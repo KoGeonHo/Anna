@@ -37,7 +37,7 @@
 	
 	<!-- <beans:bean id="LoginCheckInterceptor" class="board.newBoard.controller.LoginCheckInterceptor"></beans:bean> -->
     
-    <interceptors>
+   <!--  <interceptors>
         <interceptor>
             <mapping path="/board/*.do"/>
             <beans:ref bean="LoginCheckInterceptor"/>
@@ -50,7 +50,7 @@
             <mapping path="/qna/*.do"/>
             <beans:ref bean="LoginCheckInterceptor"/>
         </interceptor>
-    </interceptors>
+    </interceptors> -->
 	
 	<!-- <aop:config>
 		<aop:aspect id="exe" ref="aspect01">
