@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="board.newBoard.mapper.userMapper">
+
+	<insert id="userJoin" parameterType="userVO">
+	
+		INSERT INTO NewBoard_User(
+			userId,
+			userName,
+			userPwd,
+			userEmail,
+			userPhone,
+			PostCode,
+			userAddr,
+			userAddrDetail
+		) VALUES (
+			#{ userId },
+			#{ userName },
+			#{ userPwd },
+			#{ userEmail },
+			#{ userPhone },
+			#{ PostCode },
+			#{ userAddr },
+			#{ userAddrDetail }
+		)		
+		
+	</insert>
+	
+	<select id="idChk" parameterType="string" resultType="_int">
+	
+		SELECT 
+			count(*) as cnt
+		FROM NewBoard_User
+		WHERE userId = #{ userId }
+		
+	</select>
+	
+	<select id="login" parameterType="userVO" resultType="userVO">
+	
+		SELECT
+			midx,
+			userName,
+			userId
+		FROM NewBoard_User
+		WHERE 
+			userId = #{ userId } AND
+			userPwd = #{ userPwd }
+			
+	</select>
+	
+</mapper>
