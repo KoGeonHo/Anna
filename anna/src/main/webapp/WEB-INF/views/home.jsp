@@ -15,7 +15,7 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 
-<a href="">어디론가 가는 문</a>
+<a href="">어디로든 문</a>
 
 </body>
 </html>
