@@ -14,6 +14,10 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/js/**" location="/resources/js/" />
+	<resources mapping="/css/**" location="/resources/css/" />
+	<resources mapping="/images/**" location="/resources/images/" />
+	<resources mapping="/fonts/**" location="/resources/fonts/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -22,7 +26,60 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="edu.fourmen.controller" />
+	<context:component-scan base-package="edu.fourmen.service" />
+	<context:component-scan base-package="edu.fourmen.da" />
+	<context:component-scan base-package="edu.fourmen.vo" />
 	
 	
+	<!--  spring-upload -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+	<!--  spring-upload -->
 	
+	<!-- <beans:bean id="LoginCheckInterceptor" class="board.newBoard.controller.LoginCheckInterceptor"></beans:bean> -->
+    
+   <!--  <interceptors>
+        <interceptor>
+            <mapping path="/board/*.do"/>
+            <beans:ref bean="LoginCheckInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/announce/*.do"/>
+            <beans:ref bean="LoginCheckInterceptor"/>
+        </interceptor>
+        <interceptor>
+            <mapping path="/qna/*.do"/>
+            <beans:ref bean="LoginCheckInterceptor"/>
+        </interceptor>
+    </interceptors> -->
+	
+	<!-- <aop:config>
+		<aop:aspect id="exe" ref="aspect01">
+			<aop:pointcut expression="within(aopEx01.A)" id="pointcutA"/>
+			<aop:around method="Execute" pointcut-ref="pointcutA"/>
+			오류와 관계없이 실행
+			<aop:after method="after" pointcut-ref="pointcutB"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	    <!-- email 인증 관련   -->
+	    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	        <property name="host" value="smtp.gmail.com" />
+	        <property name="port" value="587" />
+	        <property name="username" value="gjy5247@gmail.com"/>
+	        <property name="password" value="fnapcxtbualutscg" />
+	        <property name="javaMailProperties">
+	            <props>
+	                <prop key="mail.transport.protocol">smtp</prop>
+	                <prop key="mail.smtp.auth">true</prop>
+	                <prop key="mail.smtp.starttls.enable">true</prop>
+	                <prop key="mail.debug">true</prop>
+	            </props>
+	        </property>
+	    </bean>
+	</beans>
 </beans:beans>
