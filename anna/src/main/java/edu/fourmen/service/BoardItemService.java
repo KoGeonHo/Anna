@@ -13,7 +13,7 @@ public interface BoardItemService {
 	
 	public List<BoardItemVO> list ( BoardItemVO vo);
 	
-	public int boarditemswrite(BoardItemVO vo,Map<String, Object> map, HttpServletRequest request);
+	public int boarditemswrite(BoardItemVO vo, HttpServletRequest request);
 	
 	public BoardItemVO selectitem(int item_idx);
 }

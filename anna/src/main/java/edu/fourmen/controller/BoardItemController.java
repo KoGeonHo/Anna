@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,39 +57,34 @@ public class BoardItemController {
 	@RequestMapping(value="itemwrite.do", method=RequestMethod.GET)
 	public String itemwrite() {
 		
-		return "boarditem/itemwrite";
+		return "boarditem/itemwrite"; 
 	}
 	
 	@RequestMapping(value="itemwrite.do", method=RequestMethod.POST)
 	public String itemwrite(BoardItemVO vo,Map<String, Object> map,MultipartFile file, HttpServletRequest request,HttpServletResponse response,  HttpSession session, MultipartHttpServletRequest mull,Model model) throws IllegalStateException, IOException {
 		
-	
+
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 		System.out.println(path);
 		
-		/*
-		 * if(!file.getOriginalFilename().isEmpty()) {//화면에서 넘어온 파일이 존재한다면
-		 * file.transferTo(new File(path, file.getOriginalFilename())); //화면에서 넘어온 파일을
-		 * //path 위치에 새로쓰는 로직
-		 * 
-		 * }else { System.out.println("업로드할 파일이 존재하지 않습니다."); }
-		 */
-		
 		File dir = new File(path); // path가 존재하는지 여부 확인
-		
 		
 		if(!dir.exists()) {
 			dir.mkdirs(); // 위치가 존재하지 않는 경우 위치 생성
 		}
 		
+			file.transferTo(new File(path, file.getOriginalFilename())); //화면에서 넘어온 파일을 path 위치에 새로쓰는 로직
+			
+			File image1 = new File(path, file.getOriginalFilename());
+			System.out.println(image1+"오리지널@@@@@@@");
+			vo.setImage1(path+file.getOriginalFilename());
 		
 		session = request.getSession();
 		
 		UserVO login = (UserVO)session.getAttribute("login");
 		
 		//vo.setMidx(login.getMidx());
-		
-		int result = boarditemService.boarditemswrite(vo,map,request);
+		int result = boarditemService.boarditemswrite(vo,request);
 		
 		model.addAttribute("vo",vo);
 		
@@ -111,7 +108,6 @@ public class BoardItemController {
 		
 		return "redirect:/boarditem/itemview.do?item_idx="+vo.getItem_idx();
 	}
-	
 	
 	
 	
