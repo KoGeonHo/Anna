@@ -137,7 +137,7 @@
 		}
 		
 		function fn_addFile(){
-			var str = "<p><input type='file' name='image"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+			var str = "<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
 			$("#fileDiv").append(str);
 			$("a[name='delete']").on("click", function(e){ //삭제 버튼
 				e.preventDefault();

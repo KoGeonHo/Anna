@@ -72,11 +72,13 @@ public class BoardItemController {
 		if(!dir.exists()) {
 			dir.mkdirs(); // 위치가 존재하지 않는 경우 위치 생성
 		}
-		
-			file.transferTo(new File(path, file.getOriginalFilename())); //화면에서 넘어온 파일을 path 위치에 새로쓰는 로직
 			
+			file.transferTo(new File(path, file.getOriginalFilename())); //화면에서 넘어온 파일을 path 위치에 새로쓰는 로직
+			vo.getImage1();
+			vo.getImage2();
 			File image1 = new File(path, file.getOriginalFilename());
 			System.out.println(image1+"오리지널@@@@@@@");
+			
 			vo.setImage1(path+file.getOriginalFilename());
 		
 		session = request.getSession();
