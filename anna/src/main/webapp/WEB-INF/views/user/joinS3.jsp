@@ -7,7 +7,80 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/js/bootstrap.js"></script>
+<script>
+
+	$(function(){
+		let user_pwd = $("input[name=user_pwd]");
+		let pwdChk = $("input[name=pwdChk]");
+		
+		$("input[name=user_email]").keyup(function(){
+			$("#emailChecked").val(0);
+		});
+		
+		$("#joinFrm").submit(function(){
+			let emailChecked = $("#emailChecked");
+			alert(emailChecked.val());
+			if(emailChecked.val() != 1){
+				alert("이메일을 확인해 주세요!");
+				return false;
+			}
+		});
+		
+		user_pwd.keyup(function(){
+			if(user_pwd.val() != "" && pwdChk.val() != ""){
+				pwd_chk(user_pwd.val(),pwdChk.val());
+			}
+		});
+		
+		pwdChk.keyup(function(){
+			if(user_pwd.val() != "" && pwdChk.val() != ""){
+				pwd_chk(user_pwd.val(),pwdChk.val());
+			}
+		});
+		
+	});
+	
+	function pwd_chk(pwd1,pwd2){
+		if(pwd1 == pwd2){
+			$("#pwdMsg").html("<span style='color:#0d6efd;'>비밀번호가 일치합니다.</span>");
+		}else{
+			$("#pwdMsg").html("<span style='color:#dc3545;'>비밀번호가 일치하지 않습니다.</span>");
+		}
+	}
+	
+	function emailChk(){
+		let email = $("input[name=user_email]");
+		
+		if(email.val() == ""){
+			alert("이메일을 입력해주세요");
+			email.focus();
+		} else {
+			let reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+			if(!reg_email.test(email.val())) {                            
+				alert("올바르지 않은 이메일 형식입니다.");
+				email.focus(); 
+			} else {                       
+				$.ajax({
+					url : "emailChk.do",
+					data : "user_email="+email.val(),
+					success : function(result){
+						if(result.trim() == 1){
+							alert("이미 사용중인 이메일 입니다.");
+							email.val("");
+							email.focus();
+						}else{
+							alert("사용가능한 이메일 주소입니다.");
+							$("#emailChecked").val(1);
+						}
+					}
+				});       
+			} 
+		}
+	}
+	
+</script>
 <style>
+
 	html, body, .wrapper {
 		width:100%;
 		height:100%;
@@ -17,12 +90,7 @@
 	
 	.row {
 		margin:0px;
-		padding:0px;
-	}
-	
-	.vcenter-item{
-	    display: flex;
-	    align-items: center;
+		padding:5px;
 	}
 	
 	.box {
@@ -33,58 +101,55 @@
 		background:#555;
 	}
 	
-	.loginBtn button, .kakaoLoginBtn button{
-		width:100%;
-		margin-top:5px;
+	textarea {
+		resize:none;
 	}
 	
 	.text-align-right {
 		text-align:right;
-		padding:0 3px;
 	}
 	
-	.text-align-left {
-		text-align:left;
-		padding:0 5px;
+	.form-control {
+		display:inline-block;
+		width:250px;
+		margin:0 5px;
 	}
 	
-	.find-join {
-		padding: 5px 0;
+	.table-th {
+		border-right : 1px solid #555;
+		text-align:center;
+	}
+	
+	h3 {
+		padding:10px;
+	}
+	
+	#pwdMsg {
+		display:inline-block;
 	}
 	
 </style>
 </head>
 <body>
-	<div class="wrapper row vcenter-item">
-		<div class="container row col-lg-12">
-			<div class="col-lg-4"></div>
-			<div class="col-lg-4 row">
-				<form id="loginFrm" action="login.do">
-					<div class="row col-12">
-						<div class="col-lg-2 col-md-3 col-sm-1"></div>
-						<div class="box col-lg-8 col-md-6 col-sm-10">
-							<h2 class="form-signin-heading">로그인</h2>
-							<label for="inputEmail" class="sr-only">이메일</label> 
-							<input type="email" id="inputEmail" class="form-control" name="user_email" placeholder="이메일" required autofocus>
-							<label for="inputPassword" class="sr-only">비밀번호</label> 
-							<input type="password" id="inputPassword" class="form-control" name="user_pwd" placeholder="비밀번호" required>
-							<div class="row find-join">
-								<div class="col-8 text-align-left" >아이디/비밀번호 찾기</div>
-								<div class="col-4 text-align-right"><span onclick="location.href='joinS1.do'">회원가입</span></div>
-							</div>
-							<div class="loginBtn">
-								<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
-							</div>
-							<div class="kakaoLoginBtn">
-								<button class="btn btn-lg btn-primary btn-block" type="button">카카오로그인</button>
-							</div>
-						</div>
-						<div class="col-lg-2 col-md-3 col-sm-1"></div>
+	<div class="container">
+		<div> 
+			<h3 class="border-bottom">이메일인증</h3>
+			<div class="row">
+				<div class="col-lg-2"></div>
+				<div class="col-lg-8 col-md-12 box">
+					<div class="row ">
+						<div class="col-md-2 text-center align-self-center"><span class="">인증번호</span></div>
+						<div class="col-md-10"><input class="form-control" type="email" name="user_email" required autofocus><button type="button" class="btn btn-primary" onclick="emailChk()">이메일 확인</button></div>
 					</div>
-				</form>
+					<div class="row">
+						<div colspan="2" class="text-end">
+							<button type="submit" class="btn btn-primary">가입하기</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2"></div>
 			</div>
-			<div class="col-lg-4"></div>
 		</div>
-	</div>
+	</div>	
 </body>
 </html>

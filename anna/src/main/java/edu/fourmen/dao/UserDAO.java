@@ -4,6 +4,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.fourmen.vo.UserVO;
+
 @Repository
 public class UserDAO {
 	
@@ -17,4 +19,11 @@ public class UserDAO {
 		return result;
 	}
 
+	
+	public int joinS1(UserVO vo) {
+
+		int result = sqlSession.insert("edu.fourmen.mapper.userMapper.joinS1",vo);
+		
+		return result;
+	}
 }

@@ -8,6 +8,46 @@
 <link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/js/bootstrap.js"></script>
 <script>
+
+	$(function(){
+		let user_pwd = $("input[name=user_pwd]");
+		let pwdChk = $("input[name=pwdChk]");
+		
+		$("input[name=user_email]").keyup(function(){
+			$("#emailChecked").val(0);
+		});
+		
+		$("#joinFrm").submit(function(){
+			let emailChecked = $("#emailChecked");
+			alert(emailChecked.val());
+			if(emailChecked.val() != 1){
+				alert("이메일을 확인해 주세요!");
+				return false;
+			}
+		});
+		
+		user_pwd.keyup(function(){
+			if(user_pwd.val() != "" && pwdChk.val() != ""){
+				pwd_chk(user_pwd.val(),pwdChk.val());
+			}
+		});
+		
+		pwdChk.keyup(function(){
+			if(user_pwd.val() != "" && pwdChk.val() != ""){
+				pwd_chk(user_pwd.val(),pwdChk.val());
+			}
+		});
+		
+	});
+	
+	function pwd_chk(pwd1,pwd2){
+		if(pwd1 == pwd2){
+			$("#pwdMsg").html("<span style='color:#0d6efd;'>비밀번호가 일치합니다.</span>");
+		}else{
+			$("#pwdMsg").html("<span style='color:#dc3545;'>비밀번호가 일치하지 않습니다.</span>");
+		}
+	}
+	
 	function emailChk(){
 		let email = $("input[name=user_email]");
 		
@@ -37,6 +77,7 @@
 			} 
 		}
 	}
+	
 </script>
 <style>
 
@@ -48,7 +89,7 @@
 	}
 	.row {
 		margin:0px;
-		padding:0px;
+		padding:5px;
 	}
 	
 	.box {
@@ -68,7 +109,7 @@
 	
 	.form-control {
 		display:inline-block;
-		width:200px;
+		width:250px;
 		margin:0 5px;
 	}
 	
@@ -80,44 +121,45 @@
 	h3 {
 		padding:10px;
 	}
+	
+	#pwdMsg {
+		display:inline-block;
+	}
 </style>
 </head>
 <body>
 	<div class="container">
 		<div> 
 			<h3 class="border-bottom">회원가입</h3>
-			<form method="POST" action="joinS2.do">
-				<input type='hidden' id="emailChecked">
+			<form id="joinFrm" method="POST" action="joinS2.do">
+				<input type='hidden' id="emailChecked" value="0">
+				<input type='hidden' id="pwdChecked" value="0">
 				<div class="row">
-					<div class="col-12">
-						<table>
-							<tbody>
-								<tr>
-									<th>이메일</th>
-									<td><input class="form-control" type="email" name="user_email" required autofocus><button type="button" class="btn btn-primary" onclick="emailChk()">이메일 확인</button></td>
-								</tr>
-								<tr>
-									<th>닉네임</th>
-									<td><input class="form-control" type="text" name="nickName" required autofocus></td>
-								</tr>
-								<tr>
-									<th>비밀번호</th>
-									<td><input class="form-control" type="password" name="user_pwd" required autofocus></td>
-								</tr>
-								<tr>
-									<th>비밀번호확인</th>
-									<td><input class="form-control" type="password" name="pwdChk" required autofocus></td>
-								</tr>
-							</tbody>
-							<tfoot>
-								<tr>
-									<td colspan="2" class="text-end">
-										<button class="btn btn-primary">가입하기</button>
-									</td>
-								</tr>
-							</tfoot>
-						</table>
+					<div class="col-lg-2"></div>
+					<div class="col-lg-8 col-md-12 box">
+						<div class="row ">
+							<div class="col-md-2 text-center align-self-center"><span class="">이메일</span></div>
+							<div class="col-md-10"><input class="form-control" type="email" name="user_email" required autofocus><button type="button" class="btn btn-primary" onclick="emailChk()">이메일 확인</button></div>
+						</div>
+						<div class="row">
+							<div class="col-md-2 text-center align-self-center">닉네임</div>
+							<div class="col-md-10"><input class="form-control" type="text" name="nickName" required autofocus></div>
+						</div>
+						<div class="row">
+							<div class="col-md-2 text-center align-self-center">비밀번호</div>
+							<div class="col-md-10"><input class="form-control" type="password" name="user_pwd" required autofocus><div id="pwdMsg"></div></div>
+						</div>
+						<div class="row">
+							<div class="col-md-2 text-center align-self-center">비밀번호 확인</div>
+							<div class="col-md-10"><input class="form-control" type="password" name="pwdChk" required autofocus></div>
+						</div>
+						<div class="row">
+							<div colspan="2" class="text-end">
+								<button type="submit" class="btn btn-primary">가입하기</button>
+							</div>
+						</div>
 					</div>
+					<div class="col-lg-2"></div>
 				</div>
 			</form>
 		</div>

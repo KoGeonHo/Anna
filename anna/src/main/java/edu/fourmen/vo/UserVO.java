@@ -14,6 +14,7 @@ public class UserVO {
 	private String isDel;
 	private String profile_image;
 	private String introduce;
+	
 	public int getUidx() {
 		return uidx;
 	}
