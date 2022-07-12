@@ -10,6 +10,7 @@
 			count(*) as cnt
 		FROM AnnaUser
 		WHERE user_email = #{ user_email }
+		AND isDel = 'N'
 	</select>
 	
 	<insert id="joinS1" parameterType="UserVO">

@@ -76,12 +76,21 @@ public class UserController {
 	
 	//회원가입 step3 이메일 인증 페이지
 	@RequestMapping(value="/joinS3.do", method=RequestMethod.GET)
-	public String joinS3(UserVO vo) {
+	public String joinS3(UserVO vo, Model model) {
 		
-		mailService.sendAuthMail(vo.getUser_email());
+		//mailService.sendAuthMail(vo.getUser_email());
+		
+		//String authKey = mailService.sendAuthMail("rhwnsdyd7@naver.com");
+		
+		model.addAttribute("user_email",vo.getUser_email());
 		
 		return "user/joinS3";
 		
+	}
+	
+	@RequestMapping(value="/sendAuthEmail.do", produces = "application/text; charset=utf8")
+	public String sendAuthEmail() {
+		return "";
 	}
 	
 

@@ -154,7 +154,7 @@
 							<div class="col-md-10"><input class="form-control" type="password" name="pwdChk" required autofocus></div>
 						</div>
 						<div class="row">
-							<div colspan="2" class="text-end">
+							<div class="text-end">
 								<button type="submit" class="btn btn-primary">가입하기</button>
 							</div>
 						</div>
