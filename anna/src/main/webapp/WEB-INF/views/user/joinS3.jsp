@@ -7,78 +7,7 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/js/bootstrap.js"></script>
-<script>
 
-	$(function(){
-		let user_pwd = $("input[name=user_pwd]");
-		let pwdChk = $("input[name=pwdChk]");
-		
-		$("input[name=user_email]").keyup(function(){
-			$("#emailChecked").val(0);
-		});
-		
-		$("#joinFrm").submit(function(){
-			let emailChecked = $("#emailChecked");
-			alert(emailChecked.val());
-			if(emailChecked.val() != 1){
-				alert("이메일을 확인해 주세요!");
-				return false;
-			}
-		});
-		
-		user_pwd.keyup(function(){
-			if(user_pwd.val() != "" && pwdChk.val() != ""){
-				pwd_chk(user_pwd.val(),pwdChk.val());
-			}
-		});
-		
-		pwdChk.keyup(function(){
-			if(user_pwd.val() != "" && pwdChk.val() != ""){
-				pwd_chk(user_pwd.val(),pwdChk.val());
-			}
-		});
-		
-	});
-	
-	function pwd_chk(pwd1,pwd2){
-		if(pwd1 == pwd2){
-			$("#pwdMsg").html("<span style='color:#0d6efd;'>비밀번호가 일치합니다.</span>");
-		}else{
-			$("#pwdMsg").html("<span style='color:#dc3545;'>비밀번호가 일치하지 않습니다.</span>");
-		}
-	}
-	
-	function emailChk(){
-		let email = $("input[name=user_email]");
-		
-		if(email.val() == ""){
-			alert("이메일을 입력해주세요");
-			email.focus();
-		} else {
-			let reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-			if(!reg_email.test(email.val())) {                            
-				alert("올바르지 않은 이메일 형식입니다.");
-				email.focus(); 
-			} else {                       
-				$.ajax({
-					url : "emailChk.do",
-					data : "user_email="+email.val(),
-					success : function(result){
-						if(result.trim() == 1){
-							alert("이미 사용중인 이메일 입니다.");
-							email.val("");
-							email.focus();
-						}else{
-							alert("사용가능한 이메일 주소입니다.");
-							$("#emailChecked").val(1);
-						}
-					}
-				});       
-			} 
-		}
-	}
-	
-</script>
 <style>
 
 	html, body, .wrapper {
@@ -142,7 +71,7 @@
 						<div class="col-md-10"><input class="form-control" type="email" name="user_email" required autofocus><button type="button" class="btn btn-primary" onclick="emailChk()">이메일 확인</button></div>
 					</div>
 					<div class="row">
-						<div colspan="2" class="text-end">
+						<div class="text-end">
 							<button type="submit" class="btn btn-primary">가입하기</button>
 						</div>
 					</div>
