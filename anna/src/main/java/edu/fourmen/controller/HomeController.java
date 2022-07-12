@@ -30,10 +30,6 @@ public class HomeController {
 		return "test2";
 	}
 	
-	@RequestMapping(value="/FreeBoard.do")
-	public String FreeBoard() {
-		
-		return "/board/FreeBoard";
-	}
+	
 	
 }
