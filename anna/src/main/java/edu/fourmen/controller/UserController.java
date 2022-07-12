@@ -3,12 +3,14 @@ package edu.fourmen.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.fourmen.service.MailService;
 import edu.fourmen.service.UserService;
 import edu.fourmen.vo.UserVO;
 
@@ -19,6 +21,11 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	MailService mailService;
+	
+	@Autowired
+	BCryptPasswordEncoder pwdEncoder; 
 	
 	//로그인 페이지
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
@@ -29,8 +36,6 @@ public class UserController {
 	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public String loginOk(UserVO vo) {
-		
-		
 		
 		return "redirect:/user/login.do";
 		
@@ -58,18 +63,22 @@ public class UserController {
 	@RequestMapping(value="/joinS2.do", method=RequestMethod.POST)
 	public String joinS2(UserVO vo, HttpServletRequest request) {
 		
+		vo.setUser_pwd(pwdEncoder.encode(vo.getUser_pwd()));
+		
 		int result = userService.joinS1(vo);
 		
 		request.setAttribute("user_email",vo.getUser_email());
 		request.setAttribute("nickName",vo.getNickName());
 		
-		return "redirect:/user/joinS3.do";
+		return "user/joinS3";
 		
 	}
 	
 	//회원가입 step3 이메일 인증 페이지
 	@RequestMapping(value="/joinS3.do", method=RequestMethod.GET)
-	public String joinS3() {
+	public String joinS3(UserVO vo) {
+		
+		mailService.sendAuthMail(vo.getUser_email());
 		
 		return "user/joinS3";
 		
