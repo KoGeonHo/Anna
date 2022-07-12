@@ -6,6 +6,7 @@
 	<typeAliases>
 		<!-- mapper에서 사용할 vo의 별칭을 등록해두는 곳입니다.  -->
 		<typeAlias type="edu.fourmen.vo.BoardVO" alias="boardvo"/>
+		<typeAlias type="edu.fourmen.vo.SearchVO" alias="searchvo"/>
     </typeAliases>
 
 </configuration>

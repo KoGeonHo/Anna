@@ -1,11 +1,11 @@
 package edu.fourmen.vo;
 
-public class BoardVO {
+public class BoardVO extends UserVO{
 	
 	private int Bidx;
-	private String BoardType;
+	private String board_type;
 	private String Title;
-	private String Content;
+	private String Contents;
 	private String Wdate;
 	private String Location;
 	private int Hit;
@@ -22,23 +22,18 @@ public class BoardVO {
 	public void setBidx(int bidx) {
 		Bidx = bidx;
 	}
-	public String getBoardType() {
-		return BoardType;
-	}
-	public void setBoardType(String boardType) {
-		BoardType = boardType;
-	}
+
 	public String getTitle() {
 		return Title;
 	}
 	public void setTitle(String title) {
 		Title = title;
 	}
-	public String getContent() {
-		return Content;
+	public String getContents() {
+		return Contents;
 	}
-	public void setContent(String content) {
-		Content = content;
+	public void setContents(String contents) {
+		Contents = contents;
 	}
 	public String getWdate() {
 		return Wdate;
@@ -94,6 +89,13 @@ public class BoardVO {
 	public void setImage5(String image5) {
 		Image5 = image5;
 	}
+	public String getBoard_type() {
+		return board_type;
+	}
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
+	}
+
 
 	
 }

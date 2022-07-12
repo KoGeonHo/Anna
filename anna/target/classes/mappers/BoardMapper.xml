@@ -6,27 +6,25 @@
 <mapper namespace="edu.fourman.mapper.boardMapper">
 
 <insert id="boardinsert">
-	INSERT INTO board(
-			 BoardType
+	INSERT INTO Board(
+			 Uidx
+			,board_type
 			,Title
-			,Content
+			,Contents
 			,Wdate
 			,Location
-			,Hit
-			,isDal
 			,Image1
 			,Image2
 			,Image3
 			,Image4
 			,Image5
 	)VALUES(
-			 #{BoardType}
+			 1
+			,#{BoardType}
 			,#{Title}
-			,#{Content}
-			,#{Wdate}
+			,#{Contents}
+			,now()
 			,#{Location}
-			,#{Hit}
-			,#{isDel}
 			,#{Image1}
 			,#{Image2}
 			,#{Image3}
@@ -36,6 +34,55 @@
 
 
 </insert>
+
+<select id="selectfreeboard" resultType="boardvo" parameterType="searchvo">
+	SELECT b.Bidx
+		  ,b.Title
+		  ,b.Uidx
+		  ,b.Contents
+		  ,b.Hit
+		  ,b.Wdate
+		  ,u.nickname
+		  ,b.board_type
+		  ,b.isDel
+	  FROM Board b
+	 INNER JOIN AnnaUser u
+	  	ON b.Uidx = u.uidx
+	 WHERE b.board_type = 'free'
+	   AND b.isDel ='N'
+	   <if test='searchType != null and searchType.equals("All")'>
+	   		AND board_type = #{board_type}
+	 	    AND b.Contents like concat('%',#{SearchVal},'%')
+	 	    OR u.nickname like concat('%',#{SearchVal},'%')
+	 		OR b.Title like concat('%',#{SearchVal},'%')
+	 		
+	 	</if>
+	   <if test='searchType != null and searchType.equals("title")'>
+	   		AND board_type = #{board_type}
+	 		AND b.Title like concat('%',#{SearchVal},'%')
+	 		
+	 		
+	 	</if>
+	 	<if test='searchType != null and searchType.equals("contentWriter")'>
+	 		AND board_type = #{board_type}
+	 		AND b.Contents like concat('%',#{SearchVal},'%')
+	 		OR u.nickname like concat('%',#{SearchVal},'%')
+	 		
+	 		
+	 	</if> 
+</select>
+
+<select id="viewBoard" resultType="boardvo" parameterType="int"> 
+	SELECT b.Title
+		  ,b.Contents
+		  ,b.Wdate
+		  ,b.Bidx
+		  ,b.Uidx
+		  ,u.nickname
+	  FROM Board b, AnnaUser u
+	 WHERE b.Uidx = u.uidx	  
+	   AND b.Bidx = #{Bidx}
+</select>
 
 
 </mapper>

@@ -21,12 +21,17 @@
 
     <h1>Summernote</h1>
     
-<form>
+<form action="BoardWrite.do" method="post">
+<select name="BoardType">
+	<option value="free">일상&amp;소통</option>
+	<option value="job">구인구직</option>
+	<option value="metting">만남</option>
+	<option value="hotplace">우리동네 핫플레이스</option>
+</select>
 <input type="text" name="Title" placeholder="제목을 입력해주세요">
  
-<div id="summernote"></div>
+<textarea id="summernote" name="Contents"></textarea>
 
-<input type="file" name="File">
 
 <button type="button">취소</button>
 <button>작성완료</button>

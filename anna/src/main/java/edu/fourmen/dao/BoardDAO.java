@@ -1,10 +1,13 @@
 package edu.fourmen.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardVO;
+import edu.fourmen.vo.SearchVO;
 
 @Repository
 public class BoardDAO {
@@ -14,10 +17,22 @@ public class BoardDAO {
 
 	private static final String namespace = "edu.fourman.mapper.boardMapper"; //네임스페이스를 namespace로 줄임.	
 	
-	public int writeBoard(BoardVO vo) {
+	public int writeBoard(BoardVO vo) { //글작성하기
 		
-		int result = sqlSession.insert(namespace+".insert", vo);
+		int result = sqlSession.insert(namespace+".boardinsert", vo);
 		
 		return result;
+	}
+	
+	public BoardVO viewBoard(int bidx) { //글 내용 보기
+		
+		
+		return sqlSession.selectOne(namespace+".viewBoard",bidx);
+	}
+	
+	public List<BoardVO> selectfreeboard(SearchVO svo){ //일상&소통 게시판리스트
+		
+		
+		return sqlSession.selectList(namespace+".selectfreeboard", svo);
 	}
 }
