@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+:root {
+  --text-color: #f0f4f5;
+  --background-color: #263343;
+  --accent-color: orange;
+  --icons-color: rgb(152, 187, 201);
+  --bodybackground-color: lightgray;
+
+}
+
+body { 
+  margin: auto;
+  background-color: var(--bodybackground-color);
+  font-family: 'STIX Two Math';
+  
+  height : 100%;
+  width : 1024px;
+}
+
+article{
+	
+	width : 1024px;
+	auto : 0px auto;
+	background-color : red;
+	padding: 8px 12px;
+	display: flex;
+	margin : auto;
+	 
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+
+
+.navbar {
+  width : 1024px;
+  margin : auto;
+  display: flex;
+  justify-content: space-between; <!--li 간격을 균등하게 나눌때 쓰는 듯-->
+  align-items: center;
+  background-color: var(--background-color);
+  padding: 8px 12px;
+  font-family: 'STIX Two Math';
+}
+
+.navbar__logo i {
+  color: var(--accent-color);
+  padding-left: 0;
+}
+
+.navbar__menu {
+  list-style: none;
+  display: flex; <!--세로 정렬과 연관 있음-->
+  margin: 0;
+  padding-left: 0;
+}
+
+.navbar__menu li {
+  padding: 8px 30px; <!--li간의 간격-->
+}
+
+.navbar__icons {
+  list-style: none;
+  display: flex;
+  color: var(--icons-color);
+  margin: 0;
+  padding-left: 0;
+}
+
+.navbar__icons li {
+  padding: 8px 12px;
+  margin: 0;
