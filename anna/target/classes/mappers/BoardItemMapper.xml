@@ -6,7 +6,7 @@
  
 <mapper namespace="edu.fourmen.mapper.boardItemMapper">
 	
-	<select id="selectAll" resultType="boarditemvo"  >
+	<select id="selectAll" resultType="BoardItemVO"  >
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
@@ -20,7 +20,7 @@
 	
 
 	
-	<insert id="boarditemswrite" parameterType="boarditemvo">
+	<insert id="boarditemswrite" parameterType="BoardItemVO">
 	insert into Board_Items(
 						uidx
 						,cate_idx
@@ -72,7 +72,7 @@
 						,#{state}
 						)
 	</insert>
-	<select id="selectitem" parameterType="int" resultType="boarditemvo">
+	<select id="selectitem" parameterType="int" resultType="BoardItemVO">
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
