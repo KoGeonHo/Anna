@@ -88,8 +88,7 @@
 }
 
 body {
-	width : 1024px;
-  margin: 0 auto;
+  margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
@@ -648,8 +647,6 @@ progress {
   .container-sm, .container {
     max-width: 540px;
   }
-  
- 
 }
 @media (min-width: 768px) {
   .container-md, .container-sm, .container {
@@ -660,8 +657,6 @@ progress {
   .container-lg, .container-md, .container-sm, .container {
     max-width: 960px;
   }
-  
-  
 }
 @media (min-width: 1200px) {
   .container-xl, .container-lg, .container-md, .container-sm, .container {
@@ -2168,14 +2163,12 @@ progress {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
 }
 @media (max-width: 991.98px) {
   .table-responsive-lg {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-
 }
 @media (max-width: 1199.98px) {
   .table-responsive-xl {
@@ -3531,7 +3524,6 @@ textarea.form-control-lg {
   }
 }
 @media (min-width: 992px) {
-	
   .dropdown-menu-lg-start {
     --bs-position: start;
   }
@@ -3863,7 +3855,7 @@ textarea.form-control-lg {
   color: var(--bs-nav-link-disabled-color);
   pointer-events: none;
   cursor: default;
-} 
+}
 
 .nav-tabs {
   --bs-nav-tabs-border-width: 1px;
@@ -4222,7 +4214,7 @@ textarea.form-control-lg {
 }
 @media (min-width: 1200px) {
   .navbar-expand-xl {
-    flex-wrap: nowrap0;
+    flex-wrap: nowrap;
     justify-content: flex-start;
   }
   .navbar-expand-xl .navbar-nav {

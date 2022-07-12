@@ -79,7 +79,6 @@
 								<button class="btn btn-lg btn-primary btn-block" type="button">카카오로그인</button>
 							</div>
 						</div>
-						
 						<div class="col-lg-2 col-md-3 col-sm-1"></div>
 					</div>
 				</form>
