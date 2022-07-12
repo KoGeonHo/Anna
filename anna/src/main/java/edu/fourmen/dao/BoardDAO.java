@@ -18,21 +18,16 @@ public class BoardDAO {
 	private static final String namespace = "edu.fourman.mapper.boardMapper"; //네임스페이스를 namespace로 줄임.	
 	
 	public int writeBoard(BoardVO vo) { //글작성하기
-		
 		int result = sqlSession.insert(namespace+".boardinsert", vo);
 		
 		return result;
 	}
 	
-	public BoardVO viewBoard(int bidx) { //글 내용 보기
-		
-		
-		return sqlSession.selectOne(namespace+".viewBoard",bidx);
+	public BoardVO viewBoard(int Bidx) { //글 내용 보기
+		return sqlSession.selectOne(namespace+".viewBoard",Bidx);
 	}
 	
 	public List<BoardVO> selectfreeboard(SearchVO svo){ //일상&소통 게시판리스트
-		
-		
 		return sqlSession.selectList(namespace+".selectfreeboard", svo);
 	}
 }
