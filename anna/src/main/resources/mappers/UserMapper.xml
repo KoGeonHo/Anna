@@ -10,6 +10,19 @@
 			count(*) as cnt
 		FROM AnnaUser
 		WHERE user_email = #{ user_email }
+		AND isDel = 'N'
 	</select>
+	
+	<insert id="joinS1" parameterType="UserVO">
+		INSERT INTO AnnaUser(
+			nickName,
+			user_email,
+			user_pwd
+		) VALUES (
+			#{ nickName },
+			#{ user_email },
+			#{ user_pwd }
+		)
+	</insert>
 	
 </mapper>

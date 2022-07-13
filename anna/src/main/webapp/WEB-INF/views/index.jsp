@@ -14,5 +14,6 @@
 </head>
 <body>
 <a href="boarditem/itemlist.do">중고거래</a>
+<a href="board/FreeBoard.do">가는건가?</a>
 </body>
 </html>
