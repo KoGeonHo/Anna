@@ -14,19 +14,17 @@ import edu.fourmen.vo.BoardItemVO;
 @Repository
 public class BoardItemDAO {
 	
-	
 	@Autowired(required=true)
 	SqlSession sqlSession;
 	
 	private static final String efdb = "edu.fourmen.mapper.boardItemMapper";
-		
 	
 	public List<BoardItemVO> selectAll(BoardItemVO vo) {
 		return sqlSession.selectList(efdb+".selectAll",vo);
 		
 	}
 		
-	public int boarditemswrite(BoardItemVO vo, Map<String, Object> map, HttpServletRequest request) {
+	public int boarditemswrite(BoardItemVO vo, HttpServletRequest request) {
 		return sqlSession.insert(efdb+".boarditemswrite",vo);
 	}
 	

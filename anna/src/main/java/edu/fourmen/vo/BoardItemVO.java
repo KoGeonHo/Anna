@@ -11,8 +11,8 @@ public class BoardItemVO extends UserVO {
 	private String wdate;
 	private String addr1;
 	private String addr2;
-	private String addr_Code;
-	private String image1;
+	private String addr_code; 
+	public  String image1;
 	private String image2;
 	private String image3;
 	private String image4;
@@ -22,6 +22,7 @@ public class BoardItemVO extends UserVO {
 	private String image8;
 	private String image9;
 	private String image10;
+	private String fileName;
 	private String Keyword;
 	private String Price;
 	private String offer;
@@ -29,13 +30,11 @@ public class BoardItemVO extends UserVO {
 	private int state;
 	
 	
-	
-	
-	public String getNickname() {
-		return nickname;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public int getItem_idx() {
 		return item_idx;
@@ -67,6 +66,12 @@ public class BoardItemVO extends UserVO {
 	public void setContent(String content) {
 		Content = content;
 	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	public String getWdate() {
 		return wdate;
 	}
@@ -85,17 +90,17 @@ public class BoardItemVO extends UserVO {
 	public void setAddr2(String addr2) {
 		this.addr2 = addr2;
 	}
-	public String getAddr_Code() {
-		return addr_Code;
+	public String getAddr_code() {
+		return addr_code;
 	}
-	public void setAddr_Code(String addr_Code) {
-		this.addr_Code = addr_Code;
+	public void setAddr_code(String addr_code) {
+		this.addr_code = addr_code;
 	}
 	public String getImage1() {
 		return image1;
 	}
 	public void setImage1(String image1) {
-		this.image1 = image1;
+		 this.image1 = image1;
 	}
 	public String getImage2() {
 		return image2;

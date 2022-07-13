@@ -48,7 +48,7 @@
 	<div class="row">
 			<div class="col-lg-4">
 				<div class="card">
-				<img src="${path}/images/logo.png" class="card-img-top" alt="...">
+				<%-- <img src="${path}/resources/upload/logo size down.png" class="card-img-top" alt="..."> --%>
 				<input type="hidden" value="${vo.uidx}">
 				<input type="hidden" value="${vo.item_idx}">
 					
