@@ -20,20 +20,19 @@
 </head>
 <body>
 <h2>중고거래글 작성 페이지</h2>
-
 <form action="itemwrite.do" method="post" enctype="multipart/form-data" name="frm">
 	<input type="hidden" name="uidx" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 
 	제목: <input type="text" name="title">
 	카테고리:<select name="cate_idx">
 			<option value="1">가전제품</option>
-			
+			  
 	</select>
 	<textarea id="summernote" name="content" ></textarea>
 	<br>
 	<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-	<input type="hidden" name="addrCode" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+	<input type="hidden" name="addr_code" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	<!-- <input type="hidden" name="image1" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
 	<input type="hidden" name="image2" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
 	<input type="hidden" name="image3" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
@@ -52,11 +51,11 @@
 		<br>
 	거래상태:<input type="text" name="state" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 		<br>
+
 	
-	
-		<div id="fileDiv">
+		 <div id="fileDiv">
 			<p>
-				<input type="file" id="file" name="image">
+				<input type="file" id="file" name="file">
 				<a href="#this" class="btn" id="delete" name="delete">삭제</a>
 			</p>
 		</div>
@@ -65,7 +64,7 @@
 		<a href="#this" class="btn" id="addFile">파일 추가</a>
 		<a href="#this" class="btn" id="write">작성하기</a>
 		<a href="#this" class="btn" id="list">목록으로</a>
-	
+
 	<button id="saveBtn">작성하기</button>
 	<button>취소하기</button>
 	
@@ -89,7 +88,6 @@
 	    $(document).on('click', '#saveBtn', function () {
 	        saveContent();
 	        });
-	        
 	        
 	    });
 	 function saveContent() {
@@ -139,7 +137,7 @@
 		}
 		
 		function fn_addFile(){
-			var str = "<p><input type='file' name='image"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+			var str = "<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
 			$("#fileDiv").append(str);
 			$("a[name='delete']").on("click", function(e){ //삭제 버튼
 				e.preventDefault();

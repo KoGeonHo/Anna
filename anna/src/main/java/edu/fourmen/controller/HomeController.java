@@ -15,8 +15,8 @@ public class HomeController {
 	public String home(Locale locale, Model model) {
 		
 		return "index";
-		
 	}
+
 	
 	@RequestMapping(value="test")
 	public String test() {
@@ -32,4 +32,4 @@ public class HomeController {
 	
 	
 	
-}
+

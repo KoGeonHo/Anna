@@ -20,8 +20,8 @@ public class BoardItemServiceImple implements BoardItemService{
 	
 	
 	@Override
-	public int boarditemswrite(BoardItemVO vo,Map<String, Object> map, HttpServletRequest request) {
-		return boarditemdao.boarditemswrite(vo, map, request);
+	public int boarditemswrite(BoardItemVO vo, HttpServletRequest request) {
+		return boarditemdao.boarditemswrite(vo,request);
 	}
 
 
