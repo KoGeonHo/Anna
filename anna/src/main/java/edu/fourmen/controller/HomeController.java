@@ -29,7 +29,7 @@ public class HomeController {
 		
 		return "test2";
 	}
-	
+}
 	
 	
 
