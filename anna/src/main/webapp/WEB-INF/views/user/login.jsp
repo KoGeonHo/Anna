@@ -8,6 +8,9 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/js/bootstrap.js"></script>
+
+
+
 <style>
 	html, body, .wrapper {
 		width:100%;
