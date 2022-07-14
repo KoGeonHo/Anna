@@ -22,13 +22,16 @@
 			let emailChecked = $("#emailChecked");
 			let pwdChecked = $("#pwdChecked");
 			let mailAuthChk = $("#mailAuthChk");
-			if(emailChecked.val() != 1){
+			if(!$("#chkbox").prop("checked")){
+				alert("이용약관에 동의해 주세요");
+				return false;
+			}else if(emailChecked.val() != 1){
 				alert("이메일을 확인해 주세요.");
 				return false;
-			}else if($("#pwdChecked").val() != 1){
+			}else if(pwdChecked.val() != 1){
 				alert("비밀번호가 일치하지 않습니다.");
 				return false;
-			}else if($("#mailAuthChk").val() != 1){
+			}else if(mailAuthChk.val() != 1){
 				alert("메일 인증 절차를 진행해주세요.");
 				return false;
 			}
@@ -37,18 +40,23 @@
 		user_pwd.keyup(function(){
 			if(user_pwd.val() != "" && pwdChk.val() != ""){
 				pwd_chk(user_pwd.val(),pwdChk.val());
+			}else{
+				$("#pwdMsg").css("display","none");
 			}
 		});
 		
 		pwdChk.keyup(function(){
 			if(user_pwd.val() != "" && pwdChk.val() != ""){
 				pwd_chk(user_pwd.val(),pwdChk.val());
+			}else{
+				$("#pwdMsg").css("display","none");
 			}
 		});
 		
 	});
 	
 	function pwd_chk(pwd1,pwd2){
+		$("#pwdMsg").css("display","inline-block");
 		if(pwd1 == pwd2){
 			$("#pwdMsg").html("<span style='color:#0d6efd;'>비밀번호가 일치합니다.</span>");
 			$("#pwdChecked").val(1);
@@ -92,7 +100,7 @@
 							});
 							$("#emailChecked").val(1);
 							email.prop("readonly",true);
-							$("#emailAuth").css("display","flex");
+							$("#emailAuth").css("display","inline-block");
 							$("#chkBtn").css("display","none");
 							$("#authEmailBtn").css("display","inline-block");
 						}
@@ -167,14 +175,20 @@
 	.tr{
 		height:45px;
 		vertical-align:middle;
+		line-height:45px;
 	}
 	
 	.btn{
 		font-size:1rem;
+		vertical-align: baseline;
 	}
 	
 	div input{
 		hieght:1.2rem;
+	}
+	
+	#pwdMsg{
+		display:none;
 	}
 	
 	.box {
@@ -189,7 +203,6 @@
 		height:2rem;
 		font-size:1rem;
 		display:inline-block;
-		vertical-align:middle;
 	}
 	
 	.btn {
@@ -208,8 +221,7 @@
 	.align-self-center{
 		vertical-align:middle;
 	}
-	
-	
+		
 	#emailAuthMsg, #emailAuth {
 		display:none;
 	}
@@ -218,16 +230,14 @@
 		html, body .btn{
 			font-size:0.9rem;
 		}
-		.form-control {
-			width:180px;
-		}
 		
-		.th{
-			display:none;
+		.form-control {
+			width:45vw;
 		}
 		
 		.box,#termChk,textarea,.container{
 			width:95vw;
+			min-width:340px;
 		}
 		
 		#termChk{
@@ -653,28 +663,31 @@
 				<div class="box">
 					<div class="tr">
 						<input class="form-control" type="email" name="user_email" placeholder="이메일" required autofocus>
-						<button type="button" id="chkBtn" class="btn btn-primary " onclick="emailChk()">이메일 확인</button>
+						<button type="button" id="chkBtn" class="btn btn-primary" onclick="emailChk()">이메일 확인</button>
 						<button type="button" id="authEmailBtn" class="btn btn-primary" style="display:none;" onclick="sendAuthEmail()">인증번호 다시받기</button>
 					</div>
 					<div class="tr" id="emailAuth">
-						<input class="form-control align-self-center" type="text" id="authKey" placeholder="인증번호" autocomplete="off">
-						<button type="button" class="btn btn-primary" onclick="authOk()">확인</button>
+						<input class="form-control" type="text" id="authKey" placeholder="인증번호" autocomplete="off">
+						<button type="button" id="authOkBtn" class="btn btn-primary" onclick="authOk()">확인</button>
 					</div>
 					<div class="text-center" id="emailAuthMsg"><span class="">이메일인증이 완료되었습니다.</span></div>
 					<div class="tr">
 						<input class="form-control" type="text" name="nickName" placeholder="닉네임" required autofocus>
 					</div>
 					<div class="tr">
-						<input class="form-control" type="password" name="user_pwd" placeholder="비밀번호" required autofocus><div id="pwdMsg"></div>
+						<input class="form-control" type="password" name="user_pwd" placeholder="비밀번호" required autofocus>
 					</div>
 					<div class="tr">
 						<input class="form-control" type="password" name="pwdChk" placeholder="비밀번호 확인" required autofocus>
+					</div>
+					<div id="pwdMsg">
+						
 					</div>
 				</div>
 				<div class="container" style="padding:10px 0; margin:auto;">
 					<div class="text-end">
 						<button type="submit" class="btn btn-primary">가입하기</button>
-						<button type="submit" class="btn btn-primary" onclick="javascript:location.href='login.do'">돌아가기</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:location.href='login.do'">돌아가기</button>
 					</div>
 				</div>
 			</form>

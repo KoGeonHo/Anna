@@ -8,12 +8,14 @@
 	<select id="emailChk" parameterType="string" resultType="_int">
 		SELECT 
 			count(*) as cnt
-		FROM AnnaUser
-		WHERE user_email = #{ user_email }
-		AND isDel = 'N'
+		FROM 
+			AnnaUser
+		WHERE 
+			user_email = #{ user_email } AND
+			isDel = 'N'
 	</select>
 	
-	<insert id="joinS1" parameterType="UserVO">
+	<insert id="join" parameterType="UserVO">
 		INSERT INTO AnnaUser(
 			nickName,
 			user_email,
@@ -24,5 +26,17 @@
 			#{ user_pwd }
 		)
 	</insert>
+	
+	<select id="login" parameterType="UserVO" resultType="UserVO">
+		SELECT 
+			uidx,
+			nickName,
+			user_pwd
+		FROM 
+			AnnaUser
+		WHERE
+			user_email = #{ user_email } AND
+			isDel = 'N'
+	</select>
 	
 </mapper>

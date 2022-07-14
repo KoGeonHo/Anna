@@ -28,7 +28,7 @@
 		
 	.loginBtn button, .kakaoLoginBtn button{
 		width:100%;
-		margin-top:5px;
+		margin-top:12px;
 	}
 	
 	.text-align-right {
@@ -42,7 +42,7 @@
 	}
 	
 	.find-join {
-		padding: 5px 0;
+		padding-top: 12px;
 	}
 
 	
@@ -77,8 +77,12 @@
 	}
 	
 	@media all and (max-width:576px){
-		.box {
+		.box, .container {
 			width:95vw;
+		}
+		
+		.container {
+			padding:0;
 		}
 	}
 	
@@ -92,7 +96,7 @@
 <body>
 	<div class="wrapper vcenter-item">
 		<div class="container">
-			<form id="loginFrm" action="login.do">
+			<form id="loginFrm" action="login.do" method="post">
 				<div>
 					<div class="box">
 						<h2 class="form-signin-heading">로그인</h2>
