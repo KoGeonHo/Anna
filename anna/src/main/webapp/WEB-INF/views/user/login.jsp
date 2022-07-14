@@ -8,9 +8,22 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/js/bootstrap.js"></script>
-
-
-
+<script>
+	function kakaoLogin(){
+		$.ajax({
+			url : "getKakaoAuthUrl.do",
+			type : "get",
+			success : function(Url){
+				location.href = Url;
+			},
+			error : function(){
+				console.log("실패");
+			}
+		});
+	}
+	
+	console.log('${ userInfo }')
+</script>
 <style>
 	html, body, .wrapper {
 		width:100%;
@@ -115,7 +128,7 @@
 							<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
 						</div>
 						<div class="kakaoLoginBtn">
-							<button class="btn btn-lg btn-primary btn-block" type="button">카카오로그인</button>
+							<button class="btn btn-lg btn-primary btn-block" onclick="kakaoLogin()" type="button">카카오로그인</button>
 						</div>
 					</div>
 				</div>
