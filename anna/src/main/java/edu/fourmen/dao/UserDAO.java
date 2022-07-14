@@ -20,10 +20,15 @@ public class UserDAO {
 	}
 
 	
-	public int joinS1(UserVO vo) {
+	public int join(UserVO vo) {
 
-		int result = sqlSession.insert("edu.fourmen.mapper.userMapper.joinS1",vo);
+		int result = sqlSession.insert("edu.fourmen.mapper.userMapper.join",vo);
 		
 		return result;
+	}
+	
+	public UserVO login(UserVO vo) {
+
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.login",vo);
 	}
 }

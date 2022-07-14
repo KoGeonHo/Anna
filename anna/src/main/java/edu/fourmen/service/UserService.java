@@ -4,5 +4,6 @@ import edu.fourmen.vo.UserVO;
 
 public interface UserService {
 	int emailChk(String user_email);
-	int joinS1(UserVO vo);
+	int join(UserVO vo);
+	UserVO login(UserVO vo);
 }
