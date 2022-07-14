@@ -48,12 +48,13 @@
 	<div class="row">
 			<div class="col-lg-4">
 				<div class="card">
-				<%-- <img src="${path}/resources/upload/logo size down.png" class="card-img-top" alt="..."> --%>
-				<input type="hidden" value="${vo.uidx}">
-				<input type="hidden" value="${vo.item_idx}">
+				<input type="image" src="../resources/upload/${vo.Image1}" class="card-img-top" alt="..."> 
+				<input type="text" value="../resources/upload/${vo.Image1}">
+				<input type="text" value="${vo.uidx}">
+				<input type="text" value="${vo.item_idx}">
 					
 					<div class="card-body">
-						<h5 class="card-title">${vo.title}</h5>
+						<h5 class="card-title">${vo.Title}</h5>
 						<p class="card-text">${vo.cate_idx}</p>
 						<p class="card-text">${vo.Content}</p>
 						<p class="card-text">${vo.Price}</p>

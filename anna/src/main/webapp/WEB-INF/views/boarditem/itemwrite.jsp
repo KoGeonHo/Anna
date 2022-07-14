@@ -24,38 +24,46 @@
 	<input type="hidden" name="uidx" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 
 	제목: <input type="text" name="title">
-	카테고리:<select name="cate_idx">
+	카테고리: <select name="cate_idx">
 			<option value="1">가전제품</option>
 			  
-	</select>
+			</select>
 	<textarea id="summernote" name="content" ></textarea>
 	<br>
 	<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	<input type="hidden" name="addr_code" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-	<!-- <input type="hidden" name="image1" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image2" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image3" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image4" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image5" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image6" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image7" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image8" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image9" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image10" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-	<input type="hidden" name="offer" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 		<br>
 	키워드:<input type="text" name="keyword" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 		<br>
 	가격:<input type="text" name="price" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 		<br>
-	거래상태:<input type="text" name="state" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+	가격제안:<select name="offer">
+		<option value="1">불가능</option>
+		<option value="2">가능</option>
+		</select>
+	거래상태:<select name="state"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+			<option value="1">판매중</option>
+			<option value="2">예약중</option>
+			<option value="3">거래완료</option>
+		   </select>
 		<br>
 
 	
-		 <div id="fileDiv">
+		 <div id="fileDiv"> 
 			<p>
-				<input type="file" id="file" name="file">
+			<!-- input file name 값이랑 컨트롤러에서 받는 변수명&이름값 내일 확인해서맞추고 실행해볼것
+			 -->
+				사진1<input type="file" id="file" name="file1">
+				<!-- 사진2<input type="file" id="file" name=file2>
+				사진3<input type="file" id="file" name=file3>
+				사진4<input type="file" id="file" name=file4>
+				사진5<input type="file" id="file" name=file5>
+				사진6<input type="file" id="file" name=file6>
+				사진7<input type="file" id="file" name=file7>
+				사진8<input type="file" id="file" name=file8>
+				사진9<input type="file" id="file" name=file9>
+				사진10<input type="file" id="file" name=file10> -->
 				<a href="#this" class="btn" id="delete" name="delete">삭제</a>
 			</p>
 		</div>
@@ -100,7 +108,7 @@
 
 </script>
 	<script type="text/javascript">
-		var gfv_count = 1;
+		var gfv_count = 2;
 	
 		$(document).ready(function(){
 			$("#list").on("click", function(e){ //목록으로 버튼
@@ -137,17 +145,18 @@
 		}
 		
 		function fn_addFile(){
-			var str = "<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+			var str = "<input type='file'  name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a>";
 			$("#fileDiv").append(str);
 			$("a[name='delete']").on("click", function(e){ //삭제 버튼
 				e.preventDefault();
 				fn_deleteFile($(this));
 			});
-		}
+		} 
 		
 		function fn_deleteFile(obj){
 			obj.parent().remove();
 		}
+		
 	</script>
 </body>
 </html>
