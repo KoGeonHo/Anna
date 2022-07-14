@@ -12,7 +12,7 @@
 제목 : ${bv.title}
 <br>
 내용 : ${bv.contents }
-
+11
 <br>
 
 	
