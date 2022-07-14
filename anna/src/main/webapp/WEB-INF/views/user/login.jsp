@@ -77,8 +77,12 @@
 	}
 	
 	@media all and (max-width:576px){
-		.box {
+		.box, .container {
 			width:95vw;
+		}
+		
+		.container {
+			padding:0;
 		}
 	}
 	

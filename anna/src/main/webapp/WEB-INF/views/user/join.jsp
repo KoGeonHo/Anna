@@ -22,13 +22,16 @@
 			let emailChecked = $("#emailChecked");
 			let pwdChecked = $("#pwdChecked");
 			let mailAuthChk = $("#mailAuthChk");
-			if(emailChecked.val() != 1){
+			if(!$("#chkbox").prop("checked")){
+				alert("이용약관에 동의해 주세요");
+				return false;
+			}else if(emailChecked.val() != 1){
 				alert("이메일을 확인해 주세요.");
 				return false;
-			}else if($("#pwdChecked").val() != 1){
+			}else if(pwdChecked.val() != 1){
 				alert("비밀번호가 일치하지 않습니다.");
 				return false;
-			}else if($("#mailAuthChk").val() != 1){
+			}else if(mailAuthChk.val() != 1){
 				alert("메일 인증 절차를 진행해주세요.");
 				return false;
 			}
@@ -674,7 +677,7 @@
 				<div class="container" style="padding:10px 0; margin:auto;">
 					<div class="text-end">
 						<button type="submit" class="btn btn-primary">가입하기</button>
-						<button type="submit" class="btn btn-primary" onclick="javascript:location.href='login.do'">돌아가기</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:location.href='login.do'">돌아가기</button>
 					</div>
 				</div>
 			</form>

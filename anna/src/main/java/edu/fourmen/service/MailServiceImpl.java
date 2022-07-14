@@ -42,22 +42,22 @@ public class MailServiceImpl implements MailService {
 
 	@Override
 	public String sendAuthMail(String user_email) {
-		//6ÀÚ¸® ³­¼ö ÀÎÁõ¹øÈ£ »ı¼º
+		//6ìë¦¬ ë‚œìˆ˜ ì¸ì¦ë²ˆí˜¸ ìƒì„±
         String authKey = getKey(6);
 
-        //ÀÎÁõ¸ŞÀÏ º¸³»±â
+        //ì¸ì¦ë©”ì¼ ë³´ë‚´ê¸°
         try {
             MailUtils sendMail = new MailUtils(mailSender);
-            sendMail.setSubject("È¸¿ø°¡ÀÔ ÀÌ¸ŞÀÏ ÀÎÁõ");
-            sendMail.setText(new StringBuffer().append("<h1>[ÀÌ¸ŞÀÏ ÀÎÁõ]</h1>")
-            .append("<p>»çÀÌÆ®¿¡ ¾Æ·¡ÀÇ ÀÎÁõ¹øÈ£¸¦ ÀÔ·ÂÇÏ½Ã¸é ÀÎÁõÀÌ ¿Ï·áµË´Ï´Ù.</p>")
+            sendMail.setSubject("íšŒì›ê°€ì… ì´ë©”ì¼ ì¸ì¦");
+            sendMail.setText(new StringBuffer().append("<h1>[ì´ë©”ì¼ ì¸ì¦]</h1>")
+            .append("<p>ì‚¬ì´íŠ¸ì— ì•„ë˜ì˜ ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì‹œë©´ ì¸ì¦ì´ ì™„ë£Œë©ë‹ˆë‹¤.</p>")
             //.append("<a href='http://localhost:9070/newBoard/")
             //.append(email)
             //.append("&authKey=")
             .append(authKey)
-            //.append("' target='_blenk'>ÀÌ¸ŞÀÏ ÀÎÁõ È®ÀÎ</a>")
+            //.append("' target='_blenk'>ì´ë©”ì¼ ì¸ì¦ í™•ì¸</a>")
             .toString());
-            sendMail.setFrom("gjy5247@gmail.com", "°ü¸®ÀÚ");
+            sendMail.setFrom("gjy5247@gmail.com", "ê´€ë¦¬ì");
             sendMail.setTo(user_email);
             sendMail.send();
         } catch (MessagingException e) {
