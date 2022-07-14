@@ -28,7 +28,7 @@
 
     <h1>Summernote</h1>
     
-<form action="BoardWrite.do" method="post">
+<form action="BoardWrite.do" method="post" enctype="multipart/form-data">
 <select name="board_type">
 	<option value="free">일상&amp;소통</option>
 	<option value="job">구인구직</option>
@@ -37,8 +37,13 @@
 </select>
 <input type="text" name="Title" placeholder="제목을 입력해주세요">
  
-<textarea id="summernote" name="Contents"></textarea>
+<textarea id="summernote" class="summernote" name="Contents"></textarea>
+<div id="boxWrap">
+<button type="button" id="file_btn">추가</button>
+<input type="file" name="FileName" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
 
+
+</div>
 
 <button type="button">취소</button>
 <button>작성완료</button>
@@ -76,36 +81,50 @@ $('#summernote').summernote({
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
 		 // 추가한 폰트사이즈
 		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-		,
-		callbacks : { 
-			//이미지를 업로드 했을때
-        	onImageUpload : function(files, editor, welEditable) {
-        // 파일 업로드(다중업로드를 위해 반복문 사용)
-        for (var i = files.length - 1; i >= 0; i--) {
-        uploadSummernoteImageFile(files[i],
-        this);
-        		}
-        	}
-        }
+	  
 	});
-	
-function uploadSummernoteImageFile(file, el) {
-	data = new FormData();
-	data.append("file", file);
-	$.ajax({
-		data : data,
-		type : "POST",
-		url : "uploadSummernoteImageFile",
-		contentType : false,
-		enctype : 'multipart/form-data',
-		processData : false,
-		success : function(data) {
-			$(el).summernote('editor.insertImage', data.url);
-		}
-	});
+</script>
+<script>
+
+$(document).ready(function() {
+	var i=2; // 변수설정은 함수의 바깥에 설정!
+  $("#file_btn").click(function() {
+    if(i<=5){
+    	
+    	$("#boxWrap").append("<input type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>");
+    }
+    
+    i++;
+   
+    
+
+  });
+});
+
+function chk_file_type(obj) {
+    var file_kind = obj.value.lastIndexOf('.');
+    var file_name = obj.value.substring(file_kind+1,obj.length); 
+    var file_type = file_name.toLowerCase();
+
+
+
+   var check_file_type = new Array();
+    check_file_type=['jpg','gif','png','jpeg','bmp',];
+
+
+
+    if(check_file_type.indexOf(file_type)==-1){
+     alert('이미지 파일만 선택할 수 있습니다.');
+     var parent_Obj=obj.parentNode
+     var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
+     return false;
+     
+     }
+    
 }
 
 </script>
+
 
 </body>
 </html>

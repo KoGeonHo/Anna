@@ -22,11 +22,18 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int joinS1(UserVO vo) {
+	public int join(UserVO vo) {
 
-		int result = userDAO.joinS1(vo);
+		int result = userDAO.join(vo);
 		
 		return result;
+	}
+
+	@Override
+	public UserVO login(UserVO vo) {
+		
+		return userDAO.login(vo);
+		
 	}
 
 }

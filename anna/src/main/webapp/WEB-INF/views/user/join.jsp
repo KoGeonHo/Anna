@@ -3,30 +3,192 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>안녕? 나야!</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/js/bootstrap.js"></script>
 <script>
-	function next(){
-		if($("#chkbox").prop("checked")){
-			location.href='joinS2.do';	
+	let EmailAuthKey = '';
+	$(function(){
+		let user_pwd = $("input[name=user_pwd]");
+		let pwdChk = $("input[name=pwdChk]");
+		
+		$("input[name=user_email]").keyup(function(){
+			$("#emailChecked").val(0);
+		});
+		
+		$("#joinFrm").submit(function(){
+			let emailChecked = $("#emailChecked");
+			let pwdChecked = $("#pwdChecked");
+			let mailAuthChk = $("#mailAuthChk");
+			if(!$("#chkbox").prop("checked")){
+				alert("이용약관에 동의해 주세요");
+				return false;
+			}else if(emailChecked.val() != 1){
+				alert("이메일을 확인해 주세요.");
+				return false;
+			}else if(pwdChecked.val() != 1){
+				alert("비밀번호가 일치하지 않습니다.");
+				return false;
+			}else if(mailAuthChk.val() != 1){
+				alert("메일 인증 절차를 진행해주세요.");
+				return false;
+			}
+		});
+		
+		user_pwd.keyup(function(){
+			if(user_pwd.val() != "" && pwdChk.val() != ""){
+				pwd_chk(user_pwd.val(),pwdChk.val());
+			}else{
+				$("#pwdMsg").css("display","none");
+			}
+		});
+		
+		pwdChk.keyup(function(){
+			if(user_pwd.val() != "" && pwdChk.val() != ""){
+				pwd_chk(user_pwd.val(),pwdChk.val());
+			}else{
+				$("#pwdMsg").css("display","none");
+			}
+		});
+		
+	});
+	
+	function pwd_chk(pwd1,pwd2){
+		$("#pwdMsg").css("display","inline-block");
+		if(pwd1 == pwd2){
+			$("#pwdMsg").html("<span style='color:#0d6efd;'>비밀번호가 일치합니다.</span>");
+			$("#pwdChecked").val(1);
 		}else{
-			alert("이용약관에 동의해주세요");
+			$("#pwdMsg").html("<span style='color:#dc3545;'>비밀번호가 일치하지 않습니다.</span>");
+			$("#pwdChecked").val(0);
+		}
+	}
+	
+	function emailChk(){
+		let email = $("input[name=user_email]");
+		
+		if(email.val() == ""){
+			alert("이메일을 입력해주세요");
+			email.focus();
+		} else {
+			let reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+			if(!reg_email.test(email.val())) {                            
+				alert("올바르지 않은 이메일 형식입니다.");
+				email.focus(); 
+			} else {
+				$("#chkBtn").prop("disabled",true);
+				$.ajax({
+					url : "emailChk.do",
+					data : "user_email="+email.val(),
+					success : function(result){
+						console.log(result.result);
+						 if(result.result == 1){
+							alert("이미 사용중인 이메일 입니다.");
+							email.val("");
+							email.focus();
+							$("#chkBtn").prop("disabled",false);
+						} else{
+							alert("사용가능한 이메일 주소입니다.\n해당 이메일로 인증메일을 발송합니다.\n확인 후 인증번호를 입력해주세요.");
+							$.ajax({
+								url : "sendAuthEmail.do",
+								data : "user_email="+email.val(),
+								success : function(authKey){
+									EmailAuthKey = authKey;
+								}
+							});
+							$("#emailChecked").val(1);
+							email.prop("readonly",true);
+							$("#emailAuth").css("display","inline-block");
+							$("#chkBtn").css("display","none");
+							$("#authEmailBtn").css("display","inline-block");
+						}
+					}
+				});       
+			} 
+		}
+	}
+	
+	function sendAuthEmail(){
+		let email = $("input[name=user_email]").val();
+		if(confirm("인증 메일을 재전송 합니다.")){
+			$.ajax({
+				url : "sendAuthEmail.do",
+				data : "user_email="+email,
+				success : function(authKey){
+					EmailAuthKey = authKey;
+				}
+			});
+		}
+	}
+	
+	function authOk(){
+		if($("#authKey").val() == EmailAuthKey){
+			alert("인증이 완료되었습니다.");
+			$("#mailAuthChk").val(1);
+			$("#emailAuth").css("display","none");
+			$("#emailAuthMsg").css("display","flex");
+			$("#authEmailBtn").prop("disabled",true);
+		}else{
+			alert("잘못된 인증번호 입니다.");
+			$("#mailAuthChk").val(0);
 		}
 	}
 </script>
 <style>
-
 	html, body, .wrapper {
 		width:100%;
 		height:100%;
 		padding:0px;
 		margin:0px;
 	}
-	.row {
-		margin:0px;
-		padding:0px;
+	
+	.vcenter-item{
+	    display: flex;
+	    align-items: center;
+	}
+	
+	.text-align-right {
+		text-align:right;
+		padding:0 3px;
+	}
+	
+	.text-align-left {
+		text-align:left;
+		padding:0 5px;
+	}
+	
+	.find-join {
+		padding: 5px 0;
+	}
+
+	h2 {
+		font-size:1.5rem;
+		padding:5px;
+	}
+
+	div {
+		font-size:1rem;
+	}
+	
+	.tr{
+		height:45px;
+		vertical-align:middle;
+		line-height:45px;
+	}
+	
+	.btn{
+		font-size:1rem;
+		vertical-align: baseline;
+	}
+	
+	div input{
+		hieght:1.2rem;
+	}
+	
+	#pwdMsg{
+		display:none;
 	}
 	
 	.box {
@@ -36,24 +198,84 @@
 		color:white;
 		background:#555;
 	}
-	textarea {
-		resize:none;
+	
+	.form-control {
+		height:2rem;
+		font-size:1rem;
+		display:inline-block;
 	}
 	
-	.text-align-right {
-		text-align:right;
+	.btn {
+		display:inline-block;
+	}
+	
+	#termChk {
+		font-size:1.2rem;
+		padding:5px;
+	}
+	
+	.row {
+		height:50px;
+	}
+	
+	.align-self-center{
+		vertical-align:middle;
+	}
+		
+	#emailAuthMsg, #emailAuth {
+		display:none;
+	}
+	
+	@media all and (max-width:576px){
+		html, body .btn{
+			font-size:0.9rem;
+		}
+		
+		.form-control {
+			width:45vw;
+		}
+		
+		.box,#termChk,textarea,.container{
+			width:95vw;
+			min-width:340px;
+		}
+		
+		#termChk{
+			margin:auto;
+		}
+		
+		.container {
+			padding:0;
+		}
+		
+	}
+	
+	@media all and (min-width:577px){
+		html, body {
+			font-size:1rem;
+		}
+		
+		.form-control {
+			width:250px;
+		}
+		
+		textarea, #termChk {
+			width:100%; 
+		}
+		
+		.box{
+			width:100%;
+		}
+		
 	}
 </style>
 </head>
 <body>
-	<div class="container">
-		<div class="row"> 
+	<div class="wrapper">
+		<div class="container">
 			<h2 class="border-bottom">회원가입</h2>
-			<div class="col-12">
-				<h3>이용약관</h3>
-			</div> 
-			<div class="col-12">
-				<textarea class="" style="width:100%; height:300px;" readonly>제1장 총칙
+			<div class="text-center">
+				<textarea style="height:300px;" readonly>제1장 총칙
 
 제1조(목적) 이 약관은 회사가 온라인으로 제공하는 디지털콘텐츠(이하 "콘텐츠"라고 한다) 및 제반서비스의 이용과 관련하여 회사와 이용자와의 권리, 의무 및 책임사항 등을 규정함을 목적으로 합니다. 
  
@@ -427,16 +649,49 @@
 
 ④ "회사"는 "이용자" 상호간 또는 "이용자"와 제3자 간에 "콘텐츠"를 매개로 하여 발생한 분쟁 등에 대하여 책임을 지지 않습니다. 
 
- 제33조(분쟁의 해결) "회사"는 분쟁이 발생하였을 경우에 "이용자"가 제기하는 정당한 의견이나 불만을 반영하여 적절하고 신속한 조치를 취합니다. 다만, 신속한 처리가 곤란한 경우에 "회사"는 "이용자"에게 그 사유와 처리일정을 통보합니다. </textarea>
-			</div>
-			<div class="text-align-right">
-				<input type="checkbox" id="chkbox" value="1"> <label for="chkbox">약관에 동의 합니다.</label>
-			</div>
-			<div class="text-align-right">
-				<button type="button" class="btn btn-primary" onclick="next()">다음</button>
+ 제33조(분쟁의 해결) "회사"는 분쟁이 발생하였을 경우에 "이용자"가 제기하는 정당한 의견이나 불만을 반영하여 적절하고 신속한 조치를 취합니다. 다만, 신속한 처리가 곤란한 경우에 "회사"는 "이용자"에게 그 사유와 처리일정을 통보합니다.</textarea>
+				<div id="termChk" class="text-align-right">
+					<input type="checkbox" id="chkbox" value="0"> <label for="chkbox">약관에 동의 합니다.</label>
+				</div>
 			</div>
 		</div>
-	</div>	
-	
+		<div class="container">
+			<form id="joinFrm" method="POST" action="join.do">
+				<input type='hidden' id="emailChecked" value="0">
+				<input type='hidden' id="pwdChecked" value="0">
+				<input type='hidden' id="mailAuthChk" value="0">
+				<div class="box">
+					<div class="tr">
+						<input class="form-control" type="email" name="user_email" placeholder="이메일" required autofocus>
+						<button type="button" id="chkBtn" class="btn btn-primary" onclick="emailChk()">이메일 확인</button>
+						<button type="button" id="authEmailBtn" class="btn btn-primary" style="display:none;" onclick="sendAuthEmail()">인증번호 다시받기</button>
+					</div>
+					<div class="tr" id="emailAuth">
+						<input class="form-control" type="text" id="authKey" placeholder="인증번호" autocomplete="off">
+						<button type="button" id="authOkBtn" class="btn btn-primary" onclick="authOk()">확인</button>
+					</div>
+					<div class="text-center" id="emailAuthMsg"><span class="">이메일인증이 완료되었습니다.</span></div>
+					<div class="tr">
+						<input class="form-control" type="text" name="nickName" placeholder="닉네임" required autofocus>
+					</div>
+					<div class="tr">
+						<input class="form-control" type="password" name="user_pwd" placeholder="비밀번호" required autofocus>
+					</div>
+					<div class="tr">
+						<input class="form-control" type="password" name="pwdChk" placeholder="비밀번호 확인" required autofocus>
+					</div>
+					<div id="pwdMsg">
+						
+					</div>
+				</div>
+				<div class="container" style="padding:10px 0; margin:auto;">
+					<div class="text-end">
+						<button type="submit" class="btn btn-primary">가입하기</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:location.href='login.do'">돌아가기</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

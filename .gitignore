@@ -10,6 +10,7 @@ anna/target/m2e-wtp/web-resources/META-INF/maven/edu.fourmen/anna/pom.properties
 .metadata
 bin/
 tmp/
+target/
 *.tmp
 *.bak
 *.swp

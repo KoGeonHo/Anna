@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
-
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,59 +60,49 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/BoardWrite.do", method = RequestMethod.POST)
-	public void BoardWrite(BoardVO vo,HttpServletResponse response) throws IOException {
+	public String BoardWrite(BoardVO vo,HttpServletResponse response) throws IOException {
 		
 		
-		response.setContentType("text/html;charset=utf-8");
-		  PrintWriter pw = response.getWriter();
+		// 파일 업로드 처리
+		String fileName=null;
+		String fileName2=null;
+		MultipartFile uploadFile = vo.getFileName1();
+		MultipartFile uploadFile2 = vo.getFileName2();
 		
-		int result=boardService.writeBoard(vo);
+
 		
-		if(result == 1) {
-			pw.append("<script>alert('등록완료.');location.href='FreeBoard.do'</script>");
-			pw.flush();
-			
-		}else {
-			pw.append("<script>alert('등록이 되지 않았습니다.');location.href='FreeBoard.do'</script>");
-			pw.flush();
-			
+		if (!uploadFile.isEmpty()) {
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile.transferTo(new File("C:\\Users\\753\\git\\Anna\\anna\\src\\main\\webapp\\resources\\upload" + fileName));
 		}
+		vo.setImage1(fileName);
+		
+		if (!uploadFile2.isEmpty()) {
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName2=uuid+"."+ext;
+			uploadFile.transferTo(new File("C:\\Users\\753\\git\\Anna\\anna\\src\\main\\webapp\\resources\\upload" + fileName));
+		}
+		vo.setImage2(fileName2);
+		
+		
+		
+		
+		boardService.writeBoard(vo);
+		return "board/FreeBoard"; 
+	
+		
+		
 		
 	}
 	
+	
 
-	@RequestMapping(value="/uploadSummernoteImageFile", produces = "application/json; charset=utf8")
-	@ResponseBody
-	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest request )  {
-		JsonObject jsonObject = new JsonObject();
-		
-        /*
-		 * String fileRoot = "C:\\summernote_image\\"; // 외부경로로 저장을 희망할때.
-		 */
-		
-		// 내부경로로 저장
-		String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-		String fileRoot = contextRoot+"resources/upload/";
-		
-		String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
-		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-		String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-		
-		File targetFile = new File(fileRoot + savedFileName);	
-		try {
-			InputStream fileStream = multipartFile.getInputStream();
-			FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-			jsonObject.addProperty("url", "/anna/resources/upload/"+savedFileName); // contextroot + resources + 저장할 내부 폴더명
-			jsonObject.addProperty("responseCode", "success");
-				
-		} catch (IOException e) {
-			FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
-			jsonObject.addProperty("responseCode", "error");
-			e.printStackTrace();
-		}
-		String a = jsonObject.toString();
-		return a;
-	}
+
 	
 
 
