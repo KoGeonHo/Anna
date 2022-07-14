@@ -3,6 +3,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>안녕? 나야!</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
@@ -24,15 +25,7 @@
 	    display: flex;
 	    align-items: center;
 	}
-	
-	.box {
-		margin:auto;
-		border-radius:10px;
-		padding:20px;
-		color:white;
-		background:#555;
-	}
-	
+		
 	.loginBtn button, .kakaoLoginBtn button{
 		width:100%;
 		margin-top:5px;
@@ -51,40 +44,75 @@
 	.find-join {
 		padding: 5px 0;
 	}
+
 	
+	h2 {
+		font-size:1.5rem;
+	}
+	
+	div {
+		font-size:1rem;
+	}
+	
+	.btn{
+		font-size:1.2rem;
+	}
+	
+	div input{
+		hieght:1.2rem;
+	}
+	
+	.box {
+		
+		margin:auto;
+		border-radius:10px;
+		padding:20px;
+		color:white;
+		background:#555;
+	}
+	
+	.form-control {
+		height:2rem;
+		font-size:1rem;
+	}
+	
+	@media all and (max-width:576px){
+		.box {
+			width:95vw;
+		}
+	}
+	
+	@media all and (min-width:577px){
+		.box {
+			width:350px;
+		}
+	}
 </style>
 </head>
 <body>
-	<div class="wrapper row vcenter-item">
-		<div class="container row col-lg-12">
-			<div class="col-lg-4"></div>
-			<div class="col-lg-4 row">
-				<form id="loginFrm" action="login.do">
-					<div class="row col-12">
-						<div class="col-lg-2 col-md-3 col-sm-1"></div>
-						<div class="box col-lg-8 col-md-6 col-sm-10">
-							<h2 class="form-signin-heading">로그인</h2>
-							<label for="inputEmail" class="sr-only">이메일</label> 
-							<input type="email" id="inputEmail" class="form-control" name="user_email" placeholder="이메일" required autofocus>
-							<label for="inputPassword" class="sr-only">비밀번호</label> 
-							<input type="password" id="inputPassword" class="form-control" name="user_pwd" placeholder="비밀번호" required>
-							<div class="row find-join">
-								<div class="col-8 text-align-left" >아이디/비밀번호 찾기</div>
-								<div class="col-4 text-align-right"><span onclick="location.href='joinS1.do'">회원가입</span></div>
-							</div>
-							<div class="loginBtn">
-								<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
-							</div>
-							<div class="kakaoLoginBtn">
-								<button class="btn btn-lg btn-primary btn-block" type="button">카카오로그인</button>
-							</div>
+	<div class="wrapper vcenter-item">
+		<div class="container">
+			<form id="loginFrm" action="login.do">
+				<div>
+					<div class="box">
+						<h2 class="form-signin-heading">로그인</h2>
+						<label for="inputEmail" class="sr-only">이메일</label> 
+						<input type="email" id="inputEmail" class="form-control" name="user_email" placeholder="이메일" required autofocus>
+						<label for="inputPassword" class="sr-only">비밀번호</label> 
+						<input type="password" id="inputPassword" class="form-control" name="user_pwd" placeholder="비밀번호" required>
+						<div class="find-join row">
+							<div class="text-align-left col-8" >아이디/비밀번호 찾기</div>
+							<div class="text-align-right col-4"><span onclick="location.href='join.do'">회원가입</span></div>
 						</div>
-						
-						<div class="col-lg-2 col-md-3 col-sm-1"></div>
+						<div class="loginBtn">
+							<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+						</div>
+						<div class="kakaoLoginBtn">
+							<button class="btn btn-lg btn-primary btn-block" type="button">카카오로그인</button>
+						</div>
 					</div>
-				</form>
-			</div>
-			<div class="col-lg-4"></div>
+				</div>
+			</form>
 		</div>
 	</div>
 </body>
