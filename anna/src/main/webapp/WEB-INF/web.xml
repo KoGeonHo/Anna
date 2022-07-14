@@ -48,4 +48,9 @@
 	</filter-mapping>
 	<!-- Filter -->
 	
+	<!-- 세션 유지시간 설정  -->
+	<session-config> 
+		<session-timeout>10</session-timeout> // 분 단위 - 10분
+	</session-config>
+	
 </web-app>
