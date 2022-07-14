@@ -13,5 +13,8 @@
 
 내용 ${bv.contents }
 
+이미지
+	
+
 </body>
 </html>

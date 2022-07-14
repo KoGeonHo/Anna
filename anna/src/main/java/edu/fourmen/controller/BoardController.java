@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.http.HttpHeaders;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,8 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -64,43 +69,61 @@ public class BoardController {
 		
 		
 		// 파일 업로드 처리
+
+
 		String fileName=null;
-		String fileName2=null;
-		MultipartFile uploadFile = vo.getFileName1();
-		MultipartFile uploadFile2 = vo.getFileName2();
-		
 
 		
+		
+		
+		
+	if(vo.getFileName1() != null) {
+		MultipartFile uploadFile = vo.getFileName1();
 		if (!uploadFile.isEmpty()) {
 			String originalFileName = uploadFile.getOriginalFilename();
 			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
 			UUID uuid = UUID.randomUUID();	//UUID 구하기
 			fileName=uuid+"."+ext;
-			uploadFile.transferTo(new File("C:\\Users\\753\\git\\Anna\\anna\\src\\main\\webapp\\resources\\upload" + fileName));
+			uploadFile.transferTo(new File("C:\\Users\\753\\git\\Anna\\anna\\src\\main\\webapp\\resources\\upload\\" + fileName));
 		}
 		vo.setImage1(fileName);
-		
+	}
+	
+	if(vo.getFileName2() != null) {
+		MultipartFile uploadFile2 = vo.getFileName2();
 		if (!uploadFile2.isEmpty()) {
-			String originalFileName = uploadFile.getOriginalFilename();
+			String originalFileName = uploadFile2.getOriginalFilename();
 			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
 			UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName2=uuid+"."+ext;
-			uploadFile.transferTo(new File("C:\\Users\\753\\git\\Anna\\anna\\src\\main\\webapp\\resources\\upload" + fileName));
+			fileName=uuid+"."+ext;
+			uploadFile2.transferTo(new File("C:\\Users\\753\\git\\Anna\\anna\\src\\main\\webapp\\resources\\upload\\" + fileName));
 		}
-		vo.setImage2(fileName2);
-		
-		
-		
+		vo.setImage2(fileName);
+	}
+	
+	if(vo.getFileName3() !=null) {
+		MultipartFile uploadFile3 = vo.getFileName3();
+		if (!uploadFile3.isEmpty()) {
+			String originalFileName = uploadFile3.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile3.transferTo(new File("C:\\Users\\753\\git\\Anna\\anna\\src\\main\\webapp\\resources\\upload\\" + fileName));
+		}
+		vo.setImage3(fileName);
+	}
 		
 		boardService.writeBoard(vo);
-		return "board/FreeBoard"; 
-	
 		
+	
+		return "redirect:/board/FreeBoard.do"; 
+	
+	
 		
 		
 	}
 	
-	
+
 
 
 	
