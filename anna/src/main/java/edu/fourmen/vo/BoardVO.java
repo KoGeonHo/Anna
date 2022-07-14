@@ -1,5 +1,7 @@
 package edu.fourmen.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class BoardVO extends UserVO{
 	
 	private int Bidx;
@@ -13,8 +15,11 @@ public class BoardVO extends UserVO{
 	private String Image1;
 	private String Image2;
 	private String Image3;
-	private String Image4;
-	private String Image5;
+	private MultipartFile Image4;
+	private MultipartFile Image5;
+	private MultipartFile FileName1;
+	private MultipartFile FileName2;
+	private MultipartFile FileName3;
 	
 	public int getBidx() {
 		return Bidx;
@@ -59,6 +64,27 @@ public class BoardVO extends UserVO{
 	public void setIsDel(String isDel) {
 		this.isDel = isDel;
 	}
+	
+	public String getBoard_type() {
+		return board_type;
+	}
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
+	}
+
+
+	public MultipartFile getImage4() {
+		return Image4;
+	}
+	public void setImage4(MultipartFile image4) {
+		Image4 = image4;
+	}
+	public MultipartFile getImage5() {
+		return Image5;
+	}
+	public void setImage5(MultipartFile image5) {
+		Image5 = image5;
+	}
 	public String getImage1() {
 		return Image1;
 	}
@@ -77,24 +103,25 @@ public class BoardVO extends UserVO{
 	public void setImage3(String image3) {
 		Image3 = image3;
 	}
-	public String getImage4() {
-		return Image4;
+	public MultipartFile getFileName1() {
+		return FileName1;
 	}
-	public void setImage4(String image4) {
-		Image4 = image4;
+	public void setFileName1(MultipartFile fileName1) {
+		FileName1 = fileName1;
 	}
-	public String getImage5() {
-		return Image5;
+	public MultipartFile getFileName2() {
+		return FileName2;
 	}
-	public void setImage5(String image5) {
-		Image5 = image5;
+	public void setFileName2(MultipartFile fileName2) {
+		FileName2 = fileName2;
 	}
-	public String getBoard_type() {
-		return board_type;
+	public MultipartFile getFileName3() {
+		return FileName3;
 	}
-	public void setBoard_type(String board_type) {
-		this.board_type = board_type;
+	public void setFileName3(MultipartFile fileName3) {
+		FileName3 = fileName3;
 	}
+
 
 
 	
