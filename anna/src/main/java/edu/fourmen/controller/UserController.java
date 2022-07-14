@@ -20,11 +20,7 @@ import edu.fourmen.vo.UserVO;
 
 @RequestMapping(value="/user")
 @Controller
-public class UserController {	
-
-	private final String client_id = "32245dd905f9d9b6d898ebe61795735c";
-	
-	private final String redirect_uri = "http://localhost:8070/anna/user/kakaoLogin.do";
+public class UserController {
 	
 	@Autowired
 	UserService userService;
@@ -104,10 +100,8 @@ public class UserController {
 		
 		session.invalidate();
 		
-		return "redirect:/user/login.do";
+		return "";
 	}
-	
-	
 	
 	//회원가입  데이터 입력
 	@RequestMapping(value="/join.do", method=RequestMethod.POST)
