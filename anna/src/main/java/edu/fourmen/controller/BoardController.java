@@ -112,6 +112,30 @@ public class BoardController {
 		}
 		vo.setImage3(fileName);
 	}
+	
+	if(vo.getFileName4() !=null) {
+		MultipartFile uploadFile4 = vo.getFileName4();
+		if (!uploadFile4.isEmpty()) {
+			String originalFileName = uploadFile4.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile4.transferTo(new File("C:\\Users\\753\\git\\Anna\\anna\\src\\main\\webapp\\resources\\upload\\" + fileName));
+		}
+		vo.setImage4(fileName);
+	}
+	
+	if(vo.getFileName5() !=null) {
+		MultipartFile uploadFile5 = vo.getFileName5();
+		if (!uploadFile5.isEmpty()) {
+			String originalFileName = uploadFile5.getOriginalFilename();
+			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName=uuid+"."+ext;
+			uploadFile5.transferTo(new File("C:\\Users\\753\\git\\Anna\\anna\\src\\main\\webapp\\resources\\upload\\" + fileName));
+		}
+		vo.setImage3(fileName);
+	}
 		
 		boardService.writeBoard(vo);
 		
@@ -125,11 +149,6 @@ public class BoardController {
 	
 
 
-
-	
-
-
-	
 	@RequestMapping(value="/viewBoard.do")
 	public String viewBoard(int Bidx,Model model) {
 		
