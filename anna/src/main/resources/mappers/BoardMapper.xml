@@ -45,6 +45,7 @@
 		  ,u.nickname
 		  ,b.board_type
 		  ,b.isDel
+		  ,b.Image1
 	  FROM Board b
 	 INNER JOIN AnnaUser u
 	  	ON b.Uidx = u.uidx
