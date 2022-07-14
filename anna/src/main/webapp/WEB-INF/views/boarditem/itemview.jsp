@@ -44,14 +44,14 @@
 <hr>
 <br>
 	
-	
+<form  method="post" enctype="multipart/form-data" name="frm">
 	<div class="row">
 			<div class="col-lg-4">
 				<div class="card">
-				<input type="image" src="../resources/upload/${vo.Image1}" class="card-img-top" alt="..."> 
-				<input type="text" value="../resources/upload/${vo.Image1}">
-				<input type="text" value="${vo.uidx}">
-				<input type="text" value="${vo.item_idx}">
+				<input type="image" src="../resources/upload/${vo.image1}" class="card-img-top" alt="..."> 
+				<input type="text" value="../resources/upload/${vo.image1}">
+				<input type="text" value="${vo.uidx} asd"> 
+				<input type="text" value="${vo.item_idx} asd">
 					
 					<div class="card-body">
 						<h5 class="card-title">${vo.Title}</h5>
@@ -64,8 +64,8 @@
 				</div>
 			</div>
 	</div>
-	
-	제목 , 카테고리, 사진, 가격, 판매자이름, 거래장소, 조회수, 이웃추가 버튼,
+</form>
+제목 , 카테고리, 사진, 가격, 판매자이름, 거래장소, 조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품, 키워드 보여주는공간
 	
 	

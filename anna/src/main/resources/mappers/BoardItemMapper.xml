@@ -115,7 +115,7 @@
 			 
 		FROM Board_Items b , AnnaUser u
 		WHERE b.uidx = u.uidx
-		AND b.uidx = #{uidx}
+		AND b.item_idx = #{item_idx}
 	</select>
 
 </mapper>

@@ -81,7 +81,7 @@ public class BoardItemController {
 		MultipartFile uploadFile1 = vo.getFile1();
 //		String uploadFile11 = uploadFile1.getOriginalFilename()+uuid.toString();
 			if(!uploadFile1.isEmpty()){
-			fileName = uuid+uploadFile1.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile1.getOriginalFilename();
 			uploadFile1.transferTo(new File(path,fileName));
 			}
 			vo.setImage1(fileName);
@@ -91,7 +91,7 @@ public class BoardItemController {
 		MultipartFile uploadFile2 = vo.getFile2();
 			if(!uploadFile2.isEmpty()){
 				//	String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-			fileName = uuid+uploadFile2.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile2.getOriginalFilename();
 			uploadFile2.transferTo(new File(path,fileName));
 			}
 			vo.setImage2(fileName);
@@ -101,7 +101,7 @@ public class BoardItemController {
 		MultipartFile uploadFile3 = vo.getFile3();
 			if(!uploadFile3.isEmpty()){
 				//	String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-			fileName = uuid+uploadFile3.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile3.getOriginalFilename();
 			uploadFile3.transferTo(new File(path,fileName));
 			}
 			vo.setImage3(fileName);
@@ -111,7 +111,7 @@ public class BoardItemController {
 		MultipartFile uploadFile4 = vo.getFile4();
 			if(!uploadFile4.isEmpty()){
 				//	String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-			fileName = uuid+uploadFile4.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile4.getOriginalFilename();
 			uploadFile4.transferTo(new File(path,fileName));
 			}
 			vo.setImage4(fileName);
@@ -121,7 +121,7 @@ public class BoardItemController {
 		MultipartFile uploadFile5 = vo.getFile5();
 			if(!uploadFile5.isEmpty()){
 				//	String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-			fileName = uuid+uploadFile5.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile5.getOriginalFilename();
 			uploadFile5.transferTo(new File(path,fileName));
 			}
 			vo.setImage5(fileName);
@@ -131,7 +131,7 @@ public class BoardItemController {
 		MultipartFile uploadFile6 = vo.getFile6();
 			if(!uploadFile6.isEmpty()){
 				//	String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-			fileName = uuid+uploadFile6.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile6.getOriginalFilename();
 			uploadFile6.transferTo(new File(path,fileName));
 			}
 			vo.setImage6(fileName);
@@ -141,7 +141,7 @@ public class BoardItemController {
 		MultipartFile uploadFile7 = vo.getFile7();
 			if(!uploadFile7.isEmpty()){
 				//	String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-			fileName = uuid+uploadFile7.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile7.getOriginalFilename();
 			uploadFile7.transferTo(new File(path,fileName));
 			}
 			vo.setImage7(fileName);
@@ -151,7 +151,7 @@ public class BoardItemController {
 		MultipartFile uploadFile8 = vo.getFile8();
 			if(!uploadFile8.isEmpty()){
 				//	String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-			fileName = uuid+uploadFile8.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile8.getOriginalFilename();
 			uploadFile8.transferTo(new File(path,fileName));
 			}
 			vo.setImage8(fileName);
@@ -161,7 +161,7 @@ public class BoardItemController {
 		MultipartFile uploadFile9 = vo.getFile9();
 			if(!uploadFile9.isEmpty()){
 				//	String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-			fileName = uuid+uploadFile9.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile9.getOriginalFilename();
 			uploadFile9.transferTo(new File(path,fileName));
 			}
 			vo.setImage9(fileName);
@@ -171,10 +171,10 @@ public class BoardItemController {
 		MultipartFile uploadFile10 = vo.getFile10();
 			if(!uploadFile10.isEmpty()){
 				//	String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-			fileName = uuid+uploadFile10.getOriginalFilename();
+			fileName = uuid+"_"+uploadFile10.getOriginalFilename();
 			uploadFile10.transferTo(new File(path,fileName));
 			}
-			vo.setImage2(fileName);
+			vo.setImage10(fileName);
 		}
 		//첫번째 추정. uploadfile1에 vo.getFile1() 을 담고 upload11에 upoadfile 의 정보를 넣어줌. 
 		// 파일명과 uuid 를 넣으 String 타입으로 만들어 null 과 비교. 이름값이 있다면 null이 아니라 아래 if문을 돌릴것으로 추측
