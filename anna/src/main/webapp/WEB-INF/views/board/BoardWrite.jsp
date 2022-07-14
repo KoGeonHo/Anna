@@ -40,7 +40,7 @@
 <textarea id="summernote" class="summernote" name="Contents"></textarea>
 <div id="boxWrap">
 <button type="button" id="file_btn">추가</button>
-<input type="file" name="FileName" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
+<input type="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
 
 
 </div>
