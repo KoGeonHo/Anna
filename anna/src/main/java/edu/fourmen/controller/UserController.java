@@ -89,9 +89,18 @@ public class UserController {
 			pw.flush();
 			
 			pw.close();
-		}
-
+		}	
+	}
+	
+	//로그아웃 처리
+	@RequestMapping(value="/logout.do")
+	public String logOut(HttpServletRequest request,HttpSession session) {
 		
+		session = request.getSession();
+		
+		session.invalidate();
+		
+		return "";
 	}
 	
 	//회원가입  데이터 입력
