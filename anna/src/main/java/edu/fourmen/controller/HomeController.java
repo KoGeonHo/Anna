@@ -17,6 +17,11 @@ public class HomeController {
 		return "index";
 	}
 
+	@RequestMapping(value = "/main.do")
+	public String main() {
+		
+		return "main";
+	}
 	
 	@RequestMapping(value="test")
 	public String test() {
@@ -29,7 +34,7 @@ public class HomeController {
 		
 		return "test2";
 	}
-	
+}
 	
 	
 

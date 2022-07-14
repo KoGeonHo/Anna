@@ -1,11 +1,15 @@
 package edu.fourmen.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,77 +37,113 @@ public class UserController {
 		
 		return "user/login";
 	}
-	
-	@RequestMapping(value="/login.do", method=RequestMethod.POST)
-	public String loginOk(UserVO vo) {
 		
-		return "redirect:/user/login.do";
-		
-	}
-	
-	//회원가입 step1 페이지
-	@RequestMapping(value="/joinS1.do", method=RequestMethod.GET)
+	//회원가입 페이지
+	@RequestMapping(value="/join.do", method=RequestMethod.GET)
 	public String joinS1() {
 		
-		return "user/joinS1";
+		return "user/join";
 		
 	}
 	
-	
-	//회원가입 step2 페이지
-	@RequestMapping(value="/joinS2.do", method=RequestMethod.GET)
-	public String joinS2() {
+	//로그인 처리
+	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+	public void login(UserVO vo, HttpServletResponse response,HttpServletRequest request,HttpSession session) throws IOException {
 		
-		return "user/joinS2";
+		response.setContentType("text/html; charset=utf-8");
+
+		PrintWriter pw = response.getWriter();
+		
+		UserVO userInfo = userService.login(vo);
+
+		if(userInfo == null) {
+			
+			System.out.println("가입되지 않은 이메일주소");
+			
+			pw.append("<script>alert('환영합니다"+vo.getNickName()+"님, 가입이 완료되었습니다.'); location.href='"+request.getContextPath()+"/user/login.do';</script>");
+			
+			pw.flush();
+			
+			pw.close();
+			
+			
+		}else if(pwdEncoder.matches(vo.getUser_pwd(), userInfo.getUser_pwd())) {
+			
+			System.out.println("비밀번호 일치");
+			
+			session = request.getSession(); 
+			
+			session.setAttribute("userInfo", userInfo);
+			
+			pw.append("<script>location.href='"+request.getContextPath()+"/main.do';</script>");
+			
+			pw.flush();
+			
+			pw.close();
+			
+		} else {
+			System.out.println("비밀번호 불일치");
+			
+			pw.append("<script>alert('비밀번호가 일치하지 않습니다.'); history.back();</script>");
+			
+			pw.flush();
+			
+			pw.close();
+		}
+
 		
 	}
 	
-	
-	//회원가입 step2 기본 회원정보 입력 및 회원가입 step3로 이동
-	@RequestMapping(value="/joinS2.do", method=RequestMethod.POST)
-	public String joinS2(UserVO vo, HttpServletRequest request) {
+	//회원가입  데이터 입력
+	@RequestMapping(value="/join.do", method=RequestMethod.POST)
+	public void joinS2(UserVO vo, HttpServletResponse response,HttpServletRequest request) throws IOException {
+		
+		response.setContentType("text/html; charset=utf-8");
+
+		PrintWriter pw = response.getWriter();
 		
 		vo.setUser_pwd(pwdEncoder.encode(vo.getUser_pwd()));
 		
-		int result = userService.joinS1(vo);
+		int result = userService.join(vo);
 		
-		request.setAttribute("user_email",vo.getUser_email());
-		request.setAttribute("nickName",vo.getNickName());
-		
-		return "user/joinS3";
+		if(result == 1) {
+			
+			pw.append("<script>alert('환영합니다"+vo.getNickName()+"님, 가입이 완료되었습니다.'); location.href='"+request.getContextPath()+"/user/login.do';</script>");
+			
+			pw.flush();
+			
+			pw.close();
+			
+		} else {
+			
+			pw.append("<script>alert('문제가 발생하여 처리되지 않았습니다.\n다시 시도해주세요.'); location.href='"+request.getContextPath()+"/user/joinS2.do'</script>");
+			
+			pw.flush();
+			
+			pw.close();
+			
+		}
 		
 	}
 	
-	//회원가입 step3 이메일 인증 페이지
-	@RequestMapping(value="/joinS3.do", method=RequestMethod.GET)
-	public String joinS3(UserVO vo, Model model) {
-		
-		//mailService.sendAuthMail(vo.getUser_email());
-		
-		//String authKey = mailService.sendAuthMail("rhwnsdyd7@naver.com");
-		
-		model.addAttribute("user_email",vo.getUser_email());
-		
-		return "user/joinS3";
-		
-	}
 	
-	@RequestMapping(value="/sendAuthEmail.do", produces = "application/text; charset=utf8")
-	public String sendAuthEmail() {
-		return "";
-	}
-	
-
-	//가입된 이메일인지 확인하는 AJAX
+	//가입된 이메일인지 확인후 인증 이메일을 보내는 Ajax
 	@ResponseBody
 	@RequestMapping(value="/emailChk.do", produces = "application/text; charset=utf8")
 	public String emailChk(String user_email) {
 		
-		//System.out.println(user_email);
-		
-		int result = userService.emailChk(user_email); 
+		int result = userService.emailChk(user_email);
 		
 		return result+"";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sendAuthEmail.do",produces = "application/text; charset=utf8")
+	public String sendAuthEmail(String user_email) {
+		
+		String authKey = mailService.sendAuthMail(user_email);
+		
+		return authKey;
 	}
 	
 }
