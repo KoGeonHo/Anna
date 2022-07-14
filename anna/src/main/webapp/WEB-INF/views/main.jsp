@@ -246,7 +246,7 @@ z-index : 1;
 
 
 			<!-- 슬라이드 -->
-			<div class="d-md-none d-lg-block d-xl-block">??aa
+			<div class="d-md-none d-lg-block d-xl-block">
 			 <div id="myCarousel" class="carousel slide " data-bs-ride="carousel">
 			    <div class="carousel-indicators ">
 			      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
