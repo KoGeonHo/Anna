@@ -232,11 +232,12 @@
 		}
 		
 		.form-control {
-			width:180px;
+			width:45vw;
 		}
 		
 		.box,#termChk,textarea,.container{
 			width:95vw;
+			min-width:340px;
 		}
 		
 		#termChk{
@@ -675,13 +676,12 @@
 					</div>
 					<div class="tr">
 						<input class="form-control" type="password" name="user_pwd" placeholder="비밀번호" required autofocus>
-						
-						<div id="pwdMsg">
-							
-						</div>
 					</div>
 					<div class="tr">
 						<input class="form-control" type="password" name="pwdChk" placeholder="비밀번호 확인" required autofocus>
+					</div>
+					<div id="pwdMsg">
+						
 					</div>
 				</div>
 				<div class="container" style="padding:10px 0; margin:auto;">

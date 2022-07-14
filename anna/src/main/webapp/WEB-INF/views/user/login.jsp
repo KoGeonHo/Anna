@@ -42,7 +42,7 @@
 	}
 	
 	.find-join {
-		padding: 5px 0;
+		padding-top: 12px;
 	}
 
 	
@@ -96,7 +96,7 @@
 <body>
 	<div class="wrapper vcenter-item">
 		<div class="container">
-			<form id="loginFrm" action="login.do">
+			<form id="loginFrm" action="login.do" method="post">
 				<div>
 					<div class="box">
 						<h2 class="form-signin-heading">로그인</h2>
