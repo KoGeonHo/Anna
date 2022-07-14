@@ -15,12 +15,26 @@ public class BoardVO extends UserVO{
 	private String Image1;
 	private String Image2;
 	private String Image3;
-	private MultipartFile Image4;
-	private MultipartFile Image5;
+	private String Image4;
+	private String Image5;
 	private MultipartFile FileName1;
 	private MultipartFile FileName2;
 	private MultipartFile FileName3;
+	private MultipartFile FileName4;
+	private MultipartFile FileName5;
 	
+	public MultipartFile getFileName4() {
+		return FileName4;
+	}
+	public void setFileName4(MultipartFile fileName4) {
+		FileName4 = fileName4;
+	}
+	public MultipartFile getFileName5() {
+		return FileName5;
+	}
+	public void setFileName5(MultipartFile fileName5) {
+		FileName5 = fileName5;
+	}
 	public int getBidx() {
 		return Bidx;
 	}
@@ -72,19 +86,6 @@ public class BoardVO extends UserVO{
 		this.board_type = board_type;
 	}
 
-
-	public MultipartFile getImage4() {
-		return Image4;
-	}
-	public void setImage4(MultipartFile image4) {
-		Image4 = image4;
-	}
-	public MultipartFile getImage5() {
-		return Image5;
-	}
-	public void setImage5(MultipartFile image5) {
-		Image5 = image5;
-	}
 	public String getImage1() {
 		return Image1;
 	}
@@ -121,8 +122,17 @@ public class BoardVO extends UserVO{
 	public void setFileName3(MultipartFile fileName3) {
 		FileName3 = fileName3;
 	}
-
-
-
+	public String getImage4() {
+		return Image4;
+	}
+	public void setImage4(String image4) {
+		Image4 = image4;
+	}
+	public String getImage5() {
+		return Image5;
+	}
+	public void setImage5(String image5) {
+		Image5 = image5;
+	}
 	
 }

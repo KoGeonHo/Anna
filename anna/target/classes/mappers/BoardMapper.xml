@@ -76,6 +76,11 @@
 		  ,b.Bidx
 		  ,b.Uidx
 		  ,u.nickname
+		  ,b.Image1
+		  ,b.Image2
+		  ,b.Image3
+		  ,b.Image4
+		  ,b.Image5
 	  FROM Board b, AnnaUser u
 	 WHERE b.Uidx = u.uidx	  
 	   AND b.Bidx = #{Bidx}

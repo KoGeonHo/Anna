@@ -60,7 +60,7 @@ public class UserController {
 			
 			System.out.println("가입되지 않은 이메일주소");
 			
-			pw.append("<script>alert('환영합니다"+vo.getNickName()+"님, 가입이 완료되었습니다.'); location.href='"+request.getContextPath()+"/user/login.do';</script>");
+			pw.append("<script>alert('가입되지 않은 이메일 주소입니다.'); history.back();</script>");
 			
 			pw.flush();
 			
@@ -89,9 +89,18 @@ public class UserController {
 			pw.flush();
 			
 			pw.close();
-		}
-
+		}	
+	}
+	
+	//로그아웃 처리
+	@RequestMapping(value="/logout.do")
+	public String logOut(HttpServletRequest request,HttpSession session) {
 		
+		session = request.getSession();
+		
+		session.invalidate();
+		
+		return "";
 	}
 	
 	//회원가입  데이터 입력
