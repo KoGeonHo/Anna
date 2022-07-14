@@ -2,6 +2,7 @@ package edu.fourmen.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,9 +11,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.fourmen.service.MailService;
 import edu.fourmen.service.UserService;
@@ -133,7 +136,73 @@ public class UserController {
 			
 		}
 		
+	}		
+	
+	//카카오 인증 Api URL 가져오는 Ajax
+	@ResponseBody
+	@RequestMapping(value = "/getKakaoAuthUrl.do", produces = "application/text; charset=utf8")
+	public String getKakaoAuthUrl() {
+		
+		String reqUrl = "https://kauth.kakao.com/oauth/authorize";
+		reqUrl += "?client_id="+userService.getClient_id();
+		reqUrl += "&redirect_uri="+userService.getRedirect_uri();
+		reqUrl += "&response_type=code";
+		
+		return reqUrl;
 	}
+	
+	//카카오 연동정보 조회
+	@RequestMapping(value = "/kakaoLogin.do")
+	public String oauthKakao(String code, Model model,RedirectAttributes ra) {
+
+		HashMap<String,Object> kakaoInfo = userService.getAccessToken(code);
+		
+        String access_Token = (String)kakaoInfo.get("access_Token");
+	
+        HashMap<String, Object> userInfo = userService.getUserInfo(access_Token);
+        
+        if(!kakaoInfo.get("responseCode").equals(200)) {
+        	
+        } else {
+        	
+        	String user_email = (String)userInfo.get("kakao_email");
+        	
+        	int result = userService.emailChk(user_email);
+        	
+        	if(result == 0) {
+        		
+        		String kakao_email = (String)userInfo.get("kakao_email");
+            	String kakao_nickName = (String)userInfo.get("nickName");
+            	String kakaoId = (String)userInfo.get("kakaoId");
+            	String thumbnail_image = (String)userInfo.get("thumbnail_image");
+            	
+            	UserVO vo = new UserVO();
+            	
+            	vo.setUser_email(kakao_email);
+            	vo.setNickName(kakao_nickName);
+            	vo.setKakao_auth(kakaoId);
+            	vo.setProfile_image(thumbnail_image);
+            	
+            	if(userService.join(vo) !=1) {
+            		System.out.println("정상처리됨");
+            	} else {
+            		System.out.println("오류발생");
+            	}
+            	
+        	} else {
+        		
+        		System.out.println("가입된 이메일 주소 카카오 id update");
+        		
+        	}
+        	
+        	
+        }
+        
+        
+        
+        return "redirect:/main.do"; //본인 원하는 경로 설정
+	}
+	
 	
 	
 	//가입된 이메일인지 확인후 인증 이메일을 보내는 Ajax
