@@ -1,13 +1,19 @@
 package edu.fourmen.controller;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
-
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.io.File;
+
+import javax.imageio.ImageIO;
 import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,7 +72,7 @@ public class BoardItemController {
 	}
 	
 	@RequestMapping(value="itemwrite.do", method=RequestMethod.POST)
-	public String itemwrite(BoardItemVO vo, HttpServletRequest request, HttpServletResponse response, HttpSession session,Model model) throws IllegalStateException, IOException {
+	public String itemwrite(BoardItemVO vo, HttpServletRequest request, HttpServletResponse response, HttpSession session,Model model,MultipartFile file) throws IllegalStateException, IOException {
 		
 
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
@@ -74,15 +80,43 @@ public class BoardItemController {
 		int i = 1;
 		String fileName = null;
 		UUID uuid = UUID.randomUUID();
-		System.out.println(vo.getFile1()+"파일1");
+		System.out.println(vo.getFile1().getOriginalFilename()+"파일1");
 		
 		
 		if(vo.getFile1() != null) {
 		MultipartFile uploadFile1 = vo.getFile1();
 //		String uploadFile11 = uploadFile1.getOriginalFilename()+uuid.toString();
 			if(!uploadFile1.isEmpty()){
-			fileName = uuid+"_"+uploadFile1.getOriginalFilename();
-			uploadFile1.transferTo(new File(path,fileName));
+			String fileName1 = uuid+"_"+uploadFile1.getOriginalFilename();
+			uploadFile1.transferTo(new File(path,fileName1));
+			System.out.println(uploadFile1.getOriginalFilename()+"두번째 if문 파일네임 입니다.");
+			
+			String imgpath = path+uploadFile1.getOriginalFilename();
+			
+			BufferedImage inputImage = ImageIO.read(file.getInputStream());
+	        System.out.println(inputImage);
+	        
+			
+			
+			int newWidth = 500;   // 변경할 가로 길이
+	        int newHeight = 300;  // 변경할 세로 길이
+	        String option = newWidth+"x"+newHeight;
+	        Image image = ImageIO.read(new File(path,uploadFile1.getOriginalFilename()));//원본 이미지 가져오기
+	   // 이미지 품질 설정         
+	        Image resizeImage = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+	        FileOutputStream out = new FileOutputStream(path +option+".jpg");
+	        ImageIO.write((RenderedImage) resizeImage, "jpg", out);
+	        //새 이미지 저장하기
+	        BufferedImage newImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+	            MultipartFile reimage = (MultipartFile) newImage;
+	        
+	            fileName = uuid+"_"+reimage.getOriginalFilename();
+	            System.out.println(fileName+"리사이즈된 파일네임 입니다.");
+				
+				  Graphics graphics = newImage.getGraphics(); graphics.drawImage(resizeImage,
+				  0, 0, null); graphics.dispose();
+				 
+			
 			}
 			vo.setImage1(fileName);
 		}
@@ -176,106 +210,6 @@ public class BoardItemController {
 			}
 			vo.setImage10(fileName);
 		}
-		//첫번째 추정. uploadfile1에 vo.getFile1() 을 담고 upload11에 upoadfile 의 정보를 넣어줌. 
-		// 파일명과 uuid 를 넣으 String 타입으로 만들어 null 과 비교. 이름값이 있다면 null이 아니라 아래 if문을 돌릴것으로 추측
-		// "" 사용하여 공백도 고려해볼것. 
-		
-		
-		
-		//두번째 
-		/*
-		 * String name = vo.getFile1().getOriginalFilename(); File file = new
-		 * File(name); if() {
-		 * 
-		 * }
-		 */
-		
-		//String file1 = "";
-		/*
-		 * if(vo.getFile1().getOriginalFilename() == "" ||
-		 * !vo.getFile1().getOriginalFilename().isEmpty()) {
-		 * vo.getFile1().transferTo(new File(path,
-		 * vo.getFile1().getOriginalFilename()+(i++))); //화면에서 넘어온 파일을 path 위치에 새로쓰는 로직
-		 * vo.setImage1(vo.getFile1().getOriginalFilename());
-		 * System.out.println(vo.getFile1().getOriginalFilename()+"1111111"); }
-		 * if(vo.getFile2().getOriginalFilename() == "" ||
-		 * !vo.getFile2().getOriginalFilename().isEmpty()) {
-		 * vo.getFile2().transferTo(new File(path,
-		 * vo.getFile2().getOriginalFilename()+(i++)));
-		 * System.out.println(vo.getFile2().getOriginalFilename()+"22222222222");
-		 * vo.setImage2(vo.getFile2().getOriginalFilename()); }
-		 * 
-		 * if(vo.getFile3().getOriginalFilename() == "" ||
-		 * !vo.getFile3().getOriginalFilename().isEmpty()) {
-		 * vo.getFile3().transferTo(new
-		 * File(path,vo.getFile3().getOriginalFilename()+(i++)));
-		 * System.out.println(vo.getFile3().getOriginalFilename()+"3333333333333");
-		 * vo.setImage3(vo.getFile3().getOriginalFilename()); }
-		 * 
-		 * if(vo.getFile4().getOriginalFilename() == "" ||
-		 * !vo.getFile4().getOriginalFilename().isEmpty()) {
-		 * vo.getFile4().transferTo(new
-		 * File(path,vo.getFile4().getOriginalFilename()+(i++)));
-		 * System.out.println(vo.getFile4().getOriginalFilename()+"3333333333333");
-		 * vo.setImage4(vo.getFile4().getOriginalFilename()); }
-		 * 
-		 * if(vo.getFile5().getOriginalFilename() == "" ||
-		 * !vo.getFile5().getOriginalFilename().isEmpty()) {
-		 * vo.getFile5().transferTo(new
-		 * File(path,vo.getFile5().getOriginalFilename()+(i++)));
-		 * System.out.println(vo.getFile5().getOriginalFilename()+"3333333333333");
-		 * vo.setImage5(vo.getFile5().getOriginalFilename()); }
-		 * 
-		 * if(vo.getFile6().getOriginalFilename() == "" ||
-		 * !vo.getFile6().getOriginalFilename().isEmpty()) {
-		 * vo.getFile6().transferTo(new
-		 * File(path,vo.getFile6().getOriginalFilename()+(i++)));
-		 * System.out.println(vo.getFile6().getOriginalFilename()+"3333333333333");
-		 * vo.setImage6(vo.getFile6().getOriginalFilename()); }
-		 * 
-		 * if(vo.getFile7().getOriginalFilename() == "" ||
-		 * !vo.getFile7().getOriginalFilename().isEmpty()) {
-		 * vo.getFile7().transferTo(new
-		 * File(path,vo.getFile7().getOriginalFilename()+(i++)));
-		 * System.out.println(vo.getFile7().getOriginalFilename()+"3333333333333");
-		 * vo.setImage7(vo.getFile7().getOriginalFilename()); }
-		 * 
-		 * if(vo.getFile8().getOriginalFilename() == "" ||
-		 * !vo.getFile8().getOriginalFilename().isEmpty()) {
-		 * vo.getFile8().transferTo(new
-		 * File(path,vo.getFile8().getOriginalFilename()+(i++)));
-		 * System.out.println(vo.getFile8().getOriginalFilename()+"3333333333333");
-		 * vo.setImage8(vo.getFile8().getOriginalFilename()); }
-		 * 
-		 * if(vo.getFile9().getOriginalFilename() == "" ||
-		 * !vo.getFile9().getOriginalFilename().isEmpty()) {
-		 * vo.getFile9().transferTo(new
-		 * File(path,vo.getFile9().getOriginalFilename()+(i++)));
-		 * System.out.println(vo.getFile9().getOriginalFilename()+"3333333333333");
-		 * vo.setImage9(vo.getFile9().getOriginalFilename()); }
-		 * 
-		 * if(vo.getFile10().getOriginalFilename() == "" ||
-		 * !vo.getFile10().getOriginalFilename().isEmpty()) {
-		 * vo.getFile10().transferTo(new
-		 * File(path,vo.getFile10().getOriginalFilename()+(i++)));
-		 * System.out.println(vo.getFile10().getOriginalFilename()+"3333333333333");
-		 * vo.setImage10(vo.getFile10().getOriginalFilename()); }
-		 */
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 				
 		/*
 		 * File dir = new File(path); // path가 존재하는지 여부 확인 if(!dir.exists()) {
@@ -297,6 +231,31 @@ public class BoardItemController {
 		model.addAttribute("vo",vo);
 		
 		response.setContentType("text/html;charset=utf-8");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		

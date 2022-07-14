@@ -14,7 +14,7 @@
 			 , b.wdate
 			 , u.nickname
 			FROM Board_Items b, AnnaUser u
-			WHERE b.uidx = u.uidx  ORDER BY b.uidx desc 
+			WHERE b.uidx = u.uidx  ORDER BY b.item_idx desc 
 		
 	</select>
 	
@@ -115,7 +115,7 @@
 			 
 		FROM Board_Items b , AnnaUser u
 		WHERE b.uidx = u.uidx
-		AND b.item_idx = #{item_idx}
+		AND b.item_idx = #{item_idx} 
 	</select>
 
 </mapper>

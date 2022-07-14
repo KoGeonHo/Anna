@@ -26,7 +26,6 @@
 	제목: <input type="text" name="title">
 	카테고리: <select name="cate_idx">
 			<option value="1">가전제품</option>
-			  
 			</select>
 	<textarea id="summernote" name="content" ></textarea>
 	<br>

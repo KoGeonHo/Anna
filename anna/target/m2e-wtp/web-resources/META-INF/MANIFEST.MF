@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
 Built-By: ksm98
-=======
-Built-By: 753
->>>>>>> master
 Build-Jdk: 13.0.2
 Created-By: Maven Integration for Eclipse
 
