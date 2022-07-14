@@ -13,7 +13,7 @@
 
 내용 ${bv.contents }
 
-아래에 이미지가 나옵니다.<br>
+아래에 이미지가 나옵니다. 아마도<br>
 
 	
 	<c:if test="${bv.image1 != null}">
