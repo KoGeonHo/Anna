@@ -13,7 +13,7 @@
 <br>
 내용 : ${bv.contents }
 111
-<br>
+<br>11
 
 	
 	<c:if test="${bv.image1 != null}">
