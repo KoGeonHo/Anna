@@ -8,12 +8,14 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -30,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.fourmen.service.BoardService;
 import edu.fourmen.vo.BoardVO;
+import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
 
 @Controller
@@ -41,7 +44,57 @@ public class BoardController {
 
 	
 	@RequestMapping(value="/FreeBoard.do")
-	public String FreeBoard(Model model, SearchVO svo) {
+	public String FreeBoard(Model model, SearchVO svo, HttpServletRequest request, HttpSession session, PageMaker pm) {
+		
+		//한 페이지에 몇개씩 표시할 것인지
+		int pagecount = 10;
+		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
+		int pagenumber = 1;
+		//페이지 번호가 파라미터로 전달되는지 읽어와본다.
+		String strPageNum = request.getParameter("pagenumber");
+		//만일 페이지 번호가 파리미터로 넘어온다면
+		if(strPageNum != null) {
+			//숫자로 바꿔서 보여줄 페이지 번호를 지정한다.
+			pagenumber = Integer.parseInt(strPageNum);
+		}
+		
+		//보여줄 페이지의 시작 ROWNUM - 0부터 시작
+		int startPage = 0+ (pagenumber - 1)* pagecount;
+		//보여줄 페이지의 끝 ROWNUM
+		int endPage = pagenumber*pagecount;
+		
+		int pageNum = pagecount;
+		
+		// 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
+		
+		String SearchVal = request.getParameter("SearchVal");
+		String SearchType = request.getParameter("SearchType");
+		
+		if(SearchVal == null) {
+			//키워드와 검색 조건에 빈 문자열을 넣어준다.
+			SearchVal ="";
+			SearchType = "";
+			
+		}
+		// 설정해준 값들을 해당 객체에 담는다.
+		pm.setStartPage(startPage);
+		pm.setEndPage(endPage);
+		pm.setPageNum(pageNum);
+		
+		ArrayList<PageMaker> plist = null;
+		
+		int totalRow = 0;
+		
+		//만일 검색 키워드가 넘어온다면
+		if(!SearchVal.equals("")) { //검색 조건이 무엇인가에 따라 분기
+			if(SearchType.equals("Title")) { //제목 검색인 경우
+				pm.setTitle(SearchVal);
+				
+			}
+			
+		}
+		
+		
 		
 		List<BoardVO> freeboard = boardService.selectfreeboard(svo);
 		System.out.println(svo);
@@ -73,6 +126,10 @@ public class BoardController {
 
 
 		String fileName=null;
+		String fileName2=null;
+		String fileName3=null;
+		String fileName4=null;
+		String fileName5=null;
 
 		
 		
@@ -100,7 +157,7 @@ public class BoardController {
 			System.out.println(tPath+"썸넬 저장경로");
 			File tFile = new File(tPath); //파일 클래스를 생성 그 안에 썸네일 저장경로를 담는다.
 
-			double ratio = 2; // 이미지 축소 비율
+			//double ratio = 2; // 이미지 축소 비율
 			
 			try {
 				//(int) (oImage.getWidth() / ratio); // 생성할 썸네일이미지의 너비
@@ -132,7 +189,7 @@ public class BoardController {
 			fileName=uuid+"."+ext;
 			uploadFile2.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
 		}
-		vo.setImage2(fileName);
+		vo.setImage2(fileName2);
 	}
 	
 	if(vo.getFileName3() !=null) {
@@ -144,7 +201,7 @@ public class BoardController {
 			fileName=uuid+"."+ext;
 			uploadFile3.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
 		}
-		vo.setImage3(fileName);
+		vo.setImage3(fileName3);
 	}
 	
 	if(vo.getFileName4() !=null) {
@@ -156,7 +213,7 @@ public class BoardController {
 			fileName=uuid+"."+ext;
 			uploadFile4.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
 		}
-		vo.setImage4(fileName);
+		vo.setImage4(fileName4);
 	}
 	
 	if(vo.getFileName5() !=null) {
@@ -168,16 +225,9 @@ public class BoardController {
 			fileName=uuid+"."+ext;
 			uploadFile5.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
 		}
-		vo.setImage5(fileName);
+		vo.setImage5(fileName5);
 	}
-	
-	
-
-	
-	
-
-		
-		boardService.writeBoard(vo);
+			boardService.writeBoard(vo);
 		
 	
 		return "redirect:/board/FreeBoard.do"; 	

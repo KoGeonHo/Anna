@@ -49,8 +49,7 @@
 	  FROM Board b
 	 INNER JOIN AnnaUser u
 	  	ON b.Uidx = u.uidx
-	 WHERE b.board_type = 'free'
-	   AND b.isDel ='N'
+	 WHERE b.isDel ='N'
 	   <if test='searchType != null and searchType.equals("All")'>
 	 	    AND b.Contents like concat('%',#{SearchVal},'%')
 	 	    OR u.nickname like concat('%',#{SearchVal},'%')
