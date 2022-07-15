@@ -11,5 +11,6 @@ public interface UserService {
 	String getClient_id();
 	String getRedirect_uri();
 	HashMap<String, Object> getAccessToken(String code);
-	HashMap<String, Object> getUserInfo(String access_Token);
+	HashMap<String, Object> getKakaoUserInfo(String access_Token);
+	void updateKakaoAuthKey(UserVO vo);
 }
