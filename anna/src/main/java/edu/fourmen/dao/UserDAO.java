@@ -30,5 +30,12 @@ public class UserDAO {
 	public UserVO login(UserVO vo) {
 
 		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.login",vo);
+		
+	}
+	
+	public void updateKakaoAuthKey(UserVO vo) {
+		
+		sqlSession.selectOne("edu.fourmen.mapper.userMapper.updateKakaoAuthKey",vo);
+		
 	}
 }
