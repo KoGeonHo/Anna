@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,9 +30,7 @@ public class UserController {
 	MailService mailService;
 	
 	@Autowired
-	BCryptPasswordEncoder pwdEncoder;
-	
-	private final String path = "/anna";
+	BCryptPasswordEncoder pwdEncoder; 
 	
 	//로그인 페이지
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
@@ -89,7 +86,7 @@ public class UserController {
 					
 					session.setAttribute("nickName", userInfo.getNickName());
 					
-					pw.append("<script>location.href='"+path+"/main.do';</script>");
+					pw.append("<script>location.href='"+request.getContextPath()+"/main.do';</script>");
 					
 					pw.flush();
 					
@@ -145,7 +142,7 @@ public class UserController {
 		
 		if(result == 1) {
 			
-			pw.append("<script>alert('환영합니다"+vo.getNickName()+"님, 가입이 완료되었습니다.'); location.href='"+path+"/user/login.do';</script>");
+			pw.append("<script>alert('환영합니다"+vo.getNickName()+"님, 가입이 완료되었습니다.'); location.href='"+request.getContextPath()+"/user/login.do';</script>");
 			
 			pw.flush();
 			
@@ -153,7 +150,7 @@ public class UserController {
 			
 		} else {
 			
-			pw.append("<script>alert('문제가 발생하여 처리되지 않았습니다.\\n다시 시도해주세요.'); location.href='"+path+"/user/joinS2.do'</script>");
+			pw.append("<script>alert('문제가 발생하여 처리되지 않았습니다.\\n다시 시도해주세요.'); location.href='"+request.getContextPath()+"/user/joinS2.do'</script>");
 			
 			pw.flush();
 			
@@ -310,9 +307,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/myPage.do")
-	public String myPage(Model model) {
-		
-		model.addAttribute("path",path);
+	public String myPage() {
 		
 		return "user/myPage";
 		
