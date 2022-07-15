@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	//토큰발급
-	public HashMap<String,Object> getAccessToken (String authorize_code) {
+	public HashMap<String,Object> getAccessToken(String authorize_code) {
         String access_Token = "";
         String refresh_Token = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService{
     }
 
 		@Override
-		public HashMap<String, Object> getUserInfo(String access_Token) {
+		public HashMap<String, Object> getKakaoUserInfo(String access_Token) {
 			String line = "";
 	        String result = "";
 	    	
@@ -159,10 +159,10 @@ public class UserServiceImpl implements UserService{
 	            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 	            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 	            
-	            JsonElement kakaoId = element.getAsJsonObject().get("id");
-	            JsonElement nickname = properties.getAsJsonObject().get("nickname");
-	            JsonElement thumbnail_image = properties.getAsJsonObject().get("thumbnail_image");
-	            JsonElement kakao_email = kakao_account.getAsJsonObject().get("email");
+	            String kakaoId = element.getAsJsonObject().get("id").toString().replaceAll("\"", "");
+	            String nickname = properties.getAsJsonObject().get("nickname").toString().replaceAll("\"", "");
+	            String thumbnail_image = properties.getAsJsonObject().get("thumbnail_image").toString().replaceAll("\"", "");
+	            String kakao_email = kakao_account.getAsJsonObject().get("email").toString().replaceAll("\"", "");
 	            
 	           
 	            //System.out.println(kakao_account);
@@ -180,6 +180,13 @@ public class UserServiceImpl implements UserService{
 	        }
 
 	        return userInfo;
+		}
+
+		@Override
+		public void updateKakaoAuthKey(UserVO vo) {
+
+			userDAO.updateKakaoAuthKey(vo);
+			
 		}
 
 }
