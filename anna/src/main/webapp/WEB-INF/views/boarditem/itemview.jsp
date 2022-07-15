@@ -10,11 +10,13 @@
 <link href="${path}/css/bootstrap.css" rel="stylesheet" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type='text/css'>
+@-ms-viewport{width : device-width;}
+@-o-viewport{width: device-width;}
+@viewport {width: device-width;}
+</style>
 <title>item view 페이지</title>
-
 <style>
-
-
 
 .outer {
   border: 6px solid royalblue;
