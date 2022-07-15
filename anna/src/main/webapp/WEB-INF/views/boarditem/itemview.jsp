@@ -14,21 +14,15 @@
 
 <style>
 
-body {
-  /* 글자 드래그 방지 */
-  -ms-user-select: none; 
-  -moz-user-select: -moz-none; 
-  -webkit-user-select: none; 
-  -khtml-user-select: none; 
-  user-select: none;
-}
+
 
 .outer {
   border: 6px solid royalblue;
-  width: 300px;
-  height: 200px;
+  width: 500px;
+  height: 500px;
   margin: 0 auto;
   overflow-x: hidden;
+  display:none;
 }
 
 .inner-list {
@@ -38,8 +32,6 @@ body {
 }
 
 .inner {
-  border: 6px solid olive;
-  padding: 0 16px;
 }
 
 
@@ -50,11 +42,12 @@ body {
 
 
 .slider{
-    width: 640px;
+    width: 700px;
     height: 480px;
     position: relative;
     margin: 0 auto;
     overflow: hidden; /* 현재 슬라이드 오른쪽에 위치한 나머지 슬라이드 들이 보이지 않도록 가림 */
+	display:block
 }
 .slider input[type=radio]{
     display: none;
@@ -67,7 +60,7 @@ ul.imgs{
 }
 ul.imgs li{
     position: absolute;
-    left: 640px;
+    left: 700px;
     transition-delay: 1s; /* 새 슬라이드가 이동해 오는 동안 이전 슬라이드 이미지가 배경이 보이도록 지연 */
 
     padding: 0;
@@ -91,23 +84,24 @@ ul.imgs li{
 }
 
 img{
-	width:450px;
+	width:700px;
 	height:450px;
 }
 
 @media ( max-width: 400px ) {
 	img{
-	width:300px;
+	width:288px;
 	height:250px;
 	}
 
 	
-	.slider{
-    width: 640px;
-    height: 480px;
+.slider{
+    width: 300x;
+    height: 250px;
     position: relative;
     margin: 0 auto;
     overflow: hidden; /* 현재 슬라이드 오른쪽에 위치한 나머지 슬라이드 들이 보이지 않도록 가림 */
+	display : none;
 }
 
 .bullets label{
@@ -118,6 +112,42 @@ img{
     height: 4px;
     cursor: pointer;
 }
+
+
+
+body {
+  /* 글자 드래그 방지 */
+  -ms-user-select: none; 
+  -moz-user-select: -moz-none; 
+  -webkit-user-select: none; 
+  -khtml-user-select: none; 
+  user-select: none;
+}
+
+.outer {
+  border: 6px solid royalblue;
+  width: 300px;
+  height: 250px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  display:block
+}
+
+.inner-list {
+  display: flex;
+  width:300px;
+  height: 250px;
+  transition: .3s ease-out;
+}
+
+.inner {
+  padding: auto;
+}
+
+
+
+
+
 }
 
 /* 현재 선택된 불릿 배경 흰색으로 구분 표시 */
@@ -241,51 +271,70 @@ img{
 	
 <form  method="post" enctype="multipart/form-data" name="frm">
 	<div class="row">
-			<div class="col-lg-4">
+			<div class="col-lg-10">
 				<div class="card">
-				<%-- <c:if test="${vo.image1 != null}">
-				<input type="image" src="../resources/upload/${vo.image1}" class="card-img-top" > 
-				</c:if>
-				<c:if test="${vo.image2 != null}">
-				<input type="image" src="../resources/upload/${vo.image2}" class="card-img-top" > 
-				</c:if>
-				<c:if test="${vo.image3 != null}">
-				<input type="image" src="../resources/upload/${vo.image3}" class="card-img-top" > 
-				</c:if>
-				<c:if test="${vo.image4 != null}">
-				<input type="image" src="../resources/upload/${vo.image4}" class="card-img-top" > 
-				</c:if>
-				<c:if test="${vo.image5 != null}">
-				<input type="image" src="../resources/upload/${vo.image5}" class="card-img-top" > 
-				</c:if>
-				<c:if test="${vo.image6 != null}">
-				<input type="image" src="../resources/upload/${vo.image6}" class="card-img-top" > 
-				</c:if>
-				<c:if test="${vo.image7 != null}">
-				<input type="image" src="../resources/upload/${vo.image7}" class="card-img-top" > 
-				</c:if>
-				<c:if test="${vo.image8 != null}">
-				<input type="image" src="../resources/upload/${vo.image8}" class="card-img-top" > 
-				</c:if>
-				<c:if test="${vo.image9 != null}">
-				<input type="image" src="../resources/upload/${vo.image9}" class="card-img-top" > 
-				</c:if>
-				<c:if test="${vo.image10 != null}">
-				<input type="image" src="../resources/upload/${vo.image10}" class="card-img-top" > 
-				</c:if> --%>
-				
-				
-				<div class="slider">
-				    <input type="radio" name="slide" id="slide1" checked>
-				    <input type="radio" name="slide" id="slide2">
-				    <input type="radio" name="slide" id="slide3">
-				    <input type="radio" name="slide" id="slide4">
-				    <input type="radio" name="slide" id="slide5">
-				    <input type="radio" name="slide" id="slide6">
-				    <input type="radio" name="slide" id="slide7">
-				    <input type="radio" name="slide" id="slide8">
-				    <input type="radio" name="slide" id="slide9">
-				    <input type="radio" name="slide" id="slide10">
+					<div class="outer">
+					  <div class="inner-list">
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image1}">
+					    </div>
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image2}">
+					    </div>
+					    <c:if test="${vo.image3 != null }">
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image3}">
+					    </div>
+					    </c:if>
+					    <c:if test="${vo.image4 != null }">
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image4}">
+					    </div>
+					    </c:if>
+					    <c:if test="${vo.image5 != null }">
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image5}">
+					    </div>
+					    </c:if>
+					    <c:if test="${vo.image6 != null }">
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image6}">
+					    </div>
+					    </c:if>
+					    <c:if test="${vo.image7 != null }">
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image7}">
+					    </div>
+					    </c:if>
+					    <c:if test="${vo.image8 != null }">
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image8}">
+					    </div>
+					    </c:if>
+					    <c:if test="${vo.image9 != null }">
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image9}">
+					    </div>
+					    </c:if>
+					    <c:if test="${vo.image10 != null }">
+					    <div class="inner">
+					      <img src="../resources/upload/${vo.image10}">
+					    </div>
+					    </c:if>
+					  </div>
+					  </div>
+					<div class="slider">
+					    <input type="radio" name="slide" id="slide1" checked>
+					    <input type="radio" name="slide" id="slide2">
+					    <input type="radio" name="slide" id="slide3">
+					    <input type="radio" name="slide" id="slide4">
+					    <input type="radio" name="slide" id="slide5">
+					    <input type="radio" name="slide" id="slide6">
+					    <input type="radio" name="slide" id="slide7">
+					    <input type="radio" name="slide" id="slide8">
+					    <input type="radio" name="slide" id="slide9">
+					    <input type="radio" name="slide" id="slide10">
+				    
 				    <ul id="imgholder" class="imgs">
 				    
 				        <li><img src="../resources/upload/${vo.image1}"></li>
@@ -307,26 +356,51 @@ img{
 				        <li><img src="../resources/upload/${vo.image9}"></li>
 				        
 				        <li><img src="../resources/upload/${vo.image10}"></li>
-				        
+				       
+				       
+				        <div class="bullets">
+				        	<c:if test="${vo.image1 != null }">
+					        <label for="slide1">&nbsp;</label>
+					        </c:if>
+					        <c:if test="${vo.image2 != null }">
+					        <label for="slide2">&nbsp;</label>
+					        </c:if>
+					        <c:if test="${vo.image3 != null }">
+					        <label for="slide3">&nbsp;</label>
+					        </c:if>
+					        <c:if test="${vo.image4 != null }">
+					        <label for="slide4">&nbsp;</label>
+					        </c:if>
+					        <c:if test="${vo.image5 != null }">
+					        <label for="slide5">&nbsp;</label>
+					        </c:if>
+					        <c:if test="${vo.image6 != null }">
+					        <label for="slide6">&nbsp;</label>
+					        </c:if>
+					        <c:if test="${vo.image7 != null }">
+					        <label for="slide7">&nbsp;</label>
+					        </c:if>
+					        <c:if test="${vo.image8 != null }">
+					        <label for="slide8">&nbsp;</label>
+					        </c:if>
+					        <c:if test="${vo.image9 != null }">
+					        <label for="slide9">&nbsp;</label>
+					        </c:if>
+					        <c:if test="${vo.image10 != null }">
+					        <label for="slide10">&nbsp;</label>
+					        </c:if>
+				   		 </div>
 				    </ul>
 				    
-				    <div class="bullets">
-				        <label for="slide1">&nbsp;</label>
-				        <label for="slide2">&nbsp;</label>
-				        <label for="slide3">&nbsp;</label>
-				        <label for="slide4">&nbsp;</label>
-				        <label for="slide5">&nbsp;</label>
-				        <label for="slide6">&nbsp;</label>
-				        <label for="slide7">&nbsp;</label>
-				        <label for="slide8">&nbsp;</label>
-				        <label for="slide9">&nbsp;</label>
-				        <label for="slide10">&nbsp;</label>
-				    </div>
-				</div>
+					</div>
+				    
+					
+					</div>
+				    
 				
 				
-				<input type="hidden" value="${vo.uidx} asd"> 
-				<input type="hidden" value="${vo.item_idx} asd">
+					<input type="hidden" value="${vo.uidx} asd"> 
+					<input type="hidden" value="${vo.item_idx} asd">
 					
 					<div class="card-body">
 						<h5 class="card-title">${vo.title}</h5>
@@ -343,24 +417,11 @@ img{
 					</div>
 				</div>
 			</div>
-	</div>
 </form>
+					
+					
 
 
-
-<div class="outer">
-  <div class="inner-list">
-    <div class="inner">
-      <h2>first...</h2>
-    </div>
-    <div class="inner">
-      <h2>second...</h2>
-    </div>
-    <div class="inner">
-      <h2>third...</h2>
-    </div>
-  </div>
-</div>
 제목 , 카테고리, 사진, 가격, 판매자이름, 거래장소, 조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품, 키워드 보여주는공간
 	
