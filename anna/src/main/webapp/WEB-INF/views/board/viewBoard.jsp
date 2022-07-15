@@ -12,8 +12,8 @@
 제목 : ${bv.title}
 <br>
 내용 : ${bv.contents }
-111
-<br>11
+
+<br>
 
 	
 	<c:if test="${bv.image1 != null}">
