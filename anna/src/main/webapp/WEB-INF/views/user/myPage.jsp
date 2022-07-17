@@ -51,6 +51,10 @@ html, body {
 		display:none
 	}
 	
+	#footer {
+		display:none;
+	}
+	
 }
 
 .menu-hide {
@@ -70,6 +74,18 @@ html, body {
 	font-size:1rem;
 	
 }
+
+.wrapper {
+	display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.ft-icon {
+	border:0px;
+	margin:0px;
+}
+
 </style>
 <script>
 	$(function(){
@@ -137,7 +153,7 @@ html, body {
 		<!-- 모바일 헤더 END -->
 		
 		
-		<div id="menu" class="container-fluid bg-dark text-white menu-hide" style="position:absolute;">
+		<div id="menu" class="container-fluid bg-dark text-white menu-hide" style="position:absolute; top:56px;">
 			<div class="menu-item">
 				마이페이지
 			</div>
@@ -152,6 +168,33 @@ html, body {
 			</div>
 		</div>
 	
+	
+		<div class="container" style="flex:1;">
+			<h3 class="border-bottom">마이 페이지</h3>
+			<div id="listOfInterested">
+				<span>${ nickName }님이 관심있어 할만한 상품</span>
+			</div>
+			<h3 class="border-bottom">마이 페이지</h3>
+			<div id="listOfInterested">
+				<span>${ nickName }님이 관심있어 할만한 상품</span>
+			</div>
+			<h3 class="border-bottom">마이 페이지</h3>
+			<div id="listOfInterested">
+				<span>${ nickName }님이 관심있어 할만한 상품</span>
+			</div>
+		</div>
+		
+		
+		
+		
+		<div id="footer" style="box-sizing: border-box; width:100vw;">
+			<div class="ft-icon text-center" style="width:20vw; display:inline-block;">1</div><!--  
+			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;">2</div><!--
+			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;">3</div><!--
+			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;">4</div><!--
+			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;">5</div>
+		</div>
+		
 	</div>
 </body>
 </html>
