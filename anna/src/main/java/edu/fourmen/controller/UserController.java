@@ -59,7 +59,7 @@ public class UserController {
 
 		if(userInfo == null) {
 			
-			System.out.println("가입되지 않은 이메일주소");
+			System.out.println("가입되지 않은 이메일주소1");
 			
 			pw.append("<script>alert('가입되지 않은 이메일 주소입니다.'); history.back();</script>");
 			

@@ -1,5 +1,3 @@
-<%@page import="edu.fourmen.vo.UserVO"%>
-<%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
@@ -45,11 +43,6 @@ html, body {
 		display:none;
 	}
 	
-	#input-interested {
-		width:40vw;
-	}
-	 
-	
 }
 
 @media all and (min-width :768px){
@@ -66,9 +59,6 @@ html, body {
 		padding:0 150px;
 	}
 	
-	#input-interested {
-		width:250px;
-	}
 }
 
 .menu-hide {
@@ -108,6 +98,7 @@ html, body {
 }
 
 .row {
+	height:3rem;
 	margin:0px;
 }
 
@@ -124,30 +115,13 @@ html, body {
 			
 		});
 	});
-	
-	function delKeyword(array, item){
-		let arr = array.split(',');
-		arr = arr.filter(function(rti) {
-		    return rti !== item;
-		});
-		let result = "";
-		for(let i = 0; i < arr.length; i++){
-			result += arr[i];
-			if(i != (arr.length-1)){
-				result += ",";
-			}
-			
-		}
-		
-		console.log(result);
-	}
 </script>
 </head>
 <body>
 	<div class="wrapper">
 	
 		<!-- PC 헤더 START-->
-		<div class="pc-header border-bottom" style="position:sticky; top:0; left:0;">
+		<div class="pc-header border-bottom" style="position:sticky; top:0; left:0;">1
 			<div class="container">
 		
 				<header class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1  ">
@@ -186,7 +160,7 @@ html, body {
 		<nav class="navbar navbar-dark" style=" background:#00AAB2;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-			    	<a class="navbar-brand" href="#" style="color:white;">효자동</a>1
+			    	<a class="navbar-brand" href="#" style="color:white;">효자동</a>
 			    </div>
 			    <div class="text-end" style="color:white; flex:1; padding:0 1rem;">
 			    	<input type="text" class="form-control" placeholder="검색">
@@ -217,7 +191,7 @@ html, body {
 	
 		<div class="wrapper" style="flex:1; overflow:auto;">
 			<div class="container" >
-				<h3 class="border-bottom" style="padding:1rem;">회원정보수정</h3>
+				<h3 class="border-bottom" style="padding:1rem;">회원정보</h3>
 				<div id="profile" class="border-bottom" style="width:100%;">
 					<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
 					<div style="display:inline-block;">
@@ -228,7 +202,7 @@ html, body {
 				</div>
 				<div class="row border-bottom">
 					<div class="col-3 text-center" style="line-height:3rem;">닉네임</div>
-					<div class="col-9" style="line-height:3rem; align-self:center;"><input type="text" class="form-control" name="nickName" value="${ userInfo.nickName }"></div>
+					<div class="col-9" style="line-height:3rem;">${ userInfo.nickName }</div>
 				</div>
 				<div class="row border-bottom">
 					<div class="col-3 text-center" style="line-height:3rem;">이메일</div>
@@ -247,37 +221,24 @@ html, body {
 				</div>
 				<div class="row border-bottom">
 					<div class="col-3 text-center" style="line-height:3rem;">소개글</div>
-					<div class="col-9">
-						<textarea class="form-control" style="margin:5px 0; resize:none;" rows="5">${ userInfo.introduce }</textarea>
+					<div class="col-9" style="line-height:3rem;">
+						<c:if test="${ not empty userInfo.introduce }">
+							${ userInfo.introduce }
+						</c:if>
+						<c:if test="${ empty userInfo.introduce }">
+							-
+						</c:if>
 					</div>
 				</div>
 				<div class="row border-bottom">
 					<div class="col-3 text-center" style="line-height:3rem; min-width:4rem;">관심사</div>
-					<div class="col-9" style="line-height:3rem; margin:5px 0;">
-						<input type="text" class="form-control" id="input-interested" style="display:inline-block;" name="interested"> 
-						<button class="btn" style="display:inline-block; background-color: #00AAB2; color: #fff;">등록</button>
-						<div>
-						<% 
-						UserVO vo = (UserVO)request.getAttribute("userInfo");
-						
-						if(vo.getInterested() != null){
-							//String[] itList = vo.getInterested().split(",");
-							String itrst = "운동,헬스,사이클,컴퓨터";
-							String[] itList = itrst.split(",");
-							for(String a : itList){
-								out.println(a+"<span onclick='delKeyword("+itList+","+a+")'>x</span>");
-							}
-						}else{
-							String itrst = "운동,헬스,사이클,컴퓨터";
-							String[] itList = itrst.split(",");
-							for(String a : itList){
-								out.println(a+"<span onclick=\"delKeyword('"+itrst+"','"+a+"')\">x</span>");
-							}
-							//out.print("-");
-						}
-
-						%>
-						</div>
+					<div class="col-9" style="line-height:3rem;">
+						<c:if test="${ not empty userInfo.interested }">
+							${ userInfo.interested }
+						</c:if>
+						<c:if test="${ empty userInfo.interested }">
+							-
+						</c:if>
 					</div>
 				</div>
 				<div style="padding:5px 0;">

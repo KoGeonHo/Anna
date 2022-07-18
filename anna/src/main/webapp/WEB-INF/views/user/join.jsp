@@ -686,8 +686,8 @@
 				</div>
 				<div class="container" style="padding:10px 0; margin:auto;">
 					<div class="text-end">
-						<button type="submit" class="btn btn-primary">가입하기</button>
-						<button type="button" class="btn btn-primary" onclick="javascript:location.href='login.do'">돌아가기</button>
+						<button type="submit" class="btn btn-primary">가입하기1</button>
+						<button type="button" class="btn btn-primary" onclick="javascript:history.back();">돌아가기</button>
 					</div>
 				</div>
 			</form>

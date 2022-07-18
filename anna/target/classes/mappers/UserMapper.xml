@@ -42,6 +42,7 @@
 			nickName,
 			user_email,
 			kakao_auth,
+			interested,
 			user_pwd
 		FROM 
 			AnnaUser
@@ -61,5 +62,28 @@
 			uidx = #{ uidx }
 	
 	</update>
+	
+	<select id="getUsetInfo" parameterType="int" resultType="UserVO">
+		
+		SELECT
+			nickName,
+			user_email,
+			addr1,
+			addr2,
+			addr_code,
+			interested,
+			location_auth,
+			kakao_auth,
+			profile_image,
+			introduce,
+			jdate
+		FROM
+			AnnaUser
+		WHERE
+			uidx = #{ uidx }
+			
+			
+		
+	</select>
 	
 </mapper>
