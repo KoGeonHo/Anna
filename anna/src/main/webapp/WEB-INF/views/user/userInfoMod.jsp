@@ -1,3 +1,5 @@
+<%@page import="edu.fourmen.vo.UserVO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
@@ -9,8 +11,6 @@
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
-
 <style>
 
 /*
@@ -26,11 +26,13 @@ html, body {
 	padding : 0px;
 	width: 100%;
 	overflow-x: hidden;
+	min-width:320px;
 }
 
 .container {
 	justify-content: center;
 	align-items: center;
+	min-width:320px;
 }
 
 .card {
@@ -42,7 +44,11 @@ html, body {
 	.pc-header {
 		display:none;
 	}
-
+	
+	#input-interested {
+		width:40vw;
+	}
+	 
 	
 }
 
@@ -56,6 +62,13 @@ html, body {
 		display:none;
 	}
 	
+	#profile {
+		padding:0 150px;
+	}
+	
+	#input-interested {
+		width:250px;
+	}
 }
 
 .menu-hide {
@@ -88,6 +101,16 @@ html, body {
 	margin:0px;
 }
 
+.profile-image{
+	width:5rem;
+	height:5rem;
+	margin:1rem;
+}
+
+.row {
+	margin:0px;
+}
+
 </style>
 <script>
 	$(function(){
@@ -101,6 +124,23 @@ html, body {
 			
 		});
 	});
+	
+	function delKeyword(array, item){
+		let arr = array.split(',');
+		arr = arr.filter(function(rti) {
+		    return rti !== item;
+		});
+		let result = "";
+		for(let i = 0; i < arr.length; i++){
+			result += arr[i];
+			if(i != (arr.length-1)){
+				result += ",";
+			}
+			
+		}
+		
+		console.log(result);
+	}
 </script>
 </head>
 <body>
@@ -116,11 +156,12 @@ html, body {
 					</a>
 	
 					<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
-						<li><a href="#" class="nav-link px-3 link-dark ">중고거래</a></li>
+						<li><a href="#" class="nav-link px-3 link-dark ">중고거래1</a></li>
 						<li><a href="#" class="nav-link px-3 link-dark">커뮤니티</a></li>
 						<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
 						<li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
 					</ul>
+	
 					<div class="col-md-3 text-end">
 						<c:if test="${ empty uidx }">
 							<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='${ path }/user/login.do';">
@@ -176,76 +217,88 @@ html, body {
 	
 		<div class="wrapper" style="flex:1; overflow:auto;">
 			<div class="container" >
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
+				<h3 class="border-bottom" style="padding:1rem;">회원정보수정</h3>
+				<div id="profile" class="border-bottom" style="width:100%;">
+					<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
+					<div style="display:inline-block;">
+						<div>
+							${ userInfo.nickName }님의 프로필
+						</div>
+					</div>
 				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
+				<div class="row border-bottom">
+					<div class="col-3 text-center" style="line-height:3rem;">닉네임</div>
+					<div class="col-9" style="line-height:3rem; align-self:center;"><input type="text" class="form-control" name="nickName" value="${ userInfo.nickName }"></div>
 				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
+				<div class="row border-bottom">
+					<div class="col-3 text-center" style="line-height:3rem;">이메일</div>
+					<div class="col-9" style="line-height:3rem;">${ userInfo.user_email }</div>
 				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
+				<div class="row border-bottom">
+					<div class="col-3 text-center" style="line-height:3rem;">내동네</div>
+					<div class="col-9" style="line-height:3rem; align-self:center;">
+						<c:if test="${ empty userInfo.addr_code }">
+							<button class="btn" style="background:#00AAB2; color:#fff;">동네 등록하기</button>
+						</c:if>
+						<c:if test="${ not empty userInfo.addr_code }">
+							${ userInfo.addr1 } ${ userInfo.addr2 }
+						</c:if>
+					</div>
 				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
+				<div class="row border-bottom">
+					<div class="col-3 text-center" style="line-height:3rem;">소개글</div>
+					<div class="col-9">
+						<textarea class="form-control" style="margin:5px 0; resize:none;" rows="5">${ userInfo.introduce }</textarea>
+					</div>
 				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
+				<div class="row border-bottom">
+					<div class="col-3 text-center" style="line-height:3rem; min-width:4rem;">관심사</div>
+					<div class="col-9" style="line-height:3rem; margin:5px 0;">
+						<input type="text" class="form-control" id="input-interested" style="display:inline-block;" name="interested"> 
+						<button class="btn" style="display:inline-block; background-color: #00AAB2; color: #fff;">등록</button>
+						<div>
+						<% 
+						UserVO vo = (UserVO)request.getAttribute("userInfo");
+						
+						if(vo.getInterested() != null){
+							//String[] itList = vo.getInterested().split(",");
+							String itrst = "운동,헬스,사이클,컴퓨터";
+							String[] itList = itrst.split(",");
+							for(String a : itList){
+								out.println(a+"<span onclick='delKeyword("+itList+","+a+")'>x</span>");
+							}
+						}else{
+							String itrst = "운동,헬스,사이클,컴퓨터";
+							String[] itList = itrst.split(",");
+							for(String a : itList){
+								out.println(a+"<span onclick=\"delKeyword('"+itrst+"','"+a+"')\">x</span>");
+							}
+							//out.print("-");
+						}
+
+						%>
+						</div>
+					</div>
 				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
+				<div style="padding:5px 0;">
+					<div class="text-end">
+						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/user/userInfoMod.do';">회원정보 수정</button>
+						<button class="btn" style="background:#BBCE53; color:#fff;">비밀번호 변경</button>
+					</div>
 				</div>
 			</div>
 		</div>
 		
-		<div id="footer" class="border-top" style="box-sizing: border-box; width:100vw; padding:1rem 0;">
+		
+		<!-- mobile footer Start -->
+		<div id="footer" class="border-top" style="box-sizing: border-box; width:100vw; padding:1rem 0; min-width:320px;">
 			<div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_home.png"></div><!--  
 			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_comm.png"></div><!--
 			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_chat.png"></div><!--
 			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_my.png"></div><!--
 			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_quick.png"></div>
 		</div>
+		<!-- mobile footer End -->
 		
 	</div>
 </body>

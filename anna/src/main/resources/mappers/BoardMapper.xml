@@ -35,7 +35,7 @@
 
 </insert>
 
-<select id="selectfreeboard" resultType="boardvo" parameterType="pagemaker">
+<select id="selectfreeboard" resultType="boardvo" parameterType="searchvo">
 	SELECT b.Bidx
 		  ,b.Title
 		  ,b.Uidx
@@ -63,32 +63,10 @@
 	 	</if>
 	 	<if test='searchType != null and searchType.equals("contentWriter")'>
 	 		AND b.Contents like concat('%',#{SearchVal},'%')
-	 		OR u.nickname like concat('%',#{SearchVal},'%')	
-	 	</if> 
-	 	
-	 	ORDER BY b.Wdate asc
-	 	limit #{startPage}, #{pageNum}
-	 	
-</select>
-
-<select id="totalCount" parameterType="pagemaker" resultType="int">
-	SELECT COUNT(Bidx)
-	  FROM Board b
-	  INNER JOIN AnnaUser u
-	  	ON b.Uidx = u.uidx
-	 WHERE b.isDel = 'N'
-		  <if test='searchType != null and searchType.equals("All")'>
-	 	    AND b.Contents like concat('%',#{SearchVal},'%')
-	 	    OR u.nickname like concat('%',#{SearchVal},'%')
-	 		OR b.Title like concat('%',#{SearchVal},'%')	
-	 	</if>
-	   <if test='searchType != null and searchType.equals("title")'>
-	 		AND b.Title like concat('%',#{SearchVal},'%')
-	 	</if>
-	 	<if test='searchType != null and searchType.equals("contentWriter")'>
-	 		AND b.Contents like concat('%',#{SearchVal},'%')
 	 		OR u.nickname like concat('%',#{SearchVal},'%')
-	 	</if>
+	 		
+	 		
+	 	</if> 
 </select>
 
 <select id="viewBoard" resultType="boardvo" parameterType="int"> 

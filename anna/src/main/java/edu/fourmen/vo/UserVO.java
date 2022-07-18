@@ -14,6 +14,7 @@ public class UserVO {
 	private String isDel;
 	private String profile_image;
 	private String introduce;
+	private String jdate;
 	
 	public int getUidx() {
 		return uidx;
@@ -92,6 +93,12 @@ public class UserVO {
 	}
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
+	}
+	public String getJdate() {
+		return jdate;
+	}
+	public void setJdate(String jdate) {
+		this.jdate = jdate;
 	}
 	
 	

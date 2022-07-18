@@ -38,4 +38,10 @@ public class UserDAO {
 		sqlSession.selectOne("edu.fourmen.mapper.userMapper.updateKakaoAuthKey",vo);
 		
 	}
+
+
+	public UserVO getUserInfo(int uidx) {
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.getUsetInfo",uidx);
+		
+	}
 }
