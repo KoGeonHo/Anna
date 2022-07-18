@@ -9,31 +9,31 @@
 </head>
 <body>
 
-제목 ${bv.title}
+제목 : ${bv.title}
+<br>
+내용 : ${bv.contents }
 
-내용 ${bv.contents }
-
-아래에 이미지가 나옵니다. 아마도<br>
+<br>
 
 	
 	<c:if test="${bv.image1 != null}">
-	<input type="image" src="../resources/upload/${bv.image1}" alt ="안되는데요?">
+	<input type="image" src="../resources/upload/${bv.image1}" alt ="안되는데요?"><br>
 	</c:if>
 	
 	<c:if test="${bv.image2 != null}">
-	<input type="image" src="../resources/upload/${bv.image2}" alt ="안되는데요?">
+	<input type="image" src="../resources/upload/${bv.image2}" alt ="안되는데요?"><br>
 	</c:if>
 	
 	<c:if test="${bv.image3 != null}">
-	<input type="image" src="../resources/upload/${bv.image3}" alt ="안되는데요?">
+	<input type="image" src="../resources/upload/${bv.image3}" alt ="안되는데요?"><br>
     </c:if>
     
     <c:if test="${bv.image4 != null}">
-	<input type="image" src="../resources/upload/${bv.image4}" alt ="안되는데요?">
+	<input type="image" src="../resources/upload/${bv.image4}" alt ="안되는데요?"><br>
     </c:if>
     
     <c:if test="${bv.image5 != null}">
-	<input type="image" src="../resources/upload/${bv.image5}" alt ="안되는데요?">
+	<input type="image" src="../resources/upload/${bv.image5}" alt ="안되는데요?"><br>
     </c:if>
     
 </body>

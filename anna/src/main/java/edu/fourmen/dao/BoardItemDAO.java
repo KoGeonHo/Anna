@@ -14,7 +14,7 @@ import edu.fourmen.vo.BoardItemVO;
 @Repository
 public class BoardItemDAO {
 	
-	@Autowired()
+	@Autowired(required=true)
 	SqlSession sqlSession;
 	
 	private static final String efdb = "edu.fourmen.mapper.boardItemMapper";
