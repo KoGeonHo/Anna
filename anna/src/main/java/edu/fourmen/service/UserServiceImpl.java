@@ -7,10 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -191,14 +188,5 @@ public class UserServiceImpl implements UserService{
 			userDAO.updateKakaoAuthKey(vo);
 			
 		}
-
-		@Override
-		public UserVO getUserInfo(int uidx) {
-
-			return userDAO.getUserInfo(uidx);
-			
-		}
-
-		
 
 }
