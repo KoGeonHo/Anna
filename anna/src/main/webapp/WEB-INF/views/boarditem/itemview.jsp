@@ -8,6 +8,9 @@
 <head>
 
 <link href="${path}/css/bootstrap.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style type='text/css'>
@@ -17,7 +20,7 @@
 </style>
 <title>item view 페이지</title>
 <style>
-
+/* 
 .outer {
   border: 6px solid royalblue;
   width: 500px;
@@ -235,7 +238,111 @@ body {
     left: 0;
     transition: 0.5s;
     z-index:1;
+} */
+
+
+
+
+/* 폰트 적용 */
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+html {
+    font-family: "Noto Sans KR", sans-serif;
 }
+
+/* 노말라이즈 */
+body, ul, li, h1, h2, h3, h4, h5 {
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+a {
+    color:inherit;
+    text-decoration:none;
+}
+
+/* 커스텀 */
+
+/* 슬라이더 1 시작 */
+.slider-1 {
+    height:400px;
+    position:relative;
+}
+
+/* 슬라이더 1 - 페이지 버튼 */
+.slider-1 > .page-btns {
+    text-align:center;
+    position:absolute;
+    bottom:20px;
+    left:0;
+    width:100%;
+}
+
+.slider-1 > .page-btns > div {
+    width:20px;
+    height:20px;
+    background-color:rgba(255,255,255,.5);
+    border-radius:4px;
+    display:inline-block;
+    cursor:pointer;
+}
+
+.slider-1 > .page-btns > div.active {
+    background-color:rgba(255,255,255,1);
+}
+
+/* 슬라이더 1 - 슬라이드 */
+
+.slider-1 > .slides > div {
+  position:absolute; 
+    width:500px;
+    height:350px;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    opacity:0;
+    transition: opacity 0.3s;
+    background-position:center;
+    background-size:cover; 
+    background-repeat:no-repeat;
+}
+
+.slider-1 > .slides > div.active {
+    opacity:1;
+}
+
+/* 슬라이더 좌우 버튼 */
+.slider-1 > .side-btns > div {
+   /*  position:absolute; */
+    top:0;
+    left:0;
+    width:25%;
+    height:100%;
+    cursor:pointer;
+}
+.slider-1 > .side-btns > div:last-child {
+    left:auto;
+    right:0;
+}
+.slider-1 >.side-btns > div > span {
+    position:absolute;
+    top:50%;
+    left:20px;
+    transform:translatey(-50%);
+    background-color:white;
+    opacity:0.5;
+    padding:1px 13px;
+    border-radius:50px;
+    font-size:25px;
+}
+.slider-1 >.side-btns > div:last-child > span {
+    left:auto;
+    right:20px;
+}
+
+/* 슬라이더 1 끝 */
 </style>
 </head>
 <body>
@@ -275,7 +382,7 @@ body {
 	<div class="row">
 			<div class="col-lg-10">
 				<div class="card">
-					<div class="outer">
+				<%-- 	<div class="outer">
 					  <div class="inner-list">
 					    <div class="inner">
 					      <img src="../resources/upload/${vo.image1}">
@@ -395,10 +502,10 @@ body {
 				    </ul>
 				    
 					</div>
-				    
+				  
 					
 					</div>
-				    
+				       --%>
 				
 				
 					<input type="hidden" value="${vo.uidx} asd"> 
@@ -430,6 +537,30 @@ body {
 	
 	
 	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="slider-1">
+    <div class="slides">
+        <div class="active" style="background-image:url(https://images.prismic.io/stayfolio-production/73f99b79-336f-47fd-8ace-afc00978147d_banner.jpg?auto=compress,format);"></div>
+        <div style="background-image:url('../resources/upload/${vo.image1}')"></div>
+        <div style="background-image:url(https://images.prismic.io/stayfolio-production/586abdef-7163-4629-9c39-6d7a627ae10e_01_banner_picture.jpg?auto=compress,format);"></div>
+        <div style="background-image:url(https://images.prismic.io/stayfolio-production/3b4bf417-3c41-4d05-b62c-f02a293ba115_banner.jpg?auto=compress,format);"></div>
+    </div>
+    <div class="page-btns">
+        <div class="active"></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="side-btns">
+        <div>
+            <span><i class="fas fa-angle-left"></i></span>
+        </div>
+        <div>
+            <span><i class="fas fa-angle-right"></i></span>
+        </div>
+    </div>
+</div>
 	
 	
 	
@@ -438,7 +569,6 @@ body {
 	
 	
 	
-	
-	<script src ="../js/boarditem.js"></script>
+	<script src ="../js/boarditem2.js"></script>
 </body>
 </html>
