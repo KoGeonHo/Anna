@@ -6,6 +6,7 @@
 <mapper namespace="edu.fourmen.mapper.userMapper">
 
 	<select id="emailChk" parameterType="string" resultType="_int">
+	
 		SELECT 
 			count(*) as cnt
 		FROM 
@@ -13,30 +14,52 @@
 		WHERE 
 			user_email = #{ user_email } AND
 			isDel = 'N'
+			
 	</select>
 	
 	<insert id="join" parameterType="UserVO">
+	
 		INSERT INTO AnnaUser(
 			nickName,
 			user_email,
+			kakao_auth,
+			profile_image,
 			user_pwd
 		) VALUES (
 			#{ nickName },
 			#{ user_email },
+			#{ kakao_auth },
+			#{ profile_image },
 			#{ user_pwd }
 		)
+		
 	</insert>
 	
 	<select id="login" parameterType="UserVO" resultType="UserVO">
+	
 		SELECT 
 			uidx,
 			nickName,
+			user_email,
+			kakao_auth,
 			user_pwd
 		FROM 
 			AnnaUser
 		WHERE
 			user_email = #{ user_email } AND
 			isDel = 'N'
+			
 	</select>
+	
+	<update id="updateKakaoAuthKey" parameterType="UserVO">
+	
+		UPDATE 
+			AnnaUser
+		SET
+			kakao_auth = #{ kakao_auth }
+		WHERE
+			uidx = #{ uidx }
+	
+	</update>
 	
 </mapper>
