@@ -1,20 +1,12 @@
 package edu.fourmen.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.UUID;
-
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.google.gson.JsonObject;
 
 import edu.fourmen.dao.BoardDAO;
 import edu.fourmen.vo.BoardVO;
+import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
 
 @Service
@@ -32,9 +24,9 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public List<BoardVO> selectfreeboard(SearchVO svo) {
+	public List<BoardVO> selectfreeboard(PageMaker pm) {
 		
-		return boardDao.selectfreeboard(svo);
+		return boardDao.selectfreeboard(pm);
 	}
 
 	
@@ -44,6 +36,13 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO viewBoard(int Bidx) {
 		
 		return boardDao.viewBoard(Bidx);
+	}
+
+
+	@Override
+	public int totalCount(PageMaker pm) {
+		
+		 return boardDao.totalCount(pm);
 	}
 
 }
