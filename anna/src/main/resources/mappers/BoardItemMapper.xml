@@ -6,19 +6,63 @@
  
 <mapper namespace="edu.fourmen.mapper.boardItemMapper">
 	
-	<select id="selectAll" resultType="BoardItemVO"  >
+	<select id="selectAll" resultType="BoardItemVO" parameterType="searchvo2"  >
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
 			 , b.Contents
 			 , b.wdate
-			 , u.nickname
+			 , u.nickName
+			 , b.image1
 			FROM Board_Items b, AnnaUser u
-			WHERE b.uidx = u.uidx  ORDER BY b.uidx desc 
+			WHERE b.uidx = u.uidx  ORDER BY b.item_idx desc LIMIT #{startPage}, #{perPageNum}
+			 <!-- <if test='searchType != null and searchType.equals("All")'>
+           AND b.Contents like concat('%',#{SearchVal},'%')
+           OR u.nickname like concat('%',#{SearchVal},'%')
+          OR b.Title like concat('%',#{SearchVal},'%')   
+       </if>
+      <if test='searchType != null and searchType.equals("title")'>
+          AND b.Title like concat('%',#{SearchVal},'%')
+       </if>
+       <if test='searchType != null and searchType.equals("contentWriter")'>
+          AND b.Contents like concat('%',#{SearchVal},'%')
+          OR u.nickname like concat('%',#{SearchVal},'%')
+       </if>
+	
+		limit #{startPage} , #{pageNum} -->
 		
 	</select>
 	
-
+	<!-- 
+<select id="totalcount" parameterType="BoardItemVO" resultType="int">
+   SELECT COUNT(item_idx)
+     FROM Board_Items b
+     INNER JOIN AnnaUser u
+        ON b.uidx = u.uidx
+    WHERE b.isDel = 'N'
+        <if test='searchType != null and searchType.equals("All")'>
+           AND b.Contents like concat('%',#{SearchVal},'%')
+           OR u.nickname like concat('%',#{SearchVal},'%')
+          OR b.Title like concat('%',#{SearchVal},'%')   
+       </if>
+      <if test='searchType != null and searchType.equals("title")'>
+          AND b.Title like concat('%',#{SearchVal},'%')
+       </if>
+       <if test='searchType != null and searchType.equals("contentWriter")'>
+          AND b.Contents like concat('%',#{SearchVal},'%')
+          OR u.nickname like concat('%',#{SearchVal},'%')
+          
+       </if>
+</select> -->
+	
+	<select id="totalcount" resultType="Integer">
+		<![CDATA[
+			SELECT 
+				count(*)
+			FROM Board_Items
+		]]>
+	</select>
+	
 	
 	<insert id="boarditemswrite" parameterType="BoardItemVO">
 	insert into Board_Items(
@@ -79,6 +123,16 @@
 			 , b.Contents
 			 , b.wdate
 			 , b.cate_idx
+			 , image1
+			 , image2
+			 , image3
+			 , image4
+			 , image5
+			 , image6
+			 , image7
+			 , image8
+			 , image9
+			 , image10
 			 , u.nickname
 			 , b.Keyword
 			 , b.Price
@@ -87,7 +141,8 @@
 			 
 		FROM Board_Items b , AnnaUser u
 		WHERE b.uidx = u.uidx
-		AND b.uidx = #{uidx}
+		AND b.item_idx = #{item_idx}
 	</select>
-
+	
+	
 </mapper>

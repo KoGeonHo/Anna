@@ -1,6 +1,6 @@
 package edu.fourmen.vo;
 
-public class PageMaker extends SearchVO {
+public class PageMaker  {
 	
 	
 	private int totalCount; // 게시글 총합을 구함
@@ -12,6 +12,28 @@ public class PageMaker extends SearchVO {
 	private int displayPageNum = 10; // < 1 2 3 4 5 6 7 8 9 10 > 페이지바?
 	private int page; // 
 	
+	private String SearchType;
+	private String SearchVal;
+	private String board_type;
+	
+	public String getSearchType() {
+		return SearchType;
+	}
+	public void setSearchType(String searchType) {
+		SearchType = searchType;
+	}
+	public String getSearchVal() {
+		return SearchVal;
+	}
+	public void setSearchVal(String searchVal) {
+		SearchVal = searchVal;
+	}
+	public String getBoard_type() {
+		return board_type;
+	}
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
+	}
 	public int getTotalCount() {
 		return totalCount;
 	}
@@ -79,6 +101,7 @@ public class PageMaker extends SearchVO {
 				endPage = tempEndPage;
 				
 		prev = startPage == 1 ? false:true; //시작 페이지가 1이면 false를 리턴하고 1이 아니면 true를 리턴해서 나타나게 한다.
+		
 		next = endPage*getPageNum() >= totalCount? false:true; //endPage에 위치한 게시글까지 합쳐도 게시글의 총합보다 낮으면 true를 줘서
 																//나타나게 하고 총합보디 높다면 false를 줘서 안나타나게 한다.
 			

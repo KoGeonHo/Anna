@@ -85,15 +85,6 @@ public class BoardController {
 		
 		int totalRow = 0;
 		
-		//만일 검색 키워드가 넘어온다면
-		if(!SearchVal.equals("")) { //검색 조건이 무엇인가에 따라 분기
-			if(SearchType.equals("Title")) { //제목 검색인 경우
-				pm.setTitle(SearchVal);
-				
-			}
-			
-		}
-		
 		
 		
 		List<BoardVO> freeboard = boardService.selectfreeboard(svo);

@@ -20,7 +20,6 @@
 </style>
 <title>item view 페이지</title>
 <style>
-/* 
 .outer {
   border: 6px solid royalblue;
   width: 500px;
@@ -34,10 +33,11 @@
   display: flex;
   height: 100%;
   transition: .3s ease-out;
+  display:none;
 }
 
 .inner {
-}
+} 
 
 
 
@@ -52,7 +52,7 @@
     position: relative;
     margin: 0 auto;
     overflow: hidden; /* 현재 슬라이드 오른쪽에 위치한 나머지 슬라이드 들이 보이지 않도록 가림 */
-	display:block
+	display:none;
 }
 .slider input[type=radio]{
     display: none;
@@ -73,7 +73,7 @@ ul.imgs li{
 }
 
 .bullets{
-    position: absolute;
+    position: absolute; 
     left: 50%;
     transform: translateX(-50%);
     bottom: 20px;
@@ -151,6 +151,95 @@ body {
 
 
 
+.slider-1 {
+	width:700px;
+    height:480px;
+    position:relative;
+    display : none;
+}
+
+/* 슬라이더 1 - 페이지 버튼 */
+.slider-1 > .page-btns {
+    text-align:center;
+    position:absolute;
+    bottom:20px;
+    left:0;
+    width:100%;
+    display : none;
+}
+
+.slider-1 > .page-btns > div {
+    width:20px;
+    height:20px;
+    /* background-color:rgba(255,255,255,.5); */
+    background-color:black;
+    border-radius:4px;
+    display:inline-block;
+    cursor:pointer;
+    display : none;
+}
+
+.slider-1 > .page-btns > div.active {
+    /* background-color:rgba(255,255,255,1); */
+    background-color:grey;
+    display : none;
+}
+
+/* 슬라이더 1 - 슬라이드 */
+
+.slider-1 > .slides > div {
+  position:absolute; 
+    width:500px;
+    height:350px;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    opacity:0;
+    transition: opacity 0.3s;
+    background-position:center;
+    /* background-size:cover;  */
+    background-repeat:no-repeat;
+    display : none;
+}
+
+.slider-1 > .slides > div.active {
+    opacity:1;
+    display : none;s
+}
+
+/* 슬라이더 좌우 버튼 */
+.slider-1 > .side-btns > div {
+   /*  position:absolute; */
+    top:0;
+    left:0;
+    width:25%;
+    height:100%;
+    cursor:pointer;
+    display : none;
+}
+.slider-1 > .side-btns > div:last-child {
+    left:auto;
+    right:0;
+    display : none;
+}
+.slider-1 >.side-btns > div > span {
+    position:absolute;
+    top:50%;
+    left:20px;
+    transform:translatey(-50%);
+    background-color:white;
+    opacity:0.5;
+    padding:1px 13px;
+    border-radius:50px;
+    font-size:25px;
+    display : none;
+}
+.slider-1 >.side-btns > div:last-child > span {
+    left:auto;
+    right:20px;
+    display : none;
+}
 
 
 }
@@ -238,7 +327,7 @@ body {
     left: 0;
     transition: 0.5s;
     z-index:1;
-} */
+} 
 
 
 
@@ -266,8 +355,8 @@ a {
 
 /* 슬라이더 1 시작 */
 .slider-1 {
-	width:500px;
-    height:350px;
+	width:700px;
+    height:480px;
     position:relative;
 }
 
@@ -283,14 +372,16 @@ a {
 .slider-1 > .page-btns > div {
     width:20px;
     height:20px;
-    background-color:rgba(255,255,255,.5);
+    /* background-color:rgba(255,255,255,.5); */
+    background-color:black;
     border-radius:4px;
     display:inline-block;
     cursor:pointer;
 }
 
 .slider-1 > .page-btns > div.active {
-    background-color:rgba(255,255,255,1);
+    /* background-color:rgba(255,255,255,1); */
+    background-color:grey;
 }
 
 /* 슬라이더 1 - 슬라이드 */
@@ -306,12 +397,14 @@ a {
     opacity:0;
     transition: opacity 0.3s;
     background-position:center;
-    background-size:cover; 
+    /* background-size:cover;  */
     background-repeat:no-repeat;
+     display : block;
 }
 
 .slider-1 > .slides > div.active {
     opacity:1;
+     display : block;
 }
 
 /* 슬라이더 좌우 버튼 */
@@ -383,10 +476,101 @@ a {
 	<div class="row">
 			<div class="col-lg-10">
 				<div class="card">
-				<%-- 	<div class="outer">
+				
+					<div class="card-body">
+						
+							<c:if test="${vo.cate_idx == 1}">
+						상품카테고리 > 가전 
+							</c:if>
+							<c:if test="${vo.cate_idx == 2}">
+						상품카테고리 > 주방
+							</c:if>
+				<hr>
+				
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+						<div class="slider-1">
+						    <div class="slides">
+						    	<c:if test="${vo.image1 != null}">
+						        <div ><img src="../resources/upload/${vo.image1}"></div>
+						        </c:if>
+						        <c:if test="${vo.image2 != null}">
+						        <div ><img src="../resources/upload/${vo.image2}"></div>
+						         </c:if>
+						        <c:if test="${vo.image3 != null}">
+						        <div ><img src="../resources/upload/${vo.image3}"></div>
+						         </c:if>
+						        <c:if test="${vo.image4 != null}">
+						        <div ><img src="../resources/upload/${vo.image4}"></div>
+						         </c:if>
+						        <c:if test="${vo.image5 != null}">
+						        <div ><img src="../resources/upload/${vo.image5}"></div>
+						         </c:if>
+						        <c:if test="${vo.image6 != null}">
+						        <div ><img src="../resources/upload/${vo.image6}"></div>
+						         </c:if>
+						        <c:if test="${vo.image7 != null}">
+						        <div ><img src="../resources/upload/${vo.image7}"></div>
+						         </c:if>
+						        <c:if test="${vo.image8 != null}">
+						        <div ><img src="../resources/upload/${vo.image8}"></div>
+						         </c:if>
+						        <c:if test="${vo.image9 != null}">
+						        <div ><img src="../resources/upload/${vo.image9}"></div>
+						         </c:if>
+						        <c:if test="${vo.image10 != null}">
+						        <div ><img src="../resources/upload/${vo.image10}"></div>
+						        </c:if>
+						    </div>
+						    <div class="page-btns">
+						        <c:if test="${vo.image1 != null}">
+						        <div></div>
+								 </c:if>
+						        <c:if test="${vo.image2 != null}">
+						        <div></div>
+						         </c:if>
+						        <c:if test="${vo.image3 != null}">
+						        <div></div>
+						         </c:if>
+						        <c:if test="${vo.image4 != null}">
+						        <div></div>
+						         </c:if>
+						        <c:if test="${vo.image5 != null}">
+						        <div></div>
+						         </c:if>
+						        <c:if test="${vo.image6 != null}">
+						        <div></div>
+						         </c:if>
+						        <c:if test="${vo.image7 != null}">
+						        <div></div>
+						         </c:if>
+						        <c:if test="${vo.image8 != null}">
+						        <div></div>
+						         </c:if>
+						        <c:if test="${vo.image9 != null}">
+						        <div></div> 
+						        </c:if>
+						        <c:if test="${vo.image10 != null}">
+								<div></div>
+						         </c:if>
+						    </div>
+						    <div class="side-btns">
+						        <div>
+						            <span><i class="fas fa-angle-left"></i></span>
+						        </div>
+						        <div>
+						            <span><i class="fas fa-angle-right"></i></span>
+						        </div>
+						    </div>
+						</div>
+										
+				
+				
+				
+					<div class="outer">
 					  <div class="inner-list">
 					    <div class="inner">
-					      <img src="../resources/upload/${vo.image1}">
+					      <img src="../resources/upload${vo.image1}">
 					    </div>
 					    <div class="inner">
 					      <img src="../resources/upload/${vo.image2}">
@@ -433,6 +617,7 @@ a {
 					    </c:if>
 					  </div>
 					  </div>
+				
 					<div class="slider">
 					    <input type="radio" name="slide" id="slide1" checked>
 					    <input type="radio" name="slide" id="slide2">
@@ -447,7 +632,7 @@ a {
 				    
 				    <ul id="imgholder" class="imgs">
 				    
-				        <li><img src="../resources/upload/${vo.image1}"></li>
+				        <li><img src="../resources/upload${vo.image1}"></li>
 						
 				        <li><img src="../resources/upload/${vo.image2}"></li>
 				        
@@ -503,27 +688,17 @@ a {
 				    </ul>
 				    
 					</div>
-				  
 					
-				       --%>
-					</div>
 				
-				
-					<input type="hidden" value="${vo.uidx} asd"> 
-					<input type="hidden" value="${vo.item_idx} asd">
-					
-					<div class="card-body">
 						<h5 class="card-title">${vo.title}</h5>
-							<c:if test="${vo.cate_idx == 1}">
-						상품카테고리 > 가전 
-							</c:if>
-							<c:if test="${vo.cate_idx == 2}">
-							주방
-							</c:if>
-						<p class="card-text">${vo.content}</p>
-						<p class="card-text">판매가격 : ${vo.price}</p>
-						<p class="card-text">거래지역 : ${vo.addr2}</p>
-						<p class="card-text">팀 포맨의 프로젝트</p>
+							<input type="hidden" value="${vo.uidx} asd"> 
+							<input type="hidden" value="${vo.item_idx} asd">
+							
+								<p class="card-text">${vo.content}</p>
+								<p class="card-text">판매가격 : ${vo.price}</p>
+								<p class="card-text">거래지역 : ${vo.addr2}</p>
+								<p class="card-text">팀 포맨의 프로젝트</p>
+						</div><!-- card body 끝 -->
 					</div>
 				</div>
 			</div>
@@ -538,30 +713,6 @@ a {
 	
 	
 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<div class="slider-1">
-    <div class="slides">
-        <div class="active" style="background-image:url(https://images.prismic.io/stayfolio-production/73f99b79-336f-47fd-8ace-afc00978147d_banner.jpg?auto=compress,format);"></div>
-        <div style="background-image:url('../resources/upload/${vo.image1}')"></div>
-        <div style="background-image:url(https://images.prismic.io/stayfolio-production/586abdef-7163-4629-9c39-6d7a627ae10e_01_banner_picture.jpg?auto=compress,format);"></div>
-        <div style="background-image:url(https://images.prismic.io/stayfolio-production/3b4bf417-3c41-4d05-b62c-f02a293ba115_banner.jpg?auto=compress,format);"></div>
-    </div>
-    <div class="page-btns">
-        <div class="active"></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="side-btns">
-        <div>
-            <span><i class="fas fa-angle-left"></i></span>
-        </div>
-        <div>
-            <span><i class="fas fa-angle-right"></i></span>
-        </div>
-    </div>
-</div>
 	
 	
 	
@@ -570,6 +721,7 @@ a {
 	
 	
 	
+	<script src ="../js/boarditem.js"></script>
 	<script src ="../js/boarditem2.js"></script>
 </body>
 </html>
