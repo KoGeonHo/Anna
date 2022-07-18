@@ -266,7 +266,8 @@ a {
 
 /* 슬라이더 1 시작 */
 .slider-1 {
-    height:400px;
+	width:500px;
+    height:350px;
     position:relative;
 }
 
@@ -504,8 +505,8 @@ a {
 					</div>
 				  
 					
-					</div>
 				       --%>
+					</div>
 				
 				
 					<input type="hidden" value="${vo.uidx} asd"> 
