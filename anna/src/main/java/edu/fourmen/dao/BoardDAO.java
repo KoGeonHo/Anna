@@ -30,4 +30,6 @@ public class BoardDAO {
 	public List<BoardVO> selectfreeboard(SearchVO svo){ //일상&소통 게시판리스트
 		return sqlSession.selectList(namespace+".selectfreeboard", svo);
 	}
+	
+	
 }
