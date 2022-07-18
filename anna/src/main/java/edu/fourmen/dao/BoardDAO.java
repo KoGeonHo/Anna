@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardVO;
+import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
 
 @Repository
@@ -18,6 +19,7 @@ public class BoardDAO {
 	private static final String namespace = "edu.fourman.mapper.boardMapper"; //네임스페이스를 namespace로 줄임.	
 	
 	public int writeBoard(BoardVO vo) { //글작성하기
+		
 		int result = sqlSession.insert(namespace+".boardinsert", vo);
 		
 		return result;
@@ -27,9 +29,15 @@ public class BoardDAO {
 		return sqlSession.selectOne(namespace+".viewBoard",Bidx);
 	}
 	
-	public List<BoardVO> selectfreeboard(SearchVO svo){ //일상&소통 게시판리스트
-		return sqlSession.selectList(namespace+".selectfreeboard", svo);
+	public List<BoardVO> selectfreeboard(PageMaker pm){ //일상&소통 게시판리스트
+		return sqlSession.selectList(namespace+".selectfreeboard", pm);
 	}
 	
+	public int totalCount(PageMaker pm) {
+		
+		int result = sqlSession.selectOne(namespace+".totalCount", pm);
+		
+		return result; 
+	}
 	
 }

@@ -8,7 +8,8 @@
          <typeAlias type="edu.fourmen.vo.BoardItemVO" alias="BoardItemVO"/>
          <typeAlias type="edu.fourmen.vo.BoardVO" alias="boardvo"/>
 		 <typeAlias type="edu.fourmen.vo.SearchVO" alias="searchvo"/>
-        <!--<typeAlias type="board.newBoard.vo.BoardVO" alias="boardVO"/> -->
+		 <typeAlias type="edu.fourmen.vo.PageMaker" alias="pagemaker"/>
+        
 
     </typeAliases>
 </configuration>
