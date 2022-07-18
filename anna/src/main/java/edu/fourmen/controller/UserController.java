@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,8 +31,6 @@ public class UserController {
 	
 	@Autowired
 	BCryptPasswordEncoder pwdEncoder; 
-	
-	String path = "/anna";
 	
 	//로그인 페이지
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
@@ -89,8 +86,6 @@ public class UserController {
 					
 					session.setAttribute("nickName", userInfo.getNickName());
 					
-					session.setAttribute("interested", userInfo.getInterested());
-					
 					pw.append("<script>location.href='"+request.getContextPath()+"/main.do';</script>");
 					
 					pw.flush();
@@ -130,7 +125,7 @@ public class UserController {
 		
 		session.invalidate();
 		
-		return "redirect:/main.do";
+		return "";
 	}
 	
 	//회원가입  데이터 입력
@@ -272,8 +267,6 @@ public class UserController {
         			
         			session.setAttribute("nickName", userLoginInfo.getNickName());
         			
-        			session.setAttribute("interested", userLoginInfo.getInterested());
-        			
         			moveTo = request.getContextPath()+"/main.do";
         			
             	}
@@ -282,7 +275,7 @@ public class UserController {
         		
         		System.out.println("가입된 이메일 주소 카카오 id(kakao_auth) update 후 로그인 처리");
         		
-        		userLoginInfo = userService.login(vo);
+        		userLoginInfo = userService.login(vo);		
         		
         		if(userLoginInfo.getKakao_auth() == "") {
         			
@@ -299,8 +292,6 @@ public class UserController {
     			
     			session.setAttribute("nickName", userLoginInfo.getNickName());
     			
-    			session.setAttribute("interested", userLoginInfo.getInterested());
-    			
     			moveTo = request.getContextPath()+"/user/myPage.do";
         			
         	}
@@ -316,68 +307,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/myPage.do")
-	public String myPage(Model model,HttpServletRequest request,HttpSession session) {
-		
-		model.addAttribute("path",path);
-		
-		session = request.getSession();
-		
-		int uidx = 0;
-		
-		if(session.getAttribute("uidx") != null) {		
-			uidx = (int)session.getAttribute("uidx");
-		}
-		
-		System.out.println(uidx);
+	public String myPage() {
 		
 		return "user/myPage";
-		
-	}
-	
-	//회원정보 조회
-	@RequestMapping(value="/userInfoView.do")
-	public String userInfo(Model model,HttpServletRequest request,HttpSession session) {
-		
-		model.addAttribute("path",path);
-		
-		session = request.getSession();
-		
-		int uidx = 0;
-		
-		if(session.getAttribute("uidx") != null) {		
-			uidx = (int)session.getAttribute("uidx");
-			
-			UserVO userInfo = userService.getUserInfo(uidx);
-			
-			model.addAttribute("userInfo",userInfo);
-			
-		}
-				
-		return "user/userInfoView";
-		
-	}
-	
-	
-	//회원정보 조회
-	@RequestMapping(value="/userInfoMod.do")
-	public String userInfoMod(Model model,HttpServletRequest request,HttpSession session) {
-		
-		model.addAttribute("path",path);
-		
-		session = request.getSession();
-		
-		int uidx = 0;
-		
-		if(session.getAttribute("uidx") != null) {		
-			uidx = (int)session.getAttribute("uidx");
-			
-			UserVO userInfo = userService.getUserInfo(uidx);
-			
-			model.addAttribute("userInfo",userInfo);
-			
-		} 
-		
-		return "user/userInfoMod";
 		
 	}
 	
