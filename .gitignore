@@ -107,3 +107,25 @@ local.properties
 hs_err_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,java
+anna/target/m2e-wtp/web-resources/META-INF/maven/edu.fourmen/anna/pom.properties
+anna/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+anna/target/classes/edu/fourmen/vo/UserVO.class
+anna/target/classes/edu/fourmen/vo/SearchVO.class
+anna/target/classes/edu/fourmen/vo/BoardVO.class
+anna/target/classes/edu/fourmen/vo/BoardItemVO.class
+anna/target/classes/edu/fourmen/service/UserServiceImpl.class
+anna/target/classes/edu/fourmen/service/UserService.class
+anna/target/classes/edu/fourmen/service/MailUtils.class
+anna/target/classes/edu/fourmen/service/MailServiceImpl.class
+anna/target/classes/edu/fourmen/service/MailService.class
+anna/target/classes/edu/fourmen/service/BoardServiceImpl.class
+anna/target/classes/edu/fourmen/service/BoardService.class
+anna/target/classes/edu/fourmen/service/BoardItemServiceImple.class
+anna/target/classes/edu/fourmen/service/BoardItemService.class
+anna/target/classes/edu/fourmen/dao/UserDAO.class
+anna/target/classes/edu/fourmen/dao/BoardItemDAO.class
+anna/target/classes/edu/fourmen/dao/BoardDAO.class
+anna/target/classes/edu/fourmen/controller/UserController.class
+anna/target/classes/edu/fourmen/controller/HomeController.class
+anna/target/classes/edu/fourmen/controller/BoardItemController.class
+anna/target/classes/edu/fourmen/controller/BoardController.class
