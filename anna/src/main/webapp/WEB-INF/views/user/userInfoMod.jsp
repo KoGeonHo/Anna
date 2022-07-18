@@ -156,7 +156,7 @@ html, body {
 					</a>
 	
 					<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
-						<li><a href="#" class="nav-link px-3 link-dark ">중고거래1</a></li>
+						<li><a href="#" class="nav-link px-3 link-dark ">중고거래</a></li>
 						<li><a href="#" class="nav-link px-3 link-dark">커뮤니티</a></li>
 						<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
 						<li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
