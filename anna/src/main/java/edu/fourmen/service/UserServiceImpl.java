@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService{
 	
 	private final String redirect_uri = "http://localhost:8070/anna/user/kakaoLogin.do";
 	
+	
 	@Override
 	public String getClient_id() {
 		return this.client_id;

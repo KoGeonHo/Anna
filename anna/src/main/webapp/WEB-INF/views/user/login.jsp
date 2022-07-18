@@ -112,7 +112,7 @@
 <body>
 	<div class="wrapper vcenter-item">
 		<div class="container">
-			<form id="loginFrm" action="login.do" method="post">
+			<form id="loginFrm" action="login.do" method="post">1
 				<div>
 					<div class="box">
 						<h2 class="form-signin-heading">로그인</h2>

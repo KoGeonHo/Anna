@@ -81,6 +81,8 @@
 			AnnaUser
 		WHERE
 			uidx = #{ uidx }
+			
+			
 		
 	</select>
 	

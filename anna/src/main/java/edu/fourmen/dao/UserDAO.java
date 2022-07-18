@@ -25,6 +25,8 @@ public class UserDAO {
 		int result = sqlSession.insert("edu.fourmen.mapper.userMapper.join",vo);
 		
 		return result;
+		
+		
 	}
 	
 	public UserVO login(UserVO vo) {
