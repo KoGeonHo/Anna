@@ -10,9 +10,10 @@
 	<title>Home</title>
 	
 
-	<script src="jQuery/js/jquery-3.6.0.min.js"></script>
-	<script src="resources/js/bootstrap.js"></script>
-	<link href="resources/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
  -->	
  	<link href="${path}/css/bootstrap.css" rel="stylesheet"/> 
@@ -27,6 +28,10 @@
 	큰(lg)   	  992px 이상	  데스크탑
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
+
+.body {
+    padding-top: -56px;
+}
 
 .row {
 	padding : 0px;
@@ -43,44 +48,6 @@
 .card {
     margin-left: 3px;
 }
-
-
-.floating {
-  position: fixed; 
-  right: 50%; 
-  top: 180px; 
-  margin-right: -720px;
-  text-align:center;
-  width: 120px;
-}
-
-.floating {
-background-color:#f9f9f9;
-border:2px solid #000;
-position: fixed; 
-right: 40%; 
-top: 180px; 
-margin-right: -615px;
-text-align:center;
-width:70px;
-border-radius: 8px;
--webkit-border-radius: 8px;
-z-index : 1;
- }
-.floating div:nth-child(1){
-
-   border-radius: 8px;
-}
-.floating div:nth-child(2){
-   border:2px solid #ff3535;
-   border-radius: 8px;
-}
-.floating  div:nth-child(3){
-   border:2px solid #ff3535;
-   border-radius: 8px;
-}
-
-
 
 
 .bottom_menu {
@@ -126,7 +93,7 @@ z-index : 1;
     top : 150px;
     
    		 }
-    
+
   .navbar-toggler-icon {
     width: 4.5em;
     height: 5.5em;
@@ -134,13 +101,16 @@ z-index : 1;
     
     .navbar-brand {
 
-    margin-left: 1rem;
+    margin-left: 2rem;
     }
     
     .navbar-dark .navbar-toggler-icon {
-    margin-right: 1rem;
+    margin-right: 2rem;
     }
     
+   .logo {
+		padding-left : 2.5rem;
+   }
     
 
 </style>
@@ -150,20 +120,6 @@ z-index : 1;
 </head>
 
 <body>
-			<!-- 플로팅 메뉴 -->
-			
-				<div class="floating">
-					광고코드붙혀넣는곳
-				</div>
-				
-				
-				<div class="floating">
-					  <div><h5 style="font-size:4px;">방금 본 상품</h5></div>
-					  <div>트위터 공유코드 삽입</div>
-					  <div>	페이스북 공유코드 삽입</div>
-				</div>
-
-			<!-- 플로팅 메뉴 -->
 
 			<!-- pc 헤더 -->
 				  <div class="b-example-divider ">
@@ -172,7 +128,7 @@ z-index : 1;
 				
 							    <header class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1  " >
 							      <a href="/" class="d-flex align-items-center col-md-3 mb-1 col-sm-3 mb-md-0 text-dark text-decoration-none ">
-							        <svg class="bi me-1" width="40" height="32" role="img" aria-label="Bootstrap"><img src="resources/image/logo.png" width="30%"><use xlink:href="#bootstrap"/></svg>
+							       <div class="logo"><img src="images/logo.png" width="70%"></div>
 							      </a>
 							
 							      <ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
@@ -181,15 +137,23 @@ z-index : 1;
 							        <li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
 							        <li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
 							      </ul>
-							
-							      <div class="col-md-3 text-end">
-							        <button type="button" class="btn "  style="background-color : #00AAB2;  color: #fff;">로그인</button>
-							        <button type="button" class="btn " style="background-color : #BBCE53;  color: #fff;">회원가입</button>
+									
+									<div class="col-md-3 text-end">									
+									<c:if test="${user == null }">
+							      							    	 	 
+							        <button type="button" class="btn "  style="background-color : #00AAB2;  color: #fff;"><a href="user/login.do">로그인</a></button>
+							        <button type="button" class="btn " style="background-color : #BBCE53;  color: #fff;"><a href="user/join.do">회원가입</a></button>
+							        </c:if>
+							        <c:if test="${user != null }">
+							       
+									<button type="button" class="btn "  style="background-color : #00AAB2;  color: #fff;"><a href="user/logout.do">로그아웃</a></button>
+							        <button type="button" class="btn " style="background-color : #BBCE53;  color: #fff;">물음표</button>
+									</c:if>
 							      </div>
-						    </header>
-						  </div>
-				  </div>
-				  </div>
+								    </header>
+								  </div>
+							  </div>
+							  </div>
 				  
 			<!-- pc헤더 -->
 
@@ -197,50 +161,43 @@ z-index : 1;
 			<!-- 모바일 헤더-->
 			
 			<div class="d-lg-none"> 
-   				 <link href="https://getbootstrap.kr/docs/5.1/examples/offcanvas-navbar/offcanvas.css" rel="stylesheet">
 					
     
 					<nav class="navbar navbar-expand-lg fixed-top navbar-dark " style="background-color : #00AAB2;"  aria-label="Main navigation">
 					
 				  <div class="container-fluid">
-				    <a class="navbar-brand fs-1 fw-bold" href="#">금암동</a>
+				    <a class="navbar-brand fs-1 fw-bold" href="#">금암동 ▼</a>
 				    <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
 				      <span class="navbar-toggler-icon"></span>
 				    </button>
 				
 				    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
 				      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				      <br>
 				        <li class="nav-item">
-				          <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
-				        </li>
-				        <li class="nav-item">
-				          <a class="nav-link" href="#">Notifications</a>
+				          <a class="nav-link  fs-1 fw-bold" aria-current="page" href="#">메뉴</a>
 				        </li>
 				        <li class="nav-item">
-				          <a class="nav-link" href="#">Profile</a>
+				          <a class="nav-link  fs-1 fw-bold" href="#">추천</a>
 				        </li>
 				        <li class="nav-item">
-				          <a class="nav-link" href="#">Switch account</a>
+				          <a class="nav-link  fs-1 fw-bold" href="#">받습</a>
 				        </li>
-				        <li class="nav-item dropdown">
-				          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Settings</a>
-				          <ul class="dropdown-menu" aria-labelledby="dropdown01">
-				            <li><a class="dropdown-item" href="#">Action</a></li>
-				            <li><a class="dropdown-item" href="#">Another action</a></li>
-				            <li><a class="dropdown-item" href="#">Something else here</a></li>
-				          </ul>
+				        <li class="nav-item">
+				          <a class="nav-link  fs-1 fw-bold" href="#">니다</a>
 				        </li>
+
 				      </ul>
-				      <form class="d-flex">
-				        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-				        <button class="btn btn-outline-success" type="submit">Search</button>
-				      </form>
 				    </div>
 				  </div>
 				
 				</nav>		
 				  </div>
 			<!-- 모바일 헤더-->
+
+			<!-- 퀵배너 -->
+			
+			<!-- 퀵배너 -->
 
 
 
@@ -255,7 +212,7 @@ z-index : 1;
 			    </div>
 			    <div class="carousel-inner">
 			      <div class="carousel-item active">
-			     <img src="resources/image/slide_2.png" width="100%">
+			     <img src="images/slide_2.png" width="100%">
 			       
 			        <div class="container">
 			          <div class="carousel-caption text-start">
@@ -264,7 +221,7 @@ z-index : 1;
 			        </div>
 			      </div>
 			      <div class="carousel-item">
-			        <img src="resources/image/slide_1.png" width="100%">
+			        <img src="images/slide_1.png" width="100%">
 			        
 			        <div class="container">
 			          <div class="carousel-caption">
@@ -272,7 +229,7 @@ z-index : 1;
 			        </div>
 			      </div>
 			      <div class="carousel-item">
-			       <img src="resources/image/slide.png" width="100%">
+			       <img src="images/slide.png" width="100%">
 			       
 			        <div class="container">
 			          <div class="carousel-caption text-end">
@@ -328,11 +285,14 @@ z-index : 1;
 								        <div class="col-md-2"><h4>｜중고거래</h4></div>
 								        <div class="col-md-8"></div>
 								        <div class="col-md-2 "><h6  style="text-align:right;">더보기</h6></div>
+								        <hr>
 							    </div>
 						</div>
 						</div>
-						</div>
-				<hr>				
+						
+								
+			      </div>
+			      
 			      
 			      <div class="container ">
 				       <div class="row">
@@ -611,19 +571,19 @@ z-index : 1;
 					<div class="row d-lg-none"> 
 							<div class="bottom_menu">
 								<div>
-									<img src="resources/image/icon_home.png" width="40%">
+									<img src="images/icon_home.png" width="40%">
 								</div>
 								<div>
-									<img src="resources/image/icon_comm.png"  width="40%">
+									<img src="images/icon_comm.png"  width="40%">
 								</div>
 								<div>
-									<img src="resources/image/icon_chat.png"  width="40%">
+									<img src="images/icon_chat.png"  width="40%">
 								</div>
 								<div>
-									<img src="resources/image/icon_my.png"  width="40%">
+									<img src="images/icon_my.png"  width="40%">
 								</div>
 								<div>
-									<img src="resources/image/icon_quick.png"  width="40%">
+									<img src="images/icon_quick.png"  width="40%">
 								</div>
 							</div>
 					</div>
