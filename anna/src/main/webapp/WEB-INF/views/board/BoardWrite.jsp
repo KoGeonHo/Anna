@@ -14,7 +14,7 @@
 
 
 
-  <script src="${pageContext.request.contextPath}/js/summernote-lite.js"></script>
+  <script src="${pageContext.request.contextPath}/js/summernote-lite.js"></script>1
   <script src="${pageContext.request.contextPath}/js/summernote-ko-KR.js"></script>
 
 
