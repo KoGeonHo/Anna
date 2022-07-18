@@ -121,7 +121,7 @@ html, body {
 	<div class="wrapper">
 	
 		<!-- PC 헤더 START-->
-		<div class="pc-header border-bottom" style="position:sticky; top:0; left:0;">1
+		<div class="pc-header border-bottom" style="position:sticky; top:0; left:0;">
 			<div class="container">
 		
 				<header class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1  ">

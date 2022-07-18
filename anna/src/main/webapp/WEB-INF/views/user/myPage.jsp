@@ -145,7 +145,7 @@ html, body {
 		<nav class="navbar navbar-dark" style=" background:#00AAB2;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-			    	<a class="navbar-brand" href="#" style="color:white;">효자동</a>1
+			    	<a class="navbar-brand" href="#" style="color:white;">효자동</a>
 			    </div>
 			    <div class="text-end" style="color:white; flex:1; padding:0 1rem;">
 			    	<input type="text" class="form-control" placeholder="검색">
