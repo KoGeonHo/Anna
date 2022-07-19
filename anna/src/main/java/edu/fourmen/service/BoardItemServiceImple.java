@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.PageMaker;
 
 @Service
 public class BoardItemServiceImple implements BoardItemService{
@@ -35,6 +36,12 @@ public class BoardItemServiceImple implements BoardItemService{
 	public List<BoardItemVO> list(BoardItemVO vo) {
 		
 		return boarditemdao.selectAll(vo);
+	}
+
+
+	@Override
+	public int totalcount() {
+		return  boarditemdao.totalcount();
 	}
 
 }

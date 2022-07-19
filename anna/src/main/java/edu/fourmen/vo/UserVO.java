@@ -1,6 +1,6 @@
 package edu.fourmen.vo;
 
-public class UserVO {
+public class UserVO{
 	private int uidx;
 	private String nickName;
 	private String user_email;
