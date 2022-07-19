@@ -22,7 +22,7 @@ public class BoardItemDAO {
 	
 	private static final String efdb = "edu.fourmen.mapper.boardItemMapper";
 	
-	public List<BoardItemVO> selectAll(SearchVO2 searchVO, BoardItemVO vo, Criteria criteria) {
+	public List<BoardItemVO> selectAll(BoardItemVO vo) {
 		return sqlSession.selectList(efdb+".selectAll",vo);
 		
 	}

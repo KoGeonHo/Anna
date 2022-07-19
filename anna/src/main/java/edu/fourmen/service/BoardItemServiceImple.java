@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
-import edu.fourmen.vo.Criteria;
 import edu.fourmen.vo.PageMaker;
-import edu.fourmen.vo.SearchVO2;
 
 @Service
 public class BoardItemServiceImple implements BoardItemService{
@@ -34,17 +32,16 @@ public class BoardItemServiceImple implements BoardItemService{
 	}
 
 
+	@Override
+	public List<BoardItemVO> list(BoardItemVO vo) {
+		
+		return boarditemdao.selectAll(vo);
+	}
 
 
 	@Override
 	public int totalcount() {
 		return  boarditemdao.totalcount();
-	}
-
-
-	@Override
-	public List<BoardItemVO> list(SearchVO2 searchVO, BoardItemVO vo, Criteria criteria) {
-		return boarditemdao.selectAll(vo,searchVO,criteria);
 	}
 
 }

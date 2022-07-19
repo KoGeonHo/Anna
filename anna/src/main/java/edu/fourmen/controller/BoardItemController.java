@@ -35,7 +35,6 @@ import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.Criteria;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.Pagenation;
-import edu.fourmen.vo.SearchVO2;
 import edu.fourmen.vo.UserVO;
 
 @RequestMapping(value = "/boarditem")
@@ -46,15 +45,14 @@ public class BoardItemController {
 	BoardItemService boarditemService;
 
 	@RequestMapping(value = "/itemlist.do")
-	public String itemlist(BoardItemVO vo, SearchVO2 searchVO,Criteria criteria, PageMaker pm, HttpServletRequest request, Model model) {
+	public String itemlist(BoardItemVO vo, Criteria criteria, PageMaker pm, HttpServletRequest request, Model model) {
 
 		
 		 Pagenation pageNation = new Pagenation();
 	        pageNation.setCriteria(criteria);
 	        pageNation.setTotalCount(boarditemService.totalcount());
-	        System.out.println(criteria+"크리테리아");
-	        System.out.println(boarditemService.totalcount() +"토탈카운트");
-			
+	        
+		
 		/*
 		 * // 한 페이지에 몇개씩 표시할 것인지 int pagecount = 15; // 보여줄 페이지의 번호를 일단 1이라고 초기값 지정 int
 		 * pagenumber = 1; // 페이지 번호가 파라미터로 전달되는지 읽어와본다. String strPageNum =
@@ -88,8 +86,7 @@ public class BoardItemController {
 
 		/* model.addAttribute("svo", svo); */
 		model.addAttribute("list", list);
-		model.addAttribute("pagenation", pageNation);
-		model.addAttribute("searchVO",searchVO);
+
 		return "boarditem/itemlist";
 	}/*
 		 * @RequestMapping(value="/ajax_board.do") public String itemlist2(BoardItemVO
