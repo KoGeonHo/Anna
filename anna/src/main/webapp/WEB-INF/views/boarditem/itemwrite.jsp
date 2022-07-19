@@ -26,25 +26,18 @@
 	제목: <input type="text" name="title">
 	카테고리:<select name="cate_idx">
 			<option value="1">가전제품</option>
-			  
-	</select>
+		   </select>
+	가격제안:<select name="offer">
+			<option value="1">불가능</option>
+			<option value="2">가능</option>
+		   </select>
 	<textarea id="summernote" name="content" ></textarea>
 	<br>
 	<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	<input type="hidden" name="addr_code" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-	<!-- <input type="hidden" name="image1" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image2" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image3" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image4" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image5" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image6" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image7" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image8" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image9" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것.
-	<input type="hidden" name="image10" value="1">임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-	<input type="hidden" name="offer" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-		<br>
+	
+	
 	키워드:<input type="text" name="keyword" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 		<br>
 	가격:<input type="text" name="price" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
@@ -55,7 +48,7 @@
 	
 		 <div id="fileDiv">
 			<p>
-				<input type="file" id="file" name="file">
+				<input type="file" id="file" name="file1">
 				<a href="#this" class="btn" id="delete" name="delete">삭제</a>
 			</p>
 		</div>
@@ -100,7 +93,7 @@
 
 </script>
 	<script type="text/javascript">
-		var gfv_count = 1;
+		var gfv_count = 2;
 	
 		$(document).ready(function(){
 			$("#list").on("click", function(e){ //목록으로 버튼
