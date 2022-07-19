@@ -6,7 +6,7 @@
  
 <mapper namespace="edu.fourmen.mapper.boardItemMapper">
 	
-	<select id="selectAll" resultType="BoardItemVO" parameterType="searchvo2"  >
+	<select id="selectAll" resultType="BoardItemVO" parameterType="BoardItemVO"  >
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx

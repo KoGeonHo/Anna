@@ -7,12 +7,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.BoardVO;
+import edu.fourmen.vo.Criteria;
 import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.SearchVO2;
 
 
 public interface BoardItemService {
 	
-	public List<BoardItemVO> list (BoardItemVO vo);
+	public List<BoardItemVO> list (SearchVO2 searchVO, BoardItemVO vo, Criteria criteria);
 	
 	public int totalcount();
 	
