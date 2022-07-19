@@ -4,12 +4,15 @@ package edu.fourmen.controller;
 
 
 import java.awt.Graphics2D;
+
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -22,13 +25,13 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-
+import org.springframework.web.servlet.ModelAndView;
 
 import edu.fourmen.service.BoardService;
 import edu.fourmen.vo.BoardVO;
@@ -293,18 +296,35 @@ public class BoardController {
 	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value="/InsertComment", method=RequestMethod.POST)
+	public String InsertComment(@RequestBody BoardVO bv,HttpSession session) {
+		System.out.println("댓글 등록 통신 성공");
+//		if(session.getAttribute("login") == null) {
+//			return "fail";
+//		} else {
+//			System.out.println("로그인함. 스크랩 진행");
+			
+			boardService.commentwrite(bv);//댓글작성
+			System.out.println("댓글 등록 서비스 성공");
+			return "InsertSuccess";
+//		}
+	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@ResponseBody
+	@RequestMapping(value="/CommentList/{Bidx}", method=RequestMethod.GET)
+	public Map<String, Object> getList(BoardVO bv, @PathVariable int Bidx, Model model) { // @PathVariable: URL 경로에 변수를 넣어주는
+		System.out.println("댓글 목록 컨트롤러 동작");
+		List<BoardVO> list = boardService.getCList(Bidx);//댓글목록
+		int total = boardService.getCTotal(bv); //댓글 갯수
+		ModelAndView view = new ModelAndView(); //데이터와 뷰를 동시에 설정이 가능
+		System.out.println("댓글 갯수 " + boardService.getCTotal(bv)); //댓글갯수 확인용
+		view.setViewName("/board/viewBoard"); //뷰
+		Map<String, Object> map = new HashMap<>(); //키와 밸류값으로 저장하는
+		map.put("list", list);
+		map.put("total", total);
+		
+		return map;
+	}
+
 }
