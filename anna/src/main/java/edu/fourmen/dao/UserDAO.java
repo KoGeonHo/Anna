@@ -25,6 +25,8 @@ public class UserDAO {
 		int result = sqlSession.insert("edu.fourmen.mapper.userMapper.join",vo);
 		
 		return result;
+		
+		
 	}
 	
 	public UserVO login(UserVO vo) {
@@ -36,6 +38,12 @@ public class UserDAO {
 	public void updateKakaoAuthKey(UserVO vo) {
 		
 		sqlSession.selectOne("edu.fourmen.mapper.userMapper.updateKakaoAuthKey",vo);
+		
+	}
+
+
+	public UserVO getUserInfo(int uidx) {
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.getUsetInfo",uidx);
 		
 	}
 }
