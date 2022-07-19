@@ -7,8 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <title>일상&amp;소통</title>
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <script>
 //스크롤 시 이벤트 처리
+
+
 
 //페이지가 처음 로딩될 때 1page를 보여주기 때문에 초기값을 1로 지정한다.
 let currentPage = 1;
@@ -19,7 +22,7 @@ let isLoding=false;
 $(window).on("scroll",function(){
 	
 	//위로 스크롤된 길이
-	let scrollTop = $(window).height();
+	let scrollTop = $(window).scrollTop();
 	//웹브라우저 창의 높이
 	let windowHeight = $(window).height();
 	//문서 전체의 높이
@@ -28,52 +31,51 @@ $(window).on("scroll",function(){
 	let isBottom = scrollTop + windowHeight + 10 >= documentHeight;
 	
 	if(isBottom){
+		console.log(isLoding);
 		//만일 현재 마지막 페이지라면
 		if(currentPage == ${totalPageCount} || isLoding){
+			
 			return; // 함수를 여기서 끝낸다.
 		}
 		//현재 로딩 중이라고 표시한다.
 		isLoding= true;
+		//console.log("탔습니다.");
 		//로딩바를 띄우고
 		$(".back-drop").show();
 		//요청할 페이지 번호를 1증가시킨다.
 		currentPage++;
 		//추가로 받아올 페이지를 서버에 ajax 요청을 하고
-		console.log("inscroll" + currentPage);
-		GetList(currentPage);	
-	};
+		//console.log("inscroll" + currentPage);
+		GetList(currentPage); 
+	
+	}
 });
 
 //카드 리스트를 가져오는 함수
 
 const GetList = function(currentPage){
-	console.log("inGetList" + currentPage);
+	//console.log("inGetList" + currentPage);
 	
 	//무한스크롤
 	$.ajax({
 	
-		url : "FreeBoard.do",
+		url : "ajax_board.do",
 		method : "GET",
 		//검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
-		data : "pageNum="+currentPage+"&SearchType=${searchType}&SearchVal=${searchVal}",
+		data : "pagenumber="+currentPage+"&SearchType=${searchType}&SearchVal=${searchVal}",
 		//FreeBoard.jsp의 내용이 data로 들어온다. 
 		success:function(data){
-			console.log(data);
+			//console.log(data);
 			//응답된 문자열은 html형식이다. 
 			//해당 문자열은 .card-list-container div에 html로 해석하라고 추가한다.
 			$(".card-list-container").append(data);
 			//로딩바를 숨긴다.
 			$(".back-drop").hide();
 			//로딩중이 아니라고 표시한다.
-			isLoading=false;
-			console.log("ajax");
-		}
-		
-		
-		
+			isLoding=false;
+			//console.log("ajax"); 
+		}	
 	});
-	
-
 }
 
 
@@ -94,17 +96,20 @@ const GetList = function(currentPage){
 	<form method="get" action="FreeBoard.do">
 
 		<select name="SearchType">
-			<option value="All" <c:if test="${!empty svo.searchType and svo.searchType eq 'All'} ">selected</c:if>>전체</option>
-			<option value="title" <c:if test="${!empty svo.searchType and svo.searchType eq 'title' }">selected</c:if>>제목</option>
-			<option value="contentWriter" <c:if test="${!empty svo.searchType and svo.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
+			<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
+			<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
+			<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
 		</select>
-		<input type="text" name="SearchVal" <c:if test="${!empty svo.searchVal}">value="${svo.searchVal}"</c:if>>
+		<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
 		<input type="submit" value="검색">
 	</form>
 	
 	<a href="BoardWrite.do">쓰기</a>
 	
 	<hr>
+	<c:if test="${!empty svo.searchVal}">
+			${totalRow}개의 자료가 검색되었습니다.
+	</c:if>
 	<form>
 		
 		<c:if test="${freeboard.size() ==0}">
@@ -126,14 +131,14 @@ const GetList = function(currentPage){
 		</c:if>
 		
 	</form>
-<section id="card-list" class="card-list">
+<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
 	<div class="container">
 		<div class="row card-list-container thumbnails">
 		
 		</div>
 	</div>
 </section>
-	<div class="back-drop">
+	<div class="back-drop"> <!-- 로딩 이미지 -->
 		<img src="../" alt="안되는데여?" />
 	
 	</div>
