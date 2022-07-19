@@ -1,7 +1,6 @@
 package edu.fourmen.service;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,9 +10,10 @@ import org.springframework.stereotype.Service;
 import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.SearchVO;
 
 @Service
-public class BoardItemServiceImple implements BoardItemService{
+public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Autowired
@@ -33,15 +33,22 @@ public class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public List<BoardItemVO> list(BoardItemVO vo) {
+	public List<BoardItemVO> list(BoardItemVO vo,SearchVO svo) {
 		
-		return boarditemdao.selectAll(vo);
+		return boarditemdao.selectAll(vo,svo);
+	}
+
+
+
+	@Override
+	public int totalCount(PageMaker pm) {
+		return 0;
 	}
 
 
 	@Override
-	public int totalcount() {
-		return  boarditemdao.totalcount();
-	}
+	public List<BoardItemVO> list2(BoardItemVO vo, SearchVO svo) {
+		return boarditemdao.selectAllbyuser(vo, svo);
+	}					
 
 }
