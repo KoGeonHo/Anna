@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page session="true"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
@@ -105,7 +105,7 @@
     }
     
     .navbar-dark .navbar-toggler-icon {
-    margin-right: 2rem;
+    margin : 0 1rem;
     }
     
    .logo {
@@ -119,7 +119,7 @@
 
 </head>
 
-<body>
+<body>	
 
 			<!-- pc 헤더 -->
 				  <div class="b-example-divider ">
@@ -139,14 +139,13 @@
 							      </ul>
 									
 									<div class="col-md-3 text-end">									
-									<c:if test="${user == null }">
+									<c:if test="${uidx == null }">
 							      							    	 	 
-							        <button type="button" class="btn "  style="background-color : #00AAB2;  color: #fff;"><a href="user/login.do">로그인</a></button>
-							        <button type="button" class="btn " style="background-color : #BBCE53;  color: #fff;"><a href="user/join.do">회원가입</a></button>
-							        </c:if>
-							        <c:if test="${user != null }">
-							       
-									<button type="button" class="btn "  style="background-color : #00AAB2;  color: #fff;"><a href="user/logout.do">로그아웃</a></button>
+							        <button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/login.do';">로그인</button>
+              					    <button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/join.do';">회원가입</button></c:if>
+							        <c:if test="${uidx != null }">
+							        								       
+									<button type="button" class="btn "  style="background-color : #00AAB2;  color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/logout.do';">로그아웃</a></button>
 							        <button type="button" class="btn " style="background-color : #BBCE53;  color: #fff;">물음표</button>
 									</c:if>
 							      </div>
@@ -167,6 +166,9 @@
 					
 				  <div class="container-fluid">
 				    <a class="navbar-brand fs-1 fw-bold" href="#">금암동 ▼</a>
+
+				    
+
 				    <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
 				      <span class="navbar-toggler-icon"></span>
 				    </button>
@@ -353,7 +355,6 @@
 			</main>
 			  <!-- 상품 -->
 
-
 			<!-- 게시글 -->
 			<main>
 			  <div class="album py-5">
@@ -446,9 +447,9 @@
 			      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 			      
 			      
-			     <div class="col-lg-3 col-md-6 " >
+			     <div class="col-lg-3  col-md-12 " >
 							
-									  <div class="card" style="width: 19rem;">
+									  <div class="card" >
 											  <img src="https://media.bunjang.co.kr/product/193152448_2_1657519466_w856.jpg" class="card-img-top" alt="...">
 												  <div class="card-body">
 												  <h6 class="card-title">아이앱 스튜디오 후드 블랙</h6>
@@ -459,9 +460,9 @@
 									</div>
 							</div>
 							
-			        <div class="col-lg-3 col-md-6 " >
+			        <div class="col-lg-3  col-md-12 " >
 							
-									  <div class="card" style="width: 19rem;">
+									  <div class="card" >
 											  <img src="https://media.bunjang.co.kr/product/193052370_2_1657426178_w856.jpg" class="card-img-top" alt="...">
 												  <div class="card-body">
 												  <h6 class="card-title">킥보드 크루스rs팝니다</h6>
@@ -472,12 +473,12 @@
 									</div>
 							</div>
 							
-			      <div class="col-lg-3 col-md-6 " >
+			      <div class="col-lg-3  col-md-12 " >
 							
-									  <div class="card" style="width: 19rem;">
+									  <div class="card">
 											  <img src="https://media.bunjang.co.kr/product/193152157_10_1657519257_w856.jpg" class="card-img-top" alt="...">
 												  <div class="card-body">
-												  <h6 class="card-title">퓨리티 플러스 3D 회전형 젖병 소독기</h6>
+												  <h6 class="card-title">퓨리티 플러스 회전형 젖병 소독기</h6>
 												  <p class="card-text">145,000원</p>
 			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
 											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
@@ -485,9 +486,9 @@
 									</div>
 							</div>
 							
-							<div class="col-lg-3 col-md-6 " >
+							<div class="col-lg-3  col-md-12" >
 							
-									  <div class="card" style="width: 19rem;">
+									  <div class="card">
 											  <img src="https://media.bunjang.co.kr/product/189215558_2_1653819887_w856.jpg" class="card-img-top" alt="...">
 												  <div class="card-body">
 												  <h6 class="card-title">코드유 블랑 블라우스</h6>
@@ -498,9 +499,9 @@
 									</div>
 							</div>  
 							
-			        <div class="col-lg-3 col-md-6 " >
+			        <div class="col-lg-3  col-md-12" >
 							
-									  <div class="card" style="width: 19rem;">
+									  <div class="card">
 											  <img src="https://media.bunjang.co.kr/product/193053163_4_1657426794_w856.jpg" class="card-img-top" alt="...">
 												  <div class="card-body">
 												  <h6 class="card-title">new 닌텐더 2ds xl</h6>
@@ -511,9 +512,9 @@
 									</div>
 							</div>
 							
-			        <div class="col-lg-3 col-md-6 " >
+			        <div class="col-lg-3  col-md-12" >
 							
-									  <div class="card" style="width: 19rem;">
+									  <div class="card" >
 											  <img src="https://media.bunjang.co.kr/product/192865491_4_1657362057_w856.jpg" class="card-img-top" alt="...">
 												  <div class="card-body">
 												  <h6 class="card-title">엠스톤그루브 저소음갈축 풀윤활 키보드</h6>
@@ -524,9 +525,9 @@
 									</div>
 							</div>
 							
-			        <div class="col-lg-3 col-md-6 " >
+			        <div class="col-lg-3  col-md-12" >
 							
-									  <div class="card" style="width: 19rem;">
+									  <div class="card" >
 											  <img src="https://media.bunjang.co.kr/product/170033103_8_1657074193_w856.jpg" class="card-img-top" alt="...">
 												  <div class="card-body">
 												  <h6 class="card-title">어반드로워 사이드테이블</h6>
@@ -537,9 +538,9 @@
 									</div>
 							</div>
 
-			        <div class="col-lg-3 col-md-6 " >
+			        <div class="col-lg-3  col-md-12" >
 							
-									  <div class="card" style="width: 19rem;">
+									  <div class="card">
 											  <img src="https://media.bunjang.co.kr/product/191947468_8_1656362331_w856.jpg" class="card-img-top" alt="...">
 												  <div class="card-body">
 												  <h6 class="card-title">마켓비 MKB 철제 캐비넷</h6>
@@ -550,8 +551,12 @@
 									</div>
 							</div>
 						</div>
+						</div>
+						</div>
+						</div>
 			</main>
-			  <!-- 상품 -->
+			
+				  <!-- 상품 -->
 
 
 <!-- 	<a href="sample1.do">sample1.do</a> |

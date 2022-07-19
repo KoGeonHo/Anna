@@ -1,5 +1,7 @@
 package edu.fourmen.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class BoardItemVO extends UserVO {
 	
 	private int item_idx;
@@ -12,6 +14,20 @@ public class BoardItemVO extends UserVO {
 	private String addr1;
 	private String addr2;
 	private String addr_code; 
+	private String isDel;
+	private MultipartFile file1;
+	private MultipartFile file2;
+	private MultipartFile file3;
+	private MultipartFile file4;
+	private MultipartFile file5;
+	private MultipartFile file6;
+	private MultipartFile file7;
+	private MultipartFile file8;
+	private MultipartFile file9;
+	private MultipartFile file10;
+	
+	
+	
 	public  String image1;
 	private String image2;
 	private String image3;
@@ -29,12 +45,106 @@ public class BoardItemVO extends UserVO {
 	private int hit;
 	private int state;
 	
+	private String SearchType;
+	private String SearchVal;
 	
-	public String getFileName() {
-		return fileName;
+	
+	private int pageNum;
+	private int amount;
+	private int startNum;
+	private int perPageNum;
+	private int startPage;
+	private int endPage;
+	private boolean prev, next;
+	
+	private int total;
+	//현재 페이지 번호, 한 페이지에 표출할 데이터 개수
+	private Criteria cri;
+	
+	
+	
+	
+	
+	
+	
+	
+	public String getIsDel() {
+		return isDel;
 	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setIsDel(String isDel) {
+		this.isDel = isDel;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public int getStartNum() {
+		return startNum;
+	}
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
+	}
+	public int getPerPageNum() {
+		return perPageNum;
+	}
+	public void setPerPageNum(int perPageNum) {
+		this.perPageNum = perPageNum;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public Criteria getCri() {
+		return cri;
+	}
+	public void setCri(Criteria cri) {
+		this.cri = cri;
+	}
+	public int getStartPage() {
+		return startPage;
+	}
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+	public int getEndPage() {
+		return endPage;
+	}
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+	public boolean isPrev() {
+		return prev;
+	}
+	public void setPrev(boolean prev) {
+		this.prev = prev;
+	}
+	public boolean isNext() {
+		return next;
+	}
+	public void setNext(boolean next) {
+		this.next = next;
+	}
+	public int getPageNum() {
+		return pageNum;
+	}
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
+	}
+	public String getSearchType() {
+		return SearchType;
+	}
+	public void setSearchType(String searchType) {
+		SearchType = searchType;
+	}
+	public String getSearchVal() {
+		return SearchVal;
+	}
+	public void setSearchVal(String searchVal) {
+		SearchVal = searchVal;
 	}
 	public int getItem_idx() {
 		return item_idx;
@@ -96,11 +206,71 @@ public class BoardItemVO extends UserVO {
 	public void setAddr_code(String addr_code) {
 		this.addr_code = addr_code;
 	}
+	public MultipartFile getFile1() {
+		return file1;
+	}
+	public void setFile1(MultipartFile file1) {
+		this.file1 = file1;
+	}
+	public MultipartFile getFile2() {
+		return file2;
+	}
+	public void setFile2(MultipartFile file2) {
+		this.file2 = file2;
+	}
+	public MultipartFile getFile3() {
+		return file3;
+	}
+	public void setFile3(MultipartFile file3) {
+		this.file3 = file3;
+	}
+	public MultipartFile getFile4() {
+		return file4;
+	}
+	public void setFile4(MultipartFile file4) {
+		this.file4 = file4;
+	}
+	public MultipartFile getFile5() {
+		return file5;
+	}
+	public void setFile5(MultipartFile file5) {
+		this.file5 = file5;
+	}
+	public MultipartFile getFile6() {
+		return file6;
+	}
+	public void setFile6(MultipartFile file6) {
+		this.file6 = file6;
+	}
+	public MultipartFile getFile7() {
+		return file7;
+	}
+	public void setFile7(MultipartFile file7) {
+		this.file7 = file7;
+	}
+	public MultipartFile getFile8() {
+		return file8;
+	}
+	public void setFile8(MultipartFile file8) {
+		this.file8 = file8;
+	}
+	public MultipartFile getFile9() {
+		return file9;
+	}
+	public void setFile9(MultipartFile file9) {
+		this.file9 = file9;
+	}
+	public MultipartFile getFile10() {
+		return file10;
+	}
+	public void setFile10(MultipartFile file10) {
+		this.file10 = file10;
+	}
 	public String getImage1() {
 		return image1;
 	}
 	public void setImage1(String image1) {
-		 this.image1 = image1;
+		this.image1 = image1;
 	}
 	public String getImage2() {
 		return image2;
@@ -156,6 +326,12 @@ public class BoardItemVO extends UserVO {
 	public void setImage10(String image10) {
 		this.image10 = image10;
 	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 	public String getKeyword() {
 		return Keyword;
 	}
@@ -186,6 +362,14 @@ public class BoardItemVO extends UserVO {
 	public void setState(int state) {
 		this.state = state;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

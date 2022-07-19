@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.Criteria;
+import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.SearchVO2;
 
 @Repository
 public class BoardItemDAO {
@@ -32,4 +35,8 @@ public class BoardItemDAO {
 		return sqlSession.selectOne(efdb+".selectitem",item_idx);
 	}
 	
+	public int totalcount() {
+		int result = sqlSession.selectOne(efdb+".totalcount");
+		return result;
+	}
 }
