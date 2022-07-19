@@ -14,7 +14,7 @@ public class BoardItemVO extends UserVO {
 	private String addr1;
 	private String addr2;
 	private String addr_code; 
-	
+	private String isDel;
 	private MultipartFile file1;
 	private MultipartFile file2;
 	private MultipartFile file3;
@@ -62,6 +62,48 @@ public class BoardItemVO extends UserVO {
 	private Criteria cri;
 	
 	
+	
+	
+	
+	
+	
+	
+	public String getIsDel() {
+		return isDel;
+	}
+	public void setIsDel(String isDel) {
+		this.isDel = isDel;
+	}
+	public int getAmount() {
+		return amount;
+	}
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	public int getStartNum() {
+		return startNum;
+	}
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
+	}
+	public int getPerPageNum() {
+		return perPageNum;
+	}
+	public void setPerPageNum(int perPageNum) {
+		this.perPageNum = perPageNum;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public Criteria getCri() {
+		return cri;
+	}
+	public void setCri(Criteria cri) {
+		this.cri = cri;
+	}
 	public int getStartPage() {
 		return startPage;
 	}

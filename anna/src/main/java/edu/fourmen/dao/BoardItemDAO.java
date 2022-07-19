@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.Criteria;
 import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.SearchVO2;
 
 @Repository
 public class BoardItemDAO {
@@ -20,7 +22,7 @@ public class BoardItemDAO {
 	
 	private static final String efdb = "edu.fourmen.mapper.boardItemMapper";
 	
-	public List<BoardItemVO> selectAll(BoardItemVO vo) {
+	public List<BoardItemVO> selectAll(SearchVO2 searchVO, BoardItemVO vo, Criteria criteria) {
 		return sqlSession.selectList(efdb+".selectAll",vo);
 		
 	}
