@@ -33,35 +33,21 @@
 		 	<beans:property name="maxUploadSize" value="200000000" />
     		<beans:property name="maxInMemorySize" value="200000000" />	
 	</beans:bean>
-	<!--  spring-upload -->
-	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
-	 --><!--  spring-upload -->
 	
-	<!-- <beans:bean id="LoginCheckInterceptor" class="board.newBoard.controller.LoginCheckInterceptor"></beans:bean> -->
-    <!-- 
+	<!--  spring-upload -->
+	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />-->
+	<!--  spring-upload -->
+	
+	<!-- 로그인 체크 인터셉터 -->
+	<beans:bean id="LoginCheckInterceptor" class="edu.fourmen.service.LoginCheck"></beans:bean>
+    
     <interceptors>
         <interceptor>
-            <mapping path="/board/*.do"/>
-            <beans:ref bean="LoginCheckInterceptor"/>
-        </interceptor>
-        <interceptor>
-            <mapping path="/announce/*.do"/>
-            <beans:ref bean="LoginCheckInterceptor"/>
-        </interceptor>
-        <interceptor>
-            <mapping path="/qna/*.do"/>
+            <mapping path="/user/*.do"/>
             <beans:ref bean="LoginCheckInterceptor"/>
         </interceptor>
     </interceptors>
-	 -->
-	<!-- <aop:config>
-		<aop:aspect id="exe" ref="aspect01">
-			<aop:pointcut expression="within(aopEx01.A)" id="pointcutA"/>
-			<aop:around method="Execute" pointcut-ref="pointcutA"/>
-			오류와 관계없이 실행
-			<aop:after method="after" pointcut-ref="pointcutB"/>
-		</aop:aspect>
-	</aop:config> -->
+    <!-- 로그인 체크 인터셉터 -->
 	
 	<beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

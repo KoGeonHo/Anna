@@ -62,7 +62,7 @@ public class UserController {
 
 		if(userInfo == null) {
 			
-			System.out.println("가입되지 않은 이메일주소1");
+			System.out.println("가입되지 않은 이메일주소");
 			
 			pw.append("<script>alert('가입되지 않은 이메일 주소입니다.'); history.back();</script>");
 			
@@ -315,6 +315,7 @@ public class UserController {
 		
 	}
 	
+	//마이 페이지
 	@RequestMapping(value="/myPage.do")
 	public String myPage(Model model,HttpServletRequest request,HttpSession session) {
 		
@@ -328,7 +329,7 @@ public class UserController {
 			uidx = (int)session.getAttribute("uidx");
 		}
 		
-		System.out.println(uidx);
+		//System.out.println(uidx);
 		
 		return "user/myPage";
 		
@@ -358,18 +359,17 @@ public class UserController {
 	}
 	
 	
-	//회원정보 조회
-	@RequestMapping(value="/userInfoMod.do")
+	//회원정보 수정페이지
+	@RequestMapping(value="/userInfoMod.do", method=RequestMethod.GET)
 	public String userInfoMod(Model model,HttpServletRequest request,HttpSession session) {
 		
 		model.addAttribute("path",path);
 		
 		session = request.getSession();
 		
-		int uidx = 0;
-		
 		if(session.getAttribute("uidx") != null) {		
-			uidx = (int)session.getAttribute("uidx");
+			
+			int uidx = (int)session.getAttribute("uidx");
 			
 			UserVO userInfo = userService.getUserInfo(uidx);
 			
@@ -380,6 +380,43 @@ public class UserController {
 		return "user/userInfoMod";
 		
 	}
+	
+	
+	//회원정보 수정페이지
+	@RequestMapping(value="/userInfoMod.do", method=RequestMethod.POST)
+	public String userInfoMod(UserVO vo,HttpServletRequest request,HttpSession session) {
+		
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		vo.setUidx(uidx);
+		
+		int result = userService.userInfoMod(vo);
+		
+		return "redirect:/user/userInfoView.do";
+		
+	}
+	
+	
+	//관심 키워드 업데이트
+	@ResponseBody
+	@RequestMapping(value="/updateKeyword.do", produces="application/test; charset=utf8")
+	public String updateKeyword(UserVO vo,HttpServletRequest request,HttpSession session) {
+		
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		vo.setUidx(uidx);
+		
+		int result = userService.updateInterested(vo);
+		
+		//System.out.println(vo.getInterested());
+		
+		return result+"";
+	}
+	
 	
 	//가입된 이메일인지 확인후 인증 이메일을 보내는 Ajax
 	@ResponseBody

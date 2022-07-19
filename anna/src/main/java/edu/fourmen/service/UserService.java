@@ -14,6 +14,8 @@ public interface UserService {
 	HashMap<String, Object> getKakaoUserInfo(String access_Token);
 	void updateKakaoAuthKey(UserVO vo);
 	UserVO getUserInfo(int uidx);
+	int userInfoMod(UserVO vo);
+	int updateInterested(UserVO vo);
 	
 	
 }
