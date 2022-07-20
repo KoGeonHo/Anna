@@ -2,12 +2,14 @@ package edu.fourmen.dao;
 
 import java.util.List;
 
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
+
 import edu.fourmen.vo.SearchVO;
 
 @Repository
@@ -29,15 +31,32 @@ public class BoardDAO {
 		return sqlSession.selectOne(namespace+".viewBoard",Bidx);
 	}
 	
-	public List<BoardVO> selectfreeboard(PageMaker pm){ //일상&소통 게시판리스트
+	public List<BoardVO> selectfreeboard(PageMaker pm){ //일상&소통 게시판리스트 // 갤러리형
 		return sqlSession.selectList(namespace+".selectfreeboard", pm);
 	}
 	
-	public int totalCount(PageMaker pm) {
+	public int totalCount(PageMaker pm) { //글 갯수 카운트
 		
 		int result = sqlSession.selectOne(namespace+".totalCount", pm);
 		
 		return result; 
+	}
+	
+	public int commentwrite(BoardVO bv) { //댓글작성하기
+		
+		int result =sqlSession.insert(namespace+".commentwrite", bv);
+		
+		return result;
+	}
+	
+	public int getCTotal(BoardVO bv) { //댓글 카운트
+		
+		return sqlSession.selectOne(namespace+".getCTotal", bv);
+	}
+	
+	public List<BoardVO> getCList(int Bidx) { //댓글목록 불러오기
+	
+		return sqlSession.selectList(namespace+".getCList", Bidx);
 	}
 	
 }
