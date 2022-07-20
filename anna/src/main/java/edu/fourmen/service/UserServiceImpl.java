@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
 		return this.redirect_uri;
 	}
 
-	
+	//가입된 이메일인지 체크
 	@Override
 	public int emailChk(String user_email) {
 
@@ -52,7 +52,8 @@ public class UserServiceImpl implements UserService{
 		
 		return result;
 	}
-
+	
+	//회원가입
 	@Override
 	public int join(UserVO vo) {
 
@@ -60,7 +61,8 @@ public class UserServiceImpl implements UserService{
 		
 		return result;
 	}
-
+	
+	//로그인
 	@Override
 	public UserVO login(UserVO vo) {
 		
@@ -68,7 +70,7 @@ public class UserServiceImpl implements UserService{
 		
 	}
 	
-	//토큰발급
+	//카카오 토큰발급
 	public HashMap<String,Object> getAccessToken(String authorize_code) {
         String access_Token = "";
         String refresh_Token = "";
@@ -132,73 +134,124 @@ public class UserServiceImpl implements UserService{
         return kakaoInfo;
     }
 
-		@Override
-		public HashMap<String, Object> getKakaoUserInfo(String access_Token) {
-			String line = "";
-	        String result = "";
-	    	
-	        //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
-	        HashMap<String, Object> userInfo = new HashMap<String, Object>();
-	        String reqURL = "https://kapi.kakao.com/v2/user/me";
-	        try {
-	            URL url = new URL(reqURL);
-	            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	            conn.setRequestMethod("GET");
+		
+	//카카오 유저 정보 요청
+	@Override
+	public HashMap<String, Object> getKakaoUserInfo(String access_Token) {
+		String line = "";
+        String result = "";
+    	
+        //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
+        HashMap<String, Object> userInfo = new HashMap<String, Object>();
+        String reqURL = "https://kapi.kakao.com/v2/user/me";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
 
-	            //요청에 필요한 Header에 포함될 내용
-	            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+            //요청에 필요한 Header에 포함될 내용
+            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
-	            int responseCode = conn.getResponseCode();
-	            //System.out.println("responseCode : " + responseCode);
+            int responseCode = conn.getResponseCode();
+            //System.out.println("responseCode : " + responseCode);
 
-	            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-	           
-	            while ((line = br.readLine()) != null) {
-	                result += line;
-	            }
-	            JsonParser parser = new JsonParser();
-	            JsonElement element = parser.parse(result);
-	            //System.out.println("response body : " + result);
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+           
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+            //System.out.println("response body : " + result);
 
-	            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
-	            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-	            
-	            String kakaoId = element.getAsJsonObject().get("id").toString().replaceAll("\"", "");
-	            String nickname = properties.getAsJsonObject().get("nickname").toString().replaceAll("\"", "");
-	            String thumbnail_image = properties.getAsJsonObject().get("thumbnail_image").toString().replaceAll("\"", "");
-	            String kakao_email = kakao_account.getAsJsonObject().get("email").toString().replaceAll("\"", "");
-	            
-	           
-	            //System.out.println(kakao_account);
-	            
-	            userInfo.put("accessToken",access_Token);
-	            userInfo.put("kakaoId",kakaoId);
-	            userInfo.put("nickName",nickname);
-	            userInfo.put("thumbnail_image",thumbnail_image);
-	            userInfo.put("kakao_email",kakao_email);
-	           
-	           
-	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
-	        }
+            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+            
+            String kakaoId = element.getAsJsonObject().get("id").toString().replaceAll("\"", "");
+            String nickname = properties.getAsJsonObject().get("nickname").toString().replaceAll("\"", "");
+            String thumbnail_image = properties.getAsJsonObject().get("thumbnail_image").toString().replaceAll("\"", "");
+            String kakao_email = kakao_account.getAsJsonObject().get("email").toString().replaceAll("\"", "");
+            
+           
+            //System.out.println(kakao_account);
+            
+            userInfo.put("accessToken",access_Token);
+            userInfo.put("kakaoId",kakaoId);
+            userInfo.put("nickName",nickname);
+            userInfo.put("thumbnail_image",thumbnail_image);
+            userInfo.put("kakao_email",kakao_email);
+           
+           
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	        return userInfo;
-		}
+        return userInfo;
+	}
 
-		@Override
-		public void updateKakaoAuthKey(UserVO vo) {
+	//회원정보에 카카오 id update
+	@Override
+	public void updateKakaoAuthKey(UserVO vo) {
 
-			userDAO.updateKakaoAuthKey(vo);
-			
-		}
+		userDAO.updateKakaoAuthKey(vo);
+		
+	}
+	
+	//회원정보 조회
+	@Override
+	public UserVO getUserInfo(int uidx) {
 
-		@Override
-		public UserVO getUserInfo(int uidx) {
+		return userDAO.getUserInfo(uidx);
+		
+	}
+	
+	//회원정보 수정
+	@Override
+	public int userInfoMod(UserVO vo) {
 
-			return userDAO.getUserInfo(uidx);
-			
-		}
+		return userDAO.userInfoMod(vo);
+	
+	}
+
+	//관심 키워드 업데이트
+	@Override
+	public int updateInterested(UserVO vo) {
+		
+		return userDAO.updateInterested(vo);
+		
+	}
+
+	@Override
+	public void kakaoLogout(String access_Token) {
+		 String reqURL ="https://kapi.kakao.com/v1/user/logout";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            
+            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+ 
+            if(responseCode == 400) {
+                throw new RuntimeException("카카오 로그아웃 도중 오류 발생");
+            }
+            
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            
+            String br_line = "";
+            String result = "";
+            while ((br_line = br.readLine()) != null) {
+                result += br_line;
+            }
+            System.out.println("결과");
+            System.out.println(result);
+        }catch(IOException e) {
+            
+        }
+		
+	}
 
 		
 

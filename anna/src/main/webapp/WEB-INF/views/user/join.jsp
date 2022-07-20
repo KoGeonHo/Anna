@@ -663,7 +663,7 @@
 				<div class="box">
 					<div class="tr">
 						<input class="form-control" type="email" name="user_email" placeholder="이메일" required autofocus>
-						<button type="button" id="chkBtn" class="btn btn-primary" onclick="emailChk()">이메일 확인</button>
+						<button type="button" id="chkBtn" class="btn btn-primary" onclick="emailChk()">이메일 중복 확인</button>
 						<button type="button" id="authEmailBtn" class="btn btn-primary" style="display:none;" onclick="sendAuthEmail()">인증번호 다시받기</button>
 					</div>
 					<div class="tr" id="emailAuth">
