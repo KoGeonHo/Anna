@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ page session="true" %> <!-- 세션사용하겠다는 뜻 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@page session="true" %>
 <!DOCTYPE html>
 <html>
@@ -46,7 +48,7 @@ $(window).on("scroll",function(){
 		currentPage++;
 		//추가로 받아올 페이지를 서버에 ajax 요청을 하고
 		//console.log("inscroll" + currentPage);
-		GetList(currentPage); 
+		GetList(currentPage);
 	
 	}
 });
@@ -91,6 +93,14 @@ const GetList = function(currentPage){
 		<li>고객센터</li>
 		<li>마이페이지</li>
 	</ul>
+	
+	<c:if test="${nickName != null}">
+	${nickName}님 환영합니다
+	
+	</c:if>
+	<c:if test="${nickName == null}">
+	<a href="../user/login.do">로그인</a> | <a href="../user/join.do">회원가입</a>
+	</c:if>
 </nav>
 <main>
 	<form method="get" action="FreeBoard.do">
@@ -121,7 +131,7 @@ const GetList = function(currentPage){
 			<c:forEach var="vo" items="${freeboard}">
 			<c:if test = "${vo.board_type eq 'free' }">
 		<div>
-			<img src="../resources/upload/t-${vo.image1}" alt="없어요 없어">
+			<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요 없어">
 			<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
 			${vo.nickName}  좋아요 112 댓글 1
 		</div>
