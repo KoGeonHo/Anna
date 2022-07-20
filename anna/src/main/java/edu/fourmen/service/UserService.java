@@ -16,6 +16,7 @@ public interface UserService {
 	UserVO getUserInfo(int uidx);
 	int userInfoMod(UserVO vo);
 	int updateInterested(UserVO vo);
+	void kakaoLogout(String access_Token);
 	
 	
 }

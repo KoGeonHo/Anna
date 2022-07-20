@@ -128,6 +128,10 @@ public class UserController {
 		
 		session = request.getSession();
 		
+		String access_Token = (String)session.getAttribute("access_Token");
+		
+		userService.kakaoLogout(access_Token);
+		
 		session.invalidate();
 		
 		return "redirect:/main.do";
@@ -300,6 +304,8 @@ public class UserController {
     			session.setAttribute("nickName", userLoginInfo.getNickName());
     			
     			session.setAttribute("interested", userLoginInfo.getInterested());
+    			
+    			session.setAttribute("access_Token", access_Token);
     			
     			moveTo = request.getContextPath()+"/user/myPage.do";
         			
