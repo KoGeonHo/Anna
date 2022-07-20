@@ -140,7 +140,7 @@ function getList() {
     </c:if>
     
 
-    
+    댓글안써짐
                     <div class="comment-box">
    		                 <div class="comment-count">댓글 <span id="count">0</span></div>
 
