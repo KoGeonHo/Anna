@@ -110,7 +110,7 @@
 
 <insert id="commentwrite" parameterType="boardvo">
 	INSERT INTO reply(
-			 Uidx
+			 uidx
 			,Bidx
 			,contents
 		    ,Wdate
@@ -133,7 +133,7 @@
 </select>
 
 <select id="getCList" resultType="boardvo" parameterType="int">
-  	SELECT r.Uidx as Uidx
+  	SELECT r.uidx as Uidx
   		  ,r.Bidx as Bidx
   		  ,u.nickName as nickName
   		  ,r.contents as contents
@@ -142,7 +142,7 @@
   	  FROM reply r, AnnaUser u
   	 WHERE r.Bidx = #{Bidx}
   	   AND r.isDel = 'N'
-  	   AND r.Uidx = u.uidx
+  	   AND r.uidx = u.uidx
 </select>
 
 
