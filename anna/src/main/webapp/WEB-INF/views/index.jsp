@@ -15,6 +15,5 @@
 <body>
 <a href="boarditem/itemlist.do">중고거래</a>
 <a href="board/FreeBoard.do">가는건가?</a>
-<a href="main.do">ANNA메인페이지</a>
 </body>
 </html>
