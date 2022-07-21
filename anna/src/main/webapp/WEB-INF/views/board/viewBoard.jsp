@@ -8,17 +8,7 @@
 <meta charset="UTF-8">
 <title>글보기</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
-<style>
 
-#commentstyle{
-
-border-width: 1px 0px 0px 0px ;
-  border-style: solid;
-
-}
-
-
-</style>
 </head>
 <body>
 
@@ -77,9 +67,8 @@ border-width: 1px 0px 0px 0px ;
                     	 </div>
     			   </div>
     			   
-    			    <div class="comment_Box" > <!-- 댓글이 들어갈 박스 -->
-					
-					
+    			    <div class="comment_Box" style="border:1px solid gray;"> <!-- 댓글이 들어갈 박스 -->
+
 	                </div>
 <script type="text/javascript">
 $(function(){
@@ -106,7 +95,7 @@ $(function(){
 			
 			$.ajax({
 				url:'InsertComment',
-				data:"Bidx="+Bidx+"&nickName="+nickName+"&Contents="+Contents+"&Uidx="+Uidx,
+				data:"Bidx="+Bidx+"&nickName="+nickName+"&Contents="+Contents+"&Uidx="Uidx,
 				success:function(data){
 					console.log('통신성공' + data);
 					if(data === 'InsertSuccess') {
@@ -134,9 +123,8 @@ $(function(){
 function getList() {
 	
 	const Bidx = ${bv.bidx};
-	
+	const nickName = $('#nickName').val();
 	const Contents = $('#Contents').val();
-	
 		/* const com_no = ${com}; */
 	$.ajax({
 		url : "CommentList",
@@ -152,16 +140,15 @@ function getList() {
 				$('#count').html(data.total);
 				for(i = 0;i < list.length;i++){
 					var Contents = list[i].contents;
-					var nickName = list[i].nickName;
-					
-					comment_html += "<div id='commentstyle'><span id='nickName'><strong>" + nickName + "</strong></span><br/>";
+					var writer = list[i].nickName;
+					comment_html += "<div><span id='nickName'><strong>" + nickName + "</strong></span><br/>";
 					comment_html += "<span id='Contents'>" + Contents + "</span><br>";
-					if(nickName=== $("#nickName").val()){
-						 comment_html += "<span id='delete' style='cursor:pointer;' data-id ="+Contents+">[삭제]</span><br></div>";
+					if(writer === $("#nickName").val()){
+						 comment_html += "<span id='delete' style='cursor:pointer;' data-id ="+Contents+">[삭제]</span><br></div><hr>";
 						 
 					}
 					else{
-						comment_html += "</div>";
+						comment_html += "</div><hr>";
 					}
 				}
 				
