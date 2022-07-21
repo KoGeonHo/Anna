@@ -42,15 +42,15 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int commentwrite(BoardVO bv) {
+	public int commentwrite(BoardVO rv) {
 		
-		return boardDao.commentwrite(bv);
+		return boardDao.commentwrite(rv);
 	}
 
 	@Override
-	public int getCTotal(BoardVO bv) {
+	public int getCTotal(BoardVO rv) {
 		
-		return boardDao.getCTotal(bv);
+		return boardDao.getCTotal(rv);
 	}
 
 
