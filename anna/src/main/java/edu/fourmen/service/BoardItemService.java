@@ -28,5 +28,7 @@ public interface BoardItemService {
 	
 	public int itemdelete(BoardItemVO vo);
 	
-	public List<BoardItemVO> MinPrice(PageMaker pm,BoardItemVO vo);
+
+	public BoardItemVO MinPrice(PageMaker pm);
+
 }

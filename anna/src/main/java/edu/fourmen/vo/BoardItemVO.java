@@ -3,7 +3,7 @@ package edu.fourmen.vo;
 import org.springframework.web.multipart.MultipartFile;
 
 public class BoardItemVO extends UserVO {
-	
+	 
 	private int item_idx;
 	private int uidx;
 	private int cate_idx;

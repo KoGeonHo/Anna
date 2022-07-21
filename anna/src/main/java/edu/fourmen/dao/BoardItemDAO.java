@@ -24,7 +24,7 @@ public class BoardItemDAO {
 	 * 
 	 * newMap.put("udix",vo.getUidx());
 	 *  newMap.put("pageNum",pm.getPerPageNum());
-	 */
+	 */ 
 	@Autowired(required=true)
 	SqlSession sqlSession;
 	
@@ -61,7 +61,9 @@ public class BoardItemDAO {
 	
 		return sqlSession.update(efdb+".itemdelete",vo);
 	}
-	public List<BoardItemVO> MinPrice(PageMaker pm,BoardItemVO vo) {
+
+	public BoardItemVO MinPrice(PageMaker pm) {
+
 		return sqlSession.selectOne(efdb+".MinPrice",pm);
 	}
 

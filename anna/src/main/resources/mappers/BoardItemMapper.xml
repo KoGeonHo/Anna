@@ -206,19 +206,24 @@
 			from Board_Items b
 			inner join AnnaUser u
 			on b.uidx = u.uidx
-			 where b.isDel = 'N'
-		<if test='searchType != null and searchType.equals("title")'>
+			 where b.isDel = 'N' order by b.wdate desc
+			<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
 		</if>
 		<if test='searchType != null and searchType.equals("contentWriter")'>
 		   AND (b.content like concat ('%',#{searchVal},'%')
 		    OR u.name like concat ('%',#{searchVal},'%')
 		 </if>
-		 <if test='cate_idx != 0 and cate_idx != null'>
+
+		<if test='searchType != null and searchType.equals("contentWriter")'>
+		   AND (b.content like concat ('%',#{searchVal},'%')
+		    OR u.name like concat ('%',#{searchVal},'%')
+		 </if>
+		   <if test='cate_idx != 0 and cate_idx != null'>
 		 	and cate_idx = #{cate_idx}
 		 </if>
-	
-	
+		 limit 1,1
+
 	
 	</select>
 	
