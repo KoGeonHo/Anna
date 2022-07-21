@@ -29,6 +29,14 @@ html, body {
 	min-width:320px;
 }
 
+
+body { position: fixed; }
+
+form {
+	margin-block-end: 0px;
+}
+
+
 .container {
 	justify-content: center;
 	align-items: center;

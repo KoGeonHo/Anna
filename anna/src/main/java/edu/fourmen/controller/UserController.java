@@ -301,6 +301,10 @@ public class UserController {
     			
     			session.setAttribute("interested", userLoginInfo.getInterested());
     			
+
+    			session.setAttribute("access_Token", access_Token);
+    			
+
     			moveTo = request.getContextPath()+"/user/myPage.do";
         			
         	}
@@ -381,6 +385,45 @@ public class UserController {
 		
 	}
 	
+
+	
+	//회원정보 수정페이지
+	@RequestMapping(value="/userInfoMod.do", method=RequestMethod.POST)
+	public String userInfoMod(UserVO vo,HttpServletRequest request,HttpSession session) {
+		
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		vo.setUidx(uidx);
+		
+		int result = userService.userInfoMod(vo);
+		
+		return "redirect:/user/userInfoView.do";
+		
+	}
+	
+	
+	//관심 키워드 업데이트
+	@ResponseBody
+	@RequestMapping(value="/updateKeyword.do", produces="application/test; charset=utf8")
+	public String updateKeyword(UserVO vo,HttpServletRequest request,HttpSession session) {
+		
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		vo.setUidx(uidx);
+		
+		int result = userService.updateInterested(vo);
+		
+		//System.out.println(vo.getInterested());
+		
+		return result+"";
+	}
+	
+	
+
 	//가입된 이메일인지 확인후 인증 이메일을 보내는 Ajax
 	@ResponseBody
 	@RequestMapping(value="/emailChk.do", produces = "application/text; charset=utf8")
