@@ -108,42 +108,5 @@
 	   AND b.Bidx = #{Bidx}
 </select>
 
-<insert id="commentwrite">
-	INSERT INTO reply(
-			 Uidx
-			,Bidx
-			,contents
-		    ,Wdate
-	)VALUES(
-			 1
-			,#{Bidx} 
-			,#{Contents}
-			,now()
-	)
-</insert>
-
-<select id="getCTotal" resultType="int" parameterType="boardvo"> <!-- vo로 받는 이유 isDel -->
-  	SELECT
-  	 COUNT(
-  	 	contents
-  	 )
-  	  FROM reply 
-  	 WHERE Bidx = #{Bidx}
-  	   AND isDel = 'N'
-</select>
-
-<select id="getCList" resultType="boardvo" parameterType="int">
-  	SELECT r.Uidx
-  		  ,r.Bidx
-  		  ,u.nickName
-  		  ,r.contents
-  		  ,r.Wdate
-  		  ,r.isDel
-  	  FROM reply r, AnnaUser u
-  	 WHERE r.Bidx = #{Bidx}
-  	   AND r.isDel = 'N'
-  	   AND r.Uidx = u.uidx
-</select>
-
 
 </mapper>
