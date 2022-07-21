@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
+<script type='text/javascript' src='https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=9ff16331dfd542b6a5b0'></script>	
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 
@@ -189,66 +190,37 @@ body { position: fixed; }
 	
 		<div class="wrapper" style="flex:1; overflow:auto;">
 			<div class="container main" >
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
+				<h3 class="border-bottom" style="padding:1rem;">동네인증</h3>												
+    		<div id='map' style='width:100%-20px;height:400px'></div>												
+    		<script type='text/javascript'>												
+    		var map = sop.map("map",{
+    			 ollehTileLayer: false,
+    			 scale: false, // 축적 컨트롤
+    			 panControl: false, // 지도이동 컨트롤
+    			 zoomSliderControl: false, //줌 컨트롤
+    			 measureControl: false, // 측정 컨트롤 (면적, 길이)
+    			 attributionControl: false // 지도속성 컨트롤
+    			});		
+    		map.setView(sop.utmk(953820, 1953437), 9);
+    		 function getLocationCoords(){
+                var center = [989674, 1818313]; 
+                if (navigator.geolocation) {
+                 navigator.geolocation.getCurrentPosition(function (position) {
+                  var utmkXY = new sop.LatLng (position.coords.latitude, position.coords.longitude);
+                  center = [utmkXY.x, utmkXY.y];
+                  map.setView(sop.utmk(utmkXY.x, utmkXY.y), 9);
+                  console.log(utmkXY.x);
+                  console.log(utmkXY.y);
+                  var html = "<p>latitude = " + position.coords.latitude +" , longitude " + position.coords.longitude+"</p>";
+                  html += "<p>x = "+utmkXY.x+", y="+utmkXY.y+"</p>";
+                  $("#divCon").append(html);
+                 });
+                }
+               }
+               getLocationCoords(); 
+    		
+    		</script>
+				
 			</div>
 		</div>
 		

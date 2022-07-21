@@ -32,6 +32,12 @@ html, body,.wrapper {
 
 body { position: fixed; }
 
+#footer {
+	background:#fff;
+	position:fixed; 
+	bottom:0px;
+}
+
 form {
 	margin-block-end: 0px;
 }
@@ -55,6 +61,10 @@ form {
 	
 	#input-interested {
 		width:40vw;
+	}
+	
+	.main {
+		padding-bottom: 70px;
 	}
 	 
 	
@@ -325,7 +335,7 @@ form {
 		</div>
 	
 		<div class="wrapper" style="flex:1; overflow:auto;">
-			<div class="container" >
+			<div class="container  main" >
 				<h3 class="border-bottom" style="padding:1rem;">회원정보수정</h3>
 				<form id="userInfoModFrm" method="POST" action="userInfoMod.do">
 					<div id="profile" class="border-bottom" style="width:100%;">
