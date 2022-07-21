@@ -209,10 +209,14 @@
 			 where b.isDel = 'N'
 		<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
-		 </if>
-		<if test='cate_idx != 0 and cate_idx != null'>
-		 	and cate_idx = #{cate_idx}
 		</if>
+		<if test='searchType != null and searchType.equals("contentWriter")'>
+		   AND (b.content like concat ('%',#{searchVal},'%')
+		    OR u.name like concat ('%',#{searchVal},'%')
+		 </if>
+		 <if test='cate_idx != 0 and cate_idx != null'>
+		 	and cate_idx = #{cate_idx}
+		 </if>
 	
 	
 	
