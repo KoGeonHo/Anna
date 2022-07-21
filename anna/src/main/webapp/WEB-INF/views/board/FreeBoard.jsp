@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ page session="true" %> <!-- 세션사용하겠다는 뜻 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@page session="true" %>
 <!DOCTYPE html>
 <html>
@@ -8,6 +10,25 @@
 <meta charset="UTF-8">
 <title>일상&amp;소통</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath()%>/css/bootstrap.css">
+<style>
+
+.card img{
+
+width : 100%;
+height : 250px;
+
+}
+
+.card{
+
+
+
+}
+
+
+
+</style>
 <script>
 //스크롤 시 이벤트 처리
 
@@ -34,7 +55,7 @@ $(window).on("scroll",function(){
 		console.log(isLoding);
 		//만일 현재 마지막 페이지라면
 		if(currentPage == ${totalPageCount} || isLoding){
-			
+
 			return; // 함수를 여기서 끝낸다.
 		}
 		//현재 로딩 중이라고 표시한다.
@@ -46,7 +67,7 @@ $(window).on("scroll",function(){
 		currentPage++;
 		//추가로 받아올 페이지를 서버에 ajax 요청을 하고
 		//console.log("inscroll" + currentPage);
-		GetList(currentPage); 
+		GetList(currentPage);
 	
 	}
 });
@@ -73,8 +94,8 @@ const GetList = function(currentPage){
 			$(".back-drop").hide();
 			//로딩중이 아니라고 표시한다.
 			isLoding=false;
-			//console.log("ajax"); 
-		}	
+			//console.log("ajax");
+		}
 	});
 }
 
@@ -85,12 +106,21 @@ const GetList = function(currentPage){
 
 
 <nav class="navbar">
+로고
 	<ul class="navbar_menu">
 		<li>중고거래</li>
 		<li>커뮤니티</li> <!-- 호버  -->
 		<li>고객센터</li>
 		<li>마이페이지</li>
 	</ul>
+	
+	<c:if test="${nickName != null}">
+	${nickName}님 환영합니다
+	
+	</c:if>
+	<c:if test="${nickName == null}">
+	<a href="../user/login.do">로그인</a>|<a href="../user/join.do">회원가입</a>
+	</c:if>
 </nav>
 <main>
 	<form method="get" action="FreeBoard.do">
@@ -107,30 +137,33 @@ const GetList = function(currentPage){
 	<a href="BoardWrite.do">쓰기</a>
 	
 	<hr>
+	
 	<c:if test="${!empty svo.searchVal}">
 			${totalRow}개의 자료가 검색되었습니다.
 	</c:if>
-	<form>
-		
+
 		<c:if test="${freeboard.size() ==0}">
 			
 			<h3>등록된 게시물이 없습니다.</h3>
 		</c:if>
-		
+<div class="container">
+	<div class="row">
 		<c:if test="${freeboard.size()>0 }">
 			<c:forEach var="vo" items="${freeboard}">
 			<c:if test = "${vo.board_type eq 'free' }">
-		<div>
-			<img src="../resources/upload/t-${vo.image1}" alt="없어요 없어">
+		<div class="card col-3">
+			<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요 없어">
 			<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
 			${vo.nickName}  좋아요 112 댓글 1
 		</div>
-		<br>
-		</c:if>
-			</c:forEach>
 		</c:if>
 		
-	</form>
+			</c:forEach>
+			
+		</c:if>
+	</div>
+</div>
+
 <section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
 	<div class="container">
 		<div class="row card-list-container thumbnails">

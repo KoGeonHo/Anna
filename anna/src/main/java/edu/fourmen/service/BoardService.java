@@ -21,9 +21,9 @@ public interface BoardService {
 	
 	int totalCount(PageMaker pm);
 	
-	int commentwrite(BoardVO bv);
+	int commentwrite(BoardVO rv);
 	
-	int getCTotal(BoardVO bv);
+	int getCTotal(BoardVO rv);
 	
 	List<BoardVO> getCList(int Bidx);
 }
