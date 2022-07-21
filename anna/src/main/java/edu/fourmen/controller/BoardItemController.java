@@ -3,6 +3,7 @@ package edu.fourmen.controller;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.imgscalr.Scalr;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +33,7 @@ public class BoardItemController {
 	BoardItemService boarditemService;
 
 	@RequestMapping(value = "/itemlist.do")
-	public String itemlist(SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
+	public String itemlist(PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
 
 		if(svo.getSearchType() == null) {
 			svo.setSearchType("TITLE");
@@ -43,15 +42,56 @@ public class BoardItemController {
 			svo.setSearchVal("");
 		}
 		
-		PageMaker pm = new PageMaker();
-		pm.setTotalCount(15);
 		
+		
+		
+		//한 페이지에 몇개씩 표시할 것인지
+				int pagecount = 12;
+				//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
+				int pagenumber = 1;
+				//페이지 번호가 파라미터로 전달되는지 읽어와본다.
+				String strPageNum = request.getParameter("pagenumber");
+				//만일 페이지 번호가 파리미터로 넘어온다면
+				if(strPageNum != null) {
+					//숫자로 바꿔서 보여줄 페이지 번호를 지정한다.
+					pagenumber = Integer.parseInt(strPageNum);
+				}
+				
+				//보여줄 페이지의 시작 ROWNUM - 0부터 시작
+				int startPage = 0+ (pagenumber - 1)* pagecount;
+				//보여줄 페이지의 끝 ROWNUM
+				int endPage = pagenumber*pagecount;
+				
+				int pageNum = pagecount;
+				
+				// 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
+
+				// 설정해준 값들을 해당 객체에 담는다.
+				pm.setStartPage(startPage);
+				pm.setEndPage(endPage);
+				pm.setPageNum(pageNum);
+				
+				//ArrayList 객체의 참조값을 담을 지역변수를 만든다.
+				ArrayList<PageMaker> plist = null;
+				//전체 row의 개수를 담을 지역변수를 미리 만든다. -검색 조건이 들어온 경우 '검색 결과 갯수'가 된다.
+				int totalRow = 0;
+
+				//글의 개수
+				totalRow = boarditemService.totalCount(pm);
+				
+				//전체 페이지 갯수 구하기
+				int totalPageCount = (int)Math.ceil(totalRow / (double)pagecount);
+				
+				request.setAttribute("plist", plist);
+				request.setAttribute("totalPageCount", totalPageCount);
+				request.setAttribute("totalRow", totalRow);
+				request.setAttribute("pagenumber", pagenumber);
 		
 		
 		
 		System.out.println(vo.getCate_idx()+"카테고리선택");
 		
-	    List<BoardItemVO> list = boarditemService.list(vo,svo);
+	    List<BoardItemVO> list = boarditemService.list(vo,pm);
 		
 	    
 	    model.addAttribute("pm",pm);
@@ -59,8 +99,79 @@ public class BoardItemController {
 		return "boarditem/itemlist";
 	}
 
+	@RequestMapping(value = "/ajax_item.do")
+	public String itemlist2(PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
+		
+		if(svo.getSearchType() == null) {
+			svo.setSearchType("TITLE");
+		}
+		if(svo.getSearchVal() == null) {
+			svo.setSearchVal("");
+		}
+		
+		System.out.println();
+		
+		
+		//한 페이지에 몇개씩 표시할 것인지
+		int pagecount = 12;
+		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
+		int pagenumber = 1;
+		//페이지 번호가 파라미터로 전달되는지 읽어와본다.
+		String strPageNum = request.getParameter("pagenumber");
+		//만일 페이지 번호가 파리미터로 넘어온다면
+		if(strPageNum != null) {
+			//숫자로 바꿔서 보여줄 페이지 번호를 지정한다.
+			pagenumber = Integer.parseInt(strPageNum);
+		}
+		
+		//보여줄 페이지의 시작 ROWNUM - 0부터 시작
+		int startPage = 0+ (pagenumber - 1)* pagecount;
+		//보여줄 페이지의 끝 ROWNUM
+		int endPage = pagenumber*pagecount;
+		
+		int pageNum = pagecount;
+		
+		// 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
+		
+		
+		
+		
+		// 설정해준 값들을 해당 객체에 담는다.
+		pm.setStartPage(startPage);
+		pm.setEndPage(endPage);
+		pm.setPageNum(pageNum);
+		
+		
+		//ArrayList 객체의 참조값을 담을 지역변수를 만든다.
+		ArrayList<PageMaker> plist = null;
+		//전체 row의 개수를 담을 지역변수를 미리 만든다. -검색 조건이 들어온 경우 '검색 결과 갯수'가 된다.
+		int totalRow = 0;
+		
+		//글의 개수
+		totalRow = boarditemService.totalCount(pm);
+		
+		//전체 페이지 갯수 구하기
+		int totalPageCount = (int)Math.ceil(totalRow / (double)pagecount);
+		request.setAttribute("plist", plist);
+		request.setAttribute("totalPageCount", totalPageCount);
+		request.setAttribute("totalRow", totalRow);
+		request.setAttribute("pagenumber", pagenumber);
+		
+		
+		
+		System.out.println(vo.getCate_idx()+"카테고리선택");
+		
+		List<BoardItemVO> list = boarditemService.list(vo,pm);
+		
+		
+		model.addAttribute("pm",pm);
+		model.addAttribute("list", list);
+		return "boarditem/ajax_item";
+	}
+
+	
 	@RequestMapping(value = "itemview.do")
-	public String selectitem(SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+	public String selectitem(PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
 			HttpSession session, Model model) {
 		session = request.getSession();
 		UserVO login = (UserVO) session.getAttribute("login");
@@ -68,7 +179,7 @@ public class BoardItemController {
 
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		
-		    List<BoardItemVO> list = boarditemService.list(vo,svo);
+		    List<BoardItemVO> list = boarditemService.list(vo,pm);
 		    model.addAttribute("list", list);
 		
 		    model.addAttribute("vo", vo);
@@ -91,7 +202,6 @@ public class BoardItemController {
 
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 		System.out.println(path);
-		int i = 1;
 		String fileName = null;
 		UUID uuid = UUID.randomUUID();
 		// System.out.println(vo.getFile1().getOriginalFilename()+"파일1");
@@ -427,5 +537,66 @@ public class BoardItemController {
 
 		return "redirect:/boarditem/itemlist.do" ;
 	}
+	
+
+	@RequestMapping(value="/itemmodify.do", method=RequestMethod.GET)
+	public String modify(Model model, int item_idx) {
+		
+		BoardItemVO vo = boarditemService.selectitem(item_idx);
+		
+		model.addAttribute("vo",vo);
+		
+		return "boarditem/itemmodify";
+		
+	}
+	@RequestMapping(value="/itemmodify.do", method=RequestMethod.POST)
+	public String modify(BoardItemVO vo) {
+			
+			int result = boarditemService.itemmodify(vo);
+		
+		return "redirect:/boarditem/itemlist.do";
+		
+	}
+	
+
+	@RequestMapping(value="/itemdelete.do", method=RequestMethod.GET)
+	public String delete(Model model, int item_idx) {
+		
+		BoardItemVO vo = boarditemService.selectitem(item_idx);
+		
+		model.addAttribute("vo",vo);
+		
+		return "boarditem/itemdelete";
+	}
+	
+	@RequestMapping(value="/itemdelete.do", method=RequestMethod.POST)
+	public String delete(BoardItemVO vo) {
+			
+			int result = boarditemService.itemdelete(vo);
+		
+		return "redirect:/itemboard/itemlist.do";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
 
 }

@@ -33,22 +33,34 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public List<BoardItemVO> list(BoardItemVO vo,SearchVO svo) {
+	public List<BoardItemVO> list(BoardItemVO vo,PageMaker pm) {
 		
-		return boarditemdao.selectAll(vo,svo);
+		return boarditemdao.selectAll(vo,pm);
 	}
 
 
 
 	@Override
 	public int totalCount(PageMaker pm) {
-		return 0;
+		return boarditemdao.totalCount(pm);
 	}
 
 
 	@Override
 	public List<BoardItemVO> list2(BoardItemVO vo, SearchVO svo) {
 		return boarditemdao.selectAllbyuser(vo, svo);
+	}
+
+
+	@Override
+	public int itemmodify(BoardItemVO vo) {
+		return boarditemdao.itemmodify(vo);
+	}
+
+
+	@Override
+	public int itemdelete(BoardItemVO vo) {
+		return boarditemdao.itemdelete(vo);
 	}					
 
 }

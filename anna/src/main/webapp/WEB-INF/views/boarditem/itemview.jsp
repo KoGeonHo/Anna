@@ -579,7 +579,8 @@ a {
 			</c:if>
 		</div>
 		</div>
-
+<a href="itemmodfiy.do">게시글 수정</a>
+<a href="itemdelete.do">게시글 수정</a>
  조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품
 	

@@ -8,7 +8,76 @@
 <head>
 <link href="${path}/css/bootstrap.css" rel="stylesheet" />
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
+<script>
+//스크롤 시 이벤트 처리
 
+
+
+//페이지가 처음 로딩될 때 1page를 보여주기 때문에 초기값을 1로 지정한다.
+let currentPage = 1;
+//현재 페이지가 로딩중인지 여부를 저장할 변수
+let isLoding=false;
+
+//웹브라우저의 창을 스크롤할 때마다  호출되는 함수 등록
+$(window).on("scroll",function(){
+	
+	//위로 스크롤된 길이
+	let scrollTop = $(window).scrollTop();
+	//웹브라우저 창의 높이
+	let windowHeight = $(window).height();
+	//문서 전체의 높이
+	let documentHeight = $(document).height();
+	//바닥까지 스크롤 되었는지 여부를 알아낸다.
+	let isBottom = scrollTop + windowHeight + 10 >= documentHeight;
+	
+	if(isBottom){
+		console.log(isLoding);
+		//만일 현재 마지막 페이지라면
+		if(currentPage == ${totalPageCount} || isLoding){
+			console.log(currentPage);
+			return; // 함수를 여기서 끝낸다.
+		}
+		//현재 로딩 중이라고 표시한다.
+		isLoding= true;
+		//console.log("탔습니다.");
+		//로딩바를 띄우고
+		$(".back-drop").show();
+		//요청할 페이지 번호를 1증가시킨다.
+		currentPage++;
+		//추가로 받아올 페이지를 서버에 ajax 요청을 하고
+		//console.log("inscroll" + currentPage);
+		GetList(currentPage); 
+	
+	}
+});
+
+//카드 리스트를 가져오는 함수
+
+const GetList = function(currentPage){
+	//console.log("inGetList" + currentPage);
+	
+	//무한스크롤
+	$.ajax({
+	
+		url : "ajax_item.do",
+		method : "GET",
+		//검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
+		data : "pagenumber="+currentPage+"&SearchType=${searchType}&SearchVal=${searchVal}",
+		//FreeBoard.jsp의 내용이 data로 들어온다. 
+		success:function(data){
+			console.log(data);
+			//응답된 문자열은 html형식이다. 
+			//해당 문자열은 .card-list-container div에 html로 해석하라고 추가한다.
+			$(".card-list-container").append(data);
+			//로딩바를 숨긴다.
+			$(".back-drop").hide();
+			//로딩중이 아니라고 표시한다.
+			isLoding=false;
+			//console.log("ajax"); 
+		}	
+	});
+}
+</script>
 <style>
 
 .col-lg-3 .card img {
@@ -17,6 +86,15 @@ width:100%;
 height:250px;
 }
 
+
+
+ul{
+	list-style:none;
+}
+li{
+	float:left;
+	margin-right:20px;
+}
 
 @media ( max-width: 400px ) {
 
@@ -58,24 +136,10 @@ height:250px;
 #b{
 	display:none;
 }
+
+.box {float:left; overflow: hidden; background: #f0e68c;}
+.box-inner {width: 800px; padding: 10px;}
 </style>
-<script>
-
-$(window).on("scroll", function() {
-	var scrollHeight = $(document).height();
-	var scrollPosition = $(window).height() + $(window).scrollTop();		
-
-	$("#scrollHeight").text(scrollHeight);
-	$("#scrollPosition").text(scrollPosition);
-	$("#bottom").text(scrollHeight - scrollPosition);
-
-	if (scrollPosition > scrollHeight - 500) {			
-		//todo
-		$("body").append('<div id="content"></div>');
-	}
-});
-
-</script>
 </head>
 <body>
 <a href="itemwrite.do">중고거래글 작성하기</a>
@@ -118,7 +182,7 @@ $(window).on("scroll", function() {
 		
 		
 	</form>
-	<c:if test="">
+	<c:if test="${svo.searchVal = ?.title}">
 	<h1>검색된 상품중 최저가 상품입니다.</h1>
 	<div class="row">
 		<div class="col-md-3 col-lg-3">
@@ -135,19 +199,31 @@ $(window).on("scroll", function() {
 <hr>
 <br>
 
-		
+
+<div style="width:100px; background-color:grey;"class="slide-toggle">
+	카테고리
+</div>
+	<div style=" height:70px;">
+	
+	<div class="box">
+	    <div class="box-inner">
+	    	<ul>
+				<li><a href="itemlist.do" class="cate_menu">전체</a></li>
+				<li><a href="itemlist.do?cate_idx=1" class="cate_gory">가전</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+			</ul>
+	    </div>
+	</div>
+</div>		
 			
-			
-			
+<hr>
+
 	<div class="container">
 		<div class="row">
-		<ul>
-			<li><a href="itemlist.do">전체</a></li>
-			<li><a href="itemlist.do?cate_idx=1">가전</a></li>
-			<li><a href="itemlist.do?cate_idx=2">취미</a></li>
-			<li><a href=""></a></li>
-			<li><a href=""></a></li>
-		</ul>
 		<c:if test="${list.size() > 0}">
 		<c:forEach var="vo" items="${list}">
 		
@@ -169,17 +245,15 @@ $(window).on("scroll", function() {
 		</div>
 	</div>
 
-<div id="container">
-	<div id="log">
-		<span>scrollHeight: <b id="scrollHeight">0</b></span><br>
-		<span>scrollPosition: <b id="scrollPosition">0</b></span><br>
-		<span>from bottom :  <b id="bottom"></b></span><br>
-		<span id="b">scroll < 500px</span>
+<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
+	<div class="container">
+		<div class="row card-list-container thumbnails">
+		
+		</div>
 	</div>
-</div>
+</section>
 
-
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src ="../js/boardlist.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
