@@ -27,6 +27,9 @@ html, body {
 	min-width:320px;
 }
 
+
+body { position: fixed; }
+
 .container {
 	justify-content: center;
 	align-items: center;
@@ -37,10 +40,20 @@ html, body {
     margin-left: 3px;
 }
 
+#footer {
+	background:#fff;
+	position:fixed; 
+	bottom:0px;
+}
+
 @media all and (max-width:  767px){
 	
 	.pc-header {
 		display:none;
+	}
+	
+	.main {
+		padding-bottom: 70px;
 	}
 	
 }
@@ -190,7 +203,7 @@ html, body {
 		</div>
 	
 		<div class="wrapper" style="flex:1; overflow:auto;">
-			<div class="container" >
+			<div class="container main" >
 				<h3 class="border-bottom" style="padding:1rem;">회원정보</h3>
 				<div id="profile" class="border-bottom" style="width:100%;">
 					<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
@@ -212,7 +225,7 @@ html, body {
 					<div class="col-3 text-center" style="line-height:3rem;">내동네</div>
 					<div class="col-9" style="line-height:3rem; align-self:center;">
 						<c:if test="${ empty userInfo.addr_code }">
-							<button class="btn" style="background:#00AAB2; color:#fff;">동네 등록하기</button>
+							<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 등록하기</button>
 						</c:if>
 						<c:if test="${ not empty userInfo.addr_code }">
 							${ userInfo.addr1 } ${ userInfo.addr2 }
@@ -252,7 +265,7 @@ html, body {
 		
 		
 		<!-- mobile footer Start -->
-		<div id="footer" class="border-top" style="box-sizing: border-box; width:100vw; padding:1rem 0; min-width:320px;">
+		<div id="footer" class="border-top" style="box-sizing:border-box; width:100vw; padding:1rem 0; min-width:320px; ">
 			<div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_home.png"></div><!--  
 			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_comm.png"></div><!--
 			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_chat.png"></div><!--
