@@ -1,6 +1,8 @@
 package edu.fourmen.vo;
 
+
 public class SearchVO extends BoardItemVO{
+
 	private String SearchType;
 	private String SearchVal;
 	private String board_type;

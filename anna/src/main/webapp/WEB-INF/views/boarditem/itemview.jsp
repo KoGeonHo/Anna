@@ -40,10 +40,12 @@
 } 
 
 
+
 .row .col-lg-2 .card img{
 width:100%;
 height:150px;
 }
+
 
 
 
@@ -92,13 +94,17 @@ ul.imgs li{
 }
 
 img{
+
 	width:100%;
+
 	height:450px;
 }
 
 @media ( max-width: 400px ) {
 	img{
+
 	width:100%;
+
 	height:250px;
 	}
 
@@ -244,6 +250,7 @@ body {
     display : none;
 }
 
+
 .container{
 width:50%;
 hieght:50px;
@@ -251,6 +258,7 @@ hieght:50px;
 
 
 }
+
 
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
@@ -392,9 +400,11 @@ a {
 <br>
 	
 <form  method="post" enctype="multipart/form-data" name="frm">
+
 	<div class="container">
 	<div class="row">
 			<div class="col-lg-12">
+
 				<div class="card">
 				
 					<div class="card-body">
@@ -409,7 +419,9 @@ a {
 				
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+
 						<div class="slider-1" >
+
 						    <div class="slides">
 						    	<c:if test="${vo.image1 != null}">
 						        <div ><img src="../resources/upload/${vo.image1}"></div>
@@ -487,7 +499,9 @@ a {
 				
 				
 				
+
 					<div class="outer" >
+
 					  <div class="inner-list">
 					    <div class="inner">
 					      <img src="../resources/upload${vo.image1}">
@@ -538,6 +552,7 @@ a {
 					  </div>
 					  </div>
 				
+
 				    
 					</div>
 					
@@ -545,6 +560,7 @@ a {
 						<h5 class="card-title">${vo.title}</h5>
 							<input type="hidden" value="${vo.uidx} asd"> 
 							<input type="hidden" value="${vo.item_idx} asd">
+
 								<p class="card-text">판매자 : ${vo.nickName}</p>
 								<p class="card-text">${vo.content}</p>
 								<p class="card-text">판매가격 : ${vo.price}</p>
@@ -583,18 +599,8 @@ a {
 <a href="itemdelete.do">게시글 수정</a>
  조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	<script src ="../js/boarditem.js"></script>
 	<script src ="../js/boarditem2.js"></script>
 </body>

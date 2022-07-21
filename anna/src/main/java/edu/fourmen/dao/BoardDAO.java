@@ -40,4 +40,23 @@ public class BoardDAO {
 		return result; 
 	}
 	
+
+	public int commentwrite(BoardVO rv) { //댓글작성하기
+		
+		int result =sqlSession.insert(namespace+".commentwrite", rv);
+		
+		return result;
+	}
+	
+	public int getCTotal(BoardVO rv) { //댓글 카운트
+		
+		return sqlSession.selectOne(namespace+".getCTotal", rv);
+	}
+	
+	public List<BoardVO> getCList(int Bidx) { //댓글목록 불러오기
+	
+		return sqlSession.selectList(namespace+".getCList", Bidx);
+	}
+	
+
 }

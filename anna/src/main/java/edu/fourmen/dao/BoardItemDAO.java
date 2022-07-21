@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardItemVO;
+
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
+
 
 @Repository
 public class BoardItemDAO {
@@ -45,6 +47,7 @@ public class BoardItemDAO {
 		return sqlSession.selectOne(efdb+".selectitem",item_idx);
 	}
 	
+
 	public int totalCount(PageMaker pm) {
 		int result = sqlSession.selectOne(efdb+".totalCount",pm);
 		return result;
@@ -61,9 +64,5 @@ public class BoardItemDAO {
 	public List<BoardItemVO> MinPrice(PageMaker pm) {
 		return sqlSession.selectOne(efdb+".MinPrice",pm);
 	}
-	
-	
-	
-	
-	
+
 }

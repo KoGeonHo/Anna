@@ -7,7 +7,7 @@
 
 <insert id="boardinsert">
 	INSERT INTO Board(
-			 Uidx
+			 uidx
 			,board_type
 			,Title
 			,Contents
@@ -19,7 +19,7 @@
 			,Image4
 			,Image5
 	)VALUES(
-			 1
+			 #{uidx}
 			,#{board_type}
 			,#{Title}
 			,#{Contents}
@@ -48,7 +48,7 @@
 		  ,b.Image1
 	  FROM Board b
 	 INNER JOIN AnnaUser u
-	  	ON b.Uidx = u.uidx
+	  	ON b.uidx = u.uidx
 	 WHERE b.isDel ='N'
 	   <if test='searchType != null and searchType.equals("All")'>
 	 	    AND b.Contents like concat('%',#{SearchVal},'%')
@@ -66,7 +66,7 @@
 	 		OR u.nickname like concat('%',#{SearchVal},'%')	
 	 	</if> 
 	 	
-	 	ORDER BY b.Wdate asc
+	 	ORDER BY b.Wdate desc
 	 	limit #{startPage}, #{pageNum}
 	 	
 </select>
@@ -75,7 +75,7 @@
 	SELECT COUNT(Bidx)
 	  FROM Board b
 	  INNER JOIN AnnaUser u
-	  	ON b.Uidx = u.uidx
+	  	ON b.uidx = u.uidx
 	 WHERE b.isDel = 'N'
 		  <if test='searchType != null and searchType.equals("All")'>
 	 	    AND b.Contents like concat('%',#{SearchVal},'%')
@@ -96,7 +96,7 @@
 		  ,b.Contents
 		  ,b.Wdate
 		  ,b.Bidx
-		  ,b.Uidx
+		  ,b.uidx
 		  ,u.nickname
 		  ,b.Image1
 		  ,b.Image2
@@ -107,6 +107,45 @@
 	 WHERE b.Uidx = u.uidx	  
 	   AND b.Bidx = #{Bidx}
 </select>
+
+
+<insert id="commentwrite" parameterType="boardvo">
+	INSERT INTO reply(
+			 Uidx
+			,Bidx
+			,contents
+		    ,Wdate
+	)VALUES(
+			 #{uidx}
+			,#{Bidx} 
+			,#{Contents}
+			,now()
+	)
+</insert>
+
+<select id="getCTotal" resultType="int" parameterType="boardvo"> <!-- vo로 받는 이유 isDel -->
+  	SELECT
+  	 COUNT(
+  	 	contents
+  	 )
+  	  FROM reply 
+  	 WHERE Bidx = #{Bidx}
+  	   AND isDel = 'N'
+</select>
+
+<select id="getCList" resultType="boardvo" parameterType="int">
+  	SELECT r.Uidx as Uidx
+  		  ,r.Bidx as Bidx
+  		  ,u.nickName as nickName
+  		  ,r.contents as contents
+  		  ,r.Wdate as Wdate
+  		  ,r.isDel as isDel
+  	  FROM reply r, AnnaUser u
+  	 WHERE r.Bidx = #{Bidx}
+  	   AND r.isDel = 'N'
+  	   AND r.Uidx = u.uidx
+</select>
+
 
 
 </mapper>

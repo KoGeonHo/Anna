@@ -45,4 +45,25 @@ public class BoardServiceImpl implements BoardService {
 		 return boardDao.totalCount(pm);
 	}
 
+	@Override
+	public int commentwrite(BoardVO rv) {
+		
+		return boardDao.commentwrite(rv);
+	}
+
+	@Override
+	public int getCTotal(BoardVO rv) {
+		
+		return boardDao.getCTotal(rv);
+	}
+
+
+	@Override
+	public List<BoardVO> getCList(int Bidx) {
+		
+		return boardDao.getCList(Bidx);
+	}
+
+
+
 }

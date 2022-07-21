@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.PageMaker;
+
 import edu.fourmen.vo.SearchVO;
+
 
 @Service
 public  class BoardItemServiceImple implements BoardItemService{
@@ -37,6 +39,7 @@ public  class BoardItemServiceImple implements BoardItemService{
 		
 		return boarditemdao.selectAll(vo,pm);
 	}
+
 
 
 
@@ -68,5 +71,6 @@ public  class BoardItemServiceImple implements BoardItemService{
 	public List<BoardItemVO> MinPrice(PageMaker pm) {
 		return boarditemdao.MinPrice(pm);
 	}					
+
 
 }

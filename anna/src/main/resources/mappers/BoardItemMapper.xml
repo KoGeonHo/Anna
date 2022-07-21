@@ -6,13 +6,16 @@
  
 <mapper namespace="edu.fourmen.mapper.boardItemMapper">
 	
+
 	<select id="selectAll" resultType="BoardItemVO" parameterType="pagemaker" >
+
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
 			 , b.Contents
 			 , b.wdate
 			 , u.nickName
+
 			 , b.Price
 			 , b.image1
 			FROM Board_Items b, AnnaUser u
@@ -66,6 +69,7 @@
 			
 	</select>
 	
+
 	
 	<insert id="boarditemswrite" parameterType="BoardItemVO">
 	insert into Board_Items(
@@ -147,6 +151,7 @@
 		WHERE b.uidx = u.uidx
 		AND b.item_idx = #{item_idx}
 	</select>
+
 	<update id="itemsmodify" parameterType="BoardItemVO">
 	Update Board_Items Set
 						cate_idx = #{cate_idx}
@@ -182,6 +187,7 @@
 			isDel = 'Y'
 		where item_idx = #{item_idx}
 	</update>
+
 	
 	<select id="MinPrice" resultType="BoardItemVO" parameterType="pagemaker">
 		select min(Price) 
