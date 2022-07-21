@@ -37,10 +37,9 @@ public class UserController {
 	
 	//로그인 페이지
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
-	public String login(HttpServletResponse response,HttpServletRequest request,HttpSession session) {
+	public String login() {
 		
 		return "user/login";
-		
 	}
 		
 	//회원가입 페이지
@@ -201,9 +200,42 @@ public class UserController {
 		
 		//카카오 code값을 이용해 엑세스 토큰 및 통신코드 받기
 		HashMap<String,Object> kakaoInfo = userService.getAccessToken(code);
+		
+		//카카오 엑세스 토큰
+        String access_Token = (String)kakaoInfo.get("access_Token");
         
         //카카오 통신 코드 200이여야 정상 처리됨
         int responseCode = (int)kakaoInfo.get("responseCode");
+	
+        //엑세스 토큰을 이용하여 카카오 회원정보를 받기
+        HashMap<String, Object> userInfo = userService.getKakaoUserInfo(access_Token);
+        
+        //카카오 회원정보를 담기위한 UserVO
+        UserVO vo = new UserVO();
+        
+        //카카오 회원정보를 변수에 담고 vo에 세팅---------------------------------------------------------------
+        
+        String kakao_email = (String)userInfo.get("kakao_email");
+        
+    	String kakao_nickName = (String)userInfo.get("nickName");
+    	
+    	String kakaoId = (String)userInfo.get("kakaoId");
+    	
+    	String thumbnail_image = (String)userInfo.get("thumbnail_image");
+    	
+    	vo.setUser_email(kakao_email);
+    	
+    	vo.setNickName(kakao_nickName);
+    	
+    	vo.setKakao_auth(kakaoId);
+    	
+    	vo.setProfile_image(thumbnail_image);
+    	
+    	//------------------------------------------------------------------------------------------
+    	
+    	
+    	//로그인 정보를 담기위한 UserVO
+    	UserVO userLoginInfo = new UserVO();
     	
     	//통신 코드가 200이 아니면 카카오API 통신 실패
         if(responseCode != 200) {
@@ -212,62 +244,41 @@ public class UserController {
         	
         	msg = "alert('카카오 로그인에 실패하였습니다.(오류코드 : kakao"+responseCode+")\\n관리자에게 문의해주세요.');";
         	
-        	moveTo = path+"/user/login.do";
+        	moveTo = request.getContextPath()+"/user/login.do";
         	
         } else {
-
-            //카카오 엑세스 토큰
-            String access_Token = (String)kakaoInfo.get("access_Token");
-            
-        	//엑세스 토큰을 이용하여 카카오 회원정보를 받기
-            HashMap<String, Object> userInfo = userService.getKakaoUserInfo(access_Token);
-            
-            //카카오 회원정보의 이메일 주소
-            String kakao_email = (String)userInfo.get("kakao_email");
-        	
-        	//로그인 정보를 담기위한 UserVO
-        	UserVO userLoginInfo = new UserVO();
         	
         	//카카오 회원정보의 이메일과 일치하는 회원정보가 있는지 확인
         	int result = userService.emailChk(kakao_email);
         	
-        	//일치하는 정보가 없다면 카카오 회원정보를 이용하여 회원정보를 AnnaUser 테이블에 입력 후 로그인 처리 
+        	//일치하는 정보가 없다면 카카오 회원정보를 이용한 회원가입 후 로그인 처리
         	if(result == 0) {
             	
-        		String kakao_nickName = (String)userInfo.get("nickName");
-            	
-            	String kakaoId = (String)userInfo.get("kakaoId");
-            	
-            	String thumbnail_image = (String)userInfo.get("thumbnail_image");
-            	
-                //카카오 회원정보를 담기위한 UserVO
-                UserVO kvo = new UserVO();
-
-            	kvo.setUser_email(kakao_email);
-            	
-            	kvo.setNickName(kakao_nickName);
-            	
-            	kvo.setKakao_auth(kakaoId);
-            	
-            	kvo.setProfile_image(thumbnail_image);
         		
-            	if(userService.join(kvo) != 1) {
+            	if(userService.join(vo) != 1) {
             		
-            		System.out.println("카카오 회원정보 입력 오류");
+            		System.out.println("카카오 로그인 회원가입 오류 발생");
             		
-            		msg = "alert('오류가 발생하였습니다.(오류코드 : join)\\n관리자에게 문의해주세요.');";
+            		msg = "alert('카카오 로그인에 실패하였습니다.(오류코드 : join)\\n관리자에게 문의해주세요.');";
                 	
-                	moveTo = path+"/user/login.do";
+                	moveTo = request.getContextPath()+"/user/login.do";
             		
             	} else {
             		
-            		System.out.println("카카오 로그인 처리");
-
-            		userLoginInfo.setUser_email(kakao_email);
+            		System.out.println("카카오 로그인 회원가입 및 로그인 처리");
             		
-            		userLoginInfo = userService.login(userLoginInfo);
+            		userLoginInfo = userService.login(vo);
             		
-        			moveTo = path+"/main.do";
+            		//로그인 세션정보 (회원번호[uidx], 이메일[user_email], 닉네임[nickName])
+            		session.setAttribute("uidx", userLoginInfo.getUidx());
+            		
+        			session.setAttribute("user_email", userLoginInfo.getUser_email());
+        			
+        			session.setAttribute("nickName", userLoginInfo.getNickName());
+        			
+        			session.setAttribute("interested", userLoginInfo.getInterested());
+        			
+        			moveTo = request.getContextPath()+"/main.do";
         			
             	}
             	
@@ -275,33 +286,30 @@ public class UserController {
         		
         		System.out.println("가입된 이메일 주소 카카오 id(kakao_auth) update 후 로그인 처리");
         		
-        		userLoginInfo.setUser_email(kakao_email);
-        		
-        		userLoginInfo = userService.login(userLoginInfo);
+        		userLoginInfo = userService.login(vo);
         		
         		if(userLoginInfo.getKakao_auth() == "") {
         			
-        			userLoginInfo.setKakao_auth(userLoginInfo.getKakao_auth());
+        			userLoginInfo.setKakao_auth(vo.getKakao_auth());
         			
         			userService.updateKakaoAuthKey(userLoginInfo);
         			
         		}
+        		
+    			//로그인 세션정보 (회원번호, 이메일[아이디], 닉네임)
+    			session.setAttribute("uidx", userLoginInfo.getUidx());
     			
-    			moveTo = path+"/user/myPage.do";
+    			session.setAttribute("user_email", userLoginInfo.getUser_email());
+    			
+    			session.setAttribute("nickName", userLoginInfo.getNickName());
+    			
+    			session.setAttribute("interested", userLoginInfo.getInterested());
+    			
+    			session.setAttribute("access_Token", access_Token);
+    			
+    			moveTo = request.getContextPath()+"/user/myPage.do";
         			
         	}
-    		
-			//로그인 세션정보 (회원번호, 이메일[아이디], 닉네임)
-			session.setAttribute("uidx", userLoginInfo.getUidx());
-			
-			session.setAttribute("user_email", userLoginInfo.getUser_email());
-			
-			session.setAttribute("nickName", userLoginInfo.getNickName());
-			
-			session.setAttribute("interested", userLoginInfo.getInterested());
-			
-			session.setAttribute("access_Token", access_Token);
-        	
         	
         }
         
@@ -380,7 +388,7 @@ public class UserController {
 	}
 	
 	
-	//회원정보 수정 및 조회 페이지로 되돌아가기
+	//회원정보 수정페이지
 	@RequestMapping(value="/userInfoMod.do", method=RequestMethod.POST)
 	public String userInfoMod(UserVO vo,HttpServletRequest request,HttpSession session) {
 		
@@ -438,13 +446,4 @@ public class UserController {
 		
 	}
 	
-	//동네인증 페이지
-	@RequestMapping(value="/locationAuth.do")
-	public String locationAuth(Model model) {
-		
-		model.addAttribute("path",path);
-		
-		return "user/locationAuth";
-		
-	}
 }
