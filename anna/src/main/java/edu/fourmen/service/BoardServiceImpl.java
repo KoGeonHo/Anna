@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import edu.fourmen.dao.BoardDAO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
-
 import edu.fourmen.vo.SearchVO;
 
 @Service
@@ -15,6 +14,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	BoardDAO boardDao;
+	
 	
 	@Override
 	public int writeBoard(BoardVO vo) {
@@ -29,11 +29,15 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectfreeboard(pm);
 	}
 
+	
+
+
 	@Override
 	public BoardVO viewBoard(int Bidx) {
 		
 		return boardDao.viewBoard(Bidx);
 	}
+
 
 	@Override
 	public int totalCount(PageMaker pm) {
@@ -59,6 +63,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		return boardDao.getCList(Bidx);
 	}
+
 
 
 }

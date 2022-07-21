@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>글보기</title>
+
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <style>
 
@@ -25,6 +26,7 @@ border-width: 1px 0px 0px 0px ;
 제목 : ${bv.title} 작성자 :${bv.nickName }
 <br>
 내용 : ${bv.contents}
+
 
 <br>
 
@@ -49,6 +51,7 @@ border-width: 1px 0px 0px 0px ;
 	<input type="image" src="../resources/upload/${bv.image5}" alt ="안되는데요?"><br>
     </c:if>
     
+
                     <div class="comment-box">
    		                 <div class="comment-count">댓글 <span id="count">0</span></div>
  
@@ -179,5 +182,6 @@ function getList() {
 };
 
 </script>
+
 </body>
 </html>
