@@ -108,6 +108,7 @@
 	   AND b.Bidx = #{Bidx}
 </select>
 
+
 <insert id="commentwrite" parameterType="boardvo">
 	INSERT INTO reply(
 			 Uidx
@@ -144,6 +145,7 @@
   	   AND r.isDel = 'N'
   	   AND r.Uidx = u.uidx
 </select>
+
 
 
 </mapper>
