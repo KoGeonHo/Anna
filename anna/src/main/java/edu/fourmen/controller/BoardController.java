@@ -54,7 +54,7 @@ public class BoardController {
 		session = request.getSession();
 		
 		//한 페이지에 몇개씩 표시할 것인지
-		int pagecount = 5;
+		int pagecount = 12;
 		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 		int pagenumber = 1;
 		//페이지 번호가 파라미터로 전달되는지 읽어와본다.
@@ -117,7 +117,7 @@ public class BoardController {
 	public String ajax_FreeBoard(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
 		
 		//한 페이지에 몇개씩 표시할 것인지
-		int pagecount = 5;
+		int pagecount = 12;
 		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 		int pagenumber = 1;
 		//페이지 번호가 파라미터로 전달되는지 읽어와본다.
@@ -313,6 +313,7 @@ public class BoardController {
 	public String InsertComment(BoardVO rv, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
+		rv.setUidx((int)session.getAttribute("uidx"));
 		System.out.println("댓글 등록 통신 성공");
 //		if(session.getAttribute("login") == null) {
 //			return "fail";

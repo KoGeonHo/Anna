@@ -10,6 +10,25 @@
 <meta charset="UTF-8">
 <title>일상&amp;소통</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="<%= request.getContextPath()%>/css/bootstrap.css">
+<style>
+
+.card img{
+
+width : 100%;
+height : 250px;
+
+}
+
+.card{
+
+
+
+}
+
+
+
+</style>
 <script>
 //스크롤 시 이벤트 처리
 
@@ -94,13 +113,14 @@ const GetList = function(currentPage){
 		<li>마이페이지</li>
 	</ul>
 	
+	<div>
 	<c:if test="${nickName != null}">
-	${nickName}님 환영합니다
-	
+	${nickName}님 환영합니다 | <a href="../user/logout.do">로그아웃</a>
 	</c:if>
 	<c:if test="${nickName == null}">
 	<a href="../user/login.do">로그인</a> | <a href="../user/join.do">회원가입</a>
 	</c:if>
+	</div>
 </nav>
 <main>
 	<form method="get" action="FreeBoard.do">
@@ -126,11 +146,12 @@ const GetList = function(currentPage){
 			
 			<h3>등록된 게시물이 없습니다.</h3>
 		</c:if>
-		
+<div class="container">
+	<div class="row">		
 		<c:if test="${freeboard.size()>0 }">
 			<c:forEach var="vo" items="${freeboard}">
 			<c:if test = "${vo.board_type eq 'free' }">
-		<div>
+		<div class="card col-3">
 			<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요 없어">
 			<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
 			${vo.nickName}  좋아요 112 댓글 1
@@ -139,7 +160,8 @@ const GetList = function(currentPage){
 		</c:if>
 			</c:forEach>
 		</c:if>
-		
+	</div>
+</div>
 	</form>
 <section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
 	<div class="container">
