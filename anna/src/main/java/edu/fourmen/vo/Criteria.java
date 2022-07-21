@@ -1,5 +1,9 @@
 package edu.fourmen.vo;
 
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 
 public class Criteria {
  
@@ -46,4 +50,7 @@ public class Criteria {
         }
     }
 }
+<<<<<<< HEAD
  
+=======
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)

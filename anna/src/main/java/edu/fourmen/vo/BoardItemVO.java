@@ -59,7 +59,10 @@ public class BoardItemVO extends UserVO {
 	
 	private int total;
 	//현재 페이지 번호, 한 페이지에 표출할 데이터 개수
+<<<<<<< HEAD
 	private Criteria cri;
+=======
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 	
 	
 	
@@ -98,12 +101,15 @@ public class BoardItemVO extends UserVO {
 	public void setTotal(int total) {
 		this.total = total;
 	}
+<<<<<<< HEAD
 	public Criteria getCri() {
 		return cri;
 	}
 	public void setCri(Criteria cri) {
 		this.cri = cri;
 	}
+=======
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 	public int getStartPage() {
 		return startPage;
 	}

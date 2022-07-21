@@ -83,8 +83,8 @@
 					url : "emailChk.do",
 					data : "user_email="+email.val(),
 					success : function(result){
-						console.log(result);
-						 if(result.result != 0){
+						console.log(result.result);
+						 if(result.result == 1){
 							alert("이미 사용중인 이메일 입니다.");
 							email.val("");
 							email.focus();
@@ -663,7 +663,7 @@
 				<div class="box">
 					<div class="tr">
 						<input class="form-control" type="email" name="user_email" placeholder="이메일" required autofocus>
-						<button type="button" id="chkBtn" class="btn btn-primary" onclick="emailChk()">이메일 중복 확인</button>
+						<button type="button" id="chkBtn" class="btn btn-primary" onclick="emailChk()">이메일 확인</button>
 						<button type="button" id="authEmailBtn" class="btn btn-primary" style="display:none;" onclick="sendAuthEmail()">인증번호 다시받기</button>
 					</div>
 					<div class="tr" id="emailAuth">

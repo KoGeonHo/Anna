@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.PageMaker;
+<<<<<<< HEAD
+=======
+import edu.fourmen.vo.SearchVO;
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 
 @Service
 public class BoardItemServiceImple implements BoardItemService{
@@ -35,7 +39,18 @@ public class BoardItemServiceImple implements BoardItemService{
 	@Override
 	public List<BoardItemVO> list(BoardItemVO vo) {
 		
+<<<<<<< HEAD
 		return boarditemdao.selectAll(vo);
+=======
+		return boarditemdao.selectAll(vo,pm);
+	}
+
+
+
+	@Override
+	public int totalCount(PageMaker pm) {
+		return boarditemdao.totalCount(pm);
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 	}
 
 
@@ -44,4 +59,19 @@ public class BoardItemServiceImple implements BoardItemService{
 		return  boarditemdao.totalcount();
 	}
 
+<<<<<<< HEAD
+=======
+
+	@Override
+	public int itemmodify(BoardItemVO vo) {
+		return boarditemdao.itemmodify(vo);
+	}
+
+
+	@Override
+	public int itemdelete(BoardItemVO vo) {
+		return boarditemdao.itemdelete(vo);
+	}					
+
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 }

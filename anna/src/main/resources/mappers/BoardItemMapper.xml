@@ -6,13 +6,21 @@
  
 <mapper namespace="edu.fourmen.mapper.boardItemMapper">
 	
+<<<<<<< HEAD
 	<select id="selectAll" resultType="BoardItemVO" parameterType="BoardItemVO"  >
+=======
+	<select id="selectAll" resultType="BoardItemVO" parameterType="pagemaker" >
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
 			 , b.Contents
 			 , b.wdate
 			 , u.nickName
+<<<<<<< HEAD
+=======
+			 , b.Price
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 			 , b.image1
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  ORDER BY b.item_idx desc LIMIT #{startPage}, #{perPageNum}
@@ -143,6 +151,44 @@
 		WHERE b.uidx = u.uidx
 		AND b.item_idx = #{item_idx}
 	</select>
+<<<<<<< HEAD
 	
+=======
+	<update id="itemsmodify" parameterType="BoardItemVO">
+	Update Board_Items Set
+						cate_idx = #{cate_idx}
+						,Title = #{title}
+						,Contents = #{content}
+						,wdate = now()
+						,addr1 = #{addr1}
+						,addr2 = #{addr2}
+						,addr_Code = #{addr_code}
+						,image1 = #{image1}
+						,image2 = #{image2}
+						,image3 = #{image3}
+						,image4 = #{image4}
+						,image5 = #{image5}
+						,image6 = #{image6}
+						,image7 = #{image7}
+						,image8 = #{image8}
+						,image9 = #{image9}
+						,image10 = #{image10}
+						,Keyword = #{keyword}
+						,Price = #{price}
+						,offer = #{offer}
+						,hit = 1 
+						,state = #{state}
+						,isDel = 'N'
+						
+						where item_itdx = #{item_idx}
+						
+	</update>
+	
+	<update id="itemdelete" parameterType="int">
+		update Board_Items Set
+			isDel = 'Y'
+		where item_idx = #{item_idx}
+	</update>
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 	
 </mapper>

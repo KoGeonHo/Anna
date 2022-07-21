@@ -63,7 +63,7 @@
 	
 	</update>
 	
-	<select id="getUserInfo" parameterType="int" resultType="UserVO">
+	<select id="getUsetInfo" parameterType="int" resultType="UserVO">
 		
 		SELECT
 			nickName,
@@ -83,28 +83,5 @@
 			uidx = #{ uidx }
 		
 	</select>
-	
-	<update id="userInfoMod" parameterType="UserVO">
-	
-		UPDATE 
-			AnnaUser
-		SET
-			nickName = #{ nickName },
-			introduce = #{ introduce }
-		WHERE 
-			uidx = #{ uidx }
-			
-	</update>
-	
-	<update id="updateInterested" parameterType="UserVO">
-	
-		UPDATE
-			AnnaUser
-		SET
-			interested = #{ interested }
-		WHERE 
-			uidx = #{ uidx }
-			
-	</update>
 	
 </mapper>

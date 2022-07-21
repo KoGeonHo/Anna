@@ -40,7 +40,13 @@
 } 
 
 
-
+<<<<<<< HEAD
+=======
+.row .col-lg-2 .card img{
+width:100%;
+height:150px;
+}
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 
 
 
@@ -89,13 +95,21 @@ ul.imgs li{
 }
 
 img{
+<<<<<<< HEAD
 	width:700px;
+=======
+	width:100%;
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 	height:450px;
 }
 
 @media ( max-width: 400px ) {
 	img{
+<<<<<<< HEAD
 	width:288px;
+=======
+	width:100%;
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 	height:250px;
 	}
 
@@ -241,6 +255,7 @@ body {
     display : none;
 }
 
+<<<<<<< HEAD
 
 }
 
@@ -274,6 +289,11 @@ body {
 }
 .slider input[type=radio]:nth-child(10):checked~.bullets>label:nth-child(10){
     background-color: #fff;
+=======
+.container{
+width:50%;
+hieght:50px;
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 }
 
 
@@ -329,10 +349,13 @@ body {
     z-index:1;
 } 
 
+<<<<<<< HEAD
 
 
 
 /* 폰트 적용 */
+=======
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 html {
@@ -473,8 +496,14 @@ a {
 <br>
 	
 <form  method="post" enctype="multipart/form-data" name="frm">
+<<<<<<< HEAD
 	<div class="row">
 			<div class="col-lg-10">
+=======
+	<div class="container">
+	<div class="row">
+			<div class="col-lg-12">
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 				<div class="card">
 				
 					<div class="card-body">
@@ -489,7 +518,11 @@ a {
 				
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<<<<<<< HEAD
 						<div class="slider-1">
+=======
+						<div class="slider-1" >
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 						    <div class="slides">
 						    	<c:if test="${vo.image1 != null}">
 						        <div ><img src="../resources/upload/${vo.image1}"></div>
@@ -567,7 +600,11 @@ a {
 				
 				
 				
+<<<<<<< HEAD
 					<div class="outer">
+=======
+					<div class="outer" >
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 					  <div class="inner-list">
 					    <div class="inner">
 					      <img src="../resources/upload${vo.image1}">
@@ -618,6 +655,7 @@ a {
 					  </div>
 					  </div>
 				
+<<<<<<< HEAD
 					<div class="slider">
 					    <input type="radio" name="slide" id="slide1" checked>
 					    <input type="radio" name="slide" id="slide2">
@@ -686,6 +724,8 @@ a {
 					        </c:if>
 				   		 </div>
 				    </ul>
+=======
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 				    
 					</div>
 					
@@ -693,7 +733,11 @@ a {
 						<h5 class="card-title">${vo.title}</h5>
 							<input type="hidden" value="${vo.uidx} asd"> 
 							<input type="hidden" value="${vo.item_idx} asd">
+<<<<<<< HEAD
 							
+=======
+								<p class="card-text">판매자 : ${vo.nickName}</p>
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 								<p class="card-text">${vo.content}</p>
 								<p class="card-text">판매가격 : ${vo.price}</p>
 								<p class="card-text">거래지역 : ${vo.addr2}</p>
@@ -703,12 +747,42 @@ a {
 				</div>
 			</div>
 </form>
+<<<<<<< HEAD
 					
 					
 
 
 제목 , 카테고리, 사진, 가격, 판매자이름, 거래장소, 조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품, 키워드 보여주는공간
+=======
+					<h2>${nickName}님	의 다른상품</h2>
+	<div class="container-fluid">
+		<div class="row">
+		<a href="user/myPage.do?uidx=${vo.uidx}">더 보기</a>
+			<c:if test="${list2.size() > 0}">
+				<c:forEach var="vo" items="${list2}">
+					<div class="col-lg-2 col-md-4" >
+						<div class="card">
+							<img src="../resources/upload/${vo.image1}" >
+								<div class="card-body">
+									<input type="hidden" value=">${vo.uidx}">
+									<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
+									<p class="card-text">${vo.price}원</p>
+									<p class="card-text">${vo.nickName}</p>
+									<p class="card-text">${vo.wdate}</p> 
+								</div>
+						</div>
+						<br>
+					</div>
+				</c:forEach>
+			</c:if>
+		</div>
+		</div>
+<a href="itemmodfiy.do">게시글 수정</a>
+<a href="itemdelete.do">게시글 수정</a>
+ 조회수, 이웃추가 버튼,
+	 신고하기, 연락하기, 판매자의 다른상품
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 	
 	
 	
