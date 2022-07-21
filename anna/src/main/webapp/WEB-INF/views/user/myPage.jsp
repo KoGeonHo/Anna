@@ -28,8 +28,6 @@ html, body {
 	overflow-x: hidden;
 }
 
-body { position: fixed; }
-
 .container {
 	justify-content: center;
 	align-items: center;
@@ -39,21 +37,10 @@ body { position: fixed; }
     margin-left: 3px;
 }
 
-
-#footer {
-	background:#fff;
-	position:fixed; 
-	bottom:0px;
-}
-
 @media all and (max-width:  767px){
 	
 	.pc-header {
 		display:none;
-	}
-	
-	.main {
-		padding-bottom: 70px;
 	}
 
 	
@@ -188,7 +175,7 @@ body { position: fixed; }
 		</div>
 	
 		<div class="wrapper" style="flex:1; overflow:auto;">
-			<div class="container main" >
+			<div class="container" >
 				<h3 class="border-bottom">마이 페이지</h3>
 				<div id="listOfInterested">
 					<span>${ nickName }님이 관심있어 할만한 상품</span>
