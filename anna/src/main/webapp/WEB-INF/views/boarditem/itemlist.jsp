@@ -187,21 +187,27 @@ height:250px;
 		</select>
 		<input type="text" name="searchVal" <c:if test="${!empty svo.searchVal}">value="${svo.searchVal}"</c:if>>
 		<input type="submit" value="검색">
-		
-		
 	</form>
-	<c:if test="${svo.searchVal = ?.title}">
-	<h1>검색된 상품중 최저가 상품입니다.</h1>
-	<div class="row">
-		<div class="col-md-3 col-lg-3">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title"> <a href="itemview.do">안녕나야</a></h5>
-					<p class="card-text">팀 포맨의 프로젝트</p>
-				</div>
-			</div>
-		</div>
-	</div>
+	
+	
+	<c:if test="${!empty svo.searchType}">
+			<c:if test="${list.size() > 0}">
+			<c:forEach var="vo" items="${list}">
+				<div class="col-lg-3">
+					<div class="card">
+					<img src="../resources/upload/${min.image1}" >
+						<div class="card-body">
+						<input type="hidden" value=">${min.uidx}">
+							<h5 class="card-title"><a href="itemview.do?item_idx=${min.item_idx}">${min.title}</a></h5>
+							<p class="card-text">${min.price}원</p>
+							<p class="card-text">${min.nickName}</p>
+							<p class="card-text">${min.wdate}</p>
+						</div>
+					</div>
+						<br>
+				</div>    
+						</c:forEach>
+			</c:if>
 	</c:if>
 <br>
 <hr>
