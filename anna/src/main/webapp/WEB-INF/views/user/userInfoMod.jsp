@@ -7,7 +7,7 @@
 <head>
 <title>안녕? 나야! - 마이 페이지</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -22,25 +22,27 @@
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
 
-html, body,.wrapper {
+html, body {
 	padding : 0px;
-	height : 100%;
-	width : 100%;
+	width: 100%;
 	overflow-x: hidden;
 	min-width:320px;
 }
 
+
+
 body { position: fixed; }
+
 
 form {
 	margin-block-end: 0px;
 }
 
+
 .container {
 	justify-content: center;
 	align-items: center;
 	min-width:320px;
-	overflow-x: hidden;
 }
 
 .card {
@@ -77,11 +79,6 @@ form {
 	#input-interested {
 		width:250px;
 	}
-	
-	#input-nickName {
-		width:20vw;
-	}
-	
 }
 
 .menu-hide {
@@ -124,132 +121,36 @@ form {
 	margin:0px;
 }
 
-.th {
-	background:#eee;
-}
-
 </style>
 <script>
-
-	let keyword = "${ userInfo.interested }";
-	let arr = keyword.split(',');
 	$(function(){
 		$("#menu-btn").click(function(){
 			
 			if($("#menu").css("left") != "0px"){
-				
 				$("#menu").css("left","0px");
-				
 			}else{
-				
 				$("#menu").css("left","100%");
-				
 			}
 			
 		});
-		let html = "";
-		if(keyword != ""){
-			for(let i = 0; i < arr.length; i++){
-				html += arr[i]+"<span onclick='delKeyword(\""+arr[i]+"\");'>삭제</span><br>";
-			}
-	
-			$("#interest_keywords").html(html);
-			
-		}else{
-			
-			$("#interest_keywords").html("등록된 관심키워드가 없습니다.");
-			
-		}
 	});
 	
-	function delKeyword(item){
+	function delKeyword(array, item){
+		let arr = array.split(',');
 		arr = arr.filter(function(rti) {
 		    return rti !== item;
 		});
-		let delResult = "";
+		let result = "";
 		for(let i = 0; i < arr.length; i++){
-			delResult += arr[i];
+			result += arr[i];
 			if(i != (arr.length-1)){
-				delResult += ",";
+				result += ",";
 			}
 			
 		}
 		
-		//console.log(delResult+"delResult");
-		let html = "";
-		$.ajax({
-			url : "updateKeyword.do",
-			data : "interested="+delResult,
-			success : function(rs){
-				if(rs != 0){
-					alert(item+" 키워드가 삭제 되었습니다.");
-					for(let i = 0; i < arr.length; i++){
-						html += arr[i]+"<span onclick='delKeyword(\""+arr[i]+"\");'>삭제</span><br>";
-					}
-					if(delResult != ""){
-						$("#interest_keywords").html(html);
-					} else {
-						$("#interest_keywords").html("등록된 관심키워드가 없습니다.");
-					}
-				}
-				
-			} 
-		});
+		console.log(result);
 	}
-	
-	function addInterested(){
-		let item = $("input[name=interested]");
-		
-		if(item.val() != ""){
-			if(!arr.includes(item.val())){
-				if(arr.length >= 10){
-					alert("관심사는 최대 10개까지 등록가능합니다.");
-					return false;
-				}
-				arr.push(item.val());
-				//배열에 빈값 삭제
-				arr = arr.filter(function(rti) {
-				    return rti !== "";
-				});
-				if(keyword == ""){
-					keyword += item.val();
-				}else{
-					keyword += ","+item.val();
-				}
-				let html = "";
-				$.ajax({
-					url : "updateKeyword.do",
-					data : "interested="+keyword,
-					success : function(rs){
-						//console.log(rs);
-						alert("키워드가 등록되었습니다.");
-						if(rs != 0){
-							for(let i = 0; i < arr.length; i++){
-								html += arr[i]+"<span onclick='delKeyword(\""+arr[i]+"\");'>삭제</span><br>";
-							}
-							$("#interest_keywords").html(html);
-						}
-						
-					} 
-				});
-				item.val("");
-				item.focus();
-			} else {
-				alert("이미 등록된 키워드 입니다.");
-				item.val("");
-				item.focus();
-			}
-		}else{
-			alert("관심키워드를 입력해주세요");
-			item.focus();
-		}
-		
-	}
-	
-	function frmSubmit(){
-		$("#userInfoModFrm").submit();
-	}
-	
 </script>
 </head>
 <body>
@@ -327,54 +228,72 @@ form {
 		<div class="wrapper" style="flex:1; overflow:auto;">
 			<div class="container" >
 				<h3 class="border-bottom" style="padding:1rem;">회원정보수정</h3>
-				<form id="userInfoModFrm" method="POST" action="userInfoMod.do">
-					<div id="profile" class="border-bottom" style="width:100%;">
-						<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
-						<div style="display:inline-block;">
-							<div>
-								<b>${ userInfo.nickName }</b>님의 프로필
-							</div>
+				<div id="profile" class="border-bottom" style="width:100%;">
+					<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
+					<div style="display:inline-block;">
+						<div>
+							${ userInfo.nickName }님의 프로필
 						</div>
 					</div>
-					<div class="row border-bottom">
-						<div class="col-3 text-center th" style="line-height:3rem;">닉네임</div>
-						<div class="col-9" style="line-height:3rem; align-self:center;"><input type="text" class="form-control" id="input-nickName" name="nickName" value="${ userInfo.nickName }"></div>
-					</div>
-					<div class="row border-bottom">
-						<div class="col-3 text-center th" style="line-height:3rem;">이메일</div>
-						<div class="col-9" style="line-height:3rem;">${ userInfo.user_email }</div>
-					</div>
-					<div class="row border-bottom">
-						<div class="col-3 text-center th" style="line-height:3rem;">내동네</div>
-						<div class="col-9" style="line-height:3rem; align-self:center;">
-							<c:if test="${ empty userInfo.addr_code }">
-								<button class="btn" style="background:#00AAB2; color:#fff;">동네 등록하기</button>
-							</c:if>
-							<c:if test="${ not empty userInfo.addr_code }">
-								${ userInfo.addr1 } ${ userInfo.addr2 }
-							</c:if>
-						</div>
-					</div>
-					<div class="row border-bottom">
-						<div class="col-3 text-center th" style="line-height:3rem;">소개글</div>
-						<div class="col-9">
-							<textarea class="form-control" name="introduce" style="margin:5px 0; resize:none;" rows="5">${ userInfo.introduce }</textarea>
-						</div>
-					</div>
-				</form>
+				</div>
 				<div class="row border-bottom">
-					<div class="col-3 text-center th" style="line-height:3rem; min-width:4rem;">관심<br>키워드</div>
+					<div class="col-3 text-center" style="line-height:3rem;">닉네임</div>
+					<div class="col-9" style="line-height:3rem; align-self:center;"><input type="text" class="form-control" name="nickName" value="${ userInfo.nickName }"></div>
+				</div>
+				<div class="row border-bottom">
+					<div class="col-3 text-center" style="line-height:3rem;">이메일</div>
+					<div class="col-9" style="line-height:3rem;">${ userInfo.user_email }</div>
+				</div>
+				<div class="row border-bottom">
+					<div class="col-3 text-center" style="line-height:3rem;">내동네</div>
+					<div class="col-9" style="line-height:3rem; align-self:center;">
+						<c:if test="${ empty userInfo.addr_code }">
+							<button class="btn" style="background:#00AAB2; color:#fff;">동네 등록하기</button>
+						</c:if>
+						<c:if test="${ not empty userInfo.addr_code }">
+							${ userInfo.addr1 } ${ userInfo.addr2 }
+						</c:if>
+					</div>
+				</div>
+				<div class="row border-bottom">
+					<div class="col-3 text-center" style="line-height:3rem;">소개글</div>
+					<div class="col-9">
+						<textarea class="form-control" style="margin:5px 0; resize:none;" rows="5">${ userInfo.introduce }</textarea>
+					</div>
+				</div>
+				<div class="row border-bottom">
+					<div class="col-3 text-center" style="line-height:3rem; min-width:4rem;">관심사</div>
 					<div class="col-9" style="line-height:3rem; margin:5px 0;">
-						<input type="text" class="form-control" id="input-interested" autocomplete="off" style="display:inline-block;" name="interested">
-						<button class="btn" type="button" style="display:inline-block; background-color: #00AAB2; color: #fff;" onclick="addInterested()">추가</button>
-						<div id="interest_keywords">
+						<input type="text" class="form-control" id="input-interested" style="display:inline-block;" name="interested"> 
+						<button class="btn" style="display:inline-block; background-color: #00AAB2; color: #fff;">등록</button>
+						<div>
+						<% 
+						UserVO vo = (UserVO)request.getAttribute("userInfo");
+						
+						if(vo.getInterested() != null){
+							//String[] itList = vo.getInterested().split(",");
+							String itrst = "운동,헬스,사이클,컴퓨터";
+							String[] itList = itrst.split(",");
+							for(String a : itList){
+								out.println(a+"<span onclick='delKeyword("+itList+","+a+")'>x</span>");
+							}
+						}else{
+							String itrst = "운동,헬스,사이클,컴퓨터";
+							String[] itList = itrst.split(",");
+							for(String a : itList){
+								out.println(a+"<span onclick=\"delKeyword('"+itrst+"','"+a+"')\">x</span>");
+							}
+							//out.print("-");
+						}
+
+						%>
 						</div>
 					</div>
 				</div>
 				<div style="padding:5px 0;">
 					<div class="text-end">
-						<button class="btn btn1" style="background:#00AAB2; color:#fff;" type="button" onclick="frmSubmit()">수정</button>
-						<button class="btn" style="background:#BBCE53; color:#fff;" type="button" onclick="javascript:history.back();">돌아가기</button>
+						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/user/userInfoMod.do';">회원정보 수정</button>
+						<button class="btn" style="background:#BBCE53; color:#fff;">비밀번호 변경</button>
 					</div>
 				</div>
 			</div>

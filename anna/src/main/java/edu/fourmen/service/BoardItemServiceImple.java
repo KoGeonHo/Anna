@@ -1,6 +1,7 @@
 package edu.fourmen.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,12 +11,13 @@ import org.springframework.stereotype.Service;
 import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.PageMaker;
-
+<<<<<<< HEAD
+=======
 import edu.fourmen.vo.SearchVO;
-
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 
 @Service
-public  class BoardItemServiceImple implements BoardItemService{
+public class BoardItemServiceImple implements BoardItemService{
 
 
 	@Autowired
@@ -35,25 +37,30 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public List<BoardItemVO> list(BoardItemVO vo,PageMaker pm) {
+	public List<BoardItemVO> list(BoardItemVO vo) {
 		
+<<<<<<< HEAD
+		return boarditemdao.selectAll(vo);
+=======
 		return boarditemdao.selectAll(vo,pm);
 	}
-
 
 
 
 	@Override
 	public int totalCount(PageMaker pm) {
 		return boarditemdao.totalCount(pm);
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 	}
 
 
 	@Override
-	public List<BoardItemVO> list2(BoardItemVO vo, SearchVO svo) {
-		return boarditemdao.selectAllbyuser(vo, svo);
+	public int totalcount() {
+		return  boarditemdao.totalcount();
 	}
 
+<<<<<<< HEAD
+=======
 
 	@Override
 	public int itemmodify(BoardItemVO vo) {
@@ -66,5 +73,5 @@ public  class BoardItemServiceImple implements BoardItemService{
 		return boarditemdao.itemdelete(vo);
 	}					
 
-
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 }

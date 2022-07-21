@@ -1,8 +1,10 @@
 package edu.fourmen.vo;
 
-
+<<<<<<< HEAD
+public class SearchVO {
+=======
 public class SearchVO extends BoardItemVO{
-
+>>>>>>> parent of 7248137 (Merge branch 'master' into seongmin)
 	private String SearchType;
 	private String SearchVal;
 	private String board_type;

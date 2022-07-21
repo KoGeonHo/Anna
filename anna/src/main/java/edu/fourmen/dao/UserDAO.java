@@ -43,21 +43,7 @@ public class UserDAO {
 
 
 	public UserVO getUserInfo(int uidx) {
-		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.getUserInfo",uidx);
-		
-	}
-
-
-	public int userInfoMod(UserVO vo) {
-		
-		return sqlSession.update("edu.fourmen.mapper.userMapper.userInfoMod",vo);
-		
-	}
-
-
-	public int updateInterested(UserVO vo) {
-		
-		return sqlSession.update("edu.fourmen.mapper.userMapper.updateInterested",vo);
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.getUsetInfo",uidx);
 		
 	}
 }

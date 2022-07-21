@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<!DOCTYPE html>
 <html>
 <head>
 
@@ -18,9 +18,6 @@
  -->	
  	<link href="${path}/css/bootstrap.css" rel="stylesheet"/> 
 	
-	
-	
-	
 <style>
 
 /*
@@ -31,603 +28,573 @@
 	큰(lg)   	  992px 이상	  데스크탑
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
+
 .body {
-	padding-top: -56px;
+    padding-top: -56px;
 }
 
 .row {
-	padding: 0px;
-	margin: 0px;
+	padding : 0px;
+    margin: 0px;
 }
 
 .container {
-	justify-content: center;
-	align-items: center;
+
+
+    justify-content: center;
+    align-items: center;
 }
 
 .card {
-	margin-left: 3px;
+    margin-left: 3px;
 }
+
 
 .bottom_menu {
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	height: 130px;
-	z-index: 100;
-	border-top: 1px solid black;
-	background-color: white
-}
-
-.bottom_menu>div {
-	float: left;
-	width: 20%;
-	height: 100%;
-	text-align: center;
-	padding-top: 20px;
-}
-
-@media ( min-width : 576px) {
-	.col-md-2 {
-		width: 30%;
+			position: fixed;
+			bottom: 0px;
+			left: 0px;
+			width: 100%;
+			height: 130px;
+			z-index:100;
+			border-top: 1px solid black;
+			background-color: white 
+			}
+			
+.bottom_menu > div {
+			float: left;
+			width: 20%;
+			height: 100%;
+			text-align: center; 
+			padding-top: 20px;
+			}
+			
+	@media (min-width:  576px){
+		.col-md-2 {
+		
+		    width : 30%;
+		}
 	}
-}
-
-@media ( min-width : 1200px) {
-	.col-md-2 {
-		width: 16.66666667%;
+	
+	@media (min-width:  1200px){
+		.col-md-2 {
+			
+		    width: 16.66666667%;
+		}
 	}
-}
-
+	
 .navbar {
-	height: 150;
-}
+    height: 150;
+    }
+    
+    
 
 .offcanvas-collapse {
-	top: 150px;
-}
+    top : 150px;
+    
+   		 }
 
-.navbar-toggler-icon {
-	width: 4.5em;
-	height: 5.5em;
-}
+  .navbar-toggler-icon {
+    width: 4.5em;
+    height: 5.5em;
+    }
+    
+    .navbar-brand {
 
-.navbar-brand {
-	margin-left: 2rem;
-}
+    margin-left: 2rem;
+    }
+    
+    .navbar-dark .navbar-toggler-icon {
+    margin : 0 1rem;
+    }
+    
+   .logo {
+		padding-left : 2.5rem;
+   }
+    
 
-.navbar-dark .navbar-toggler-icon {
-	margin: 0 1rem;
-}
-
-.logo {
-	padding-left: 2.5rem;
-}
 </style>
 
 
 
 </head>
 
-<body>
+<body>	
 
 			<!-- pc 헤더 -->
-			<div class="b-example-divider ">
-				<div class="container ">
-					<div class="d-md-none d-lg-block d-xl-block">
-		
-						<header class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1 ">
-							<a href="/" class="d-flex align-items-center col-md-3 mb-1 col-sm-3 mb-md-0 text-dark text-decoration-none ">
-								<div class="logo">
-									<img src="images/logo.png" width="70%">
-								</div>
-							</a>
-		
-							<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
-								<li><a href="boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
-								<li><a href="board/FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a></li>
-								<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
-								<li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
-							</ul>
-		
-							<div class="col-md-3 text-end">
-								<c:if test="${uidx == null }">
-		
-									<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/login.do';">로그인</button>
-									<button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/join.do';">회원가입</button>
-								</c:if>
-								<c:if test="${uidx != null }">
-									<button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/logout.do';">로그아웃</button>
-									<button type="button" class="btn " style="background-color: #BBCE53; color: #fff;">물음표</button>
-								</c:if>
-							</div>
-						</header>
-					</div>
-				</div>
-			</div>
-		
+				  <div class="b-example-divider ">
+						<div class="container ">
+							<div class="d-md-none d-lg-block d-xl-block">
+				
+							    <header class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1  " >
+							      <a href="/" class="d-flex align-items-center col-md-3 mb-1 col-sm-3 mb-md-0 text-dark text-decoration-none ">
+							       <div class="logo"><img src="images/logo.png" width="70%"></div>
+							      </a>
+							
+							      <ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
+							        <li><a href="boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
+							        <li><a href="board/FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a></li>
+							        <li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
+							        <li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
+							      </ul>
+									
+									<div class="col-md-3 text-end">									
+									<c:if test="${uidx == null }">
+							      							    	 	 
+							        <button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/login.do';">로그인</button>
+              					    <button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/join.do';">회원가입</button></c:if>
+							        <c:if test="${uidx != null }">
+							        								       
+									<button type="button" class="btn "  style="background-color : #00AAB2;  color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/logout.do';">로그아웃</a></button>
+							        <button type="button" class="btn " style="background-color : #BBCE53;  color: #fff;">물음표</button>
+									</c:if>
+							      </div>
+								    </header>
+								  </div>
+							  </div>
+							  </div>
+				  
 			<!-- pc헤더 -->
-		
-		
+
+
 			<!-- 모바일 헤더-->
-		
-			<div class="d-lg-none">
-		
-				<nav class="navbar navbar-expand-lg fixed-top navbar-dark " style="background-color: #00AAB2;" aria-label="Main navigation">
-		
-					<div class="container-fluid">
-						<a class="navbar-brand fs-1 fw-bold" href="#">금암동 ▼</a>
-		
-		
-						<button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-						</button>
-		
-						<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-							<br>
-							<ul class="navbar-nav me-auto mb-2 mb-lg-0">						
-								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" aria-current="page" href="#">메뉴</a></li>
-								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">추천</a></li>
-								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">받습</a></li>
-								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">니다</a></li>
-							</ul>
-						</div>
-					</div>
-				</nav>
-			</div>
+			
+			<div class="d-lg-none"> 
+					
+    
+					<nav class="navbar navbar-expand-lg fixed-top navbar-dark " style="background-color : #00AAB2;"  aria-label="Main navigation">
+					
+				  <div class="container-fluid">
+				    <a class="navbar-brand fs-1 fw-bold" href="#">금암동 ▼</a>
+
+				    
+
+				    <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+				      <span class="navbar-toggler-icon"></span>
+				    </button>
+				
+				    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+				      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				      <br>
+				        <li class="nav-item">
+				          <a class="nav-link  fs-1 fw-bold" aria-current="page" href="#">메뉴</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link  fs-1 fw-bold" href="#">추천</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link  fs-1 fw-bold" href="#">받습</a>
+				        </li>
+				        <li class="nav-item">
+				          <a class="nav-link  fs-1 fw-bold" href="#">니다</a>
+				        </li>
+
+				      </ul>
+				    </div>
+				  </div>
+				
+				</nav>		
+				  </div>
 			<!-- 모바일 헤더-->
-		
-		
+
+			<!-- 퀵배너 -->
+			
+			<!-- 퀵배너 -->
+
+
+
+
 			<!-- 슬라이드 -->
 			<div class="d-md-none d-lg-block d-xl-block">
-				<div id="myCarousel" class="carousel slide " data-bs-ride="carousel">
-					<div class="carousel-indicators ">
-						<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-						<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-						<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-					</div>
-					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<img src="images/slide_2.png" width="100%">
-		
-							<div class="container">
-								<div class="carousel-caption text-start"></div>
-							</div>
-						</div>
-						<div class="carousel-item">
-							<img src="images/slide_1.png" width="100%">
-		
-							<div class="container">
-								<div class="carousel-caption"></div>
-							</div>
-						</div>
-						<div class="carousel-item">
-							<img src="images/slide.png" width="100%">
-		
-							<div class="container">
-								<div class="carousel-caption text-end"></div>
-							</div>
-						</div>
-					</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span>
-						<span class="visually-hidden">Next</span>
-					</button>
-				</div>
-				<br>
-				 <br>
+			 <div id="myCarousel" class="carousel slide " data-bs-ride="carousel">
+			    <div class="carousel-indicators ">
+			      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+			      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+			      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+			    </div>
+			    <div class="carousel-inner">
+			      <div class="carousel-item active">
+			     <img src="images/slide_2.png" width="100%">
+			       
+			        <div class="container">
+			          <div class="carousel-caption text-start">
+
+			          </div>
+			        </div>
+			      </div>
+			      <div class="carousel-item">
+			        <img src="images/slide_1.png" width="100%">
+			        
+			        <div class="container">
+			          <div class="carousel-caption">
+			          </div>
+			        </div>
+			      </div>
+			      <div class="carousel-item">
+			       <img src="images/slide.png" width="100%">
+			       
+			        <div class="container">
+			          <div class="carousel-caption text-end">
+
+			          </div>
+			        </div>
+			      </div>
+			    </div>
+			    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+			      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			      <span class="visually-hidden">Previous</span>
+			    </button>
+			    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+			      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			      <span class="visually-hidden">Next</span>
+			    </button>
+			  </div>
+			<br>
+			<br>
 			</div>
-			<!-- 슬라이드 -->
-		
-		
-			<!-- 검색 -->
-					<div class="container">
-						<div class="d-md-none d-lg-block d-xl-block">
-					    <div class="row">
-					        <div class="col-md-1 col-sm-0"></div>
-					        <div class="col-md-10  col-sm-12" >
-					        
-					            <form class="d-flex ">
-						          <input class="form-control me-6 vh-20" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
-						          <button class="btn btn-outline-primary" type="submit">Search</button>
-						        </form>
-					        
-					        </div>
-					        <div class="col-md-1 col-sm-0"></div>
-					    </div>
-					    </div>
-					    </div>	
-				  	<!-- 검색 -->
-			
-		
-		
-					<!-- 상품 -->
-					<main>
-						<div class="album py-5 ">
-							<div class="d-md-none d-lg-block d-xl-block">
-								<div class="container">
-				
-									<div class="container ">
-										<div class="row ">
-											<div class="col-md-2">
-												<h4>｜중고거래</h4>
-											</div>
-											<div class="col-md-8"></div>
-											<div class="col-md-2 ">
-												<h6 style="text-align: right;">더보기</h6>
-											</div>
-											<hr>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-		
-		
-				<div class="container ">
-					<div class="row">
-						<div class=" col-lg-3  col-md-12 ">
-		
-							<div class="card ">
-								<img src="https://media.bunjang.co.kr/product/187617756_3_1652360665_w856.jpg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h6 class="card-title ">후지카메라 x100v</h6>
-									<h5 class="card-text">1,450,000원</h5>
-									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-								</div>
-							</div>
-						</div>
-		
-						<div class="col-lg-3  col-md-12 ">
-		
-							<div class="card ">
-								<img src="https://media.bunjang.co.kr/product/190285795_2_1655981003_w856.jpg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h6 class="card-title">17-18 손흥민 유니폼</h6>
-									<p class="card-text">145,000원</p>
-									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-								</div>
-							</div>
-						</div>
-		
-						<div class=" col-lg-3  col-md-12 ">
-		
-							<div class="card ">
-								<img src="https://media.bunjang.co.kr/product/193141726_1_1657512097_w856.jpg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h6 class="card-title">맥북 m1 에어 2020 기본형</h6>
-									<p class="card-text">800,000원</p>
-									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-								</div>
-							</div>
-						</div>
-		
-						<div class=" col-lg-3  col-md-12 ">
-		
-							<div class="card ">
-								<img src="https://media.bunjang.co.kr/product/192931467_3_1657288958_w856.jpg" class="card-img-top" alt="...">
-								<div class="card-body">
-									<h6 class="card-title">루이까또즈 머니클립 지갑</h6>
-									<p class="card-text">35,000원</p>
-									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>		
-			</main>
-			<!-- 상품 -->
-		
-			<!-- 게시글 -->
+		<!-- 슬라이드 -->
+	
+	
+		<!-- 검색 -->
+			<div class="container">
+				<div class="d-md-none d-lg-block d-xl-block">
+			    <div class="row">
+			        <div class="col-md-1 col-sm-0"></div>
+			        <div class="col-md-10  col-sm-12" >
+			        
+			            <form class="d-flex ">
+				          <input class="form-control me-6 vh-20" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+				          <button class="btn btn-outline-primary" type="submit">Search</button>
+				        </form>
+			        
+			        </div>
+			        <div class="col-md-1 col-sm-0"></div>
+			    </div>
+			    </div>
+			    </div>	
+		  	<!-- 검색 -->
+	
+
+
+			  <!-- 상품 -->
 			<main>
-				<div class="album py-5">
-					<div class="container">
-						<div class="d-md-none d-lg-block d-xl-block">
-		
-							<div class="container ">
-								<div class="row">
-									<div class="col-md-2">
-										<h4>｜일상 & 소통</h4>
-									</div>
-									<div class="col-md-8"></div>
-									<div class="col-md-2">
-										<h6 style="text-align: right;">더보기</h6>
-									</div>
-								</div>
-							</div>
-							<hr>
-		
-							<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">		
-		
-								<div class="col">
-									<div class="card shadow-sm">
-										<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img"	aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice"focusable="false">
-										<rect width="100%" height="100%" fill="#55595c" /> <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
-											<div class="card-body">
-											<h5 class="card-title">게시글 제목</h5>
-											<p class="card-text"></p>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">♥2</button>
-										</div>
-									</div>
-								</div>
-		
-								<div class="col">
-									<div class="card shadow-sm">
-										<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img"	aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice"focusable="false">
-										<rect width="100%" height="100%" fill="#55595c" /> <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
-											<div class="card-body">
-											<h5 class="card-title">게시글 제목</h5>
-											<p class="card-text"></p>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">♥2</button>
-										</div>
-									</div>
-								</div>
-		
-								<div class="col">
-									<div class="card shadow-sm">
-										<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img"	aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice"focusable="false">
-										<rect width="100%" height="100%" fill="#55595c" /> <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
-											<div class="card-body">
-											<h5 class="card-title">게시글 제목</h5>
-											<p class="card-text"></p>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">♥2</button>
-										</div>
-									</div>
-								</div>
-		
-								<div class="col">
-									<div class="card shadow-sm">
-										<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img"	aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice"focusable="false">
-										<rect width="100%" height="100%" fill="#55595c" /> <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
-											<div class="card-body">
-											<h5 class="card-title">게시글 제목</h5>
-											<p class="card-text"></p>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">♥2</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</main>
-			<!-- 게시글 -->
-		
+			  <div class="album py-5 ">
+			  <div class="d-md-none d-lg-block d-xl-block">
+			    <div class="container">
 					
-		 <!-- 상품 -->
-			<main>
-				<div class="album py-5 ">
-					<div class="container">
-						<div class="d-md-none d-lg-block d-xl-block">
-							<div class="container ">
-								<div class="row">
-									<div class="col-md-2">
-										<h4>｜중고거래</h4>
+						<div class="container ">
+							    <div class="row ">
+								        <div class="col-md-2"><h4>｜중고거래</h4></div>
+								        <div class="col-md-8"></div>
+								        <div class="col-md-2 "><h6  style="text-align:right;">더보기</h6></div>
+								        <hr>
+							    </div>
+						</div>
+						</div>
+						
+								
+			      </div>
+			      
+			      
+			      <div class="container ">
+				       <div class="row">
+			     <div class=" col-lg-3  col-md-12 " >
+							
+									  <div class="card ">
+											  <img src="https://media.bunjang.co.kr/product/187617756_3_1652360665_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title ">후지카메라 x100v</h6>
+												  <h5 class="card-text">1,450,000원</h5>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
 									</div>
-									<div class="col-md-8"></div>
-									<div class="col-md-2">
-										<h6 style="text-align: right;">더보기</h6>
-									</div>
-								</div>
 							</div>
-							<hr>
-		
-							<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">		
-		
-								<div class="col-lg-3  col-md-12 ">
-		
-									<div class="card">
-										<img src="https://media.bunjang.co.kr/product/193152448_2_1657519466_w856.jpg"	 class="card-img-top" alt="...">
-										<div class="card-body">
-											<h6 class="card-title">아이앱 스튜디오 후드 블랙</h6>
-											<p class="card-text">220,000원</p>
-											<button type="button" class="btn btn-sm btn-outline-secondary" 	style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
-										</div>
+							
+			     <div class="col-lg-3  col-md-12 " >
+							
+									  <div class="card " >
+											  <img src="https://media.bunjang.co.kr/product/190285795_2_1655981003_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">17-18 손흥민 유니폼</h6>
+												  <p class="card-text">145,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
 									</div>
-								</div>
-		
-								<div class="col-lg-3  col-md-12 ">
-		
-									<div class="card">
-										<img src="https://media.bunjang.co.kr/product/193052370_2_1657426178_w856.jpg" class="card-img-top" alt="...">
-										<div class="card-body">
-											<h6 class="card-title">킥보드 크루스rs팝니다</h6>
-											<p class="card-text">700,000원</p>
-											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
-										</div>
+							</div>
+							
+			     <div class=" col-lg-3  col-md-12 " >
+							
+									  <div class="card ">
+											  <img src="https://media.bunjang.co.kr/product/193141726_1_1657512097_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">맥북 m1 에어 2020 기본형</h6>
+												  <p class="card-text">800,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
 									</div>
-								</div>
-		
-								<div class="col-lg-3  col-md-12 ">
-		
-									<div class="card">
-										<img src="https://media.bunjang.co.kr/product/193152157_10_1657519257_w856.jpg" class="card-img-top" alt="...">
-										<div class="card-body">
-											<h6 class="card-title">퓨리티 플러스 회전형 젖병 소독기</h6>
-											<p class="card-text">145,000원</p>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
-										</div>
+							</div>
+							
+			     <div class=" col-lg-3  col-md-12 " >
+							
+									  <div class="card " >
+											  <img src="https://media.bunjang.co.kr/product/192931467_3_1657288958_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">루이까또즈 머니클립 지갑</h6>
+												  <p class="card-text">35,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
 									</div>
-								</div>
-		
-								<div class="col-lg-3  col-md-12">
-		
-									<div class="card">
-										<img src="https://media.bunjang.co.kr/product/189215558_2_1653819887_w856.jpg" class="card-img-top" alt="...">
-										<div class="card-body">
-											<h6 class="card-title">코드유 블랑 블라우스</h6>
-											<p class="card-text">29,000원</p>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
-										</div>
-									</div>
-								</div>
-		
-								<div class="col-lg-3  col-md-12">
-		
-									<div class="card">
-										<img src="https://media.bunjang.co.kr/product/193053163_4_1657426794_w856.jpg"	class="card-img-top" alt="...">
-										<div class="card-body">
-											<h6 class="card-title">new 닌텐더 2ds xl</h6>
-											<p class="card-text">100,000원</p>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
-										</div>
-									</div>
-								</div>
-		
-								<div class="col-lg-3  col-md-12">
-		
-									<div class="card">
-										<img src="https://media.bunjang.co.kr/product/192865491_4_1657362057_w856.jpg" class="card-img-top" alt="...">
-										<div class="card-body">
-											<h6 class="card-title">엠스톤그루브 저소음갈축 풀윤활 키보드</h6>
-											<p class="card-text">115,000원</p>
-											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-										</div>
-									</div>
-								</div>
-		
-								<div class="col-lg-3  col-md-12">
-		
-									<div class="card">
-										<img src="https://media.bunjang.co.kr/product/170033103_8_1657074193_w856.jpg" class="card-img-top" alt="...">
-										<div class="card-body">
-											<h6 class="card-title">어반드로워 사이드테이블</h6>
-											<p class="card-text">250,000원</p>
-											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-										</div>
-									</div>
-								</div>
-		
-								<div class="col-lg-3  col-md-12">
-		
-									<div class="card">
-										<img src="https://media.bunjang.co.kr/product/170033103_8_1657074193_w856.jpg" class="card-img-top" alt="...">
-										<div class="card-body">
-											<h6 class="card-title">어반드로워 사이드테이블</h6>
-											<p class="card-text">250,000원</p>
-											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-										</div>
-									</div>
-								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+						</div>
+			
 			</main>
-		
-			<!-- 상품 -->	
-		
-		
-			<!--
-				<a href="sample1.do">sample1.do</a> |
-				<a href="sample2.do">sample2.do</a> |
-				<br>
-				<a href="user/register.do">register로 이동</a>	
-				<br>
-				<a href="user/join.do">회원가입하기</a><br>
-				<br> 
-				-->		
-		
-			<!--모바일 하단 메뉴버튼 -->
+			  <!-- 상품 -->
+
+			<!-- 게시글 -->
+			<main>
+			  <div class="album py-5">
+			    <div class="container">
+					 <div class="d-md-none d-lg-block d-xl-block">
+					 
+							<div class="container ">
+								    <div class="row">
+									        <div class="col-md-2"><h4>｜일상 & 소통</h4></div>
+									        <div class="col-md-8"></div>
+									        <div class="col-md-2"><h6  style="text-align:right;">더보기</h6></div>
+								    </div>
+							</div>
+						<hr>
+					
+			      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+			      
+			      
+			        <div class="col">
+				          <div class="card shadow-sm">
+					            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice" focusable="false"><title></title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+					
+									 <div class="card-body">
+										  <h5 class="card-title">게시글 제목</h5>
+										  <p class="card-text"></p>
+			                              <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+									      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+									 </div>
+				          </div>
+			        </div>
+			        
+			        <div class="col">
+				          <div class="card shadow-sm">
+					            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice" focusable="false"><title></title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+					
+									 <div class="card-body">
+										  <h5 class="card-title">게시글 제목</h5>
+										  <p class="card-text"></p>
+			                              <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+									      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+									 </div>
+				          </div>
+			        </div>
+			        
+			        <div class="col">
+				          <div class="card shadow-sm">
+					            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice" focusable="false"><title></title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+					
+									 <div class="card-body">
+										  <h5 class="card-title">게시글 제목</h5>
+										  <p class="card-text"></p>
+			                              <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+									      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+									 </div>
+				          </div>
+			        </div>
+			        
+			        			        <div class="col">
+				          <div class="card shadow-sm">
+					            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice" focusable="false"><title></title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+					
+									 <div class="card-body">
+										  <h5 class="card-title">게시글 제목</h5>
+										  <p class="card-text"></p>
+			                              <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+									      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+									 </div>
+				          </div>
+			        </div>
+			        </div>
+			
+			</main>
+			<!-- 게시글 -->
+
+			
+			  <!-- 상품 -->
+			<main>
+			  <div class="album py-5 ">
+			    <div class="container">
+					 <div class="d-md-none d-lg-block d-xl-block">
+						<div class="container ">
+							    <div class="row">
+								        <div class="col-md-2"><h4>｜중고거래</h4></div>
+								        <div class="col-md-8"></div>
+								        <div class="col-md-2"><h6  style="text-align:right;">더보기</h6></div>
+							    </div>
+						</div>
+				<hr>
+					
+			      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+			      
+			      
+			     <div class="col-lg-3  col-md-12 " >
+							
+									  <div class="card" >
+											  <img src="https://media.bunjang.co.kr/product/193152448_2_1657519466_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">아이앱 스튜디오 후드 블랙</h6>
+												  <p class="card-text">220,000원 </p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
+									</div>
+							</div>
+							
+			        <div class="col-lg-3  col-md-12 " >
+							
+									  <div class="card" >
+											  <img src="https://media.bunjang.co.kr/product/193052370_2_1657426178_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">킥보드 크루스rs팝니다</h6>
+												  <p class="card-text">700,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
+									</div>
+							</div>
+							
+			      <div class="col-lg-3  col-md-12 " >
+							
+									  <div class="card">
+											  <img src="https://media.bunjang.co.kr/product/193152157_10_1657519257_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">퓨리티 플러스 회전형 젖병 소독기</h6>
+												  <p class="card-text">145,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
+									</div>
+							</div>
+							
+							<div class="col-lg-3  col-md-12" >
+							
+									  <div class="card">
+											  <img src="https://media.bunjang.co.kr/product/189215558_2_1653819887_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">코드유 블랑 블라우스</h6>
+												  <p class="card-text">29,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
+									</div>
+							</div>  
+							
+			        <div class="col-lg-3  col-md-12" >
+							
+									  <div class="card">
+											  <img src="https://media.bunjang.co.kr/product/193053163_4_1657426794_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">new 닌텐더 2ds xl</h6>
+												  <p class="card-text">100,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
+									</div>
+							</div>
+							
+			        <div class="col-lg-3  col-md-12" >
+							
+									  <div class="card" >
+											  <img src="https://media.bunjang.co.kr/product/192865491_4_1657362057_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">엠스톤그루브 저소음갈축 풀윤활 키보드</h6>
+												  <p class="card-text">115,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
+									</div>
+							</div>
+							
+			        <div class="col-lg-3  col-md-12" >
+							
+									  <div class="card" >
+											  <img src="https://media.bunjang.co.kr/product/170033103_8_1657074193_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">어반드로워 사이드테이블</h6>
+												  <p class="card-text">250,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
+									</div>
+							</div>
+
+			        <div class="col-lg-3  col-md-12" >
+							
+									  <div class="card">
+											  <img src="https://media.bunjang.co.kr/product/191947468_8_1656362331_w856.jpg" class="card-img-top" alt="...">
+												  <div class="card-body">
+												  <h6 class="card-title">마켓비 MKB 철제 캐비넷</h6>
+												  <p class="card-text">55,000원</p>
+			                                      <button type="button"  class="btn btn-sm btn-outline-secondary"  style="float:right">view 5</button>
+											      <button type="button" class="btn btn-sm btn-outline-secondary" style="float:right">♥2</button>
+											  </div>
+									</div>
+							</div>
+						</div>
+						</div>
+						</div>
+						</div>
+			</main>
+			
+				  <!-- 상품 -->
+
+
+<!-- 	<a href="sample1.do">sample1.do</a> |
+	<a href="sample2.do">sample2.do</a> |
+	<br>
+	<a href="user/register.do">register로 이동</a>	
+	<br>
+	<a href="user/join.do">회원가입하기</a><br>
+	<br> -->
+
+
+	    
+
+<!--모바일 하단 메뉴버튼 -->
 			<div class="visible-xs">
 				<div class="container ">
-					<div class="row d-lg-none">
-						<div class="bottom_menu">
-							<div>
-								<img src="images/icon_home.png" width="40%">
+					<div class="row d-lg-none"> 
+							<div class="bottom_menu">
+								<div>
+									<img src="images/icon_home.png" width="40%">
+								</div>
+								<div>
+									<img src="images/icon_comm.png"  width="40%">
+								</div>
+								<div>
+									<img src="images/icon_chat.png"  width="40%">
+								</div>
+								<div>
+									<img src="images/icon_my.png"  width="40%">
+								</div>
+								<div>
+									<img src="images/icon_quick.png"  width="40%">
+								</div>
 							</div>
-							<div>
-								<img src="images/icon_comm.png" width="40%">
-							</div>
-							<div>
-								<img src="images/icon_chat.png" width="40%">
-							</div>
-							<div>
-								<img src="images/icon_my.png" width="40%">
-							</div>
-							<div>
-								<img src="images/icon_quick.png" width="40%">
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
-			<!--모바일 하단 메뉴버튼 -->
-			
-
-		<main>
-	<form method="get" action="FreeBoard.do">
-
-		<select name="SearchType">
-			<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
-			<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
-			<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
-		</select>
-		<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
-		<input type="submit" value="검색">
-	</form>
-	
-	<a href="BoardWrite.do">쓰기</a>
-	
-	<hr>
-	<c:if test="${!empty svo.searchVal}">
-			${totalRow}개의 자료가 검색되었습니다.
-	</c:if>
-	<form>
-		
-		<c:if test="${freeboard.size() ==0}">
-			
-			<h3>등록된 게시물이 없습니다.</h3>
-		</c:if>
-		
-		<c:if test="${freeboard.size()>0 }">
-			<c:forEach var="vo" items="${freeboard}">
-			<c:if test = "${vo.board_type eq 'free' }">
-		<div>
-			<img src="../resources/upload/t-${vo.image1}" alt="없어요 없어">
-			<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
-			${vo.nickName}  좋아요 112 댓글 1
-		</div>
-		<br>
-		</c:if>
-			</c:forEach>
-		</c:if>
-		
-	</form>
-<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
-	<div class="container">
-		<div class="row card-list-container thumbnails">
-		
-		</div>
-	</div>
-</section>
-	<div class="back-drop"> <!-- 로딩 이미지 -->
-		<img src="../" alt="안되는데여?" />
-	
-	</div>
-</main>
-		
+<!--모바일 하단 메뉴버튼 -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
  <script src="https://getbootstrap.kr/docs/5.1/examples/offcanvas-navbar/offcanvas.js"></script>

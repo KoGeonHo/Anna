@@ -62,7 +62,7 @@ public class UserController {
 
 		if(userInfo == null) {
 			
-			System.out.println("가입되지 않은 이메일주소");
+			System.out.println("가입되지 않은 이메일주소1");
 			
 			pw.append("<script>alert('가입되지 않은 이메일 주소입니다.'); history.back();</script>");
 			
@@ -127,10 +127,6 @@ public class UserController {
 	public String logOut(HttpServletRequest request,HttpSession session) {
 		
 		session = request.getSession();
-		
-		String access_Token = (String)session.getAttribute("access_Token");
-		
-		userService.kakaoLogout(access_Token);
 		
 		session.invalidate();
 		
@@ -266,12 +262,14 @@ public class UserController {
             	} else {
             		
             		System.out.println("카카오 로그인 회원가입 및 로그인 처리");
+
             		
             		userLoginInfo = userService.login(vo);
             		
             		//로그인 세션정보 (회원번호[uidx], 이메일[user_email], 닉네임[nickName])
             		session.setAttribute("uidx", userLoginInfo.getUidx());
             		
+
         			session.setAttribute("user_email", userLoginInfo.getUser_email());
         			
         			session.setAttribute("nickName", userLoginInfo.getNickName());
@@ -300,6 +298,7 @@ public class UserController {
     			session.setAttribute("uidx", userLoginInfo.getUidx());
     			
     			session.setAttribute("user_email", userLoginInfo.getUser_email());
+
     			
     			session.setAttribute("nickName", userLoginInfo.getNickName());
     			
@@ -307,6 +306,7 @@ public class UserController {
     			
     			session.setAttribute("access_Token", access_Token);
     			
+
     			moveTo = request.getContextPath()+"/user/myPage.do";
         			
         	}
@@ -321,7 +321,6 @@ public class UserController {
 		
 	}
 	
-	//마이 페이지
 	@RequestMapping(value="/myPage.do")
 	public String myPage(Model model,HttpServletRequest request,HttpSession session) {
 		
@@ -335,7 +334,7 @@ public class UserController {
 			uidx = (int)session.getAttribute("uidx");
 		}
 		
-		//System.out.println(uidx);
+		System.out.println(uidx);
 		
 		return "user/myPage";
 		
@@ -365,17 +364,18 @@ public class UserController {
 	}
 	
 	
-	//회원정보 수정페이지
-	@RequestMapping(value="/userInfoMod.do", method=RequestMethod.GET)
+	//회원정보 조회
+	@RequestMapping(value="/userInfoMod.do")
 	public String userInfoMod(Model model,HttpServletRequest request,HttpSession session) {
 		
 		model.addAttribute("path",path);
 		
 		session = request.getSession();
 		
+		int uidx = 0;
+		
 		if(session.getAttribute("uidx") != null) {		
-			
-			int uidx = (int)session.getAttribute("uidx");
+			uidx = (int)session.getAttribute("uidx");
 			
 			UserVO userInfo = userService.getUserInfo(uidx);
 			
@@ -387,6 +387,7 @@ public class UserController {
 		
 	}
 	
+
 	
 	//회원정보 수정페이지
 	@RequestMapping(value="/userInfoMod.do", method=RequestMethod.POST)
@@ -424,6 +425,7 @@ public class UserController {
 	}
 	
 	
+
 	//가입된 이메일인지 확인후 인증 이메일을 보내는 Ajax
 	@ResponseBody
 	@RequestMapping(value="/emailChk.do", produces = "application/text; charset=utf8")
