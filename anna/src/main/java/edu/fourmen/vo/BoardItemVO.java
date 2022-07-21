@@ -59,7 +59,7 @@ public class BoardItemVO extends UserVO {
 	
 	private int total;
 	//현재 페이지 번호, 한 페이지에 표출할 데이터 개수
-
+	private Criteria cri;
 	
 	
 	
@@ -98,7 +98,12 @@ public class BoardItemVO extends UserVO {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-
+	public Criteria getCri() {
+		return cri;
+	}
+	public void setCri(Criteria cri) {
+		this.cri = cri;
+	}
 	public int getStartPage() {
 		return startPage;
 	}

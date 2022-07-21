@@ -6,70 +6,63 @@
  
 <mapper namespace="edu.fourmen.mapper.boardItemMapper">
 	
-
-	<select id="selectAll" resultType="BoardItemVO" parameterType="pagemaker" >
-
+	<select id="selectAll" resultType="BoardItemVO" parameterType="BoardItemVO"  >
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
 			 , b.Contents
 			 , b.wdate
 			 , u.nickName
-
-			 , b.Price
 			 , b.image1
 			FROM Board_Items b, AnnaUser u
-			WHERE b.uidx = u.uidx  
-			<if test='searchType != null and searchType.equals("title")'>
-		   AND b.title like concat ('%',#{searchVal},'%')
-		 </if>
-		<if test='searchType != null and searchType.equals("contentWriter")'>
-		   AND (b.content like concat ('%',#{searchVal},'%')
-		    OR u.name like concat ('%',#{searchVal},'%')
-		 </if>
-		   <if test='cate_idx != 0 and cate_idx != null'>
-		 	and cate_idx = #{cate_idx}
-		 </if>
-		 ORDER BY b.item_idx desc limit #{startPage}, #{pageNum}
+			WHERE b.uidx = u.uidx  ORDER BY b.item_idx desc LIMIT #{startPage}, #{perPageNum}
+			 <!-- <if test='searchType != null and searchType.equals("All")'>
+           AND b.Contents like concat('%',#{SearchVal},'%')
+           OR u.nickname like concat('%',#{SearchVal},'%')
+          OR b.Title like concat('%',#{SearchVal},'%')   
+       </if>
+      <if test='searchType != null and searchType.equals("title")'>
+          AND b.Title like concat('%',#{SearchVal},'%')
+       </if>
+       <if test='searchType != null and searchType.equals("contentWriter")'>
+          AND b.Contents like concat('%',#{SearchVal},'%')
+          OR u.nickname like concat('%',#{SearchVal},'%')
+       </if>
+	
+		limit #{startPage} , #{pageNum} -->
+		
 	</select>
 	
+	<!-- 
+<select id="totalcount" parameterType="BoardItemVO" resultType="int">
+   SELECT COUNT(item_idx)
+     FROM Board_Items b
+     INNER JOIN AnnaUser u
+        ON b.uidx = u.uidx
+    WHERE b.isDel = 'N'
+        <if test='searchType != null and searchType.equals("All")'>
+           AND b.Contents like concat('%',#{SearchVal},'%')
+           OR u.nickname like concat('%',#{SearchVal},'%')
+          OR b.Title like concat('%',#{SearchVal},'%')   
+       </if>
+      <if test='searchType != null and searchType.equals("title")'>
+          AND b.Title like concat('%',#{SearchVal},'%')
+       </if>
+       <if test='searchType != null and searchType.equals("contentWriter")'>
+          AND b.Contents like concat('%',#{SearchVal},'%')
+          OR u.nickname like concat('%',#{SearchVal},'%')
+          
+       </if>
+</select> -->
 	
-	<select id="selectAllbyuser" resultType="BoardItemVO" parameterType="searchvo" >
-		SELECT b.item_idx
-			 , b.Title
-			 , b.uidx
-			 , b.Contents
-			 , b.wdate
-			 , u.nickName
-			 , b.Price
-			 , b.image1
-			FROM Board_Items b, AnnaUser u
-			WHERE b.uidx = u.uidx  and b.uidx = #{uidx}
-			and b.item_idx not like #{item_idx}
-			order by item_idx limit 1,6
-	</select>
-	<select id="totalCount" resultType="Integer" parameterType="pagemaker">
+	<select id="totalcount" resultType="Integer">
+		<![CDATA[
 			SELECT 
 				count(*)
-			FROM Board_Items b
-				inner join AnnaUser u
-				on b.uidx = u.uidx
-			 where b.isDel = 'N'
-		<if test='searchType != null and searchType.equals("title")'>
-		   AND b.title like concat ('%',#{searchVal},'%')
-		 </if>
-		<if test='searchType != null and searchType.equals("contentWriter")'>
-		   AND (b.content like concat ('%',#{searchVal},'%')
-		    OR u.name like concat ('%',#{searchVal},'%')
-		 </if>
-		   <if test='cate_idx != 0 and cate_idx != null'>
-		 	and cate_idx = #{cate_idx}
-		 </if>
-			
-			
+			FROM Board_Items
+		]]>
 	</select>
 	
-
 	
 	<insert id="boarditemswrite" parameterType="BoardItemVO">
 	insert into Board_Items(
@@ -96,7 +89,7 @@
 						,offer
 						,hit
 						,state
-						,isDel
+						
 						) VALUES(
 						1
 						,#{cate_idx}
@@ -121,7 +114,6 @@
 						,#{offer}
 						,1
 						,#{state}
-						,'N'
 						)
 	</insert>
 	<select id="selectitem" parameterType="int" resultType="BoardItemVO">
@@ -151,42 +143,6 @@
 		WHERE b.uidx = u.uidx
 		AND b.item_idx = #{item_idx}
 	</select>
-
-	<update id="itemsmodify" parameterType="BoardItemVO">
-	Update Board_Items Set
-						cate_idx = #{cate_idx}
-						,Title = #{title}
-						,Contents = #{content}
-						,wdate = now()
-						,addr1 = #{addr1}
-						,addr2 = #{addr2}
-						,addr_Code = #{addr_code}
-						,image1 = #{image1}
-						,image2 = #{image2}
-						,image3 = #{image3}
-						,image4 = #{image4}
-						,image5 = #{image5}
-						,image6 = #{image6}
-						,image7 = #{image7}
-						,image8 = #{image8}
-						,image9 = #{image9}
-						,image10 = #{image10}
-						,Keyword = #{keyword}
-						,Price = #{price}
-						,offer = #{offer}
-						,hit = 1 
-						,state = #{state}
-						,isDel = 'N'
-						
-						where item_itdx = #{item_idx}
-						
-	</update>
 	
-	<update id="itemdelete" parameterType="int">
-		update Board_Items Set
-			isDel = 'Y'
-		where item_idx = #{item_idx}
-	</update>
-
 	
 </mapper>
