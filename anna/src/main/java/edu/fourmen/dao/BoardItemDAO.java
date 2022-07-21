@@ -61,7 +61,9 @@ public class BoardItemDAO {
 	
 		return sqlSession.update(efdb+".itemdelete",vo);
 	}
+
 	public BoardItemVO MinPrice(PageMaker pm) {
+
 		return sqlSession.selectOne(efdb+".MinPrice",pm);
 	}
 

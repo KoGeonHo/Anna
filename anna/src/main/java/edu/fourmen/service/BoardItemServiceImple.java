@@ -70,6 +70,7 @@ public  class BoardItemServiceImple implements BoardItemService{
 	@Override
 	public BoardItemVO MinPrice(PageMaker pm) {
 		return boarditemdao.MinPrice(pm);
+
 	}					
 
 

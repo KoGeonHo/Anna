@@ -104,8 +104,10 @@ public class BoardItemController {
 	    List<BoardItemVO> list = boarditemService.list(vo,pm);
 	    //최저가 상품 정보 받아오기
 	    
+
 	    boarditemService.MinPrice(pm);
 	    
+
 	    model.addAttribute("pm",pm);
 	    model.addAttribute("list", list);
 

@@ -209,7 +209,12 @@
 			 where b.isDel = 'N' order by b.wdate desc
 			<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("contentWriter")'>
+		   AND (b.content like concat ('%',#{searchVal},'%')
+		    OR u.name like concat ('%',#{searchVal},'%')
 		 </if>
+
 		<if test='searchType != null and searchType.equals("contentWriter")'>
 		   AND (b.content like concat ('%',#{searchVal},'%')
 		    OR u.name like concat ('%',#{searchVal},'%')
@@ -218,6 +223,7 @@
 		 	and cate_idx = #{cate_idx}
 		 </if>
 		 limit 1,1
+
 	
 	</select>
 	

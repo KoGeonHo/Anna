@@ -229,8 +229,10 @@ height:250px;
 					</div>
 						<br>
 				</div>
+
 							</c:forEach>
 		</c:if>
+
 			</c:if>
 			
 <br>
