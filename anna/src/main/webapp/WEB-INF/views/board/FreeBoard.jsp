@@ -26,8 +26,42 @@ height : 250px;
 
 }
 
+a{
 
+text-decoration-line: none;
 
+}
+
+ui{
+
+text-align:center;
+margin : 0px auto;
+
+}
+
+li{
+list-style: none;
+display : inline-block;
+
+}
+
+.navbar{
+ 
+text-align:center
+
+}
+
+@media all and (min-width:1001px){
+	body{
+		background:#fff;
+	}
+}
+
+@media all and (max-width:1000px){
+	body{
+		background:#000;
+	}
+}
 </style>
 <script>
 //스크롤 시 이벤트 처리
