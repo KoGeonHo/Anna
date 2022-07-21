@@ -9,6 +9,8 @@
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
 <script type='text/javascript' src='https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=9ff16331dfd542b6a5b0'></script>	
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ad11d9178deb7b571198c476ec55ad0f"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 
@@ -192,33 +194,124 @@ body { position: fixed; }
 			<div class="container main" >
 				<h3 class="border-bottom" style="padding:1rem;">동네인증</h3>												
     		<div id='map' style='width:100%-20px;height:400px'></div>												
-    		<script type='text/javascript'>												
-    		var map = sop.map("map",{
-    			 ollehTileLayer: false,
-    			 scale: false, // 축적 컨트롤
-    			 panControl: false, // 지도이동 컨트롤
-    			 zoomSliderControl: false, //줌 컨트롤
-    			 measureControl: false, // 측정 컨트롤 (면적, 길이)
-    			 attributionControl: false // 지도속성 컨트롤
-    			});		
-    		map.setView(sop.utmk(953820, 1953437), 9);
-    		 function getLocationCoords(){
-                var center = [989674, 1818313]; 
-                if (navigator.geolocation) {
-                 navigator.geolocation.getCurrentPosition(function (position) {
-                  var utmkXY = new sop.LatLng (position.coords.latitude, position.coords.longitude);
-                  center = [utmkXY.x, utmkXY.y];
-                  map.setView(sop.utmk(utmkXY.x, utmkXY.y), 9);
-                  console.log(utmkXY.x);
-                  console.log(utmkXY.y);
-                  var html = "<p>latitude = " + position.coords.latitude +" , longitude " + position.coords.longitude+"</p>";
-                  html += "<p>x = "+utmkXY.x+", y="+utmkXY.y+"</p>";
-                  $("#divCon").append(html);
-                 });
-                }
-               }
-               getLocationCoords(); 
+    		<script type='text/javascript'>		
+    		$.ajax({
+    			url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+    			data : "consumer_key=9ff16331dfd542b6a5b0&consumer_secret=32b9d18070d34db18be5",
+    			success : function(data){
+    				if(navigator.geolocation){
+    					navigator.geolocation.getCurrentPosition(function(position){
+    						
+    						let utmkXY = new sop.LatLng (position.coords.latitude, position.coords.longitude);
+    						
+    						loadMap(position.coords.latitude,position.coords.longitude);
+    						
+    						console.log("x:"+utmkXY.x);
+    						
+    						console.log("y:"+utmkXY.y);
+    						
+    						$.ajax({
+    	    	    			url : "https://sgisapi.kostat.go.kr/OpenAPI3/personal/findcodeinsmallarea.json",
+    	    	    			data : "accessToken="+data.result.accessToken+"&x_coor="+utmkXY.x+"&y_coor="+utmkXY.y,
+    	    	    			success : function(data2){
+    	    	    				console.log(data2.result.sido_cd+data2.result.sgg_cd);
+    	    	    				$.ajax({
+    	    	    					url : "https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json",
+    	    	    					data : "accessToken="+data.result.accessToken+"&pg_yn=1&cd="+data2.result.sido_cd+data2.result.sgg_cd,
+    	    	    					success : function(data3){
+    	    	    						console.log(data3.result);
+    	    	    					}
+    	    	    				});
+    	    	    			}
+    	    	    		});
+    					})
+    				}
+    				
+    			}
+    		});
     		
+    		function loadMap(x,y){
+	    		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    		mapOption = { 
+	    		    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	    		    level: 3 // 지도의 확대 레벨 
+	    		}; 
+	    		
+	    		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	    		
+	    		//HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+	    		if (navigator.geolocation) {
+	    		
+	    		// GeoLocation을 이용해서 접속 위치를 얻어옵니다
+	    		navigator.geolocation.getCurrentPosition(function(position) {
+	    		    
+	    		    var lat = x, // 위도
+	    		        lon = y; // 경도
+	    		    
+	    		    var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+	    		        message = '<div style="padding:5px;">여기서 뭐하니?</div>'; // 인포윈도우에 표시될 내용입니다
+	    		    
+	    		    // 마커와 인포윈도우를 표시합니다
+	    		    displayMarker(locPosition, message);
+	    		        
+	    		    
+	    		    //alert(lat+"-"+lon);
+	    		    
+	    		    $.ajax({
+	    		    	url : 'https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=' + lon +'&y=' + lat,
+	    		        type : 'GET',
+	    		        headers : {
+	    		          'Authorization' : 'KakaoAK 32245dd905f9d9b6d898ebe61795735c'
+	    		        },
+	    		        success : function(data) {
+	    		        	// 구 주소 정보를 가진 배열 addr, 도로명 주소의 정보를 가진 배열 road_addr
+	    		        	let addr = data;
+	    		        	let road_addr = data;
+	    		          	console.log(addr);
+	    		          	$("#user_addr").html("현재 위치는 "+addr.documents[0].address_name+"입니다");
+	    		        },
+	    		        error : function(e) {
+	    		          console.log(e);
+	    		        }
+	    		      });
+	    		        
+	    		  });
+	    		
+	    		
+	    		
+	    		} else { 
+	    		
+	    			var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),//geolocation을 사용할수 없을때 기본 좌표
+	    		    message = 'geolocation을 사용할수 없어요..'
+	    		    
+	    			displayMarker(locPosition, message);
+	    		}
+	    		
+	    		//지도에 마커와 인포윈도우를 표시하는 함수입니다
+	    		function displayMarker(locPosition, message) {
+	    		
+	    		// 마커를 생성합니다
+	    		var marker = new kakao.maps.Marker({  
+	    		    map: map, 
+	    		    position: locPosition
+	    		}); 
+	    		
+	    		var iwContent = message, // 인포윈도우에 표시할 내용
+	    		    iwRemoveable = true;
+	    		
+	    		// 인포윈도우를 생성합니다
+	    		var infowindow = new kakao.maps.InfoWindow({
+	    		    content : iwContent,
+	    		    removable : iwRemoveable
+	    		});
+	    		
+	    		// 인포윈도우를 마커위에 표시합니다 
+	    		//infowindow.open(map, marker);
+	    		
+	    		// 지도 중심좌표를 접속위치로 변경합니다
+	    		map.setCenter(locPosition);      
+	    		} 
+    		}
     		</script>
 				
 			</div>
