@@ -8,11 +8,15 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,8 +50,10 @@ public class BoardController {
 	@RequestMapping(value="/FreeBoard.do")
 	public String FreeBoard(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
 		
+		session = request.getSession();
+		
 		//한 페이지에 몇개씩 표시할 것인지
-		int pagecount = 5;
+		int pagecount = 12;
 		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 		int pagenumber = 1;
 		//페이지 번호가 파라미터로 전달되는지 읽어와본다.
@@ -96,6 +102,11 @@ public class BoardController {
 		model.addAttribute("freeboard", freeboard);
 		model.addAttribute("svo", svo);
 		
+		
+		
+		
+		
+		
 
 		return "board/FreeBoard";
 	}
@@ -105,7 +116,7 @@ public class BoardController {
 	public String ajax_FreeBoard(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
 		
 		//한 페이지에 몇개씩 표시할 것인지
-		int pagecount = 5;
+		int pagecount = 12;
 		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 		int pagenumber = 1;
 		//페이지 번호가 파라미터로 전달되는지 읽어와본다.
@@ -159,7 +170,11 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/BoardWrite.do", method= RequestMethod.GET)
-	public String BoardWrite() {
+	public String BoardWrite(HttpSession session, HttpServletRequest request) {
+		
+		session = request.getSession();
+
+
 		
 		return "board/BoardWrite";
 	}
@@ -176,10 +191,6 @@ public class BoardController {
 		String fileName3=null;
 		String fileName4=null;
 		String fileName5=null;
-
-		
-		
-		
 		
 	if(vo.getFileName1() != null) {
 		MultipartFile uploadFile = vo.getFileName1();
@@ -188,6 +199,7 @@ public class BoardController {
 			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
 			UUID uuid = UUID.randomUUID();	//UUID 구하기
 			fileName=uuid+"."+ext;
+			System.out.println(request.getSession().getServletContext().getRealPath("/main/resources/upload/"));
 			uploadFile.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
 			String oPath = request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName; // 원본 경로
 			File oFile = new File(oPath); //파일 클래스를 생성 그 안에 원본 경로를 담는다.
@@ -282,7 +294,9 @@ public class BoardController {
 
 
 	@RequestMapping(value="/viewBoard.do")
-	public String viewBoard(int Bidx,Model model) {
+	public String viewBoard(int Bidx,Model model, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
 		
 		BoardVO bv = boardService.viewBoard(Bidx);
 		
@@ -293,6 +307,45 @@ public class BoardController {
 	}
 	
 	
+
+	@ResponseBody
+	@RequestMapping(value="/InsertComment",produces = "application/text; charset=utf8")
+	public String InsertComment(BoardVO rv, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		rv.setUidx((int)session.getAttribute("uidx"));
+		System.out.println("댓글 등록 통신 성공");
+//		if(session.getAttribute("login") == null) {
+//			return "fail";
+//		} else {
+//			System.out.println("로그인함. 스크랩 진행");
+			
+		System.out.println(rv.getContents()); 
+		System.out.println(rv.getNickName()); 
+		System.out.println(rv.getBidx()); 
+		
+			boardService.commentwrite(rv);//댓글작성
+			System.out.println("댓글 등록 서비스 성공");
+			return "InsertSuccess";
+//		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/CommentList", produces = "application/json; charset=utf8")
+	public Map<String, Object> getList(BoardVO rv, Model model) { // @PathVariable: URL 경로에 변수를 넣어주는
+		System.out.println("댓글 목록 컨트롤러 동작");
+		List<BoardVO> list = boardService.getCList(rv.getBidx());//댓글목록
+		int total = boardService.getCTotal(rv); //댓글 갯수
+		ModelAndView view = new ModelAndView(); //데이터와 뷰를 동시에 설정이 가능
+		System.out.println("댓글 갯수 " + boardService.getCTotal(rv)); //댓글갯수 확인용
+		view.setViewName("/board/viewBoard"); //뷰
+		Map<String, Object> map = new HashMap<>(); //키와 밸류값으로 저장하는
+		map.put("list", list);
+		map.put("total", total);
+		
+		return map;
+	}
+
 
 	
 	

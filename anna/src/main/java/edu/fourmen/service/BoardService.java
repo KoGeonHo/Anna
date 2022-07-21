@@ -18,4 +18,12 @@ public interface BoardService {
 	BoardVO viewBoard(int Bidx);
 	
 	int totalCount(PageMaker pm);
+
+	
+	int commentwrite(BoardVO rv);
+	
+	int getCTotal(BoardVO rv);
+	
+	List<BoardVO> getCList(int Bidx);
+
 }

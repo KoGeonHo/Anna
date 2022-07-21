@@ -1,7 +1,6 @@
 package edu.fourmen.vo;
 
-public class PageMaker{
-	
+public class PageMaker extends BoardItemVO{
 	
 	private int totalCount; // 게시글 총합을 구함
 	private int startPage; // 시작 게시글
