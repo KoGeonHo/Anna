@@ -100,9 +100,14 @@ public class BoardItemController {
 		
 		System.out.println(vo.getCate_idx()+"카테고리선택");
 		
+		//전체 상품 리스트 받아오기
 	    List<BoardItemVO> list = boarditemService.list(vo,pm);
-		
+
+	    //최저가 상품 정보 받아오기
+	    List<BoardItemVO> min = boarditemService.MinPrice(pm);
 	    
+		
+	    model.addAttribute("min",min);
 	    model.addAttribute("pm",pm);
 	    model.addAttribute("list", list);
 
@@ -231,10 +236,10 @@ public class BoardItemController {
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 
 		
-		    List<BoardItemVO> list = boarditemService.list(vo,pm);
-		    model.addAttribute("list", list);
+		List<BoardItemVO> list = boarditemService.list(vo,pm);
+		model.addAttribute("list", list);
 		
-		    model.addAttribute("vo", vo);
+		model.addAttribute("vo", vo);
 		List<BoardItemVO> list2 = boarditemService.list2(vo,svo);
 		model.addAttribute("list2", list2);
 
