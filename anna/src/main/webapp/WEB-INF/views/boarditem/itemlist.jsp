@@ -7,9 +7,11 @@
 <html>
 <head>
 <link href="${path}/css/bootstrap.css" rel="stylesheet" />
+
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
 <script>
 //스크롤 시 이벤트 처리
+
 
 
 
@@ -20,6 +22,7 @@ let isLoding=false;
 
 //웹브라우저의 창을 스크롤할 때마다  호출되는 함수 등록
 $(window).on("scroll",function(){
+
 	
 	//위로 스크롤된 길이
 	let scrollTop = $(window).scrollTop();
@@ -49,11 +52,13 @@ $(window).on("scroll",function(){
 		GetList(currentPage); 
 	
 	}
+
 });
 
 //카드 리스트를 가져오는 함수
 
 const GetList = function(currentPage){
+
 	//console.log("inGetList" + currentPage);
 	
 	//무한스크롤
@@ -84,7 +89,9 @@ const GetList = function(currentPage){
 
 width:100%;
 height:250px;
+
 }
+
 
 
 
@@ -108,6 +115,7 @@ height:250px;
 
 }
 </style>
+
 
 <meta charset="utf-8">
 <title>Insert title here</title>
@@ -229,7 +237,9 @@ height:250px;
 		
 			<div class="col-lg-3">
 				<div class="card">
+
 				<img src="../resources/upload/${vo.image1}" >
+
 					<div class="card-body">
 					<input type="hidden" value=">${vo.uidx}">
 						<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
@@ -244,6 +254,39 @@ height:250px;
 		</c:if>
 		</div>
 	</div>
+	
+	
+<section id="card-list" class="card-list">
+	<div class="container">
+		<div class="row card-list-container thumbnails"></div>
+	</div>
+</section>
+<div class="back-drop">
+	<img src="" alt="안됨">
+</div> 
+
+
+    <div class="col-sm-4 col-md-4"></div>
+    <div class="col-sm-4 col-md-4">
+        <ul class="btn-group pagination" style="margin-left: 50%;">
+            <c:if test="${pagenation.prev }">
+                <li>
+                    <a href='<c:url value="/boarditem/itemlist.do?page=${pagenation.startPage-1 }"/>'><i class="fa fa-chevron-left"></i></a>
+                </li>
+            </c:if>
+             <c:forEach begin="${pagenation.startPage }" end="${pagenation.endPage }" var="pageNum">
+                 <li>
+                    <a href='<c:url value="/boarditem/itemlist.do?page=${pageNum}"/>'><i class="fa">${pageNum}</i></a>
+                </li>
+            </c:forEach>
+            <c:if test="${pagenation.next && pagenation.endPage >0 }">
+                <li>
+                     <a href='<c:url value="/boarditem/itemlist.do?page=${pagenation.endPage+1 }"/>'><i class="fa fa-chevron-right"></i></a>
+                </li>
+             </c:if>
+        </ul>
+    </div>
+
 
 <section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
 	<div class="container">
@@ -255,5 +298,6 @@ height:250px;
 
 <script src ="../js/boardlist.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 </body>
 </html>

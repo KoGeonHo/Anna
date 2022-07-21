@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.PageMaker;
+
 import edu.fourmen.vo.SearchVO;
+
 
 @Service
 public  class BoardItemServiceImple implements BoardItemService{
@@ -40,6 +42,7 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 
+
 	@Override
 	public int totalCount(PageMaker pm) {
 		return boarditemdao.totalCount(pm);
@@ -62,5 +65,6 @@ public  class BoardItemServiceImple implements BoardItemService{
 	public int itemdelete(BoardItemVO vo) {
 		return boarditemdao.itemdelete(vo);
 	}					
+
 
 }

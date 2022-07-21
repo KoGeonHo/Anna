@@ -1,5 +1,6 @@
 package edu.fourmen.vo;
 
+
 import java.util.List;
 
 public class Criteria {
@@ -102,3 +103,4 @@ public class Criteria {
 			return this.endPage;
 		}
 }
+

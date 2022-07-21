@@ -28,6 +28,8 @@ html, body {
 	overflow-x: hidden;
 }
 
+body { position: fixed; }
+
 .container {
 	justify-content: center;
 	align-items: center;
@@ -37,10 +39,21 @@ html, body {
     margin-left: 3px;
 }
 
+
+#footer {
+	background:#fff;
+	position:fixed; 
+	bottom:0px;
+}
+
 @media all and (max-width:  767px){
 	
 	.pc-header {
 		display:none;
+	}
+	
+	.main {
+		padding-bottom: 70px;
 	}
 
 	
@@ -175,7 +188,7 @@ html, body {
 		</div>
 	
 		<div class="wrapper" style="flex:1; overflow:auto;">
-			<div class="container" >
+			<div class="container main" >
 				<h3 class="border-bottom">마이 페이지</h3>
 				<div id="listOfInterested">
 					<span>${ nickName }님이 관심있어 할만한 상품</span>
@@ -243,7 +256,7 @@ html, body {
 			<div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_home.png"></div><!--  
 			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_comm.png"></div><!--
 			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_chat.png"></div><!--
-			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_my.png"></div><!--
+			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;" onclick="location.href='userInfoView.do';"><img src="${ path }/images/icon_my.png"></div><!--
 			--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"><img src="${ path }/images/icon_quick.png"></div>
 		</div>
 		
