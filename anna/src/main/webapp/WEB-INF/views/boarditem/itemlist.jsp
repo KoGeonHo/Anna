@@ -205,7 +205,7 @@ height:250px;
 						</div>
 					</div>
 						<br>
-				</div>    
+				</div>
 						</c:forEach>
 			</c:if>
 	</c:if>
