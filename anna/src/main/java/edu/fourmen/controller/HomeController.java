@@ -45,6 +45,17 @@ public class HomeController {
 		return "main";
 	}
 	
+	@RequestMapping(value="test")
+	public String test() {
+		
+		return "test";
+	}
+	
+	@RequestMapping(value="test2")
+	public String test2() {
+		
+		return "test2";
+	}
 }
 	
 	
