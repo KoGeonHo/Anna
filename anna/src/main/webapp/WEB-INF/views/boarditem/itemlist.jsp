@@ -182,7 +182,7 @@ height:250px;
 		
 		
 	</form>
-	<c:if test="${svo.searchVal = ?.title}">
+	<%-- <c:if test="${svo.searchVal = ?.title}">
 	<h1>검색된 상품중 최저가 상품입니다.</h1>
 	<div class="row">
 		<div class="col-md-3 col-lg-3">
@@ -197,7 +197,7 @@ height:250px;
 	</c:if>
 <br>
 <hr>
-<br>
+<br> --%>
 
 
 <div style="width:100px; background-color:grey;"class="slide-toggle">
