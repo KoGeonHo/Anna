@@ -19,7 +19,6 @@ public interface BoardItemService {
 	public List<BoardItemVO> list2 (BoardItemVO vo, SearchVO svo);//판매자의 다른상품
 	
 	public int totalCount(PageMaker pm);
-
 	
 	public int boarditemswrite(BoardItemVO vo, HttpServletRequest request);
 	
@@ -29,5 +28,5 @@ public interface BoardItemService {
 	
 	public int itemdelete(BoardItemVO vo);
 	
-	public List<BoardItemVO> MinPrice(PageMaker pm);
+	public List<BoardItemVO> MinPrice(PageMaker pm,BoardItemVO vo);
 }
