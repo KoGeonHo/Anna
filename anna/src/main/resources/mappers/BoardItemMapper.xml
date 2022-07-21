@@ -17,14 +17,14 @@
 			 , b.image1
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  
-			<if test='searchType != null and searchType.equals("title")'>
+		<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
-		 </if>
+		</if>
 		<if test='searchType != null and searchType.equals("contentWriter")'>
 		   AND (b.content like concat ('%',#{searchVal},'%')
 		    OR u.name like concat ('%',#{searchVal},'%')
 		 </if>
-		   <if test='cate_idx != 0 and cate_idx != null'>
+		 <if test='cate_idx != 0 and cate_idx != null'>
 		 	and cate_idx = #{cate_idx}
 		 </if>
 		 ORDER BY b.item_idx desc limit #{startPage}, #{pageNum}
@@ -182,5 +182,34 @@
 			isDel = 'Y'
 		where item_idx = #{item_idx}
 	</update>
+	
+	<select id="MinPrice" resultType="BoardItemVO" parameterType="pagemaker">
+		select min(Price) 
+			 , b.item_idx
+			 , b.Title
+			 , b.uidx
+			 , b.Contents
+			 , b.wdate
+			 , b.cate_idx
+			 , image1
+			 , u.nickname
+			 , b.Keyword
+			 , b.Price
+			 , b.offer
+			 , b.state
+			from Board_Items b
+			inner join AnnaUser u
+			on b.uidx = u.uidx
+			 where b.isDel = 'N'
+		<if test='searchType != null and searchType.equals("title")'>
+		   AND b.title like concat ('%',#{searchVal},'%')
+		 </if>
+		<if test='cate_idx != 0 and cate_idx != null'>
+		 	and cate_idx = #{cate_idx}
+		</if>
+	
+	
+	
+	</select>
 	
 </mapper>
