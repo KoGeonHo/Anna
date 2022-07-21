@@ -180,40 +180,6 @@ height:250px;
 <hr>
 <br>
 
-	<form method="get" action="itemlist.do">
-		<select name="searchType">
-			<option value="title" <c:if test="${!empty svo.searchType and svo.searchType eq 'title'}">selected</c:if>>제목</option>
-			<option value="contentWriter" <c:if test="${!empty svo.searchType and svo.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
-		</select>
-		<input type="text" name="searchVal" <c:if test="${!empty svo.searchVal}">value="${svo.searchVal}"</c:if>>
-		<input type="submit" value="검색">
-	</form>
-	
-	
-	<c:if test="${!empty svo.searchType}">
-			<c:if test="${list.size() > 0}">
-			<c:forEach var="vo" items="${list}">
-				<div class="col-lg-3">
-					<div class="card">
-					<img src="../resources/upload/${min.image1}" >
-						<div class="card-body">
-						<input type="hidden" value=">${min.uidx}">
-							<h5 class="card-title"><a href="itemview.do?item_idx=${min.item_idx}">${min.title}</a></h5>
-							<p class="card-text">${min.price}원</p>
-							<p class="card-text">${min.nickName}</p>
-							<p class="card-text">${min.wdate}</p>
-						</div>
-					</div>
-						<br>
-				</div>
-						</c:forEach>
-			</c:if>
-	</c:if>
-<br>
-<hr>
-<br>
-
-
 <div style="width:100px; background-color:grey;"class="slide-toggle">
 	카테고리
 </div>
@@ -234,6 +200,44 @@ height:250px;
 	</div>
 </div>		
 			
+	<form method="get" action="itemlist.do">
+		<select name="searchType">
+			<option value="title" <c:if test="${!empty svo.searchType and svo.searchType eq 'title'}">selected</c:if>>제목</option>
+			<option value="contentWriter" <c:if test="${!empty svo.searchType and svo.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
+		</select>
+		<input type="text" name="searchVal" 
+				<c:if test="${!empty svo.searchVal}">
+				value=${svo.searchVal}
+				</c:if>>
+		<input type="submit" value="검색">
+	</form>
+	
+			<c:if test="${!empty pm.searchVal}">	
+			<h1>니가 검색한 ${pm.searchVal} 의 최저가 상품이란다</h1>
+			<c:if test="${list.size() > 0}">
+				<c:forEach var="vo" items="${list}">
+				<div class="col-lg-3">
+					<div class="card">
+					<img src="../resources/upload/${vo.image1}" >
+						<div class="card-body">
+						<input type="hidden" value=">${vo.uidx}">
+							<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
+							<p class="card-text">${vo.price}원</p>
+							<p class="card-text">${vo.nickName}</p>
+							<p class="card-text">${vo.wdate}</p>
+						</div>
+					</div>
+						<br>
+				</div>
+							</c:forEach>
+		</c:if>
+			</c:if>
+			
+<br>
+<hr>
+<br>
+
+
 <hr>
 
 	<div class="container">
@@ -267,31 +271,8 @@ height:250px;
 		<div class="row card-list-container thumbnails"></div>
 	</div>
 </section>
-<div class="back-drop">
-	<img src="" alt="안됨">
-</div> 
 
 
-    <div class="col-sm-4 col-md-4"></div>
-    <div class="col-sm-4 col-md-4">
-        <ul class="btn-group pagination" style="margin-left: 50%;">
-            <c:if test="${pagenation.prev }">
-                <li>
-                    <a href='<c:url value="/boarditem/itemlist.do?page=${pagenation.startPage-1 }"/>'><i class="fa fa-chevron-left"></i></a>
-                </li>
-            </c:if>
-             <c:forEach begin="${pagenation.startPage }" end="${pagenation.endPage }" var="pageNum">
-                 <li>
-                    <a href='<c:url value="/boarditem/itemlist.do?page=${pageNum}"/>'><i class="fa">${pageNum}</i></a>
-                </li>
-            </c:forEach>
-            <c:if test="${pagenation.next && pagenation.endPage >0 }">
-                <li>
-                     <a href='<c:url value="/boarditem/itemlist.do?page=${pagenation.endPage+1 }"/>'><i class="fa fa-chevron-right"></i></a>
-                </li>
-             </c:if>
-        </ul>
-    </div>
 
 
 <section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
@@ -301,7 +282,6 @@ height:250px;
 		</div>
 	</div>
 </section>
-
 <script src ="../js/boardlist.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
