@@ -302,8 +302,10 @@ public class UserController {
     			session.setAttribute("interested", userLoginInfo.getInterested());
     			
 
+
     			session.setAttribute("access_Token", access_Token);
     			
+
 
     			moveTo = request.getContextPath()+"/user/myPage.do";
         			

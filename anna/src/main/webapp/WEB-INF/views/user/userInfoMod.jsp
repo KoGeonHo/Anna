@@ -30,7 +30,9 @@ html, body {
 }
 
 
+
 body { position: fixed; }
+
 
 form {
 	margin-block-end: 0px;
