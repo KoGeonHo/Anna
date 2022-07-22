@@ -58,5 +58,24 @@ public class BoardDAO {
 		return sqlSession.selectList(namespace+".getCList", Bidx);
 	}
 	
+	public int Ccount(int Bidx) {
+		
+		return sqlSession.update(namespace+".Ccount", Bidx);
+	}
+	
+	public int boardLikeUP(BoardVO vo) {
+		
+		return sqlSession.insert(namespace+".boardLikeUP", vo);
+	}
+	
+	public int boardLikeDown(BoardVO vo) {
+		
+		return sqlSession.delete(namespace+".boardLikeDown",vo);
+	}
+	
+	public int Likeyn(BoardVO vo) {
+		return sqlSession.selectOne(namespace+".Likeyn",vo);
+	}
+	
 
 }

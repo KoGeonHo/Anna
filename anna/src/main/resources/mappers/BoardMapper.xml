@@ -46,6 +46,7 @@
 		  ,b.board_type
 		  ,b.isDel
 		  ,b.Image1
+		  ,b.ccount
 	  FROM Board b
 	 INNER JOIN AnnaUser u
 	  	ON b.uidx = u.uidx
@@ -111,7 +112,7 @@
 
 <insert id="commentwrite" parameterType="boardvo">
 	INSERT INTO reply(
-			 Uidx
+			 uidx
 			,Bidx
 			,contents
 		    ,Wdate
@@ -130,7 +131,6 @@
   	 )
   	  FROM reply 
   	 WHERE Bidx = #{Bidx}
-  	   AND isDel = 'N'
 </select>
 
 <select id="getCList" resultType="boardvo" parameterType="int">
@@ -139,11 +139,40 @@
   		  ,u.nickName as nickName
   		  ,r.contents as contents
   		  ,r.Wdate as Wdate
-  		  ,r.isDel as isDel
   	  FROM reply r, AnnaUser u
   	 WHERE r.Bidx = #{Bidx}
-  	   AND r.isDel = 'N'
   	   AND r.Uidx = u.uidx
+</select>
+
+<update id="Ccount" parameterType="int">
+	UPDATE Board
+	   SET Ccount = Ccount+1
+	 WHERE Bidx = #{Bidx}
+</update>
+
+<insert id="boardLikeUP">
+	INSERT INTO Board_like(
+			Uidx
+		   ,Bidx
+	)VALUES(
+			#{uidx}
+		   ,#{Bidx}
+	)
+</insert>
+
+<delete id="boardLikeDown">
+	DELETE 
+	  FROM Board_like
+	 WHERE Bidx = #{Bidx}
+	   AND Uidx = #{uidx}
+</delete>
+
+
+<select id="Likeyn" resultType="int" parameterType="boardvo">
+		SELECT count(*)
+		  FROM Board_like
+		 WHERE Bidx = #{Bidx}
+		   AND Uidx = #{uidx}
 </select>
 
 
