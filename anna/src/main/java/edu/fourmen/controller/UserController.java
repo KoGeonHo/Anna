@@ -3,6 +3,7 @@ package edu.fourmen.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -438,13 +439,30 @@ public class UserController {
 		
 	}
 	
-	//동네인증 페이지
+	//동네설정 페이지
 	@RequestMapping(value="/locationAuth.do")
 	public String locationAuth(Model model) {
 		
 		model.addAttribute("path",path);
 		
 		return "user/locationAuth";
+		
+	}
+	
+	//동네설정 페이지
+	@RequestMapping(value="/locationView.do")
+	public String locationAuth(String[] dong,Model model) {
+		
+		
+		
+		
+		
+		
+		
+		model.addAttribute("path",path);
+		model.addAttribute("selectedDong",dong);
+		
+		return "user/locationView";
 		
 	}
 }

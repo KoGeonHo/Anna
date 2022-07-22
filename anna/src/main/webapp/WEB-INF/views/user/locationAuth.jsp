@@ -47,6 +47,7 @@ body { position: fixed; }
 	background:#fff;
 	position:fixed; 
 	bottom:0px;
+	z-index:10000;
 }
 
 @media all and (max-width:  767px){
@@ -104,7 +105,10 @@ body { position: fixed; }
 	margin:0px;
 }
 
+
+
 </style>
+
 <script>
 	$(function(){
 		$("#menu-btn").click(function(){
@@ -116,7 +120,58 @@ body { position: fixed; }
 			}
 			
 		});
+		
+		$.ajax({
+			url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+			data : "consumer_key=9ff16331dfd542b6a5b0&consumer_secret=32b9d18070d34db18be5",
+			success : function(data){
+				if(navigator.geolocation){
+					navigator.geolocation.getCurrentPosition(function(position){
+						
+						let utmkXY = new sop.LatLng(position.coords.latitude, position.coords.longitude);
+						
+						console.log("x:"+utmkXY.x);
+						
+						console.log("y:"+utmkXY.y);
+						
+						$.ajax({
+	    	    			url : "https://sgisapi.kostat.go.kr/OpenAPI3/personal/findcodeinsmallarea.json",
+	    	    			data : "accessToken="+data.result.accessToken+"&x_coor="+utmkXY.x+"&y_coor="+utmkXY.y,
+	    	    			success : function(data2){
+	    	    				$("#dongList").append("<div class='text-center' style='padding:1rem;'>거래를 원하시는 동네를 선택해주세요.</div>");
+	    	    				$("#dongList").append("<div class='text-center border-bottom border-top' style='padding:1rem;'>현위치는 <b>"+data2.result.sido_nm+" "+data2.result.sgg_nm+"</b>입입니다.</div>");
+	    	    				$.ajax({
+	    	    					url : "https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json",
+	    	    					data : "accessToken="+data.result.accessToken+"&pg_yn=1&cd="+data2.result.sido_cd+data2.result.sgg_cd,
+	    	    					success : function(data3){
+	    	    						for(let i = 0; i < data3.result.length; i++){
+	    	    							$("#dongList").append("<div class='border-bottom'><input style='margin: 1rem;' name='dong' type='checkbox' id='chk"+i+"' value="+data3.result[i].cd+"><label for='chk"+i+"'>"+data3.result[i].full_addr+"</label></div>");
+	    	    						}
+	    	    						$("#loading").fadeOut();
+	    	    					}
+	    	    				});
+	    	    			}
+	    	    		});
+					})
+				}
+				
+			}
+		});
 	});
+	
+	function chkChkBox(){
+		var items = [];
+		if($('input[name=dong]:checked').length == 0){
+			alert("최소 한개 이상의 항목을 선택해주세요.");
+			return false;
+		}else{
+			$('input[name=dong]:checked').each(function () {
+			    items.push($(this).val());
+			});
+		}
+		$("#locationFrm").submit();
+		//console.log(items);
+	}
 </script>
 </head>
 <body>
@@ -189,131 +244,20 @@ body { position: fixed; }
 				전주시
 			</div>
 		</div>
-	
+		
+		
+		<div id="loading" style="width:100%; height:100%; background:#000; position:relative; color:white; line-height:100%;" class="text-center">
+			<div style="line-height:500px; font-size:2rem;">Now Loading...</div>
+		</div>
+		
+		
 		<div class="wrapper" style="flex:1; overflow:auto;">
 			<div class="container main" >
-				<h3 class="border-bottom" style="padding:1rem;">동네인증</h3>												
-    		<div id='map' style='width:100%-20px;height:400px'></div>												
-    		<script type='text/javascript'>		
-    		$.ajax({
-    			url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
-    			data : "consumer_key=9ff16331dfd542b6a5b0&consumer_secret=32b9d18070d34db18be5",
-    			success : function(data){
-    				if(navigator.geolocation){
-    					navigator.geolocation.getCurrentPosition(function(position){
-    						
-    						let utmkXY = new sop.LatLng (position.coords.latitude, position.coords.longitude);
-    						
-    						loadMap(position.coords.latitude,position.coords.longitude);
-    						
-    						console.log("x:"+utmkXY.x);
-    						
-    						console.log("y:"+utmkXY.y);
-    						
-    						$.ajax({
-    	    	    			url : "https://sgisapi.kostat.go.kr/OpenAPI3/personal/findcodeinsmallarea.json",
-    	    	    			data : "accessToken="+data.result.accessToken+"&x_coor="+utmkXY.x+"&y_coor="+utmkXY.y,
-    	    	    			success : function(data2){
-    	    	    				console.log(data2.result.sido_cd+data2.result.sgg_cd);
-    	    	    				$.ajax({
-    	    	    					url : "https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json",
-    	    	    					data : "accessToken="+data.result.accessToken+"&pg_yn=1&cd="+data2.result.sido_cd+data2.result.sgg_cd,
-    	    	    					success : function(data3){
-    	    	    						console.log(data3.result);
-    	    	    					}
-    	    	    				});
-    	    	    			}
-    	    	    		});
-    					})
-    				}
-    				
-    			}
-    		});
-    		
-    		function loadMap(x,y){
-	    		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    		mapOption = { 
-	    		    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	    		    level: 3 // 지도의 확대 레벨 
-	    		}; 
-	    		
-	    		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	    		
-	    		//HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
-	    		if (navigator.geolocation) {
-	    		
-	    		// GeoLocation을 이용해서 접속 위치를 얻어옵니다
-	    		navigator.geolocation.getCurrentPosition(function(position) {
-	    		    
-	    		    var lat = x, // 위도
-	    		        lon = y; // 경도
-	    		    
-	    		    var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-	    		        message = '<div style="padding:5px;">여기서 뭐하니?</div>'; // 인포윈도우에 표시될 내용입니다
-	    		    
-	    		    // 마커와 인포윈도우를 표시합니다
-	    		    displayMarker(locPosition, message);
-	    		        
-	    		    
-	    		    //alert(lat+"-"+lon);
-	    		    
-	    		    $.ajax({
-	    		    	url : 'https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=' + lon +'&y=' + lat,
-	    		        type : 'GET',
-	    		        headers : {
-	    		          'Authorization' : 'KakaoAK 32245dd905f9d9b6d898ebe61795735c'
-	    		        },
-	    		        success : function(data) {
-	    		        	// 구 주소 정보를 가진 배열 addr, 도로명 주소의 정보를 가진 배열 road_addr
-	    		        	let addr = data;
-	    		        	let road_addr = data;
-	    		          	console.log(addr);
-	    		          	$("#user_addr").html("현재 위치는 "+addr.documents[0].address_name+"입니다");
-	    		        },
-	    		        error : function(e) {
-	    		          console.log(e);
-	    		        }
-	    		      });
-	    		        
-	    		  });
-	    		
-	    		
-	    		
-	    		} else { 
-	    		
-	    			var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),//geolocation을 사용할수 없을때 기본 좌표
-	    		    message = 'geolocation을 사용할수 없어요..'
-	    		    
-	    			displayMarker(locPosition, message);
-	    		}
-	    		
-	    		//지도에 마커와 인포윈도우를 표시하는 함수입니다
-	    		function displayMarker(locPosition, message) {
-	    		
-	    		// 마커를 생성합니다
-	    		var marker = new kakao.maps.Marker({  
-	    		    map: map, 
-	    		    position: locPosition
-	    		}); 
-	    		
-	    		var iwContent = message, // 인포윈도우에 표시할 내용
-	    		    iwRemoveable = true;
-	    		
-	    		// 인포윈도우를 생성합니다
-	    		var infowindow = new kakao.maps.InfoWindow({
-	    		    content : iwContent,
-	    		    removable : iwRemoveable
-	    		});
-	    		
-	    		// 인포윈도우를 마커위에 표시합니다 
-	    		//infowindow.open(map, marker);
-	    		
-	    		// 지도 중심좌표를 접속위치로 변경합니다
-	    		map.setCenter(locPosition);      
-	    		} 
-    		}
-    		</script>
-				
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">동네설정</h3>
+				<form id="locationFrm" action="locationView.do">
+					<div id="dongList"></div>
+				</form>
+				<div class="text-end"><button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="chkChkBox()">확인</button></div>
 			</div>
 		</div>
 		
