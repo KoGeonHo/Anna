@@ -105,6 +105,13 @@ li{
 
 @media ( max-width: 400px ) {
 
+.container.row.col-lg-12.card.card-body{
+	width:100%;
+
+
+}
+
+
 .col-lg-3 .card img {
 
 width:293px;
@@ -203,7 +210,6 @@ height:250px;
 	<form method="get" action="itemlist.do">
 		<select name="searchType">
 			<option value="title" <c:if test="${!empty svo.searchType and svo.searchType eq 'title'}">selected</c:if>>제목</option>
-			<option value="contentWriter" <c:if test="${!empty svo.searchType and svo.searchType eq 'contentWriter'}">selected</c:if>>내용+작성자</option>
 		</select>
 		<input type="text" name="searchVal" 
 				<c:if test="${!empty svo.searchVal}">
@@ -211,30 +217,25 @@ height:250px;
 				</c:if>>
 		<input type="submit" value="검색">
 	</form>
-	
-			<c:if test="${!empty pm.searchVal}">	
+		<div>
+			<c:if test="${!empty pm.searchVal and pm.searchVal ==}">	
 			<h1>니가 검색한 ${pm.searchVal} 의 최저가 상품이란다</h1>
-			<c:if test="${list.size() > 0}">
-				<c:forEach var="vo" items="${list}">
 				<div class="col-lg-3">
 					<div class="card">
-					<img src="../resources/upload/${vo.image1}" >
+					<a href="itemview.do?item_idx=${ssang.item_idx}"><img src="../resources/upload/${ssang.image1}" ></a>
 						<div class="card-body">
-						<input type="hidden" value=">${vo.uidx}">
-							<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
-							<p class="card-text">${vo.price}원</p>
-							<p class="card-text">${vo.nickName}</p>
-							<p class="card-text">${vo.wdate}</p>
+						<input type="hidden" value=">${ssang.uidx}">
+							<h5 class="card-title"><a href="itemview.do?item_idx=${ssang.item_idx}">${ssang.title}</a></h5>
+							<p class="card-text">${ssang.price}원</p>
+							<p class="card-text">${ssang.nickName}</p>
+							<p class="card-text">${ssang.wdate}</p>
 						</div>
 					</div>
 						<br>
 				</div>
 
-							</c:forEach>
-		</c:if>
-
 			</c:if>
-			
+		</div>
 <br>
 <hr>
 <br>
@@ -249,8 +250,7 @@ height:250px;
 		
 			<div class="col-lg-3">
 				<div class="card">
-
-				<img src="../resources/upload/${vo.image1}" >
+				<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" ></a>
 
 					<div class="card-body">
 					<input type="hidden" value=">${vo.uidx}">

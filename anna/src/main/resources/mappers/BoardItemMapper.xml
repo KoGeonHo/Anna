@@ -15,7 +15,6 @@
 			 , b.Contents
 			 , b.wdate
 			 , u.nickName
-
 			 , b.Price
 			 , b.image1
 			FROM Board_Items b, AnnaUser u
@@ -58,10 +57,6 @@
 		<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
 		 </if>
-		<if test='searchType != null and searchType.equals("contentWriter")'>
-		   AND (b.content like concat ('%',#{searchVal},'%')
-		    OR u.name like concat ('%',#{searchVal},'%')
-		 </if>
 		   <if test='cate_idx != 0 and cate_idx != null'>
 		 	and cate_idx = #{cate_idx}
 		 </if>
@@ -71,7 +66,7 @@
 	
 
 	
-	<insert id="boarditemswrite" parameterType="BoardItemVO">
+	<insert id="boarditemswrite">
 	insert into Board_Items(
 						uidx
 						,cate_idx
@@ -131,16 +126,16 @@
 			 , b.Contents
 			 , b.wdate
 			 , b.cate_idx
-			 , image1
-			 , image2
-			 , image3
-			 , image4
-			 , image5
-			 , image6
-			 , image7
-			 , image8
-			 , image9
-			 , image10
+			 , b.image1
+			 , b.image2
+			 , b.image3
+			 , b.image4
+			 , b.image5
+			 , b.image6
+			 , b.image7
+			 , b.image8
+			 , b.image9
+			 , b.image10
 			 , u.nickname
 			 , b.Keyword
 			 , b.Price
@@ -152,7 +147,7 @@
 		AND b.item_idx = #{item_idx}
 	</select>
 
-	<update id="itemsmodify" parameterType="BoardItemVO">
+	<update id="itemmodify" parameterType="BoardItemVO">
 	Update Board_Items Set
 						cate_idx = #{cate_idx}
 						,Title = #{title}
@@ -178,7 +173,7 @@
 						,state = #{state}
 						,isDel = 'N'
 						
-						where item_itdx = #{item_idx}
+						where item_idx = #{item_idx}
 						
 	</update>
 	
@@ -206,25 +201,32 @@
 			from Board_Items b
 			inner join AnnaUser u
 			on b.uidx = u.uidx
-			 where b.isDel = 'N' order by b.wdate desc
+			 where b.isDel = 'N' 
 			<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
 		</if>
-		<if test='searchType != null and searchType.equals("contentWriter")'>
-		   AND (b.content like concat ('%',#{searchVal},'%')
-		    OR u.name like concat ('%',#{searchVal},'%')
-		 </if>
-
-		<if test='searchType != null and searchType.equals("contentWriter")'>
-		   AND (b.content like concat ('%',#{searchVal},'%')
-		    OR u.name like concat ('%',#{searchVal},'%')
-		 </if>
-		   <if test='cate_idx != 0 and cate_idx != null'>
-		 	and cate_idx = #{cate_idx}
-		 </if>
-		 limit 1,1
-
-	
+	order by b.wdate desc limit 0,1
 	</select>
 	
+	<insert id="addNeighbor" >
+		insert into Neighbor
+					(
+					 uidx
+					,neighbor_idx
+					)
+					VALUES
+					(
+					 #{uidx}
+					,#{neighbor_idx}
+					)
+	</insert>
+	
+	<select id="myNeighbor">
+		select neighbor_idx from Neighbor where uidx = #{uidx}
+	</select>
+	
+	<select id="yourNeighbor">
+		select	neighbor_idx from Neighbor where uidx = #{uidx}
+	</select>
+		
 </mapper>

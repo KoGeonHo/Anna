@@ -57,10 +57,8 @@ height:150px;
     position: relative;
     margin: 0 auto;
     overflow: hidden; /* 현재 슬라이드 오른쪽에 위치한 나머지 슬라이드 들이 보이지 않도록 가림 */
-	display:none;
 }
 .slider input[type=radio]{
-    display: none;
 }
 
 ul.imgs{
@@ -94,13 +92,17 @@ ul.imgs li{
 }
 
 img{
-
-	width:100%;
+	float:center;
+	width:500px;
 
 	height:450px;
 }
 
 @media ( max-width: 400px ) {
+
+.row{
+
+}
 	img{
 
 	width:100%;
@@ -136,11 +138,12 @@ body {
   -webkit-user-select: none; 
   -khtml-user-select: none; 
   user-select: none;
+ 
 }
 
 .outer {
-  border: 6px solid royalblue;
-  width: 300px;
+  border: 3px solid royalblue;
+  width: 100%;
   height: 250px;
   margin: 0 auto;
   overflow-x: hidden;
@@ -149,19 +152,19 @@ body {
 
 .inner-list {
   display: flex;
-  width:300px;
+  width:100%;
   height: 250px;
   transition: .3s ease-out;
 }
 
 .inner {
-  padding: auto;
+  padding: 0;
 }
 
 
 
 .slider-1 {
-	width:700px;
+	width:500px;
     height:480px;
     position:relative;
     display : none;
@@ -181,7 +184,7 @@ body {
     width:20px;
     height:20px;
     /* background-color:rgba(255,255,255,.5); */
-    background-color:black;
+    background-color:white;
     border-radius:4px;
     display:inline-block;
     cursor:pointer;
@@ -190,7 +193,7 @@ body {
 
 .slider-1 > .page-btns > div.active {
     /* background-color:rgba(255,255,255,1); */
-    background-color:grey;
+    background-color:gray;
     display : none;
 }
 
@@ -207,14 +210,18 @@ body {
     opacity:0;
     transition: opacity 0.3s;
     background-position:center;
-    /* background-size:cover;  */
+ 	background-size:cover;
     background-repeat:no-repeat;
     display : none;
 }
 
 .slider-1 > .slides > div.active {
     opacity:1;
-    display : none;s
+    display : none;
+}
+
+.slider-1 > .slides > div.active img {
+	width:100%;
 }
 
 /* 슬라이더 좌우 버튼 */
@@ -252,7 +259,7 @@ body {
 
 
 .container{
-width:50%;
+width:100%;
 hieght:50px;
 }
 
@@ -282,7 +289,7 @@ a {
 
 /* 슬라이더 1 시작 */
 .slider-1 {
-	width:700px;
+	width:500px;
     height:480px;
     position:relative;
 }
@@ -300,7 +307,7 @@ a {
     width:20px;
     height:20px;
     /* background-color:rgba(255,255,255,.5); */
-    background-color:black;
+    background-color:gray;
     border-radius:4px;
     display:inline-block;
     cursor:pointer;
@@ -316,7 +323,7 @@ a {
 .slider-1 > .slides > div {
   position:absolute; 
     width:500px;
-    height:350px;
+    height:500px;
     top:0;
     left:0;
     right:0;
@@ -324,7 +331,7 @@ a {
     opacity:0;
     transition: opacity 0.3s;
     background-position:center;
-    /* background-size:cover;  */
+    background-size:cover;
     background-repeat:no-repeat;
      display : block;
 }
@@ -352,7 +359,7 @@ a {
     top:50%;
     left:20px;
     transform:translatey(-50%);
-    background-color:white;
+    background-color:gray;
     opacity:0.5;
     padding:1px 13px;
     border-radius:50px;
@@ -403,7 +410,7 @@ a {
 
 	<div class="container">
 	<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-12 col-sm-12">
 
 				<div class="card">
 				
@@ -415,6 +422,11 @@ a {
 							<c:if test="${vo.cate_idx == 2}">
 						상품카테고리 > 주방
 							</c:if>
+							
+							<div style="right;">
+								<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
+								<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
+							</div>
 				<hr>
 				
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -424,10 +436,10 @@ a {
 
 						    <div class="slides">
 						    	<c:if test="${vo.image1 != null}">
-						        <div ><img src="../resources/upload/${vo.image1}"></div>
+						        <div class="active"><img src="../resources/upload${vo.image1}" onclick="window.open(this.src)"></div>
 						        </c:if>
 						        <c:if test="${vo.image2 != null}">
-						        <div ><img src="../resources/upload/${vo.image2}"></div>
+						        <div ><img src="../resources/upload/${vo.image2}" onclick="window.open(this.src)"></div>
 						         </c:if>
 						        <c:if test="${vo.image3 != null}">
 						        <div ><img src="../resources/upload/${vo.image3}"></div>
@@ -506,13 +518,15 @@ a {
 					    <div class="inner">
 					      <img src="../resources/upload${vo.image1}">
 					    </div>
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image2}">
-					    </div>
+					    <c:if test="${vo.image2 != null }">
+						    <div class="inner">
+						      <img src="../resources/upload/${vo.image2}">
+						    </div>
+						</c:if> 
 					    <c:if test="${vo.image3 != null }">
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image3}">
-					    </div>
+						    <div class="inner">
+						      <img src="../resources/upload/${vo.image3}">
+						    </div>
 					    </c:if>
 					    <c:if test="${vo.image4 != null }">
 					    <div class="inner">
@@ -562,11 +576,12 @@ a {
 							<input type="hidden" value="${vo.item_idx} asd">
 
 								<p class="card-text">판매자 : ${vo.nickName}</p>
-								<p class="card-text">${vo.content}</p>
+								<p class="card-text">내용 : ${vo.content}</p>
 								<p class="card-text">판매가격 : ${vo.price}</p>
 								<p class="card-text">거래지역 : ${vo.addr2}</p>
 								<p class="card-text">키워드 : ${vo.keyword}</p>
-								
+								<p class="card-text"><a href="addneighbor.do">이웃추가</a></p>
+					
 						</div><!-- card body 끝 -->
 					</div>
 				</div>
@@ -580,7 +595,7 @@ a {
 				<c:forEach var="vo" items="${list2}">
 					<div class="col-lg-2 col-md-4" >
 						<div class="card">
-							<img src="../resources/upload/${vo.image1}" >
+						<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" ></a>
 								<div class="card-body">
 									<input type="hidden" value=">${vo.uidx}">
 									<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
@@ -595,8 +610,7 @@ a {
 			</c:if>
 		</div>
 		</div>
-<a href="itemmodfiy.do">게시글 수정</a>
-<a href="itemdelete.do">게시글 수정</a>
+
  조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품
 
