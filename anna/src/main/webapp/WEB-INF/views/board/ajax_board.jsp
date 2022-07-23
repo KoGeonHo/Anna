@@ -12,10 +12,10 @@
 <c:if test="${freeboard.size()>0 }">
 			<c:forEach var="vo" items="${freeboard}">
 			<c:if test = "${vo.board_type eq 'free' }">
-		<div class="card col-3">
+		<div class="card col-md-3">
 			<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="225" >
 			<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
-			${vo.nickName}  좋아요 112 댓글 ${vo.ccount}
+			${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount}
 		</div>
 		<br>
 		</c:if>
