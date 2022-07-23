@@ -187,6 +187,7 @@ function getList() {
 		
 };
 
+
 var likeval = ${like}; //버튼 이름이 like인듯
 
 let Bidx = ${bv.bidx};
@@ -230,7 +231,7 @@ if(likeval > 0){
 			}
 		})// 아작스 끝
 	});
-}
+}`
 </script>
 
 </body>
