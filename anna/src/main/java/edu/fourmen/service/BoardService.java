@@ -4,6 +4,7 @@ import java.util.List;
 
 
 
+
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
@@ -25,5 +26,13 @@ public interface BoardService {
 	int getCTotal(BoardVO rv);
 	
 	List<BoardVO> getCList(int Bidx);
+	
+	int Ccount(int Bidx);
+	
+	int boardLikeUP(BoardVO vo);
+	
+	int boardLikeDown(BoardVO vo);
+	
+	int Likeyn(BoardVO vo);
 
 }

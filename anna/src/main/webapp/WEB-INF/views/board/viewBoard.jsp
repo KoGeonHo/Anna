@@ -22,7 +22,8 @@ border-width: 1px 0px 0px 0px ;
 </style>
 </head>
 <body>
-
+<input type="hidden" value="${bv.bidx}" name="Bidx" id="Bidx">
+<input type="hidden" name="uidx" value="${uidx}">
 제목 : ${bv.title} 작성자 :${bv.nickName }
 <br>
 내용 : ${bv.contents}
@@ -32,7 +33,7 @@ border-width: 1px 0px 0px 0px ;
 
 	
 	<c:if test="${bv.image1 != null}">
-	<input type="image" src="../resources/upload/${bv.image1}" alt ="안되는데요?"><br>
+	<img src="../resources/upload/${bv.image1}" alt ="안되는데요?"><br>
 	</c:if>
 	
 	<c:if test="${bv.image2 != null}">
@@ -51,10 +52,13 @@ border-width: 1px 0px 0px 0px ;
 	<input type="image" src="../resources/upload/${bv.image5}" alt ="안되는데요?"><br>
     </c:if>
     
+    <button type="button" class="LikeBtn" name="like">좋아요버튼</button>
+    
 
                     <div class="comment-box">
    		                 <div class="comment-count">댓글 <span id="count">0</span></div>
  
+   		                <form method='post' id="commentForm">
    		                 	   <!-- <span class="c-icon"><i class="fa-solid fa-user"></i>  -->
    		                 <div class="comment-name">
 	                        <span class="anonym">작성자 : 
@@ -66,7 +70,7 @@ border-width: 1px 0px 0px 0px ;
 	                        <!-- </span> -->
                      <!--<img src="/익명.jpg" width ="50px" alt="My Image"><!-->
                     <div class="comment-sbox">
-                    	<input type="text" value="${bv.bidx}" name="Bidx" id="Bidx">
+                    	<input type="hidden" value="${bv.bidx}" name="Bidx" id="Bidx">
                         <textarea class="comment-input" id="Contents" cols="80" rows="2" name="Contents" ></textarea>
                         <!-- <span class="com-function-btn" type="hidden">
                             
@@ -74,6 +78,7 @@ border-width: 1px 0px 0px 0px ;
                             <a href="#"><i class="fa-solid fa-trash-can"></i></a>
                          </span> -->
                     </div>
+                    </form>
                     	<div class="Reply_btn"><!-- regBtn -->
                     		<button id="commentwrite">댓글등록</button>
                     		
@@ -93,7 +98,8 @@ $(function(){
 			const Bidx = ${bv.bidx};
 			const nickName = $('#nickName').val();
 			const Contents = $('#Contents').val();
-			const Uidx = ${uidx};
+
+
 			
 			console.log(Bidx);
 			console.log(nickName);
@@ -108,7 +114,7 @@ $(function(){
 			
 			$.ajax({
 				url:'InsertComment',
-				data:"Bidx="+Bidx+"&nickName="+nickName+"&Contents="+Contents+"&Uidx="+Uidx,
+				data:$("#commentForm").serialize(),
 				success:function(data){
 					console.log('통신성공' + data);
 					if(data === 'InsertSuccess') {
@@ -181,6 +187,51 @@ function getList() {
 		
 };
 
+
+var likeval = ${like}; //버튼 이름이 like인듯
+
+let Bidx = ${bv.bidx};
+let Uidx = ${uidx};
+if(likeval > 0){
+	console.log(likeval + "좋아요 누름");
+	$('.LikeBtn').html("좋아요 취소");
+	$('.LikeBtn').click(function() {
+		$.ajax({
+			type :'post',
+			url : '<c:url value ="/board/likeDown"/>',
+			contentType: 'application/json',
+			data : JSON.stringify(
+					{
+						"Bidx" : Bidx,
+						"Uidx" : Uidx
+					}		
+				),
+			success : function(data) {
+				alert('취소 성공');
+			}
+		})// 아작스 끝
+	})
+
+}else{
+	console.log(likeval + "좋아요 안누름")
+	console.log(Uidx);
+	$('.LikeBtn').click(function() {
+		$.ajax({
+			type :'post',
+			url : '<c:url value ="/board/likeUp"/>',
+			contentType: 'application/json',
+			data : JSON.stringify(
+					{
+						"Bidx" : Bidx,
+						"Uidx" : Uidx
+					}		
+				),
+			success : function(data) {
+				alert('성공염');
+			}
+		})// 아작스 끝
+	});
+}`
 </script>
 
 </body>
