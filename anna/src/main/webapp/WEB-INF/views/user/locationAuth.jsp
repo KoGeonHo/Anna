@@ -138,11 +138,12 @@ body { position: fixed; }
 	    	    			url : "https://sgisapi.kostat.go.kr/OpenAPI3/personal/findcodeinsmallarea.json",
 	    	    			data : "accessToken="+data.result.accessToken+"&x_coor="+utmkXY.x+"&y_coor="+utmkXY.y,
 	    	    			success : function(data2){
+	    	    				console.log(data2);
 	    	    				$("#dongList").append("<div class='text-center' style='padding:1rem;'>거래를 원하시는 동네를 선택해주세요.</div>");
 	    	    				$("#dongList").append("<div class='text-center border-bottom border-top' style='padding:1rem;'>현위치는 <b>"+data2.result.sido_nm+" "+data2.result.sgg_nm+"</b>입입니다.</div>");
 	    	    				$.ajax({
 	    	    					url : "https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json",
-	    	    					data : "accessToken="+data.result.accessToken+"&pg_yn=1&cd="+data2.result.sido_cd+data2.result.sgg_cd,
+	    	    					data : "accessToken="+data.result.accessToken+"&pg_yn=0&cd="+data2.result.sido_cd+data2.result.sgg_cd,
 	    	    					success : function(data3){
 	    	    						for(let i = 0; i < data3.result.length; i++){
 	    	    							$("#dongList").append("<div class='border-bottom'><input style='margin: 1rem;' name='dong' type='checkbox' id='chk"+i+"' value="+data3.result[i].cd+"><label for='chk"+i+"'>"+data3.result[i].full_addr+"</label></div>");
