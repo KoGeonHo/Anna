@@ -310,14 +310,16 @@ public class BoardController {
 		
 		BoardVO vo = new BoardVO();
 		
-		System.out.println(Bidx);
-		System.out.println((int)session.getAttribute("uidx"));
+		
 		
 		vo.setBidx(Bidx);
-		vo.setUidx((int)session.getAttribute("uidx"));
-		
+		if(session.getAttribute("uidx") != null) {
+			vo.setUidx((int)session.getAttribute("uidx"));
+		}
 		model.addAttribute("bv", bv);
 		model.addAttribute("like",boardService.Likeyn(vo));
+		
+		System.out.println("like");
 		
 		return "board/viewBoard";
 	}
@@ -367,8 +369,16 @@ public class BoardController {
 	
 	@ResponseBody 
 	@RequestMapping(value="/likeUp", method=RequestMethod.POST)
-	public void likeup(BoardVO vo) {
+	public void likeup(BoardVO vo, int Bidx, HttpSession session, HttpServletRequest request) {
 		System.out.println("컨트롤러 연결 성공");
+		
+		session = request.getSession();
+		
+		vo.setBidx(Bidx);
+		vo.setUidx((int)session.getAttribute("uidx"));
+		
+		System.out.println(Bidx);
+		System.out.println((int)session.getAttribute("uidx"));
 
 		boardService.boardLikeUP(vo);
 	
@@ -376,8 +386,17 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="/likeDown", method=RequestMethod.POST)
-	public void likeDown(BoardVO vo) {
-		System.out.println("좋아요 싫어요!");
+	public void likeDown(BoardVO vo, int Bidx, HttpSession session, HttpServletRequest request) {
+		
+		session = request.getSession();
+		
+		System.out.println("좋아요 취소!");
+		
+		vo.setBidx(Bidx);
+		vo.setUidx((int)session.getAttribute("uidx"));
+		
+		System.out.println(Bidx);
+		System.out.println((int)session.getAttribute("uidx"));
 		boardService.boardLikeDown(vo);
 	}
 

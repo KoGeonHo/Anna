@@ -51,8 +51,11 @@ border-width: 1px 0px 0px 0px ;
     <c:if test="${bv.image5 != null}">
 	<input type="image" src="../resources/upload/${bv.image5}" alt ="안되는데요?"><br>
     </c:if>
-    
-    <button type="button" class="LikeBtn" name="like">좋아요버튼</button>
+	<c:if test="${bv.uidx == uidx}"> 
+    	<a href="">수정</a>
+    	<a href="">삭제</a>
+    </c:if>
+    <button type="button" class="LikeBtn" name="like">좋아요</button>
     
 
                     <div class="comment-box">
@@ -68,7 +71,7 @@ border-width: 1px 0px 0px 0px ;
 	                      </div>   
 	                        	
 	                        <!-- </span> -->
-                     <!--<img src="/익명.jpg" width ="50px" alt="My Image"><!-->
+                     
                     <div class="comment-sbox">
                     	<input type="hidden" value="${bv.bidx}" name="Bidx" id="Bidx">
                         <textarea class="comment-input" id="Contents" cols="80" rows="2" name="Contents" ></textarea>
@@ -88,6 +91,7 @@ border-width: 1px 0px 0px 0px ;
     			    <div class="comment_Box"> <!-- 댓글이 들어갈 박스 -->
 
 	                </div>
+	                
 <script type="text/javascript">
 $(function(){
 	$('#commentwrite').click(function() {
@@ -187,51 +191,52 @@ function getList() {
 		
 };
 
+function Like(){
 
-var likeval = ${like}; //버튼 이름이 like인듯
+var likeval = ${like}; //컨트롤러에서 선언한 like 인듯
 
 let Bidx = ${bv.bidx};
+<c:if test="${ not empty uidx}">
 let Uidx = ${uidx};
-if(likeval > 0){
+
+if(likeval == 1){
 	console.log(likeval + "좋아요 누름");
 	$('.LikeBtn').html("좋아요 취소");
 	$('.LikeBtn').click(function() {
 		$.ajax({
 			type :'post',
-			url : '<c:url value ="/board/likeDown"/>',
-			contentType: 'application/json',
-			data : JSON.stringify(
-					{
-						"Bidx" : Bidx,
-						"Uidx" : Uidx
-					}		
-				),
+			url : 'likeDown',
+			data : "Bidx="+Bidx+"&Uidx="+Uidx,
 			success : function(data) {
 				alert('취소 성공');
+				location.reload();
 			}
 		})// 아작스 끝
 	})
 
-}else{
+
+}else if(likeval == 0){
 	console.log(likeval + "좋아요 안누름")
 	console.log(Uidx);
+	$('.LikeBtn').html("좋아요")
 	$('.LikeBtn').click(function() {
 		$.ajax({
 			type :'post',
-			url : '<c:url value ="/board/likeUp"/>',
-			contentType: 'application/json',
-			data : JSON.stringify(
-					{
-						"Bidx" : Bidx,
-						"Uidx" : Uidx
-					}		
-				),
+			url : 'likeUp',
+			data : "Bidx="+Bidx+"&Uidx="+Uidx,
 			success : function(data) {
 				alert('성공염');
+				location.reload();
 			}
 		})// 아작스 끝
 	});
-}`
+	
+}
+</c:if>
+
+}
+
+Like();
 </script>
 
 </body>
