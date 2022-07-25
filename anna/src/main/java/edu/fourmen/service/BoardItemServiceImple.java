@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
 
 import edu.fourmen.vo.SearchVO;
@@ -73,5 +74,14 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 	}					
 
+	@Override
+	public int insertChat(ChatMessageVO cvo) {
+		return boarditemdao.insertChat(cvo);
+	}
+
+	@Override
+	public List selectChat(ChatMessageVO cvo) {
+		return boarditemdao.selectChat(cvo);
+	}
 
 }

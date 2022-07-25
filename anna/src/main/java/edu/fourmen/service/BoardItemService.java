@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
 
 import edu.fourmen.vo.SearchVO;
@@ -27,8 +28,11 @@ public interface BoardItemService {
 	public int itemmodify(BoardItemVO vo);
 	
 	public int itemdelete(BoardItemVO vo);
-	
 
 	public BoardItemVO MinPrice(PageMaker pm);
 
+	public int insertChat(ChatMessageVO cvo);	
+	
+	public List selectChat(ChatMessageVO cvo);
+	
 }

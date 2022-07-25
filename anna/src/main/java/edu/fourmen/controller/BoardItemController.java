@@ -6,7 +6,9 @@ import java.io.File;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -23,11 +25,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.fourmen.service.BoardItemService;
+import edu.fourmen.service.UserService;
 import edu.fourmen.vo.BoardItemVO;
-
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
 
@@ -36,13 +40,16 @@ import edu.fourmen.vo.UserVO;
 @RequestMapping(value = "/boarditem")
 @Controller
 public class BoardItemController {
-
+	private List<ChatMessageVO> messages;
+	@Autowired
+	UserService userService;
+	
 	@Autowired
 	BoardItemService boarditemService;
 
 	@RequestMapping(value = "/itemlist.do")
 
-	public String itemlist(PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
+	public String itemlist(HttpSession session,PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
 
 		if(svo.getSearchType() == null) {
 			svo.setSearchType("TITLE");
@@ -113,50 +120,11 @@ public class BoardItemController {
 	    model.addAttribute("list", list);
 
 		return "boarditem/itemlist";
-	}/*
-		 * @RequestMapping(value="/ajax_board.do") public String itemlist2(BoardItemVO
-		 * vo, PageMaker pm , HttpServletRequest request, Model model) {
-		 * 
-		 * //한 페이지에 몇개씩 표시할 것인지 int pagecount = 15; //보여줄 페이지의 번호를 일단 1이라고 초기값 지정 int
-		 * pagenumber = 1; //페이지 번호가 파라미터로 전달되는지 읽어와본다. String strPageNum =
-		 * request.getParameter("pagenumber"); //만일 페이지 번호가 파리미터로 넘어온다면 if(strPageNum !=
-		 * null) { //숫자로 바꿔서 보여줄 페이지 번호를 지정한다. pagenumber =
-		 * Integer.parseInt(strPageNum); }
-		 * 
-		 * //보여줄 페이지의 시작 ROWNUM - 0부터 시작 int startPage = 1+ (pagenumber - 1)* pagecount;
-		 * //보여줄 페이지의 끝 ROWNUM int endPage = pagenumber*pagecount;
-		 * 
-		 * int pageNum = pagecount;
-		 * 
-		 * // 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
-		 * 
-		 * 
-		 * 
-		 * // 설정해준 값들을 해당 객체에 담는다. pm.setStartPage(startPage); pm.setEndPage(endPage);
-		 * pm.setPageNum(pageNum);
-		 * 
-		 * //ArrayList 객체의 참조값을 담을 지역변수를 만든다. ArrayList<PageMaker> plist = null; //전체
-		 * row의 개수를 담을 지역변수를 미리 만든다. -검색 조건이 들어온 경우 '검색 결과 갯수'가 된다. int totalRow = 0;
-		 * 
-		 * //글의 개수 totalRow = boarditemService.totalcount(vo);
-		 * 
-		 * //전체 페이지 갯수 구하기 int totalPageCount = (int)Math.ceil(totalRow /
-		 * (double)pagecount);
-		 * 
-		 * request.setAttribute("plist", plist); request.setAttribute("totalPageCount",
-		 * totalPageCount); request.setAttribute("totalRow", totalRow);
-		 * request.setAttribute("pagenumber", pagenumber);
-		 * 
-		 * List<BoardItemVO> list = boarditemService.list(vo);
-		 * 
-		 * model.addAttribute("svo", svo); model.addAttribute("list",list);
-		 * 
-		 * return "boarditem/ajax_board"; }
-		 */
+	}
 
 
 	@RequestMapping(value = "/ajax_item.do")
-	public String itemlist2(PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
+	public String itemlist2(HttpSession session,PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
 		
 		if(svo.getSearchType() == null) {
 			svo.setSearchType("TITLE");
@@ -228,12 +196,10 @@ public class BoardItemController {
 	
 	@RequestMapping(value = "itemview.do")
 	public String selectitem(PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
-
 			HttpSession session, Model model) {
 		session = request.getSession();
-		UserVO login = (UserVO) session.getAttribute("login");
-		model.addAttribute("login", login);
-
+		UserVO userinfo = (UserVO) session.getAttribute("login");
+		model.addAttribute("userinfo", userinfo);
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 
 		
@@ -244,6 +210,7 @@ public class BoardItemController {
 		List<BoardItemVO> list2 = boarditemService.list2(vo,svo);
 		model.addAttribute("list2", list2);
 
+		
 
 		return "boarditem/itemview";
 
@@ -261,7 +228,7 @@ public class BoardItemController {
 
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 		System.out.println(path);
-
+		UserVO userinfo = (UserVO) session.getAttribute("login");
 		String fileName = null;
 		UUID uuid = UUID.randomUUID();
 		// System.out.println(vo.getFile1().getOriginalFilename()+"파일1");
@@ -595,10 +562,11 @@ public class BoardItemController {
 	
 
 	@RequestMapping(value="/itemmodify.do", method=RequestMethod.GET)
-	public String modify(Model model, int item_idx) {
-		
+	public String modify(HttpSession session,Model model, int item_idx) {
+		UserVO userinfo = (UserVO) session.getAttribute("login");
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		
+		model.addAttribute("userinfo",userinfo);
 		model.addAttribute("vo",vo);
 		
 		return "boarditem/itemmodify";
@@ -929,7 +897,7 @@ public class BoardItemController {
 	
 
 	@RequestMapping(value="/itemdelete.do", method=RequestMethod.GET)
-	public String delete(Model model, int item_idx) {
+	public String delete(HttpSession session,Model model, int item_idx) {
 		
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		
@@ -939,7 +907,7 @@ public class BoardItemController {
 	}
 	
 	@RequestMapping(value="/itemdelete.do", method=RequestMethod.POST)
-	public String delete(BoardItemVO vo) {
+	public String delete(HttpSession session,BoardItemVO vo) {
 			
 			int result = boarditemService.itemdelete(vo);
 		
@@ -947,8 +915,123 @@ public class BoardItemController {
 	}
 	
 	@RequestMapping(value="/addNeighbor.do", method=RequestMethod.GET)
-	public String addNeighbor() {
+	public String addNeighbor(HttpSession session) {
 		return "";
 	}
+	
 
+	@RequestMapping(value="/chat")
+	public String showMain(int item_idx, Model model) {
+		BoardItemVO vo = boarditemService.selectitem(item_idx);
+		model.addAttribute("vo",vo);
+		return "boarditem/chat";
+	}
+	
+	BoardItemController(){
+		messages = new ArrayList<>();
+	}
+
+	@RequestMapping("/AddMessage")
+	@ResponseBody
+	public Map AddMessage(String nickName,int uidx, String cdate, int item_idx, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
+		System.out.println("이쯤에");
+		session = request.getSession();
+		System.out.println((int)session.getAttribute("uidx"));
+		UserVO userinfo = (UserVO)session.getAttribute("login");
+		BoardItemVO vo = boarditemService.selectitem(item_idx);
+		session.setAttribute("userinfo",userinfo);
+		model.addAttribute("vo",vo);
+		int chat_host = vo.getUidx();
+		int invited = (int) session.getAttribute("uidx"); //세션의 uidx값을 invited 에 넣음
+		long cidx = messages.size(); // 저장된 마지막 메시지의 다음 번호
+		ChatMessageVO chatMessage = new ChatMessageVO(cidx, uidx, invited, contents,  chat_host, item_idx,nickName);
+		messages.add(chatMessage);
+		System.out.println(chatMessage+"채팅");
+		
+		int result = boarditemService.insertChat(chatMessage);
+		
+		//ajax가 가져갈 출력값 개체 생성
+		Map rs = new HashMap<String, Object>();
+		rs.put("chat_host", chat_host);
+		rs.put("invited", invited);
+		
+		return rs;
+	}
+
+	@RequestMapping("/getAllMessages")
+	@ResponseBody
+	public List getAllMessages(String nickName,int uidx,int item_idx,String cdate, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
+
+		UserVO userinfo = (UserVO)session.getAttribute("login");
+		BoardItemVO vo = boarditemService.selectitem(item_idx);
+		int invited = userinfo.getUidx();
+		int chat_host = vo.getUidx();
+		 long cidx = messages.size(); // 저장된 마지막 메시지의 다음 번호
+		session.setAttribute("userinfo",userinfo);
+		model.addAttribute("vo",vo);
+		ChatMessageVO chatMessage = new ChatMessageVO(cidx,uidx, invited,contents, chat_host,item_idx,  nickName);
+		List value = boarditemService.selectChat(chatMessage);
+		return value;
+	}
+	
+	
+	
+	@RequestMapping("/getMessages")
+	@ResponseBody
+	public List getMessages(int from) {
+		return messages.subList(from,messages.size());
+	}
+	
+	@RequestMapping("/clear")
+	@ResponseBody
+	public String clear() {
+		messages.clear();
+		return "메시지 전체 삭제";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

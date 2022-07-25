@@ -228,5 +228,34 @@
 	<select id="yourNeighbor">
 		select	neighbor_idx from Neighbor where uidx = #{uidx}
 	</select>
-		
+	
+	
+	<insert id="insertChat">
+		INSERT INTO chat(
+				uidx
+			,	item_idx
+			,	contents
+			,	chat_host
+			,	cdate
+			,	invited
+			)
+			VALUES(
+				 #{uidx}
+			,	 #{item_idx}
+			,	 #{contents}
+			,	 #{chat_host}
+			,	 now()
+			,	 #{invited}
+			)
+	</insert>
+	<select id="selectChat" parameterType="int" resultType="chatVO">
+		select content,date_format(now(),'%y-%m-%d-%h:%i') from chat 
+		where chat_host = #{chat_host} and 
+				invited = #{invited} and 
+				item_idx = #{item_idx} 
+				order by cidx 
+	
+	</select>
+	
+	
 </mapper>

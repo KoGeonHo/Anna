@@ -6,11 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <link href="${path}/css/bootstrap.css" rel="stylesheet" />
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style type='text/css'>
@@ -19,7 +16,16 @@
 @viewport {width: device-width;}
 </style>
 <title>item view 페이지</title>
+
 <style>
+#chat{
+height:300px;
+overflow-y:scroll;
+flex-direction:column_reverse;
+
+
+
+}
 .outer {
   border: 6px solid royalblue;
   width: 500px;
@@ -372,6 +378,106 @@ a {
 
 /* 슬라이더 1 끝 */
 </style>
+
+<style>
+ 	body{margin:0;padding:0;max-height:800px}	
+	.wrap	{position:absolute;top:50%;left:50%;width:200px;height:100px;margin-top:-50px;margin-left:-100px;}
+	
+	table {width:100%;border-collapse:collapse; border:0; empty-cells:show; border-spacing:0; padding:0;}
+	table th {height:24px; padding:4px 10px; border:1px solid #DDD; font-weight:bold; text-align:left; background:#ecf5fc;}
+	table td {height:22px; padding:5px 10px; border:1px solid #DDD;}
+	#btn_close{float:right}
+
+	/*레이어 팝업 영역*/
+	.Pstyle {
+	 opacity: 0;
+	 display: none;
+	 position: relative;
+	 width: auto;
+	 border: 5px solid #fff;
+	 padding: 20px;
+	 background-color: #fff;
+	}    		
+	</style>
+	<script>
+		$(function(){
+			$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
+				$('#popup').bPopup();
+			});
+			
+			$("#btn_close").click(function(){ //닫기
+				$('#popup').bPopup().close();  
+			});			
+		});
+	</script>
+<script>
+	let invited=0;
+	let chat_host=0;
+	function sendMessage(form) {
+		//작성자, 내용 유효성 검사
+		form.nickName.value = form.nickName.value.trim();
+		/* if (form.usernick.value.length == 0) {
+			alert('작성자를 입력하세요');
+			form.usernick.focus();
+			return false;
+		} */
+		
+		form.contents.value = form.contents.value.trim();
+		if (form.contents.value.length == 0) {
+			alert('내용 입력하세요');
+			form.contents.focus();
+			return false;
+		}
+		
+		// AJAX -> doAddMessage 실행 및 출력값 가져오기
+		$.post('./AddMessage',{
+			nickName : form.nickName.value,
+			contents : form.contents.value,
+			item_idx : form.item_idx.value,
+			uidx : form.uidx.value
+		}, function(data) {
+			uidx = data["uidx"];
+		},'json');
+		form.contents.value = '';
+		form.contents.focus();
+	}
+	
+	
+	
+	var Chat__lastReceivedMessagecidx = -1;
+	
+	
+	function Chat__loadNewMessages() {
+		$.get('./getMessages',{
+			from : Chat__lastReceivedMessagecidx + 1
+		}, function(data) {
+			console.log(data);
+			for ( let i = 0; i < data.length; i++ ) {
+				var messages = data[i];
+				Chat__lastReceivedMessagecidx = messages.cidx;
+				Chat__drawMessages(messages);
+			}
+			setTimeout(Chat__loadNewMessages,1000);
+		}, 'json');
+	}
+	function Chat__drawMessages(messages) {
+		var html = '[' +messages.cidx + '] (' + messages.nickName + ') : ' + messages.contents;
+		
+		if(messages.uidx == ${uidx}){
+			$('.chat-list').append('<div style="text-align:right;">'+ html + '</div>');
+		}else if(messages.uidx != ${uidx}){
+			$('.chat-list').append('<div style="text-align:left;">' + html + '</div>');
+			}
+	}
+	$(function() {
+		Chat__loadNewMessages();
+		
+	});
+	
+	
+	
+</script>
+
 </head>
 <body>
 
@@ -429,7 +535,6 @@ a {
 							</div>
 				<hr>
 				
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
 						<div class="slider-1" >
@@ -572,8 +677,8 @@ a {
 					
 				
 						<h5 class="card-title">${vo.title}</h5>
-							<input type="hidden" value="${vo.uidx} asd"> 
-							<input type="hidden" value="${vo.item_idx} asd">
+							<input type="hidden" value="${vo.uidx}"> 
+							<input type="hidden" value="${vo.item_idx}">
 
 								<p class="card-text">판매자 : ${vo.nickName}</p>
 								<p class="card-text">내용 : ${vo.content}</p>
@@ -590,12 +695,12 @@ a {
 					<h2>${nickName}님	의 다른상품</h2>
 	<div class="container-fluid">
 		<div class="row">
-		<a href="user/myPage.do?uidx=${vo.uidx}">더 보기</a>
+		<a href="../user/myPage.do?uidx=${vo.uidx}">더 보기</a>
 			<c:if test="${list2.size() > 0}">
 				<c:forEach var="vo" items="${list2}">
 					<div class="col-lg-2 col-md-4" >
 						<div class="card">
-						<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" ></a>
+						<img src="../resources/upload/${vo.image1}" >
 								<div class="card-body">
 									<input type="hidden" value=">${vo.uidx}">
 									<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
@@ -610,12 +715,39 @@ a {
 			</c:if>
 		</div>
 		</div>
-
+	<a href="chat">채팅</a>
+ 	<div class="wrap">
+		<input type="button" id="btn_open" value="레이어 팝업 열기">
+	</div>
+	<script>
+	$("#chat").scrollTop($("#chat")[0].scrollHeight);
+	</script>
+	<!--팝업 영역 시작 -->
+	<div id="popup" class="Pstyle">	
+		<form onsubmit="sendMessage(this); return false;">
+			<input type="hidden" name="item_idx" value="${vo.item_idx}"><br>
+			<input type="hidden" name="chat_host" value="${vo.uidx}"><br>
+			<input type="hidden" name="cidx" value="1">
+			<input type="hidden" name="invited" value="${uidx}">
+			<input type="hidden" name="uidx" value="${uidx}">
+			<!-- <input type="hidden" name="chat_read" value="1"> -->
+			
+			<input type="text" name="nickName" value="${nickName}"readonly="readonly">
+			
+			<input type="text" name="contents" placeholder="내용" id="msg">
+			<input type="submit" value="전송">
+		</form>
+		
+			<div class="chat-list" id="chat" ></div>
+				<input type="button" id="btn_close" onclick="addLog()"value="닫 기">
+			</div>
+	<!--팝업 영역 끝 -->
  조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 	<script src ="../js/boarditem.js"></script>
 	<script src ="../js/boarditem2.js"></script>
+	
 </body>
 </html>

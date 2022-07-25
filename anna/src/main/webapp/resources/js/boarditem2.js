@@ -1,4 +1,3 @@
-console.clear();
 
 // 기존 버튼형 슬라이더
 $('.slider-1 > .page-btns > div').click(function(){
@@ -48,5 +47,26 @@ $('.slider-1 > .side-btns > div').click(function(){
     $post.click();
 });
 
+const log = document.getElementById("log");
 
+log.isScrollBottom = true;
+
+log.addEventListener("scroll", (event) => {
+  if (event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight) {
+    log.isScrollBottom = true;
+  } else {
+    log.isScrollBottom = false;
+  }
+});
+
+
+const addLog = () => {
+  const msg = document.getElementById("msg").value;
+  
+  log.innerHTML += `${msg}\r\n`;
+  
+  if (log.isScrollBottom) {
+    log.scrollTop = log.scrollHeight;
+  }
+};
 

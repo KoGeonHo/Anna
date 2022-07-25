@@ -157,6 +157,13 @@ height:250px;
 </style>
 </head>
 <body>
+<c:if test="${uidx == null}">
+<a href="../user/login.do">로그인하기</a>
+</c:if>
+
+<c:if test="${uidx != null}">
+<a href="../user/logout.do">로그아웃</a>
+</c:if>
 <a href="itemwrite.do">중고거래글 작성하기</a>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
@@ -218,7 +225,7 @@ height:250px;
 		<input type="submit" value="검색">
 	</form>
 		<div>
-			<c:if test="${!empty pm.searchVal and pm.searchVal ==}">	
+			<c:if test="${!empty pm.searchVal}">	
 			<h1>니가 검색한 ${pm.searchVal} 의 최저가 상품이란다</h1>
 				<div class="col-lg-3">
 					<div class="card">
