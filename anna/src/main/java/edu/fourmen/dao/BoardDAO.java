@@ -1,9 +1,10 @@
 package edu.fourmen.dao;
 
-import java.util.HashMap;
+
+
 
 import java.util.List;
-import java.util.Map;
+
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,14 @@ public class BoardDAO {
 	}
 	
 	public List<BoardVO> selectfreeboard(PageMaker pm){ //일상&소통 게시판리스트
-		
-		
-		
+
 		return sqlSession.selectList(namespace+".selectfreeboard", pm);
+	}
+	
+	public List<BoardVO> selectjobboard(PageMaker pm){
+		
+		
+		return sqlSession.selectList(namespace+".selectjobboard",pm);
 	}
 	
 	public int totalCount(PageMaker pm) {

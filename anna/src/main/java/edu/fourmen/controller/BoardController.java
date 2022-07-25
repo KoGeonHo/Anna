@@ -400,7 +400,21 @@ public class BoardController {
 		boardService.boardLikeDown(vo);
 	}
 
+	@RequestMapping(value="/JobBoard.do")
+	public String JobBoard(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
+		
+		session = request.getSession();
+		
+		List<BoardVO> jobboard = boardService.selectjobboard(pm);
+		int Ccount = boardService.getCTotal(bv);
+		
+		bv.setCcount(Ccount);
 	
+		model.addAttribute("jobboard", jobboard);
+		model.addAttribute("svo", svo);
+		
+		return "board/JobBoard";
+	}
 	
 	
 	
