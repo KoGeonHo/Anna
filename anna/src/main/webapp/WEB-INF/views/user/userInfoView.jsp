@@ -111,7 +111,6 @@ body { position: fixed; }
 }
 
 .row {
-	height:3rem;
 	margin:0px;
 }
 
@@ -214,27 +213,49 @@ body { position: fixed; }
 					</div>
 				</div>
 				<div class="row border-bottom">
-					<div class="col-3 text-center" style="line-height:3rem;">닉네임</div>
-					<div class="col-9" style="line-height:3rem;">${ userInfo.nickName }</div>
+					<div class="col-3 text-center" style="padding:1rem;">닉네임</div>
+					<div class="col-9" style="padding:1rem;">${ userInfo.nickName }</div>
 				</div>
 				<div class="row border-bottom">
-					<div class="col-3 text-center" style="line-height:3rem;">이메일</div>
-					<div class="col-9" style="line-height:3rem;">${ userInfo.user_email }</div>
+					<div class="col-3 text-center" style="padding:1rem;">이메일</div>
+					<div class="col-9" style="padding:1rem;">${ userInfo.user_email }</div>
 				</div>
 				<div class="row border-bottom">
-					<div class="col-3 text-center" style="line-height:3rem;">내동네</div>
-					<div class="col-9" style="line-height:3rem; align-self:center;">
-						<c:if test="${ empty userInfo.addr_code }">
+					<div class="col-3 text-center" style="padding:1rem;">내동네</div>
+					<div class="col-9" style="padding:1rem; align-self:center;" id="locaList">
+						<c:if test="${ empty userInfo.location_auth }">
 							<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 등록하기</button>
 						</c:if>
-						<c:if test="${ not empty userInfo.addr_code }">
-							${ userInfo.addr1 } ${ userInfo.addr2 }
+						<c:if test="${ not empty userInfo.location_auth }">
+							<script>
+								let locationList = [${ userInfo.location_auth }];
+									$.ajax({
+										url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+										data : "consumer_key=9ff16331dfd542b6a5b0&consumer_secret=32b9d18070d34db18be5",
+										success : function(data){
+											for(let i = 0; i < locationList.length; i++){
+												$.ajax({
+													url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
+													async : false,
+													data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
+													success : function(geojson){
+														$("#locaList").append(geojson.features[0].properties.adm_nm+"<br>");
+													}
+												});
+											}
+											$("#locaList").append("<button class='btn' style='background:#00AAB2; color:#fff;' onclick=\"location.href='locationAuth.do';\">동네 다시 등록하기</button>");
+										},
+										error: function(){
+											console.log("error");
+										}
+									});
+							</script>
 						</c:if>
 					</div>
 				</div>
 				<div class="row border-bottom">
-					<div class="col-3 text-center" style="line-height:3rem;">소개글</div>
-					<div class="col-9" style="line-height:3rem;">
+					<div class="col-3 text-center" style="padding:1rem;">소개글</div>
+					<div class="col-9" style="padding:1rem;">
 						<c:if test="${ not empty userInfo.introduce }">
 							${ userInfo.introduce }
 						</c:if>
@@ -244,8 +265,8 @@ body { position: fixed; }
 					</div>
 				</div>
 				<div class="row border-bottom">
-					<div class="col-3 text-center" style="line-height:3rem; min-width:4rem;">관심사</div>
-					<div class="col-9" style="line-height:3rem;">
+					<div class="col-3 text-center" style="padding:1rem; min-width:4rem;">관심사</div>
+					<div class="col-9" style="padding:1rem;">
 						<c:if test="${ not empty userInfo.interested }">
 							${ userInfo.interested }
 						</c:if>

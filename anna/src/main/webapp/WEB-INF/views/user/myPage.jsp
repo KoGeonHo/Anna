@@ -193,62 +193,6 @@ body { position: fixed; }
 				<div id="listOfInterested">
 					<span>${ nickName }님이 관심있어 할만한 상품</span>
 				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
-				<h3 class="border-bottom">마이 페이지</h3>
-				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
-				</div>
 			</div>
 		</div>
 		

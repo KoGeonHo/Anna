@@ -139,14 +139,13 @@ body { position: fixed; }
 	    	    			data : "accessToken="+data.result.accessToken+"&x_coor="+utmkXY.x+"&y_coor="+utmkXY.y,
 	    	    			success : function(data2){
 	    	    				console.log(data2);
-	    	    				$("#dongList").append("<div class='text-center' style='padding:1rem;'>거래를 원하시는 동네를 선택해주세요.</div>");
 	    	    				$("#dongList").append("<div class='text-center border-bottom border-top' style='padding:1rem;'>현위치는 <b>"+data2.result.sido_nm+" "+data2.result.sgg_nm+"</b>입입니다.</div>");
 	    	    				$.ajax({
 	    	    					url : "https://sgisapi.kostat.go.kr/OpenAPI3/addr/stage.json",
 	    	    					data : "accessToken="+data.result.accessToken+"&pg_yn=0&cd="+data2.result.sido_cd+data2.result.sgg_cd,
 	    	    					success : function(data3){
 	    	    						for(let i = 0; i < data3.result.length; i++){
-	    	    							$("#dongList").append("<div class='border-bottom'><input style='margin: 1rem;' name='dong' type='checkbox' id='chk"+i+"' value="+data3.result[i].cd+"><label for='chk"+i+"'>"+data3.result[i].full_addr+"</label></div>");
+	    	    							$("#dongList").append("<div class='border-bottom'><input onclick='chkCnt(this)' style='margin: 1rem;' name='dong' type='checkbox' id='chk"+i+"' value="+data3.result[i].cd+"><label for='chk"+i+"'>"+data3.result[i].full_addr+"</label></div>");
 	    	    						}
 	    	    						$("#loading").fadeOut();
 	    	    					}
@@ -173,6 +172,21 @@ body { position: fixed; }
 		$("#locationFrm").submit();
 		//console.log(items);
 	}
+	
+	function chkCnt(chkbox){
+		if($('input[name=dong]:checked').length > 5){
+			alert("최대 5개까지만 선택 가능합니다.");
+			chkbox.checked = false;
+		}
+	}
+	
+	/* $.ajax({
+		url : "test.do",
+		data : "testData=1",
+		success : function(data){
+			$("#ajaxTest").html(data);
+		}
+	}); */
 </script>
 </head>
 <body>
@@ -247,18 +261,21 @@ body { position: fixed; }
 		</div>
 		
 		
-		<div id="loading" style="width:100%; height:100%; background:#000; position:relative; color:white; line-height:100%;" class="text-center">
+		<!-- <div id="loading" style="width:100%; height:100%; background:#000; position:relative; color:white; line-height:100%;" class="text-center">
 			<div style="line-height:500px; font-size:2rem;">Now Loading...</div>
-		</div>
+		</div> -->
 		
 		
 		<div class="wrapper" style="flex:1; overflow:auto;">
 			<div class="container main" >
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">동네설정</h3>
 				<form id="locationFrm" action="locationView.do">
-					<div id="dongList"></div>
+					<div class='text-center' style='padding:1rem;'>거래를 원하시는 동네를 선택해주세요.</div>
+					<div id="dongList">
+					</div>
 				</form>
 				<div class="text-end"><button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="chkChkBox()">확인</button></div>
+				<div class="text-end"><button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="location.href='userInfoView.do'">돌아가기</button></div>
 			</div>
 		</div>
 		

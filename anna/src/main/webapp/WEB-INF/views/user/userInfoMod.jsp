@@ -384,7 +384,7 @@ form {
 				<div style="padding:5px 0;">
 					<div class="text-end">
 						<button class="btn btn1" style="background:#00AAB2; color:#fff;" type="button" onclick="frmSubmit()">수정</button>
-						<button class="btn" style="background:#BBCE53; color:#fff;" type="button" onclick="javascript:history.back();">돌아가기</button>
+						<button class="btn" style="background:#BBCE53; color:#fff;" type="button" onclick="javascript:location.href='userInfoView.do';">돌아가기</button>
 					</div>
 				</div>
 			</div>
