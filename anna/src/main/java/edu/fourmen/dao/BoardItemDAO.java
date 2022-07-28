@@ -12,6 +12,7 @@ import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
+import edu.fourmen.vo.UserVO;
 
 @Repository
 public class BoardItemDAO {
@@ -69,7 +70,12 @@ public class BoardItemDAO {
 	}
 	
 	public List selectChat(ChatMessageVO cvo) {
-		return sqlSession.selectOne(efdb+".selectChat",cvo);
+		return sqlSession.selectList(efdb+".selectChat",cvo);
 	}
+	
+	public int addNeighbor(BoardItemVO vo) {
+		return sqlSession.insert(efdb+".addNeighbor",vo);
+	}
+	
 
 }

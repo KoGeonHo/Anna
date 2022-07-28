@@ -10,6 +10,7 @@ import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
 
 import edu.fourmen.vo.SearchVO;
+import edu.fourmen.vo.UserVO;
 
 
 
@@ -17,7 +18,7 @@ public interface BoardItemService {
 
 	public List<BoardItemVO> list (BoardItemVO vo, PageMaker pm);// 전체 리스트
 
-	public List<BoardItemVO> list2 (BoardItemVO vo, SearchVO svo);//판매자의 다른상품
+	public List<BoardItemVO> selectAllbyuser (BoardItemVO vo, SearchVO svo);//판매자의 다른상품
 	
 	public int totalCount(PageMaker pm);
 	
@@ -35,4 +36,5 @@ public interface BoardItemService {
 	
 	public List selectChat(ChatMessageVO cvo);
 	
+	public int addNeighbor(BoardItemVO vo );
 }

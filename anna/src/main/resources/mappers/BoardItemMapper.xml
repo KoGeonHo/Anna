@@ -22,10 +22,6 @@
 		<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
 		</if>
-		<if test='searchType != null and searchType.equals("contentWriter")'>
-		   AND (b.content like concat ('%',#{searchVal},'%')
-		    OR u.name like concat ('%',#{searchVal},'%')
-		 </if>
 		 <if test='cate_idx != 0 and cate_idx != null'>
 		 	and cate_idx = #{cate_idx}
 		 </if>
@@ -249,7 +245,7 @@
 			)
 	</insert>
 	<select id="selectChat" parameterType="int" resultType="chatVO">
-		select content,date_format(now(),'%y-%m-%d-%h:%i') from chat 
+		select contents,date_format(now(),'%y-%m-%d-%h:%i') from chat 
 		where chat_host = #{chat_host} and 
 				invited = #{invited} and 
 				item_idx = #{item_idx} 

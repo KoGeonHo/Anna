@@ -193,11 +193,11 @@ public class BoardItemController {
 		return "boarditem/ajax_item";
 	}
 
-	
 	@RequestMapping(value = "itemview.do")
-	public String selectitem(PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+	public String selectitem(ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
 			HttpSession session, Model model) {
 		session = request.getSession();
+		
 		UserVO userinfo = (UserVO) session.getAttribute("login");
 		model.addAttribute("userinfo", userinfo);
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
@@ -205,13 +205,13 @@ public class BoardItemController {
 		
 		List<BoardItemVO> list = boarditemService.list(vo,pm);
 		model.addAttribute("list", list);
-		
 		model.addAttribute("vo", vo);
-		List<BoardItemVO> list2 = boarditemService.list2(vo,svo);
-		model.addAttribute("list2", list2);
-
 		
-
+		List<BoardItemVO> list2 = boarditemService.selectAllbyuser(vo, svo);
+		model.addAttribute("list2", list2);
+		
+		
+		
 		return "boarditem/itemview";
 
 	}
@@ -936,7 +936,6 @@ public class BoardItemController {
 	public Map AddMessage(String nickName,int uidx, String cdate, int item_idx, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
 		System.out.println("이쯤에");
 		session = request.getSession();
-		System.out.println((int)session.getAttribute("uidx"));
 		UserVO userinfo = (UserVO)session.getAttribute("login");
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		session.setAttribute("userinfo",userinfo);
@@ -944,10 +943,8 @@ public class BoardItemController {
 		int chat_host = vo.getUidx();
 		int invited = (int) session.getAttribute("uidx"); //세션의 uidx값을 invited 에 넣음
 		long cidx = messages.size(); // 저장된 마지막 메시지의 다음 번호
-		ChatMessageVO chatMessage = new ChatMessageVO(cidx, uidx, invited, contents,  chat_host, item_idx,nickName);
+		ChatMessageVO chatMessage = new ChatMessageVO(cidx, uidx, invited, contents,chat_host,item_idx,nickName);
 		messages.add(chatMessage);
-		System.out.println(chatMessage+"채팅");
-		
 		int result = boarditemService.insertChat(chatMessage);
 		
 		//ajax가 가져갈 출력값 개체 생성
@@ -957,7 +954,6 @@ public class BoardItemController {
 		
 		return rs;
 	}
-
 	@RequestMapping("/getAllMessages")
 	@ResponseBody
 	public List getAllMessages(String nickName,int uidx,int item_idx,String cdate, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
@@ -969,8 +965,11 @@ public class BoardItemController {
 		 long cidx = messages.size(); // 저장된 마지막 메시지의 다음 번호
 		session.setAttribute("userinfo",userinfo);
 		model.addAttribute("vo",vo);
-		ChatMessageVO chatMessage = new ChatMessageVO(cidx,uidx, invited,contents, chat_host,item_idx,  nickName);
+		ChatMessageVO chatMessage = new ChatMessageVO(cidx,uidx, invited,contents,chat_host,item_idx,nickName);
 		List value = boarditemService.selectChat(chatMessage);
+		
+		
+		
 		return value;
 	}
 	
@@ -990,9 +989,15 @@ public class BoardItemController {
 	}
 	
 	
+	@ResponseBody
+	@RequestMapping("/addNeighbor")
+	public String addNeighbor( int item_idx, int neighbor_idx,BoardItemVO vo) {
+		System.out.println("이웃추가 신청");
+		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
+		boarditemService.addNeighbor(vo);
 	
-	
-	
+		return "이웃추가 완료" ;
+	}
 	
 	
 	

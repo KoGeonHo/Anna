@@ -13,6 +13,7 @@ import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
 
 import edu.fourmen.vo.SearchVO;
+import edu.fourmen.vo.UserVO;
 
 
 @Service
@@ -51,7 +52,7 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public List<BoardItemVO> list2(BoardItemVO vo, SearchVO svo) {
+	public List<BoardItemVO> selectAllbyuser(BoardItemVO vo, SearchVO svo) {
 		return boarditemdao.selectAllbyuser(vo, svo);
 	}
 
@@ -82,6 +83,12 @@ public  class BoardItemServiceImple implements BoardItemService{
 	@Override
 	public List selectChat(ChatMessageVO cvo) {
 		return boarditemdao.selectChat(cvo);
+	}
+
+
+	@Override
+	public int addNeighbor(BoardItemVO vo) {
+		return boarditemdao.addNeighbor(vo);
 	}
 
 }

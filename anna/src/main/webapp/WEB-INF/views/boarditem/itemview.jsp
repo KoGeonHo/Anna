@@ -18,7 +18,7 @@
 <title>item view 페이지</title>
 
 <style>
-#chat{
+#chat-list{
 height:300px;
 overflow-y:scroll;
 flex-direction:column_reverse;
@@ -434,7 +434,7 @@ a {
 			nickName : form.nickName.value,
 			contents : form.contents.value,
 			item_idx : form.item_idx.value,
-			uidx : form.uidx.value
+			uidx : form.uidx.value,
 		}, function(data) {
 			uidx = data["uidx"];
 		},'json');
@@ -474,7 +474,23 @@ a {
 		
 	});
 	
-	
+	function addNeighbor(form) {
+		//작성자, 내용 유효성 검사
+		form.uidx.value = form.uidx.value.trim();
+		if (form.uidx.value.length == 0) {
+			alert('회원만 이웃추가 기능을 사용할 수 있습니다');
+			return false;
+		}
+		
+		// AJAX -> addNeighbor 실행 및 출력값 가져오기
+		$.post('./addNeighbor',{
+			neighbor_idx : form.neighbor_idx.value,
+			uidx : form.uidx.value,
+			item_idx : form.item_idx.value,
+		}, function(data) {
+			uidx = data["uidx"];
+		},'json');
+	}
 	
 </script>
 
@@ -715,32 +731,34 @@ a {
 			</c:if>
 		</div>
 		</div>
-	<a href="chat">채팅</a>
- 	<div class="wrap">
-		<input type="button" id="btn_open" value="레이어 팝업 열기">
+z 	<div class="wrap">
+		<input type="button" id="btn_open" value="연락하기">
 	</div>
-	<script>
-	$("#chat").scrollTop($("#chat")[0].scrollHeight);
-	</script>
 	<!--팝업 영역 시작 -->
 	<div id="popup" class="Pstyle">	
 		<form onsubmit="sendMessage(this); return false;">
 			<input type="hidden" name="item_idx" value="${vo.item_idx}"><br>
 			<input type="hidden" name="chat_host" value="${vo.uidx}"><br>
-			<input type="hidden" name="cidx" value="1">
 			<input type="hidden" name="invited" value="${uidx}">
 			<input type="hidden" name="uidx" value="${uidx}">
-			<!-- <input type="hidden" name="chat_read" value="1"> -->
 			
 			<input type="text" name="nickName" value="${nickName}"readonly="readonly">
 			
-			<input type="text" name="contents" placeholder="내용" id="msg">
+			<input type="text" name="contents" placeholder="내용" >
 			<input type="submit" value="전송">
 		</form>
 		
 			<div class="chat-list" id="chat" ></div>
-				<input type="button" id="btn_close" onclick="addLog()"value="닫 기">
+				<input type="button" id="btn_close" value="닫 기">
 			</div>
+		<form onsubmit="addNeighbor(this); return false;">
+			<div>
+				<button>이웃추가</button>
+				<input type="hidden" name="uidx"value="${uidx}">
+				<input type="hidden" name="neighbor_idx"value="${vo.uidx}">
+				<input type="hidden" name="item_idx"value="${vo.item_idx}">
+			</div>
+		</form>
 	<!--팝업 영역 끝 -->
  조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품

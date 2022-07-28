@@ -11,6 +11,10 @@ public class ChatMessageVO extends BoardItemVO{
 	private String nickName;
 	
 	
+	public ChatMessageVO(){}
+	
+	
+	
 	
 	public ChatMessageVO(long cidx, int uidx, int invited, String contents, int chat_host,  int item_idx, String nickName) {
 		this.cidx = cidx;
