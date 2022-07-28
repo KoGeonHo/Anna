@@ -358,7 +358,7 @@ a {
 			<div class="d-md-none d-lg-block d-xl-block">
 				<div class="container">
 
-					<div class="container ">
+					<div class="container ">  
 						<div class="row ">
 							<div class="col-md-2">
 								<h4>｜인기 상품</h4>
@@ -387,134 +387,38 @@ a {
 
 			
 
-			<div class=" col-lg-3  col-md-12 ">
+			<c:if test="${list.size() > 0}">
+							<c:forEach var="vo" items="${list}">
 
-					<div class="card ">
-						<img src="https://media.bunjang.co.kr/product/187617756_3_1652360665_w856.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h6 class="card-title ">후지카메라 x100v</h6>
-							<p class="card-text">1,450,000원</p>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-						</div>
-					</div>
-				</div>
-			
-			<div class="col-lg-3  col-md-12 ">
 
-					<div class="card ">
-						<img src="https://media.bunjang.co.kr/product/190285795_2_1655981003_w856.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h6 class="card-title">17-18 손흥민 유니폼</h6>
-							<p class="card-text">145,000원</p>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-						</div>
-					</div>
-				</div>
-			
-			<div class=" col-lg-3  col-md-12 ">
+								<div class="col-lg-3  col-md-12 ">
 
-					<div class="card ">
-						<img src="https://media.bunjang.co.kr/product/193141726_1_1657512097_w856.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h6 class="card-title">맥북 m1 에어 2020 기본형</h6>
-							<p class="card-text">800,000원</p>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-						</div>
-					</div>
-				</div>
-			
-			<div class=" col-lg-3  col-md-12 ">
-				<div class="card ">
-					<img src="https://media.bunjang.co.kr/product/192931467_3_1657288958_w856.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h6 class="card-title">루이까또즈 머니클립 지갑</h6>
-						<p class="card-text">35,000원</p>
-						<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-						<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-					</div>
-				</div>
-			</div>
-			
-			<div class=" col-lg-3  col-md-12 ">
+									<div class="card">
+										<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"> <img
+											src="<%=request.getContextPath()%>/resources/upload/${vo.image1}"
+											onerror=this.src= "images/noimg_item.jpg" width="100%"
+											height="255">
+										</a>
 
-					<div class="card ">
-						<img src="https://media.bunjang.co.kr/product/187617756_3_1652360665_w856.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h6 class="card-title ">후지카메라 x100v</h6>
-							<p class="card-text">1,450,000원</p>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-						</div>
-					</div>
-				</div>
+										<div class="card-body">
+											<h6 class="card-title">
+												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
+											</h6>
+											<p class="card-text">${vo.price}원</p>
+											<button type="button"
+												class="btn btn-sm btn-outline-secondary"
+												style="float: right">view 5</button>
+											<button type="button"
+												class="btn btn-sm btn-outline-secondary"
+												style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</c:if>
 			
-			<div class="col-lg-3  col-md-12 ">
-
-					<div class="card ">
-						<img src="https://media.bunjang.co.kr/product/190285795_2_1655981003_w856.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h6 class="card-title">17-18 손흥민 유니폼</h6>
-							<p class="card-text">145,000원</p>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-						</div>
-					</div>
-				</div>
 			
-			<div class=" col-lg-3  col-md-12 ">
-
-					<div class="card ">
-						<img src="https://media.bunjang.co.kr/product/193141726_1_1657512097_w856.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h6 class="card-title">맥북 m1 에어 2020 기본형</h6>
-							<p class="card-text">800,000원</p>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-						</div>
-					</div>
-				</div>
-			
-			<div class=" col-lg-3  col-md-12 ">
-			
-				<div class="card ">
-					<img src="https://media.bunjang.co.kr/product/192931467_3_1657288958_w856.jpg" class="card-img-top" alt="...">
-					<div class="card-body">
-						<h6 class="card-title">루이까또즈 머니클립 지갑</h6>
-						<p class="card-text">35,000원</p>
-						<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-						<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-					</div>
-				</div>
-			</div>
-			
-			<div class=" col-lg-3  col-md-12 ">
-
-					<div class="card ">
-						<img src="https://media.bunjang.co.kr/product/187617756_3_1652360665_w856.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h6 class="card-title ">후지카메라 x100v</h6>
-							<p class="card-text">1,450,000원</p>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-						</div>
-					</div>
-				</div>
-			
-			<div class="col-lg-3  col-md-12 ">
-
-					<div class="card ">
-						<img src="https://media.bunjang.co.kr/product/190285795_2_1655981003_w856.jpg" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h6 class="card-title">17-18 손흥민 유니폼</h6>
-							<p class="card-text">145,000원</p>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
-							<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
-						</div>
-					</div>
-				</div>		
+				
 	  	</div>
 	</div>
 	</div>
@@ -782,7 +686,9 @@ width: 50px;
 	</div>
 	<!--모바일 하단 메뉴버튼 -->
 
-	<!-- 퀵메뉴 시작 -->
+
+
+	<!-- 퀵메뉴 시작 
 	<div id="test_obj">
 		<a href="boarditem/itemwrite.do">
 			<img src="images/quickmenu.png" onmouseover="this.src='images/quickmenu_in.png'" onmouseout="this.src='images/quickmenu.png'"">
@@ -818,6 +724,41 @@ width: 50px;
 					    });
 		</script>
 		<!-- 퀵메뉴 종료 -->
+
+
+		<!-- 퀵메뉴 시작 -->
+		 <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
+      <li class="mfb-component__wrap">
+        <a href="#" class="mfb-component__button--main">
+          <i class="mfb-component__main-icon--resting ion-plus-round"></i>
+          <i class="mfb-component__main-icon--active ion-close-round"></i>
+        </a>
+        <ul class="mfb-component__list">
+          <li>
+            <a href="https://github.com/nobitagit/material-floating-button/" data-mfb-label="판매글 등록" class="mfb-component__button--child">
+              <i class="mfb-component__child-icon ion-clockwise"></i>
+              
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/nobitagit" data-mfb-label="알림" class="mfb-component__button--child">
+              <i class="mfb-component__child-icon ion-social-youtube"></i>
+            </a>
+          </li>
+
+
+        </ul>
+      </li>
+    </ul>
+		
+		
+		<link href="css/mfb.css" rel="stylesheet">
+		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
+		<!-- 퀵메뉴 시작 -->
+
+
+
+
 
 
 

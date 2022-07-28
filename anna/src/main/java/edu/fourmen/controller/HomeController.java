@@ -85,7 +85,7 @@ public class HomeController {
 		//중고거래 불러오기
 				
 				//한 페이지에 몇개씩 표시할 것인지
-				int pagecount1 = 12;
+				int pagecount1 = 100;
 				//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 				int pagenumber1 = 1;
 				//페이지 번호가 파라미터로 전달되는지 읽어와본다.
@@ -161,7 +161,7 @@ public class HomeController {
 		
 		
 		//한 페이지에 몇개씩 표시할 것인지
-		int pagecount = 12;
+		int pagecount = 50;
 		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 		int pagenumber = 1;
 		//페이지 번호가 파라미터로 전달되는지 읽어와본다.
