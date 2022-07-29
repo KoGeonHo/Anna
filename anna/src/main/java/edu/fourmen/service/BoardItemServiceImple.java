@@ -91,4 +91,16 @@ public  class BoardItemServiceImple implements BoardItemService{
 		return boarditemdao.addNeighbor(vo);
 	}
 
+
+	@Override
+	public int neighbor_check(BoardItemVO vo) {
+		return boarditemdao.neighbor_check(vo);
+	}
+
+
+	@Override
+	public int delneighbor(BoardItemVO vo) {
+		return boarditemdao.delneighbor(vo);
+	}
+
 }

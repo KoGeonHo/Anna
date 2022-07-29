@@ -18,10 +18,9 @@
 <title>item view 페이지</title>
 
 <style>
-#chat-list{
+.chat-list{
 height:300px;
-overflow-y:scroll;
-flex-direction:column_reverse;
+overflow-y:auto;
 
 
 
@@ -456,8 +455,11 @@ a {
 				var messages = data[i];
 				Chat__lastReceivedMessagecidx = messages.cidx;
 				Chat__drawMessages(messages);
+				
+				
 			}
 			setTimeout(Chat__loadNewMessages,1000);
+			$("#chat").scrollTop($("#chat")[0].scrollHeight);
 		}, 'json');
 	}
 	function Chat__drawMessages(messages) {
@@ -473,6 +475,10 @@ a {
 		Chat__loadNewMessages();
 		
 	});
+	
+	
+	
+	
 	
 	function addNeighbor(form) {
 		//작성자, 내용 유효성 검사
@@ -493,7 +499,9 @@ a {
 	}
 	
 </script>
-
+		
+	
+		
 </head>
 <body>
 
@@ -701,7 +709,6 @@ a {
 								<p class="card-text">판매가격 : ${vo.price}</p>
 								<p class="card-text">거래지역 : ${vo.addr2}</p>
 								<p class="card-text">키워드 : ${vo.keyword}</p>
-								<p class="card-text"><a href="addneighbor.do">이웃추가</a></p>
 					
 						</div><!-- card body 끝 -->
 					</div>
@@ -751,14 +758,38 @@ z 	<div class="wrap">
 			<div class="chat-list" id="chat" ></div>
 				<input type="button" id="btn_close" value="닫 기">
 			</div>
+		<script>
+				<!-- 채팅 스크롤 하단으로 보내기 -->
+				
+			
+		</script>
+		
+		
 		<form onsubmit="addNeighbor(this); return false;">
-			<div>
-				<button>이웃추가</button>
-				<input type="hidden" name="uidx"value="${uidx}">
-				<input type="hidden" name="neighbor_idx"value="${vo.uidx}">
-				<input type="hidden" name="item_idx"value="${vo.item_idx}">
+			<div> 
+				<input type="submit" value="이웃추가" id="or">
+				<input type="hidden" name="uidx" value="${uidx}">
+				<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
+				<input type="hidden" name="item_idx" value="${vo.item_idx}">
 			</div>
 		</form>
+		
+	<!-- 	<script>
+		const $element = document.querySelector(".chat-list");
+
+			// 현재의 최하단 구하기
+			const eh = $element.clientHeight  + $element.scrollTop;
+
+			// 요소가 추가되어 길이가 길어지기 전에 비교
+			const isScroll = $element.scrollHeight <= eh;
+
+			// -- 요소 추가하는 코드 --
+
+			// 스크롤이 최하단 일때만 고정
+			if (isScroll) {
+			  $element.scrollTop = $element.scrollHeight;
+			}
+		</script> -->
 	<!--팝업 영역 끝 -->
  조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품

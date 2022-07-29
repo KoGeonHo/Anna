@@ -914,11 +914,6 @@ public class BoardItemController {
 		return "redirect:/itemboard/itemlist.do";
 	}
 	
-	@RequestMapping(value="/addNeighbor.do", method=RequestMethod.GET)
-	public String addNeighbor(HttpSession session) {
-		return "";
-	}
-	
 
 	@RequestMapping(value="/chat")
 	public String showMain(int item_idx, Model model) {
@@ -988,15 +983,38 @@ public class BoardItemController {
 		return "메시지 전체 삭제";
 	}
 	
-	
 	@ResponseBody
 	@RequestMapping("/addNeighbor")
-	public String addNeighbor( int item_idx, int neighbor_idx,BoardItemVO vo) {
-		System.out.println("이웃추가 신청");
+	public String addNeighbor( HttpSession session,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
+		
+		
+		
+		
+		System.out.println(vo.getNeighbor_idx()+"이웃번호");
+		
+		System.out.println(vo.getUidx()+"세션번호");
+		
+		
+		int result = boarditemService.neighbor_check(vo);
+		
+		System.out.println(result +"친구 유무");
+		
+		model.addAttribute("model",model);
+		
+		if(result == 0 ) {
 		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
 		boarditemService.addNeighbor(vo);
-	
 		return "이웃추가 완료" ;
+		}else {
+		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
+		boarditemService.delneighbor(vo);
+		return "이웃삭제 완료" ;
+		}
+		
+		
+		
+	
+	
 	}
 	
 	

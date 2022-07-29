@@ -1,4 +1,3 @@
-
 // 기존 버튼형 슬라이더
 $('.slider-1 > .page-btns > div').click(function(){
     var $this = $(this);
@@ -46,4 +45,3 @@ $('.slider-1 > .side-btns > div').click(function(){
     
     $post.click();
 });
-
