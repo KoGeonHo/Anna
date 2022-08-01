@@ -274,6 +274,12 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getInterestedItem(interested);
 	}
 
+	@Override
+	public List<UserVO> neighborList(int uidx) {
+
+		return userDAO.neighborList(uidx);
+	}
+
 		
 
 }

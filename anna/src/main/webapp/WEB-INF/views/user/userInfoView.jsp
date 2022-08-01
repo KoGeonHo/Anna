@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
@@ -96,7 +97,8 @@
 				<div class="col-3 text-center th" style="padding:1rem;">소개글</div>
 				<div class="col-9" style="padding:1rem;">
 					<c:if test="${ not empty userInfo.introduce }">
-						${ userInfo.introduce }
+					<% pageContext.setAttribute("newLineChar", "\n"); %>
+					${fn:replace(userInfo.introduce, newLineChar, "<br/>")}
 					</c:if>
 					<c:if test="${ empty userInfo.introduce }">
 						-
