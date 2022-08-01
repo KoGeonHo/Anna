@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+				
  <!-- include libraries(jQuery, bootstrap) -->
         <!-- include libraries(jQuery, bootstrap) -->
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
@@ -17,10 +18,27 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <meta charset="utf-8">
 <title> 상품 등록 페이지</title>
+<!-- <script>
+	$(function(){
+		
+		
+		$("#joinFrm").submit(function(){
+			let emailChecked = $("#emailChecked");
+			let pwdChecked = $("#pwdChecked");
+			let mailAuthChk = $("#mailAuthChk");
+			let file = $("input[name=file1]");
+			
+			if(file.val() == null){
+				alert("사진을 한 장 이상 등록해주세요");
+				return false;
+			}
+  
+		});
+</script> -->
 </head>
 <body>
 <h2>중고거래글 작성 페이지</h2>
-<form action="itemwrite.do" method="post" enctype="multipart/form-data" name="frm">
+<form action="itemwrite.do" method="post" enctype="multipart/form-data" name="frm" id="joinFrm">
 	<input type="hidden" name="uidx" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 
 	제목: <input type="text" name="title">
@@ -44,22 +62,16 @@
 		<br>
 	거래상태:<input type="text" name="state" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 		<br>
-
-	
-		 <div id="fileDiv">
-			<p>
-				<input type="file" id="file" name="file1">
+				<div id="fileDiv">
+				<input type="file" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
 				<a href="#this" class="btn" id="delete" name="delete">삭제</a>
-			</p>
-		</div>
-		
+				</div>
+				
 		<br/><br/>
 		<a href="#this" class="btn" id="addFile">파일 추가</a>
-		<a href="#this" class="btn" id="write">작성하기</a>
-		<a href="#this" class="btn" id="list">목록으로</a>
-
-	<button id="saveBtn">작성하기</button>
-	<button>취소하기</button>
+	<button type="button" >작성하기2</button>
+	<button>작성하기</button>
+	<button onclick="loaction.href='itemwrite.do'">취소하기</button>
 	
 </form>
 
@@ -131,7 +143,7 @@
 		
 		function fn_addFile(){
 			var str = "<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-			$("#fileDiv").append(str);
+			$("#fileDiv").append("<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
 			$("a[name='delete']").on("click", function(e){ //삭제 버튼
 				e.preventDefault();
 				fn_deleteFile($(this));
@@ -141,6 +153,38 @@
 		function fn_deleteFile(obj){
 			obj.parent().remove();
 		}
+		
+		
+		function chk_file_type(obj) {
+		    var file_kind = obj.value.lastIndexOf('.');
+		    var file_name = obj.value.substring(file_kind+1,obj.length); 
+		    var file_type = file_name.toLowerCase();
+
+
+
+		   var check_file_type = new Array();
+		    check_file_type=['jpg','gif','png','jpeg','bmp',];
+
+
+
+		    if(check_file_type.indexOf(file_type)==-1){
+		     alert('이미지 파일만 선택할 수 있습니다.');
+		     var parent_Obj=obj.parentNode
+		     var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
+		     return false;
+		     
+		     }
+		    
+		}
 	</script>
+				<script>
+				$("#joinFrm").submit(function(){
+				    var fileCheck = $("#file").val();
+				    if(!fileCheck){
+				        alert("사진을 첨부해주세요");
+				       return false;
+				    }
+				    });
+				</script>
 </body>
 </html>

@@ -17,13 +17,21 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <meta charset="utf-8">
 <title> 상품 등록 페이지</title>
+<script>
+    var fileCheck = document.getElementById("file").value;
+    if(!fileCheck == null){
+        alert("파일을 첨부해 주세요");
+        return false;
+    }
+</script>
 </head>
 <body>
 <h2>중고거래글 작성 페이지</h2>
 <form action="itemmodify.do" method="post" enctype="multipart/form-data" name="frm">
 	<input type="hidden" name="uidx" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 
-	제목: <input type="text" name="title">
+	<input type="hidden" name="item_idx" value="${vo.item_idx}">
+	제목: <input type="text" name="title" value="${vo.title}">
 	카테고리:<select name="cate_idx">
 			<option value="1">가전제품</option>
 		   </select>
@@ -31,7 +39,7 @@
 			<option value="1">불가능</option>
 			<option value="2">가능</option>
 		   </select>
-	<textarea id="summernote" name="content" ></textarea>
+	<textarea id="summernote" name="content" >${vo.content}</textarea>
 	<br>
 	<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
@@ -142,5 +150,6 @@
 			obj.parent().remove();
 		}
 	</script>
+	
 </body>
 </html>

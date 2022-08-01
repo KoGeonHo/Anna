@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 
 import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
 
 import edu.fourmen.vo.SearchVO;
+import edu.fourmen.vo.UserVO;
 
 
 @Service
@@ -50,7 +52,7 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public List<BoardItemVO> list2(BoardItemVO vo, SearchVO svo) {
+	public List<BoardItemVO> selectAllbyuser(BoardItemVO vo, SearchVO svo) {
 		return boarditemdao.selectAllbyuser(vo, svo);
 	}
 
@@ -73,5 +75,32 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 	}					
 
+	@Override
+	public int insertChat(ChatMessageVO cvo) {
+		return boarditemdao.insertChat(cvo);
+	}
+
+	@Override
+	public List selectChat(ChatMessageVO cvo) {
+		return boarditemdao.selectChat(cvo);
+	}
+
+
+	@Override
+	public int addNeighbor(BoardItemVO vo) {
+		return boarditemdao.addNeighbor(vo);
+	}
+
+
+	@Override
+	public int neighbor_check(BoardItemVO vo) {
+		return boarditemdao.neighbor_check(vo);
+	}
+
+
+	@Override
+	public int delneighbor(BoardItemVO vo) {
+		return boarditemdao.delneighbor(vo);
+	}
 
 }

@@ -59,7 +59,8 @@ public class BoardItemVO extends UserVO {
 	
 	private int total;
 	//현재 페이지 번호, 한 페이지에 표출할 데이터 개수
-
+	
+	private int neighbor_idx;
 	
 	
 	
@@ -68,6 +69,12 @@ public class BoardItemVO extends UserVO {
 	
 	
 	
+	public int getNeighbor_idx() {
+		return neighbor_idx;
+	}
+	public void setNeighbor_idx(int neighbor_idx) {
+		this.neighbor_idx = neighbor_idx;
+	}
 	public String getIsDel() {
 		return isDel;
 	}

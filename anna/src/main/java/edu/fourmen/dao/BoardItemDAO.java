@@ -1,8 +1,6 @@
 package edu.fourmen.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardItemVO;
-
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
-
+import edu.fourmen.vo.UserVO;
 
 @Repository
 public class BoardItemDAO {
@@ -65,6 +63,26 @@ public class BoardItemDAO {
 	public BoardItemVO MinPrice(PageMaker pm) {
 
 		return sqlSession.selectOne(efdb+".MinPrice",pm);
+	}
+
+	public int insertChat(ChatMessageVO cvo) {
+		return sqlSession.insert(efdb+".insertChat",cvo);
+	}
+	
+	public List selectChat(ChatMessageVO cvo) {
+		return sqlSession.selectList(efdb+".selectChat",cvo);
+	}
+	
+	public int addNeighbor(BoardItemVO vo) {
+		return sqlSession.insert(efdb+".addNeighbor",vo);
+	}
+	
+	public int neighbor_check(BoardItemVO vo) {
+		return sqlSession.selectOne(efdb+".neighbor_check",vo);
+	}
+	
+	public int delneighbor(BoardItemVO vo) {
+		return sqlSession.delete(efdb+".delneighbor",vo);
 	}
 
 }
