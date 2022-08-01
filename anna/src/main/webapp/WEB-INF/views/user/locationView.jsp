@@ -189,18 +189,21 @@ body { position: fixed; }
 		</nav>
 		<!-- 모바일 헤더 END -->
 		
-		<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:56px; background:#00AAB2; z-index:10000;">
-			<div class="menu-item">
+		<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:56px; background:#00AAB2;">
+			<div class="menu-item" onclick="location.href='<%=request.getContextPath()%>/user/myPage.do'">
 				마이페이지
 			</div>
-			<div class="menu-item">
-				전주시
+			<div class="menu-item" onclick="location.href='<%=request.getContextPath()%>/user/userInfoView.do'">
+				내정보
 			</div>
-			<div class="menu-item">
-				전주시
+			<div class="menu-item" onclick="location.href='<%=request.getContextPath()%>/user/myPage.do'">
+				이웃관리
 			</div>
-			<div class="menu-item">
-				전주시
+			<div class="menu-item" onclick="location.href='<%=request.getContextPath()%>/user/myPage.do'">
+				구매내역
+			</div>
+			<div class="menu-item" onclick="location.href='<%=request.getContextPath()%>/user/myPage.do'">
+				판매내역
 			</div>
 		</div>
 		

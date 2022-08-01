@@ -330,20 +330,12 @@ public class UserController {
 		session = request.getSession();
 		
 		int uidx = 0;
-
+		
 		uidx = (int)session.getAttribute("uidx");
 		
-		String locationList = userService.getLocation(uidx);
+		UserVO userInfo = userService.getUserInfo(uidx);
 		
-		//System.out.println(locationList);
-		
-		//System.out.println(session.getAttribute("interested"));
-		
-		BoardItemVO vo = new BoardItemVO();
-		
-		String interested =  (String)session.getAttribute("interested");
-		
-		String[] ArrayInterested = interested.split(",");
+		String[] ArrayInterested = userInfo.getInterested().split(",");
 
 		List<String> listInterested = new ArrayList<String>();
 		
@@ -351,9 +343,11 @@ public class UserController {
 			listInterested.add(ArrayInterested[i]);
 		}
 		
-		//System.out.println(listInterested.size());
-		
 		List<BoardItemVO> list = userService.getInterestedItem(listInterested);
+		
+		model.addAttribute("interestedList",list);
+		
+		model.addAttribute("userInfo",userInfo);
 		
 		return "user/myPage";
 		
@@ -500,6 +494,6 @@ public class UserController {
 		
 		int result = userService.updateLocation(vo);
 		
-		return "redirect:/user/userInfoView.do";
+		return "redirect:/user/userInfoMod.do";
 	}
 }

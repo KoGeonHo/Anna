@@ -119,15 +119,18 @@
 	</update>
 	
 	<select id="getLocation" parameterType="int" resultType="string">
+	
 		SELECT
 			location_auth
 		FROM
 			AnnaUser
 		WHERE
 			uidx = #{ uidx }
+			
 	</select>
 	
 	<select id="getInterestedItem" parameterType="java.util.List" resultType="BoardItemVO">
+	
 		SELECT
 			item_idx,
 			uidx,
@@ -156,9 +159,12 @@
 		FROM
 			Board_Items
 		WHERE
+			isdel = 'N' limit 1,20
+		<!-- WHERE
 			<foreach collection="list" item="item" separator="OR" open="(" close=")">
 				keyword like concat('%',#{item},'%')
-			</foreach>
+			</foreach> -->
+			
 	</select>
 	
 </mapper>
