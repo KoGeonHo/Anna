@@ -448,7 +448,7 @@ a {
 	
 	function Chat__loadNewMessages() {
 		$.get('./getMessages',{
-			from : Chat__lastReceivedMessagecidx + 1
+			from : Chat__lastReceivedMessagecidx + 1 
 		}, function(data) {
 			console.log(data);
 			for ( let i = 0; i < data.length; i++ ) {
@@ -460,7 +460,7 @@ a {
 			}
 			setTimeout(Chat__loadNewMessages,1000);
 			$("#chat").scrollTop($("#chat")[0].scrollHeight);
-		}, 'json');
+		}, 'json');z
 	}
 	function Chat__drawMessages(messages) {
 		var html = '[' +messages.cidx + '] (' + messages.nickName + ') : ' + messages.contents;
