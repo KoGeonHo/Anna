@@ -98,6 +98,9 @@ public class BoardController {
 		request.setAttribute("pagenumber", pagenumber);
 		
 		List<BoardVO> freeboard = boardService.selectfreeboard(pm);
+		int Ccount = boardService.getCTotal(bv);
+		
+		bv.setCcount(Ccount);
 	
 		model.addAttribute("freeboard", freeboard);
 		model.addAttribute("svo", svo);
@@ -161,6 +164,9 @@ public class BoardController {
 		request.setAttribute("pagenumber", pagenumber);
 		
 		List<BoardVO> freeboard = boardService.selectfreeboard(pm);
+		int Ccount = boardService.getCTotal(bv);
+		
+		bv.setCcount(Ccount);
 	
 		model.addAttribute("freeboard", freeboard);
 		model.addAttribute("svo", svo);
@@ -244,8 +250,9 @@ public class BoardController {
 			String originalFileName = uploadFile2.getOriginalFilename();
 			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
 			UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName=uuid+"."+ext;
-			uploadFile2.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
+			fileName2=uuid+"."+ext;
+			uploadFile2.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName2));
+			System.out.println("이미지2저장완료");
 		}
 		vo.setImage2(fileName2);
 	}
@@ -256,8 +263,9 @@ public class BoardController {
 			String originalFileName = uploadFile3.getOriginalFilename();
 			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
 			UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName=uuid+"."+ext;
-			uploadFile3.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
+			fileName3=uuid+"."+ext;
+			uploadFile3.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName3));
+			System.out.println("이미지3저장완료");
 		}
 		vo.setImage3(fileName3);
 	}
@@ -268,8 +276,8 @@ public class BoardController {
 			String originalFileName = uploadFile4.getOriginalFilename();
 			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
 			UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName=uuid+"."+ext;
-			uploadFile4.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
+			fileName4=uuid+"."+ext;
+			uploadFile4.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName4));
 		}
 		vo.setImage4(fileName4);
 	}
@@ -280,8 +288,8 @@ public class BoardController {
 			String originalFileName = uploadFile5.getOriginalFilename();
 			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
 			UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName=uuid+"."+ext;
-			uploadFile5.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
+			fileName5=uuid+"."+ext;
+			uploadFile5.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName5));
 		}
 		vo.setImage5(fileName5);
 	}
@@ -300,8 +308,18 @@ public class BoardController {
 		
 		BoardVO bv = boardService.viewBoard(Bidx);
 		
+		BoardVO vo = new BoardVO();
+		
+		
+		
+		vo.setBidx(Bidx);
+		if(session.getAttribute("uidx") != null) {
+			vo.setUidx((int)session.getAttribute("uidx"));
+		}
 		model.addAttribute("bv", bv);
-
+		model.addAttribute("like",boardService.Likeyn(vo));
+		
+		System.out.println("like");
 		
 		return "board/viewBoard";
 	}
@@ -310,10 +328,10 @@ public class BoardController {
 
 	@ResponseBody
 	@RequestMapping(value="/InsertComment",produces = "application/text; charset=utf8")
-	public String InsertComment(BoardVO rv, HttpServletRequest request, HttpSession session) {
+	public String InsertComment(BoardVO rv, HttpServletRequest request, HttpSession session, int Bidx) {
 		
 		session = request.getSession();
-		rv.setUidx((int)session.getAttribute("uidx"));
+		//rv.setUidx((int)session.getAttribute("uidx"));
 		System.out.println("댓글 등록 통신 성공");
 //		if(session.getAttribute("login") == null) {
 //			return "fail";
@@ -325,6 +343,7 @@ public class BoardController {
 		System.out.println(rv.getBidx()); 
 		
 			boardService.commentwrite(rv);//댓글작성
+			boardService.Ccount(Bidx);
 			System.out.println("댓글 등록 서비스 성공");
 			return "InsertSuccess";
 //		}
@@ -346,6 +365,40 @@ public class BoardController {
 		return map;
 	}
 
+	
+	
+	@ResponseBody 
+	@RequestMapping(value="/likeUp", method=RequestMethod.POST)
+	public void likeup(BoardVO vo, int Bidx, HttpSession session, HttpServletRequest request) {
+		System.out.println("컨트롤러 연결 성공");
+		
+		session = request.getSession();
+		
+		vo.setBidx(Bidx);
+		vo.setUidx((int)session.getAttribute("uidx"));
+		
+		System.out.println(Bidx);
+		System.out.println((int)session.getAttribute("uidx"));
+
+		boardService.boardLikeUP(vo);
+	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/likeDown", method=RequestMethod.POST)
+	public void likeDown(BoardVO vo, int Bidx, HttpSession session, HttpServletRequest request) {
+		
+		session = request.getSession();
+		
+		System.out.println("좋아요 취소!");
+		
+		vo.setBidx(Bidx);
+		vo.setUidx((int)session.getAttribute("uidx"));
+		
+		System.out.println(Bidx);
+		System.out.println((int)session.getAttribute("uidx"));
+		boardService.boardLikeDown(vo);
+	}
 
 	
 	

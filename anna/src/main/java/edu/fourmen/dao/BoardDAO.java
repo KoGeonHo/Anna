@@ -1,6 +1,9 @@
 package edu.fourmen.dao;
 
+import java.util.HashMap;
+
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,9 @@ public class BoardDAO {
 	}
 	
 	public List<BoardVO> selectfreeboard(PageMaker pm){ //일상&소통 게시판리스트
+		
+		
+		
 		return sqlSession.selectList(namespace+".selectfreeboard", pm);
 	}
 	
@@ -58,5 +64,24 @@ public class BoardDAO {
 		return sqlSession.selectList(namespace+".getCList", Bidx);
 	}
 	
-
+	public int Ccount(int Bidx) {
+		
+		return sqlSession.update(namespace+".Ccount", Bidx);
+	}
+	
+	public int boardLikeUP(BoardVO vo) {
+		
+		return sqlSession.insert(namespace+".boardLikeUP", vo);
+	}
+	
+	public int boardLikeDown(BoardVO vo) {
+		
+		return sqlSession.delete(namespace+".boardLikeDown",vo);
+	}
+	
+	public int Likeyn(BoardVO vo) {
+		return sqlSession.selectOne(namespace+".Likeyn",vo);
+	}
+	
+	
 }

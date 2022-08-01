@@ -1,9 +1,12 @@
 package edu.fourmen.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.UserVO;
 
 @Repository
@@ -59,5 +62,25 @@ public class UserDAO {
 		
 		return sqlSession.update("edu.fourmen.mapper.userMapper.updateInterested",vo);
 		
+	}
+
+
+	public int updateLocation(UserVO vo) {
+
+		return sqlSession.update("edu.fourmen.mapper.userMapper.updateLocation",vo);
+		
+	}
+
+
+	public String getLocation(int uidx) {
+
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.getLocation",uidx);
+		
+	}
+
+
+	public List<BoardItemVO> getInterestedItem(List<String> interested) {
+		
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getInterestedItem",interested);
 	}
 }

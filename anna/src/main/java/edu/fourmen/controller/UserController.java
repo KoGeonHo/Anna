@@ -2,7 +2,9 @@ package edu.fourmen.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import edu.fourmen.service.BoardItemService;
 import edu.fourmen.service.MailService;
 import edu.fourmen.service.UserService;
+import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.UserVO;
 
 @RequestMapping(value="/user")
@@ -26,6 +31,9 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	BoardItemService boardItemService;
 	
 	@Autowired
 	MailService mailService;
@@ -323,11 +331,23 @@ public class UserController {
 		
 		int uidx = 0;
 		
-		if(session.getAttribute("uidx") != null) {		
-			uidx = (int)session.getAttribute("uidx");
+		uidx = (int)session.getAttribute("uidx");
+		
+		UserVO userInfo = userService.getUserInfo(uidx);
+		
+		String[] ArrayInterested = userInfo.getInterested().split(",");
+
+		List<String> listInterested = new ArrayList<String>();
+		
+		for(int i = 0; i < ArrayInterested.length; i++) {
+			listInterested.add(ArrayInterested[i]);
 		}
 		
-		//System.out.println(uidx);
+		List<BoardItemVO> list = userService.getInterestedItem(listInterested);
+		
+		model.addAttribute("interestedList",list);
+		
+		model.addAttribute("userInfo",userInfo);
 		
 		return "user/myPage";
 		
@@ -342,15 +362,12 @@ public class UserController {
 		session = request.getSession();
 		
 		int uidx = 0;
+			
+		uidx = (int)session.getAttribute("uidx");
 		
-		if(session.getAttribute("uidx") != null) {		
-			uidx = (int)session.getAttribute("uidx");
-			
-			UserVO userInfo = userService.getUserInfo(uidx);
-			
-			model.addAttribute("userInfo",userInfo);
-			
-		}
+		UserVO userInfo = userService.getUserInfo(uidx);
+		
+		model.addAttribute("userInfo",userInfo);
 				
 		return "user/userInfoView";
 		
@@ -438,7 +455,7 @@ public class UserController {
 		
 	}
 	
-	//동네인증 페이지
+	//동네설정 페이지
 	@RequestMapping(value="/locationAuth.do")
 	public String locationAuth(Model model) {
 		
@@ -446,5 +463,37 @@ public class UserController {
 		
 		return "user/locationAuth";
 		
+	}
+	
+	//동네설정 페이지
+	@RequestMapping(value="/locationView.do")
+	public String locationAuth(String[] dong,Model model) {
+		
+		model.addAttribute("path",path);
+		model.addAttribute("selectedDong",dong);
+		
+		return "user/locationView";
+		
+	}
+	
+	//동네설정 업데이트
+	@RequestMapping(value="/updateLocation.do")
+	public String locationUpdate(String selectedLocation,HttpServletRequest request,HttpSession session) {
+		//System.out.println(selectedLocation);
+		String location_auth = selectedLocation;
+		
+		session = request.getSession();
+		
+		UserVO vo = new UserVO();
+		
+		vo.setLocation_auth(location_auth);
+		
+		vo.setUidx((int)session.getAttribute("uidx"));
+
+		//System.out.println(vo.getLocation_auth());
+		
+		int result = userService.updateLocation(vo);
+		
+		return "redirect:/user/userInfoMod.do";
 	}
 }

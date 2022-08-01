@@ -13,6 +13,14 @@
 <link rel="stylesheet" href="<%= request.getContextPath()%>/css/bootstrap.css">
 <style>
 
+/* 
+아주 작은(Extra small)	xs	576px 미만	스마트폰 세로
+작은(Small)	sm	576px 이상	스마트폰 가로
+중간(Medium)	md	768px 이상	타블렛
+큰(Large)	lg	992px 이상	데스크탑
+아주 큰(Extra large)	xl	1200px 이상	큰 데스크탑
+ */
+ 
 .card img{
 
 width : 100%;
@@ -51,17 +59,19 @@ text-align:center
 
 }
 
-@media all and (min-width:1001px){
+@media all and (max-width:576px){ /*최대 576까지 */
+	body{
+		background:#000;
+	}
+}
+
+@media all and (min-width:1001px){ 1001
 	body{
 		background:#fff;
 	}
 }
 
-@media all and (max-width:1000px){
-	body{
-		background:#000;
-	}
-}
+
 </style>
 <script>
 //스크롤 시 이벤트 처리
@@ -185,10 +195,11 @@ const GetList = function(currentPage){
 		<c:if test="${freeboard.size()>0 }">
 			<c:forEach var="vo" items="${freeboard}">
 			<c:if test = "${vo.board_type eq 'free' }">
-		<div class="card col-3">
-			<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요 없어">
-			<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
-			${vo.nickName}  좋아요 112 댓글 1
+		<div class="card col-md-3">
+		<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="225" >	
+		<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
+			${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount}
+			
 		</div>
 		<br>
 		</c:if>

@@ -22,6 +22,8 @@ public class BoardVO extends UserVO{
 	private MultipartFile FileName3;
 	private MultipartFile FileName4;
 	private MultipartFile FileName5;
+	private int Ccount;
+	private int cntLike;
 	
 	public MultipartFile getFileName4() {
 		return FileName4;
@@ -134,5 +136,21 @@ public class BoardVO extends UserVO{
 	public void setImage5(String image5) {
 		Image5 = image5;
 	}
+	public int getCcount() {
+		return Ccount;
+	}
+	public void setCcount(int ccount) {
+		Ccount = ccount;
+	}
+	public int getCntLike() {
+		return cntLike;
+	}
+	public void setCntLike(int cntLike) {
+		this.cntLike = cntLike;
+	}
+	
+
+
+	
 	
 }

@@ -65,5 +65,33 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	@Override
+	public int Ccount(int Bidx) {
+		
+		return boardDao.Ccount(Bidx);
+	}
+
+
+	@Override
+	public int boardLikeUP(BoardVO vo) {
+		
+		return boardDao.boardLikeUP(vo);
+	}
+
+
+	@Override
+	public int boardLikeDown(BoardVO vo) {
+		
+		return boardDao.boardLikeDown(vo);
+	}
+
+
+	@Override
+	public int Likeyn(BoardVO vo) {
+		
+		return boardDao.Likeyn(vo);
+	}
+
+
 
 }

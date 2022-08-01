@@ -22,7 +22,8 @@ border-width: 1px 0px 0px 0px ;
 </style>
 </head>
 <body>
-
+<input type="hidden" value="${bv.bidx}" name="Bidx" id="Bidx">
+<input type="hidden" name="uidx" value="${uidx}">
 제목 : ${bv.title} 작성자 :${bv.nickName }
 <br>
 내용 : ${bv.contents}
@@ -32,7 +33,7 @@ border-width: 1px 0px 0px 0px ;
 
 	
 	<c:if test="${bv.image1 != null}">
-	<input type="image" src="../resources/upload/${bv.image1}" alt ="안되는데요?"><br>
+	<img src="../resources/upload/${bv.image1}" alt ="안되는데요?"><br>
 	</c:if>
 	
 	<c:if test="${bv.image2 != null}">
@@ -50,11 +51,17 @@ border-width: 1px 0px 0px 0px ;
     <c:if test="${bv.image5 != null}">
 	<input type="image" src="../resources/upload/${bv.image5}" alt ="안되는데요?"><br>
     </c:if>
+	<c:if test="${bv.uidx == uidx}"> 
+    	<a href="">수정</a>
+    	<a href="">삭제</a>
+    </c:if>
+    <button type="button" class="LikeBtn" name="like">좋아요</button>
     
 
                     <div class="comment-box">
    		                 <div class="comment-count">댓글 <span id="count">0</span></div>
  
+   		                <form method='post' id="commentForm">
    		                 	   <!-- <span class="c-icon"><i class="fa-solid fa-user"></i>  -->
    		                 <div class="comment-name">
 	                        <span class="anonym">작성자 : 
@@ -64,9 +71,9 @@ border-width: 1px 0px 0px 0px ;
 	                      </div>   
 	                        	
 	                        <!-- </span> -->
-                     <!--<img src="/익명.jpg" width ="50px" alt="My Image"><!-->
+                     
                     <div class="comment-sbox">
-                    	<input type="text" value="${bv.bidx}" name="Bidx" id="Bidx">
+                    	<input type="hidden" value="${bv.bidx}" name="Bidx" id="Bidx">
                         <textarea class="comment-input" id="Contents" cols="80" rows="2" name="Contents" ></textarea>
                         <!-- <span class="com-function-btn" type="hidden">
                             
@@ -74,6 +81,7 @@ border-width: 1px 0px 0px 0px ;
                             <a href="#"><i class="fa-solid fa-trash-can"></i></a>
                          </span> -->
                     </div>
+                    </form>
                     	<div class="Reply_btn"><!-- regBtn -->
                     		<button id="commentwrite">댓글등록</button>
                     		
@@ -83,6 +91,7 @@ border-width: 1px 0px 0px 0px ;
     			    <div class="comment_Box"> <!-- 댓글이 들어갈 박스 -->
 
 	                </div>
+	                
 <script type="text/javascript">
 $(function(){
 	$('#commentwrite').click(function() {
@@ -93,7 +102,8 @@ $(function(){
 			const Bidx = ${bv.bidx};
 			const nickName = $('#nickName').val();
 			const Contents = $('#Contents').val();
-			const Uidx = ${uidx};
+
+
 			
 			console.log(Bidx);
 			console.log(nickName);
@@ -108,7 +118,7 @@ $(function(){
 			
 			$.ajax({
 				url:'InsertComment',
-				data:"Bidx="+Bidx+"&nickName="+nickName+"&Contents="+Contents+"&Uidx="+Uidx,
+				data:$("#commentForm").serialize(),
 				success:function(data){
 					console.log('통신성공' + data);
 					if(data === 'InsertSuccess') {
@@ -181,6 +191,52 @@ function getList() {
 		
 };
 
+function Like(){
+
+var likeval = ${like}; //컨트롤러에서 선언한 like 인듯
+
+let Bidx = ${bv.bidx};
+<c:if test="${ not empty uidx}">
+let Uidx = ${uidx};
+
+if(likeval == 1){
+	console.log(likeval + "좋아요 누름");
+	$('.LikeBtn').html("좋아요 취소");
+	$('.LikeBtn').click(function() {
+		$.ajax({
+			type :'post',
+			url : 'likeDown',
+			data : "Bidx="+Bidx+"&Uidx="+Uidx,
+			success : function(data) {
+				alert('취소 성공');
+				location.reload();
+			}
+		})// 아작스 끝
+	})
+
+
+}else if(likeval == 0){
+	console.log(likeval + "좋아요 안누름")
+	console.log(Uidx);
+	$('.LikeBtn').html("좋아요")
+	$('.LikeBtn').click(function() {
+		$.ajax({
+			type :'post',
+			url : 'likeUp',
+			data : "Bidx="+Bidx+"&Uidx="+Uidx,
+			success : function(data) {
+				alert('성공염');
+				location.reload();
+			}
+		})// 아작스 끝
+	});
+	
+}
+</c:if>
+
+}
+
+Like();
 </script>
 
 </body>
