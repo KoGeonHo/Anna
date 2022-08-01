@@ -255,7 +255,7 @@
 					<div class="text-center btn-circle">공지</div>
 					<div class="text-center">공지사항</div>
 				</div>
-				<div class="col-4" style="padding:0px;">
+				<div class="col-4" style="padding:0px;" onclick="location.href='${path}/user/neighborMng.do'">
 					<div class="text-center btn-circle">이웃</div>
 					<div class="text-center">이웃 관리</div>
 				</div>
@@ -263,7 +263,7 @@
 					<div class="text-center btn-circle">질문</div>
 					<div class="text-center">자주하는 질문</div>
 				</div>
-				<div class="col-4" style="padding:0px;">
+				<div class="col-4" style="padding:0px;" onclick="location.href='${path}/customer/QnA.do'">
 					<div class="text-center btn-circle">QnA</div>
 					<div class="text-center">문의 내역</div>
 				</div>
