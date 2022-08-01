@@ -12,7 +12,7 @@
 						<li><a href="#" class="nav-link px-3 link-dark ">중고거래</a></li>
 						<li><a href="#" class="nav-link px-3 link-dark">커뮤니티</a></li>
 						<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
-						<li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
+						<li><a href="${path}/user/myPage.do" class="nav-link px-3 link-dark">마이페이지</a></li>
 					</ul>
 					<div class="col-md-3 text-end">
 						<c:if test="${ empty uidx }">
