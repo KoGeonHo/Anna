@@ -22,6 +22,7 @@ public interface UserService {
 	int updateLocation(UserVO vo);
 	String getLocation(int uidx);
 	List<BoardItemVO> getInterestedItem(List<String> interested);
+	List<UserVO> neighborList(int uidx);
 	
 	
 }

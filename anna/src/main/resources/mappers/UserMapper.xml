@@ -167,4 +167,20 @@
 			
 	</select>
 	
+	<select id="neighborList" parameterType="int" resultType="UserVO">
+		
+		SELECT 
+			uidx,
+			nickName,
+			user_email,
+			profile_image
+		FROM 
+			AnnaUser
+		WHERE 
+			uidx 
+		IN
+			(SELECT uidx FROM Neighbor WHERE uidx = #{ uidx })
+			 
+	</select>
+	
 </mapper>

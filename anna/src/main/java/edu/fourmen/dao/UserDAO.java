@@ -82,5 +82,13 @@ public class UserDAO {
 	public List<BoardItemVO> getInterestedItem(List<String> interested) {
 		
 		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getInterestedItem",interested);
+		
+	}
+
+
+	public List<UserVO> neighborList(int uidx) {
+		
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.neighborList",uidx);
+		
 	}
 }

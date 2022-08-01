@@ -28,6 +28,7 @@
 
 .card {
     margin-left: 3px;
+    cursor:pointer;
 }
 
 @media all and (max-width:  767px){
@@ -113,7 +114,7 @@
 									<div class="row">
 										<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
 											<div class="col-3" style="width:20%;">
-												<div class="card">
+												<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
 													<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
 													<div class="card-body">
 												    	<span style="display:block;">${ interestedList[j].title }</span>
@@ -135,7 +136,7 @@
 									<div class="row">
 										<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
 											<div class="col-3" style="width:20%;">
-												<div class="card">
+												<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
 													<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
 													<div class="card-body">
 												    	<span style="display:block;">${ interestedList[j].title }</span>
@@ -168,7 +169,7 @@
 									<div class="row">
 										<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
 											<div class="col-3" style="width:20%;">
-												<div class="card">
+												<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
 													<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
 													<div class="card-body">
 												    	<span style="display:block;">${ interestedList[j].title }</span>
@@ -190,7 +191,7 @@
 									<div class="row">
 										<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
 											<div class="col-3" style="width:20%;">
-												<div class="card">
+												<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
 													<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
 													<div class="card-body">
 												    	<span style="display:block;">${ interestedList[j].title }</span>
