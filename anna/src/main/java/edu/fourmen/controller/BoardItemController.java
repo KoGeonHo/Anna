@@ -194,22 +194,33 @@ public class BoardItemController {
 	}
 
 	@RequestMapping(value = "itemview.do")
-	public String selectitem(ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
-			HttpSession session, Model model) {
+	public String selectitem(BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+			HttpSession session, Model model ) {
+		
+		
 		session = request.getSession();
 		
 		UserVO userinfo = (UserVO) session.getAttribute("login");
 		model.addAttribute("userinfo", userinfo);
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
-
+		model.addAttribute("vo", vo);
+		
+		int neighbor_idx = vo.getUidx();
+		int uidx = (int) session.getAttribute("uidx");
+		System.out.println(uidx +"session uidx 번호");
+		System.out.println(neighbor_idx + "itemview 이웃번호");
+		bvo.setUidx(uidx);
+		bvo.setNeighbor_idx(neighbor_idx);
+		int result = boarditemService.neighbor_check(bvo);
+		model.addAttribute("result",result);
+		System.out.println(result +"이웃 체크");
+		
 		
 		List<BoardItemVO> list = boarditemService.list(vo,pm);
 		model.addAttribute("list", list);
-		model.addAttribute("vo", vo);
 		
 		List<BoardItemVO> list2 = boarditemService.selectAllbyuser(vo, svo);
 		model.addAttribute("list2", list2);
-		
 		
 		
 		return "boarditem/itemview";
@@ -983,44 +994,63 @@ public class BoardItemController {
 		return "메시지 전체 삭제";
 	}
 	
+	
+/*
+	@ResponseBody
+	@RequestMapping("/neighbor_check")
+	public String neighbor_check(HttpSession session, int item_idx, int neighbor_idx, BoardItemVO vo, Model model) {
+
+		
+
+		int result = boarditemService.neighbor_check(vo);
+
+		System.out.println(result + "친구 유무");
+
+		model.addAttribute("result", result);
+
+		if (result == 0) {
+
+			return "/addNeighbor";
+		} else {
+
+			return "/delNeighbor";
+		}
+	}
+	 */
+		
+		
+		
+		
+		
+	
+	
 	@ResponseBody
 	@RequestMapping("/addNeighbor")
-	public String addNeighbor( HttpSession session,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
-		
-		
-		
-		
-		System.out.println(vo.getNeighbor_idx()+"이웃번호");
-		
-		System.out.println(vo.getUidx()+"세션번호");
-		
-		
-		int result = boarditemService.neighbor_check(vo);
-		
-		System.out.println(result +"친구 유무");
-		
-		model.addAttribute("model",model);
-		
-		if(result == 0 ) {
+	public String addNeighbor(HttpSession
+			  session,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
+		System.out.println("이거 여기까진 오기는 하냐");
 		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
+		
+		System.out.println(vo.getNeighbor_idx() + "이웃번호");
+		System.out.println(vo.getUidx() + "세션번호");
+		
+		System.out.println(neighbor_idx+"이웃번호");
 		boarditemService.addNeighbor(vo);
-		return "이웃추가 완료" ;
-		}else {
-		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
-		boarditemService.delneighbor(vo);
-		return "이웃삭제 완료" ;
-		}
+		System.out.println("이웃추가 함수가 안됨?");
 		
-		
-		
-	
-	
+		return "이웃추가 완료";
 	}
 	
-	
-	
-	
-	
+	@ResponseBody
+	@RequestMapping("/delNeighbor")
+	public String delNeighbor(HttpSession
+			 session,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
+		
+		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
+		boarditemService.delneighbor(vo);
+		
+		return "이웃삭제 완료";
+	}
 	
 	
 	

@@ -204,18 +204,7 @@
 	order by b.wdate desc limit 0,1
 	</select>
 	
-	<insert id="addNeighbor" >
-		insert into Neighbor
-					(
-					 uidx
-					,neighbor_idx
-					)
-					VALUES
-					(
-					 #{uidx}
-					,#{neighbor_idx}
-					)
-	</insert>
+	
 	
 	<select id="myNeighbor">
 		select neighbor_idx from Neighbor where uidx = #{uidx}
@@ -230,6 +219,19 @@
 		where uidx = #{uidx}
 		 and  neighbor_idx = #{neighbor_idx}
 	</select>
+	
+	<insert id="addNeighbor" >
+		insert into Neighbor
+					(
+					 uidx
+					,neighbor_idx
+					)
+					VALUES
+					(
+					 #{uidx}
+					,#{neighbor_idx}
+					)
+	</insert>
 	
 	<delete id="delneighbor">
 		delete from Neighbor 
