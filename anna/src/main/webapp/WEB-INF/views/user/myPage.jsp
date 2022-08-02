@@ -263,7 +263,7 @@
 					<div class="text-center btn-circle">질문</div>
 					<div class="text-center">자주하는 질문</div>
 				</div>
-				<div class="col-4" style="padding:0px;" onclick="location.href='${path}/customer/QnA.do'">
+				<div class="col-4" style="padding:0px;" onclick="location.href='${path}/customer/QnAList.do'">
 					<div class="text-center btn-circle">QnA</div>
 					<div class="text-center">문의 내역</div>
 				</div>

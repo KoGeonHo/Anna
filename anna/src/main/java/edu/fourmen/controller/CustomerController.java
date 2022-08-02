@@ -23,8 +23,8 @@ public class CustomerController {
 	private String path = "/anna";
 
 	
-	@RequestMapping(value="/QnA.do")
-	public String QnA(Model model,HttpServletRequest request,HttpSession session) {
+	@RequestMapping(value="/QnAList.do")
+	public String QnAList(Model model,HttpServletRequest request,HttpSession session) {
 		
 		session = request.getSession();
 		
@@ -36,7 +36,15 @@ public class CustomerController {
 		
 		model.addAttribute("QnAList",QnAList);
 		
-		return "customer/QnA";
+		return "customer/QnAList";
 		
+	}
+	
+	@RequestMapping(value="/QnAWrite.do")
+	public String QnAWrite(Model model) {
+		
+		model.addAttribute("path",path);
+		
+		return "customer/QnAWrite";
 	}
 }

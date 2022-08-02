@@ -65,7 +65,7 @@
 				<tfoot>
 					<tr>
 						<td colspan="3" class="text-end" style="border:0px;">
-							<button type="button" class="btn btn-sm" style="background:#00AAB2; color:#fff;">글작성</button>
+							<button type="button" class="btn btn-sm" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAWrite.do'">글작성</button>
 						</td>
 					</tr>
 				</tfoot>
