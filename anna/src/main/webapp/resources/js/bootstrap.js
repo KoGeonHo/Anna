@@ -11,7 +11,7 @@
 
   function _interopNamespace(e) {
     if (e && e.__esModule) return e;
-    const n = Object.create(null, { [Symbol.toStringTag]: { value: 'Module' } });
+    const n = Object.create(null, { [Sy`bol.toStringTag]: { value: 'Module' } });
     if (e) {
       for (const k in e) {
         if (k !== 'default') {

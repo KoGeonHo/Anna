@@ -15,6 +15,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.fourmen.dao.UserDAO;
+import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.UserVO;
 
 import org.springframework.stereotype.Service;
@@ -251,6 +252,32 @@ public class UserServiceImpl implements UserService{
             
         }
 		
+	}
+
+	@Override
+	public int updateLocation(UserVO vo) {
+		
+		return userDAO.updateLocation(vo);
+		
+	}
+
+	@Override
+	public String getLocation(int uidx) {
+
+		return userDAO.getLocation(uidx);
+		
+	}
+
+	@Override
+	public List<BoardItemVO> getInterestedItem(List<String> interested) {
+		
+		return userDAO.getInterestedItem(interested);
+	}
+
+	@Override
+	public List<UserVO> neighborList(int uidx) {
+
+		return userDAO.neighborList(uidx);
 	}
 
 		

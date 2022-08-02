@@ -6,11 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <link href="${path}/css/bootstrap.css" rel="stylesheet" />
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style type='text/css'>
@@ -19,7 +16,15 @@
 @viewport {width: device-width;}
 </style>
 <title>item view 페이지</title>
+
 <style>
+.chat-list{
+height:300px;
+overflow-y:auto;
+
+
+
+}
 .outer {
   border: 6px solid royalblue;
   width: 500px;
@@ -57,10 +62,8 @@ height:150px;
     position: relative;
     margin: 0 auto;
     overflow: hidden; /* 현재 슬라이드 오른쪽에 위치한 나머지 슬라이드 들이 보이지 않도록 가림 */
-	display:none;
 }
 .slider input[type=radio]{
-    display: none;
 }
 
 ul.imgs{
@@ -94,13 +97,17 @@ ul.imgs li{
 }
 
 img{
-
-	width:100%;
+	float:center;
+	width:500px;
 
 	height:450px;
 }
 
 @media ( max-width: 400px ) {
+
+.row{
+
+}
 	img{
 
 	width:100%;
@@ -136,11 +143,12 @@ body {
   -webkit-user-select: none; 
   -khtml-user-select: none; 
   user-select: none;
+ 
 }
 
 .outer {
-  border: 6px solid royalblue;
-  width: 300px;
+  border: 3px solid royalblue;
+  width: 100%;
   height: 250px;
   margin: 0 auto;
   overflow-x: hidden;
@@ -149,19 +157,19 @@ body {
 
 .inner-list {
   display: flex;
-  width:300px;
+  width:100%;
   height: 250px;
   transition: .3s ease-out;
 }
 
 .inner {
-  padding: auto;
+  padding: 0;
 }
 
 
 
 .slider-1 {
-	width:700px;
+	width:500px;
     height:480px;
     position:relative;
     display : none;
@@ -181,7 +189,7 @@ body {
     width:20px;
     height:20px;
     /* background-color:rgba(255,255,255,.5); */
-    background-color:black;
+    background-color:white;
     border-radius:4px;
     display:inline-block;
     cursor:pointer;
@@ -190,7 +198,7 @@ body {
 
 .slider-1 > .page-btns > div.active {
     /* background-color:rgba(255,255,255,1); */
-    background-color:grey;
+    background-color:gray;
     display : none;
 }
 
@@ -207,14 +215,18 @@ body {
     opacity:0;
     transition: opacity 0.3s;
     background-position:center;
-    /* background-size:cover;  */
+ 	background-size:cover;
     background-repeat:no-repeat;
     display : none;
 }
 
 .slider-1 > .slides > div.active {
     opacity:1;
-    display : none;s
+    display : none;
+}
+
+.slider-1 > .slides > div.active img {
+	width:100%;
 }
 
 /* 슬라이더 좌우 버튼 */
@@ -252,7 +264,7 @@ body {
 
 
 .container{
-width:50%;
+width:100%;
 hieght:50px;
 }
 
@@ -282,7 +294,7 @@ a {
 
 /* 슬라이더 1 시작 */
 .slider-1 {
-	width:700px;
+	width:500px;
     height:480px;
     position:relative;
 }
@@ -300,7 +312,7 @@ a {
     width:20px;
     height:20px;
     /* background-color:rgba(255,255,255,.5); */
-    background-color:black;
+    background-color:gray;
     border-radius:4px;
     display:inline-block;
     cursor:pointer;
@@ -316,7 +328,7 @@ a {
 .slider-1 > .slides > div {
   position:absolute; 
     width:500px;
-    height:350px;
+    height:500px;
     top:0;
     left:0;
     right:0;
@@ -324,7 +336,7 @@ a {
     opacity:0;
     transition: opacity 0.3s;
     background-position:center;
-    /* background-size:cover;  */
+    background-size:cover;
     background-repeat:no-repeat;
      display : block;
 }
@@ -352,7 +364,7 @@ a {
     top:50%;
     left:20px;
     transform:translatey(-50%);
-    background-color:white;
+    background-color:gray;
     opacity:0.5;
     padding:1px 13px;
     border-radius:50px;
@@ -365,6 +377,131 @@ a {
 
 /* 슬라이더 1 끝 */
 </style>
+
+<style>
+ 	body{margin:0;padding:0;max-height:800px}	
+	.wrap	{position:absolute;top:50%;left:50%;width:200px;height:100px;margin-top:-50px;margin-left:-100px;}
+	
+	table {width:100%;border-collapse:collapse; border:0; empty-cells:show; border-spacing:0; padding:0;}
+	table th {height:24px; padding:4px 10px; border:1px solid #DDD; font-weight:bold; text-align:left; background:#ecf5fc;}
+	table td {height:22px; padding:5px 10px; border:1px solid #DDD;}
+	#btn_close{float:right}
+
+	/*레이어 팝업 영역*/
+	.Pstyle {
+	 opacity: 0;
+	 display: none;
+	 position: relative;
+	 width: auto;
+	 border: 5px solid #fff;
+	 padding: 20px;
+	 background-color: #fff;
+	}    		
+	</style>
+	<script>
+		$(function(){
+			$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
+				$('#popup').bPopup();
+			});
+			
+			$("#btn_close").click(function(){ //닫기
+				$('#popup').bPopup().close();  
+			});			
+		});
+	</script>
+<script>
+	let invited=0;
+	let chat_host=0;
+	function sendMessage(form) {
+		//작성자, 내용 유효성 검사
+		form.nickName.value = form.nickName.value.trim();
+		/* if (form.usernick.value.length == 0) {
+			alert('작성자를 입력하세요');
+			form.usernick.focus();
+			return false;
+		} */
+		
+		form.contents.value = form.contents.value.trim();
+		if (form.contents.value.length == 0) {
+			alert('내용 입력하세요');
+			form.contents.focus();
+			return false;
+		}
+		
+		// AJAX -> doAddMessage 실행 및 출력값 가져오기
+		$.post('./AddMessage',{
+			nickName : form.nickName.value,
+			contents : form.contents.value,
+			item_idx : form.item_idx.value,
+			uidx : form.uidx.value,
+		}, function(data) {
+			uidx = data["uidx"];
+		},'json');
+		form.contents.value = '';
+		form.contents.focus();
+	}
+	
+	
+	
+	var Chat__lastReceivedMessagecidx = -1;
+	
+	
+	function Chat__loadNewMessages() {
+		$.get('./getMessages',{
+			from : Chat__lastReceivedMessagecidx + 1 
+		}, function(data) {
+			console.log(data);
+			for ( let i = 0; i < data.length; i++ ) {
+				var messages = data[i];
+				Chat__lastReceivedMessagecidx = messages.cidx;
+				Chat__drawMessages(messages);
+				
+				
+			}
+			setTimeout(Chat__loadNewMessages,1000);
+			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+		}, 'json');z
+	}
+	function Chat__drawMessages(messages) {
+		var html = '[' +messages.cidx + '] (' + messages.nickName + ') : ' + messages.contents;
+		
+		if(messages.uidx == ${uidx}){
+			$('.chat-list').append('<div style="text-align:right;">'+ html + '</div>');
+		}else if(messages.uidx != ${uidx}){
+			$('.chat-list').append('<div style="text-align:left;">' + html + '</div>');
+			}
+	}
+	$(function() {
+		Chat__loadNewMessages();
+		
+	});
+	
+	
+	
+	
+	
+	function addNeighbor(form) {
+		//작성자, 내용 유효성 검사
+		form.uidx.value = form.uidx.value.trim();
+		if (form.uidx.value.length == 0) {
+			alert('회원만 이웃추가 기능을 사용할 수 있습니다');
+			return false;
+		}
+		
+		// AJAX -> addNeighbor 실행 및 출력값 가져오기
+		$.post('./addNeighbor',{
+			neighbor_idx : form.neighbor_idx.value,
+			uidx : form.uidx.value,
+			item_idx : form.item_idx.value,
+		}, function(data) {
+			uidx = data["uidx"];
+		},'json');
+	}
+	
+</script>
+		
+	
+		
 </head>
 <body>
 
@@ -403,7 +540,7 @@ a {
 
 	<div class="container">
 	<div class="row">
-			<div class="col-lg-12">
+			<div class="col-lg-12 col-sm-12">
 
 				<div class="card">
 				
@@ -415,19 +552,23 @@ a {
 							<c:if test="${vo.cate_idx == 2}">
 						상품카테고리 > 주방
 							</c:if>
+							
+							<div style="right;">
+								<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
+								<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
+							</div>
 				<hr>
 				
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
 						<div class="slider-1" >
 
 						    <div class="slides">
 						    	<c:if test="${vo.image1 != null}">
-						        <div ><img src="../resources/upload/${vo.image1}"></div>
+						        <div class="active"><img src="../resources/upload${vo.image1}" onclick="window.open(this.src)"></div>
 						        </c:if>
 						        <c:if test="${vo.image2 != null}">
-						        <div ><img src="../resources/upload/${vo.image2}"></div>
+						        <div ><img src="../resources/upload/${vo.image2}" onclick="window.open(this.src)"></div>
 						         </c:if>
 						        <c:if test="${vo.image3 != null}">
 						        <div ><img src="../resources/upload/${vo.image3}"></div>
@@ -506,13 +647,15 @@ a {
 					    <div class="inner">
 					      <img src="../resources/upload${vo.image1}">
 					    </div>
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image2}">
-					    </div>
+					    <c:if test="${vo.image2 != null }">
+						    <div class="inner">
+						      <img src="../resources/upload/${vo.image2}">
+						    </div>
+						</c:if> 
 					    <c:if test="${vo.image3 != null }">
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image3}">
-					    </div>
+						    <div class="inner">
+						      <img src="../resources/upload/${vo.image3}">
+						    </div>
 					    </c:if>
 					    <c:if test="${vo.image4 != null }">
 					    <div class="inner">
@@ -558,15 +701,15 @@ a {
 					
 				
 						<h5 class="card-title">${vo.title}</h5>
-							<input type="hidden" value="${vo.uidx} asd"> 
-							<input type="hidden" value="${vo.item_idx} asd">
+							<input type="hidden" value="${vo.uidx}"> 
+							<input type="hidden" value="${vo.item_idx}">
 
 								<p class="card-text">판매자 : ${vo.nickName}</p>
-								<p class="card-text">${vo.content}</p>
+								<p class="card-text">내용 : ${vo.content}</p>
 								<p class="card-text">판매가격 : ${vo.price}</p>
 								<p class="card-text">거래지역 : ${vo.addr2}</p>
 								<p class="card-text">키워드 : ${vo.keyword}</p>
-								
+					
 						</div><!-- card body 끝 -->
 					</div>
 				</div>
@@ -575,12 +718,12 @@ a {
 					<h2>${nickName}님	의 다른상품</h2>
 	<div class="container-fluid">
 		<div class="row">
-		<a href="user/myPage.do?uidx=${vo.uidx}">더 보기</a>
+		<a href="../user/myPage.do?uidx=${vo.uidx}">더 보기</a>
 			<c:if test="${list2.size() > 0}">
 				<c:forEach var="vo" items="${list2}">
 					<div class="col-lg-2 col-md-4" >
 						<div class="card">
-							<img src="../resources/upload/${vo.image1}" >
+						<img src="../resources/upload/${vo.image1}" >
 								<div class="card-body">
 									<input type="hidden" value=">${vo.uidx}">
 									<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
@@ -595,13 +738,65 @@ a {
 			</c:if>
 		</div>
 		</div>
-<a href="itemmodfiy.do">게시글 수정</a>
-<a href="itemdelete.do">게시글 수정</a>
+z 	<div class="wrap">
+		<input type="button" id="btn_open" value="연락하기">
+	</div>
+	<!--팝업 영역 시작 -->
+	<div id="popup" class="Pstyle">	
+		<form onsubmit="sendMessage(this); return false;">
+			<input type="hidden" name="item_idx" value="${vo.item_idx}"><br>
+			<input type="hidden" name="chat_host" value="${vo.uidx}"><br>
+			<input type="hidden" name="invited" value="${uidx}">
+			<input type="hidden" name="uidx" value="${uidx}">
+			
+			<input type="text" name="nickName" value="${nickName}"readonly="readonly">
+			
+			<input type="text" name="contents" placeholder="내용" >
+			<input type="submit" value="전송">
+		</form>
+		
+			<div class="chat-list" id="chat" ></div>
+				<input type="button" id="btn_close" value="닫 기">
+			</div>
+		<script>
+				<!-- 채팅 스크롤 하단으로 보내기 -->
+				
+			
+		</script>
+		
+		
+		<form onsubmit="addNeighbor(this); return false;">
+			<div> 
+				<input type="submit" value="이웃추가" id="or">
+				<input type="hidden" name="uidx" value="${uidx}">
+				<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
+				<input type="hidden" name="item_idx" value="${vo.item_idx}">
+			</div>
+		</form>
+		
+	<!-- 	<script>
+		const $element = document.querySelector(".chat-list");
+
+			// 현재의 최하단 구하기
+			const eh = $element.clientHeight  + $element.scrollTop;
+
+			// 요소가 추가되어 길이가 길어지기 전에 비교
+			const isScroll = $element.scrollHeight <= eh;
+
+			// -- 요소 추가하는 코드 --
+
+			// 스크롤이 최하단 일때만 고정
+			if (isScroll) {
+			  $element.scrollTop = $element.scrollHeight;
+			}
+		</script> -->
+	<!--팝업 영역 끝 -->
  조회수, 이웃추가 버튼,
 	 신고하기, 연락하기, 판매자의 다른상품
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 	<script src ="../js/boarditem.js"></script>
 	<script src ="../js/boarditem2.js"></script>
+	
 </body>
 </html>

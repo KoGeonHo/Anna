@@ -107,4 +107,80 @@
 			
 	</update>
 	
+	<update id="updateLocation" parameterType="UserVO">
+	
+		UPDATE
+			AnnaUser
+		SET
+			location_auth = #{ location_auth }
+		WHERE 
+			uidx = #{ uidx }
+			
+	</update>
+	
+	<select id="getLocation" parameterType="int" resultType="string">
+	
+		SELECT
+			location_auth
+		FROM
+			AnnaUser
+		WHERE
+			uidx = #{ uidx }
+			
+	</select>
+	
+	<select id="getInterestedItem" parameterType="java.util.List" resultType="BoardItemVO">
+	
+		SELECT
+			item_idx,
+			uidx,
+			cate_idx,
+			title,
+			contents,
+			wdate,
+			addr1,
+			addr2,
+			addr_code,
+			image1,
+			image2,
+			image3,
+			image4,
+			image5,
+			image6,
+			image7,
+			image8,
+			image9,
+			image10,
+			keyword,
+			price,
+			offer,
+			hit,
+			state
+		FROM
+			Board_Items
+		WHERE
+			isdel = 'N' limit 1,20
+		<!-- WHERE
+			<foreach collection="list" item="item" separator="OR" open="(" close=")">
+				keyword like concat('%',#{item},'%')
+			</foreach> -->
+			
+	</select>
+	
+	<select id="neighborList" parameterType="int" resultType="UserVO">
+		
+		SELECT 
+			uidx,
+			nickName,
+			user_email,
+			profile_image
+		FROM 
+			AnnaUser
+		WHERE 
+			uidx 
+		IN
+			(SELECT uidx FROM Neighbor WHERE uidx = #{ uidx })
+			 
+	</select>
+	
 </mapper>

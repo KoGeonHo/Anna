@@ -10,6 +10,7 @@
 		 <typeAlias type="edu.fourmen.vo.SearchVO" alias="searchvo"/>
 		 <typeAlias type="edu.fourmen.vo.PageMaker" alias="pagemaker"/>
 		 <typeAlias type="edu.fourmen.vo.Criteria" alias="criteria"/>
+		 <typeAlias type="edu.fourmen.vo.ChatMessageVO" alias="chatVO"/>
 
 
 
