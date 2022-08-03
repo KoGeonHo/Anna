@@ -470,6 +470,7 @@ public class UserController {
 	public String locationAuth(String[] dong,Model model) {
 		
 		model.addAttribute("path",path);
+		
 		model.addAttribute("selectedDong",dong);
 		
 		return "user/locationView";
@@ -495,5 +496,23 @@ public class UserController {
 		int result = userService.updateLocation(vo);
 		
 		return "redirect:/user/userInfoMod.do";
+	}
+	
+	//이웃관리 페이지
+	@RequestMapping(value="/neighborMng.do")
+	public String neighborMng(String[] dong,Model model,HttpSession session, HttpServletRequest request) {
+		
+		model.addAttribute("path",path);
+		
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		List<UserVO> nList = userService.neighborList(uidx);
+		
+		model.addAttribute("nList",nList);
+		
+		return "user/neighborMng";
+		
 	}
 }

@@ -194,10 +194,12 @@ public class BoardItemController {
 	}
 
 	@RequestMapping(value = "itemview.do")
+
 	public String selectitem(BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
 			HttpSession session, Model model ) {
 		
 		
+
 		session = request.getSession();
 		
 		UserVO userinfo = (UserVO) session.getAttribute("login");
@@ -218,11 +220,13 @@ public class BoardItemController {
 		
 		List<BoardItemVO> list = boarditemService.list(vo,pm);
 		model.addAttribute("list", list);
+
 		
 		List<BoardItemVO> list2 = boarditemService.selectAllbyuser(vo, svo);
 		model.addAttribute("list2", list2);
 		
 		
+
 		return "boarditem/itemview";
 
 	}
@@ -994,6 +998,7 @@ public class BoardItemController {
 		return "메시지 전체 삭제";
 	}
 	
+
 	
 /*
 	@ResponseBody
@@ -1050,6 +1055,7 @@ public class BoardItemController {
 		boarditemService.delneighbor(vo);
 		
 		return "이웃삭제 완료";
+
 	}
 	
 	
@@ -1087,4 +1093,5 @@ public class BoardItemController {
 	
 	
 	
+
 }

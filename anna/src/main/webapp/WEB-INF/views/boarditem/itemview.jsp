@@ -460,7 +460,9 @@ a {
 			}
 			setTimeout(Chat__loadNewMessages,1000);
 			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+
 		}, 'json');
+
 	}
 	function Chat__drawMessages(messages) {
 		var html = '[' +messages.cidx + '] (' + messages.nickName + ') : ' + messages.contents;
@@ -487,7 +489,9 @@ a {
 			alert('회원만 이웃추가 기능을 사용할 수 있습니다');
 			return false;
 		}
+
 		console.log("여기인가")
+
 		// AJAX -> addNeighbor 실행 및 출력값 가져오기
 		$.post('./addNeighbor',{
 			neighbor_idx : form.neighbor_idx.value,
@@ -498,6 +502,7 @@ a {
 		},'json');
 	}
 	
+
 	function delNeighbor(form) {
 		//작성자, 내용 유효성 검사
 		form.uidx.value = form.uidx.value.trim();
@@ -516,6 +521,7 @@ a {
 		},'json');
 	}
 	
+
 </script>
 		
 	
@@ -721,7 +727,9 @@ a {
 						<h5 class="card-title">${vo.title}</h5>
 							<input type="hidden" value="${vo.uidx}"> 
 							<input type="hidden" value="${vo.item_idx}">
+
 							<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
+
 
 								<p class="card-text">판매자 : ${vo.nickName}</p>
 								<p class="card-text">내용 : ${vo.content}</p>
@@ -777,6 +785,7 @@ z 	<div class="wrap">
 			<div class="chat-list" id="chat" ></div>
 				<input type="button" id="btn_close" value="닫 기">
 			</div>
+
 		
 		<c:if test="${result == 0}">
 		<form onsubmit="addNeighbor(this); return false;">
@@ -795,6 +804,7 @@ z 	<div class="wrap">
 				<input type="hidden" name="item_idx" value="${vo.item_idx}">
 		</form>
 		</c:if>
+
 	<!-- 	<script>
 		const $element = document.querySelector(".chat-list");
 

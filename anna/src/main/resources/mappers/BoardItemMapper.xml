@@ -203,8 +203,7 @@
 		</if>
 	order by b.wdate desc limit 0,1
 	</select>
-	
-	
+
 	
 	<select id="myNeighbor">
 		select neighbor_idx from Neighbor where uidx = #{uidx}
@@ -212,6 +211,7 @@
 	
 	<select id="yourNeighbor">
 		select	neighbor_idx from Neighbor where uidx = #{uidx}
+
 	</select>
 	
 	<select id="neighbor_check" resultType="int" parameterType="BoardItemVO">
@@ -233,6 +233,7 @@
 					)
 	</insert>
 	
+
 	<delete id="delneighbor">
 		delete from Neighbor 
 		where uidx = #{uidx} 
