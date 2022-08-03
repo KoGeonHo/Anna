@@ -460,7 +460,9 @@ a {
 			}
 			setTimeout(Chat__loadNewMessages,1000);
 			$("#chat").scrollTop($("#chat")[0].scrollHeight);
-		}, 'json');z
+
+		}, 'json');
+
 	}
 	function Chat__drawMessages(messages) {
 		var html = '[' +messages.cidx + '] (' + messages.nickName + ') : ' + messages.contents;
@@ -487,7 +489,9 @@ a {
 			alert('회원만 이웃추가 기능을 사용할 수 있습니다');
 			return false;
 		}
-		
+
+		console.log("여기인가")
+
 		// AJAX -> addNeighbor 실행 및 출력값 가져오기
 		$.post('./addNeighbor',{
 			neighbor_idx : form.neighbor_idx.value,
@@ -498,6 +502,26 @@ a {
 		},'json');
 	}
 	
+
+	function delNeighbor(form) {
+		//작성자, 내용 유효성 검사
+		form.uidx.value = form.uidx.value.trim();
+		if (form.uidx.value.length == 0) {
+			alert('회원만 이웃삭제 기능을 사용할 수 있습니다');
+			return false;
+		}
+		
+		// AJAX -> delNeighbor 실행 및 출력값 가져오기
+		$.post('./delNeighbor',{
+			neighbor_idx : form.neighbor_idx.value,
+			uidx : form.uidx.value,
+			item_idx : form.item_idx.value,
+		}, function(data) {
+			uidx = data["uidx"];
+		},'json');
+	}
+	
+
 </script>
 		
 	
@@ -686,7 +710,7 @@ a {
 					    <div class="inner">
 					      <img src="../resources/upload/${vo.image9}">
 					    </div>
-					    </c:if>
+						   </c:if>
 					    <c:if test="${vo.image10 != null }">
 					    <div class="inner">
 					      <img src="../resources/upload/${vo.image10}">
@@ -704,6 +728,9 @@ a {
 							<input type="hidden" value="${vo.uidx}"> 
 							<input type="hidden" value="${vo.item_idx}">
 
+							<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
+
+
 								<p class="card-text">판매자 : ${vo.nickName}</p>
 								<p class="card-text">내용 : ${vo.content}</p>
 								<p class="card-text">판매가격 : ${vo.price}</p>
@@ -715,7 +742,7 @@ a {
 				</div>
 				</div>
 </form>
-					<h2>${nickName}님	의 다른상품</h2>
+					<h2>${vo.nickName}님	의 다른상품</h2>
 	<div class="container-fluid">
 		<div class="row">
 		<a href="../user/myPage.do?uidx=${vo.uidx}">더 보기</a>
@@ -758,22 +785,26 @@ z 	<div class="wrap">
 			<div class="chat-list" id="chat" ></div>
 				<input type="button" id="btn_close" value="닫 기">
 			</div>
-		<script>
-				<!-- 채팅 스크롤 하단으로 보내기 -->
-				
-			
-		</script>
+
 		
-		
+		<c:if test="${result == 0}">
 		<form onsubmit="addNeighbor(this); return false;">
-			<div> 
 				<input type="submit" value="이웃추가" id="or">
+				<input type="text" name="uidx" value="${uidx}">
+				<input type="text" name="neighbor_idx" value="${vo.uidx}">
+				<input type="hidden" name="item_idx" value="${vo.item_idx}">
+		</form>
+		</c:if>
+		
+		<c:if test="${result != 0}">
+		<form onsubmit="delNeighbor(this); return false;">
+				<input type="submit" value="이웃삭제" id="or">
 				<input type="hidden" name="uidx" value="${uidx}">
 				<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
 				<input type="hidden" name="item_idx" value="${vo.item_idx}">
-			</div>
 		</form>
-		
+		</c:if>
+
 	<!-- 	<script>
 		const $element = document.querySelector(".chat-list");
 

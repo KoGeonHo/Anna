@@ -77,8 +77,10 @@ public class BoardItemDAO {
 		return sqlSession.insert(efdb+".addNeighbor",vo);
 	}
 	
-	public int neighbor_check(BoardItemVO vo) {
-		return sqlSession.selectOne(efdb+".neighbor_check",vo);
+
+	public int neighbor_check(BoardItemVO bvo) {
+		return sqlSession.selectOne(efdb+".neighbor_check",bvo);
+
 	}
 	
 	public int delneighbor(BoardItemVO vo) {

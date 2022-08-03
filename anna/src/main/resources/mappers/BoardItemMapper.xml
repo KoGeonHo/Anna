@@ -203,6 +203,22 @@
 		</if>
 	order by b.wdate desc limit 0,1
 	</select>
+
+	
+	<select id="myNeighbor">
+		select neighbor_idx from Neighbor where uidx = #{uidx}
+	</select>
+	
+	<select id="yourNeighbor">
+		select	neighbor_idx from Neighbor where uidx = #{uidx}
+
+	</select>
+	
+	<select id="neighbor_check" resultType="int" parameterType="BoardItemVO">
+		select COUNT(*) from Neighbor 
+		where uidx = #{uidx}
+		 and  neighbor_idx = #{neighbor_idx}
+	</select>
 	
 	<insert id="addNeighbor" >
 		insert into Neighbor
@@ -217,20 +233,7 @@
 					)
 	</insert>
 	
-	<select id="myNeighbor">
-		select neighbor_idx from Neighbor where uidx = #{uidx}
-	</select>
-	
-	<select id="yourNeighbor">
-		select	neighbor_idx from Neighbor where uidx = #{uidx}
-	</select>
-	
-	<select id="neighbor_check" resultType="int" parameterType="BoardItemVO">
-		select COUNT(*) from Neighbor 
-		where uidx = #{uidx}
-		 and  neighbor_idx = #{neighbor_idx}
-	</select>
-	
+
 	<delete id="delneighbor">
 		delete from Neighbor 
 		where uidx = #{uidx} 
