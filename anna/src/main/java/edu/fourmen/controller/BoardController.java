@@ -310,7 +310,7 @@ public class BoardController {
 		
 		BoardVO vo = new BoardVO();
 		
-		
+		boardService.HitUp(Bidx);
 		
 		vo.setBidx(Bidx);
 		if(session.getAttribute("uidx") != null) {
@@ -416,8 +416,14 @@ public class BoardController {
 		return "board/JobBoard";
 	}
 	
-	
-	
+	@RequestMapping(value="/BoardDelete.do")
+	public String BoardDelete(int Bidx) {
+		
+		boardService.boardDelete(Bidx);
+		System.out.println("삭제완료");
+		
+		return "redirect:/board/FreeBoard.do";
+	}
 	
 	
 	

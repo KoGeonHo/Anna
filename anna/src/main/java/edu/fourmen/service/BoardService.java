@@ -35,5 +35,9 @@ public interface BoardService {
 	int boardLikeDown(BoardVO vo);
 	
 	int Likeyn(BoardVO vo);
+	
+	int HitUp(int Bidx);
+	
+	int boardDelete(int Bidx);
 
 }

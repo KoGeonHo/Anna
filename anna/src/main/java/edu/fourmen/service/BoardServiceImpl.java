@@ -100,5 +100,19 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	@Override
+	public int HitUp(int Bidx) {
+		
+		return boardDao.HitUp(Bidx);
+	}
+
+
+	@Override
+	public int boardDelete(int Bidx) {
+		
+		return boardDao.boardDelete(Bidx);
+	}
+
+
 
 }

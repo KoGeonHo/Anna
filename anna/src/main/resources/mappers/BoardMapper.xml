@@ -54,6 +54,7 @@
 	 INNER JOIN AnnaUser u
 	  	ON b.uidx = u.uidx
 	 WHERE b.isDel ='N'
+	   AND board_type = 'free' 
 	   <if test='searchType != null and searchType.equals("All")'>
 	 	    AND b.Contents like concat('%',#{SearchVal},'%')
 	 	    OR u.nickname like concat('%',#{SearchVal},'%')
@@ -91,6 +92,7 @@
 	 INNER JOIN AnnaUser u
 	  	ON b.uidx = u.uidx
 	 WHERE b.isDel ='N'
+	   AND board_type = 'job'
 	   <if test='searchType != null and searchType.equals("All")'>
 	 	    AND b.Contents like concat('%',#{SearchVal},'%')
 	 	    OR u.nickname like concat('%',#{SearchVal},'%')
@@ -208,11 +210,23 @@
 
 
 <select id="Likeyn" resultType="int" parameterType="boardvo">
-		SELECT count(*)
-		  FROM Board_like
-		 WHERE Bidx = #{Bidx}
-		   AND Uidx = #{uidx}
+	SELECT count(*)
+	  FROM Board_like
+     WHERE Bidx = #{Bidx}
+	   AND Uidx = #{uidx}
 </select>
+
+<update id="HitUp">
+	UPDATE Board
+	   SET Hit = Hit+1
+	 WHERE Bidx = #{Bidx}
+</update>
+
+<update id="boardDelete">
+	UPDATE Board
+	   SET isDel = 'Y'
+	 WHERE Bidx = #{Bidx}
+</update>
 
 
 

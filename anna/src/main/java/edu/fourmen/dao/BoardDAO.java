@@ -88,5 +88,15 @@ public class BoardDAO {
 		return sqlSession.selectOne(namespace+".Likeyn",vo);
 	}
 	
+	public int HitUp(int Bidx) {
+		
+		return sqlSession.update(namespace+".HitUp", Bidx);
+	}
+	
+	public int boardDelete(int Bidx) {
+		
+		return sqlSession.update(namespace+".boardDelete", Bidx);
+	}
+	
 	
 }
