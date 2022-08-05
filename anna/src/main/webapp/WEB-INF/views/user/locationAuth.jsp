@@ -9,7 +9,7 @@
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
 <script src="${ path }/js/common/common.js"></script>
-<script type='text/javascript' src='https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=9ff16331dfd542b6a5b0'></script>	
+<script type='text/javascript' src='https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=7b9a8af3d576479db243'></script>	
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ad11d9178deb7b571198c476ec55ad0f"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -21,7 +21,7 @@
 		
 		$.ajax({
 			url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
-			data : "consumer_key=9ff16331dfd542b6a5b0&consumer_secret=32b9d18070d34db18be5",
+			data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
 			success : function(data){
 				if(navigator.geolocation){
 					navigator.geolocation.getCurrentPosition(function(position){

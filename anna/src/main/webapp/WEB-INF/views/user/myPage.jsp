@@ -87,7 +87,8 @@
 	background:#777; 
 	width:80px;
 	height:80px; 
-	margin:20px 20px 0 20px; 
+	margin:auto;
+	margin-top:20px; 
 	color:#fff; 
 	line-height:80px;
 }
@@ -101,175 +102,178 @@
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		
-		<!-- MyPage for Pc -->
-		<div class="container main" id="container-pc">
-			<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
-			<div id="listOfInterested">
-				<span>${ nickName }님이 관심있어 할만한 상품</span>
-				<div id="slideOfInterested" class="carousel slide" data-bs-ride="carousel">
-					<div class="carousel-inner">
-						<c:forEach var="i" begin="0" end="${ interestedList.size() - 1 }" step="5">
-							<c:if test="${ i == 0 }">
-								<div class="carousel-item active">
-									<div class="row">
-										<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
-											<div class="col-3" style="width:20%;">
-												<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
-													<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-													<div class="card-body">
-												    	<span style="display:block;">${ interestedList[j].title }</span>
-												  	</div>
+		<div class="wrapper" id="container-pc">
+			<!-- MyPage for Pc -->
+			<div class="container main">
+				<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
+				<div id="listOfInterested">
+					<span>${ nickName }님이 관심있어 할만한 상품</span>
+					<div id="slideOfInterested" class="carousel slide" data-bs-ride="carousel">
+						<div class="carousel-inner">
+							<c:forEach var="i" begin="0" end="${ interestedList.size() - 1 }" step="5">
+								<c:if test="${ i == 0 }">
+									<div class="carousel-item active">
+										<div class="row">
+											<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
+												<div class="col-3" style="width:20%;">
+													<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
+														<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+														<div class="card-body">
+													    	<span style="display:block;">${ interestedList[j].title }</span>
+													  	</div>
+													</div>
 												</div>
-											</div>
-										</c:forEach>
+											</c:forEach>
+										</div>
 									</div>
-								</div>
-								<button class="prev" type="button" style="cursor:default;">
-									<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="prev" aria-hidden="true"></span>
-								</button>
-								<button class="next" type="button" style="cursor:default;">
-									<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="next" aria-hidden="true"></span>
-								</button>
-							</c:if>
-							<c:if test="${ i != 0 }">
-								<div class="carousel-item">
-									<div class="row">
-										<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
-											<div class="col-3" style="width:20%;">
-												<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
-													<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-													<div class="card-body">
-												    	<span style="display:block;">${ interestedList[j].title }</span>
-												  	</div>
+									<button class="prev" type="button" style="cursor:default;">
+										<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="prev" aria-hidden="true"></span>
+									</button>
+									<button class="next" type="button" style="cursor:default;">
+										<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="next" aria-hidden="true"></span>
+									</button>
+								</c:if>
+								<c:if test="${ i != 0 }">
+									<div class="carousel-item">
+										<div class="row">
+											<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
+												<div class="col-3" style="width:20%;">
+													<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
+														<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+														<div class="card-body">
+													    	<span style="display:block;">${ interestedList[j].title }</span>
+													  	</div>
+													</div>
 												</div>
-											</div>
-										</c:forEach>
+											</c:forEach>
+										</div>
 									</div>
-								</div>
-								<button class="prev" type="button" style="cursor:default;">
-									<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="prev" aria-hidden="true"></span>
-								</button>
-								<button class="next" type="button" style="cursor:default;">
-									<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="next" aria-hidden="true"></span>
-								</button>
-							</c:if>
-						</c:forEach>
+									<button class="prev" type="button" style="cursor:default;">
+										<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="prev" aria-hidden="true"></span>
+									</button>
+									<button class="next" type="button" style="cursor:default;">
+										<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="next" aria-hidden="true"></span>
+									</button>
+								</c:if>
+							</c:forEach>
+						</div>
 					</div>
 				</div>
-			</div>
-			
-			<hr>
-			<div id="listOfCommunity">
-				<span>${ nickName }님의 판매중인 상품</span>
-				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-					<div class="carousel-inner">
-						<c:forEach var="i" begin="0" end="${ interestedList.size() - 1 }" step="5">
-							<c:if test="${ i == 0 }">
-								<div class="carousel-item active">
-									<div class="row">
-										<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
-											<div class="col-3" style="width:20%;">
-												<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
-													<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-													<div class="card-body">
-												    	<span style="display:block;">${ interestedList[j].title }</span>
-												  	</div>
-												</div>
-											</div>
-										</c:forEach>
-									</div>
-								</div>
-								<button class="prev" type="button" style="cursor:default;">
-									<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" aria-hidden="true"></span>
-								</button>
-								<button class="next" type="button" style="cursor:default;">
-									<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" aria-hidden="true"></span>
-								</button>
-							</c:if>
-							<c:if test="${ i != 0 }">
-								<div class="carousel-item">
-									<div class="row">
-										<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
-											<div class="col-3" style="width:20%;">
-												<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
-													<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-													<div class="card-body">
-												    	<span style="display:block;">${ interestedList[j].title }</span>
-												  	</div>
-												</div>
-											</div>
-										</c:forEach>
-									</div>
-								</div>
-								<button class="prev" type="button" style="cursor:default;">
-									<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" aria-hidden="true"></span>
-								</button>
-								<button class="next" type="button" style="cursor:default;">
-									<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" aria-hidden="true"></span>
-								</button>
-							</c:if>
-						</c:forEach>
-					</div>
-				</div>
-			</div>
-			<hr>
-			
-			<div id="listOfCommunity">
-				<span>우리동네 커뮤니티</span>
 				
+				<hr>
+				<div id="listOfCommunity">
+					<span>${ nickName }님의 판매중인 상품</span>
+					<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+						<div class="carousel-inner">
+							<c:forEach var="i" begin="0" end="${ interestedList.size() - 1 }" step="5">
+								<c:if test="${ i == 0 }">
+									<div class="carousel-item active">
+										<div class="row">
+											<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
+												<div class="col-3" style="width:20%;">
+													<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
+														<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+														<div class="card-body">
+													    	<span style="display:block;">${ interestedList[j].title }</span>
+													  	</div>
+													</div>
+												</div>
+											</c:forEach>
+										</div>
+									</div>
+									<button class="prev" type="button" style="cursor:default;">
+										<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" aria-hidden="true"></span>
+									</button>
+									<button class="next" type="button" style="cursor:default;">
+										<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" aria-hidden="true"></span>
+									</button>
+								</c:if>
+								<c:if test="${ i != 0 }">
+									<div class="carousel-item">
+										<div class="row">
+											<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
+												<div class="col-3" style="width:20%;">
+													<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
+														<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+														<div class="card-body">
+													    	<span style="display:block;">${ interestedList[j].title }</span>
+													  	</div>
+													</div>
+												</div>
+											</c:forEach>
+										</div>
+									</div>
+									<button class="prev" type="button" style="cursor:default;">
+										<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" aria-hidden="true"></span>
+									</button>
+									<button class="next" type="button" style="cursor:default;">
+										<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" aria-hidden="true"></span>
+									</button>
+								</c:if>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+				<hr>
+				
+				<div id="listOfCommunity">
+					<span>우리동네 커뮤니티</span>
+					
+				</div>
 			</div>
+			<!-- MyPage for Pc -->
 		</div>
-		<!-- MyPage for Pc -->
 		
-		
-		<!-- MyPage for Mobile -->
-		<div class="container main" id='container-mobile'>
-			<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
-			<div class="border-bottom">
-				<div style="display:inline-block;">
-					<img src="${ userInfo.profile_image }" style="border-radius:100px; width:100px; height:auto;padding:1rem;">
+		<div class="wrapper" id='container-mobile'>
+			<!-- MyPage for Mobile -->
+			<div class="container main" >
+				<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
+				<div class="border-bottom">
+					<div style="display:inline-block;">
+						<img src="${ userInfo.profile_image }" style="border-radius:100px; width:100px; height:auto;padding:1rem;">
+					</div>
+					<div style="display:inline-block; vertical-align: middle;">
+						<div>${ userInfo.nickName }</div>
+						<div>내 정보</div>
+					</div>
 				</div>
-				<div style="display:inline-block; vertical-align: middle;">
-					<div>${ userInfo.nickName }</div>
-					<div>내 정보</div>
+				<div class="row">
+					<div class="col-4" style="padding:0px;">
+						<div class="text-center btn-circle">구매</div>
+						<div class="text-center">구매 내역</div>
+					</div>
+					<div class="col-4" style="padding:0px;">
+						<div class="text-center btn-circle">판매</div>
+						<div class="text-center">판매 내역</div>
+					</div>
+					<div class="col-4" style="padding:0px;">
+						<div class="text-center btn-circle">찜</div>
+						<div class="text-center">찜 목록</div>
+					</div>
+					<div class="col-4" style="padding:0px;">
+						<div class="text-center btn-circle">관심</div>
+						<div class="text-center">관심 상품</div>
+					</div>
+					<div class="col-4" style="padding:0px;">
+						<div class="text-center btn-circle">공지</div>
+						<div class="text-center">공지사항</div>
+					</div>
+					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/user/neighborMng.do'">
+						<div class="text-center btn-circle">이웃</div>
+						<div class="text-center">이웃 관리</div>
+					</div>
+					<div class="col-4" style="padding:0px;">
+						<div class="text-center btn-circle">질문</div>
+						<div class="text-center">자주하는 질문</div>
+					</div>
+					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/customer/QnAList.do'">
+						<div class="text-center btn-circle">QnA</div>
+						<div class="text-center">문의 내역</div>
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-4" style="padding:0px;">
-					<div class="text-center btn-circle">구매</div>
-					<div class="text-center">구매 내역</div>
-				</div>
-				<div class="col-4" style="padding:0px;">
-					<div class="text-center btn-circle">판매</div>
-					<div class="text-center">판매 내역</div>
-				</div>
-				<div class="col-4" style="padding:0px;">
-					<div class="text-center btn-circle">찜</div>
-					<div class="text-center">찜 목록</div>
-				</div>
-				<div class="col-4" style="padding:0px;">
-					<div class="text-center btn-circle">관심</div>
-					<div class="text-center">관심 상품</div>
-				</div>
-				<div class="col-4" style="padding:0px;">
-					<div class="text-center btn-circle">공지</div>
-					<div class="text-center">공지사항</div>
-				</div>
-				<div class="col-4" style="padding:0px;">
-					<div class="text-center btn-circle">이웃</div>
-					<div class="text-center">이웃 관리</div>
-				</div>
-				<div class="col-4" style="padding:0px;">
-					<div class="text-center btn-circle">질문</div>
-					<div class="text-center">자주하는 질문</div>
-				</div>
-				<div class="col-4" style="padding:0px;">
-					<div class="text-center btn-circle">QnA</div>
-					<div class="text-center">문의 내역</div>
-				</div>
-			</div>
+			<!-- MyPage for Mobile -->
 		</div>
-		<!-- MyPage for Mobile -->
 		
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	</div>
