@@ -137,6 +137,9 @@
 	SELECT b.Title
 		  ,b.Contents
 		  ,b.Wdate
+		  ,b.board_type
+		  ,b.Hit
+		  ,(select count(*) from Board_like c where c.Bidx = b.Bidx) as cntLike
 		  ,b.Bidx
 		  ,b.uidx
 		  ,u.nickname

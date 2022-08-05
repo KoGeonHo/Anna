@@ -110,7 +110,7 @@
 }
 
 .card img{
-height : 250px;
+height : 300px;
 
 
 }
@@ -156,7 +156,6 @@ $(window).on("scroll",function(){
 		//추가로 받아올 페이지를 서버에 ajax 요청을 하고
 		//console.log("inscroll" + currentPage);
 		GetList(currentPage);
-		console.log("?")
 	}
 });
 
@@ -191,7 +190,6 @@ const GetList = function(currentPage){
 </script>
 </head>
 <body>
-
 <!-- pc 헤더 -->
 			<div class="b-example-divider ">
 				<div class="container ">
@@ -264,62 +262,66 @@ const GetList = function(currentPage){
 				</nav>
 			</div>
 			<!-- 모바일 헤더-->
-		
-		
-		<main>
-	<form method="get" action="FreeBoard.do">
+<main>
+					<form method="get" action="FreeBoard.do">
+				
+						<select name="SearchType">
+							<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
+							<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
+							<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
+						</select>
+						<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
+						<input type="submit" value="검색">
+					</form>
+					
+					<a href="BoardWrite.do">쓰기</a>
+					
+					<hr>
+					<c:if test="${!empty svo.searchVal}">
+							${totalRow}개의 자료가 검색되었습니다.
+					</c:if>
+					<form>
+						
+						<c:if test="${freeboard.size() ==0}">
+							
+							<h3>등록된 게시물이 없습니다.</h3>
+						</c:if>
+				<div class="container">
+					<div class="row">		
+						<c:if test="${freeboard.size()>0 }">
+							<c:forEach var="vo" items="${freeboard}">
+							<c:if test = "${vo.board_type eq 'free' }">
+						<div class="card col-md-3">
+						<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="225" >	
+						<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
+							${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount} 조회수 ${vo.hit}
+							
+						</div>
+						
+						<br>
+						
+						</c:if>
+							</c:forEach>
+						</c:if>
+					</div>
+				</div>
+					</form>
+					
+				<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
+					<div class="container">
+						<div class="row card-list-container thumbnails">
+						
+						</div>
+					</div>
+				</section>
+				
+					<div class="back-drop"><!-- 로딩 이미지 -->
+						<img src="../" alt="안되는데여?" />
+					</div>
+					
+				</main>
 
-		<select name="SearchType">
-			<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
-			<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
-			<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
-		</select>
-		<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
-		<input type="submit" value="검색">
-	</form>
-	
-	<a href="BoardWrite.do">쓰기</a>
-	
-	<hr>
-	<c:if test="${!empty svo.searchVal}">
-			${totalRow}개의 자료가 검색되었습니다.
-	</c:if>
-	<form>
-		
-		<c:if test="${freeboard.size() ==0}">
-			
-			<h3>등록된 게시물이 없습니다.</h3>
-		</c:if>
-<div class="container">
-	<div class="row">		
-		<c:if test="${freeboard.size()>0 }">
-			<c:forEach var="vo" items="${freeboard}">
-			<c:if test = "${vo.board_type eq 'free' }">
-		<div class="card col-md-3">
-		<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="225" >	
-		<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
-			${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount}
-			
-		</div>
-		<br>
-		</c:if>
-			</c:forEach>
-		</c:if>
-	</div>
-</div>
-	</form>
-<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
-	<div class="container">
-		<div class="row card-list-container thumbnails">
-		
-		</div>
-	</div>
-</section>
-	<div class="back-drop"> <!-- 로딩 이미지 -->
-		<img src="../" alt="안되는데여?" />
-	
-	</div>
-</main>
+
 
 </body>
 </html>

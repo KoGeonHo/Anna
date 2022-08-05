@@ -417,7 +417,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/BoardDelete.do")
-	public String BoardDelete(int Bidx) {
+	public String BoardDelete(int Bidx,BoardVO vo) {
+		
+		vo.setBidx(Bidx);
+		System.out.println("Bidx");
 		
 		boardService.boardDelete(Bidx);
 		System.out.println("삭제완료");
