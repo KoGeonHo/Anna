@@ -194,7 +194,7 @@ public class BoardItemController {
 	}
 
 	@RequestMapping(value = "itemview.do")
-	public String selectitem(BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+	public String selectitem(ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
 			HttpSession session, Model model ) {
 		
 		
@@ -205,15 +205,14 @@ public class BoardItemController {
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		model.addAttribute("vo", vo);
 		
-		int neighbor_idx = vo.getUidx();
-		int uidx = (int) session.getAttribute("uidx");
-		System.out.println(uidx +"session uidx 번호");
-		System.out.println(neighbor_idx + "itemview 이웃번호");
-		bvo.setUidx(uidx);
-		bvo.setNeighbor_idx(neighbor_idx);
-		int result = boarditemService.neighbor_check(bvo);
-		model.addAttribute("result",result);
-		System.out.println(result +"이웃 체크");
+
+		
+		/*
+		 * System.out.println("여기가 문제인가"); List<ChatMessageVO> cv =
+		 * boarditemService.selectChat(cvo); model.addAttribute("cv",cv);
+		 * System.out.println("여기가 문제인가?????");
+		 */
+		
 		
 		
 		List<BoardItemVO> list = boarditemService.list(vo,pm);
@@ -222,6 +221,20 @@ public class BoardItemController {
 		List<BoardItemVO> list2 = boarditemService.selectAllbyuser(vo, svo);
 		model.addAttribute("list2", list2);
 		
+		
+		int uidx = (int) session.getAttribute("uidx");
+		
+		if(session.getAttribute("uidx") != null) {
+		int neighbor_idx = vo.getUidx();
+		System.out.println(uidx +"session uidx 번호");
+		System.out.println(neighbor_idx + "itemview 이웃번호");
+		vo.setNeighbor_idx(neighbor_idx);
+		vo.setUidx(uidx); //이게 있으면 추가가 안되고 없으면 체크가 안된다.
+		
+		}
+		int result = boarditemService.neighbor_check(vo);
+		model.addAttribute("result",result);
+		System.out.println(result +"이웃 체크");
 		
 		return "boarditem/itemview";
 
@@ -914,12 +927,13 @@ public class BoardItemController {
 		
 		model.addAttribute("vo",vo);
 		
-		return "boarditem/itemdelete";
+		return "boarditem/itemlist";
 	}
 	
 	@RequestMapping(value="/itemdelete.do", method=RequestMethod.POST)
 	public String delete(HttpSession session,BoardItemVO vo) {
 			
+			System.out.println("게시글 삭제 완료");
 			int result = boarditemService.itemdelete(vo);
 		
 		return "redirect:/itemboard/itemlist.do";
@@ -962,7 +976,7 @@ public class BoardItemController {
 	}
 	@RequestMapping("/getAllMessages")
 	@ResponseBody
-	public List getAllMessages(String nickName,int uidx,int item_idx,String cdate, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
+	public String getAllMessages(ChatMessageVO cvo,String nickName,int uidx,int item_idx,String cdate, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
 
 		UserVO userinfo = (UserVO)session.getAttribute("login");
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
@@ -972,11 +986,8 @@ public class BoardItemController {
 		session.setAttribute("userinfo",userinfo);
 		model.addAttribute("vo",vo);
 		ChatMessageVO chatMessage = new ChatMessageVO(cidx,uidx, invited,contents,chat_host,item_idx,nickName);
-		List value = boarditemService.selectChat(chatMessage);
 		
-		
-		
-		return value;
+		return "d";
 	}
 	
 	
@@ -1029,12 +1040,10 @@ public class BoardItemController {
 	public String addNeighbor(HttpSession
 			  session,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
 		System.out.println("이거 여기까진 오기는 하냐");
-		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
+		int uidx = (int) session.getAttribute("uidx");
 		
-		System.out.println(vo.getNeighbor_idx() + "이웃번호");
-		System.out.println(vo.getUidx() + "세션번호");
-		
-		System.out.println(neighbor_idx+"이웃번호");
+		System.out.println(neighbor_idx+"이웃 추가쪽 이웃번호");
+		System.out.println(uidx+"이웃 추가쪽 세션번호");
 		boarditemService.addNeighbor(vo);
 		System.out.println("이웃추가 함수가 안됨?");
 		
@@ -1048,7 +1057,7 @@ public class BoardItemController {
 		
 		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
 		boarditemService.delneighbor(vo);
-		
+		System.out.println("이웃삭제 완료");
 		return "이웃삭제 완료";
 	}
 	

@@ -81,7 +81,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 	}
 
 	@Override
-	public List selectChat(ChatMessageVO cvo) {
+	public List<ChatMessageVO> selectChat(ChatMessageVO cvo) {
+		System.out.println("serviceimple selectchat");
 		return boarditemdao.selectChat(cvo);
 	}
 
@@ -93,8 +94,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public int neighbor_check(BoardItemVO bvo) {
-		int result = boarditemdao.neighbor_check(bvo);
+	public int neighbor_check(BoardItemVO vo) {
+		int result = boarditemdao.neighbor_check(vo);
 		System.out.println(result+"service쪽 result");
 		return result;
 	}
