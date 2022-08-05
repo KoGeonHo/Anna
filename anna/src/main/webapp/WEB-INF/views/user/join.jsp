@@ -690,7 +690,7 @@
 						<button type="button" class="btn btn-primary" onclick="javascript:history.back();">돌아가기</button>
 					</div>
 				</div>
-			</form>
+			</form>	
 		</div>
 	</div>
 </body>

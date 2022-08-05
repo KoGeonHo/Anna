@@ -8,4 +8,8 @@ public interface CustomerService {
 
 	List<QnAVO> getQnAList(int uidx);
 
+	int QnAWrite(QnAVO vo);
+
+	QnAVO QnAView(int qidx);
+
 }

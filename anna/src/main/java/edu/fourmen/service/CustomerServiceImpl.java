@@ -16,8 +16,20 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public List<QnAVO> getQnAList(int uidx) {
-		// TODO Auto-generated method stub
+		
 		return customerDAO.getQnAList(uidx);
+	}
+
+	@Override
+	public int QnAWrite(QnAVO vo) {
+		
+		return customerDAO.QnAWrite(vo);
+	}
+
+	@Override
+	public QnAVO QnAView(int qidx) {
+		
+		return customerDAO.QnAView(qidx);
 	}
 	
 }

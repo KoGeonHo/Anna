@@ -21,6 +21,23 @@
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
 <!-- path는 request.getContextPath()를 가져온것. -->
+<style>
+
+.th {
+	background:#eee;
+	text-align:center;
+	vertical-align:middle;
+}
+.th, .td{
+	padding:10px;
+}
+
+.tr{
+	display:table; 
+	width:100%;
+}
+
+</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -28,63 +45,33 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		
-		<div class="container main" style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의 하기</h3>
-			<table class="table text-center">
-				<thead>
-					<tr>
-						<th scope="col" style="width:50%;">
-							제목
-						</th>
-						<th scope="col" style="width:30%;">
-							작성일
-						</th>
-						<th scope="col" style="width:20%;">
-							상태
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:if test="${ empty QnAList }">
-						<tr>
-							<td colspan="3">
-								아직 작성한 글이 없습니다.
-							</td>
-						</tr>
-					</c:if>
-					<c:if test="${ not empty QnAList }">
-						<c:forEach var="i" items="${ QnAList }">
-							<tr>
-								<td onclick="location.href='QnAView.do?qidx=${i.qidx}'">${ i.title }</td>
-								<td>${ i.wDate }</td>
-								<td>
-									<c:if test="${ i.state eq 0 }">
-										미열람
-									</c:if>
-									<c:if test="${ i.state eq 1 }">
-										처리중
-									</c:if>
-									<c:if test="${ i.state eq 2 }">
-										처리완료
-									</c:if>
-								</td>
-							</tr>
-						</c:forEach>
-					</c:if>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="3" class="text-end" style="border:0px;">
-							<button type="button" class="btn btn-sm" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAWrite.do'">글작성</button>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
+		<div class="wrapper">
+			<div class="container main">
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의하기 - ${ QnAItem.title }</h3>
+				<div class="row border-bottom tr">
+					<div class="col-4 th" style="display:table-cell;">문의유형</div>
+					<div class="col-8 td" style="display:table-cell;">
+						${ QnAItem.qType }
+					</div>
+				</div>
+				<div class="row border-bottom tr">
+					<div class="col-4 th" style="display:table-cell;">내용</div>
+					<div class="col-8 td" style="display:table-cell;">
+						${ QnAItem.contents }
+					</div>
+				</div>
+				<div class="row border-bottom tr">
+					<div class="col-4 th" style="display:table-cell;">첨부파일</div>
+					<div class="col-8 td" style="display:table-cell;">
+						${ QnAItem.attach }
+					</div>
+				</div>
+			</div>	
 		</div>
 		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
+		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->	
 	</div>
 </body>
 </html>

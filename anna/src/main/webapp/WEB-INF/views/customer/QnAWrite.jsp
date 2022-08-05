@@ -21,11 +21,22 @@
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
 <!-- path는 request.getContextPath()를 가져온것. -->
-
 <style>
-	th {
-		text-align:center;
-	}
+
+.th {
+	background:#eee;
+	text-align:center;
+	vertical-align:middle;
+}
+.th, .td{
+	padding:10px;
+}
+
+.tr{
+	display:table; 
+	width:100%;
+}
+
 </style>
 </head>
 <body>
@@ -34,55 +45,51 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		
-		<div class="container main" style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의 하기</h3>
-			<form method="POST" action="QnAWrite.do">
-				<table class="table">
-						<tbody>
-							<tr>
-								<th>
-									제목
-								</th>
-								<td><input type="text" name="title">
-								</td>
-							</tr>
-							<tr>
-								<th>
-									문의 유형
-								</th>
-								<td>
-									<select name="qType">
-										<option value="systemError">시스템 오류</option>
-										<option value="service">서비스 이용 문의</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									내용
-								</th>
-								<td>
-									<textarea name="contents" rows="10" cols="30"></textarea>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									첨부파일
-								</th>
-								<td>
-									<input type="file" name="attach">
-								</td>
-							</tr>
-						</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="3" class="text-end" style="border:0px;">
-								<button type="submit" class="btn btn-sm" style="background:#00AAB2; color:#fff;">등록</button>
-							</td>
-						</tr>
-					</tfoot>
-				</table>
-			</form>
+		<div class="wrapper">
+			<div class="container main">
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의 하기</h3>
+				<form method="POST" action="QnAWrite.do" enctype="multipart/form-data">
+				
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">제목</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<input type="text" class="form-control" name="title">
+						</div>
+					</div>
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">문의 유형</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<select name="qType">
+								<option value="system">시스템오류</option>
+								<option value="login">로그인</option>
+								<option value="service">서비스이용</option>
+								<option value="bannedItem">판매 금지 품목</option>
+								<option value="ETC">기타</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">내용</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<textarea class="form-control" name="contents" rows="10" cols="25"></textarea>
+						</div>
+					</div>
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<input class="form-control" name="attachFile" type="file" id="formFile">
+						</div>
+					</div>
+					
+					<div class="text-end">
+						<button class="btn" style="background:#00AAB2; color:#fff; margin:5px;">등록</button>
+						<button class="btn" style="background:#00AAB2; color:#fff; margin:5px;" type="button" onclick="location.href='${path}/customer/QnAList.do'">취소</button>
+					</div>
+				</form>
+			</div>
 		</div>
 		
 		<!-- 푸터는 고정 -->

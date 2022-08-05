@@ -15,8 +15,20 @@ public class CustomerDAO {
 	SqlSession sqlSession;
 
 	public List<QnAVO> getQnAList(int uidx) {
-		// TODO Auto-generated method stub
+		
 		return sqlSession.selectList("edu.fourmen.mapper.customerMapper.getQnAList",uidx);
+		
+	}
+
+	public int QnAWrite(QnAVO vo) {
+		
+		return sqlSession.insert("edu.fourmen.mapper.customerMapper.QnAWrite",vo);
+		
+	}
+
+	public QnAVO QnAView(int qidx) {
+		
+		return sqlSession.selectOne("edu.fourmen.mapper.customerMapper.QnAView",qidx);
 	}
 	
 	

@@ -1,17 +1,21 @@
 package edu.fourmen.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class QnAVO {
 	private int qidx;
 	private int uidx;
-	private int qType;
+	private String qType;
 	private String title;
 	private String contents;
+	private MultipartFile attachFile;
 	private String attach;
 	private String wDate;
 	private int state;
 	private int ans_uidx;
 	private String answer;
 	private String ans_date;
+	
 	public int getQidx() {
 		return qidx;
 	}
@@ -24,10 +28,10 @@ public class QnAVO {
 	public void setUidx(int uidx) {
 		this.uidx = uidx;
 	}
-	public int getqType() {
+	public String getqType() {
 		return qType;
 	}
-	public void setqType(int qType) {
+	public void setqType(String qType) {
 		this.qType = qType;
 	}
 	public String getTitle() {
@@ -41,6 +45,12 @@ public class QnAVO {
 	}
 	public void setContents(String contents) {
 		this.contents = contents;
+	}
+	public MultipartFile getAttachFile() {
+		return attachFile;
+	}
+	public void setAttachFile(MultipartFile attachFile) {
+		this.attachFile = attachFile;
 	}
 	public String getAttach() {
 		return attach;
