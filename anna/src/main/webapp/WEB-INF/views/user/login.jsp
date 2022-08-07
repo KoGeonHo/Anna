@@ -12,6 +12,7 @@
 	function kakaoLogin(){
 		$.ajax({
 			url : "getKakaoAuthUrl.do",
+			data : "keepLogin="+$("#keepLogin").prop("checked"),
 			type : "get",
 			success : function(Url){
 				location.href = Url;
@@ -57,9 +58,6 @@
 		padding:0 5px;
 	}
 	
-	.find-join {
-		padding-top: 12px;
-	}
 
 	
 	h2 {
@@ -120,6 +118,9 @@
 						<input type="email" id="inputEmail" class="form-control" name="user_email" placeholder="이메일" required autofocus>
 						<label for="inputPassword" class="sr-only">비밀번호</label> 
 						<input type="password" id="inputPassword" class="form-control" name="user_pwd" placeholder="비밀번호" required>
+						<div style="padding:12px 5px;">
+							<input type="checkbox" id="keepLogin" name="keepLogin" value="true"><label for="keepLogin" style="margin-left:10px;">로그인 유지</label>
+						</div>
 						<div class="find-join row">
 							<div class="text-align-left col-8" >아이디/비밀번호 찾기</div>
 							<div class="text-align-right col-4"><span onclick="location.href='join.do'">회원가입</span></div>

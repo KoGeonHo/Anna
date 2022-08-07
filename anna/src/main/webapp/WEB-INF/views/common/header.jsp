@@ -38,7 +38,41 @@
 		<nav class="navbar navbar-dark" style=" background:#00AAB2;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-			    	<a class="navbar-brand" href="#" style="color:white;">효자동</a>
+					<select class="form-select" aria-label="Default select example">
+						<option>내 동네</option>
+					</select>
+		    		<script>
+			    		let locationList = [${ userInfo.location_auth }];
+			    		let html = '';
+			    		$.ajax({
+							url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+							data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
+							success : function(data){
+								$(".spinner-border").css("display","none");
+								for(let i = 0; i < locationList.length; i++){
+									$.ajax({
+										url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
+										async : false,
+										data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
+										success : function(geojson){
+											let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
+											//dong.push(locationLevel[locationLevel.length-1]);
+											//console.log(dong);
+											html += '<option value="'+locationList[i]+'"';
+											if(i == 0){
+												html += " selected "
+											}
+											html += '>'+locationLevel[locationLevel.length-1]+'</option>'
+											$(".form-select").append('<option value="'+locationList[i]+'">'+locationLevel[locationLevel.length-1]+'</option>');
+										}
+									});
+								}
+							},
+							error: function(){
+								console.log("error");
+							}
+						});
+		    		</script>
 			    </div>
 			    <div class="text-end" style="color:white; flex:1; padding:0 1rem;">
 			    	<input type="text" class="form-control" placeholder="검색">

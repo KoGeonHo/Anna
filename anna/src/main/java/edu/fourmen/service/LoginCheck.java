@@ -2,6 +2,7 @@ package edu.fourmen.service;
 
 import java.io.PrintWriter;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,8 +20,16 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		
 		String requestUrl = request.getRequestURL().toString();
+		Cookie[] cookies = request.getCookies();
 		
-		if(requestUrl.contains("/login") || requestUrl.contains("/join") || requestUrl.contains("/getKakaoAuthUrl") || requestUrl.contains("/kakaoLogin") || requestUrl.contains("/emailChk") || requestUrl.contains("/sendAuthEmail") || requestUrl.contains("/updateKeyword")){ 
+		for(Cookie cookie:cookies) {
+			if(cookie.getName().equals("uidx")) {
+				System.out.println("쿠키존재:"+cookie.getValue());
+			}
+		}
+		
+		
+		if(requestUrl.contains("/login") || requestUrl.contains("/join") || requestUrl.contains("/getKakaoAuthUrl") || requestUrl.contains("/kakaoLogin") || requestUrl.contains("/emailChk") || requestUrl.contains("/sendAuthEmail")){ 
 			
 			return true;
 			
