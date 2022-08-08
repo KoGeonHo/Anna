@@ -29,12 +29,29 @@
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		
 		<div class="container main" style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem; margin:0px;">이웃 관리</h3>
-			<c:if test="${ empty nList }">
-				<div class='text-center'>
-					등록한 이웃이 없습니다.
-				</div>
-			</c:if>
+			<h3 class="border-bottom" style="padding:1rem; margin:0px;">제목</h3>
+			<!-- 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			본문 내용작성 
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			-->
 		</div>
 		
 		<!-- 푸터는 고정 -->

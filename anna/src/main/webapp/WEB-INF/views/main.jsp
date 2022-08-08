@@ -2,7 +2,6 @@
 <%@ page session="true"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"    pageEncoding="utf-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<%@page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,90 +10,16 @@
 	<title>Home</title>
 	
 
-    <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
+	<script src="js/jquery-3.6.0.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
 	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
  -->	
  	<link href="${path}/css/bootstrap.css" rel="stylesheet"/> 
- 	
- 	<!--   Slick Slider -->
-
-
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>	
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
- 	<!--   Slick Slider -->
 	
-	<script>
-//스크롤 시 이벤트 처리
-
-//페이지가 처음 로딩될 때 1page를 보여주기 때문에 초기값을 1로 지정한다.
-let currentPage = 1;
-//현재 페이지가 로딩중인지 여부를 저장할 변수
-let isLoding=false;
-
-//웹브라우저의 창을 스크롤할 때마다  호출되는 함수 등록
-$(window).on("scroll",function(){
-
 	
-	//위로 스크롤된 길이
-	let scrollTop = $(window).scrollTop();
-	//웹브라우저 창의 높이
-	let windowHeight = $(window).height();
-	//문서 전체의 높이
-	let documentHeight = $(document).height();
-	//바닥까지 스크롤 되었는지 여부를 알아낸다.
-	let isBottom = scrollTop + windowHeight + 10 >= documentHeight;
 	
-	if(isBottom){
-		console.log(isLoding);
-		//만일 현재 마지막 페이지라면
-		if(currentPage == ${totalPageCount} || isLoding){
-			console.log(currentPage);
-			return; // 함수를 여기서 끝낸다.
-		}
-		//현재 로딩 중이라고 표시한다.
-		isLoding= true;
-		//console.log("탔습니다.");
-		//로딩바를 띄우고
-		$(".back-drop").show();
-		//요청할 페이지 번호를 1증가시킨다.
-		currentPage++;
-		//추가로 받아올 페이지를 서버에 ajax 요청을 하고
-		//console.log("inscroll" + currentPage);
-		GetList(currentPage); 
-	
-	}
-
-});
-
-//카드 리스트를 가져오는 함수
-
-const GetList = function(currentPage){
-
-	//console.log("inGetList" + currentPage);
-	
-	//무한스크롤
-	$.ajax({
-	
-		url : "ajax_main.do",
-		method : "GET",	
-		//FreeBoard.jsp의 내용이 data로 들어온다. 
-		success:function(data){
-			console.log(data);
-			//응답된 문자열은 html형식이다. 
-			//해당 문자열은 .card-list-container div에 html로 해석하라고 추가한다.
-			$(".card-list-container").append(data);
-			//로딩바를 숨긴다.
-			$(".back-drop").hide();
-			//로딩중이 아니라고 표시한다.
-			isLoding=false;
-			//console.log("ajax"); 
-		}	
-	});
-}
-</script>
 	
 <style>
 
@@ -108,12 +33,6 @@ const GetList = function(currentPage){
 */
 .body {
 	padding-top: -56px;
-}
-a {
-  color: #000;
-  text-decoration: none;
-}
-	
 }
 
 .row {
@@ -193,464 +112,434 @@ a {
 
 <body>
 
-	<!-- pc 헤더 -->
-	<div class="b-example-divider ">
-		<div class="container ">
-			<div class="d-md-none d-lg-block d-xl-block">
-
-				<header
-					class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1 ">
-					<a href="/"
-						class="d-flex align-items-center col-md-3 mb-1 col-sm-3 mb-md-0 text-dark text-decoration-none ">
-						<div class="logo">
-							<img src="images/logo.png" width="70%">
-						</div>
-					</a>
-
-					<ul
-						class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
-						<li><a href="boarditem/itemlist.do"
-							class="nav-link px-3 link-dark ">중고거래</a></li>
-						<li><a href="board/FreeBoard.do"
-							class="nav-link px-3 link-dark">커뮤니티</a></li>
-						<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
-						<li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
-					</ul>
-
-					<div class="col-md-3 text-end">
-						<c:if test="${uidx == null }">
-
-							<button type="button" class="btn"
-								style="background-color: #00AAB2; color: #fff;"
-								onclick="javascript:location.href='<%=request.getContextPath()%>/user/login.do';">로그인</button>
-							<button type="button" class="btn"
-								style="background-color: #BBCE53; color: #fff;"
-								onclick="javascript:location.href='<%=request.getContextPath()%>/user/join.do';">회원가입</button>
-						</c:if>
-						<c:if test="${uidx != null }">
-							<button type="button" class="btn "
-								style="background-color: #00AAB2; color: #fff;"
-								onclick="javascript:location.href='<%=request.getContextPath()%>/user/logout.do';">로그아웃</button>
-							<button type="button" class="btn "
-								style="background-color: #BBCE53; color: #fff;">물음표</button>
-						</c:if>
-					</div>
-				</header>
-			</div>
-		</div>
-	</div>
-
-	<!-- pc헤더 -->
-
-
-	<!-- 모바일 헤더-->
-
-	<div class="d-lg-none">
-
-		<nav class="navbar navbar-expand-lg fixed-top navbar-dark "
-			style="background-color: #00AAB2;" aria-label="Main navigation">
-
-			<div class="container-fluid">
-				<a class="navbar-brand fs-1 fw-bold" href="#">금암동 ▼</a>
-
-
-				<button class="navbar-toggler p-0 border-0" type="button"
-					id="navbarSideCollapse" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="navbar-collapse offcanvas-collapse"
-					id="navbarsExampleDefault">
-					<br>
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link  fs-1 fw-bold"
-							aria-current="page" href="#">메뉴</a></li>
-						<li class="nav-item"><a class="nav-link  fs-1 fw-bold"
-							href="#">추천</a></li>
-						<li class="nav-item"><a class="nav-link  fs-1 fw-bold"
-							href="#">받습</a></li>
-						<li class="nav-item"><a class="nav-link  fs-1 fw-bold"
-							href="#">니다</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div>
-	<!-- 모바일 헤더-->
-
-
-	<!-- 슬라이드 -->
-	<div class="d-md-none d-lg-block d-xl-block">
-		<div id="myCarousel" class="carousel slide " data-bs-ride="carousel">
-			<div class="carousel-indicators ">
-				<button type="button" data-bs-target="#myCarousel"
-					data-bs-slide-to="0" class="active" aria-current="true"
-					aria-label="Slide 1"></button>
-				<button type="button" data-bs-target="#myCarousel"
-					data-bs-slide-to="1" aria-label="Slide 2"></button>
-				<button type="button" data-bs-target="#myCarousel"
-					data-bs-slide-to="2" aria-label="Slide 3"></button>
-			</div>
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img src="images/slide_2.png" width="100%">
-
-					<div class="container">
-						<div class="carousel-caption text-start"></div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img src="images/slide_1.png" width="100%">
-
-					<div class="container">
-						<div class="carousel-caption"></div>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img src="images/slide.png" width="100%">
-
-					<div class="container">
-						<div class="carousel-caption text-end"></div>
-					</div>
-				</div>
-			</div>
-			<button class="carousel-control-prev" type="button"
-				data-bs-target="#myCarousel" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next" type="button"
-				data-bs-target="#myCarousel" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
-			</button>
-		</div>
-		<br> <br>
-	</div>
-	<!-- 슬라이드 -->
-
-
-	<!-- 검색 -->
-	<div class="container">
-		<div class="d-md-none d-lg-block d-xl-block">
-			<div class="row">
-				<div class="col-md-1 col-sm-0"></div>
-				<div class="col-md-10  col-sm-12">
-
-					<form class="d-flex ">
-						<input class="form-control me-6 vh-20" type="search"
-							placeholder="검색어를 입력하세요" aria-label="Search">
-						<button class="btn btn-outline-primary" type="submit">Search</button>
-					</form>
-
-				</div>
-				<div class="col-md-1 col-sm-0"></div>
-			</div>
-		</div>
-	</div>
-	<!-- 검색 -->
-
-
-
-	<!-- 상품 -->
-	<main>
-		<div class="album py-5 ">
-			<div class="d-md-none d-lg-block d-xl-block">
-				<div class="container">
-
-					<div class="container ">  
-						<div class="row ">
-							<div class="col-md-2">
-								<h4>｜인기 상품</h4>
+			<!-- pc 헤더 -->
+			<div class="b-example-divider ">
+				<div class="container ">
+					<div class="d-md-none d-lg-block d-xl-block">
+		
+						<header class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1 ">
+							<a href="/" class="d-flex align-items-center col-md-3 mb-1 col-sm-3 mb-md-0 text-dark text-decoration-none ">
+								<div class="logo">
+									<img src="images/logo.png" width="70%">
+								</div>
+							</a>
+		
+							<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
+								<li><a href="boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
+								<li><a href="board/FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a></li>
+								<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
+								<li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
+							</ul>
+		
+							<div class="col-md-3 text-end">
+								<c:if test="${uidx == null }">
+		
+									<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/login.do';">로그인</button>
+									<button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/join.do';">회원가입</button>
+								</c:if>
+								<c:if test="${uidx != null }">
+									<button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/logout.do';">로그아웃</button>
+									<button type="button" class="btn " style="background-color: #BBCE53; color: #fff;">물음표</button>
+								</c:if>
 							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2 ">
-								<h6 style="text-align: right;">더보기</h6>
+						</header>
+					</div>
+				</div>
+			</div>
+		
+			<!-- pc헤더 -->
+		
+		
+			<!-- 모바일 헤더-->
+		
+			<div class="d-lg-none">
+		
+				<nav class="navbar navbar-expand-lg fixed-top navbar-dark " style="background-color: #00AAB2;" aria-label="Main navigation">
+		
+					<div class="container-fluid">
+						<a class="navbar-brand fs-1 fw-bold" href="#">금암동 ▼</a>
+		
+		
+						<button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+		
+						<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+							<br>
+							<ul class="navbar-nav me-auto mb-2 mb-lg-0">						
+								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" aria-current="page" href="#">메뉴</a></li>
+								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">추천</a></li>
+								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">받습</a></li>
+								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">니다</a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+			<!-- 모바일 헤더-->
+		
+		
+			<!-- 슬라이드 -->
+			<div class="d-md-none d-lg-block d-xl-block">
+				<div id="myCarousel" class="carousel slide " data-bs-ride="carousel">
+					<div class="carousel-indicators ">
+						<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+						<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+						<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					</div>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img src="images/slide_2.png" width="100%">
+		
+							<div class="container">
+								<div class="carousel-caption text-start"></div>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<img src="images/slide_1.png" width="100%">
+		
+							<div class="container">
+								<div class="carousel-caption"></div>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<img src="images/slide.png" width="100%">
+		
+							<div class="container">
+								<div class="carousel-caption text-end"></div>
+							</div>
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+				<br>
+				 <br>
+			</div>
+			<!-- 슬라이드 -->
+		
+		
+			<!-- 검색 -->
+					<div class="container">
+						<div class="d-md-none d-lg-block d-xl-block">
+					    <div class="row">
+					        <div class="col-md-1 col-sm-0"></div>
+					        <div class="col-md-10  col-sm-12" >
+					        
+					            <form class="d-flex ">
+						          <input class="form-control me-6 vh-20" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+						          <button class="btn btn-outline-primary" type="submit">Search</button>
+						        </form>
+					        
+					        </div>
+					        <div class="col-md-1 col-sm-0"></div>
+					    </div>
+					    </div>
+					    </div>	
+				  	<!-- 검색 -->
+			
+		
+		
+					<!-- 상품 -->
+					<main>
+						<div class="album py-5 ">
+							<div class="d-md-none d-lg-block d-xl-block">
+								<div class="container">
+				
+									<div class="container ">
+										<div class="row ">
+											<div class="col-md-2">
+												<h4>｜중고거래</h4>
+											</div>
+											<div class="col-md-8"></div>
+											<div class="col-md-2 ">
+												<h6 style="text-align: right;">더보기</h6>
+											</div>
+											<hr>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+		
+		
+				<div class="container ">
+					<div class="row">
+						<div class=" col-lg-3  col-md-12 ">
+		
+							<div class="card ">
+								<img src="https://media.bunjang.co.kr/product/187617756_3_1652360665_w856.jpg" class="card-img-top" alt="...">
+								<div class="card-body">
+									<h6 class="card-title ">후지카메라 x100v</h6>
+									<h5 class="card-text">1,450,000원</h5>
+									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
+								</div>
+							</div>
+						</div>
+		
+						<div class="col-lg-3  col-md-12 ">
+		
+							<div class="card ">
+								<img src="https://media.bunjang.co.kr/product/190285795_2_1655981003_w856.jpg" class="card-img-top" alt="...">
+								<div class="card-body">
+									<h6 class="card-title">17-18 손흥민 유니폼</h6>
+									<p class="card-text">145,000원</p>
+									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
+								</div>
+							</div>
+						</div>
+		
+						<div class=" col-lg-3  col-md-12 ">
+		
+							<div class="card ">
+								<img src="https://media.bunjang.co.kr/product/193141726_1_1657512097_w856.jpg" class="card-img-top" alt="...">
+								<div class="card-body">
+									<h6 class="card-title">맥북 m1 에어 2020 기본형</h6>
+									<p class="card-text">800,000원</p>
+									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
+								</div>
+							</div>
+						</div>
+		
+						<div class=" col-lg-3  col-md-12 ">
+		
+							<div class="card ">
+								<img src="https://media.bunjang.co.kr/product/192931467_3_1657288958_w856.jpg" class="card-img-top" alt="...">
+								<div class="card-body">
+									<h6 class="card-title">루이까또즈 머니클립 지갑</h6>
+									<p class="card-text">35,000원</p>
+									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
+									<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>		
+			</main>
+			<!-- 상품 -->
+		
+			<!-- 게시글 -->
+			<main>
+				<div class="album py-5">
+					<div class="container">
+						<div class="d-md-none d-lg-block d-xl-block">
+		
+							<div class="container ">
+								<div class="row">
+									<div class="col-md-2">
+										<h4>｜일상 & 소통</h4>
+									</div>
+									<div class="col-md-8"></div>
+									<div class="col-md-2">
+										<h6 style="text-align: right;">더보기</h6>
+									</div>
+								</div>
 							</div>
 							<hr>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</main>
-	<!-- 상품 -->
-
- 	<!--   Slick Slider -->
- 	<div class="container ">
-			<div class="row">
-	<!-- stlye 은 slick 영역 확인용 -->
-	<div style="padding:30px 100px; background-color: #fff; margin-top:-75px;" >
-	  	<div id="slider-div"  >
-
-
-			
-
-			<c:if test="${list.size() > 0}">
-							<c:forEach var="vo" items="${list}">
-
-
-								<div class="col-lg-3  col-md-12 ">
-
-									<div class="card">
-										<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"> <img
-											src="<%=request.getContextPath()%>/resources/upload/${vo.image1}"
-											onerror=this.src= "images/noimg_item.jpg" width="100%"
-											height="255">
-										</a>
-
-										<div class="card-body">
-											<h6 class="card-title">
-												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
-											</h6>
-											<p class="card-text">${vo.price}원</p>
-											<button type="button"
-												class="btn btn-sm btn-outline-secondary"
-												style="float: right">view 5</button>
-											<button type="button"
-												class="btn btn-sm btn-outline-secondary"
-												style="float: right">♥2</button>
+		
+							<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">		
+		
+								<div class="col">
+									<div class="card shadow-sm">
+										<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img"	aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice"focusable="false">
+										<rect width="100%" height="100%" fill="#55595c" /> <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+											<div class="card-body">
+											<h5 class="card-title">게시글 제목</h5>
+											<p class="card-text"></p>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">♥2</button>
 										</div>
 									</div>
 								</div>
-							</c:forEach>
-						</c:if>
-			
-			
-				
-	  	</div>
-	</div>
-	</div>
-	
-	
-	<script>
-  		$(function(){
-			$('#slider-div').slick({
-				slide: 'div',		//슬라이드 되어야 할 태그 ex) div, li 
-				infinite : true, 	//무한 반복 옵션	 
-				slidesToShow : 4,		// 한 화면에 보여질 컨텐츠 개수
-				slidesToScroll : 1,		//스크롤 한번에 움직일 컨텐츠 개수
-				speed : 100,	 // 다음 버튼 누르고 다음 화면 뜨는데까지 걸리는 시간(ms)
-				arrows : true, 		// 옆으로 이동하는 화살표 표시 여부
-				autoplay : true,			// 자동 스크롤 사용 여부
-				autoplaySpeed : 5000, 		// 자동 스크롤 시 다음으로 넘어가는데 걸리는 시간 (ms)
-				pauseOnHover : true,		// 슬라이드 이동	시 마우스 호버하면 슬라이더 멈추게 설정
-				vertical : false,		// 세로 방향 슬라이드 옵션
-				prevArrow : "<img src='images/slicbtn_prev.png'  id ='slidebtn' class='slick-prev'></button>",		// 이전 화살표 모양 설정
-				nextArrow : "<img src='images/slicbtn_next.png' id ='slidebtn' class='slick-next'></button>",		// 다음 화살표 모양 설정
-				draggable : true, 	//드래그 가능 여부 
-				
-				responsive: [ // 반응형 웹 구현 옵션
-					{  
-						breakpoint: 960, //화면 사이즈 960px
-						settings: {
-							//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-							slidesToShow:3 
-						} 
-					},
-					{ 
-						breakpoint: 768, //화면 사이즈 768px
-						settings: {	
-							//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-							slidesToShow:2 
-						} 
-					}
-				]
-
-			});
-  		})  		
-	</script>
-	
-	
-	<style>
-	
-#slidebtn {
-width: 50px;
-  color: white;
-  font-size: 35px;
- 	line-height: 50px;
-
-}
-	
-	.slick-prev {
-   
-    position: absolute;
-    z-index: 100;
-    top: 42%;
-    left: -80px;
-    border : 0;
-
-}
-
-	.slick-next {
-   
-    position: absolute;
-    z-index: 100;
-    top: 42%;
-    right: -80px;
-    border : 0;
-
-}
-
-
-</style>
-	
- 	 <!--   Slick Slider -->
-
-
-
-
-	<!-- 게시글 -->
-	<main>
-		<div class="album py-5">
-			<div class="container">
-				<div class="d-md-none d-lg-block d-xl-block">
-
-					<div class="container ">
-						<div class="row">
-							<div class="col-md-2">
-								<h4>｜일상 & 소통</h4>
-							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2">
-								<h6 style="text-align: right;">
-									<a href="board/FreeBoard.do">더보기</a>
-								</h6>
-							</div>
-						</div>
-					</div>
-					<hr>
-
-
-					<form>
-						<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-
-
-
-
-							<c:if test="${freeboard.size() ==0}">
-
-								<h3>등록된 게시물이 없습니다.</h3>
-							</c:if>
-
-							<c:if test="${freeboard.size()>0 }">
-								<c:forEach var="vo" items="${freeboard}">
-									<c:if test="${vo.board_type eq 'free' }">
-
-										<div class="col">
-											<div class="card shadow-sm">
-												<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img
-													src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"
-													onerror=this.src= "images/noimg.jpg" width="100%"
-													height="225">
-												</a>
-												<div class="card-body">
-													<h6 class="card-title">
-														<a href="board/viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a>
-													</h6>
-													<p class="card-text"></p>
-													<button type="button"
-														class="btn btn-sm btn-outline-secondary"
-														style="float: right">view 5</button>
-													<button type="button"
-														class="btn btn-sm btn-outline-secondary"
-														style="float: right">♥2</button>
-												</div>
-											</div>
-										</div>
-									</c:if>
-								</c:forEach>
-							</c:if>
-
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		</div>
-		<br>
-
-	</main>
-	<!-- 게시글 -->
-
-
-
-	<!-- 상품 -->
-	<main>
-		<div class="album py-5 ">
-			<div class="container">
-				<div class="d-md-none d-lg-block d-xl-block">
-					<div class="container ">
-						<div class="row">
-							<div class="col-md-2">
-								<h4>｜중고거래</h4>
-							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2">
-								<h6 style="text-align: right;">
-									<a href="boarditem/itemlist.do">더보기</a>
-								</h6>
-							</div>
-						</div>
-					</div>
-					<hr>
-
-					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-						<c:if test="${list.size() > 0}">
-							<c:forEach var="vo" items="${list}">
-
-
-								<div class="col-lg-3  col-md-12 ">
-
-									<div class="card">
-										<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"> <img
-											src="<%=request.getContextPath()%>/resources/upload/${vo.image1}"
-											onerror=this.src= "images/noimg_item.jpg" width="100%"
-											height="255">
-										</a>
-
-										<div class="card-body">
-											<h6 class="card-title">
-												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
-											</h6>
-											<p class="card-text">${vo.price}원</p>
-											<button type="button"
-												class="btn btn-sm btn-outline-secondary"
-												style="float: right">view 5</button>
-											<button type="button"
-												class="btn btn-sm btn-outline-secondary"
-												style="float: right">♥2</button>
+		
+								<div class="col">
+									<div class="card shadow-sm">
+										<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img"	aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice"focusable="false">
+										<rect width="100%" height="100%" fill="#55595c" /> <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+											<div class="card-body">
+											<h5 class="card-title">게시글 제목</h5>
+											<p class="card-text"></p>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">♥2</button>
 										</div>
 									</div>
 								</div>
-							</c:forEach>
-						</c:if>
-					</div>
-
-					<div id="card-list" class="card-list">
-						<!-- 무한스크롤부분 -->
-						<div class="container">
-							<div class="row card-list-container thumbnails"></div>
+		
+								<div class="col">
+									<div class="card shadow-sm">
+										<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img"	aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice"focusable="false">
+										<rect width="100%" height="100%" fill="#55595c" /> <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+											<div class="card-body">
+											<h5 class="card-title">게시글 제목</h5>
+											<p class="card-text"></p>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+		
+								<div class="col">
+									<div class="card shadow-sm">
+										<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img"	aria-label="Placeholder: " preserveAspectRatio="xMidYMid slice"focusable="false">
+										<rect width="100%" height="100%" fill="#55595c" /> <text x="50%" y="50%" fill="#eceeef" dy=".3em"></text></svg>
+											<div class="card-body">
+											<h5 class="card-title">게시글 제목</h5>
+											<p class="card-text"></p>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	 style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
-
-
-
-
 				</div>
-			</div>
-		</div>
-	</main>
-
-
-
-
-	<!-- 상품 -->
-
-
-	<!--
+			</main>
+			<!-- 게시글 -->
+		
+					
+		 <!-- 상품 -->
+			<main>
+				<div class="album py-5 ">
+					<div class="container">
+						<div class="d-md-none d-lg-block d-xl-block">
+							<div class="container ">
+								<div class="row">
+									<div class="col-md-2">
+										<h4>｜중고거래</h4>
+									</div>
+									<div class="col-md-8"></div>
+									<div class="col-md-2">
+										<h6 style="text-align: right;">더보기</h6>
+									</div>
+								</div>
+							</div>
+							<hr>
+		
+							<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">		
+		
+								<div class="col-lg-3  col-md-12 ">
+		
+									<div class="card">
+										<img src="https://media.bunjang.co.kr/product/193152448_2_1657519466_w856.jpg"	 class="card-img-top" alt="...">
+										<div class="card-body">
+											<h6 class="card-title">아이앱 스튜디오 후드 블랙</h6>
+											<p class="card-text">220,000원</p>
+											<button type="button" class="btn btn-sm btn-outline-secondary" 	style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+		
+								<div class="col-lg-3  col-md-12 ">
+		
+									<div class="card">
+										<img src="https://media.bunjang.co.kr/product/193052370_2_1657426178_w856.jpg" class="card-img-top" alt="...">
+										<div class="card-body">
+											<h6 class="card-title">킥보드 크루스rs팝니다</h6>
+											<p class="card-text">700,000원</p>
+											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+		
+								<div class="col-lg-3  col-md-12 ">
+		
+									<div class="card">
+										<img src="https://media.bunjang.co.kr/product/193152157_10_1657519257_w856.jpg" class="card-img-top" alt="...">
+										<div class="card-body">
+											<h6 class="card-title">퓨리티 플러스 회전형 젖병 소독기</h6>
+											<p class="card-text">145,000원</p>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+		
+								<div class="col-lg-3  col-md-12">
+		
+									<div class="card">
+										<img src="https://media.bunjang.co.kr/product/189215558_2_1653819887_w856.jpg" class="card-img-top" alt="...">
+										<div class="card-body">
+											<h6 class="card-title">코드유 블랑 블라우스</h6>
+											<p class="card-text">29,000원</p>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+		
+								<div class="col-lg-3  col-md-12">
+		
+									<div class="card">
+										<img src="https://media.bunjang.co.kr/product/193053163_4_1657426794_w856.jpg"	class="card-img-top" alt="...">
+										<div class="card-body">
+											<h6 class="card-title">new 닌텐더 2ds xl</h6>
+											<p class="card-text">100,000원</p>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary"	style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+		
+								<div class="col-lg-3  col-md-12">
+		
+									<div class="card">
+										<img src="https://media.bunjang.co.kr/product/192865491_4_1657362057_w856.jpg" class="card-img-top" alt="...">
+										<div class="card-body">
+											<h6 class="card-title">엠스톤그루브 저소음갈축 풀윤활 키보드</h6>
+											<p class="card-text">115,000원</p>
+											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+		
+								<div class="col-lg-3  col-md-12">
+		
+									<div class="card">
+										<img src="https://media.bunjang.co.kr/product/170033103_8_1657074193_w856.jpg" class="card-img-top" alt="...">
+										<div class="card-body">
+											<h6 class="card-title">어반드로워 사이드테이블</h6>
+											<p class="card-text">250,000원</p>
+											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+		
+								<div class="col-lg-3  col-md-12">
+		
+									<div class="card">
+										<img src="https://media.bunjang.co.kr/product/170033103_8_1657074193_w856.jpg" class="card-img-top" alt="...">
+										<div class="card-body">
+											<h6 class="card-title">어반드로워 사이드테이블</h6>
+											<p class="card-text">250,000원</p>
+											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">view 5</button>
+											<button type="button" class="btn btn-sm btn-outline-secondary" style="float: right">♥2</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+		
+			<!-- 상품 -->	
+		
+		
+			<!--
 				<a href="sample1.do">sample1.do</a> |
 				<a href="sample2.do">sample2.do</a> |
 				<br>
@@ -658,110 +547,87 @@ width: 50px;
 				<br>
 				<a href="user/join.do">회원가입하기</a><br>
 				<br> 
-				-->
-
-	<!--모바일 하단 메뉴버튼 -->
-	<div class="visible-xs">
-		<div class="container ">
-			<div class="row d-lg-none">
-				<div class="bottom_menu">
-					<div>
-						<img src="images/icon_home.png" width="40%">
-					</div>
-					<div>
-						<img src="images/icon_comm.png" width="40%">
-					</div>
-					<div>
-						<img src="images/icon_chat.png" width="40%">
-					</div>
-					<div>
-						<img src="images/icon_my.png" width="40%">
-					</div>
-					<div>
-						<img src="images/icon_quick.png" width="40%">
+				-->		
+		
+			<!--모바일 하단 메뉴버튼 -->
+			<div class="visible-xs">
+				<div class="container ">
+					<div class="row d-lg-none">
+						<div class="bottom_menu">
+							<div>
+								<img src="images/icon_home.png" width="40%">
+							</div>
+							<div>
+								<img src="images/icon_comm.png" width="40%">
+							</div>
+							<div>
+								<img src="images/icon_chat.png" width="40%">
+							</div>
+							<div>
+								<img src="images/icon_my.png" width="40%">
+							</div>
+							<div>
+								<img src="images/icon_quick.png" width="40%">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+			<!--모바일 하단 메뉴버튼 -->
+			
+
+		<main>
+	<form method="get" action="FreeBoard.do">
+
+		<select name="SearchType">
+			<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
+			<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
+			<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
+		</select>
+		<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
+		<input type="submit" value="검색">
+	</form>
+	
+	<a href="BoardWrite.do">쓰기</a>
+	
+	<hr>
+	<c:if test="${!empty svo.searchVal}">
+			${totalRow}개의 자료가 검색되었습니다.
+	</c:if>
+	<form>
+		
+		<c:if test="${freeboard.size() ==0}">
+			
+			<h3>등록된 게시물이 없습니다.</h3>
+		</c:if>
+		
+		<c:if test="${freeboard.size()>0 }">
+			<c:forEach var="vo" items="${freeboard}">
+			<c:if test = "${vo.board_type eq 'free' }">
+		<div>
+			<img src="../resources/upload/t-${vo.image1}" alt="없어요 없어">
+			<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
+			${vo.nickName}  좋아요 112 댓글 1
+		</div>
+		<br>
+		</c:if>
+			</c:forEach>
+		</c:if>
+		
+	</form>
+<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
+	<div class="container">
+		<div class="row card-list-container thumbnails">
+		
 		</div>
 	</div>
-	<!--모바일 하단 메뉴버튼 -->
-
-
-
-	<!-- 퀵메뉴 시작 
-	<div id="test_obj">
-		<a href="boarditem/itemwrite.do">
-			<img src="images/quickmenu.png" onmouseover="this.src='images/quickmenu_in.png'" onmouseout="this.src='images/quickmenu.png'"">
-		</a>
-	</div>
+</section>
+	<div class="back-drop"> <!-- 로딩 이미지 -->
+		<img src="../" alt="안되는데여?" />
 	
-	<style>
-		#test_obj {
-			position: absolute;
-			width: 70px;
-			height: 70px;
-			right: 35px;
-			border-radius: 70px;
-			top: 750px;
-			border: 1px solid #dddddd;
-			color : #000;
-		}
-		</style>
+	</div>
+</main>
 		
-		<script>
-					    $(document).ready(function () {
-					        var tmp = parseInt($("#test_obj").css('top'));
-					 
-					        $(window).scroll(function () {
-					            var scrollTop = $(window).scrollTop();
-					            var obj_position = scrollTop + tmp + "px";
-					 
-					            $("#test_obj").stop().animate({
-					                "top": obj_position
-					            }, 500);
-					 
-					        }).scroll();
-					    });
-		</script>
-		<!-- 퀵메뉴 종료 -->
-
-
-		<!-- 퀵메뉴 시작 -->
-		 <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
-      <li class="mfb-component__wrap">
-        <a href="#" class="mfb-component__button--main">
-          <i class="mfb-component__main-icon--resting ion-plus-round"></i>
-          <i class="mfb-component__main-icon--active ion-close-round"></i>
-        </a>
-        <ul class="mfb-component__list">
-          <li>
-            <a href="https://github.com/nobitagit/material-floating-button/" data-mfb-label="판매글 등록" class="mfb-component__button--child">
-              <i class="mfb-component__child-icon ion-clockwise"></i>
-              
-            </a>
-          </li>
-          <li>
-            <a href="https://github.com/nobitagit" data-mfb-label="알림" class="mfb-component__button--child">
-              <i class="mfb-component__child-icon ion-social-youtube"></i>
-            </a>
-          </li>
-
-
-        </ul>
-      </li>
-    </ul>
-		
-		
-		<link href="css/mfb.css" rel="stylesheet">
-		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
-		<!-- 퀵메뉴 시작 -->
-
-
-
-
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
  <script src="https://getbootstrap.kr/docs/5.1/examples/offcanvas-navbar/offcanvas.js"></script>

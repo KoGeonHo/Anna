@@ -69,7 +69,7 @@ public class BoardItemDAO {
 		return sqlSession.insert(efdb+".insertChat",cvo);
 	}
 	
-	public List selectChat(ChatMessageVO cvo) {
+	public List<ChatMessageVO> selectChat(ChatMessageVO cvo) {
 		return sqlSession.selectList(efdb+".selectChat",cvo);
 	}
 	
@@ -80,7 +80,6 @@ public class BoardItemDAO {
 
 	public int neighbor_check(BoardItemVO bvo) {
 		return sqlSession.selectOne(efdb+".neighbor_check",bvo);
-
 	}
 	
 	public int delneighbor(BoardItemVO vo) {
