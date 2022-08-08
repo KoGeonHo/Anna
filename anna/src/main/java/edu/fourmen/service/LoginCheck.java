@@ -37,7 +37,7 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 			
 			//System.out.println(session.getAttribute("uidx"));
 			
-			if(session.getAttribute("uidx") == null) {
+			if(session.getAttribute("uidx") == null || session.getAttribute("userLoginInfo") == null) {
 				
 				PrintWriter pw = response.getWriter();
 				

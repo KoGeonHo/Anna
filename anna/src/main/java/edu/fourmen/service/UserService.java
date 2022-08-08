@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.UserVO;
 
 public interface UserService {
@@ -23,6 +24,7 @@ public interface UserService {
 	String getLocation(int uidx);
 	List<BoardItemVO> getInterestedItem(List<String> interested);
 	List<UserVO> neighborList(int uidx);
+	List<BoardVO> myTownCommunityList(String location_auth);
 	
 	
 }

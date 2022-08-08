@@ -69,7 +69,7 @@
 								<span class="visually-hidden">Loading...</span>
 							</div>
 							<script>
-								let locationList = [${ userInfo.location_auth }];
+								
 								$.ajax({
 									url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
 									data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
@@ -94,9 +94,9 @@
 						</c:if>
 					</div>
 				</div>
-				<div class="row border-bottom">
+				<div class="row border-bottom tr">
 					<div class="col-3 text-center th" style="padding:1rem;">소개글</div>
-					<div class="col-9" style="padding:1rem;">
+					<div class="col-9 td" style="padding:1rem;">
 						<c:if test="${ not empty userInfo.introduce }">
 						<% pageContext.setAttribute("newLineChar", "\n"); %>
 						${fn:replace(userInfo.introduce, newLineChar, "<br/>")}

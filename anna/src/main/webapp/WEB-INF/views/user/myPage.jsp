@@ -109,7 +109,8 @@
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
 				<div id="listOfInterested">
-					<span>${ nickName }님이 관심있어 할만한 상품</span>
+					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님이 관심있어 할만한 상품</div>
+					<div style="float:right; padding:5px;">더 보기</div>
 					<div id="slideOfInterested" class="carousel slide" data-bs-ride="carousel">
 						<div class="carousel-inner">
 							<c:forEach var="i" begin="0" end="${ interestedList.size() - 1 }" step="5">
@@ -164,7 +165,8 @@
 				
 				<hr>
 				<div id="listOfCommunity">
-					<span>${ nickName }님의 판매중인 상품</span>
+					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님의 판매중인 상품</div>
+					<div style="float:right; padding:5px;">더 보기</div>
 					<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 						<div class="carousel-inner">
 							<c:forEach var="i" begin="0" end="${ interestedList.size() - 1 }" step="5">
@@ -219,8 +221,29 @@
 				<hr>
 				
 				<div id="listOfCommunity">
-					<span>우리동네 커뮤니티</span>
-					
+					<div style="float:left; padding:5px;">우리동네 커뮤니티</div>
+					<div style="float:right; padding:5px;">더 보기</div>
+					<div class="list">
+				
+						<div class="tr border-bottom">
+							<div class="th" style="width:50%;">제목</div>
+							<div class="th" style="width:10%;">구분</div>
+							<div class="th" style="width:10%;">작성자</div>
+							<div class="th" style="width:20%;">작성일</div>
+							<div class="th" style="width:10%;">조회수</div>
+						</div>
+						<c:if test="${ not empty myTownCommunityList }">
+							<c:forEach var="i" items="${ myTownCommunityList }">
+								<div class="tr border-bottom">
+									<div class="td text-center" style="width:50%;">${ i.title }</div>
+									<div class="td text-center" style="width:10%;">${ i.board_type }</div>
+									<div class="td text-center" style="width:10%;">${ i.nickName }</div>
+									<div class="td text-center" style="width:20%;">${ i.wdate }</div>
+									<div class="td text-center" style="width:10%;">${ i.hit }</div>
+								</div>
+							</c:forEach>
+						</c:if>
+					</div>
 				</div>
 			</div>
 			<!-- MyPage for Pc -->
