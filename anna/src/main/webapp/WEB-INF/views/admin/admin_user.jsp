@@ -10,13 +10,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-<title>Insert title here</title>
+<title>회원 관리</title>
 
 		<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="<%=request.getContextPath()%>/css/admin_user.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         
         <style>
            .col-md-10 {
@@ -40,6 +40,101 @@
 
         </style>
         
+        
+        <!-- 관리자 정보 메뉴  -->
+<style type="text/css">
+			#banner_online {
+			    height: 610px;
+  			    width: 503px;
+				border: 1px solid black;]
+				box-shadow: 3px 3px 7px 1px grey;
+				background-color: white;
+				z-index: 9999;
+				margin-left: -50%;
+				margin-top: -15%;
+				display: none;
+				position: fixed;
+			}
+			
+			#banner_online h1 {
+			    font-weight: bold;
+				text-align: center;
+				font-size: 20px;
+				margin: 43px -12px 28px auto;
+			}
+			
+			#banner_online p .second {
+				margin-left: 6px;
+			}
+			
+			.pop_content {
+				font-size: 13px;
+				margin-left: 82px;
+				text-align: center;
+			}
+			
+			#banner_online_how {
+				height: 78px;
+				width: 444px;
+				margin-left: 28px;
+				border: 1px solid #82bf77;
+				margin-top: 22px;
+			}
+			
+			#banner_online_how h3 {
+				font-size: 12px;
+				margin-left: 6px;
+				margin-top: 16px;
+			}
+			
+			.p_bottom {
+				margin-left: 30px;
+			}
+			
+			#modal {
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+				top: 0;
+				left: 0;
+				z-index: 99;
+				display: none;
+			}
+			#modal_list > table > tr > td{
+				width : 30px;			
+				border-bottom: 1px solid #cdd0d4;	
+			}
+			
+			#td_line {
+			border-bottom: 1px solid #cdd0d4;	
+			}
+			
+			.form-select-sm {
+
+			    width: 83px;
+			}
+			
+			#menu_box {
+				display: flex;
+				padding : ;
+				position: relative;
+  				left: 165px;
+  				margin : 3 0 10 0;
+  				
+
+			}
+			#close_button {
+				width: 83px;
+				height : 31px;
+				
+			}
+			.form-select form-select-sm{
+				border:1px solid #3881B4;
+			}
+			
+</style>
+
 </head>
 <body>
 
@@ -166,7 +261,89 @@
                                                 <th>2022-07-25</th>
                                                 <th>0</th>
                                                 <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
+                                                <th><button type="button" id="openModalPop" class="btn " style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">관리</button>
+                                              
+															<div id= "modal"> 
+															</div>
+															    <div id = "banner_online">
+															        
+															        <h1>회원 상세정보</h1><br>
+															        <div class="pop_content">
+															             <table border="0" name="modal_list" style="text-align:  left; border-bottom: 1px solid #cdd0d4;">
+															             <tr>
+																				<td id="td_line" width="130px;" height= "40px;" >이름</td>
+																				<td id="td_line">홍길동</td>
+																			</tr>
+																			<tr>
+																			    <td id="td_line" width="130px;" height= "40px;">닉네임</td>
+																			    <td id="td_line">anna</td>
+																			</tr>
+																			<tr>
+																			    <td id="td_line" width="130px;" height= "40px;">성별</td>
+																			    <td id="td_line">남</td>
+																			</tr>
+																			<tr>
+																			    <td id="td_line" width="130px;" height= "40px;">아이디</td>
+																			    <td id="td_line">test1111</td>
+																			</tr>
+																			<tr>
+																			    <td id="td_line"  width="130px;" height= "40px;">비밀번호</td>
+																			    <td id="td_line">test1111</td>
+																			</tr>
+																			<tr>
+																			    <td id="td_line" width="130px;" height= "40px;">이메일</td>
+																			    <td id="td_line">abcdefg@naver.com</td>
+																			</tr>
+																			<tr>
+																			    <td id="td_line" width="130px;" height= "40px;">전화번호</td>
+																			    <td id="td_line">010-1234-5678</td>
+																			</tr>
+																			<tr >
+																			    <td id="td_line" width="130px;" height= "40px;">주소</td>
+																			    <td id="td_line">전라북도 전주시 덕진구 금암동</td>
+																			</tr>
+																			<tr id="td_line" >
+																			    <td  width="130px;" height= "40px;">제재횟수</td>
+																			    <td >1회</td>
+																			</tr>
+																		    </table>
+																		    <br>
+																		    																		         
+															        </div>
+															        <div id="menu_box">
+															        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+																				  <option selected>권한</option>
+																				  <option value="1">유저</option>
+																				  <option value="2">관리자</option>
+																				</select>&nbsp;
+																				<button type="button"  id="close_button" class="btn " style="background-color: #3881B4; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">닫기</button>
+															       			</div>
+															       			<button type="button"  id="close_button" class="btn " style="background-color: #4A4A48; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">설정</button>
+															       			<button type="button"  id="close_button" class="btn " style="background-color: #00AAB2; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">수정</button>
+															        </div>
+															        </div>
+															
+															
+															
+															<script type="text/javascript">
+															$(document).ready(function() {
+															    $("#openPop").click(function() {
+															        $("#banner_online").show();
+															    });
+															
+															    $("#openModalPop").click(function() {
+															        $("#banner_online").fadeIn();
+															        $("#modal").fadeIn();
+															    });
+															
+															    $("#close_button").click(function(){
+															        $("#banner_online").fadeOut();
+															        $("#modal").fadeOut();
+															    });
+															});
+															</script>
+                                                </th>
+                                                
                                             </tr>
                                             <tr>
                                                 <th>2</th>
