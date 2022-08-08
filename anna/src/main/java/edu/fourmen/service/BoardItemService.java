@@ -34,7 +34,7 @@ public interface BoardItemService {
 
 	public int insertChat(ChatMessageVO cvo);	
 	
-	public List selectChat(ChatMessageVO cvo);
+	public List<ChatMessageVO> selectChat(ChatMessageVO cvo);
 	
 	public int addNeighbor(BoardItemVO vo);
 	

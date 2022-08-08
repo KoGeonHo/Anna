@@ -5,39 +5,30 @@ public class ChatMessageVO extends BoardItemVO{
 	private long cidx;
 	private int uidx;
 	private int invited;
-	private String contents;
+	private String content;
 	private int chat_host;
 	private int item_idx;
-	private String nickName;
+	
+	
 	
 	
 	public ChatMessageVO(){}
 	
-	
-	
-	
-	public ChatMessageVO(long cidx, int uidx, int invited, String contents, int chat_host,  int item_idx, String nickName) {
+	public ChatMessageVO(long cidx, int uidx, int invited, String content, int chat_host,  int item_idx, String nickName) {
 		this.cidx = cidx;
 		this.uidx = uidx;
 		this.invited = invited;
-		this.contents = contents;
+		this.content = content;
 		this.chat_host = chat_host;
 		this.item_idx = item_idx;
-		this.nickName = nickName;
 	
 	
 	
 	
 	}
 
-	public String getNickName() {
-		return nickName;
-	}
 
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
 
 	public long getCidx() {
 		return cidx;
@@ -75,14 +66,13 @@ public class ChatMessageVO extends BoardItemVO{
 
 
 
-	public String getcontents() {
-		return contents;
+	public String getContent() {
+		return content;
 	}
 
 
-
-	public void setcontents(String contents) {
-		this.contents = contents;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public int getChat_host() {

@@ -81,7 +81,7 @@ public  class BoardItemServiceImple implements BoardItemService{
 	}
 
 	@Override
-	public List selectChat(ChatMessageVO cvo) {
+	public List<ChatMessageVO> selectChat(ChatMessageVO cvo) {
 		return boarditemdao.selectChat(cvo);
 	}
 
