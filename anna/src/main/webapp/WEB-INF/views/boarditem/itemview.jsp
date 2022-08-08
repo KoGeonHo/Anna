@@ -455,9 +455,7 @@ a {
 			}
 			setTimeout(Chat__loadNewMessages,1000);
 			$("#chat").scrollTop($("#chat")[0].scrollHeight);
-
 		}, 'json');
-
 	}
 	function Chat__drawMessages(messages) {
 		var html = '[' +messages.cidx + '] (' + messages.nickName + ') : ' + messages.contents;
@@ -478,18 +476,6 @@ a {
 	
 	
 	function addNeighbor(form) {
-<<<<<<< HEAD
-=======
-		//작성자, 내용 유효성 검사
-		form.uidx.value = form.uidx.value.trim();
-		if (form.uidx.value.length == 0) {
-			alert('회원만 이웃추가 기능을 사용할 수 있습니다');
-			return false;
-		}
-
-		console.log("여기인가")
-
->>>>>>> 3f13b20f8bc4c1ec7328c158d4402a73f6d79878
 		// AJAX -> addNeighbor 실행 및 출력값 가져오기
 		$.post('./addNeighbor',{
 			neighbor_idx : form.neighbor_idx.value,
@@ -501,7 +487,6 @@ a {
 			location.reload();
 	}
 	
-
 	function delNeighbor(form) {
 		
 		// AJAX -> delNeighbor 실행 및 출력값 가져오기
@@ -515,7 +500,6 @@ a {
 			location.reload();
 	}
 	
-
 </script>
 		
 	
@@ -535,204 +519,12 @@ a {
 			<div class="container main">
 	
 	
-<<<<<<< HEAD
 		<form  method="post" enctype="multipart/form-data" name="frm">
 		
 			<div class="container">
 			<div class="row">
 					<div class="col-lg-12 col-sm-12">
 		
-=======
-<form  method="post" enctype="multipart/form-data" name="frm">
-
-	<div class="container">
-	<div class="row">
-			<div class="col-lg-12 col-sm-12">
-
-				<div class="card">
-				
-					<div class="card-body">
-						
-							<c:if test="${vo.cate_idx == 1}">
-						상품카테고리 > 가전 
-							</c:if>
-							<c:if test="${vo.cate_idx == 2}">
-						상품카테고리 > 주방
-							</c:if>
-							
-							<div style="right;">
-								<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
-								<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
-							</div>
-				<hr>
-				
-
-
-						<div class="slider-1" >
-
-						    <div class="slides">
-						    	<c:if test="${vo.image1 != null}">
-						        <div class="active"><img src="../resources/upload${vo.image1}" onclick="window.open(this.src)"></div>
-						        </c:if>
-						        <c:if test="${vo.image2 != null}">
-						        <div ><img src="../resources/upload/${vo.image2}" onclick="window.open(this.src)"></div>
-						         </c:if>
-						        <c:if test="${vo.image3 != null}">
-						        <div ><img src="../resources/upload/${vo.image3}"></div>
-						         </c:if>
-						        <c:if test="${vo.image4 != null}">
-						        <div ><img src="../resources/upload/${vo.image4}"></div>
-						         </c:if>
-						        <c:if test="${vo.image5 != null}">
-						        <div ><img src="../resources/upload/${vo.image5}"></div>
-						         </c:if>
-						        <c:if test="${vo.image6 != null}">
-						        <div ><img src="../resources/upload/${vo.image6}"></div>
-						         </c:if>
-						        <c:if test="${vo.image7 != null}">
-						        <div ><img src="../resources/upload/${vo.image7}"></div>
-						         </c:if>
-						        <c:if test="${vo.image8 != null}">
-						        <div ><img src="../resources/upload/${vo.image8}"></div>
-						         </c:if>
-						        <c:if test="${vo.image9 != null}">
-						        <div ><img src="../resources/upload/${vo.image9}"></div>
-						         </c:if>
-						        <c:if test="${vo.image10 != null}">
-						        <div ><img src="../resources/upload/${vo.image10}"></div>
-						        </c:if>
-						    </div>
-						    <div class="page-btns">
-						        <c:if test="${vo.image1 != null}">
-						        <div></div>
-								 </c:if>
-						        <c:if test="${vo.image2 != null}">
-						        <div></div>
-						         </c:if>
-						        <c:if test="${vo.image3 != null}">
-						        <div></div>
-						         </c:if>
-						        <c:if test="${vo.image4 != null}">
-						        <div></div>
-						         </c:if>
-						        <c:if test="${vo.image5 != null}">
-						        <div></div>
-						         </c:if>
-						        <c:if test="${vo.image6 != null}">
-						        <div></div>
-						         </c:if>
-						        <c:if test="${vo.image7 != null}">
-						        <div></div>
-						         </c:if>
-						        <c:if test="${vo.image8 != null}">
-						        <div></div>
-						         </c:if>
-						        <c:if test="${vo.image9 != null}">
-						        <div></div> 
-						        </c:if>
-						        <c:if test="${vo.image10 != null}">
-								<div></div>
-						         </c:if>
-						    </div>
-						    <div class="side-btns">
-						        <div>
-						            <span><i class="fas fa-angle-left"></i></span>
-						        </div>
-						        <div>
-						            <span><i class="fas fa-angle-right"></i></span>
-						        </div>
-						    </div>
-						</div>
-										
-				
-				
-				
-
-					<div class="outer" >
-
-					  <div class="inner-list">
-					    <div class="inner">
-					      <img src="../resources/upload${vo.image1}">
-					    </div>
-					    <c:if test="${vo.image2 != null }">
-						    <div class="inner">
-						      <img src="../resources/upload/${vo.image2}">
-						    </div>
-						</c:if> 
-					    <c:if test="${vo.image3 != null }">
-						    <div class="inner">
-						      <img src="../resources/upload/${vo.image3}">
-						    </div>
-					    </c:if>
-					    <c:if test="${vo.image4 != null }">
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image4}">
-					    </div>
-					    </c:if>
-					    <c:if test="${vo.image5 != null }">
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image5}">
-					    </div>
-					    </c:if>
-					    <c:if test="${vo.image6 != null }">
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image6}">
-					    </div>
-					    </c:if>
-					    <c:if test="${vo.image7 != null }">
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image7}">
-					    </div>
-					    </c:if>
-					    <c:if test="${vo.image8 != null }">
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image8}">
-					    </div>
-					    </c:if>
-					    <c:if test="${vo.image9 != null }">
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image9}">
-					    </div>
-						   </c:if>
-					    <c:if test="${vo.image10 != null }">
-					    <div class="inner">
-					      <img src="../resources/upload/${vo.image10}">
-					    </div>
-					    </c:if>
-					  </div>
-					  </div>
-				
-
-				    
-					</div>
-					
-				
-						<h5 class="card-title">${vo.title}</h5>
-							<input type="hidden" value="${vo.uidx}"> 
-							<input type="hidden" value="${vo.item_idx}">
-
-							<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
-
-
-								<p class="card-text">판매자 : ${vo.nickName}</p>
-								<p class="card-text">내용 : ${vo.content}</p>
-								<p class="card-text">판매가격 : ${vo.price}</p>
-								<p class="card-text">거래지역 : ${vo.addr2}</p>
-								<p class="card-text">키워드 : ${vo.keyword}</p>
-					
-						</div><!-- card body 끝 -->
-					</div>
-				</div>
-				</div>
-</form>
-					<h2>${vo.nickName}님	의 다른상품</h2>
-	<div class="container-fluid">
-		<div class="row">
-		<a href="../user/myPage.do?uidx=${vo.uidx}">더 보기</a>
-			<c:if test="${list2.size() > 0}">
-				<c:forEach var="vo" items="${list2}">
-					<div class="col-lg-2 col-md-4" >
->>>>>>> 3f13b20f8bc4c1ec7328c158d4402a73f6d79878
 						<div class="card">
 						
 							<div class="card-body">
@@ -952,7 +744,6 @@ a {
 					</div>
 					<input type="button" id="btn_close" value="닫 기">
 			</div>
-<<<<<<< HEAD
 			<c:if test="${uidx != null }">
 				<div class="wrap2">
 					<input type="button" id="btn_open" value="연락하기">
@@ -977,28 +768,6 @@ a {
 				</form>
 				</c:if>
 			</c:if>
-=======
-
-		
-		<c:if test="${result == 0}">
-		<form onsubmit="addNeighbor(this); return false;">
-				<input type="submit" value="이웃추가" id="or">
-				<input type="text" name="uidx" value="${uidx}">
-				<input type="text" name="neighbor_idx" value="${vo.uidx}">
-				<input type="hidden" name="item_idx" value="${vo.item_idx}">
-		</form>
-		</c:if>
-		
-		<c:if test="${result != 0}">
-		<form onsubmit="delNeighbor(this); return false;">
-				<input type="submit" value="이웃삭제" id="or">
-				<input type="hidden" name="uidx" value="${uidx}">
-				<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
-				<input type="hidden" name="item_idx" value="${vo.item_idx}">
-		</form>
-		</c:if>
-
->>>>>>> 3f13b20f8bc4c1ec7328c158d4402a73f6d79878
 	<!-- 	<script>
 		const $element = document.querySelector(".chat-list");
 

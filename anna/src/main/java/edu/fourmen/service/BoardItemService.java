@@ -36,15 +36,9 @@ public interface BoardItemService {
 	
 	public List<ChatMessageVO> selectChat(ChatMessageVO cvo);
 	
-
 	public int addNeighbor(BoardItemVO vo);
 	
-<<<<<<< HEAD
 	public int neighbor_check(BoardItemVO vo);
-=======
-	public int neighbor_check(BoardItemVO bvo);
-
->>>>>>> 3f13b20f8bc4c1ec7328c158d4402a73f6d79878
 	
 	public int delneighbor(BoardItemVO vo);
 }
