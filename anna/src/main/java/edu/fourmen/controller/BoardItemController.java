@@ -194,10 +194,16 @@ public class BoardItemController {
 	}
 
 	@RequestMapping(value = "itemview.do")
+<<<<<<< HEAD
 	public String selectitem(ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+=======
+
+	public String selectitem(BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+>>>>>>> 3f13b20f8bc4c1ec7328c158d4402a73f6d79878
 			HttpSession session, Model model ) {
 		
 		
+
 		session = request.getSession();
 		
 		UserVO userinfo = (UserVO) session.getAttribute("login");
@@ -217,11 +223,13 @@ public class BoardItemController {
 		
 		List<BoardItemVO> list = boarditemService.list(vo,pm);
 		model.addAttribute("list", list);
+
 		
 		List<BoardItemVO> list2 = boarditemService.selectAllbyuser(vo, svo);
 		model.addAttribute("list2", list2);
 		
 		
+<<<<<<< HEAD
 		int uidx = (int) session.getAttribute("uidx");
 		
 		if(session.getAttribute("uidx") != null) {
@@ -236,6 +244,9 @@ public class BoardItemController {
 		model.addAttribute("result",result);
 		System.out.println(result +"이웃 체크");
 		
+=======
+
+>>>>>>> 3f13b20f8bc4c1ec7328c158d4402a73f6d79878
 		return "boarditem/itemview";
 
 	}
@@ -1005,6 +1016,7 @@ public class BoardItemController {
 		return "메시지 전체 삭제";
 	}
 	
+
 	
 /*
 	@ResponseBody
@@ -1059,6 +1071,7 @@ public class BoardItemController {
 		boarditemService.delneighbor(vo);
 		System.out.println("이웃삭제 완료");
 		return "이웃삭제 완료";
+
 	}
 	
 	
@@ -1096,4 +1109,5 @@ public class BoardItemController {
 	
 	
 	
+
 }
