@@ -168,4 +168,48 @@
 			
 	</select>
 	
+
+	<select id="neighborList" parameterType="int" resultType="UserVO">
+		
+		SELECT 
+			uidx,
+			nickName,
+			user_email,
+			profile_image
+		FROM 
+			AnnaUser
+		WHERE 
+			uidx 
+		IN
+			(SELECT uidx FROM Neighbor WHERE uidx = #{ uidx })
+			 
+	</select>
+	
+	<select id="myTownCommunityList" parameterType="java.util.List" resultType="boardvo"> 
+		
+		SELECT
+			b.bidx,
+			b.uidx,
+			(SELECT nickName FROM AnnaUser u where u.uidx = b.uidx) as nickName,
+			b.board_type,
+			b.title,
+			b.contents,
+			DATE_FORMAT(b.wDate,'%Y-%m-%d') as wDate,
+			b.hit,
+			b.image1,
+			b.image2,
+			b.image3,
+			b.image4,
+			b.image5
+		FROM 
+			Board b
+		<!-- WHERE
+			location in  -->
+			<!-- <foreach collection="list" item="item" separator="," open="(" close=")">
+				#{item}
+			</foreach> -->
+		ORDER BY bidx DESC
+		LIMIT 1, 10;
+	</select> 
+	
 </mapper>

@@ -17,7 +17,8 @@
   		FROM 
   			QnA
   		WHERE 
-  			uidx = #{ uidx }
+  			uidx = #{ uidx } AND
+  			isDel = 'N'
   			
   	</select>
   	
@@ -44,6 +45,7 @@
   	<select id="QnAView" parameterType="int" resultType="QnAVO">
   	
   		SELECT 
+  			qidx,
   			qType,
   			title,
   			attach,
@@ -57,6 +59,7 @@
   			QnA
   		WHERE
   			qidx = #{ qidx }
+  			
   	</select>
   
 </mapper>

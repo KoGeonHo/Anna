@@ -27,59 +27,60 @@
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		
-		<div class="container main" style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의 하기</h3>
-			<table class="table text-center">
-				<thead>
-					<tr>
-						<th scope="col" style="width:50%;">
-							제목
-						</th>
-						<th scope="col" style="width:30%;">
-							작성일
-						</th>
-						<th scope="col" style="width:20%;">
-							상태
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:if test="${ empty QnAList }">
-						<tr>
-							<td colspan="3">
-								아직 작성한 글이 없습니다.
-							</td>
+		<div class="wrapper">
+			<div class="container main">
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의 하기</h3>
+				<table class="text-center" style="width:100%;">
+					<thead>
+						<tr class="border-bottom">
+							<th scope="col" style="width:50%;" class="th">
+								제목
+							</th>
+							<th scope="col" style="width:30%;" class="th">
+								작성일
+							</th>
+							<th scope="col" style="width:20%;" class="th">
+								상태
+							</th>
 						</tr>
-					</c:if>
-					<c:if test="${ not empty QnAList }">
-						<c:forEach var="i" items="${ QnAList }">
-							<tr>
-								<td onclick="location.href='QnAView.do?qidx=${i.qidx}'">${ i.title }</td>
-								<td>${ i.wDate }</td>
-								<td>
-									<c:if test="${ i.state eq 0 }">
-										미열람
-									</c:if>
-									<c:if test="${ i.state eq 1 }">
-										처리중
-									</c:if>
-									<c:if test="${ i.state eq 2 }">
-										처리완료
-									</c:if>
+					</thead>
+					<tbody>
+						<c:if test="${ empty QnAList }">
+							<tr class="border-bottom">
+								<td colspan="3">
+									아직 작성한 글이 없습니다.
 								</td>
 							</tr>
-						</c:forEach>
-					</c:if>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="3" class="text-end" style="border:0px;">
-							<button type="button" class="btn btn-sm" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAWrite.do'">글작성</button>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
+						</c:if>
+						<c:if test="${ not empty QnAList }">
+							<c:forEach var="i" items="${ QnAList }">
+								<tr class="border-bottom">
+									<td class="td" onclick="location.href='QnAView.do?qidx=${i.qidx}'">${ i.title }</td>
+									<td class="td">${ i.wDate }</td>
+									<td class="td">
+										<c:if test="${ i.state eq 0 }">
+											미열람
+										</c:if>
+										<c:if test="${ i.state eq 1 }">
+											처리중
+										</c:if>
+										<c:if test="${ i.state eq 2 }">
+											처리완료
+										</c:if>
+									</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="3" class="text-end td" style="border:0px;">
+								<button type="button" class="btn btn-sm" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAWrite.do'">글작성</button>
+							</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
 		</div>
 		
 		<!-- 푸터는 고정 -->

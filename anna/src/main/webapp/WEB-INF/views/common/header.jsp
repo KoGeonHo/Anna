@@ -9,9 +9,11 @@
 					</a>
 	
 					<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
-						<li><a href="#" class="nav-link px-3 link-dark ">중고거래</a></li>
-						<li><a href="#" class="nav-link px-3 link-dark">커뮤니티</a></li>
-						<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
+
+						<li><a href="${path}/boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
+						<li><a href="${path}/board/FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a></li>
+						<li><a href="${path}/customer/QnAList.do" class="nav-link px-3 link-dark">고객센터</a></li>
+
 						<li><a href="${path}/user/myPage.do" class="nav-link px-3 link-dark">마이페이지</a></li>
 					</ul>
 					<div class="col-md-3 text-end">
@@ -42,7 +44,7 @@
 						<option>내 동네</option>
 					</select>
 		    		<script>
-			    		let locationList = [${ userInfo.location_auth }];
+			    		let locationList = [${ userLoginInfo.location_auth }];
 			    		let html = '';
 			    		$.ajax({
 							url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",

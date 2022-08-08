@@ -1,5 +1,6 @@
 package edu.fourmen.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.UserVO;
 
 @Repository
@@ -82,5 +84,19 @@ public class UserDAO {
 	public List<BoardItemVO> getInterestedItem(List<String> interested) {
 		
 		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getInterestedItem",interested);
+	}
+
+
+	public List<BoardVO> myTownCommunityList(String location_auth) {
+		
+		String[] ArrayLocation = location_auth.split(",");
+		
+		List<String> locationList = new ArrayList<String>();
+		
+		for(int i = 0; i < ArrayLocation.length; i++) {
+			locationList.add(ArrayLocation[i]);
+		}
+		
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.myTownCommunityList",locationList);
 	}
 }

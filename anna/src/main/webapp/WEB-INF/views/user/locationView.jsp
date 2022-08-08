@@ -236,7 +236,7 @@ body { position: fixed; }
 				
 					$.ajax({
 						url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
-						data : "consumer_key=9ff16331dfd542b6a5b0&consumer_secret=32b9d18070d34db18be5",
+						data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
 						success : function(getToken){
 							let AccessToken = getToken.result.accessToken;
 							<c:forEach var="i" items="${ selectedDong }">
