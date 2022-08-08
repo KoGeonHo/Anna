@@ -38,6 +38,7 @@ import edu.fourmen.service.BoardService;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
+import edu.fourmen.vo.UserVO;
 
 @Controller
 @RequestMapping(value="/board")
@@ -176,10 +177,16 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/BoardWrite.do", method= RequestMethod.GET)
-	public String BoardWrite(HttpSession session, HttpServletRequest request) {
+	public String BoardWrite(HttpSession session, HttpServletRequest request, UserVO uv) {
 		
 		session = request.getSession();
-
+		
+		
+		 
+		
+		 	
+		
+		
 
 		
 		return "board/BoardWrite";
@@ -305,7 +312,7 @@ public class BoardController {
 	public String viewBoard(int Bidx,Model model, HttpServletRequest request, HttpSession session) {
 		
 		session = request.getSession();
-		
+
 		BoardVO bv = boardService.viewBoard(Bidx);
 		
 		BoardVO vo = new BoardVO();
@@ -428,6 +435,30 @@ public class BoardController {
 		return "redirect:/board/FreeBoard.do";
 	}
 	
+	@RequestMapping(value="/test.do")
+	public String test(int Bidx,Model model, HttpServletRequest request, HttpSession session) {
+				
+		model.addAttribute("path","/anna");
+		
+		session = request.getSession();
+		
+		BoardVO bv = boardService.viewBoard(Bidx);
+		
+		BoardVO vo = new BoardVO();
+		
+		boardService.HitUp(Bidx);
+		
+		vo.setBidx(Bidx);
+		if(session.getAttribute("uidx") != null) {
+			vo.setUidx((int)session.getAttribute("uidx"));
+		}
+		model.addAttribute("bv", bv);
+		model.addAttribute("like",boardService.Likeyn(vo));
+		
+		System.out.println("like");
+		
+		return "board/test";
+	}
 	
 	
 	

@@ -206,7 +206,7 @@ const GetList = function(currentPage){
 								<li><a href="boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
 								<li><a href="FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a>
 									<ul>
-										<li><a href="#">일상&amp;소통</a></li>
+										<li><a href="">일상&amp;소통</a></li>
 										<li><a href="JobBoard.do">구인구직</a></li>
 										<li><a href="">모임</a></li>
 										<li><a href="">우리동네 핫플레이스</a></li>
@@ -263,6 +263,7 @@ const GetList = function(currentPage){
 			</div>
 			<!-- 모바일 헤더-->
 <main>
+	<input type="text" value="${vo.board_type}">
 					<form method="get" action="FreeBoard.do">
 				
 						<select name="SearchType">
@@ -280,12 +281,11 @@ const GetList = function(currentPage){
 					<c:if test="${!empty svo.searchVal}">
 							${totalRow}개의 자료가 검색되었습니다.
 					</c:if>
-					<form>
-						
-						<c:if test="${freeboard.size() ==0}">
+			<form>		
+				<c:if test="${freeboard.size() ==0}">
 							
-							<h3>등록된 게시물이 없습니다.</h3>
-						</c:if>
+					<h3>등록된 게시물이 없습니다.</h3>
+				</c:if>
 				<div class="container">
 					<div class="row">		
 						<c:if test="${freeboard.size()>0 }">
@@ -295,18 +295,16 @@ const GetList = function(currentPage){
 						<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="225" >	
 						<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
 							${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount} 조회수 ${vo.hit}
-							
 						</div>
-						
-						<br>
 						
 						</c:if>
 							</c:forEach>
 						</c:if>
+						
 					</div>
 				</div>
-					</form>
-					
+			</form>
+			
 				<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
 					<div class="container">
 						<div class="row card-list-container thumbnails">
@@ -314,13 +312,9 @@ const GetList = function(currentPage){
 						</div>
 					</div>
 				</section>
-				
-					<div class="back-drop"><!-- 로딩 이미지 -->
-						<img src="../" alt="안되는데여?" />
-					</div>
+			
 					
 				</main>
-
 
 
 </body>
