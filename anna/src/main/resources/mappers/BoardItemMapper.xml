@@ -239,7 +239,7 @@
 		and neighbor_idx = #{neighbor_idx}
 	</delete>
 	
-	<insert id="insertChat">
+	<insert id="insertChat" parameterType="chatVO">
 		INSERT INTO chat(
 				uidx
 			,	item_idx
