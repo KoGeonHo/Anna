@@ -6,11 +6,10 @@ public class BoardItemVO extends UserVO {
 	 
 	private int item_idx;
 	private int uidx;
-	private int chat_host;
 	private int cate_idx;
 	private String Title;
-	private String Contents;
-	private String nickName;
+	private String Content;
+	private String nickname;
 	private String wdate;
 	private String addr1;
 	private String addr2;
@@ -67,18 +66,7 @@ public class BoardItemVO extends UserVO {
 	
 	
 	
-	public int getChat_host() {
-		return chat_host;
-	}
-	public void setChat_host(int chat_host) {
-		this.chat_host = chat_host;
-	}
-	public String getContents() {
-		return Contents;
-	}
-	public void setContents(String contents) {
-		Contents = contents;
-	}
+	
 	
 	
 	public int getNeighbor_idx() {
@@ -184,11 +172,17 @@ public class BoardItemVO extends UserVO {
 	public void setTitle(String title) {
 		Title = title;
 	}
-	public String getNickName() {
-		return nickName;
+	public String getContent() {
+		return Content;
 	}
-	public void setNickname(String nickName) {
-		this.nickName = nickName;
+	public void setContent(String content) {
+		Content = content;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getWdate() {
 		return wdate;

@@ -168,7 +168,6 @@
 			
 	</select>
 	
-
 	<select id="neighborList" parameterType="int" resultType="UserVO">
 		
 		SELECT 
