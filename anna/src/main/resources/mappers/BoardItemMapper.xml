@@ -12,7 +12,7 @@
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
-			 , b.Contents
+			 , b.contents
 			 , b.wdate
 			 , u.nickName
 			 , b.Price
@@ -33,7 +33,7 @@
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
-			 , b.Contents
+			 , b.contents
 			 , b.wdate
 			 , u.nickName
 			 , b.Price
@@ -67,7 +67,7 @@
 						uidx
 						,cate_idx
 						,Title
-						,Contents
+						,contents
 						,wdate
 						,addr1
 						,addr2
@@ -89,10 +89,10 @@
 						,state
 						,isDel
 						) VALUES(
-						1
+						 #{uidx}	
 						,#{cate_idx}
 						,#{title}
-						,#{content}
+						,#{contents}
 						,now()
 						,#{addr1}
 						,#{addr2}
@@ -115,11 +115,11 @@
 						,'N'
 						)
 	</insert>
-	<select id="selectitem" parameterType="int" resultType="BoardItemVO">
+	<select id="selectitem" parameterType="BoardItemVO" resultType="BoardItemVO">
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
-			 , b.Contents
+			 , b.contents
 			 , b.wdate
 			 , b.cate_idx
 			 , b.image1
@@ -132,12 +132,11 @@
 			 , b.image8
 			 , b.image9
 			 , b.image10
-			 , u.nickname
+			 , u.nickName
 			 , b.Keyword
 			 , b.Price
 			 , b.offer
 			 , b.state
-			 
 		FROM Board_Items b , AnnaUser u
 		WHERE b.uidx = u.uidx
 		AND b.item_idx = #{item_idx}
@@ -147,7 +146,7 @@
 	Update Board_Items Set
 						cate_idx = #{cate_idx}
 						,Title = #{title}
-						,Contents = #{content}
+						,contents = #{contents}
 						,wdate = now()
 						,addr1 = #{addr1}
 						,addr2 = #{addr2}
@@ -185,7 +184,7 @@
 			 , b.item_idx
 			 , b.Title
 			 , b.uidx
-			 , b.Contents
+			 , b.contents
 			 , b.wdate
 			 , b.cate_idx
 			 , image1
@@ -258,12 +257,19 @@
 			,	 #{invited}
 			)
 	</insert>
-	<select id="selectChat" parameterType="int" resultType="chatVO">
-		select contents,date_format(now(),'%y-%m-%d-%h:%i') from chat 
-		where chat_host = #{chat_host} and 
-				invited = #{invited} and 
-				item_idx = #{item_idx} 
-				order by cidx 
+	<select id="selectChat" parameterType="chatVO" resultType="chatVO">
+		select a.item_idx
+			  ,a.chat_host
+			  ,a.cidx
+			  ,a.contents
+			  ,a.invited
+			  ,date_format(a.cdate,'%y-%m-%d-%h:%i')
+			  ,b.nickName
+			  from chat a ,AnnaUser b
+		where a.uidx = b.uidx
+		and chat_host = #{chat_host} 
+		and invited = #{invited}
+		and item_idx = #{item_idx}  order by cidx 
 	
 	</select>
 	
