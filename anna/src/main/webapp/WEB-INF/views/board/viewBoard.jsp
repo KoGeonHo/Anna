@@ -18,15 +18,55 @@ border-width: 1px 0px 0px 0px ;
 
 }
 
+body{
+
+width : 1024px;
+margin : 0px auto;
+
+}
+
+#state{
+
+width : 1024px;
+
+}
+
+#state td{
+text-align:center;
+width : 341px;
+
+}
+
+#title{
+
+
+}
+
 
 </style>
 </head>
 <body>
 <input type="hidden" value="${bv.bidx}" name="Bidx" id="Bidx">
 <input type="hidden" name="uidx" value="${uidx}">
-제목 : ${bv.title} 작성자 :${bv.nickName }
+<table id="state">
+<tr>
+<td>${bv.nickName}</td>
+<td>${bv.wdate}</td>
+<td>조회수 :${bv.hit} 좋아요 :${bv.cntLike}</td>
+</tr>
+
+</table>
 <br>
-내용 : ${bv.contents}
+<c:if test="${bv.board_type eq 'free'}">
+[일상소통]
+</c:if>
+<c:if test="${bv.board_type eq 'job'}">
+[구인구직]
+</c:if>
+
+<h2><span id="title"> ${bv.title} </span></h2>
+<br>
+${bv.contents}
 
 
 <br>
@@ -52,8 +92,8 @@ border-width: 1px 0px 0px 0px ;
 	<input type="image" src="../resources/upload/${bv.image5}" alt ="안되는데요?"><br>
     </c:if>
 	<c:if test="${bv.uidx == uidx}"> 
-    	<a href="">수정</a>
-    	<a href="">삭제</a>
+    	<a href="#">수정</a>
+    	<a href="BoardDelete.do?Bidx=${bv.bidx}">삭제</a>
     </c:if>
     <button type="button" class="LikeBtn" name="like">좋아요</button>
     
@@ -91,6 +131,7 @@ border-width: 1px 0px 0px 0px ;
     			    <div class="comment_Box"> <!-- 댓글이 들어갈 박스 -->
 
 	                </div>
+	                
 	                
 <script type="text/javascript">
 $(function(){

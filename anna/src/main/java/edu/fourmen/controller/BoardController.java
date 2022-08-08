@@ -310,7 +310,7 @@ public class BoardController {
 		
 		BoardVO vo = new BoardVO();
 		
-		
+		boardService.HitUp(Bidx);
 		
 		vo.setBidx(Bidx);
 		if(session.getAttribute("uidx") != null) {
@@ -400,10 +400,33 @@ public class BoardController {
 		boardService.boardLikeDown(vo);
 	}
 
+	@RequestMapping(value="/JobBoard.do")
+	public String JobBoard(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
+		
+		session = request.getSession();
+		
+		List<BoardVO> jobboard = boardService.selectjobboard(pm);
+		int Ccount = boardService.getCTotal(bv);
+		
+		bv.setCcount(Ccount);
 	
+		model.addAttribute("jobboard", jobboard);
+		model.addAttribute("svo", svo);
+		
+		return "board/JobBoard";
+	}
 	
-	
-	
+	@RequestMapping(value="/BoardDelete.do")
+	public String BoardDelete(int Bidx,BoardVO vo) {
+		
+		vo.setBidx(Bidx);
+		System.out.println("Bidx");
+		
+		boardService.boardDelete(Bidx);
+		System.out.println("삭제완료");
+		
+		return "redirect:/board/FreeBoard.do";
+	}
 	
 	
 	

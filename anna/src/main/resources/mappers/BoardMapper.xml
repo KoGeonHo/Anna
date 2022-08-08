@@ -54,6 +54,7 @@
 	 INNER JOIN AnnaUser u
 	  	ON b.uidx = u.uidx
 	 WHERE b.isDel ='N'
+	   AND board_type = 'free' 
 	   <if test='searchType != null and searchType.equals("All")'>
 	 	    AND b.Contents like concat('%',#{SearchVal},'%')
 	 	    OR u.nickname like concat('%',#{SearchVal},'%')
@@ -72,6 +73,43 @@
 	 	
 	 	ORDER BY b.Wdate desc
 	 	limit #{startPage}, #{pageNum}
+	 	
+</select>
+
+<select id="selectjobboard" resultType="boardvo" parameterType="pagemaker">
+	SELECT b.Bidx
+		  ,b.Title
+		  ,b.Uidx
+		  ,b.Contents
+		  ,b.Hit
+		  ,b.Wdate
+		  ,u.nickname
+		  ,b.board_type
+		  ,b.isDel
+		  ,b.Image1
+		  ,b.ccount
+	  FROM Board b
+	 INNER JOIN AnnaUser u
+	  	ON b.uidx = u.uidx
+	 WHERE b.isDel ='N'
+	   AND board_type = 'job'
+	   <if test='searchType != null and searchType.equals("All")'>
+	 	    AND b.Contents like concat('%',#{SearchVal},'%')
+	 	    OR u.nickname like concat('%',#{SearchVal},'%')
+	 		OR b.Title like concat('%',#{SearchVal},'%')
+	 		
+	 	</if>
+	   <if test='searchType != null and searchType.equals("title")'>
+	 		AND b.Title like concat('%',#{SearchVal},'%')
+	 		
+	 		
+	 	</if>
+	 	<if test='searchType != null and searchType.equals("contentWriter")'>
+	 		AND b.Contents like concat('%',#{SearchVal},'%')
+	 		OR u.nickname like concat('%',#{SearchVal},'%')	
+	 	</if> 
+	 	
+	 	ORDER BY b.Wdate desc
 	 	
 </select>
 
@@ -99,6 +137,9 @@
 	SELECT b.Title
 		  ,b.Contents
 		  ,b.Wdate
+		  ,b.board_type
+		  ,b.Hit
+		  ,(select count(*) from Board_like c where c.Bidx = b.Bidx) as cntLike
 		  ,b.Bidx
 		  ,b.uidx
 		  ,u.nickname
@@ -172,11 +213,23 @@
 
 
 <select id="Likeyn" resultType="int" parameterType="boardvo">
-		SELECT count(*)
-		  FROM Board_like
-		 WHERE Bidx = #{Bidx}
-		   AND Uidx = #{uidx}
+	SELECT count(*)
+	  FROM Board_like
+     WHERE Bidx = #{Bidx}
+	   AND Uidx = #{uidx}
 </select>
+
+<update id="HitUp">
+	UPDATE Board
+	   SET Hit = Hit+1
+	 WHERE Bidx = #{Bidx}
+</update>
+
+<update id="boardDelete">
+	UPDATE Board
+	   SET isDel = 'Y'
+	 WHERE Bidx = #{Bidx}
+</update>
 
 
 

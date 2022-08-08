@@ -93,5 +93,26 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	@Override
+	public List<BoardVO> selectjobboard(PageMaker pm) {
+		
+		return boardDao.selectjobboard(pm);
+	}
+
+
+	@Override
+	public int HitUp(int Bidx) {
+		
+		return boardDao.HitUp(Bidx);
+	}
+
+
+	@Override
+	public int boardDelete(int Bidx) {
+		
+		return boardDao.boardDelete(Bidx);
+	}
+
+
 
 }

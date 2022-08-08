@@ -15,6 +15,7 @@ public interface BoardService {
 	int writeBoard(BoardVO vo);
 	
 	List<BoardVO> selectfreeboard(PageMaker pm);
+	List<BoardVO> selectjobboard(PageMaker pm);
 
 	BoardVO viewBoard(int Bidx);
 	
@@ -34,5 +35,9 @@ public interface BoardService {
 	int boardLikeDown(BoardVO vo);
 	
 	int Likeyn(BoardVO vo);
+	
+	int HitUp(int Bidx);
+	
+	int boardDelete(int Bidx);
 
 }
