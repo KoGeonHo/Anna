@@ -14,7 +14,14 @@ public class UserVO{
 	private String isDel;
 	private String profile_image;
 	private String introduce;
+	private String keepLogin;
 	
+	public String getKeepLogin() {
+		return keepLogin;
+	}
+	public void setKeepLogin(String keepLogin) {
+		this.keepLogin = keepLogin;
+	}
 	public int getUidx() {
 		return uidx;
 	}

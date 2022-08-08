@@ -70,26 +70,26 @@
 							</div>
 							<script>
 								let locationList = [${ userInfo.location_auth }];
-									$.ajax({
-										url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
-										data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
-										success : function(data){
-											$(".spinner-border").css("display","none");
-											for(let i = 0; i < locationList.length; i++){
-												$.ajax({
-													url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
-													async : false,
-													data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
-													success : function(geojson){
-														$("#locaList").append(geojson.features[0].properties.adm_nm+"<br>");
-													}
-												});
-											}
-										},
-										error: function(){
-											console.log("error");
+								$.ajax({
+									url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+									data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
+									success : function(data){
+										$(".spinner-border").css("display","none");
+										for(let i = 0; i < locationList.length; i++){
+											$.ajax({
+												url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
+												async : false,
+												data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
+												success : function(geojson){
+													$("#locaList").append(geojson.features[0].properties.adm_nm+"<br>");
+												}
+											});
 										}
-									});
+									},
+									error: function(){
+										console.log("error");
+									}
+								});
 							</script>
 						</c:if>
 					</div>

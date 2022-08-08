@@ -55,6 +55,20 @@
 					</div>
 				</div>
 				<div class="row border-bottom tr">
+					<div class="col-4 th" style="display:table-cell;">처리상태</div>
+					<div class="col-8 td" style="display:table-cell;">
+						<c:if test="${ QnAItem.state eq 0 }">
+							미열람
+						</c:if>
+						<c:if test="${ QnAItem.state eq 1 }">
+							처리중
+						</c:if>
+						<c:if test="${ QnAItem.state eq 2 }">
+							처리완료
+						</c:if>
+					</div>
+				</div>
+				<div class="row border-bottom tr">
 					<div class="col-4 th" style="display:table-cell;">내용</div>
 					<div class="col-8 td" style="display:table-cell;">
 						${ QnAItem.contents }
@@ -64,6 +78,20 @@
 					<div class="col-4 th" style="display:table-cell;">첨부파일</div>
 					<div class="col-8 td" style="display:table-cell;">
 						${ QnAItem.attach }
+					</div>
+				</div>
+				<c:if test="${ QnAItem.state eq 2 }">
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">답변</div>
+						<div class="col-8 td" style="display:table-cell;">
+							${ QnAItem.answer }
+						</div>
+					</div>
+				</c:if>
+				<div class="row tr">
+					<div class="col-12 td text-end" style="display:table-cell;">
+						<button class="btn" type="button" style="background:#00AAB2; color:#fff;">삭제</button>
+						<button class="btn" type="button" style="background:#00AAB2; color:#fff;">목록</button>
 					</div>
 				</div>
 			</div>	

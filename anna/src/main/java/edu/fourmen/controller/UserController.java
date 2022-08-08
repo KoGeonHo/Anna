@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,7 +23,6 @@ import edu.fourmen.service.BoardItemService;
 import edu.fourmen.service.MailService;
 import edu.fourmen.service.UserService;
 import edu.fourmen.vo.BoardItemVO;
-import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.UserVO;
 
 @RequestMapping(value="/user")
@@ -65,6 +65,8 @@ public class UserController {
 		
 		response.setContentType("text/html; charset=utf-8");
 		
+		System.out.println(vo.getKeepLogin());
+		
 		PrintWriter pw = response.getWriter();
 		
 		UserVO userInfo = userService.login(vo);
@@ -91,15 +93,21 @@ public class UserController {
 					System.out.println("비밀번호 일치");
 					
 					session = request.getSession(); 
-		
+
 					session.setAttribute("uidx", userInfo.getUidx());
 					
-					session.setAttribute("user_email", userInfo.getUser_email());
+					session.setAttribute("userInfo", userInfo);
 					
-					session.setAttribute("nickName", userInfo.getNickName());
-					
-					session.setAttribute("interested", userInfo.getInterested());
-					
+					//로그인 유지체크를 한경우 쿠키를생성한다.
+					if(vo.getKeepLogin() != null) {
+			        	if(vo.getKeepLogin().equals("true")) {
+			        		int uidx = userInfo.getUidx();
+			        		Cookie cookie = new Cookie("uidx",Integer.toString(uidx));
+			        		cookie.setPath("/");
+			        		cookie.setMaxAge(60*60*24*7);//쿠키유지 일주일
+			        		response.addCookie(cookie);
+			        	}
+					}
 					pw.append("<script>location.href='"+request.getContextPath()+"/main.do';</script>");
 					
 					pw.flush();
@@ -133,7 +141,7 @@ public class UserController {
 	
 	//로그아웃 처리
 	@RequestMapping(value="/logout.do")
-	public String logOut(HttpServletRequest request,HttpSession session) {
+	public String logOut(HttpServletRequest request,HttpServletResponse response,HttpSession session) {
 		
 		session = request.getSession();
 		
@@ -142,6 +150,15 @@ public class UserController {
 		userService.kakaoLogout(access_Token);
 		
 		session.invalidate();
+		Cookie[] cookies = request.getCookies();  // 쿠키 값을 null로 설정
+		
+		for(Cookie cookie:cookies) {
+			if(cookie.getName().equals("uidx")) {
+				cookie.setPath("/");
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
+		}
 		
 		return "redirect:/main.do";
 	}
@@ -181,7 +198,17 @@ public class UserController {
 	//카카오 인증 Api URL 가져오는 Ajax
 	@ResponseBody
 	@RequestMapping(value = "/getKakaoAuthUrl.do", produces = "application/text; charset=utf8")
-	public String getKakaoAuthUrl() {
+	public String getKakaoAuthUrl(String keepLogin,HttpServletRequest request, HttpSession session) {
+		
+		if(keepLogin.equals("false")) {
+			System.out.println("false");
+		}else {
+			System.out.println("true");
+		}
+		
+		session = request.getSession();
+		
+		session.setAttribute("keepLogin",keepLogin);
 		
 		String reqUrl = "https://kauth.kakao.com/oauth/authorize";
 		reqUrl += "?client_id="+userService.getClient_id();
@@ -200,9 +227,15 @@ public class UserController {
         
         //처리후 이동경로
         String moveTo = "";
+        
 		
 		session = request.getSession();
-		
+
+        //로그인유지 유무
+        String keepLogin = (String)session.getAttribute("keepLogin");
+        
+        //System.out.println(keepLogin);
+        		
 		response.setContentType("text/html; charset=utf-8");
 
 		PrintWriter pw = response.getWriter();
@@ -298,15 +331,19 @@ public class UserController {
     			moveTo = path+"/user/myPage.do";
         			
         	}
+        	
+        	//로그인 유지체크를 한경우 쿠키를생성한다.
+        	if(keepLogin.equals("true")) {
+        		Cookie cookie = new Cookie("uidx",Integer.toString(userLoginInfo.getUidx()));
+        		cookie.setPath("/");
+        		cookie.setMaxAge(60*60*24*7);//쿠키유지 일주일
+        		response.addCookie(cookie);
+        	}
     		
 			//로그인 세션정보 (회원번호, 이메일[아이디], 닉네임)
+        	session.setAttribute("userInfo", userLoginInfo);
+        	
 			session.setAttribute("uidx", userLoginInfo.getUidx());
-			
-			session.setAttribute("user_email", userLoginInfo.getUser_email());
-			
-			session.setAttribute("nickName", userLoginInfo.getNickName());
-			
-			session.setAttribute("interested", userLoginInfo.getInterested());
 			
 			session.setAttribute("access_Token", access_Token);
         	
