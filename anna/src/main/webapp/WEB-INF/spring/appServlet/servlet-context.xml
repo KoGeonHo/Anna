@@ -46,6 +46,7 @@
         <interceptor>
             <mapping path="/user/*.do"/>
             <mapping path="/customer/*.do"/>
+            <mapping path="/boarditem/*.do"/>
             <beans:ref bean="LoginCheckInterceptor"/>
         </interceptor>
     </interceptors>

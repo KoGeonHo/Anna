@@ -53,6 +53,23 @@
 			
 	</select>
 	
+	<select id="keepLogin" parameterType="UserVO" resultType="UserVO">
+	
+		SELECT 
+			uidx,
+			nickName,
+			user_email,
+			location_auth,
+			kakao_auth,
+			interested,
+			user_pwd
+		FROM 
+			AnnaUser
+		WHERE
+			uidx = #{ uidx }
+			
+	</select>
+	
 	<update id="updateKakaoAuthKey" parameterType="UserVO">
 	
 		UPDATE 
