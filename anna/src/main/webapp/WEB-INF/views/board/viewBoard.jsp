@@ -132,6 +132,7 @@ ${bv.contents}
 
 	                </div>
 	                
+	                
 <script type="text/javascript">
 $(function(){
 	$('#commentwrite').click(function() {
