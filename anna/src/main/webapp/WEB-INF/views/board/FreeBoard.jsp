@@ -11,6 +11,11 @@
 <title>일상&amp;소통</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath()%>/css/bootstrap.css">
+
+	<script src="<%= request.getContextPath()%>/js/bootstrap.js"></script>
+	<link href="<%= request.getContextPath()%>/css/offcanvas.css" rel="stylesheet" type="text/css" />
+
+
 <style>
 
 /* 
@@ -21,54 +26,93 @@
 아주 큰(Extra large)	xl	1200px 이상	큰 데스크탑
  */
  
+.body {
+	padding-top: -56px;
+}
+
+.row {
+	padding: 0px;
+	margin: 0px;
+}
+
+.container {
+	justify-content: center;
+	align-items: center;
+}
+
+
+.bottom_menu {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 130px;
+	z-index: 100;
+	border-top: 1px solid black;
+	background-color: white
+}
+
+.bottom_menu>div {
+	float: left;
+	width: 20%;
+	height: 100%;
+	text-align: center;
+	padding-top: 20px;
+}
+
+@media ( min-width : 576px) {
+	.col-md-2 {
+		width: 30%;
+	}
+}
+
+@media ( min-width : 1200px) {
+	.col-md-2 {
+		width: 16.66666667%;
+	}
+}
+
+.navbar {
+	height: 150;
+}
+
+.offcanvas-collapse {
+	top: 150px;
+}
+
+.navbar-toggler-icon {
+	width: 4.5em;
+	height: 5.5em;
+}
+
+.navbar-brand {
+	margin-left: 2rem;
+}
+
+.navbar-dark .navbar-toggler-icon {
+	margin: 0 1rem;
+}
+
+.logo {
+	padding-left: 2.5rem;
+}
+
+.menu li ul{
+
+	display:none;
+
+}
+
+.menu li:hover ul{
+
+	display:block;
+
+}
+
 .card img{
-
-width : 100%;
-height : 250px;
-
-}
-
-.card{
+height : 300px;
 
 
-
-}
-
-a{
-
-text-decoration-line: none;
-
-}
-
-ui{
-
-text-align:center;
-margin : 0px auto;
-
-}
-
-li{
-list-style: none;
-display : inline-block;
-
-}
-
-.navbar{
- 
-text-align:center
-
-}
-
-@media all and (max-width:576px){ /*최대 576까지 */
-	body{
-		background:#000;
-	}
-}
-
-@media all and (min-width:1001px){ 1001
-	body{
-		background:#fff;
-	}
 }
 
 
@@ -93,7 +137,7 @@ $(window).on("scroll",function(){
 	//문서 전체의 높이
 	let documentHeight = $(document).height();
 	//바닥까지 스크롤 되었는지 여부를 알아낸다.
-	let isBottom = scrollTop + windowHeight + 10 >= documentHeight;
+	let isBottom = scrollTop + windowHeight >= documentHeight;
 	
 	if(isBottom){
 		console.log(isLoding);
@@ -112,7 +156,6 @@ $(window).on("scroll",function(){
 		//추가로 받아올 페이지를 서버에 ajax 요청을 하고
 		//console.log("inscroll" + currentPage);
 		GetList(currentPage);
-	
 	}
 });
 
@@ -147,79 +190,138 @@ const GetList = function(currentPage){
 </script>
 </head>
 <body>
-
-
-<nav class="navbar">
-	<ul class="navbar_menu">
-		<li>중고거래</li>
-		<li>커뮤니티</li> <!-- 호버  -->
-		<li>고객센터</li>
-		<li>마이페이지</li>
-	</ul>
-	
-	<div>
-	<c:if test="${nickName != null}">
-	${nickName}님 환영합니다 | <a href="../user/logout.do">로그아웃</a>
-	</c:if>
-	<c:if test="${nickName == null}">
-	<a href="../user/login.do">로그인</a> | <a href="../user/join.do">회원가입</a>
-	</c:if>
-	</div>
-</nav>
+<!-- pc 헤더 -->
+			<div class="b-example-divider ">
+				<div class="container ">
+					<div class="d-md-none d-lg-block d-xl-block">
+		
+						<header class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1 ">
+						<div class="logo">
+							<a href="/" class="d-flex align-items-center col-md-3 mb-1 col-sm-3 mb-md-0 text-dark text-decoration-none ">		
+									<img src="images/logo.png" width="70%">
+							</a>
+							</div>
+						<div class="menu">
+							<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
+								<li><a href="boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
+								<li><a href="FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a>
+									<ul>
+										<li><a href="#">일상&amp;소통</a></li>
+										<li><a href="JobBoard.do">구인구직</a></li>
+										<li><a href="">모임</a></li>
+										<li><a href="">우리동네 핫플레이스</a></li>
+									</ul>
+								</li>
+								<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
+								<li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
+							</ul>
+						</div>
+							<div class="col-md-3 text-end">
+								<c:if test="${uidx == null }">
+		
+									<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/login.do';">로그인</button>
+									<button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/join.do';">회원가입</button>
+								</c:if>
+								<c:if test="${uidx != null }">
+									<button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/logout.do';">로그아웃</button>
+									<button type="button" class="btn " style="background-color: #BBCE53; color: #fff;">물음표</button>
+								</c:if>
+							</div>
+						</header>
+					</div>
+				</div>
+			</div>
+		
+			<!-- pc헤더 -->
+		
+		
+			<!-- 모바일 헤더-->
+		
+			<div class="d-lg-none">
+		
+				<nav class="navbar navbar-expand-lg fixed-top navbar-dark " style="background-color: #00AAB2;" aria-label="Main navigation">
+		
+					<div class="container-fluid">
+						<a class="navbar-brand fs-1 fw-bold" href="#">금암동 ▼</a>
+		
+		
+						<button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+		
+						<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+							<br>
+							<ul class="navbar-nav me-auto mb-2 mb-lg-0">						
+								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" aria-current="page" href="#">메뉴</a></li>
+								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">추천</a></li>
+								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">받습</a></li>
+								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">니다</a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+			<!-- 모바일 헤더-->
 <main>
-	<form method="get" action="FreeBoard.do">
+					<form method="get" action="FreeBoard.do">
+				
+						<select name="SearchType">
+							<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
+							<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
+							<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
+						</select>
+						<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
+						<input type="submit" value="검색">
+					</form>
+					
+					<a href="BoardWrite.do">쓰기</a>
+					
+					<hr>
+					<c:if test="${!empty svo.searchVal}">
+							${totalRow}개의 자료가 검색되었습니다.
+					</c:if>
+					<form>
+						
+						<c:if test="${freeboard.size() ==0}">
+							
+							<h3>등록된 게시물이 없습니다.</h3>
+						</c:if>
+				<div class="container">
+					<div class="row">		
+						<c:if test="${freeboard.size()>0 }">
+							<c:forEach var="vo" items="${freeboard}">
+							<c:if test = "${vo.board_type eq 'free' }">
+						<div class="card col-md-3">
+						<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="225" >	
+						<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
+							${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount} 조회수 ${vo.hit}
+							
+						</div>
+						
+						<br>
+						
+						</c:if>
+							</c:forEach>
+						</c:if>
+					</div>
+				</div>
+					</form>
+					
+				<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
+					<div class="container">
+						<div class="row card-list-container thumbnails">
+						
+						</div>
+					</div>
+				</section>
+				
+					<div class="back-drop"><!-- 로딩 이미지 -->
+						<img src="../" alt="안되는데여?" />
+					</div>
+					
+				</main>
 
-		<select name="SearchType">
-			<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
-			<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
-			<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
-		</select>
-		<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
-		<input type="submit" value="검색">
-	</form>
-	
-	<a href="BoardWrite.do">쓰기</a>
-	
-	<hr>
-	<c:if test="${!empty svo.searchVal}">
-			${totalRow}개의 자료가 검색되었습니다.
-	</c:if>
-	<form>
-		
-		<c:if test="${freeboard.size() ==0}">
-			
-			<h3>등록된 게시물이 없습니다.</h3>
-		</c:if>
-<div class="container">
-	<div class="row">		
-		<c:if test="${freeboard.size()>0 }">
-			<c:forEach var="vo" items="${freeboard}">
-			<c:if test = "${vo.board_type eq 'free' }">
-		<div class="card col-md-3">
-		<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="225" >	
-		<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
-			${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount}
-			
-		</div>
-		<br>
-		</c:if>
-			</c:forEach>
-		</c:if>
-	</div>
-</div>
-	</form>
-<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
-	<div class="container">
-		<div class="row card-list-container thumbnails">
-		
-		</div>
-	</div>
-</section>
-	<div class="back-drop"> <!-- 로딩 이미지 -->
-		<img src="../" alt="안되는데여?" />
-	
-	</div>
-</main>
+
 
 </body>
 </html>

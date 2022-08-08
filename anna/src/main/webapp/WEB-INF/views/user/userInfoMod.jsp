@@ -181,86 +181,87 @@ form {
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	
-		<div class="container  main"  style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem;">회원정보수정</h3>
-			<form id="userInfoModFrm" method="POST" action="userInfoMod.do">
-				<div id="profile" class="border-bottom" style="width:100%;">
-					<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
-					<div style="display:inline-block;">
-						<div>
-							<b>${ userInfo.nickName }</b>님의 프로필
+		<div class="wrapper">
+			<div class="container  main">
+				<h3 class="border-bottom" style="padding:1rem;">회원정보수정</h3>
+				<form id="userInfoModFrm" method="POST" action="userInfoMod.do">
+					<div id="profile" class="border-bottom" style="width:100%;">
+						<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
+						<div style="display:inline-block;">
+							<div>
+								<b>${ userInfo.nickName }</b>님의 프로필
+							</div>
+						</div>
+					</div>
+					<div class="row border-bottom" style="display:table; width:100%;">
+						<div class="col-3 text-center th" style="padding:1rem; display:table-cell; width:25%;">닉네임</div>
+						<div class="col-9" style="padding:1rem; align-self:center; display:table-cell; width:auto;"><input type="text" class="form-control" id="input-nickName" name="nickName" value="${ userInfo.nickName }"></div>
+					</div>
+					<div class="row border-bottom">
+						<div class="col-3 text-center th" style="padding:1rem;">이메일</div>
+						<div class="col-9" style="padding:1rem;">${ userInfo.user_email }</div>
+					</div>
+					<div class="row border-bottom">
+						<div class="col-3 text-center th" style="padding:1rem;">내동네</div>
+						<div class="col-9" style="padding:1rem; align-self:center;" id="locaList">
+							<c:if test="${ empty userInfo.location_auth }">
+								<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 등록하기</button>
+							</c:if>
+							<c:if test="${ not empty userInfo.location_auth }">
+								<div class="spinner-border text-primary" role="status">
+									<span class="visually-hidden">Loading...</span>
+								</div>
+								<script>
+									let locationList = [${ userInfo.location_auth }];
+										$.ajax({
+											url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+											data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
+											success : function(data){
+												$(".spinner-border").css("display","none");
+												for(let i = 0; i < locationList.length; i++){
+													$.ajax({
+														url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
+														async : false,
+														data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
+														success : function(geojson){
+															$("#locaList").append(geojson.features[0].properties.adm_nm+"<br>");
+														}
+													});
+												}
+												$("#locaList").append("<button class='btn' type='button' style='background:#00AAB2;  color:#fff;' onclick=\"location.href='locationAuth.do';\">동네 다시 등록하기</button>");
+											},
+											error: function(){
+												console.log("error");
+											}
+										});
+								</script>
+							</c:if>
+						</div>
+					</div>
+					<div class="row border-bottom">
+						<div class="col-3 text-center th" style="padding:1rem;">소개글</div>
+						<div class="col-9">
+							<textarea class="form-control" name="introduce" style="margin:5px 0; resize:none;" rows="5">${ userInfo.introduce }</textarea>
+						</div>
+					</div>
+				</form>
+				<div class="row border-bottom">
+					<div class="col-3 text-center th" style="padding:1rem; min-width:4rem;">관심<br>키워드</div>
+					<div class="col-9" style="padding:1rem; margin:5px 0;">
+						<input type="text" class="form-control" id="input-interested" autocomplete="off" style="display:inline-block;" name="interested">
+						<button class="btn" type="button" style="display:inline-block; background-color: #00AAB2; color: #fff;" onclick="addInterested()">추가</button>
+						<div id="interest_keywords">
 						</div>
 					</div>
 				</div>
-				<div class="row border-bottom">
-					<div class="col-3 text-center th" style="padding:1rem;">닉네임</div>
-					<div class="col-9" style="padding:1rem; align-self:center;"><input type="text" class="form-control" id="input-nickName" name="nickName" value="${ userInfo.nickName }"></div>
-				</div>
-				<div class="row border-bottom">
-					<div class="col-3 text-center th" style="padding:1rem;">이메일</div>
-					<div class="col-9" style="padding:1rem;">${ userInfo.user_email }</div>
-				</div>
-				<div class="row border-bottom">
-					<div class="col-3 text-center th" style="padding:1rem;">내동네</div>
-					<div class="col-9" style="padding:1rem; align-self:center;" id="locaList">
-						<c:if test="${ empty userInfo.location_auth }">
-							<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 등록하기</button>
-						</c:if>
-						<c:if test="${ not empty userInfo.location_auth }">
-							<div class="spinner-border text-primary" role="status">
-								<span class="visually-hidden">Loading...</span>
-							</div>
-							<script>
-								let locationList = [${ userInfo.location_auth }];
-									$.ajax({
-										url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
-										data : "consumer_key=9ff16331dfd542b6a5b0&consumer_secret=32b9d18070d34db18be5",
-										success : function(data){
-											$(".spinner-border").css("display","none");
-											for(let i = 0; i < locationList.length; i++){
-												$.ajax({
-													url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
-													async : false,
-													data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
-													success : function(geojson){
-														$("#locaList").append(geojson.features[0].properties.adm_nm+"<br>");
-													}
-												});
-											}
-											$("#locaList").append("<button class='btn' type='button' style='background:#00AAB2;  color:#fff;' onclick=\"location.href='locationAuth.do';\">동네 다시 등록하기</button>");
-										},
-										error: function(){
-											console.log("error");
-										}
-									});
-							</script>
-						</c:if>
+				<div style="padding:5px 0;">
+					<div class="text-end">
+						<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="frmSubmit()">수정</button>
+						<button class="btn" style="background:#BBCE53; color:#fff;" type="button" onclick="javascript:location.href='userInfoView.do';">돌아가기</button>
 					</div>
-				</div>
-				<div class="row border-bottom">
-					<div class="col-3 text-center th" style="padding:1rem;">소개글</div>
-					<div class="col-9">
-						<textarea class="form-control" name="introduce" style="margin:5px 0; resize:none;" rows="5">${ userInfo.introduce }</textarea>
-					</div>
-				</div>
-			</form>
-			<div class="row border-bottom">
-				<div class="col-3 text-center th" style="padding:1rem; min-width:4rem;">관심<br>키워드</div>
-				<div class="col-9" style="padding:1rem; margin:5px 0;">
-					<input type="text" class="form-control" id="input-interested" autocomplete="off" style="display:inline-block;" name="interested">
-					<button class="btn" type="button" style="display:inline-block; background-color: #00AAB2; color: #fff;" onclick="addInterested()">추가</button>
-					<div id="interest_keywords">
-					</div>
-				</div>
-			</div>
-			<div style="padding:5px 0;">
-				<div class="text-end">
-					<button class="btn btn1" style="background:#00AAB2; color:#fff;" type="button" onclick="frmSubmit()">수정</button>
-					<button class="btn" style="background:#BBCE53; color:#fff;" type="button" onclick="javascript:location.href='userInfoView.do';">돌아가기</button>
 				</div>
 			</div>
 		</div>
-		
 		
 		
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>

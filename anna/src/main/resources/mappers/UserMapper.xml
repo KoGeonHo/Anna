@@ -41,6 +41,7 @@
 			uidx,
 			nickName,
 			user_email,
+			location_auth,
 			kakao_auth,
 			interested,
 			user_pwd

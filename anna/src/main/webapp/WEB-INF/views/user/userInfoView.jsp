@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
@@ -37,40 +38,41 @@
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	
-		<div class="container main" style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem;">회원정보</h3>
-			<div id="profile" class="border-bottom" style="width:100%;">
-				<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
-				<div style="display:inline-block;">
-					<div>
-						${ userInfo.nickName }님의 프로필
+		<div class="wrapper">
+			<div class="container main">
+				<h3 class="border-bottom" style="padding:1rem;">회원정보</h3>
+				<div id="profile" class="border-bottom" style="width:100%;">
+					<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
+					<div style="display:inline-block;">
+						<div>
+							${ userInfo.nickName }님의 프로필
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row border-bottom">
-				<div class="col-3 text-center th" style="padding:1rem;">닉네임</div>
-				<div class="col-9" style="padding:1rem;">${ userInfo.nickName }</div>
-			</div>
-			<div class="row border-bottom">
-				<div class="col-3 text-center th" style="padding:1rem;">이메일</div>
-				<div class="col-9" style="padding:1rem;">${ userInfo.user_email }</div>
-			</div>
-			<div class="row border-bottom">
-				<div class="col-3 text-center th" style="padding:1rem;">내동네</div>
-				<div class="col-9" style="padding:1rem; align-self:center;" id="locaList">
-					
-					<c:if test="${ empty userInfo.location_auth }">
-						<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 등록하기</button>
-					</c:if>
-					<c:if test="${ not empty userInfo.location_auth }">
-						<div class="spinner-border text-primary" role="status">
-							<span class="visually-hidden">Loading...</span>
-						</div>
-						<script>
-							let locationList = [${ userInfo.location_auth }];
+				<div class="row border-bottom">
+					<div class="col-3 text-center th" style="padding:1rem;">닉네임</div>
+					<div class="col-9" style="padding:1rem;">${ userInfo.nickName }</div>
+				</div>
+				<div class="row border-bottom">
+					<div class="col-3 text-center th" style="padding:1rem;">이메일</div>
+					<div class="col-9" style="padding:1rem;">${ userInfo.user_email }</div>
+				</div>
+				<div class="row border-bottom">
+					<div class="col-3 text-center th" style="padding:1rem;">내동네</div>
+					<div class="col-9" style="padding:1rem; align-self:center;" id="locaList">
+						
+						<c:if test="${ empty userInfo.location_auth }">
+							<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 등록하기</button>
+						</c:if>
+						<c:if test="${ not empty userInfo.location_auth }">
+							<div class="spinner-border text-primary" role="status">
+								<span class="visually-hidden">Loading...</span>
+							</div>
+							<script>
+								let locationList = [${ userInfo.location_auth }];
 								$.ajax({
 									url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
-									data : "consumer_key=9ff16331dfd542b6a5b0&consumer_secret=32b9d18070d34db18be5",
+									data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
 									success : function(data){
 										$(".spinner-border").css("display","none");
 										for(let i = 0; i < locationList.length; i++){
@@ -88,40 +90,41 @@
 										console.log("error");
 									}
 								});
-						</script>
-					</c:if>
+							</script>
+						</c:if>
+					</div>
 				</div>
-			</div>
-			<div class="row border-bottom">
-				<div class="col-3 text-center th" style="padding:1rem;">소개글</div>
-				<div class="col-9" style="padding:1rem;">
-					<c:if test="${ not empty userInfo.introduce }">
-						${ userInfo.introduce }
-					</c:if>
-					<c:if test="${ empty userInfo.introduce }">
-						-
-					</c:if>
+				<div class="row border-bottom">
+					<div class="col-3 text-center th" style="padding:1rem;">소개글</div>
+					<div class="col-9" style="padding:1rem;">
+						<c:if test="${ not empty userInfo.introduce }">
+						<% pageContext.setAttribute("newLineChar", "\n"); %>
+						${fn:replace(userInfo.introduce, newLineChar, "<br/>")}
+						</c:if>
+						<c:if test="${ empty userInfo.introduce }">
+							-
+						</c:if>
+					</div>
 				</div>
-			</div>
-			<div class="row border-bottom">
-				<div class="col-3 text-center th" style="padding:1rem; min-width:4rem;">관심사</div>
-				<div class="col-9" style="padding:1rem;">
-					<c:if test="${ not empty userInfo.interested }">
-						${ userInfo.interested }
-					</c:if>
-					<c:if test="${ empty userInfo.interested }">
-						-
-					</c:if>
+				<div class="row border-bottom">
+					<div class="col-3 text-center th" style="padding:1rem; min-width:4rem;">관심사</div>
+					<div class="col-9" style="padding:1rem;">
+						<c:if test="${ not empty userInfo.interested }">
+							${ userInfo.interested }
+						</c:if>
+						<c:if test="${ empty userInfo.interested }">
+							-
+						</c:if>
+					</div>
 				</div>
-			</div>
-			<div style="padding:5px 0;">
-				<div class="text-end">
-					<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/user/userInfoMod.do';">회원정보 수정</button>
-					<button class="btn" style="background:#BBCE53; color:#fff;">비밀번호 변경</button>
+				<div style="padding:5px 0;">
+					<div class="text-end">
+						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/user/userInfoMod.do';">회원정보 수정</button>
+						<button class="btn" style="background:#BBCE53; color:#fff;">비밀번호 변경</button>
+					</div>
 				</div>
 			</div>
 		</div>
-		
 		
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="edu.fourmen.mapper.customerMapper">
+  
+  	<select id="getQnAList" parameterType="int" resultType="QnAVO">
+  	
+  		SELECT 
+  			qidx,
+  			qType,
+  			title,
+  			attach,
+  			DATE_FORMAT(wDate,'%Y-%m-%d') as wDate,
+  			state
+  		FROM 
+  			QnA
+  		WHERE 
+  			uidx = #{ uidx }
+  			
+  	</select>
+  	
+  	<insert id="QnAWrite" parameterType="QnAVO">
+  		
+  		INSERT INTO QnA(
+  			uidx,
+  			qType,
+  			title,
+  			contents,
+  			attach,
+  			state
+  		) VALUES (
+  			#{ uidx },
+  			#{ qType },
+  			#{ title },
+  			#{ contents },
+  			#{ attach },
+  			0
+  		)
+  		
+  	</insert>
+  	
+  	<select id="QnAView" parameterType="int" resultType="QnAVO">
+  	
+  		SELECT 
+  			qType,
+  			title,
+  			attach,
+  			contents,
+  			DATE_FORMAT(wDate,'%Y-%m-%d'),
+  			state,
+  			ans_uidx,
+  			answer,
+  			ans_date
+  		FROM
+  			QnA
+  		WHERE
+  			qidx = #{ qidx }
+  	</select>
+  
+</mapper>
