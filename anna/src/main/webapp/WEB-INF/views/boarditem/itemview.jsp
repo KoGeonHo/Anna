@@ -7,9 +7,7 @@
 <html>
 <head>
 <link href="${path}/css/bootstrap.css" rel="stylesheet" />
-<script src="${path}/js/jquery-3.6.0.js"></script>
-<script src="${path}/js/bootstrap.js"></script>
-<script src="${path}/js/common/common.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style type='text/css'>
@@ -54,6 +52,10 @@ height:150px;
 }
 
 
+
+
+
+
 .slider{
     width: 700px;
     height: 480px;
@@ -94,7 +96,7 @@ ul.imgs li{
     cursor: pointer;
 }
 
-.card-body img{
+img{
 	float:center;
 	width:500px;
 
@@ -374,6 +376,9 @@ a {
 }
 
 /* 슬라이더 1 끝 */
+</style>
+
+<style>
  	body{margin:0;padding:0;max-height:800px}	
 	.wrap	{position:absolute;top:50%;left:50%;width:200px;height:100px;margin-top:-50px;margin-left:-100px;}
 	
@@ -392,9 +397,8 @@ a {
 	 padding: 20px;
 	 background-color: #fff;
 	}    		
-</style>
-	
-<script>
+	</style>
+	<script>
 		$(function(){
 			$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
 				$('#popup').bPopup();
@@ -403,14 +407,19 @@ a {
 			$("#btn_close").click(function(){ //닫기
 				$('#popup').bPopup().close();  
 			});			
-	
 		});
-</script>
+	</script>
 <script>
 	let invited=0;
 	let chat_host=0;
 	function sendMessage(form) {
 		//작성자, 내용 유효성 검사
+		form.nickName.value = form.nickName.value.trim();
+		/* if (form.usernick.value.length == 0) {
+			alert('작성자를 입력하세요');
+			form.usernick.focus();
+			return false;
+		} */
 		
 		form.contents.value = form.contents.value.trim();
 		if (form.contents.value.length == 0) {
@@ -424,33 +433,28 @@ a {
 			nickName : form.nickName.value,
 			contents : form.contents.value,
 			item_idx : form.item_idx.value,
-			chat_host : from.chat_host.value,
-			invited : form.invited.value,
 			uidx : form.uidx.value,
 		}, function(data) {
 			uidx = data["uidx"];
 		},'json');
 		form.contents.value = '';
 		form.contents.focus();
-		return false;
 	}
 	
 	
 	
-	var Chat__lastReceivedchatlistcidx = -1;
+	var Chat__lastReceivedMessagecidx = -1;
 	
 	
 	function Chat__loadNewMessages() {
 		$.get('./getMessages',{
-			item_idx : ${vo.item_idx},
-			chat_host : $("#chat_host").val(),
-			from : Chat__lastReceivedchatlistcidx + 1 
+			from : Chat__lastReceivedMessagecidx + 1 
 		}, function(data) {
-			
+			console.log(data);
 			for ( let i = 0; i < data.length; i++ ) {
-				var chatlist = data[i];
-				Chat__lastReceivedchatlistcidx = chatlist.cidx;
-				Chat__drawMessages(chatlist);
+				var messages = data[i];
+				Chat__lastReceivedMessagecidx = messages.cidx;
+				Chat__drawMessages(messages);
 				
 				
 			}
@@ -460,12 +464,12 @@ a {
 		}, 'json');
 
 	}
-	function Chat__drawMessages(chatlist) {
-		var html = '[' +chatlist.cidx + '] (' + chatlist.nickName + ') : ' + chatlist.contents;
+	function Chat__drawMessages(messages) {
+		var html = '[' +messages.cidx + '] (' + messages.nickName + ') : ' + messages.contents;
 		
-		if(chatlist.uidx == ${uidx}){
+		if(messages.uidx == ${uidx}){
 			$('.chat-list').append('<div style="text-align:right;">'+ html + '</div>');
-		}else if(chatlist.uidx != ${uidx}){
+		}else if(messages.uidx != ${uidx}){
 			$('.chat-list').append('<div style="text-align:left;">' + html + '</div>');
 			}
 	}
@@ -486,6 +490,8 @@ a {
 			return false;
 		}
 
+		console.log("여기인가")
+
 		// AJAX -> addNeighbor 실행 및 출력값 가져오기
 		$.post('./addNeighbor',{
 			neighbor_idx : form.neighbor_idx.value,
@@ -494,11 +500,16 @@ a {
 		}, function(data) {
 			uidx = data["uidx"];
 		},'json');
-			location.reload();
 	}
 	
 
 	function delNeighbor(form) {
+		//작성자, 내용 유효성 검사
+		form.uidx.value = form.uidx.value.trim();
+		if (form.uidx.value.length == 0) {
+			alert('회원만 이웃삭제 기능을 사용할 수 있습니다');
+			return false;
+		}
 		
 		// AJAX -> delNeighbor 실행 및 출력값 가져오기
 		$.post('./delNeighbor',{
@@ -508,33 +519,47 @@ a {
 		}, function(data) {
 			uidx = data["uidx"];
 		},'json');
-			location.reload();
 	}
 	
 
 </script>
 		
 	
-<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
-<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
-<!-- path는 request.getContextPath()를 가져온것. -->
 		
 </head>
 <body>
-<div class="wrapper">
-		<!-- 헤더 및 메뉴 -->
-		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		
-		<div class="wrapper">
-			<div class="container main">
-	
-	
 
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="itemlist.do">AnnA</a>
+					<button class="navbar-toggler" type="button"
+						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="#">중고거래</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">커뮤니티</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">고객센터</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+					
+				</ul>
+				<form class="d-flex">
+					<input class="form-control me-2" type="search" placeholder="Search"
+						aria-label="Search">
+					<button class="btn btn-outline-success" type="submit">Search</button>
+				</form>
+			</div>
+		</div>
+	</nav>
 	
-		
-
+<br>
+<hr>
+<br>
+	
 <form  method="post" enctype="multipart/form-data" name="frm">
 
 	<div class="container">
@@ -707,7 +732,7 @@ a {
 
 
 								<p class="card-text">판매자 : ${vo.nickName}</p>
-								<p class="card-text">내용 : ${vo.contents}</p>
+								<p class="card-text">내용 : ${vo.content}</p>
 								<p class="card-text">판매가격 : ${vo.price}</p>
 								<p class="card-text">거래지역 : ${vo.addr2}</p>
 								<p class="card-text">키워드 : ${vo.keyword}</p>
@@ -717,73 +742,69 @@ a {
 				</div>
 				</div>
 </form>
-							<h2>${vo.nickName}님	의 다른상품</h2>
-			<div class="container-fluid">
-				<div class="row">
-				<a href="../user/myPage.do?uidx=${vo.uidx}">더 보기</a>
-					<c:if test="${youritem.size() > 0}">
-						<c:forEach var="vo" items="${youritem}">
-							<div class="col-lg-2 col-md-4" >
-								<div class="card">
-								<img src="../resources/upload/${vo.image1}" >
-										<div class="card-body">
-											<input type="hidden" id="chat_host"value="${vo.uidx}">
-											<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
-											<p class="card-text">${vo.price}원</p>
-											<p class="card-text">${vo.nickName}</p>
-											<p class="card-text">${vo.wdate}</p> 
-										</div>
+					<h2>${vo.nickName}님	의 다른상품</h2>
+	<div class="container-fluid">
+		<div class="row">
+		<a href="../user/myPage.do?uidx=${vo.uidx}">더 보기</a>
+			<c:if test="${list2.size() > 0}">
+				<c:forEach var="vo" items="${list2}">
+					<div class="col-lg-2 col-md-4" >
+						<div class="card">
+						<img src="../resources/upload/${vo.image1}" >
+								<div class="card-body">
+									<input type="hidden" value=">${vo.uidx}">
+									<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
+									<p class="card-text">${vo.price}원</p>
+									<p class="card-text">${vo.nickName}</p>
+									<p class="card-text">${vo.wdate}</p> 
 								</div>
-								<br>
-							</div>
-						</c:forEach>
-					</c:if>
-				</div>
-			</div>
-			<!--팝업 영역 시작 -->
-			<div id="popup" class="Pstyle">	
-				<form onsubmit="sendMessage(this); return false;">
-					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
-					<input type="text" name="chat_host" value="${vo.chat_host}"><br>
-					<input type="hidden" name="invited" value="${uidx}">
-					<input type="hidden" name="uidx" value="${uidx}">
-					<input type="text" name="nickName" value="${userInfo.nickName}"readonly="readonly">
-					<input type="text" name="contents" placeholder="내용" >
-					<input type="submit" value="전송">
-				</form>
-				
-					<div class="chat-list" id="chat" >
+						</div>
+						<br>
 					</div>
-					<input type="button" id="btn_close" value="닫 기">
+				</c:forEach>
+			</c:if>
+		</div>
+		</div>
+z 	<div class="wrap">
+		<input type="button" id="btn_open" value="연락하기">
+	</div>
+	<!--팝업 영역 시작 -->
+	<div id="popup" class="Pstyle">	
+		<form onsubmit="sendMessage(this); return false;">
+			<input type="hidden" name="item_idx" value="${vo.item_idx}"><br>
+			<input type="hidden" name="chat_host" value="${vo.uidx}"><br>
+			<input type="hidden" name="invited" value="${uidx}">
+			<input type="hidden" name="uidx" value="${uidx}">
+			
+			<input type="text" name="nickName" value="${nickName}"readonly="readonly">
+			
+			<input type="text" name="contents" placeholder="내용" >
+			<input type="submit" value="전송">
+		</form>
+		
+			<div class="chat-list" id="chat" ></div>
+				<input type="button" id="btn_close" value="닫 기">
 			</div>
-			<c:if test="${uidx != null }">
-				<div class="wrap2">
-					<input type="button" id="btn_open" value="연락하기">
-				</div>
-			</c:if>
-			<c:if test="${uidx != null }">
-				<c:if test="${result == 0 }">
-				<form onsubmit="addNeighbor(this); return false;">
-						<input type="submit" value="이웃추가" id="or">
-						<input type=text name="uidx" value="${uidx}">
-						<input type="text" name="neighbor_idx" value="${vo.neighbor_idx}">
-						<input type="hidden" name="item_idx" value="${vo.item_idx}">
-				</form>
-				</c:if>
-				
-				<c:if test="${result != 0}">
-				<form onsubmit="delNeighbor(this); return false;">
-						<input type="submit" value="이웃삭제" id="or">
-						<input type="text" name="uidx" value="${uidx}">
-						<input type="text" name="neighbor_idx" value="${vo.neighbor_idx}">
-						<input type="hidden" name="item_idx" value="${vo.item_idx}">
-				</form>
-				</c:if>
-			</c:if>
-			
-			<H2>채팅</H2>
-			
-			
+
+		
+		<c:if test="${result == 0}">
+		<form onsubmit="addNeighbor(this); return false;">
+				<input type="submit" value="이웃추가" id="or">
+				<input type="text" name="uidx" value="${uidx}">
+				<input type="text" name="neighbor_idx" value="${vo.uidx}">
+				<input type="hidden" name="item_idx" value="${vo.item_idx}">
+		</form>
+		</c:if>
+		
+		<c:if test="${result != 0}">
+		<form onsubmit="delNeighbor(this); return false;">
+				<input type="submit" value="이웃삭제" id="or">
+				<input type="hidden" name="uidx" value="${uidx}">
+				<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
+				<input type="hidden" name="item_idx" value="${vo.item_idx}">
+		</form>
+		</c:if>
+
 	<!-- 	<script>
 		const $element = document.querySelector(".chat-list");
 
@@ -801,19 +822,12 @@ a {
 			}
 		</script> -->
 	<!--팝업 영역 끝 -->
- 조회수,
-	 신고하기,
+ 조회수, 이웃추가 버튼,
+	 신고하기, 연락하기, 판매자의 다른상품
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 	<script src ="../js/boarditem.js"></script>
 	<script src ="../js/boarditem2.js"></script>
 	
-	
-	</div>
-		</div>
-		<!-- 푸터는 고정 -->
-		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
-	</div>
 </body>
 </html>
