@@ -8,8 +8,8 @@ public class BoardItemVO extends UserVO {
 	private int uidx;
 	private int cate_idx;
 	private String Title;
-	private String Contents;
-	private String nickName;
+	private String Content;
+	private String nickname;
 	private String wdate;
 	private String addr1;
 	private String addr2;
@@ -172,17 +172,17 @@ public class BoardItemVO extends UserVO {
 	public void setTitle(String title) {
 		Title = title;
 	}
-	public String getContents() {
-		return Contents;
+	public String getContent() {
+		return Content;
 	}
-	public void setContents(String contents) {
-		Contents = contents;
+	public void setContent(String content) {
+		Content = content;
 	}
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
-	public void setNickname(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public String getWdate() {
 		return wdate;

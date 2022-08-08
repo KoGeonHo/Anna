@@ -12,7 +12,7 @@
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
-			 , b.contents
+			 , b.Contents
 			 , b.wdate
 			 , u.nickName
 			 , b.Price
@@ -33,7 +33,7 @@
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
-			 , b.contents
+			 , b.Contents
 			 , b.wdate
 			 , u.nickName
 			 , b.Price
@@ -67,7 +67,7 @@
 						uidx
 						,cate_idx
 						,Title
-						,contents
+						,Contents
 						,wdate
 						,addr1
 						,addr2
@@ -89,10 +89,10 @@
 						,state
 						,isDel
 						) VALUES(
-						 #{uidx}	
+						1
 						,#{cate_idx}
 						,#{title}
-						,#{contents}
+						,#{content}
 						,now()
 						,#{addr1}
 						,#{addr2}
@@ -115,11 +115,11 @@
 						,'N'
 						)
 	</insert>
-	<select id="selectitem" parameterType="BoardItemVO" resultType="BoardItemVO">
+	<select id="selectitem" parameterType="int" resultType="BoardItemVO">
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
-			 , b.contents
+			 , b.Contents
 			 , b.wdate
 			 , b.cate_idx
 			 , b.image1
@@ -132,11 +132,12 @@
 			 , b.image8
 			 , b.image9
 			 , b.image10
-			 , u.nickName
+			 , u.nickname
 			 , b.Keyword
 			 , b.Price
 			 , b.offer
 			 , b.state
+			 
 		FROM Board_Items b , AnnaUser u
 		WHERE b.uidx = u.uidx
 		AND b.item_idx = #{item_idx}
@@ -146,7 +147,7 @@
 	Update Board_Items Set
 						cate_idx = #{cate_idx}
 						,Title = #{title}
-						,contents = #{contents}
+						,Contents = #{content}
 						,wdate = now()
 						,addr1 = #{addr1}
 						,addr2 = #{addr2}
@@ -184,7 +185,7 @@
 			 , b.item_idx
 			 , b.Title
 			 , b.uidx
-			 , b.contents
+			 , b.Contents
 			 , b.wdate
 			 , b.cate_idx
 			 , image1
@@ -250,14 +251,14 @@
 			VALUES(
 				 #{uidx}
 			,	 #{item_idx}
-			,	 #{content}
+			,	 #{contents}
 			,	 #{chat_host}
 			,	 now()
 			,	 #{invited}
 			)
 	</insert>
 	<select id="selectChat" parameterType="int" resultType="chatVO">
-		select cidx,contents,date_format(now(),'%y-%m-%d-%h:%i') from chat 
+		select contents,date_format(now(),'%y-%m-%d-%h:%i') from chat 
 		where chat_host = #{chat_host} and 
 				invited = #{invited} and 
 				item_idx = #{item_idx} 

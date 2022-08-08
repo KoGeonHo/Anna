@@ -8,10 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="itemdelete.do">
-<button>삭제</button>
 
-</form>
 
 
 

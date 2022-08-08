@@ -5,12 +5,15 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath()%>/css/bootstrap.css">
 <head>
+<link href="${path}/css/bootstrap.css" rel="stylesheet" />
 
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
 <script>
 //스크롤 시 이벤트 처리
+
+
+
 
 //페이지가 처음 로딩될 때 1page를 보여주기 때문에 초기값을 1로 지정한다.
 let currentPage = 1;
@@ -19,6 +22,7 @@ let isLoding=false;
 
 //웹브라우저의 창을 스크롤할 때마다  호출되는 함수 등록
 $(window).on("scroll",function(){
+
 	
 	//위로 스크롤된 길이
 	let scrollTop = $(window).scrollTop();
@@ -151,127 +155,144 @@ height:250px;
 .box {float:left; overflow: hidden; background: #f0e68c;}
 .box-inner {width: 800px; padding: 10px;}
 </style>
-
-<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
-<link href="${path}/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="${path}/css/offcanvas.css" rel="stylesheet" type="text/css" />
-<link href="${path}/css/bootstrap.css" rel="stylesheet" />
-
-
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
 </head>
 <body>
-	<div class="wrapper">
-		<!-- 헤더 및 메뉴 -->
-		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		
-		<div class="container main">
-						<!-- 카테고리 -->
-						<div style="width:100px; background-color:grey;"class="slide-toggle">
-							카테고리
-						</div>
-						<div style=" height:70px;">
-							<div class="box">
-							    <div class="box-inner">
-							    	<ul>
-										<li><a href="itemlist.do" class="cate_menu">전체</a></li>
-										<li><a href="itemlist.do?cate_idx=1" class="cate_gory">가전</a></li>
-										<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
-										<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
-										<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
-										<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
-										<li><a href="itemwrite.do" class="cate_gory">글작성</a></li>
-									</ul>
-							    </div>
-							</div>
-						</div>		
-						<!-- 카테고리 끝 -->
-						<form method="get" action="itemlist.do">
-							<select name="searchType">
-								<option value="title" <c:if test="${!empty svo.searchType and svo.searchType eq 'title'}">selected</c:if>>제목</option>
-							</select>
-							<input type="text" name="searchVal" 
-									<c:if test="${!empty svo.searchVal}">
-									value=${svo.searchVal}
-									</c:if>>
-							<input type="submit" value="검색">
-						</form>
-					<div>
-						<c:if test="${!empty pm.searchVal}">	
-						<h1>니가 검색한 ${pm.searchVal} 의 최저가 상품이란다</h1>
-							<div class="col-lg-3">
-								<div class="card">
-								<a href="itemview.do?item_idx=${ssang.item_idx}"><img src="../resources/upload/${ssang.image1}" ></a>
-									<div class="card-body">
-									<input type="hidden" value=">${ssang.uidx}">
-										<h5 class="card-title"><a href="itemview.do?item_idx=${ssang.item_idx}">${ssang.title}</a></h5>
-										<p class="card-text">${ssang.price}원</p>
-										<p class="card-text">${ssang.nickName}</p>
-										<p class="card-text">${ssang.wdate}</p>
-									</div>
-								</div>
-									<br>
-							</div>
-			
-						</c:if>
-					</div>
-<br>
-<hr>
-<br>
+<c:if test="${uidx == null}">
+<a href="../user/login.do">로그인하기</a>
+</c:if>
 
-
-<hr>
-
-					<div class="container">
-						<div class="row">
-						<c:if test="${list.size() > 0}">
-						<c:forEach var="vo" items="${list}">
-						
-							<div class="col-lg-3">
-								<div class="card">
-								<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" ></a>
-				
-									<div class="card-body">
-									<input type="hidden" value=">${vo.uidx}">
-										<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
-										<p class="card-text">${vo.price}원</p>
-										<p class="card-text">${vo.nickName}</p>
-										<p class="card-text">${vo.wdate}</p>
-									</div>
-								</div>
-									<br>
-							</div>
-									</c:forEach>
-						</c:if>
-						</div>
-					</div>
-					
-	
-						<section id="card-list" class="card-list">
-							<div class="container">
-								<div class="row card-list-container thumbnails"></div>
-							</div>
-						</section>
-
-
-
-
-						<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
-							<div class="container">
-								<div class="row card-list-container thumbnails">
-								
-								</div>
-							</div>
-						</section>
-				<script src ="../js/boardlist.js"></script>
-				<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<c:if test="${uidx != null}">
+<a href="../user/logout.do">로그아웃</a>
+</c:if>
+<a href="itemwrite.do">중고거래글 작성하기</a>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">AnnA</a>
+					<button class="navbar-toggler" type="button"
+						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="#">중고거래</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">커뮤니티</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">고객센터</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+				</ul>
+				<form class="d-flex">
+					<input class="form-control me-2" type="search" placeholder="Search"
+						aria-label="Search">
+					<button class="btn btn-outline-success" type="submit">Search</button>
+				</form>
 			</div>
-		
-		<!-- 푸터는 나중에 추가될거니까 일단 주석처리 해놨음 -->
-		<%-- <!-- 푸터는 고정 -->
-		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
-		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		 --%>
+		</div>
+	</nav>
+<br>
+<hr>
+<br>
+
+<div style="width:100px; background-color:grey;"class="slide-toggle">
+	카테고리
+</div>
+	<div style=" height:70px;">
+	
+	<div class="box">
+	    <div class="box-inner">
+	    	<ul>
+				<li><a href="itemlist.do" class="cate_menu">전체</a></li>
+				<li><a href="itemlist.do?cate_idx=1" class="cate_gory">가전</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+				<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
+			</ul>
+	    </div>
 	</div>
+</div>		
+			
+	<form method="get" action="itemlist.do">
+		<select name="searchType">
+			<option value="title" <c:if test="${!empty svo.searchType and svo.searchType eq 'title'}">selected</c:if>>제목</option>
+		</select>
+		<input type="text" name="searchVal" 
+				<c:if test="${!empty svo.searchVal}">
+				value=${svo.searchVal}
+				</c:if>>
+		<input type="submit" value="검색">
+	</form>
+		<div>
+			<c:if test="${!empty pm.searchVal}">	
+			<h1>니가 검색한 ${pm.searchVal} 의 최저가 상품이란다</h1>
+				<div class="col-lg-3">
+					<div class="card">
+					<a href="itemview.do?item_idx=${ssang.item_idx}"><img src="../resources/upload/${ssang.image1}" ></a>
+						<div class="card-body">
+						<input type="hidden" value=">${ssang.uidx}">
+							<h5 class="card-title"><a href="itemview.do?item_idx=${ssang.item_idx}">${ssang.title}</a></h5>
+							<p class="card-text">${ssang.price}원</p>
+							<p class="card-text">${ssang.nickName}</p>
+							<p class="card-text">${ssang.wdate}</p>
+						</div>
+					</div>
+						<br>
+				</div>
+
+			</c:if>
+		</div>
+<br>
+<hr>
+<br>
+
+
+<hr>
+
+	<div class="container">
+		<div class="row">
+		<c:if test="${list.size() > 0}">
+		<c:forEach var="vo" items="${list}">
+		
+			<div class="col-lg-3">
+				<div class="card">
+				<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" ></a>
+
+					<div class="card-body">
+					<input type="hidden" value=">${vo.uidx}">
+						<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
+						<p class="card-text">${vo.price}원</p>
+						<p class="card-text">${vo.nickName}</p>
+						<p class="card-text">${vo.wdate}</p>
+					</div>
+				</div>
+					<br>
+			</div>
+					</c:forEach>
+		</c:if>
+		</div>
+	</div>
+	
+	
+<section id="card-list" class="card-list">
+	<div class="container">
+		<div class="row card-list-container thumbnails"></div>
+	</div>
+</section>
+
+
+
+
+<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
+	<div class="container">
+		<div class="row card-list-container thumbnails">
+		
+		</div>
+	</div>
+</section>
+<script src ="../js/boardlist.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 </body>
 </html>

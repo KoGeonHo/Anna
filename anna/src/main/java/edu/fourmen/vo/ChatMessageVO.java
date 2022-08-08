@@ -5,7 +5,7 @@ public class ChatMessageVO extends BoardItemVO{
 	private long cidx;
 	private int uidx;
 	private int invited;
-	private String content;
+	private String contents;
 	private int chat_host;
 	private int item_idx;
 	private String nickName;
@@ -16,11 +16,11 @@ public class ChatMessageVO extends BoardItemVO{
 	
 	
 	
-	public ChatMessageVO(long cidx, int uidx, int invited, String content, int chat_host,  int item_idx, String nickName) {
+	public ChatMessageVO(long cidx, int uidx, int invited, String contents, int chat_host,  int item_idx, String nickName) {
 		this.cidx = cidx;
 		this.uidx = uidx;
 		this.invited = invited;
-		this.content = content;
+		this.contents = contents;
 		this.chat_host = chat_host;
 		this.item_idx = item_idx;
 		this.nickName = nickName;
@@ -75,14 +75,14 @@ public class ChatMessageVO extends BoardItemVO{
 
 
 
-	public String getcontent() {
-		return content;
+	public String getcontents() {
+		return contents;
 	}
 
 
 
-	public void setcontent(String content) {
-		this.content = content;
+	public void setcontents(String contents) {
+		this.contents = contents;
 	}
 
 	public int getChat_host() {

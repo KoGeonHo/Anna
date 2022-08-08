@@ -39,7 +39,7 @@
 			<option value="1">불가능</option>
 			<option value="2">가능</option>
 		   </select>
-	<textarea id="summernote" name="contents" >${vo.contents}</textarea>
+	<textarea id="summernote" name="content" >${vo.content}</textarea>
 	<br>
 	<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
@@ -149,37 +149,6 @@
 		function fn_deleteFile(obj){
 			obj.parent().remove();
 		}
-		
-		function chk_file_type(obj) {
-		    var file_kind = obj.value.lastIndexOf('.');
-		    var file_name = obj.value.substring(file_kind+1,obj.length); 
-		    var file_type = file_name.toLowerCase();
-
-
-
-		   var check_file_type = new Array();
-		    check_file_type=['jpg','gif','png','jpeg','bmp',];
-
-
-
-		    if(check_file_type.indexOf(file_type)==-1){
-		     alert('이미지 파일만 선택할 수 있습니다.');
-		     var parent_Obj=obj.parentNode
-		     var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
-		     return false;
-		     
-		     }
-		    
-		}
-	</script>
-	<script>
-				$("#joinFrm").submit(function(){
-				    var fileCheck = $("#file").val();
-				    if(!fileCheck){
-				        alert("사진을 첨부해주세요");
-				       return false;
-				    }
-				    });
 	</script>
 	
 </body>
