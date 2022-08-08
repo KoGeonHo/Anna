@@ -15,7 +15,14 @@ public class QnAVO {
 	private int ans_uidx;
 	private String answer;
 	private String ans_date;
+	private String isDel;
 	
+	public String getIsDel() {
+		return isDel;
+	}
+	public void setIsDel(String isDel) {
+		this.isDel = isDel;
+	}
 	public int getQidx() {
 		return qidx;
 	}

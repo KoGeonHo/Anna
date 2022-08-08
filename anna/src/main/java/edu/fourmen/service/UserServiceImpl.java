@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.fourmen.dao.UserDAO;
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.UserVO;
 
 import org.springframework.stereotype.Service;
@@ -280,6 +281,12 @@ public class UserServiceImpl implements UserService{
 
 		return userDAO.neighborList(uidx);
 		
+	}
+
+	@Override
+	public List<BoardVO> myTownCommunityList(String location_auth) {
+		
+		return userDAO.myTownCommunityList(location_auth);
 	}
 
 		

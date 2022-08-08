@@ -23,6 +23,7 @@ import edu.fourmen.service.BoardItemService;
 import edu.fourmen.service.MailService;
 import edu.fourmen.service.UserService;
 import edu.fourmen.vo.BoardItemVO;
+import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.UserVO;
 
 @RequestMapping(value="/user")
@@ -94,9 +95,11 @@ public class UserController {
 					
 					session = request.getSession(); 
 
+					session.setMaxInactiveInterval(60*60);
+
 					session.setAttribute("uidx", userInfo.getUidx());
 					
-					session.setAttribute("userInfo", userInfo);
+					session.setAttribute("userLoginInfo", userInfo);
 					
 					//로그인 유지체크를 한경우 쿠키를생성한다.
 					if(vo.getKeepLogin() != null) {
@@ -230,6 +233,8 @@ public class UserController {
         
 		
 		session = request.getSession();
+		
+		session.setMaxInactiveInterval(60*60);
 
         //로그인유지 유무
         String keepLogin = (String)session.getAttribute("keepLogin");
@@ -341,11 +346,13 @@ public class UserController {
         	}
     		
 			//로그인 세션정보 (회원번호, 이메일[아이디], 닉네임)
-        	session.setAttribute("userInfo", userLoginInfo);
+        	session.setAttribute("userLoginInfo", userLoginInfo);
         	
 			session.setAttribute("uidx", userLoginInfo.getUidx());
 			
 			session.setAttribute("access_Token", access_Token);
+			
+			
         	
         	
         }
@@ -368,19 +375,37 @@ public class UserController {
 		
 		int uidx = 0;
 		
+		List<BoardItemVO> list = null;
+		
+		List<BoardVO> blist = null;
+		
 		uidx = (int)session.getAttribute("uidx");
+		
+		UserVO uv = (UserVO)session.getAttribute("userLoginInfo");
+		
+		//System.out.println(uv.getLocation_auth());
 		
 		UserVO userInfo = userService.getUserInfo(uidx);
 		
-		String[] ArrayInterested = userInfo.getInterested().split(",");
-
-		List<String> listInterested = new ArrayList<String>();
-		
-		for(int i = 0; i < ArrayInterested.length; i++) {
-			listInterested.add(ArrayInterested[i]);
+		if(userInfo.getInterested() != null) {
+			String[] ArrayInterested = userInfo.getInterested().split(",");
+			List<String> listInterested = new ArrayList<String>();
+			
+			for(int i = 0; i < ArrayInterested.length; i++) {
+				listInterested.add(ArrayInterested[i]);
+			}
+			
+			list = userService.getInterestedItem(listInterested);
+			
 		}
 		
-		List<BoardItemVO> list = userService.getInterestedItem(listInterested);
+		if(uv.getLocation_auth() != null) {
+			blist = userService.myTownCommunityList(uv.getLocation_auth());
+		}
+		
+		System.out.println(blist);
+
+		model.addAttribute("myTownCommunityList",blist);
 		
 		model.addAttribute("interestedList",list);
 		

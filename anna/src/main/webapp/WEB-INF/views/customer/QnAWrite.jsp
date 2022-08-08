@@ -84,9 +84,11 @@
 						</div>
 					</div>
 					
-					<div class="text-end">
-						<button class="btn" style="background:#00AAB2; color:#fff; margin:5px;">등록</button>
-						<button class="btn" style="background:#00AAB2; color:#fff; margin:5px;" type="button" onclick="location.href='${path}/customer/QnAList.do'">취소</button>
+					<div class="text-end tr">
+						<div class="td">
+							<button class="btn" style="background:#00AAB2; color:#fff;">등록</button>
+							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/customer/QnAList.do'">취소</button>
+						</div>
 					</div>
 				</form>
 			</div>

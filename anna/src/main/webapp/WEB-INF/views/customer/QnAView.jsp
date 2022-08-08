@@ -21,23 +21,7 @@
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
 <!-- path는 request.getContextPath()를 가져온것. -->
-<style>
 
-.th {
-	background:#eee;
-	text-align:center;
-	vertical-align:middle;
-}
-.th, .td{
-	padding:10px;
-}
-
-.tr{
-	display:table; 
-	width:100%;
-}
-
-</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -69,29 +53,29 @@
 					</div>
 				</div>
 				<div class="row border-bottom tr">
-					<div class="col-4 th" style="display:table-cell;">내용</div>
-					<div class="col-8 td" style="display:table-cell;">
+					<div class="col-4 th">내용</div>
+					<div class="col-8 td">
 						${ QnAItem.contents }
 					</div>
 				</div>
 				<div class="row border-bottom tr">
-					<div class="col-4 th" style="display:table-cell;">첨부파일</div>
-					<div class="col-8 td" style="display:table-cell;">
+					<div class="col-4 th">첨부파일</div>
+					<div class="col-8 td">
 						${ QnAItem.attach }
 					</div>
 				</div>
 				<c:if test="${ QnAItem.state eq 2 }">
 					<div class="row border-bottom tr">
-						<div class="col-4 th" style="display:table-cell;">답변</div>
-						<div class="col-8 td" style="display:table-cell;">
+						<div class="col-4 th">답변</div>
+						<div class="col-8 td">
 							${ QnAItem.answer }
 						</div>
 					</div>
 				</c:if>
 				<div class="row tr">
-					<div class="col-12 td text-end" style="display:table-cell;">
-						<button class="btn" type="button" style="background:#00AAB2; color:#fff;">삭제</button>
-						<button class="btn" type="button" style="background:#00AAB2; color:#fff;">목록</button>
+					<div class="col-12 td text-end">
+						<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnADel.do?qidx=<%=request.getParameter("qidx")%>'">삭제</button>
+						<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAList.do'">목록</button>
 					</div>
 				</div>
 			</div>	
