@@ -18,7 +18,7 @@ public class CookieCheck extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
 		
-		System.out.println("CookieCheckInterceptor????");
+		//System.out.println("CookieCheckInterceptor????");
 		
 		HttpSession session = request.getSession();
 		
