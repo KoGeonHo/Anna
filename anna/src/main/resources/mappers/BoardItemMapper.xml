@@ -8,7 +8,6 @@
 	
 
 	<select id="selectAll" resultType="BoardItemVO" parameterType="pagemaker" >
-
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
@@ -199,7 +198,7 @@
 			 where b.isDel = 'N' 
 			<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
-		</if>
+			</if>
 	order by b.wdate desc limit 0,1
 	</select>
 
@@ -265,6 +264,7 @@
 			  ,a.invited
 			  ,date_format(a.cdate,'%y-%m-%d-%h:%i')
 			  ,b.nickName
+			  ,b.uidx
 			  from chat a ,AnnaUser b
 		where a.uidx = b.uidx
 		and chat_host = #{chat_host} 

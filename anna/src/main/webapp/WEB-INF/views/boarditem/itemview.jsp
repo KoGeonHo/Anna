@@ -426,8 +426,8 @@ a {
 			contents : form.contents.value,
 			item_idx : form.item_idx.value,
 			chat_host : from.chat_host.value,
-			invited : form.invited.value,
 			uidx : form.uidx.value, 
+			invited : form.invited.value,
 		},  
 		function(data) {
 			uidx = data["uidx"];

@@ -105,7 +105,6 @@ public class BoardItemController {
 		
 		
 		
-		System.out.println(vo.getCate_idx()+"카테고리선택");
 		
 		//전체 상품 리스트 받아오기
 	    List<BoardItemVO> list = boarditemService.list(vo,pm);
@@ -133,7 +132,6 @@ public class BoardItemController {
 			svo.setSearchVal("");
 		}
 		
-		System.out.println();
 		
 		
 		//한 페이지에 몇개씩 표시할 것인지
@@ -183,7 +181,6 @@ public class BoardItemController {
 		
 		
 		
-		System.out.println(vo.getCate_idx()+"카테고리선택");
 		
 		List<BoardItemVO> list = boarditemService.list(vo,pm);
 		
@@ -205,7 +202,6 @@ public class BoardItemController {
 		model.addAttribute("vo", vo);
 		
 		int chat_host = vo.getUidx();
-		System.out.println(chat_host+"작성자 회원번호");
 		
 		
 		
@@ -227,8 +223,6 @@ public class BoardItemController {
 		if(session.getAttribute("uidx") != null) {
 		int uidx = (int) session.getAttribute("uidx");
 		int neighbor_idx = vo.getUidx();
-		System.out.println(uidx +"session uidx 번호");
-		System.out.println(neighbor_idx + "itemview 이웃번호");
 		bvo.setNeighbor_idx(neighbor_idx);
 		bvo.setUidx(uidx); //이게 있으면 추가가 안되고 없으면 체크가 안된다.
 		}
@@ -249,9 +243,7 @@ public class BoardItemController {
 	@RequestMapping(value = "itemwrite.do", method = RequestMethod.POST)
 	public String itemwrite(BoardItemVO vo, HttpServletRequest request, HttpServletResponse response,
 			HttpSession session, Model model, MultipartFile file) throws IllegalStateException, IOException {
-		System.out.println(vo.getUidx()+"글쓰기 회원번호");
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-		System.out.println(path);
 		UserVO userinfo = (UserVO) session.getAttribute("login");
 		String fileName = null;
 		UUID uuid = UUID.randomUUID();
@@ -1058,6 +1050,7 @@ public class BoardItemController {
 		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
 		boarditemService.delneighbor(vo);
 		System.out.println("이웃삭제 완료");
+		
 		return "이웃삭제 완료";
 
 	}
