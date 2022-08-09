@@ -12,6 +12,7 @@ public class PageMaker extends BoardItemVO{
 	private int page; //
 	private String SearchType;
 	private String SearchVal;
+	private String board_type;
 	
 	public int getTotalCount() {
 		return totalCount;
@@ -96,6 +97,12 @@ public class PageMaker extends BoardItemVO{
 	}
 	public void setSearchVal(String searchVal) {
 		SearchVal = searchVal;
+	}
+	public String getBoard_type() {
+		return board_type;
+	}
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
 	}
 
 	

@@ -231,6 +231,44 @@
 	 WHERE Bidx = #{Bidx}
 </update>
 
-
+<select id="selectboard" resultType="boardvo" parameterType="pagemaker">
+	SELECT b.Bidx
+		  ,b.Title
+		  ,b.Uidx
+		  ,b.Contents
+		  ,b.Hit
+		  ,b.Wdate
+		  ,u.nickname
+		  ,b.board_type
+		  ,b.isDel
+		  ,b.Image1
+		  ,b.ccount
+		  ,(select count(*) from Board_like c where c.Bidx = b.Bidx) as cntLike
+	  FROM Board b
+	 INNER JOIN AnnaUser u
+	  	ON b.uidx = u.uidx
+	 WHERE b.isDel ='N'
+	  
+<if test='board_type != null'>
+	   AND board_type = #{board_type}
+</if>
+<if test='searchType != null and searchType.equals("All")'>
+	   AND b.Contents like concat('%',#{SearchVal},'%')
+	 	OR u.nickname like concat('%',#{SearchVal},'%')
+	    OR b.Title like concat('%',#{SearchVal},'%')
+	 		
+	 	</if>
+<if test='searchType != null and searchType.equals("title")'>
+	   AND b.Title like concat('%',#{SearchVal},'%')
+</if>
+<if test='searchType != null and searchType.equals("contentWriter")'>
+	   AND b.Contents like concat('%',#{SearchVal},'%')
+	 	OR u.nickname like concat('%',#{SearchVal},'%')	
+</if>
+	 ORDER BY b.Wdate desc
+<if test='board_type.equals("free")'>	 
+	 limit #{startPage}, #{pageNum}
+</if>
+</select>
 
 </mapper>

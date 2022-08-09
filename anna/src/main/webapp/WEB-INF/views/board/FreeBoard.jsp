@@ -207,7 +207,7 @@ const GetList = function(currentPage){
 								<li><a href="FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a>
 									<ul>
 										<li><a href="">일상&amp;소통</a></li>
-										<li><a href="JobBoard.do">구인구직</a></li>
+										<li><a href="JobBoard.do?board_type=free">구인구직</a></li>
 										<li><a href="">모임</a></li>
 										<li><a href="">우리동네 핫플레이스</a></li>
 									</ul>
