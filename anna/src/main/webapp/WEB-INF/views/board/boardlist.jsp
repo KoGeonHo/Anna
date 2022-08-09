@@ -1,21 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page session="true" %> <!-- 세션사용하겠다는 뜻 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@page session="true" %>
+<%@ page session="true" %> <!-- 세션사용하겠다는 뜻 -->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일상&amp;소통</title>
+<title>Insert title here</title>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath()%>/css/bootstrap.css">
 
 	<script src="<%= request.getContextPath()%>/js/bootstrap.js"></script>
 	<link href="<%= request.getContextPath()%>/css/offcanvas.css" rel="stylesheet" type="text/css" />
-
-
 <style>
 
 /* 
@@ -190,7 +186,7 @@ const GetList = function(currentPage){
 </script>
 </head>
 <body>
-<!-- pc 헤더 -->
+
 			<div class="b-example-divider ">
 				<div class="container ">
 					<div class="d-md-none d-lg-block d-xl-block">
@@ -206,10 +202,10 @@ const GetList = function(currentPage){
 								<li><a href="boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
 								<li><a href="FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a>
 									<ul>
-										<li><a href="">일상&amp;소통</a></li>
-										<li><a href="JobBoard.do?board_type=free">구인구직</a></li>
-										<li><a href="">모임</a></li>
-										<li><a href="">우리동네 핫플레이스</a></li>
+										<li><a href="boardlist.do?board_type=free">일상&amp;소통</a></li>
+										<li><a href="boardlist.do?board_type=job">구인구직</a></li>
+										<li><a href="boardlist.do?board_type=meeting">모임</a></li>
+										<li><a href="boardlist.do?board_type=hotplace">우리동네 핫플레이스</a></li>
 									</ul>
 								</li>
 								<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
@@ -231,91 +227,55 @@ const GetList = function(currentPage){
 					</div>
 				</div>
 			</div>
-		
-			<!-- pc헤더 -->
-		
-		
-			<!-- 모바일 헤더-->
-		
-			<div class="d-lg-none">
-		
-				<nav class="navbar navbar-expand-lg fixed-top navbar-dark " style="background-color: #00AAB2;" aria-label="Main navigation">
-		
-					<div class="container-fluid">
-						<a class="navbar-brand fs-1 fw-bold" href="#">금암동 ▼</a>
-		
-		
-						<button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
-							<span class="navbar-toggler-icon"></span>
-						</button>
-		
-						<div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-							<br>
-							<ul class="navbar-nav me-auto mb-2 mb-lg-0">						
-								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" aria-current="page" href="#">메뉴</a></li>
-								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">추천</a></li>
-								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">받습</a></li>
-								<li class="nav-item"><a class="nav-link  fs-1 fw-bold" href="#">니다</a></li>
-							</ul>
-						</div>
-					</div>
-				</nav>
-			</div>
-			<!-- 모바일 헤더-->
-<main>
-	<input type="text" value="${vo.board_type}">
-					<form method="get" action="FreeBoard.do">
-				
-						<select name="SearchType">
-							<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
-							<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
-							<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
-						</select>
-						<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
-						<input type="submit" value="검색">
-					</form>
+			
+
+	
+			<form method="get" action="boardlist.do?">
+				<input type="text" value="${pm.board_type}" name="board_type">
+				<select name="SearchType">
+					<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
+					<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
+					<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
+				</select>
+				<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
+				<input type="submit" value="검색">
+			</form>
 					
-					<a href="BoardWrite.do">쓰기</a>
+			<a href="BoardWrite.do">쓰기</a>
 					
-					<hr>
-					<c:if test="${!empty svo.searchVal}">
-							${totalRow}개의 자료가 검색되었습니다.
-					</c:if>
+			<hr>
+			
 			<form>		
-				<c:if test="${freeboard.size() ==0}">
-							
+				<c:if test="${board.size() ==0}">		
 					<h3>등록된 게시물이 없습니다.</h3>
 				</c:if>
 				<div class="container">
 					<div class="row">		
-						<c:if test="${freeboard.size()>0 }">
-							<c:forEach var="vo" items="${freeboard}">
-							<c:if test = "${vo.board_type eq 'free' }">
+						<c:if test="${board.size()>0}">
+							<c:forEach var="vo" items="${board}">
+							
 						<div class="card col-md-3">
 						<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="225" >	
 						<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
 							${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount} 조회수 ${vo.hit}
 						</div>
 						
-						</c:if>
+					
 							</c:forEach>
 						</c:if>
 						
 					</div>
 				</div>
 			</form>
-			
-				<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
+			<c:if test="${pm.board_type eq 'free'}">
+			<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
 					<div class="container">
 						<div class="row card-list-container thumbnails">
 						
 						</div>
 					</div>
 				</section>
-			
-					
-				</main>
-
-
+			</c:if>
+	
 </body>
 </html>

@@ -209,12 +209,10 @@ a {
 
 					<ul
 						class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
-						<li><a href="boarditem/itemlist.do"
-							class="nav-link px-3 link-dark ">중고거래</a></li>
-						<li><a href="board/FreeBoard.do"
-							class="nav-link px-3 link-dark">커뮤니티</a></li>
-						<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
-						<li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
+						<li><a href="${path}/boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
+						<li><a href="${path}/board/FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a></li>
+						<li><a href="${path}/customer/QnAList.do" class="nav-link px-3 link-dark ">고객센터</a></li>
+						<li><a href="${path}/user/myPage.do" class="nav-link px-3 link-dark">마이페이지</a></li>
 					</ul>
 
 					<div class="col-md-3 text-end">
@@ -231,8 +229,7 @@ a {
 							<button type="button" class="btn "
 								style="background-color: #00AAB2; color: #fff;"
 								onclick="javascript:location.href='<%=request.getContextPath()%>/user/logout.do';">로그아웃</button>
-							<button type="button" class="btn "
-								style="background-color: #BBCE53; color: #fff;">물음표</button>
+							
 						</c:if>
 					</div>
 				</header>
@@ -396,7 +393,7 @@ a {
 									<div class="card">
 										<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"> <img
 											src="<%=request.getContextPath()%>/resources/upload/${vo.image1}"
-											onerror=this.src= "images/noimg_item.jpg" width="100%"
+											onerror=this.src="images/noimg_item.jpg" width="100%"
 											height="255">
 										</a>
 
@@ -540,10 +537,7 @@ width: 50px;
 
 										<div class="col">
 											<div class="card shadow-sm">
-												<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img
-													src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"
-													onerror=this.src= "images/noimg.jpg" width="100%"
-													height="225">
+												<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"	 onerror=this.src="images/noimg_item.jpg" width="100%"  height="225">
 												</a>
 												<div class="card-body">
 													<h6 class="card-title">
@@ -607,7 +601,7 @@ width: 50px;
 									<div class="card">
 										<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"> <img
 											src="<%=request.getContextPath()%>/resources/upload/${vo.image1}"
-											onerror=this.src= "images/noimg_item.jpg" width="100%"
+											onerror=this.src="images/noimg_item.jpg" width="100%"
 											height="255">
 										</a>
 

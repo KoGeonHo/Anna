@@ -24,13 +24,14 @@
   
 </head>
 <body>
-${uidx}
+
 
 
     <h1>Summernote</h1>
     
 <form action="BoardWrite.do" method="post" enctype="multipart/form-data">
 <input type="hidden" name="uidx" value="${uidx}">
+<input type="text" name="Location" value="${vo.location}">
 <select name="board_type">
 	<option value="free">일상&amp;소통</option>
 	<option value="job">구인구직</option>
