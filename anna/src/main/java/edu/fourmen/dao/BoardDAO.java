@@ -98,5 +98,8 @@ public class BoardDAO {
 		return sqlSession.update(namespace+".boardDelete", Bidx);
 	}
 	
-	
+	public List<BoardVO> selectboard(PageMaker pm){
+		
+		return sqlSession.selectList(namespace+".selectboard",pm);
+	}
 }

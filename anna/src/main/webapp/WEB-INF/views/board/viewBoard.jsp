@@ -37,9 +37,22 @@ width : 341px;
 
 }
 
-#title{
+.LikeBtn{
+margin:auto;
+display:block;
+}
 
+.comment-box{
+width : 700px;
+margin:auto;
+display:block;
+}
 
+.comment_Box{
+
+width : 700px;
+margin:auto;
+display:block;
 }
 
 
@@ -101,11 +114,11 @@ ${bv.contents}
                     <div class="comment-box">
    		                 <div class="comment-count">댓글 <span id="count">0</span></div>
  
-   		                <form method='post' id="commentForm">
+   		                <form method='post' id="commentForm" name="frm">
    		                 	   <!-- <span class="c-icon"><i class="fa-solid fa-user"></i>  -->
    		                 <div class="comment-name">
 	                        <span class="anonym">작성자 : 
-	                    	   	<input type="text" class="form-control" id="nickName" placeholder="이름" name ="nickName" value='${nickName }' readonly  style="width: 100px; border:none;">
+	                    	   	<input type="text" class="form-control" id="nickName" placeholder="닉네임" name ="nickName" value='${userInfo.nickName}' readonly  style="width: 100px; border:none;">
 	                        	<input type="hidden" name="uidx" value="${uidx}">
 	                        </span>
 	                      </div>   
@@ -139,11 +152,17 @@ $(function(){
 		
 		alert("이거맞나요?");
 		
+
 			//Json으로 전달할 파라미터 변수선언
 			const Bidx = ${bv.bidx};
 			const nickName = $('#nickName').val();
 			const Contents = $('#Contents').val();
 
+			if (Contents == ""){ //내용입력확인
+		  		alert("내용을 입력하세요");
+		  		$('#Contents').focus();
+		  		return;
+		  	}
 
 			
 			console.log(Bidx);
@@ -278,6 +297,8 @@ if(likeval == 1){
 }
 
 Like();
+
+
 </script>
 
 </body>
