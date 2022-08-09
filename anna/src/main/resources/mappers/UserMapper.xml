@@ -177,7 +177,7 @@
 		FROM
 			Board_Items
 		WHERE
-			isdel = 'N' limit 1,12
+			isdel = 'N' limit 1,15
 		<!-- WHERE
 			<foreach collection="list" item="item" separator="OR" open="(" close=")">
 				keyword like concat('%',#{item},'%')

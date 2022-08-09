@@ -10,46 +10,50 @@
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
 <script src="${ path }/js/common/common.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+	$(function(){
+		let slide;
+		let slideWidth = 0;
+		
+		$(".slide-btn-prev").click(function(){
+			let slideContainer = $(this).data("container");
+			slideWidth = $(slideContainer).css("width").replace("px","");
+			slide = $($(this).data("slide"));
+			if((parseInt(slide.css("left").replace("px",""))%slideWidth) == 0){
+				let left = slide.css("left").replace("px","");
+				if((parseInt(left)+parseInt(slideWidth)) > 0){
+					left = 0;
+				}
+				else{
+					left = parseInt(left)+parseInt(slideWidth);
+				}
+				slide.css("left",left+"px");
+			}
+		});
+		
+		$(".slide-btn-next").click(function(){
+			let slideContainer = $(this).data("container");
+			slideWidth = $(slideContainer).css("width").replace("px","");
+			slide = $($(this).data("slide"));
+			if((parseInt(slide.css("left").replace("px",""))%slideWidth) == 0){
+				left = slide.css("left").replace("px","");
+				let NextMax = -((Math.ceil(${ interestedList.size() / 5 })-1)*slideWidth);
+				if((parseInt(left)-parseInt(slideWidth)) <= parseInt(NextMax)){
+					left = NextMax;
+				}else{
+					left = (parseInt(left)-parseInt(slideWidth));
+				}
+			}
+			slide.css("left",left+"px");
+		});
+		
+		
+		
+	});
+</script>
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-<script>
-	$(function(){
-	    $('.slider-wrap').slick({
-	      slide: 'div',        //슬라이드 되어야 할 태그
-	      infinite : true,     //무한 반복 옵션     
-	      slidesToShow : 5,        // 한 화면에 보여질 컨텐츠 개수
-	      slidesToScroll : 1,        //스크롤 한번에 움직일 컨텐츠 개수
-	      speed : 500,     // 다음 버튼 누르고 다음 화면 뜨는데까지 걸리는 시간(ms)
-	      arrows : true,         // 옆으로 이동하는 화살표 표시 여부
-	      dots : true,         // 스크롤바 아래 점으로 페이지네이션 여부
-	      autoplay : true,            // 자동 스크롤 사용 여부
-	      autoplaySpeed : 2000,         // 자동 스크롤 시 다음으로 넘어가는데 걸리는 시간 (ms)
-	      pauseOnHover : true,        // 슬라이드 이동    시 마우스 호버하면 슬라이더 멈추게 설정
-	      vertical : false,        // 세로 방향 슬라이드 옵션
-	      prevArrow : "<img src='${path}/images/slicbtn_prev.png'  id ='slidebtn' class='slick-prev'></button>",		// 이전 화살표 모양 설정
-			nextArrow : "<img src='${path}/images/slicbtn_next.png' id ='slidebtn' class='slick-next'></button>",		// 다음 화살표 모양 설정
-	      draggable : true,     //드래그 가능 여부 
-	      responsive: [ // 반응형 웹 구현 옵션
-	        {  
-	          breakpoint: 960, //화면 사이즈 960px
-	          settings: {
-	            slidesToShow: 4
-	          } 
-	        },
-	        { 
-	          breakpoint: 768, //화면 사이즈 768px
-	          settings: {    
-	            slidesToShow: 5
-	          } 
-	        }
-	      ]
-	
-	    });
-	});
-</script>
 <style>
 
 /*
@@ -133,6 +137,17 @@
 	padding:10px;
 }
 
+.slide-btn {
+	position:absolute;
+	z-index:100; 
+	height:100%; 
+	top:0; 
+	bottom:0; 
+	align-items:center; 
+	display:flex;
+	cursor:pointer;
+}
+
 
 </style>
 </head>
@@ -147,122 +162,43 @@
 				<div id="listOfInterested">
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님이 관심있어 할만한 상품</div>
 					<div style="float:right; padding:5px;">더 보기</div>
-					<div class="slider-wrap">
-						<c:forEach var="vo" items="${interestedList}" step="5">
-						    <div class="cont">
-								<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-									<img src="${path}/upload/${ vo.image1}" onerror="this.onerror=null; this.src='${path}/images/no_image.gif';" class="card-img-top" alt="...">
-									<div class="card-body">
-								    	<span style="display:block;">${ vo.title }</span>
-								  	</div>
-								</div>
-							</div>
-					    </c:forEach>
-					</div>
 					
-					<%-- <div id="slideOfInterested" class="carousel slide" data-bs-ride="carousel">
-						<div class="carousel-inner">
-							<c:forEach var="i" begin="0" end="${ interestedList.size() - 1 }" step="5">
-								<c:if test="${ i == 0 }">
-									<div class="carousel-item active">
-										<div class="row">
-											<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
-												<div class="col-3" style="width:20%;">
-													<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
-														<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-														<div class="card-body">
-													    	<span style="display:block;">${ interestedList[j].title }</span>
-													  	</div>
-													</div>
-												</div>
-											</c:forEach>
-										</div>
+					<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative;">
+						<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
+						<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
+						<div id="slider-interested" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
+							<c:forEach var="vo" items="${interestedList}">
+								<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
+									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
+										<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+										<div class="card-body">
+									    	<span style="display:block;">${ vo.title }</span>
+									  	</div>
 									</div>
-									<button class="prev" type="button" style="cursor:default;">
-										<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="prev" aria-hidden="true"></span>
-									</button>
-									<button class="next" type="button" style="cursor:default;">
-										<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="next" aria-hidden="true"></span>
-									</button>
-								</c:if>
-								<c:if test="${ i != 0 }">
-									<div class="carousel-item">
-										<div class="row">
-											<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
-												<div class="col-3" style="width:20%;">
-													<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
-														<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-														<div class="card-body">
-													    	<span style="display:block;">${ interestedList[j].title }</span>
-													  	</div>
-													</div>
-												</div>
-											</c:forEach>
-										</div>
-									</div>
-									<button class="prev" type="button" style="cursor:default;">
-										<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="prev" aria-hidden="true"></span>
-									</button>
-									<button class="next" type="button" style="cursor:default;">
-										<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#slideOfInterested" data-bs-slide="next" aria-hidden="true"></span>
-									</button>
-								</c:if>
+								</div>
 							</c:forEach>
 						</div>
-					</div> --%>
+					</div>
 				</div>
-				
 				<hr>
+				
 				<div id="listOfCommunity">
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님의 판매중인 상품</div>
 					<div style="float:right; padding:5px;">더 보기</div>
-					<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-						<div class="carousel-inner">
-							<c:forEach var="i" begin="0" end="${ interestedList.size() }" step="5">
-								<c:if test="${ i == 0 }">
-									<div class="carousel-item active">
-										<div class="row">
-											<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
-												<div class="col-3" style="width:20%;">
-													<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
-														<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-														<div class="card-body">
-													    	<span style="display:block;">${ interestedList[j].title }</span>
-													  	</div>
-													</div>
-												</div>
-											</c:forEach>
-										</div>
+					
+					<div id="slideOfMyItem" style="width:100%; clear:both; overflow:hidden; position:relative;">
+						<div class="slide-btn slide-btn-prev" data-slide="#slider-myItem" data-container="#slideOfMyItem" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
+						<div class="slide-btn slide-btn-next" data-slide="#slider-myItem" data-container="#slideOfMyItem" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
+						<div id="slider-myItem" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
+							<c:forEach var="vo" items="${interestedList}">
+								<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
+									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
+										<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+										<div class="card-body">
+									    	<span style="display:block;">${ vo.title }</span>
+									  	</div>
 									</div>
-									<button class="prev" type="button" style="cursor:default;">
-										<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" aria-hidden="true"></span>
-									</button>
-									<button class="next" type="button" style="cursor:default;">
-										<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" aria-hidden="true"></span>
-									</button>
-								</c:if>
-								<c:if test="${ i != 0 }">
-									<div class="carousel-item">
-										<div class="row">
-											<c:forEach var="j" begin="${ i }" end="${ i + 4 }" step="1">
-												<div class="col-3" style="width:20%;">
-													<div class="card" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ interestedList[j].item_idx }'">
-														<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-														<div class="card-body">
-													    	<span style="display:block;">${ interestedList[j].title }</span>
-													  	</div>
-													</div>
-												</div>
-											</c:forEach>
-										</div>
-									</div>
-									<button class="prev" type="button" style="cursor:default;">
-										<span class="carousel-control-prev-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" aria-hidden="true"></span>
-									</button>
-									<button class="next" type="button" style="cursor:default;">
-										<span class="carousel-control-next-icon" style="cursor:pointer;" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" aria-hidden="true"></span>
-									</button>
-								</c:if>
+								</div>
 							</c:forEach>
 						</div>
 					</div>
