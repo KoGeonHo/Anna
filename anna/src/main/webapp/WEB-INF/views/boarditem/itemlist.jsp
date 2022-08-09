@@ -10,6 +10,50 @@
 
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
 <script>
+
+$(function(){
+	$("#dd").click(function(){ //레이어 팝업 열기 버튼 클릭 시
+		$('#popup2').bPopup();
+	});
+	
+	$("#btn_close").click(function(){ //닫기
+		$('#popup2').bPopup().close();  
+	});			
+
+});
+
+$(function(){
+	$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
+		$('#popup').bPopup();
+	});
+	
+	$("#btn_close").click(function(){ //닫기
+		$('#popup').bPopup().close();  
+	});			
+
+});
+
+
+function Chat__loadNewMessages() {
+	$.get('./mychatlist',{
+	chat_host : ${userLoginInfo.uidx}
+	}, function(data) {
+		for ( let i = 0; i < data.length; i++ ) {
+			var mychatlist = data[i];
+			Chat__drawMessages(mychatlist);
+		}
+		//setTimeout(Chat__loadNewMessages,1000);
+	}, 'json');
+
+}
+function Chat__drawMessages(mychatlist) {
+	var html = mychatlist.nickName+' 님과의 거래';
+		$('.mychatlist').append('<div id="dd"> <a class="dd">'+ html + '</a></div>');
+}
+$(function() {
+	Chat__loadNewMessages();
+	
+});
 //스크롤 시 이벤트 처리
 
 
@@ -127,11 +171,26 @@ height:250px;
 <meta charset="utf-8">
 <title>Insert title here</title>
 <style>
+.Pstyle {
+	 opacity: 0;
+	 display: none;
+	 position: relative;
+	 width: auto;
+	 border: 5px solid #fff;
+	 padding: 20px;
+	 background-color: #fff;
+	}    		
+.Pstyle2{
+	 opacity: 0;
+	 display: none;
+	 position: relative;
+	 width: auto;
+	 border: 5px solid #fff;
+	 padding: 20px;
+	 background-color: #fff;
+	 z-index : 9999;
+	}    		
 #container{
-	height:5000px;
-}
-#content{
-	color:gray;
 	height:5000px;
 }
 #log{
@@ -247,7 +306,24 @@ height:250px;
 <hr>
 <br>
 
-
+			<div id="popup2" class="Pstyle2">	
+					<div class="mychatlist2" id="chat" >
+					adsasd 이게 나라냐 ㅋㅋ
+					</div>
+					
+					<input type="button" id="btn_close" value="닫 기">
+			</div>
+			
+			
+			<div id="popup" class="Pstyle">	
+					<div class="mychatlist" id="chat" >
+					</div>
+					
+					<input type="button" id="btn_close" value="닫 기">
+			</div>
+				<div class="wrap2">
+					<input type="button" id="btn_open" value="채팅리스트">
+				</div>
 <hr>
 
 	<div class="container">
@@ -291,6 +367,8 @@ height:250px;
 		</div>
 	</div>
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 <script src ="../js/boardlist.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 

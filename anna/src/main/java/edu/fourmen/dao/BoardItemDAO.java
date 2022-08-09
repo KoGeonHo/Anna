@@ -73,6 +73,9 @@ public class BoardItemDAO {
 		return sqlSession.selectList(efdb+".selectChat",cvo);
 	}
 	
+	public List<ChatMessageVO> mychatlist(ChatMessageVO cvo){
+		return sqlSession.selectList(efdb+".mychatlist",cvo);
+	}
 	public int addNeighbor(BoardItemVO vo) {
 		return sqlSession.insert(efdb+".addNeighbor",vo);
 	}

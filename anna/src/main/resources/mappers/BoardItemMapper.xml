@@ -270,8 +270,14 @@
 		and chat_host = #{chat_host} 
 		and invited = #{invited}
 		and item_idx = #{item_idx}  order by cidx 
-	
 	</select>
 	
+	<select id="mychatlist" parameterType="chatVO"  resultType="chatVO">
+		select DISTINCT a.item_idx,c.nickname ,a.contents
+		from  chat a, AnnaUser c
+ 		where a.uidx = c.uidx 
+ 		  and a.chat_host = #{uidx} order by a.item_idx desc
+ 				
+	</select>
 	
 </mapper>

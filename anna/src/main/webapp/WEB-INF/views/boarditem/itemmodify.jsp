@@ -39,7 +39,7 @@
 			<option value="1">불가능</option>
 			<option value="2">가능</option>
 		   </select>
-	<textarea id="summernote" name="content" >${vo.content}</textarea>
+	<textarea id="summernote" name="contents" >${vo.contents}</textarea>
 	<br>
 	<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
@@ -87,15 +87,15 @@
 	
 	    //저장버튼 클릭
 	    $(document).on('click', '#saveBtn', function () {
-	        saveContent();
+	        saveContents();
 	        });
 	        
 	    });
-	 function saveContent() {
+	 function saveContents() {
     	
         //값 가져오기
         var Content = $('#summernote').summernote('code');        //썸머노트(설명)
-        alert("content : " + content);
+        alert("contents : " + contents);
 		
     }
 
