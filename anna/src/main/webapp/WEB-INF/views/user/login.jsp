@@ -9,6 +9,14 @@
 <link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/js/bootstrap.js"></script>
 <script>
+	
+	if("${uidx}" != ""){
+		alert("이미 로그인되어있습니다.");
+		location.href="<%=request.getContextPath()%>/main.do";
+	}
+	
+	console.log("${uidx}");
+
 	function kakaoLogin(){
 		$.ajax({
 			url : "getKakaoAuthUrl.do",
