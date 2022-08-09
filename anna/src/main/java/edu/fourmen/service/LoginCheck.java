@@ -26,8 +26,11 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 			if(cookie.getName().equals("uidx")) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				System.out.println("쿠키존재:"+cookie.getValue());
 =======
+=======
+>>>>>>> parent of 89a0040 (Revert "Revert "20220809"")
 =======
 >>>>>>> parent of 89a0040 (Revert "Revert "20220809"")
 				System.out.println(cookie.getValue()); 
@@ -43,6 +46,9 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 				
 				return true;
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 89a0040 (Revert "Revert "20220809"")
+=======
 >>>>>>> parent of 89a0040 (Revert "Revert "20220809"")
 =======
 >>>>>>> parent of 89a0040 (Revert "Revert "20220809"")
