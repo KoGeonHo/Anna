@@ -408,7 +408,6 @@ a {
 </script>
 <script>
 	let invited=0;
-	let chat_host=0;
 	function sendMessage(form) {
 		//작성자, 내용 유효성 검사
 		
@@ -425,7 +424,7 @@ a {
 			nickName : form.nickName.value,
 			contents : form.contents.value,
 			item_idx : form.item_idx.value,
-			chat_host : from.chat_host.value,
+			chat_host :form.chat_host.value,
 			uidx : form.uidx.value, 
 			invited : form.invited.value,
 		},  
@@ -747,7 +746,15 @@ a {
 				<form onsubmit="sendMessage(this); return false;">
 					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
 					<input type="text" name="chat_host" value="${vo.uidx}"><br>
+					
+					<c:if test="${userLoginInfo.uidx == vo.uidx}">
+					<input type="text" name="invited" value="${chatlist.uidx}">
+					</c:if>
+					<c:if test="${userLoginInfo.uidx != vo.uidx}">
 					<input type="text" name="invited" value="${userLoginInfo.uidx}">
+					</c:if>
+					
+					
 					<input type="text" name="uidx" value="${userLoginInfo.uidx}">
 					<input type="text" name="nickName" value="${userLoginInfo.nickName}"readonly="readonly">
 					<input type="text" name="contents" placeholder="내용" >

@@ -202,9 +202,6 @@ public class BoardItemController {
 		model.addAttribute("vo", vo);
 		
 		int chat_host = vo.getUidx();
-		
-		
-		
 		/*
 		 * List<ChatMessageVO> cvo2 = boarditemService.selectChat(cvo);
 		 * model.addAttribute("cvo2",cvo2);
@@ -941,13 +938,15 @@ public class BoardItemController {
 
 	@RequestMapping("/AddMessage")
 	@ResponseBody
-	public Map AddMessage(ChatMessageVO cvo,String nickName, String cdate,  String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
+	public Map AddMessage(BoardItemVO vo ,ChatMessageVO cvo,String nickName, String cdate,  String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
 		System.out.println("이쯤에");
 		session = request.getSession();
+		
 		int invited = (int) session.getAttribute("uidx"); //세션의 uidx값을 invited 에 넣음
-		long cidx = chatlist.size(); // 저장된 마지막 메시지의 다음 번호
-		System.out.println("이거 사실 chatMessage 필요없는거 아니냐");
+		
 		int result = boarditemService.insertChat(cvo);
+		
+		boarditemService.selectChat(cvo);
 		//ajax가 가져갈 출력값 개체 생성
 		Map rs = new HashMap<String, Object>();
 		
@@ -961,10 +960,8 @@ public class BoardItemController {
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		int invited = userinfo.getUidx();
 		int chat_host = vo.getUidx();
-		 long cidx = chatlist.size(); // 저장된 마지막 메시지의 다음 번호
 		session.setAttribute("userinfo",userinfo);
 		model.addAttribute("vo",vo);
-		ChatMessageVO chatMessage = new ChatMessageVO(cidx,uidx, invited,contents,chat_host,item_idx);
 		
 		return "d";
 	}
@@ -984,11 +981,6 @@ public class BoardItemController {
 		cvo.setInvited(invited);
 		cvo.setItem_idx(item_idx);
 		List<ChatMessageVO> chatlist = boarditemService.selectChat(cvo);
-		/*
-		 * for(ChatMessageVO chatvo : chatlist) { System.out.println(chatvo.getCidx());
-		 * System.out.println("contents:"+chatvo.getContents()); }
-		 */
-		//model.addAttribute("chatlist",chatlist);
 		return chatlist;
 	}
 	
@@ -999,7 +991,17 @@ public class BoardItemController {
 		return "메시지 전체 삭제";
 	}
 	
-
+	@RequestMapping("/mychatlist")
+	@ResponseBody
+	public List mychatlist(int chat_host,ChatMessageVO cvo,HttpSession session,HttpServletRequest request) {
+		System.out.println("채팅창 열었다");
+		session = request.getSession();
+		
+		
+		List<ChatMessageVO> mychatlist = boarditemService.mychatlist(cvo);
+		System.out.println(mychatlist+"이거 왜 안 찍히는데");
+		return mychatlist;
+	}
 	
 /*
 	@ResponseBody
