@@ -96,6 +96,7 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 	public int neighbor_check(BoardItemVO bvo) {
 		int result = boarditemdao.neighbor_check(bvo);
+		System.out.println(result+"service쪽 result");
 		return result;
 
 	}
