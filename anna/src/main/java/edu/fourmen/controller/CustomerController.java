@@ -98,4 +98,12 @@ public class CustomerController {
 		
 		return "customer/QnAView";
 	}
+	
+	@RequestMapping(value="/QnADel.do")
+	public String QnADel(int qidx) {
+		
+		int result = customerService.QnADel(qidx);
+		
+		return "redirect:/customer/QnAList.do";
+	}
 }

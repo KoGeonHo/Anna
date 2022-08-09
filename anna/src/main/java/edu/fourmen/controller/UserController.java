@@ -379,7 +379,7 @@ public class UserController {
 		
 		List<BoardVO> blist = null;
 		
-		uidx = (int)session.getAttribute("uidx");
+		uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
 		
 		UserVO uv = (UserVO)session.getAttribute("userLoginInfo");
 		
@@ -425,7 +425,7 @@ public class UserController {
 		
 		int uidx = 0;
 			
-		uidx = (int)session.getAttribute("uidx");
+		uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
 		
 		UserVO userInfo = userService.getUserInfo(uidx);
 		
@@ -446,7 +446,7 @@ public class UserController {
 		
 		if(session.getAttribute("uidx") != null) {		
 			
-			int uidx = (int)session.getAttribute("uidx");
+			int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
 			
 			UserVO userInfo = userService.getUserInfo(uidx);
 			
@@ -465,7 +465,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		int uidx = (int)session.getAttribute("uidx");
+		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
 		
 		vo.setUidx(uidx);
 		
@@ -483,7 +483,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		int uidx = (int)session.getAttribute("uidx");
+		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
 		
 		vo.setUidx(uidx);
 		
@@ -568,7 +568,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		int uidx = (int)session.getAttribute("uidx");
+		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
 		
 		List<UserVO> nList = userService.neighborList(uidx);
 		
