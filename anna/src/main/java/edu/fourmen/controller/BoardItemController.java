@@ -41,7 +41,7 @@ import jdk.nashorn.internal.ir.RuntimeNode.Request;
 @RequestMapping(value = "/boarditem")
 @Controller
 public class BoardItemController {
-	private List<ChatMessageVO> chatlist;
+	private List<ChatMessageVO> messages;
 	@Autowired
 	UserService userService;
 	
@@ -105,6 +105,7 @@ public class BoardItemController {
 		
 		
 		
+		System.out.println(vo.getCate_idx()+"카테고리선택");
 		
 		//전체 상품 리스트 받아오기
 	    List<BoardItemVO> list = boarditemService.list(vo,pm);
@@ -132,6 +133,7 @@ public class BoardItemController {
 			svo.setSearchVal("");
 		}
 		
+		System.out.println();
 		
 		
 		//한 페이지에 몇개씩 표시할 것인지
@@ -181,6 +183,7 @@ public class BoardItemController {
 		
 		
 		
+		System.out.println(vo.getCate_idx()+"카테고리선택");
 		
 		List<BoardItemVO> list = boarditemService.list(vo,pm);
 		
@@ -192,7 +195,7 @@ public class BoardItemController {
 
 	
 	@RequestMapping(value = "itemview.do")
-	public String selectitem(BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+	public String selectitem(ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
 			HttpSession session, Model model) {
 		
 
@@ -200,11 +203,6 @@ public class BoardItemController {
 		
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		model.addAttribute("vo", vo);
-		
-		int chat_host = vo.getUidx();
-		
-		
-		
 		/*
 		 * List<ChatMessageVO> cvo2 = boarditemService.selectChat(cvo);
 		 * model.addAttribute("cvo2",cvo2);
@@ -219,14 +217,17 @@ public class BoardItemController {
 		model.addAttribute("youritem", youritem);
 		
 		
+		int uidx = (int) session.getAttribute("uidx");
 		
 		if(session.getAttribute("uidx") != null) {
-		int uidx = (int) session.getAttribute("uidx");
 		int neighbor_idx = vo.getUidx();
-		bvo.setNeighbor_idx(neighbor_idx);
-		bvo.setUidx(uidx); //이게 있으면 추가가 안되고 없으면 체크가 안된다.
+		System.out.println(uidx +"session uidx 번호");
+		System.out.println(neighbor_idx + "itemview 이웃번호");
+		vo.setNeighbor_idx(neighbor_idx);
+		vo.setUidx(uidx); //이게 있으면 추가가 안되고 없으면 체크가 안된다.
+		
 		}
-		int result = boarditemService.neighbor_check(bvo);
+		int result = boarditemService.neighbor_check(vo);
 		model.addAttribute("result",result);
 		System.out.println(result +"이웃 체크");
 		
@@ -243,7 +244,9 @@ public class BoardItemController {
 	@RequestMapping(value = "itemwrite.do", method = RequestMethod.POST)
 	public String itemwrite(BoardItemVO vo, HttpServletRequest request, HttpServletResponse response,
 			HttpSession session, Model model, MultipartFile file) throws IllegalStateException, IOException {
+		System.out.println(vo.getUidx()+"글쓰기 회원번호");
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+		System.out.println(path);
 		UserVO userinfo = (UserVO) session.getAttribute("login");
 		String fileName = null;
 		UUID uuid = UUID.randomUUID();
@@ -941,15 +944,25 @@ public class BoardItemController {
 
 	@RequestMapping("/AddMessage")
 	@ResponseBody
-	public Map AddMessage(ChatMessageVO cvo,String nickName, String cdate,  String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
+	public Map AddMessage(String nickName,int uidx, String cdate, int item_idx, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
 		System.out.println("이쯤에");
 		session = request.getSession();
+		UserVO userinfo = (UserVO)session.getAttribute("login");
+		BoardItemVO vo = boarditemService.selectitem(item_idx);
+		System.out.println(item_idx +"채팅입력 itemidx");
+		session.setAttribute("userinfo",userinfo);
+		model.addAttribute("vo",vo);
+		int chat_host = vo.getUidx();
 		int invited = (int) session.getAttribute("uidx"); //세션의 uidx값을 invited 에 넣음
-		long cidx = chatlist.size(); // 저장된 마지막 메시지의 다음 번호
-		System.out.println("이거 사실 chatMessage 필요없는거 아니냐");
-		int result = boarditemService.insertChat(cvo);
+		long cidx = messages.size(); // 저장된 마지막 메시지의 다음 번호
+		ChatMessageVO chatMessage = new ChatMessageVO(cidx, uidx, invited, contents,chat_host,item_idx,nickName);
+		messages.add(chatMessage);
+		int result = boarditemService.insertChat(chatMessage);
+		
 		//ajax가 가져갈 출력값 개체 생성
 		Map rs = new HashMap<String, Object>();
+		rs.put("chat_host", chat_host);
+		rs.put("invited", invited);
 		
 		return rs;
 	}
@@ -961,10 +974,10 @@ public class BoardItemController {
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		int invited = userinfo.getUidx();
 		int chat_host = vo.getUidx();
-		 long cidx = chatlist.size(); // 저장된 마지막 메시지의 다음 번호
+		 long cidx = messages.size(); // 저장된 마지막 메시지의 다음 번호
 		session.setAttribute("userinfo",userinfo);
 		model.addAttribute("vo",vo);
-		ChatMessageVO chatMessage = new ChatMessageVO(cidx,uidx, invited,contents,chat_host,item_idx);
+		ChatMessageVO chatMessage = new ChatMessageVO(cidx,uidx, invited,contents,chat_host,item_idx,nickName);
 		
 		return "d";
 	}
@@ -995,7 +1008,7 @@ public class BoardItemController {
 	@RequestMapping("/clear")
 	@ResponseBody
 	public String clear() {
-		chatlist.clear();
+		messages.clear();
 		return "메시지 전체 삭제";
 	}
 	
@@ -1033,11 +1046,14 @@ public class BoardItemController {
 	@ResponseBody
 	@RequestMapping("/addNeighbor")
 	public String addNeighbor(HttpSession
-			  session,HttpServletRequest request ,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
-		session = request.getSession();
+			  session,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
+		System.out.println("이거 여기까진 오기는 하냐");
 		int uidx = (int) session.getAttribute("uidx");
 		
+		System.out.println(neighbor_idx+"이웃 추가쪽 이웃번호");
+		System.out.println(uidx+"이웃 추가쪽 세션번호");
 		boarditemService.addNeighbor(vo);
+		System.out.println("이웃추가 함수가 안됨?");
 		
 		return "이웃추가 완료";
 	}
@@ -1050,7 +1066,6 @@ public class BoardItemController {
 		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
 		boarditemService.delneighbor(vo);
 		System.out.println("이웃삭제 완료");
-		
 		return "이웃삭제 완료";
 
 	}

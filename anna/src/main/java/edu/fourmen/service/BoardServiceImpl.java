@@ -29,11 +29,7 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.selectfreeboard(pm);
 	}
 
-	@Override
-	public List<BoardVO> selectboard(PageMaker pm) {
-		
-		return boardDao.selectboard(pm);
-	}
+	
 
 
 	@Override
