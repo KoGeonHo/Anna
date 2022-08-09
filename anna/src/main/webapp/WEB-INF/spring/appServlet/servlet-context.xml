@@ -40,12 +40,19 @@
 	<!--  spring-upload -->
 
 	<!-- 로그인 체크 인터셉터 -->
+	<beans:bean id="CookieCheckInterceptor" class="edu.fourmen.service.CookieCheck"></beans:bean>
 	<beans:bean id="LoginCheckInterceptor" class="edu.fourmen.service.LoginCheck"></beans:bean>
     
     <interceptors>
         <interceptor>
+            <mapping path="/*/*.do"/>
+            <beans:ref bean="CookieCheckInterceptor"/>
+        </interceptor>
+        
+        <interceptor>
             <mapping path="/user/*.do"/>
             <mapping path="/customer/*.do"/>
+            <mapping path="/boarditem/*.do"/>
             <beans:ref bean="LoginCheckInterceptor"/>
         </interceptor>
     </interceptors>
