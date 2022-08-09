@@ -24,7 +24,22 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 		
 		for(Cookie cookie:cookies) {
 			if(cookie.getName().equals("uidx")) {
+<<<<<<< HEAD
 				System.out.println("쿠키존재:"+cookie.getValue());
+=======
+				System.out.println(cookie.getValue()); 
+				//System.out.println("cookie:"+Integer.parseInt(String.valueOf(cookieUidx)));
+				//System.out.println("쿠키존재:"+cookie.getValue());
+				//UserVO userLoginInfo = userService.keepLogin(Integer.parseInt(cookie.getValue()));
+				
+				
+				//session.setAttribute("uidx", cookie.getValue());
+				 
+				//session.setAttribute("userLoginInfo", userLoginInfo);
+				
+				
+				return true;
+>>>>>>> parent of 89a0040 (Revert "Revert "20220809"")
 			}
 		}
 		
