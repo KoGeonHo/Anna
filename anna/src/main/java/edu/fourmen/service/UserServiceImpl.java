@@ -289,12 +289,6 @@ public class UserServiceImpl implements UserService{
 		return userDAO.myTownCommunityList(location_auth);
 	}
 
-	@Override
-	public UserVO keepLogin(int uidx) {
-		
-		return userDAO.keepLogin(uidx);
-	}
-
 		
 
 }

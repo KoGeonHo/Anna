@@ -107,10 +107,4 @@ public class UserDAO {
 		
 		return sqlSession.selectList("edu.fourmen.mapper.userMapper.myTownCommunityList",locationList);
 	}
-
-
-	public UserVO keepLogin(int uidx) {
-		
-		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.keepLogin",uidx);
-	}
 }

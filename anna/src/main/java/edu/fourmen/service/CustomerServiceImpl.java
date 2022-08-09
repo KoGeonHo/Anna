@@ -31,11 +31,5 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		return customerDAO.QnAView(qidx);
 	}
-
-	@Override
-	public int QnADel(int qidx) {
-		
-		return customerDAO.QnADel(qidx);
-	}
 	
 }

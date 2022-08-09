@@ -30,11 +30,6 @@ public class CustomerDAO {
 		
 		return sqlSession.selectOne("edu.fourmen.mapper.customerMapper.QnAView",qidx);
 	}
-
-	public int QnADel(int qidx) {
-		
-		return sqlSession.update("edu.fourmen.mapper.customerMapper.QnADel",qidx);
-	}
 	
 	
 }

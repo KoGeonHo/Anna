@@ -12,6 +12,4 @@ public interface CustomerService {
 
 	QnAVO QnAView(int qidx);
 
-	int QnADel(int qidx);
-
 }

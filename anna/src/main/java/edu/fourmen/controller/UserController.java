@@ -379,11 +379,11 @@ public class UserController {
 		
 		List<BoardVO> blist = null;
 		
-		uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		uidx = (int)session.getAttribute("uidx");
 		
 		UserVO uv = (UserVO)session.getAttribute("userLoginInfo");
 		
-		System.out.println(uv.getLocation_auth());
+		//System.out.println(uv.getLocation_auth());
 		
 		UserVO userInfo = userService.getUserInfo(uidx);
 		
@@ -425,7 +425,7 @@ public class UserController {
 		
 		int uidx = 0;
 			
-		uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		uidx = (int)session.getAttribute("uidx");
 		
 		UserVO userInfo = userService.getUserInfo(uidx);
 		
@@ -446,7 +446,7 @@ public class UserController {
 		
 		if(session.getAttribute("uidx") != null) {		
 			
-			int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+			int uidx = (int)session.getAttribute("uidx");
 			
 			UserVO userInfo = userService.getUserInfo(uidx);
 			
@@ -465,7 +465,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		int uidx = (int)session.getAttribute("uidx");
 		
 		vo.setUidx(uidx);
 		
@@ -483,7 +483,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		int uidx = (int)session.getAttribute("uidx");
 		
 		vo.setUidx(uidx);
 		
@@ -551,7 +551,7 @@ public class UserController {
 		
 		vo.setLocation_auth(location_auth);
 		
-		vo.setUidx(Integer.parseInt(String.valueOf(session.getAttribute("uidx"))));
+		vo.setUidx((int)session.getAttribute("uidx"));
 
 		//System.out.println(vo.getLocation_auth());
 		
@@ -568,7 +568,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		int uidx = (int)session.getAttribute("uidx");
 		
 		List<UserVO> nList = userService.neighborList(uidx);
 		

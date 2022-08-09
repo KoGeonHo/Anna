@@ -418,6 +418,7 @@ a {
 			form.contents.focus();
 			return false;
 		}
+		console.log("대체 왜 그러는데")
 		
 		// AJAX -> doAddMessage 실행 및 출력값 가져오기
 		$.post('./AddMessage',{
@@ -425,16 +426,17 @@ a {
 			contents : form.contents.value,
 			item_idx : form.item_idx.value,
 			chat_host : from.chat_host.value,
+			uidx : form.uidx.value, 
 			invited : form.invited.value,
-			uidx : form.uidx.value,
-		}, function(data) {
+		},  
+		function(data) {
 			uidx = data["uidx"];
-		},'json');
+		},'json'); 
+		console.log("대체 왜 그러는데123123123");
 		form.contents.value = '';
 		form.contents.focus();
 		return false;
 	}
-	
 	
 	
 	var Chat__lastReceivedchatlistcidx = -1;
@@ -744,16 +746,16 @@ a {
 			<div id="popup" class="Pstyle">	
 				<form onsubmit="sendMessage(this); return false;">
 					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
-					<input type="text" name="chat_host" value="${vo.chat_host}"><br>
-					<input type="hidden" name="invited" value="${uidx}">
-					<input type="hidden" name="uidx" value="${uidx}">
+					<input type="text" name="chat_host" value="${vo.uidx}"><br>
+					<input type="text" name="invited" value="${userLoginInfo.uidx}">
+					<input type="text" name="uidx" value="${userLoginInfo.uidx}">
 					<input type="text" name="nickName" value="${userLoginInfo.nickName}"readonly="readonly">
 					<input type="text" name="contents" placeholder="내용" >
 					<input type="submit" value="전송">
 				</form>
-				
 					<div class="chat-list" id="chat" >
 					</div>
+					
 					<input type="button" id="btn_close" value="닫 기">
 			</div>
 			<c:if test="${uidx != null }">
@@ -765,8 +767,8 @@ a {
 				<c:if test="${result == 0 }">
 				<form onsubmit="addNeighbor(this); return false;">
 						<input type="submit" value="이웃추가" id="or">
-						<input type=text name="uidx" value="${uidx}">
-						<input type="text" name="neighbor_idx" value="${vo.neighbor_idx}">
+						<input type=text name="uidx" value="${userLoginInfo.uidx}">
+						<input type="text" name="neighbor_idx" value="${vo.uidx}">
 						<input type="hidden" name="item_idx" value="${vo.item_idx}">
 				</form>
 				</c:if>
@@ -774,8 +776,8 @@ a {
 				<c:if test="${result != 0}">
 				<form onsubmit="delNeighbor(this); return false;">
 						<input type="submit" value="이웃삭제" id="or">
-						<input type="text" name="uidx" value="${uidx}">
-						<input type="text" name="neighbor_idx" value="${vo.neighbor_idx}">
+						<input type="text" name="uidx" value="${userLoginInfo.uidx}">
+						<input type="text" name="neighbor_idx" value="${vo.uidx}">
 						<input type="hidden" name="item_idx" value="${vo.item_idx}">
 				</form>
 				</c:if>

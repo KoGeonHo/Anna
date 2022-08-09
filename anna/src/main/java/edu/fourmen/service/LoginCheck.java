@@ -7,17 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import edu.fourmen.vo.UserVO;
 
 
 public class LoginCheck extends HandlerInterceptorAdapter{
-	
-	@Autowired
-	UserService userService;
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
 		
@@ -26,8 +20,14 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		
 		String requestUrl = request.getRequestURL().toString();
+		Cookie[] cookies = request.getCookies();
 		
-		System.out.println("loginCheckInterceptor");
+		for(Cookie cookie:cookies) {
+			if(cookie.getName().equals("uidx")) {
+				System.out.println("쿠키존재:"+cookie.getValue());
+			}
+		}
+		
 		
 		if(requestUrl.contains("/login") || requestUrl.contains("/join") || requestUrl.contains("/getKakaoAuthUrl") || requestUrl.contains("/kakaoLogin") || requestUrl.contains("/emailChk") || requestUrl.contains("/sendAuthEmail")){ 
 			

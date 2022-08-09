@@ -61,16 +61,5 @@
   			qidx = #{ qidx }
   			
   	</select>
-  	
-  	<update id="QnADel" parameterType="int">
-  	
-  		UPDATE 
-  			QnA
-  		SET
-  			isDel = 'Y'
-  		WHERE
-  			qidx = #{qidx}
-  		
-  	</update>
   
 </mapper>
