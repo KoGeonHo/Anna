@@ -26,8 +26,25 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		
 		String requestUrl = request.getRequestURL().toString();
+		Cookie[] cookies = request.getCookies();
 		
-		System.out.println("loginCheckInterceptor");
+		for(Cookie cookie:cookies) {
+			if(cookie.getName().equals("uidx")) {
+				System.out.println(cookie.getValue()); 
+				//System.out.println("cookie:"+Integer.parseInt(String.valueOf(cookieUidx)));
+				//System.out.println("쿠키존재:"+cookie.getValue());
+				//UserVO userLoginInfo = userService.keepLogin(Integer.parseInt(cookie.getValue()));
+				
+				
+				//session.setAttribute("uidx", cookie.getValue());
+				 
+				//session.setAttribute("userLoginInfo", userLoginInfo);
+				
+				
+				return true;
+			}
+		}
+		
 		
 		if(requestUrl.contains("/login") || requestUrl.contains("/join") || requestUrl.contains("/getKakaoAuthUrl") || requestUrl.contains("/kakaoLogin") || requestUrl.contains("/emailChk") || requestUrl.contains("/sendAuthEmail")){ 
 			
