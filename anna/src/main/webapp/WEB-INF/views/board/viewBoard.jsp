@@ -117,8 +117,8 @@ ${bv.contents}
    		                <form method='post' id="commentForm" name="frm">
    		                 	   <!-- <span class="c-icon"><i class="fa-solid fa-user"></i>  -->
    		                 <div class="comment-name">
-	                        <span class="anonym">작성자 : 
-	                    	   	<input type="text" class="form-control" id="nickName" placeholder="닉네임" name ="nickName" value='${userInfo.nickName}' readonly  style="width: 100px; border:none;">
+	                        <span class="anonym">
+	                    	   	<input type="hidden" class="form-control" id="nickName" name ="nickName" value='${userInfo.nickName}'>
 	                        	<input type="hidden" name="uidx" value="${uidx}">
 	                        </span>
 	                      </div>   

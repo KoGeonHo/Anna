@@ -182,13 +182,7 @@ public class BoardController {
 		session = request.getSession();
 		
 		
-		 
-		
-		 	
-		
-		
 
-		
 		return "board/BoardWrite";
 	}
 	
@@ -407,21 +401,7 @@ public class BoardController {
 		boardService.boardLikeDown(vo);
 	}
 
-	@RequestMapping(value="/JobBoard.do")
-	public String JobBoard(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
-		
-		session = request.getSession();
-		
-		List<BoardVO> jobboard = boardService.selectjobboard(pm);
-		int Ccount = boardService.getCTotal(bv);
-		
-		bv.setCcount(Ccount);
-	
-		model.addAttribute("jobboard", jobboard);
-		model.addAttribute("svo", svo);
-		
-		return "board/JobBoard";
-	}
+
 	
 	@RequestMapping(value="/BoardDelete.do")
 	public String BoardDelete(int Bidx,BoardVO vo) {
@@ -433,6 +413,14 @@ public class BoardController {
 		System.out.println("삭제완료");
 		
 		return "redirect:/board/FreeBoard.do";
+	}
+	
+	@RequestMapping(value="/BoardModify.do", method=RequestMethod.GET)
+	public String BoardModify(int Bidx, Model model) {
+		
+		BoardVO bv = boardService.viewBoard(Bidx);
+		model.addAttribute("bv", bv);
+		return "board/BoardModify";
 	}
 	
 	@RequestMapping(value="/test.do")

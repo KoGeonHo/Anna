@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글쓰기 페이지</title>
-<!-- include libraries(jQuery, bootstrap) -->
+<title>수정하기</title>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
@@ -21,36 +19,29 @@
 
      <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-  
 </head>
 <body>
 
-
-
-    <h1>Summernote</h1>
+   <h1>Summernote</h1>
     
 <form action="BoardWrite.do" method="post" enctype="multipart/form-data">
-<input type="text" name="uidx" value="${uidx}">
-<input type="text" name="Location" value="${userLoginInfo.location_auth}">
-
-<select name="board_type" onchange="locationMap()" id="board_type">
+<input type="hidden" name="uidx" value="${uidx}">
+<input type="text" name="Location" value="${vo.location}">
+<select name="board_type">
 	<option value="free">일상&amp;소통</option>
 	<option value="job">구인구직</option>
-	<option value="meeting">만남</option>
+	<option value="metting">만남</option>
 	<option value="hotplace">우리동네 핫플레이스</option>
 </select>
 
-<input type="text" name="Title" placeholder="제목을 입력해주세요">
+<input type="text" name="Title" placeholder="제목을 입력해주세요" value="${bv.title}">
  
-<textarea id="summernote" class="summernote" name="Contents"></textarea>
-<div id="location_kakao">
-
-
-
-</div>
+<textarea id="summernote" class="summernote" name="Contents">${bv.contents }</textarea>
 <div id="boxWrap">
 <button type="button" id="file_btn">추가</button>
 <input type="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
+
+
 </div>
 
 <button type="button">취소</button>
@@ -132,13 +123,8 @@ function chk_file_type(obj) {
 }
 
 </script>
-<script>
 
-function locationMap(){
 
-}
-
-</script>
 
 </body>
 </html>
