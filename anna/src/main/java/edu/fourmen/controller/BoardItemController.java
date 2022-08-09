@@ -36,7 +36,6 @@ import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
 
 import edu.fourmen.vo.UserVO;
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 @RequestMapping(value = "/boarditem")
 @Controller
@@ -59,7 +58,8 @@ public class BoardItemController {
 			svo.setSearchVal("");
 		}
 		
-		session = request.getSession();
+		
+		
 		
 		//한 페이지에 몇개씩 표시할 것인지
 				int pagecount = 12;
@@ -193,44 +193,40 @@ public class BoardItemController {
 		return "boarditem/ajax_item";
 	}
 
-	
 	@RequestMapping(value = "itemview.do")
-	public String selectitem(ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
-			HttpSession session, Model model) {
+
+	public String selectitem(BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+			HttpSession session, Model model ) {
+		
 		
 
 		session = request.getSession();
 		
+		UserVO userinfo = (UserVO) session.getAttribute("login");
+		model.addAttribute("userinfo", userinfo);
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		model.addAttribute("vo", vo);
-		/*
-		 * List<ChatMessageVO> cvo2 = boarditemService.selectChat(cvo);
-		 * model.addAttribute("cvo2",cvo2);
-		 */
+		
+		int neighbor_idx = vo.getUidx();
+		int uidx = (int) session.getAttribute("uidx");
+		System.out.println(uidx +"session uidx 번호");
+		System.out.println(neighbor_idx + "itemview 이웃번호");
+		bvo.setUidx(uidx);
+		bvo.setNeighbor_idx(neighbor_idx);
+		int result = boarditemService.neighbor_check(bvo);
+		model.addAttribute("result",result);
+		System.out.println(result +"이웃 체크");
 		
 		
 		List<BoardItemVO> list = boarditemService.list(vo,pm);
 		model.addAttribute("list", list);
 
 		
-		List<BoardItemVO> youritem = boarditemService.selectAllbyuser(vo, svo);
-		model.addAttribute("youritem", youritem);
+		List<BoardItemVO> list2 = boarditemService.selectAllbyuser(vo, svo);
+		model.addAttribute("list2", list2);
 		
 		
-		int uidx = (int) session.getAttribute("uidx");
-		
-		if(session.getAttribute("uidx") != null) {
-		int neighbor_idx = vo.getUidx();
-		System.out.println(uidx +"session uidx 번호");
-		System.out.println(neighbor_idx + "itemview 이웃번호");
-		vo.setNeighbor_idx(neighbor_idx);
-		vo.setUidx(uidx); //이게 있으면 추가가 안되고 없으면 체크가 안된다.
-		
-		}
-		int result = boarditemService.neighbor_check(vo);
-		model.addAttribute("result",result);
-		System.out.println(result +"이웃 체크");
-		
+
 		return "boarditem/itemview";
 
 	}
@@ -244,7 +240,7 @@ public class BoardItemController {
 	@RequestMapping(value = "itemwrite.do", method = RequestMethod.POST)
 	public String itemwrite(BoardItemVO vo, HttpServletRequest request, HttpServletResponse response,
 			HttpSession session, Model model, MultipartFile file) throws IllegalStateException, IOException {
-		System.out.println(vo.getUidx()+"글쓰기 회원번호");
+
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 		System.out.println(path);
 		UserVO userinfo = (UserVO) session.getAttribute("login");
@@ -919,15 +915,15 @@ public class BoardItemController {
 	public String delete(HttpSession session,Model model, int item_idx) {
 		
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
+		
 		model.addAttribute("vo",vo);
 		
-		return "boarditem/itemlist";
+		return "boarditem/itemdelete";
 	}
 	
 	@RequestMapping(value="/itemdelete.do", method=RequestMethod.POST)
 	public String delete(HttpSession session,BoardItemVO vo) {
 			
-			System.out.println("게시글 삭제 완료");
 			int result = boarditemService.itemdelete(vo);
 		
 		return "redirect:/itemboard/itemlist.do";
@@ -941,6 +937,9 @@ public class BoardItemController {
 		return "boarditem/chat";
 	}
 	
+	BoardItemController(){
+		messages = new ArrayList<>();
+	}
 
 	@RequestMapping("/AddMessage")
 	@ResponseBody
@@ -949,7 +948,6 @@ public class BoardItemController {
 		session = request.getSession();
 		UserVO userinfo = (UserVO)session.getAttribute("login");
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
-		System.out.println(item_idx +"채팅입력 itemidx");
 		session.setAttribute("userinfo",userinfo);
 		model.addAttribute("vo",vo);
 		int chat_host = vo.getUidx();
@@ -968,7 +966,7 @@ public class BoardItemController {
 	}
 	@RequestMapping("/getAllMessages")
 	@ResponseBody
-	public String getAllMessages(ChatMessageVO cvo,String nickName,int uidx,int item_idx,String cdate, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
+	public List getAllMessages(String nickName,int uidx,int item_idx,String cdate, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
 
 		UserVO userinfo = (UserVO)session.getAttribute("login");
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
@@ -978,31 +976,19 @@ public class BoardItemController {
 		session.setAttribute("userinfo",userinfo);
 		model.addAttribute("vo",vo);
 		ChatMessageVO chatMessage = new ChatMessageVO(cidx,uidx, invited,contents,chat_host,item_idx,nickName);
+		List value = boarditemService.selectChat(chatMessage);
 		
-		return "d";
+		
+		
+		return value;
 	}
 	
 	
 	
 	@RequestMapping("/getMessages")
 	@ResponseBody
-	public List<ChatMessageVO> getMessages(BoardItemVO vo,int from,ChatMessageVO cvo,HttpSession session,Model model) {
-		
-		String nickName = (String)session.getAttribute("nickName");
-		int invited = (int) session.getAttribute("uidx");
-		int chat_host = vo.getChat_host();
-		int item_idx = vo.getItem_idx();
-		cvo.setNickName(nickName);
-		cvo.setChat_host(chat_host);
-		cvo.setInvited(invited);
-		cvo.setItem_idx(item_idx);
-		List<ChatMessageVO> chatlist = boarditemService.selectChat(cvo);
-		/*
-		 * for(ChatMessageVO chatvo : chatlist) { System.out.println(chatvo.getCidx());
-		 * System.out.println("contents:"+chatvo.getContents()); }
-		 */
-		//model.addAttribute("chatlist",chatlist);
-		return chatlist;
+	public List getMessages(int from) {
+		return messages.subList(from,messages.size());
 	}
 	
 	@RequestMapping("/clear")
@@ -1048,10 +1034,12 @@ public class BoardItemController {
 	public String addNeighbor(HttpSession
 			  session,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
 		System.out.println("이거 여기까진 오기는 하냐");
-		int uidx = (int) session.getAttribute("uidx");
+		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
 		
-		System.out.println(neighbor_idx+"이웃 추가쪽 이웃번호");
-		System.out.println(uidx+"이웃 추가쪽 세션번호");
+		System.out.println(vo.getNeighbor_idx() + "이웃번호");
+		System.out.println(vo.getUidx() + "세션번호");
+		
+		System.out.println(neighbor_idx+"이웃번호");
 		boarditemService.addNeighbor(vo);
 		System.out.println("이웃추가 함수가 안됨?");
 		
@@ -1065,7 +1053,7 @@ public class BoardItemController {
 		
 		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
 		boarditemService.delneighbor(vo);
-		System.out.println("이웃삭제 완료");
+		
 		return "이웃삭제 완료";
 
 	}

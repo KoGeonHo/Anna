@@ -226,7 +226,7 @@ height:250px;
 	</form>
 		<div>
 			<c:if test="${!empty pm.searchVal}">	
-			<h1>${userLoginInfo.nickName} 님이 검색하신 ${pm.searchVal} 의 최저가 상품입니다</h1>
+			<h1>니가 검색한 ${pm.searchVal} 의 최저가 상품이란다</h1>
 				<div class="col-lg-3">
 					<div class="card">
 					<a href="itemview.do?item_idx=${ssang.item_idx}"><img src="../resources/upload/${ssang.image1}" ></a>
