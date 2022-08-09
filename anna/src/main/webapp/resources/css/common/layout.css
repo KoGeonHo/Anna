@@ -31,6 +31,10 @@ body {
 	.main {
 		padding-bottom: 70px;
 	}
+	
+	.wrapper {
+    	margin-bottom:70px;
+	}
 
 	
 }
@@ -70,7 +74,6 @@ body {
     flex-direction: column;
     height: 100vh;
     overflow:auto;
-    margin-bottom:70px;
 }
 
 .ft-icon {

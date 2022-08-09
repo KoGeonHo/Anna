@@ -25,6 +25,7 @@ public interface UserService {
 	List<BoardItemVO> getInterestedItem(List<String> interested);
 	List<UserVO> neighborList(int uidx);
 	List<BoardVO> myTownCommunityList(String location_auth);
+	UserVO keepLogin(int uidx);
 	
 	
 }
