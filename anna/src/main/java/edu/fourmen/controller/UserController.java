@@ -375,9 +375,9 @@ public class UserController {
 		
 		int uidx = 0;
 		
-		List<BoardItemVO> list = null;
+		List<BoardItemVO> list = new ArrayList<BoardItemVO>();
 		
-		List<BoardVO> blist = null;
+		List<BoardVO> blist = new ArrayList<BoardVO>();
 		
 		uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
 		
@@ -397,6 +397,9 @@ public class UserController {
 			
 			list = userService.getInterestedItem(listInterested);
 			
+		} else {
+			List<String> listInterested = new ArrayList<String>();
+			list = userService.getInterestedItem(listInterested);
 		}
 		
 		if(uv.getLocation_auth() != null) {
@@ -499,6 +502,8 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value="/emailChk.do", produces = "application/text; charset=utf8")
 	public String emailChk(String user_email) {
+		
+		System.out.println(user_email);
 		
 		int result = userService.emailChk(user_email);
 		

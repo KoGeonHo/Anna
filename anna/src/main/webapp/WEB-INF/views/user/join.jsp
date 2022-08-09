@@ -84,7 +84,7 @@
 					data : "user_email="+email.val(),
 					success : function(result){
 						console.log(result);
-						 if(result.result != 0){
+						if(result != 0){
 							alert("이미 사용중인 이메일 입니다.");
 							email.val("");
 							email.focus();

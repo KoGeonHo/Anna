@@ -10,7 +10,7 @@
 	
 					<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
 						<li><a href="${path}/boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
-						<li><a href="${path}/board/FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a></li>
+						<li><a href="${path}/board/boardlist.do?board_type=free" class="nav-link px-3 link-dark">커뮤니티</a></li>
 						<li><a href="${path}/customer/QnAList.do" class="nav-link px-3 link-dark">고객센터</a></li>
 						<li><a href="${path}/user/myPage.do" class="nav-link px-3 link-dark">마이페이지</a></li>
 					</ul>
