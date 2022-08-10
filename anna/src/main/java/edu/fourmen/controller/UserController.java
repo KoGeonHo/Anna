@@ -261,6 +261,8 @@ public class UserController {
             //카카오 엑세스 토큰
             String access_Token = (String)kakaoInfo.get("access_Token");
             
+            System.out.println("accessToken:"+access_Token);
+            
         	//엑세스 토큰을 이용하여 카카오 회원정보를 받기
             HashMap<String, Object> userInfo = userService.getKakaoUserInfo(access_Token);
             
@@ -320,6 +322,7 @@ public class UserController {
         		userLoginInfo.setUser_email(kakao_email);
         		
         		userLoginInfo = userService.login(userLoginInfo);
+
         		
         		if(userLoginInfo.getKakao_auth() == "") {
         			
@@ -328,19 +331,23 @@ public class UserController {
         			userService.updateKakaoAuthKey(userLoginInfo);
         			
         		}
-    			
+
+        		//System.out.println(kakao_email);
+        		
     			moveTo = path+"/user/myPage.do";
         			
         	}
-        	
+        	System.out.println(keepLogin);
         	//로그인 유지체크를 한경우 쿠키를생성한다.
+        	
         	if(keepLogin.equals("true")) {
         		Cookie cookie = new Cookie("uidx",Integer.toString(userLoginInfo.getUidx()));
         		cookie.setPath("/");
         		cookie.setMaxAge(60*60*24*7);//쿠키유지 일주일
         		response.addCookie(cookie);
         	}
-    		
+        	
+        	
 			//로그인 세션정보 (회원번호, 이메일[아이디], 닉네임)
         	session.setAttribute("userLoginInfo", userLoginInfo);
         	
@@ -377,7 +384,7 @@ public class UserController {
 		
 		List<BoardVO> blist = new ArrayList<BoardVO>();
 		
-		uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		uidx = (int)session.getAttribute("uidx");
 		
 		UserVO uv = (UserVO)session.getAttribute("userLoginInfo");
 		
@@ -426,7 +433,7 @@ public class UserController {
 		
 		int uidx = 0;
 			
-		uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		uidx = (int)session.getAttribute("uidx");
 		
 		UserVO userInfo = userService.getUserInfo(uidx);
 		
@@ -447,7 +454,7 @@ public class UserController {
 		
 		if(session.getAttribute("uidx") != null) {		
 			
-			int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+			int uidx = (int)session.getAttribute("uidx");
 			
 			UserVO userInfo = userService.getUserInfo(uidx);
 			
@@ -466,7 +473,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		int uidx = (int)session.getAttribute("uidx");
 		
 		vo.setUidx(uidx);
 		
@@ -484,7 +491,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		int uidx = (int)session.getAttribute("uidx");
 		
 		vo.setUidx(uidx);
 		
@@ -571,7 +578,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		int uidx = (int)session.getAttribute("uidx");
 		
 		List<UserVO> nList = userService.neighborList(uidx);
 		

@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
@@ -61,7 +62,14 @@
 				<div class="row border-bottom tr">
 					<div class="col-4 th">첨부파일</div>
 					<div class="col-8 td">
-						${ QnAItem.attach }<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="window.open('');">첨부파일 보기</button>
+    					<c:set var = "length" value = "${fn:length(QnAItem.attach)}"/>
+						<c:if test="${ length >= 20 }" >
+							${ fn:substring(QnAItem.attach,0,5) }...${ fn:substring(QnAItem.attach,length-10,length) } 
+						</c:if>
+						<c:if test="${ length < 20 }" >
+							${ QnAItem.attach } 
+						</c:if>
+						<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="window.open('');">첨부파일 보기</button>
 					</div>
 				</div>
 				<c:if test="${ QnAItem.state eq 2 }">

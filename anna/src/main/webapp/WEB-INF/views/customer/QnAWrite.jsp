@@ -80,7 +80,7 @@
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<input class="form-control" name="attachFile" type="file" id="formFile">
+							<input class="form-control" name="attachFile" type="file" id="formFile" accept=".gif, .jpg, .png">
 						</div>
 					</div>
 					
