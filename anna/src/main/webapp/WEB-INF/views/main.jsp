@@ -15,16 +15,12 @@
 	<script src="js/bootstrap.js"></script>
 	<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
 	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
- -->	
  	<link href="${path}/css/bootstrap.css" rel="stylesheet"/> 
  	
- 	<!--   Slick Slider -->
-
-
+<!--   Slick Slider -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>	
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
- 	<!--   Slick Slider -->
+<!--   Slick Slider -->
 	
 	<script>
 //스크롤 시 이벤트 처리
@@ -654,7 +650,7 @@ width: 50px;
 				<br> 
 				-->
 
-	<!--모바일 하단 메뉴버튼 -->
+	<!--모바일 하단 메뉴버튼 시작-->
 	<div class="visible-xs">
 		<div class="container ">
 			<div class="row d-lg-none">
@@ -678,46 +674,11 @@ width: 50px;
 			</div>
 		</div>
 	</div>
-	<!--모바일 하단 메뉴버튼 -->
+	<!--모바일 하단 메뉴버튼 종료	-->
 
 
 
-	<!-- 퀵메뉴 시작 
-	<div id="test_obj">
-		<a href="boarditem/itemwrite.do">
-			<img src="images/quickmenu.png" onmouseover="this.src='images/quickmenu_in.png'" onmouseout="this.src='images/quickmenu.png'"">
-		</a>
-	</div>
 	
-	<style>
-		#test_obj {
-			position: absolute;
-			width: 70px;
-			height: 70px;
-			right: 35px;
-			border-radius: 70px;
-			top: 750px;
-			border: 1px solid #dddddd;
-			color : #000;
-		}
-		</style>
-		
-		<script>
-					    $(document).ready(function () {
-					        var tmp = parseInt($("#test_obj").css('top'));
-					 
-					        $(window).scroll(function () {
-					            var scrollTop = $(window).scrollTop();
-					            var obj_position = scrollTop + tmp + "px";
-					 
-					            $("#test_obj").stop().animate({
-					                "top": obj_position
-					            }, 500);
-					 
-					        }).scroll();
-					    });
-		</script>
-		<!-- 퀵메뉴 종료 -->
 
 
 		<!-- 퀵메뉴 시작 -->
@@ -729,14 +690,14 @@ width: 50px;
         </a>
         <ul class="mfb-component__list">
           <li>
-            <a href="https://github.com/nobitagit/material-floating-button/" data-mfb-label="판매글 등록" class="mfb-component__button--child">
-              <i class="mfb-component__child-icon ion-clockwise"></i>
+            <a href="boarditem/itemwrite.do" data-mfb-label="판매글 등록" class="mfb-component__button--child">
+              <img src="images/icon_write.png" width="20px" height="20px;" he style="margin-left:19px; margin-top: 18px;">
               
             </a>
           </li>
           <li>
-            <a href="https://github.com/nobitagit" data-mfb-label="알림" class="mfb-component__button--child">
-              <i class="mfb-component__child-icon ion-social-youtube"></i>
+            <a href="itemwrite.do" data-mfb-label="알림" class="mfb-component__button--child">
+              <img src="images/icon_push.png" width="20px" height="20px;" he style="margin-left:18px; margin-top: 18px;">
             </a>
           </li>
 
@@ -748,7 +709,7 @@ width: 50px;
 		
 		<link href="css/mfb.css" rel="stylesheet">
 		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
-		<!-- 퀵메뉴 시작 -->
+		<!-- 퀵메뉴 종료 -->
 
 
 
