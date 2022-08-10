@@ -24,8 +24,10 @@ body {
 
 @media all and (max-width:  767px){
 	
-	.pc-header {
+	.pc-header  {
 		display:none;
+		z-index : 10000;
+		background-color : #fff;
 	}
 	
 	.main {
@@ -36,12 +38,15 @@ body {
     	margin-bottom:70px;
 	}
 	
+	
+	
 }
 
 @media all and (min-width :768px){
 
 	.navbar, .collapse, #menu{
-		display:none
+		display:none;
+		z-index : 10000;
 	}
 	
 	#footer {
@@ -58,6 +63,7 @@ body {
 #menu{
 
 	transition: all 0.5s ease-out;
+	z-index : 10000;
 	
 }
 

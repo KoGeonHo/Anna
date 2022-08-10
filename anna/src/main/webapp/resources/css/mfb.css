@@ -82,11 +82,14 @@
   margin: 25px;
   position: fixed;
   white-space: nowrap;
-  z-index: 30;
+  z-index: 10000;
   padding-left: 0;
   list-style: none; }
   .mfb-component--tl *, .mfb-component--tr *, .mfb-component--bl *, .mfb-component--br *, .mfb-component--tl *:before, .mfb-component--tr *:before, .mfb-component--bl *:before, .mfb-component--br *:before, .mfb-component--tl *:after, .mfb-component--tr *:after, .mfb-component--bl *:after, .mfb-component--br *:after {
     box-sizing: inherit; }
+    
+    
+    
 
 /*------------------------------------*\
     #BASE | Modifiers
@@ -113,7 +116,24 @@
 
 .mfb-component--br {
   right: 0;
-  bottom: 0; }
+  bottom: 0; 
+ 
+  }
+  
+  @media all and (max-width:  767px){
+  		.mfb-component--br {
+  			margin-bottom : 85px;
+  		}
+  
+  }
+  
+  @media all and (min-width :768px){
+  		.mfb-component--br {
+  			margin-right : 50px;
+  		}
+  
+  }
+  
 
 /*------------------------------------*\
     #BUTTONS | Base
