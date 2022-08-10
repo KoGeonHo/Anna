@@ -38,6 +38,8 @@ public interface BoardItemService {
 	
 	public List<ChatMessageVO> mychatlist(ChatMessageVO cvo);
 	
+	public List<ChatMessageVO> mychat(ChatMessageVO cvo);
+	
 	public int addNeighbor(BoardItemVO vo);
 	
 	public int neighbor_check(BoardItemVO bvo);

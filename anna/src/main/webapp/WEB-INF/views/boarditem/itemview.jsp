@@ -445,6 +445,7 @@ a {
 		$.get('./getMessages',{
 			item_idx : ${vo.item_idx},
 			chat_host : $("#chat_host").val(),
+			uidx : ${userLoginInfo.uidx},
 			from : Chat__lastReceivedchatlistcidx + 1 
 		}, function(data) {
 			
@@ -702,8 +703,7 @@ a {
 				
 						<h5 class="card-title">${vo.title}</h5>
 							<input type="hidden" value="${vo.uidx}"> 
-							<input type="hidden" value="${vo.item_idx}">
-
+							<input type="hidden"  id="vo.item_idx"value="${vo.item_idx}">
 							<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
 
 

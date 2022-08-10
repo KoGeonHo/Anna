@@ -976,6 +976,9 @@ public class BoardItemController {
 		int invited = (int) session.getAttribute("uidx");
 		int chat_host = vo.getChat_host();
 		int item_idx = vo.getItem_idx();
+		System.out.println(invited + "참여자 번호");
+		System.out.println(chat_host + " 글주인 번호");
+		System.out.println(item_idx + " 글번호");
 		cvo.setNickName(nickName);
 		cvo.setChat_host(chat_host);
 		cvo.setInvited(invited);
@@ -994,15 +997,29 @@ public class BoardItemController {
 	@RequestMapping("/mychatlist")
 	@ResponseBody
 	public List mychatlist(int chat_host,ChatMessageVO cvo,HttpSession session,HttpServletRequest request) {
-		System.out.println("채팅창 열었다");
+		System.out.println("채팅목록창 열었다");
 		session = request.getSession();
 		
+		
+		
+		cvo.setChat_host(chat_host);
 		
 		List<ChatMessageVO> mychatlist = boarditemService.mychatlist(cvo);
 		System.out.println(mychatlist+"이거 왜 안 찍히는데");
 		return mychatlist;
 	}
 	
+	@RequestMapping("/mychat")
+	@ResponseBody
+	public List mychat(int chat_host,ChatMessageVO cvo,HttpSession session,HttpServletRequest request) {
+		System.out.println("거래채팅창 열었다");
+		session = request.getSession();
+		
+		
+		List<ChatMessageVO> mychat = boarditemService.mychat(cvo);
+		System.out.println(mychat+"이거 왜 안 찍히는데");
+		return mychat;
+	}
 /*
 	@ResponseBody
 	@RequestMapping("/neighbor_check")
