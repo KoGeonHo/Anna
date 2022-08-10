@@ -132,7 +132,7 @@ margin : 0px auto;
 	    		<div>제목 : <input type="text" name="title"></div>
 	    		<div>신고일 <input type="date" name="date" id='currentDate'></div>
 	    		<div>상세설명 <textarea></textarea></div>
-	    		<div>신고자 ${userInfo.nickName}</div>
+	    		<div>신고자 ${userLoginInfo.nickName}</div>
 	    		<div>첨부파일 <input type="file" name="file"></div>
 	    	
 	    		<div>
@@ -192,11 +192,12 @@ margin : 0px auto;
 					<div><img src="../resources/upload/${bv.image5}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
 				    </c:if>
 					<c:if test="${bv.uidx == uidx}"> 
-				    	<a href="#">수정</a>
+				    	<a href="BoardModify.do?Bidx=${bv.bidx }">수정</a>
 				    	<a href="BoardDelete.do?Bidx=${bv.bidx}">삭제</a>
 				    </c:if>
+				    <c:if test="${bv.uidx != uidx }">
 				    	<span id="report"><a class="report" style="cursor:pointer;">신고</a></span>
-				    	
+				    </c:if>
 				    	
 				    
 				    <input type="image" src="../images/icon_unlike.png" class="LikeBtn">
@@ -209,7 +210,7 @@ margin : 0px auto;
    		                 	   <!-- <span class="c-icon"><i class="fa-solid fa-user"></i>  -->
    		                 <div class="comment-name">
 	                        <span class="anonym">
-	                       		<input type="text" class="form-control" id="nickName" placeholder="닉네임" name ="nickName" value='${userInfo.nickName }' readonly  style="width: 100px; border:none;">
+	                       		<input type="hidden" class="form-control" id="nickName" name ="nickName" value='${userInfo.nickName}'>
 	                        	<input type="hidden" name="uidx" value="${uidx}">
 	                        </span>
 	                      </div>   
@@ -230,6 +231,7 @@ margin : 0px auto;
 	                </div>
 	                
 	                
+	                
 
 			</div>
 		</div>
@@ -240,7 +242,7 @@ margin : 0px auto;
 
 					<script type="text/javascript">
 					
-					 $("#report").click(function() { //신고하기 레이아웃
+					 $(".report").click(function() { //신고하기 레이아웃
 					        $("#report_contents").fadeIn();
 					 		$(".report_back").fadeIn();
 					        

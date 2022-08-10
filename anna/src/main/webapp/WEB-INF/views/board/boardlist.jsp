@@ -240,9 +240,18 @@ const GetList = function(currentPage){
 				<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
 				<input type="submit" value="검색">
 			</form>
-					
-			<a href="BoardWrite.do">쓰기</a>
-					
+			<c:if test="${pm.board_type eq 'free'}">
+				<a href="BoardWrite.do?board_type=free">쓰기</a>
+			</c:if>
+			<c:if test="${pm.board_type eq 'job'}">
+				<a href="BoardWrite.do?board_type=job">쓰기</a>
+			</c:if>
+			<c:if test="${pm.board_type eq 'meeting'}">
+				<a href="BoardWrite.do?board_type=meeting">쓰기</a>
+			</c:if>
+			<c:if test="${pm.board_type eq 'hotplace'}">
+				<a href="BoardWrite.do?board_type=hotplace">쓰기</a>
+			</c:if>
 			<hr>
 			
 			<form>		
