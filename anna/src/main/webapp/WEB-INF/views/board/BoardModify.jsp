@@ -29,25 +29,14 @@ position: fixed;
 
     
 </style>
-<script>
 
-$(".view").mouseover(function(){
-	$(".viewimg").fadeIn()
-	
-	});
-
-
-
-$("#test").mouseleave(function(){$(this).css("color", "black");}
-
-</script>
 </head>
 <body>
 
    <h2>글 수정</h2>
     
-<form action="BoardWrite.do" method="post" enctype="multipart/form-data">
-<input type="hidden" name="uidx" value="${uidx}">
+<form action="BoardModify.do" method="post" enctype="multipart/form-data">
+
 <input type="text" name="Location" value="${userLoginInfo.location_auth}">
 <input type="text" name="board_type" value="${bv.board_type }">
 
@@ -69,27 +58,28 @@ $("#test").mouseleave(function(){$(this).css("color", "black");}
 <textarea id="summernote" class="summernote" name="Contents">${bv.contents }</textarea>
 
 <c:if test="${bv.image1 != null}">
-	<div class="view">${bv.image1}</div>
+	<span class="view">${bv.image1}</span><br>
 	<div class="viewimg">
 		<img src="../resources/upload/${bv.image1}" alt ="안되는데요?">
 	</div>
 </c:if>
 
 <c:if test="${bv.image2 != null}">
-	<div class="view2">${bv.image2}</div>
+	<span class="view2">${bv.image2}</span><br>
 </c:if>
 <c:if test="${bv.image3 != null}">
-	<div>${bv.image3}</div>
+	<span>${bv.image3}</span><br>
 </c:if>
 <c:if test="${bv.image4 != null}">
-	<div>${bv.image4}</div>
+	<span>${bv.image4}</span><br>
 </c:if>
 <c:if test="${bv.image5 != null}">
-	<div>${bv.image5}</div>
+	<span>${bv.image5}</span>
 </c:if>
  
 <div id="boxWrap">
-<button type="button" id="file_btn">추가</button>
+<button type="button" id="file_btn">추가</button><br>
+파일 1:
 <input type="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
 
 
@@ -141,7 +131,7 @@ $(document).ready(function() {
   $("#file_btn").click(function() {
     if(i<=5){
     	
-    	$("#boxWrap").append("<input type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>");
+    	$("#boxWrap").append("파일"+i+":<input type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>");
     }
     
     i++;
@@ -174,7 +164,19 @@ function chk_file_type(obj) {
 }
 
 </script>
+<script type="text/javascript">
 
+$(".view").mouseover(function(){
+	$(".viewimg").css("display","block")
+	
+	});
+
+$(".view").mouseout(function(){
+	$(".viewimg").css("display","none")
+	
+});
+
+</script>
 
 
 </body>
