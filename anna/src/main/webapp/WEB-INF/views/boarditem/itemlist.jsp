@@ -18,19 +18,13 @@ $(function(){
 	console.log("채팅창 목록 열림")
 		$('#popup').bPopup();
 	});
-	$(".chat").click(function(){ //닫기
+	$("#btn_close").click(function(){ //닫기
 		$('#popup').bPopup().close();  
 	});			
 
 });
 
 
-$(function(){
-	$(".class").click(function(){
-		console.log("asd");
-		$('#popup').bPopup();
-	});
-});
 
 
 /* $(function(){
@@ -59,13 +53,19 @@ function Chat__List() {
 }
 function Chat__drawMessages(mychatlist) {
 	var html = mychatlist.nickName+' 님과의 거래';
-		$('.mychatlist').append('<div> <a class="chat">'+ html + '</a></div>');
+		$('.mychatlist').append(' <div>  <a class="chat">'+ html + '</a></div>');
 }
 $(function() {
 	Chat__List();
 	
 });
 
+$(function(){
+	$(".chat").click(function(){
+		console.log("asd");
+		$('#popup').bPopup();
+	});
+});
 
 
 

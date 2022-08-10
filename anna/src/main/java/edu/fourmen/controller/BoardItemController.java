@@ -22,6 +22,7 @@ import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -192,7 +193,7 @@ public class BoardItemController {
 
 	
 	@RequestMapping(value = "itemview.do")
-	public String selectitem(BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+	public String selectitem(BoardItemVO wvo,BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
 			HttpSession session, Model model) {
 		
 
@@ -214,9 +215,11 @@ public class BoardItemController {
 		
 		List<BoardItemVO> youritem = boarditemService.selectAllbyuser(vo, svo);
 		model.addAttribute("youritem", youritem);
+		System.out.println(youritem+"판매자의 다른 상품 리스트");
 		
 		
 		
+		//이웃체크
 		if(session.getAttribute("uidx") != null) {
 		int uidx = (int) session.getAttribute("uidx");
 		int neighbor_idx = vo.getUidx();
@@ -226,6 +229,22 @@ public class BoardItemController {
 		int result = boarditemService.neighbor_check(bvo);
 		model.addAttribute("result",result);
 		System.out.println(result +"이웃 체크");
+		
+		
+		//찜 체크
+		if(session.getAttribute("uidx") != null) {
+			int uidx = (int)session.getAttribute("uidx");
+			int W_item_idx = vo.getItem_idx();
+			wvo.setItem_idx(W_item_idx);
+			wvo.setUidx(uidx);
+			
+			System.out.println(uidx +"asdsad");
+			System.out.println(W_item_idx + "12312");
+		}
+		int wish = boarditemService.checkWish(wvo);
+		System.out.println(wish +"찜체크");
+		model.addAttribute("wish",wish);
+		
 		
 		return "boarditem/itemview";
 
@@ -972,13 +991,13 @@ public class BoardItemController {
 	@ResponseBody
 	public List<ChatMessageVO> getMessages(BoardItemVO vo,int from,ChatMessageVO cvo,HttpSession session,Model model) {
 		
+		int chat_read = 0;
+		System.out.println(chat_read +"d이거 들어오냐");
+		
 		String nickName = (String)session.getAttribute("nickName");
 		int invited = (int) session.getAttribute("uidx");
 		int chat_host = vo.getChat_host();
 		int item_idx = vo.getItem_idx();
-		System.out.println(invited + "참여자 번호");
-		System.out.println(chat_host + " 글주인 번호");
-		System.out.println(item_idx + " 글번호");
 		cvo.setNickName(nickName);
 		cvo.setChat_host(chat_host);
 		cvo.setInvited(invited);
@@ -1074,8 +1093,23 @@ public class BoardItemController {
 
 	}
 	
+	@ResponseBody
+	@RequestMapping("/addWish")
+	public int addWish(BoardItemVO vo) {
+		
+		boarditemService.addWish(vo);
+		System.out.println("찜 완료");
+		return 1;
+	}
 	
-	
+	@ResponseBody
+	@RequestMapping("/delWish")
+	public int delWish(BoardItemVO vo) {
+		
+		boarditemService.delWish(vo);
+		System.out.println("찜 삭제 완료");
+		return 1;
+	}
 	
 	
 	
