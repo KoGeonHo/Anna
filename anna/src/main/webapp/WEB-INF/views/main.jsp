@@ -1,29 +1,48 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"    pageEncoding="utf-8"%>
+<%@ page session="true" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<%@page session="true" %>
 <!DOCTYPE html>
 <html>
 <head>
-
-	<meta charset="UTF-8">
-	<title>Home</title>
 	
+	<title>안녕? 나야!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+	<meta charset="UTF-8">
+	
+<script src="${ path }/js/jquery-3.6.0.js"></script>
+<script src="${ path }/js/bootstrap.js"></script>
+<script src="${ path }/js/common/common.js"></script>
 
-    <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
-	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
- 	<link href="${path}/css/bootstrap.css" rel="stylesheet"/> 
- 	
+
+
+
+
+		    
+
+<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
+
+<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
+<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/mfb.css" rel="stylesheet">
+<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
+
+		
 <!--   Slick Slider -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>	
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!--   Slick Slider -->
 	
+	
+<!-- path는 request.getContextPath()를 가져온것. -->	
+
 	<script>
 //스크롤 시 이벤트 처리
+
+
 
 //페이지가 처음 로딩될 때 1page를 보여주기 때문에 초기값을 1로 지정한다.
 let currentPage = 1;
@@ -32,7 +51,6 @@ let isLoding=false;
 
 //웹브라우저의 창을 스크롤할 때마다  호출되는 함수 등록
 $(window).on("scroll",function(){
-
 	
 	//위로 스크롤된 길이
 	let scrollTop = $(window).scrollTop();
@@ -41,13 +59,13 @@ $(window).on("scroll",function(){
 	//문서 전체의 높이
 	let documentHeight = $(document).height();
 	//바닥까지 스크롤 되었는지 여부를 알아낸다.
-	let isBottom = scrollTop + windowHeight + 10 >= documentHeight;
+	let isBottom = scrollTop + windowHeight >= documentHeight;
 	
 	if(isBottom){
 		console.log(isLoding);
 		//만일 현재 마지막 페이지라면
 		if(currentPage == ${totalPageCount} || isLoding){
-			console.log(currentPage);
+			
 			return; // 함수를 여기서 끝낸다.
 		}
 		//현재 로딩 중이라고 표시한다.
@@ -59,26 +77,25 @@ $(window).on("scroll",function(){
 		currentPage++;
 		//추가로 받아올 페이지를 서버에 ajax 요청을 하고
 		//console.log("inscroll" + currentPage);
-		GetList(currentPage); 
-	
+		GetList(currentPage);
 	}
-
 });
 
 //카드 리스트를 가져오는 함수
 
 const GetList = function(currentPage){
-
 	//console.log("inGetList" + currentPage);
 	
 	//무한스크롤
 	$.ajax({
 	
-		url : "ajax_main.do",
-		method : "GET",	
+		url : "ajax_board.do",
+		method : "GET",
+		//검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
+		data : "pagenumber="+currentPage+"&SearchType=${searchType}&SearchVal=${searchVal}",
 		//FreeBoard.jsp의 내용이 data로 들어온다. 
 		success:function(data){
-			console.log(data);
+			//console.log(data);
 			//응답된 문자열은 html형식이다. 
 			//해당 문자열은 .card-list-container div에 html로 해석하라고 추가한다.
 			$(".card-list-container").append(data);
@@ -90,6 +107,8 @@ const GetList = function(currentPage){
 		}	
 	});
 }
+
+
 </script>
 	
 <style>
@@ -126,24 +145,7 @@ a {
 	margin-left: 3px;
 }
 
-.bottom_menu {
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	height: 130px;
-	z-index: 100;
-	border-top: 1px solid black;
-	background-color: white
-}
 
-.bottom_menu>div {
-	float: left;
-	width: 20%;
-	height: 100%;
-	text-align: center;
-	padding-top: 20px;
-}
 
 @media ( min-width : 576px) {
 	.col-md-2 {
@@ -157,31 +159,37 @@ a {
 	}
 }
 
-.navbar {
-	height: 150;
-}
+
 
 .offcanvas-collapse {
 	top: 150px;
 }
 
-.navbar-toggler-icon {
-	width: 4.5em;
-	height: 5.5em;
-}
 
-.navbar-brand {
-	margin-left: 2rem;
-}
-
-.navbar-dark .navbar-toggler-icon {
-	margin: 0 1rem;
-}
 
 .logo {
 	padding-left: 2.5rem;
 }
+
+@media all and (max-width:  767px){
+	
+	#myCarousel, #search, #bestitem, #boardlist, #productname  {
+		display:none;
+	}
+	
+	#itemlist {
+		margin-top: -106px;
+	}
+	
+}
+
+@media all and (min-width :768px){
+
+
+  
 </style>
+
+
 
 
 
@@ -189,91 +197,16 @@ a {
 
 <body>
 
-	<!-- pc 헤더 -->
-	<div class="b-example-divider ">
-		<div class="container ">
-			<div class="d-md-none d-lg-block d-xl-block">
+<div class="wrapper">
+		<!-- 헤더 및 메뉴 -->
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 
-				<header
-					class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1 ">
-					<a href="/"
-						class="d-flex align-items-center col-md-3 mb-1 col-sm-3 mb-md-0 text-dark text-decoration-none ">
-						<div class="logo">
-							<img src="images/logo.png" width="70%">
-						</div>
-					</a>
-
-					<ul
-						class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
-						<li><a href="${path}/boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
-						<li><a href="${path}/board/FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a></li>
-						<li><a href="${path}/customer/QnAList.do" class="nav-link px-3 link-dark ">고객센터</a></li>
-						<li><a href="${path}/user/myPage.do" class="nav-link px-3 link-dark">마이페이지</a></li>
-					</ul>
-
-					<div class="col-md-3 text-end">
-						<c:if test="${uidx == null }">
-
-							<button type="button" class="btn"
-								style="background-color: #00AAB2; color: #fff;"
-								onclick="javascript:location.href='<%=request.getContextPath()%>/user/login.do';">로그인</button>
-							<button type="button" class="btn"
-								style="background-color: #BBCE53; color: #fff;"
-								onclick="javascript:location.href='<%=request.getContextPath()%>/user/join.do';">회원가입</button>
-						</c:if>
-						<c:if test="${uidx != null }">
-							<button type="button" class="btn "
-								style="background-color: #00AAB2; color: #fff;"
-								onclick="javascript:location.href='<%=request.getContextPath()%>/user/logout.do';">로그아웃</button>
-							
-						</c:if>
-					</div>
-				</header>
-			</div>
-		</div>
-	</div>
-
-	<!-- pc헤더 -->
-
-
-	<!-- 모바일 헤더-->
-
-	<div class="d-lg-none">
-
-		<nav class="navbar navbar-expand-lg fixed-top navbar-dark "
-			style="background-color: #00AAB2;" aria-label="Main navigation">
-
-			<div class="container-fluid">
-				<a class="navbar-brand fs-1 fw-bold" href="#">금암동 ▼</a>
-
-
-				<button class="navbar-toggler p-0 border-0" type="button"
-					id="navbarSideCollapse" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="navbar-collapse offcanvas-collapse"
-					id="navbarsExampleDefault">
-					<br>
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link  fs-1 fw-bold"
-							aria-current="page" href="#">메뉴</a></li>
-						<li class="nav-item"><a class="nav-link  fs-1 fw-bold"
-							href="#">추천</a></li>
-						<li class="nav-item"><a class="nav-link  fs-1 fw-bold"
-							href="#">받습</a></li>
-						<li class="nav-item"><a class="nav-link  fs-1 fw-bold"
-							href="#">니다</a></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div>
-	<!-- 모바일 헤더-->
+	<div class="wrapper" id="container-pc">
 
 
 	<!-- 슬라이드 -->
-	<div class="d-md-none d-lg-block d-xl-block">
+
 		<div id="myCarousel" class="carousel slide " data-bs-ride="carousel">
 			<div class="carousel-indicators ">
 				<button type="button" data-bs-target="#myCarousel"
@@ -319,13 +252,13 @@ a {
 			</button>
 		</div>
 		<br> <br>
-	</div>
+
 	<!-- 슬라이드 -->
 
 
 	<!-- 검색 -->
+	<div id="search">
 	<div class="container">
-		<div class="d-md-none d-lg-block d-xl-block">
 			<div class="row">
 				<div class="col-md-1 col-sm-0"></div>
 				<div class="col-md-10  col-sm-12">
@@ -339,16 +272,17 @@ a {
 				</div>
 				<div class="col-md-1 col-sm-0"></div>
 			</div>
-		</div>
+		
+	</div>
 	</div>
 	<!-- 검색 -->
 
 
 
-	<!-- 상품 -->
+	<!-- 인기상품 start -->
+	<div id = "bestitem">
 	<main>
 		<div class="album py-5 ">
-			<div class="d-md-none d-lg-block d-xl-block">
 				<div class="container">
 
 					<div class="container ">  
@@ -364,11 +298,10 @@ a {
 						</div>
 					</div>
 				</div>
-			</div>
 		</div>
 
 	</main>
-	<!-- 상품 -->
+	
 
  	<!--   Slick Slider -->
  	<div class="container ">
@@ -488,17 +421,16 @@ width: 50px;
 
 
 </style>
-	
+	</div>
  	 <!--   Slick Slider -->
 
-
+<!-- 인기상품 end -->
 
 
 	<!-- 게시글 -->
 	<main>
-		<div class="album py-5">
+		<div class="album py-5" id="boardlist">
 			<div class="container">
-				<div class="d-md-none d-lg-block d-xl-block">
 
 					<div class="container ">
 						<div class="row">
@@ -554,8 +486,7 @@ width: 50px;
 							</c:if>
 
 						</div>
-					</form>
-				</div>
+					</form>				
 			</div>
 		</div>
 		</div>
@@ -567,6 +498,7 @@ width: 50px;
 
 
 	<!-- 상품 -->
+	<div id="itemlist">
 	<main>
 		<div class="album py-5 ">
 			<div class="container">
@@ -574,19 +506,19 @@ width: 50px;
 					<div class="container ">
 						<div class="row">
 							<div class="col-md-2">
-								<h4>｜중고거래</h4>
+								<h4 id="productname">｜중고거래</h4>
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2">
-								<h6 style="text-align: right;">
+								<h6 id="productname" style="text-align: right;">
 									<a href="boarditem/itemlist.do">더보기</a>
 								</h6>
 							</div>
 						</div>
 					</div>
-					<hr>
+					<hr id="productname">
 
-					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" >
 
 						<c:if test="${list.size() > 0}">
 							<c:forEach var="vo" items="${list}">
@@ -633,7 +565,7 @@ width: 50px;
 			</div>
 		</div>
 	</main>
-
+</div>
 
 
 
@@ -650,73 +582,29 @@ width: 50px;
 				<br> 
 				-->
 
-	<!--모바일 하단 메뉴버튼 시작-->
-	<div class="visible-xs">
-		<div class="container ">
-			<div class="row d-lg-none">
-				<div class="bottom_menu">
-					<div>
-						<img src="images/icon_home.png" width="40%">
-					</div>
-					<div>
-						<img src="images/icon_comm.png" width="40%">
-					</div>
-					<div>
-						<img src="images/icon_chat.png" width="40%">
-					</div>
-					<div>
-						<img src="images/icon_my.png" width="40%">
-					</div>
-					<div>
-						<img src="images/icon_quick.png" width="40%">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--모바일 하단 메뉴버튼 종료	-->
-
+	
 
 
 	
 
 
 		<!-- 퀵메뉴 시작 -->
-		 <ul id="menu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
-      <li class="mfb-component__wrap">
-        <a href="#" class="mfb-component__button--main">
-          <i class="mfb-component__main-icon--resting ion-plus-round"></i>
-          <i class="mfb-component__main-icon--active ion-close-round"></i>
-        </a>
-        <ul class="mfb-component__list">
-          <li>
-            <a href="boarditem/itemwrite.do" data-mfb-label="판매글 등록" class="mfb-component__button--child">
-              <img src="images/icon_write.png" width="20px" height="20px;" he style="margin-left:19px; margin-top: 18px;">
-              
-            </a>
-          </li>
-          <li>
-            <a href="itemwrite.do" data-mfb-label="알림" class="mfb-component__button--child">
-              <img src="images/icon_push.png" width="20px" height="20px;" he style="margin-left:18px; margin-top: 18px;">
-            </a>
-          </li>
+			<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
 
 
-        </ul>
-      </li>
-    </ul>
-		
-		
-		<link href="css/mfb.css" rel="stylesheet">
-		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
+			
 		<!-- 퀵메뉴 종료 -->
 
 
 
 
 
+</div>
 
-
+		<!-- 푸터는 고정 -->
+		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
  <script src="https://getbootstrap.kr/docs/5.1/examples/offcanvas-navbar/offcanvas.js"></script>

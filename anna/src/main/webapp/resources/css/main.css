@@ -1,0 +1,200 @@
+@charset "UTF-8";
+
+/*
+반응형 기준 기록
+	아주작은(xs)  576px 미만	  스마트폰 세로
+	작은(sm) 	  576px 이상	  스마트폰 가로
+	중간(md)	  768px 이상	  타블렛
+	큰(lg)   	  992px 이상	  데스크탑
+	아주큰(xl)	  1200px 이상	  큰 데스크탑
+*/
+.body {
+	padding-top: -56px;
+}
+a {
+  color: #000;
+  text-decoration: none;
+}
+	
+}
+
+.row {
+	padding: 0px;
+	margin: 0px;
+}
+
+.container {
+	justify-content: center;
+	align-items: center;
+}
+
+.card {
+	margin-left: 3px;
+}
+
+.bottom_menu {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 130px;
+	z-index: 100;
+	border-top: 1px solid black;
+	background-color: white
+}
+
+.bottom_menu>div {
+	float: left;
+	width: 20%;
+	height: 100%;
+	text-align: center;
+	padding-top: 20px;
+}
+
+@media ( min-width : 576px) {
+	.col-md-2 {
+		width: 30%;
+	}
+}
+
+@media ( min-width : 1200px) {
+	.col-md-2 {
+		width: 16.66666667%;
+	}
+}
+
+.navbar {
+	height: 150;
+}
+
+.offcanvas-collapse {
+	top: 150px;
+}
+
+.navbar-toggler-icon {
+	width: 4.5em;
+	height: 5.5em;
+}
+
+.navbar-brand {
+	margin-left: 2rem;
+}
+
+.navbar-dark .navbar-toggler-icon {
+	margin: 0 1rem;
+}
+
+.logo {
+	padding-left: 2.5rem;
+}
+</style>
+
+<style>
+
+html, body {
+	padding : 0px;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+body { 
+	position: fixed; 
+}
+
+.container {
+	justify-content: center;
+	align-items: center;
+}
+
+
+#footer {
+	background:#fff;
+	position:fixed; 
+	bottom:0px;
+	z-index:10000;
+}
+
+@media all and (max-width:  767px){
+	
+	.pc-header {
+		display:none;
+	}
+	
+	.main {
+		padding-bottom: 70px;
+	}
+	
+	.wrapper {
+    	margin-bottom:70px;
+	}
+	
+}
+
+@media all and (min-width :768px){
+
+	.navbar, .collapse, #menu{
+		display:none
+	}
+	
+	#footer {
+		display:none;
+	}
+	
+}
+
+.menu-hide {
+	 left:100%;
+}
+
+
+#menu{
+
+	transition: all 0.5s ease-out;
+	
+}
+
+.menu-item{
+
+	padding:1rem;
+	font-size:1rem;
+	
+}
+
+.wrapper {
+	display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow:auto;
+}
+
+.ft-icon {
+	border:0px;
+	margin:0px;
+}
+
+.row {
+	margin:0;
+}
+
+.row > * {
+	padding:0 5px;
+}
+
+.th {
+	background:#eee;
+	text-align:center;
+	vertical-align:middle;
+}
+.th, .td {
+	padding:10px;
+	display:table-cell;
+}
+
+.tr {
+	display:table; 
+	width:100%;
+}
+
+.pc-header border-bottom{
+	z-index : 10000;
+}

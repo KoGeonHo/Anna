@@ -212,14 +212,21 @@ h5, .h5 {
 }
 
 
+
+@media (min-width: 1px) {
+  h6, .h6 {
+   font-size: 1.5rem;
+  }
+}
+
 @media (min-width: 576px) {
   h6, .h6 {
-   font-size: 3rem;
+   font-size: 1.5rem;
   }
 }
 @media (min-width: 768px) {
   h6, .h6 {
-   font-size: 3rem;
+   font-size: 1rem;
   }
 }
 @media (min-width: 992px) {
@@ -4041,7 +4048,6 @@ textarea.form-control-lg {
   --bs-navbar-toggler-focus-width: 0.25rem;
   --bs-navbar-toggler-transition: box-shadow 0.15s ease-in-out;
   position: relative;
-  display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
