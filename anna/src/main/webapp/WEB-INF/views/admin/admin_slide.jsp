@@ -21,7 +21,8 @@
         <style>
            .col-md-10 {
             padding-top: 90px;
-            margin-bottom: 60px;
+            margin-bottom: 60px;           
+     	    margin-left: 200px;
            }
            
            tbody > tr > th {
@@ -34,8 +35,16 @@
            .btn {
            		line-height: 0.65;
            		font-size: 0.85rem;
+           		height : 30px;
            }
            
+  			.dataTable-table > tbody > tr > th {
+  				vertical-align: middle;
+  			}
+  			.card-body {
+					padding-left: 50px;
+					padding-right: 50px;
+				}
            
 
         </style>
@@ -108,6 +117,7 @@
 			#modal_list > table > tr > td{
 				width : 30px;			
 				border-bottom: 1px solid #cdd0d4;	
+				
 			}
 			
 			#td_line {
@@ -142,6 +152,15 @@
 				border:1px solid #3881B4;
 			}
 			
+			#slide_write{
+				
+			}
+			
+			.form-select {
+				width :75px;				
+				margin-left: auto; margin-right: auto;
+			}
+			
 </style>
 
 
@@ -158,6 +177,8 @@
             <a class="navbar-brand ps-3" href="../admin/admin_user.do">관리자페이지</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            
+            <h5 style="color:#fff; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/main.do';">HOME</h5> 
 
             
         </nav>
@@ -199,19 +220,18 @@
             <div id="layoutSidenav_content"> 
                 <main>
                 <div class="container-fluid px-4">
-            <!-- 검색 -->
+           <!-- 검색 -->
 					<div class="container">
 						<div class="d-md-none d-lg-block d-xl-block">
 					    <div class="row">
 					        <div class="col-md-1 col-sm-0"></div>
 					        <div class="col-md-10  col-sm-12" >
-                                <h6 style="font-weight:bold">⚫️ 신고목록 검색</h6>
+                                <h6 style="font-weight:bold">⚫️ 이벤트 배너 설정   &nbsp;&nbsp;ex)</h6>
                                 <br>
-					            <form class="d-flex ">
-                                    
-						          <input class="form-control me-6 vh-20" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
-						          <button class="btn btn-outline-primary" type="submit">Search</button>
-						        </form>
+                                 <div id="slide_write">
+						          	<img src="../images/admin_slide_img.png" width=" 80%">
+						         </div>
+
 					        
 					        </div>
 					        <div class="col-md-1 col-sm-0"></div>
@@ -220,6 +240,9 @@
 					    </div>	
                         </div>
 				  	<!-- 검색 -->
+          
+          
+        
 
 
                       
@@ -231,224 +254,64 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>신고유형</th>
-                                                <th>신고닉네임</th>
-                                                <th>신고명</th>
-                                                <th>상세설명</th>
-                                                <th>신고일</th>
-                                                <th>신고자</th>
-                                                <th>노쇼</th>
-                                                <th>상세보기</th>
+                                                <th>배너 적용 이미지</th>
+                                                <th>링크</th>
+                                                <th>게시일</th>
+                                                <th>첨부파일</th>
+                                                <th>항목등록 &amp; 삭제</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                            <tr >
+                                                <th>
+                                                  <select class="form-select" aria-label="Default select example">
+												  <option selected>1</option>
+												  <option value="1">2</option>
+												  <option value="2">3</option>
+												</select></th>
+                                                <th><img src="../images/admin_slide_ex.png"></th>
+                                                <th>boarditem/itemlist.do</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" id="openModalPop" class="btn " style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">상세보기</button>
-                                              
-															<div id= "modal"> 
-															</div>
-															    <div id = "banner_online">
-															        
-															        <h1>신고 상세보기</h1><br>
-															        <div class="pop_content">
-															             <table border="0" name="modal_list" style="text-align:  left; border-bottom: 1px solid #cdd0d4;">
-															             <tr>
-																				<td id="td_line" width="130px;" height= "40px;" >신고유형</td>
-																				<td id="td_line">상품거래</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">신고닉네임</td>
-																			    <td id="td_line">namdokun</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">신고명</td>
-																			    <td id="td_line">노쇼 신고합니다</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "200px;" style="vertical-align: top; padding-top: 10px;">상세설명</td>
-																			    <td id="td_line" style="vertical-align: top; padding-top: 10px;">약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요 너무 화가 납니다 홈페이지 사용자로서 패널티가 부과됬으면 합니다</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line"  width="130px;" height= "40px;">신고일</td>
-																			    <td id="td_line">2022.07.25</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">신고자</td>
-																			    <td id="td_line">sungmin111</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">첨부파일</td>
-																			    <td id="td_line">신고내용.jpg</td>
-																			</tr>
-																			
-																		    </table>
-																		    <br>
-																		    																		         
-															        </div>
-															        <div id="menu_box">
-															          <div id="menu_box">
-															       
-																				<button type="button"  id="test_button" class="btn " style="width :105px; background-color: #3881B4; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">거래글 확인</button>
-															       			 &nbsp;
-															       			<button type="button"  id="test_button" class="btn " style="background-color: #E51D21; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/ "  style="font-size: 14px;">신고 적용 </button>
-															       			&nbsp;
-															       			<button type="button"  id="close_button" class="btn" style="background-color: #00AAB2; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">닫기</button>
-															        </div>
-															        </div>
-															
-															
-														 <script type="text/javascript">
-															$(document).ready(function() {
-															    $("#openPop").click(function() {
-															        $("#banner_online").show();
-															    });
-															
-															    $("#openModalPop").click(function() {
-															        $("#banner_online").fadeIn();
-															        $("#modal").fadeIn();
-															    });
-															
-															    $("#close_button").click(function(){
-															        $("#banner_online").fadeOut();
-															        $("#modal").fadeOut();
-															    });
-															    
-															  
-															});
-															</script>
-															
-                                                </th>
+                                                <th>slide_img_1&nbsp;<button type="button" class="btn " style="background-color: #4A4A49; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">파일업로드</button></th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">등록</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
                                                 
-                                            </tr>
-                                            <tr>	
-                                               <th>2</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <tr >
+                                                <th>
+                                                  <select class="form-select" aria-label="Default select example">
+												  <option selected>2</option>
+												  <option value="1">1</option>
+												  <option value="2">3</option>
+												</select></th>
+                                                <th><img src="../images/admin_slide_ex.png"></th>
+                                                <th>boarditem/itemlist.do</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>3</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th>slide_img_2&nbsp; <button type="button" class="btn " style="background-color: #4A4A49; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">파일업로드</button></th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">등록</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr >
+                                                <th>
+                                                  <select class="form-select" aria-label="Default select example">
+												  <option selected>3</option>
+												  <option value="1">1</option>
+												  <option value="2">2</option>
+												</select></th>
+                                                <th><img src="../images/admin_slide_ex.png"></th>
+                                                <th>boarditem/itemlist.do</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>4</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>5</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>6</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>7</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>8</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>9</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>10</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                           <th>11</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>12</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
+                                                <th>slide_img_3&nbsp; <button type="button" class="btn " style="background-color: #4A4A49; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">파일업로드</button></th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">등록</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                              
+                                             
+                                                
+                                                
+                                            
                                             
                                         </tbody>
                                     </table>
@@ -457,7 +320,7 @@
                         </div>
                     </main>
                     </div>
-
+                   
 
 
                 

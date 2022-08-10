@@ -20,34 +20,32 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         
         <style>
-           .col-md-10 {
-            padding-top: 90px;
-            margin-bottom: 60px;
-           }
-           
-           tbody > tr > th {
-           font-size : 14px;
-           	font-weight : normal;
-           	text-align: center;           		
-           
-           }
-           
-           .btn {
-           		line-height: 0.65;
-           		font-size: 0.85rem;
-           }
-           
-           .tabs {
-           	margin-top : -125px;
-           
-           }
-           
-           .mb-4 {
-           		border: 0;
-           }
-           
-
-        </style>
+				.col-md-10 {
+					padding-top: 90px;
+					margin-bottom: 60px;
+				}
+				
+				tbody>tr>th {
+					font-size: 14px;
+					font-weight: normal;
+					text-align: center;
+				}
+				
+				.btn {
+					line-height: 0.65;
+					font-size: 0.85rem;
+				}
+				
+				.tabs {
+					margin-top: -125px;
+				}
+				
+				.mb-4 {
+					border: 0;
+				}
+				
+				
+</style>
         
         
         
@@ -170,6 +168,7 @@
             <a class="navbar-brand ps-3" href="../admin/admin_user.do">관리자페이지</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+           <h5 style="color:#fff; text-align:right; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/main.do';">HOME</h5> 
 
             
         </nav>
@@ -203,6 +202,7 @@
                                    <a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트 배너 설정</a>
                                 </nav>
                             </div>
+                           
                 </nav>
             </div>
 
@@ -237,12 +237,12 @@
                       
                    
                    <section id="about_tab" style="margin:100px 0;">
-					    <div class="tabs" style="text-align:center;">
+					    <div class="tabs" style="text-align:left; padding-left: 30px; padding-right: 30px;">
 					        <input id="tab1" type="radio" name="tab_btn" checked/>
 					        <label for="tab1">일상 &amp; 소통</label>
 					
 					        <input id="tab2" type="radio" name="tab_btn"/>
-					        <label for="tab2">구인 & 구직</label>
+					        <label for="tab2">구인 &amp; 구직</label>
 					
 					        <input id="tab3" type="radio" name="tab_btn"/>
 					        <label for="tab3">모임</label>
@@ -262,7 +262,7 @@
                                                 <th>닉네임</th>
                                                 <th>제목</th>                                                
                                                 <th>작성일</th>
-                                                <th>판매글 조회 &amp; 삭제</th>
+                                                <th>게시글 조회 &amp; 삭제</th>
 
                                             </tr>
                                         </thead>
@@ -390,236 +390,138 @@
         <!-- 탭2-->
         <div id="peple" class="about_inner">
            
+           
            <div class="card mb-4">
                                 <div class="card-body">
-                                    <table id="datatablesSimple">
+                                    <table id="datatablesSimple_1">
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>신고유형</th>
-                                                <th>신고닉네임</th>
-                                                <th>신고명</th>
-                                                <th>상세설명</th>
-                                                <th>신고일</th>
-                                                <th>신고자</th>
-                                                <th>노쇼</th>
-                                                <th>상세보기</th>
+                                                <th>닉네임</th>
+                                                <th>제목</th>                                                
+                                                <th>작성일</th>
+                                                <th>게시글 조회 &amp; 삭제</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <th>1</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th>test</th>
+                                                <th>백엔드 개발자 구합니다 / 이젠컴퓨터학원</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" id="openModalPop" class="btn " style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">상세보기</button>
-                                              
-															<div id= "modal"> 
-															</div>
-															    <div id = "banner_online">
-															        
-															        <h1>신고 상세보기</h1><br>
-															        <div class="pop_content">
-															             <table border="0" name="modal_list" style="text-align:  left; border-bottom: 1px solid #cdd0d4;">
-															             <tr>
-																				<td id="td_line" width="130px;" height= "40px;" >신고유형</td>
-																				<td id="td_line">상품거래</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">신고닉네임</td>
-																			    <td id="td_line">namdokun</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">신고명</td>
-																			    <td id="td_line">노쇼 신고합니다</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "200px;" style="vertical-align: top; padding-top: 10px;">상세설명</td>
-																			    <td id="td_line" style="vertical-align: top; padding-top: 10px;">약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요 너무 화가 납니다 홈페이지 사용자로서 패널티가 부과됬으면 합니다</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line"  width="130px;" height= "40px;">신고일</td>
-																			    <td id="td_line">2022.07.25</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">신고자</td>
-																			    <td id="td_line">sungmin111</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">첨부파일</td>
-																			    <td id="td_line">신고내용.jpg</td>
-																			</tr>
-																			
-																		    </table>
-																		    <br>
-																		    																		         
-															        </div>
-															        <div id="menu_box">
-															          <div id="menu_box">
-															       
-																				<button type="button"  id="test_button" class="btn " style="width :105px; background-color: #3881B4; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">거래글 확인</button>
-															       			 &nbsp;
-															       			<button type="button"  id="test_button" class="btn " style="background-color: #E51D21; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/ "  style="font-size: 14px;">신고 적용 </button>
-															       			&nbsp;
-															       			<button type="button"  id="close_button" class="btn" style="background-color: #00AAB2; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">닫기</button>
-															        </div>
-															        </div>
-															
-															
-														 <script type="text/javascript">
-															$(document).ready(function() {
-															    $("#openPop").click(function() {
-															        $("#banner_online").show();
-															    });
-															
-															    $("#openModalPop").click(function() {
-															        $("#banner_online").fadeIn();
-															        $("#modal").fadeIn();
-															    });
-															
-															    $("#close_button").click(function(){
-															        $("#banner_online").fadeOut();
-															        $("#modal").fadeOut();
-															    });
-															    
-															  
-															});
-															</script>
-															
-                                                </th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
                                                 
-                                            </tr>
-                                            <tr>	
-                                               <th>2</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <tr>
+                                                <th>2</th>
+                                                <th>test</th>
+                                                <th>디자이너 구합니다 시간 금액 협의 후 결정</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>3</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>3</th>
+                                                <th>test</th>
+                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다  </th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>4</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>4</th>
+                                                <th>test</th>
+                                                <th>가족같은 분위기의 고깃집 알바 구합니다</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>5</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>5</th>
+                                                <th>test</th>
+                                                <th>백엔드 개발자 구합니다 / 이젠컴퓨터학원</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
                                                 <th>6</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th>test</th>
+                                                <th>디자이너 구합니다 시간 금액 협의 후 결정</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
                                                 <th>7</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th>test</th>
+                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다 </th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>8</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>8</th>
+                                                <th>test</th>
+                                                <th>가족같은 분위기의 고깃집 알바 구합니다</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>9</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>9</th>
+                                                <th>test</th>
+                                                <th>백엔드 개발자 구합니다 / 이젠컴퓨터학원</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>10</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>10</th>
+                                                <th>test</th>
+                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                           <th>11</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>11</th>
+                                                <th>test</th>
+                                                <th>가족같은 분위기의 고깃집 알바 구합니다</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>12</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                
+                                               <tr>
+                                                <th>12</th>
+                                                <th>test</th>
+                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
                                                 <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                
                                             
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-           
+                            
+                            
            
            
            
@@ -630,12 +532,159 @@
         <!-- 탭3-->
         <div id="history" class="about_inner">
         	
+        	
+        	
+        	
+        	 
+        	<div class="card mb-4">
+                                <div class="card-body">
+                                    <table id="datatablesSimple_3">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>닉네임</th>
+                                                <th>제목</th>                                                
+                                                <th>작성일</th>
+                                                <th>게시글 조회 &amp; 삭제</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>1</th>
+                                                <th>test</th>
+                                                <th>번개 모임 인원 구합니다</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>2</th>
+                                                <th>test</th>
+                                                <th>등산 모임 구합니다</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>3</th>
+                                                <th>test</th>
+                                                <th>노래방 모임 멤버 구합니다  </th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>4</th>
+                                                <th>test</th>
+                                                <th>맛집 탐방하실 분들 구해요</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>5</th>
+                                                <th>test</th>
+                                                <th>모여서 여행가실분</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>6</th>
+                                                <th>test</th>
+                                                <th>안나FC 선수단 모집합니다 지원 주세요</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>7</th>
+                                                <th>test</th>
+                                                <th>배그 4인 돌릴사람 연락주세요</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>8</th>
+                                                <th>test</th>
+                                                <th>노래방 모임 멤버 구합니다</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>9</th>
+                                                <th>test</th>
+                                                <th>등산 모임 구합니다</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>10</th>
+                                                <th>test</th>
+                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                <tr>
+                                                <th>11</th>
+                                                <th>test</th>
+                                                <th>주마다 봉사다닐 분들 모집해요</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                
+                                               <tr>
+                                                <th>12</th>
+                                                <th>test</th>
+                                                <th>번개 모임 인원 구합니다</th>
+                                                <th>2022-07-25</th>
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                </tr>
+                                                
+                                                
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            </div>
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
         </div>
+        </div>
+        </section>
+        </main>
+        
         <!-- 탭3-->
                             
                             
+                            
                         </div>
-                    </main>
+                  
                     </div>
 
 

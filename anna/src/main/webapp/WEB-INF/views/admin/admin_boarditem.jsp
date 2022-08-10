@@ -36,6 +36,10 @@
            		font-size: 0.85rem;
            }
            
+           .card-body {
+					padding-left: 50px;
+					padding-right: 50px;
+				}
            
 
         </style>
@@ -158,7 +162,7 @@
             <a class="navbar-brand ps-3" href="../admin/admin_user.do">관리자페이지</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-
+			<h5 style="color:#fff; text-align:right; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/main.do';">HOME</h5> 
             
         </nav>
         <div id="layoutSidenav">
