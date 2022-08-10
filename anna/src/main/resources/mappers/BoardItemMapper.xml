@@ -273,11 +273,20 @@
 	</select>
 	
 	<select id="mychatlist" parameterType="chatVO"  resultType="chatVO">
-		select DISTINCT a.item_idx,c.nickname ,a.contents
-		from  chat a, AnnaUser c
- 		where a.uidx = c.uidx 
- 		  and a.chat_host = #{uidx} order by a.item_idx desc
- 				
+ 		  select DISTINCT a.item_idx,c.nickname from  chat a, AnnaUser c
+ 				where a.uidx =  c.uidx 
+ 				and a.chat_host = #{chat_host} 
+ 				order by a.item_idx desc
+ 		  
+ 		  
+ 		  
 	</select>
 	
+	<select id="mychat" parameterType="chatVO" resultType="chatVO">
+		select a.item_idx,c.nickname ,a.contents, a.uidx,date_format(a.cdate,'%y-%m-%d-%h:%i')
+			from  chat a, AnnaUser c
+	 		where a.uidx = c.uidx 
+	 		and item_idx = #{item_idx}
+	 		  order by a.cdate desc
+	</select>
 </mapper>

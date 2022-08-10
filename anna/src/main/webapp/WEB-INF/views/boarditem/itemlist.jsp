@@ -11,18 +11,29 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
 <script>
 
+
+
 $(function(){
-	$("#dd").click(function(){ //레이어 팝업 열기 버튼 클릭 시
-		$('#popup2').bPopup();
+	$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
+	console.log("채팅창 목록 열림")
+		$('#popup').bPopup();
 	});
-	
-	$("#btn_close").click(function(){ //닫기
-		$('#popup2').bPopup().close();  
+	$(".chat").click(function(){ //닫기
+		$('#popup').bPopup().close();  
 	});			
 
 });
 
+
 $(function(){
+	$(".class").click(function(){
+		console.log("asd");
+		$('#popup').bPopup();
+	});
+});
+
+
+/* $(function(){
 	$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
 		$('#popup').bPopup();
 	});
@@ -31,10 +42,10 @@ $(function(){
 		$('#popup').bPopup().close();  
 	});			
 
-});
+}); */
 
 
-function Chat__loadNewMessages() {
+function Chat__List() {
 	$.get('./mychatlist',{
 	chat_host : ${userLoginInfo.uidx}
 	}, function(data) {
@@ -48,12 +59,19 @@ function Chat__loadNewMessages() {
 }
 function Chat__drawMessages(mychatlist) {
 	var html = mychatlist.nickName+' 님과의 거래';
-		$('.mychatlist').append('<div id="dd"> <a class="dd">'+ html + '</a></div>');
+		$('.mychatlist').append('<div> <a class="chat">'+ html + '</a></div>');
 }
 $(function() {
-	Chat__loadNewMessages();
+	Chat__List();
 	
 });
+
+
+
+
+
+
+
 //스크롤 시 이벤트 처리
 
 
@@ -188,7 +206,6 @@ height:250px;
 	 border: 5px solid #fff;
 	 padding: 20px;
 	 background-color: #fff;
-	 z-index : 9999;
 	}    		
 #container{
 	height:5000px;
@@ -305,25 +322,48 @@ height:250px;
 <br>
 <hr>
 <br>
-
-			<div id="popup2" class="Pstyle2">	
-					<div class="mychatlist2" id="chat" >
-					adsasd 이게 나라냐 ㅋㅋ
-					</div>
-					
-					<input type="button" id="btn_close" value="닫 기">
-			</div>
-			
-			
+			<!-- 채팅 리스트 -->
 			<div id="popup" class="Pstyle">	
-					<div class="mychatlist" id="chat" >
+					<div class="mychatlist"  >
 					</div>
+					세션 uidx = ${userLoginInfo.uidx}"
 					
 					<input type="button" id="btn_close" value="닫 기">
 			</div>
-				<div class="wrap2">
-					<input type="button" id="btn_open" value="채팅리스트">
-				</div>
+			<div class="wrap2">
+				<input type="button" id="btn_open" value="채팅리스트">
+			</div>
+				
+				
+				
+			<%-- <!-- 개인간의 채팅방 -->
+			<div id="popup2" class="Pstyle2">	
+					<div class="mychat"  >
+						<form onsubmit="sendMessage(this); return false;">
+							<input type="text" name="item_idx" value="${vo.item_idx}"><br>
+							<input type="text" name="chat_host" value="${vo.uidx}"><br>
+							
+							<c:if test="${userLoginInfo.uidx == vo.uidx}">
+							<input type="text" name="invited" value="${chatlist.uidx}">
+							</c:if>
+							<c:if test="${userLoginInfo.uidx != vo.uidx}">
+							<input type="text" name="invited" value="${userLoginInfo.uidx}">
+							</c:if>
+							
+							
+							<input type="text" name="uidx" value="${userLoginInfo.uidx}">
+							<input type="text" name="nickName" value="${userLoginInfo.nickName}"readonly="readonly">
+							<input type="text" name="contents" placeholder="내용" >
+							<input type="submit" value="전송">
+						</form>
+						<div class="chat-list" id="chat" >
+						</div>
+					</div>
+					<input type="button" id="btn_close" value="닫 기">
+			</div> --%>
+			
+			
+			
 <hr>
 
 	<div class="container">
@@ -351,11 +391,6 @@ height:250px;
 	</div>
 	
 	
-<section id="card-list" class="card-list">
-	<div class="container">
-		<div class="row card-list-container thumbnails"></div>
-	</div>
-</section>
 
 
 

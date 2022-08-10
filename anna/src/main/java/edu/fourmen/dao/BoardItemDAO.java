@@ -76,6 +76,10 @@ public class BoardItemDAO {
 	public List<ChatMessageVO> mychatlist(ChatMessageVO cvo){
 		return sqlSession.selectList(efdb+".mychatlist",cvo);
 	}
+	public List<ChatMessageVO> mychat(ChatMessageVO cvo){
+		return sqlSession.selectList(efdb+".mychat",cvo);
+	}
+	
 	public int addNeighbor(BoardItemVO vo) {
 		return sqlSession.insert(efdb+".addNeighbor",vo);
 	}
@@ -88,5 +92,5 @@ public class BoardItemDAO {
 	public int delneighbor(BoardItemVO vo) {
 		return sqlSession.delete(efdb+".delneighbor",vo);
 	}
-
+	
 }
