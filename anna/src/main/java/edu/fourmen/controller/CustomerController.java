@@ -34,7 +34,7 @@ public class CustomerController {
 		
 		session = request.getSession();
 		
-		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
+		int uidx = (int)session.getAttribute("uidx");
 		
 		List<QnAVO> QnAList = customerService.getQnAList(uidx);
 		
@@ -55,7 +55,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value="/QnAWrite.do",method=RequestMethod.POST)
-	public void QnAWrite(QnAVO vo,HttpServletResponse response,HttpServletRequest request,HttpSession session) throws IllegalStateException, IOException {
+	public String QnAWrite(QnAVO vo,HttpServletResponse response,HttpServletRequest request,HttpSession session) throws IllegalStateException, IOException {
 		
 		response.setContentType("text/html; charset=utf-8");
 		
@@ -77,7 +77,7 @@ public class CustomerController {
 		Date dateForFileName = new Date();
 		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		
-		String fileName = DateFormat.format(dateForFileName) + "_" + String.valueOf(session.getAttribute("uidx")) + vo.getAttachFile().getOriginalFilename();
+		String fileName = DateFormat.format(dateForFileName) + "_" + String.valueOf(session.getAttribute("uidx")) + "_" + vo.getAttachFile().getOriginalFilename();
 		//System.out.println(fileName);
 		
 		//System.out.println(vo.getAttachFile().getOriginalFilename().isEmpty());
@@ -87,13 +87,13 @@ public class CustomerController {
 		}
 		
 		vo.setUidx(Integer.parseInt(String.valueOf(session.getAttribute("uidx"))));
-		vo.setAttach(vo.getAttachFile().getOriginalFilename());
+		vo.setAttach(fileName);
 		
 		//System.out.println(vo.getAttach());
 		
-		//int result = customerService.QnAWrite(vo);
+		int result = customerService.QnAWrite(vo);
 		
-		//return "redirect:/customer/QnAList.do";
+		return "redirect:/customer/QnAList.do";
 	}
 	
 	@RequestMapping(value="/QnAView.do")

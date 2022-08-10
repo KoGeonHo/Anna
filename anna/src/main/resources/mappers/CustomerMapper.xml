@@ -19,6 +19,7 @@
   		WHERE 
   			uidx = #{ uidx } AND
   			isDel = 'N'
+  		ORDER BY qidx DESC
   			
   	</select>
   	

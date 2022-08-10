@@ -22,12 +22,6 @@ public class CookieCheck extends HandlerInterceptorAdapter{
 		
 		HttpSession session = request.getSession();
 		
-		if(session.getAttribute("uidx") == null || session.getAttribute("userLoginInfo") == null) {
-			
-			session.invalidate();
-			
-		}
-		
 		Cookie[] cookies = request.getCookies();
 		
 		for(Cookie cookie:cookies) {
@@ -41,6 +35,16 @@ public class CookieCheck extends HandlerInterceptorAdapter{
 				 
 				session.setAttribute("userLoginInfo", userLoginInfo);
 				
+			}
+		}
+		
+		String requestUrl = request.getRequestURL().toString();
+		
+		if(!requestUrl.contains("/kakaoLogin")){
+			if(session.getAttribute("uidx") == null || session.getAttribute("userLoginInfo") == null) {
+			
+				session.invalidate();
+			
 			}
 		}
 		
