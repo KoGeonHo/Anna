@@ -61,7 +61,7 @@
 				<div class="row border-bottom tr">
 					<div class="col-4 th">첨부파일</div>
 					<div class="col-8 td">
-						${ QnAItem.attach }
+						${ QnAItem.attach }<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="window.open('');">첨부파일 보기</button>
 					</div>
 				</div>
 				<c:if test="${ QnAItem.state eq 2 }">

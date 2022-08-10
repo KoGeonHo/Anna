@@ -2,6 +2,8 @@ package edu.fourmen.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +34,7 @@ public class CustomerController {
 		
 		session = request.getSession();
 		
-		int uidx = (int)session.getAttribute("uidx");
+		int uidx = Integer.parseInt(String.valueOf(session.getAttribute("uidx")));
 		
 		List<QnAVO> QnAList = customerService.getQnAList(uidx);
 		
@@ -53,38 +55,45 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value="/QnAWrite.do",method=RequestMethod.POST)
-	public String QnAWrite(QnAVO vo,HttpServletResponse response,HttpServletRequest request,HttpSession session) throws IllegalStateException, IOException {
+	public void QnAWrite(QnAVO vo,HttpServletResponse response,HttpServletRequest request,HttpSession session) throws IllegalStateException, IOException {
+		
 		response.setContentType("text/html; charset=utf-8");
 		
 		session = request.getSession();
 		
-		System.out.println(vo.getTitle());
-		System.out.println(vo.getqType());
-		System.out.println(vo.getContents());
+		//System.out.println(vo.getTitle());
+		//System.out.println(vo.getqType());
+		//System.out.println(vo.getContents());
 		
-		String path = request.getSession().getServletContext().getRealPath("/resources/QnA/");
+		String path = session.getServletContext().getRealPath("/resources/QnA/");
 		File dir = new File(path); 
 		
-		System.out.println(path);
+		//System.out.println(path);
 		
 		if(!dir.exists()) {
 			dir.mkdirs();
 		}
 		
+		Date dateForFileName = new Date();
+		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+		
+		String fileName = DateFormat.format(dateForFileName) + "_" + String.valueOf(session.getAttribute("uidx")) + vo.getAttachFile().getOriginalFilename();
+		//System.out.println(fileName);
+		
 		//System.out.println(vo.getAttachFile().getOriginalFilename().isEmpty());
 		
 		if(!vo.getAttachFile().getOriginalFilename().isEmpty()) {
-			vo.getAttachFile().transferTo(new File(path,vo.getAttachFile().getOriginalFilename()));
+			vo.getAttachFile().transferTo(new File(path,fileName));
 		}
 		
-		vo.setUidx((int)session.getAttribute("uidx"));
+		vo.setUidx(Integer.parseInt(String.valueOf(session.getAttribute("uidx"))));
 		vo.setAttach(vo.getAttachFile().getOriginalFilename());
 		
-		System.out.println(vo.getAttach());
+		//System.out.println(vo.getAttach());
 		
-		int result = customerService.QnAWrite(vo);
+		//int result = customerService.QnAWrite(vo);
 		
-		return "redirect:/customer/QnAList.do";
+		//return "redirect:/customer/QnAList.do";
 	}
 	
 	@RequestMapping(value="/QnAView.do")

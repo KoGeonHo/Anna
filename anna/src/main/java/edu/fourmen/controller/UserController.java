@@ -95,8 +95,6 @@ public class UserController {
 					
 					session = request.getSession(); 
 
-					session.setMaxInactiveInterval(60*60);
-
 					session.setAttribute("uidx", userInfo.getUidx());
 					
 					session.setAttribute("userLoginInfo", userInfo);
@@ -233,8 +231,6 @@ public class UserController {
         
 		
 		session = request.getSession();
-		
-		session.setMaxInactiveInterval(60*60);
 
         //로그인유지 유무
         String keepLogin = (String)session.getAttribute("keepLogin");
@@ -373,6 +369,8 @@ public class UserController {
 		
 		session = request.getSession();
 		
+		System.out.println(session.getMaxInactiveInterval());
+		
 		int uidx = 0;
 		
 		List<BoardItemVO> list = new ArrayList<BoardItemVO>();
@@ -406,7 +404,7 @@ public class UserController {
 			blist = userService.myTownCommunityList(uv.getLocation_auth());
 		}
 		
-		System.out.println(blist);
+		//System.out.println(blist);
 
 		model.addAttribute("myTownCommunityList",blist);
 		
