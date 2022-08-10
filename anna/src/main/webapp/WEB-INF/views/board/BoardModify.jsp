@@ -1,42 +1,93 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>수정하기</title>
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
     <!-- include summernote css/js-->
+<script src="${pageContext.request.contextPath}/js/summernote-lite.js"></script>
+<script src="${pageContext.request.contextPath}/js/summernote-ko-KR.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<style>
+    
+
+.viewimg{
+
+display : none;
+position: fixed;
+
+
+}
+
+    
+</style>
+<script>
+
+$(".view").mouseover(function(){
+	$(".viewimg").fadeIn()
+	
+	});
 
 
 
-  <script src="${pageContext.request.contextPath}/js/summernote-lite.js"></script>
-  <script src="${pageContext.request.contextPath}/js/summernote-ko-KR.js"></script>
+$("#test").mouseleave(function(){$(this).css("color", "black");}
 
-
-     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+</script>
 </head>
 <body>
 
-   <h1>Summernote</h1>
+   <h2>글 수정</h2>
     
 <form action="BoardWrite.do" method="post" enctype="multipart/form-data">
 <input type="hidden" name="uidx" value="${uidx}">
-<input type="text" name="Location" value="${vo.location}">
-<select name="board_type">
-	<option value="free">일상&amp;소통</option>
-	<option value="job">구인구직</option>
-	<option value="metting">만남</option>
-	<option value="hotplace">우리동네 핫플레이스</option>
-</select>
+<input type="text" name="Location" value="${userLoginInfo.location_auth}">
+<input type="text" name="board_type" value="${bv.board_type }">
+
+<c:if test="${bv.board_type eq 'free'}">
+	일상&amp;소통
+</c:if>
+<c:if test="${bv.board_type eq 'job'}">
+	구인구직
+</c:if>
+<c:if test="${bv.board_type eq 'meeting'}">
+	모임
+</c:if>
+<c:if test="${bv.board_type eq 'hotplace'}">
+	우리동네 핫플레이스
+</c:if>
 
 <input type="text" name="Title" placeholder="제목을 입력해주세요" value="${bv.title}">
  
 <textarea id="summernote" class="summernote" name="Contents">${bv.contents }</textarea>
+
+<c:if test="${bv.image1 != null}">
+	<div class="view">${bv.image1}</div>
+	<div class="viewimg">
+		<img src="../resources/upload/${bv.image1}" alt ="안되는데요?">
+	</div>
+</c:if>
+
+<c:if test="${bv.image2 != null}">
+	<div class="view2">${bv.image2}</div>
+</c:if>
+<c:if test="${bv.image3 != null}">
+	<div>${bv.image3}</div>
+</c:if>
+<c:if test="${bv.image4 != null}">
+	<div>${bv.image4}</div>
+</c:if>
+<c:if test="${bv.image5 != null}">
+	<div>${bv.image5}</div>
+</c:if>
+ 
 <div id="boxWrap">
 <button type="button" id="file_btn">추가</button>
 <input type="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>

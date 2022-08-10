@@ -31,7 +31,7 @@
     
 <form action="BoardWrite.do" method="post" enctype="multipart/form-data">
 <input type="text" name="uidx" value="${uidx}">
-<input type="text" name="Location" value="${userLoginInfo.location_auth}">
+<input type="text" name="Location" value="${userLoginInfo.location_auth}">										
 
 <select name="board_type" onchange="locationMap()" id="board_type">
 	<option value="free">일상&amp;소통</option>

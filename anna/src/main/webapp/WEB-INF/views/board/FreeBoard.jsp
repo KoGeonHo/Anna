@@ -263,7 +263,6 @@ const GetList = function(currentPage){
 			</div>
 			<!-- 모바일 헤더-->
 <main>
-	<input type="text" value="${vo.board_type}">
 					<form method="get" action="FreeBoard.do">
 				
 						<select name="SearchType">
