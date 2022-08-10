@@ -30,24 +30,22 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div class="wrapper">
-			<div class="container main">
-				<h3 class="border-bottom" style="padding:1rem; margin:0px;">채팅 목록</h3>
-				<div class="table">
-					<c:if test="${chatList.size() > 0}">
-						<c:forEach var="i" items="${chatList}">
-							<div class="tr border-bottom" style="padding:10px;" onclick="location.href='chatView.do?item_idx=${i.item_idx}&chat_host=${i.chat_host}&invited=${i.invited}'">
-								<div>
-									<c:if test="${ uidx eq i.chat_host}">
-										${ i.invitedNickName }
-									</c:if>
-									<c:if test="${ uidx eq i.invited}">
-										${ i.hostNickName }
-									</c:if>
+			<div class="container main" style="flex:1; overflow:hidden;">
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">${ audience }님과의 채팅</h3>
+				<div class="chatbox" style="width:100%; height:100%; overflow-y:auto; position:relative;">
+					<c:if test="${chatViewList.size() > 0}">
+						<c:forEach var="i" items="${chatViewList}">
+							<c:if test="${ i.uidx eq uidx }">
+								<div class="text-end border-bottom" style="padding:10px;">
+									나<br>
+									${i.contents}
 								</div>
-								<div class="text-end">${ i.lastChat }<span style="font-size:0.8rem;">(${ i.lastChatDate })</span></div>
-							</div>
+							</c:if>
 						</c:forEach>
 					</c:if>		
+					<div style="position:absolute; bottom:0;">
+						123
+					</div>
 				</div>
 			</div>
 		</div>

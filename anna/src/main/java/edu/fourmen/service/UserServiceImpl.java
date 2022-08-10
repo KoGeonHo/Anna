@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import edu.fourmen.dao.UserDAO;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.UserVO;
 
 import org.springframework.stereotype.Service;
@@ -291,6 +292,19 @@ public class UserServiceImpl implements UserService{
 	public UserVO keepLogin(int uidx) {
 		
 		return userDAO.keepLogin(uidx);
+	}
+
+	@Override
+	public List<ChatMessageVO> getChatList(int uidx) {
+		
+		return userDAO.getChatList(uidx);
+	}
+
+	@Override
+	public List<ChatMessageVO> getChatViewList(ChatMessageVO cmvo) {
+		
+		return userDAO.getChatViewList(cmvo);
+		
 	}
 
 }

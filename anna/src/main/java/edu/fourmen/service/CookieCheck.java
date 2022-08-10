@@ -42,9 +42,7 @@ public class CookieCheck extends HandlerInterceptorAdapter{
 		
 		if(!requestUrl.contains("/kakaoLogin")){
 			if(session.getAttribute("uidx") == null || session.getAttribute("userLoginInfo") == null) {
-			
 				session.invalidate();
-			
 			}
 		}
 		
