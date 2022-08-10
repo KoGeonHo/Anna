@@ -21,7 +21,7 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 		
 		String requestUrl = request.getRequestURL().toString();
 		
-		if(requestUrl.contains("/login") || requestUrl.contains("/join") || requestUrl.contains("/getKakaoAuthUrl") || requestUrl.contains("/kakaoLogin") || requestUrl.contains("/emailChk") || requestUrl.contains("/sendAuthEmail")){ 
+		if(requestUrl.contains("/login") || requestUrl.contains("/logout") || requestUrl.contains("/join") || requestUrl.contains("/getKakaoAuthUrl") || requestUrl.contains("/kakaoLogin") || requestUrl.contains("/emailChk") || requestUrl.contains("/sendAuthEmail")){ 
 			
 			return true;
 			
@@ -30,6 +30,8 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 			//System.out.println(session.getAttribute("uidx"));
 			
 			if(session.getAttribute("uidx") == null || session.getAttribute("userLoginInfo") == null) {
+				
+				session.invalidate();
 				
 				PrintWriter pw = response.getWriter();
 				

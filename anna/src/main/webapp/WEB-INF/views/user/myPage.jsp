@@ -15,6 +15,10 @@
 		let slide;
 		let slideWidth = 0;
 		
+		$(window).resize(function(){
+			$(".slide-container").css("left","0px");
+		});
+		
 		$(".slide-btn-prev").click(function(){
 			let slideContainer = $(this).data("container");
 			slideWidth = $(slideContainer).css("width").replace("px","");
@@ -38,10 +42,10 @@
 			if((parseInt(slide.css("left").replace("px",""))%slideWidth) == 0){
 				left = slide.css("left").replace("px","");
 				let NextMax = -((Math.ceil(${ interestedList.size() / 5 })-1)*slideWidth);
-				if((parseInt(left)-parseInt(slideWidth)) <= parseInt(NextMax)){
-					left = NextMax;
-				}else{
+				if((parseInt(left)-parseInt(slideWidth)) >= parseInt(NextMax)){
 					left = (parseInt(left)-parseInt(slideWidth));
+				}else{
+					left = 0;
 				}
 			}
 			slide.css("left",left+"px");
@@ -166,7 +170,7 @@
 					<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative;">
 						<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
 						<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
-						<div id="slider-interested" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
+						<div id="slider-interested" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
 							<c:forEach var="vo" items="${interestedList}">
 								<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
@@ -189,7 +193,7 @@
 					<div id="slideOfMyItem" style="width:100%; clear:both; overflow:hidden; position:relative;">
 						<div class="slide-btn slide-btn-prev" data-slide="#slider-myItem" data-container="#slideOfMyItem" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
 						<div class="slide-btn slide-btn-next" data-slide="#slider-myItem" data-container="#slideOfMyItem" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
-						<div id="slider-myItem" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
+						<div id="slider-myItem" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
 							<c:forEach var="vo" items="${interestedList}">
 								<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
