@@ -22,7 +22,7 @@ public interface BoardItemService {
 	
 	public int totalCount(PageMaker pm);
 	
-	public int boarditemswrite(BoardItemVO vo, HttpServletRequest request);
+	public int boarditemswrite(BoardItemVO vo);
 	
 	public BoardItemVO selectitem(int item_idx);
 	
@@ -51,4 +51,6 @@ public interface BoardItemService {
 	public int checkWish(BoardItemVO wvo);
 	
 	public int delWish(BoardItemVO wvo);
+	
+	public int report_target(BoardItemVO vo);
 }

@@ -6,6 +6,7 @@ import java.io.File;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import javax.swing.JPopupMenu.Separator;
 
 import org.imgscalr.Scalr;
 
@@ -577,12 +578,32 @@ public class BoardItemController {
 		 */
 
 		session = request.getSession();
-
+		
 		UserVO login = (UserVO) session.getAttribute("login");
-
+		/*
+		 */List<String> list = new ArrayList();
+		 System.out.println(vo.getKeyword()+"맨 처음 받은 키워드");
+		 System.out.println(vo.getKeyword().split(",")+"두번째 받은 키워드");
+		 
+		 String[] str = vo.getKeyword().split(",");
+		 String asd = "";
+		 for(String s : str) {
+			 
+				//System.out.println("#"+s);
+			 	asd += "#"+s;
+				System.out.println(asd);
+		 }
+		 vo.setKeyword(""+asd+"");
+		 
+			/* vo.setKeyword("#"+s); */
+		/*
+		 * List<String> list2 = "#"+s ; System.out.println("#"+list2);
+		 * System.out.println(list2 + "키워드 리스트2222 자르고난후");
+		 */
+		
 		// vo.setMidx(login.getMidx());
 
-		int result = boarditemService.boarditemswrite(vo, request);
+		int result = boarditemService.boarditemswrite(vo);
 
 		model.addAttribute("vo", vo);
 
@@ -1111,7 +1132,13 @@ public class BoardItemController {
 		return 1;
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping("/report")
+	public String report_taget(BoardItemVO vo,String contents) {
+		boarditemService.report_target(vo);
+		System.out.println("신고 완료");
+		return "ㅅㄱ";
+	}
 	
 	
 	

@@ -392,6 +392,15 @@ a {
 	 padding: 20px;
 	 background-color: #fff;
 	}    		
+	.Pstyle2 {
+	 opacity: 0;
+	 display: none;
+	 position: relative;
+	 width: auto;
+	 border: 5px solid #fff;
+	 padding: 20px;
+	 background-color: #fff;
+	}    		
 </style>
 	
 <script>
@@ -426,6 +435,25 @@ a {
 				$('#popup2').bPopup().close();  
 			});			
 		});
+		//신고 글 작성하는 부분
+		function report(form){
+		$.post('report',{
+			item_idx : ${vo.item_idx},
+			bidx : ${vo.item_idx},
+			repoter : ${userLoginInfo.uidx},
+			evidence : 1,
+			target : ${vo.uidx},
+			contents : form.contents.value,
+			report_type : form.report_type.value,
+			
+		},'json');
+		//location.reload();
+		alert("tr");
+		$('#popup2').bPopup().close();  
+			console.log("신고 완료");
+	}
+		
+		
 		//채팅 리스트 여는 부분
 		$(function(){
 			$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
@@ -447,7 +475,6 @@ a {
 			form.contents.focus();
 			return false;
 		}
-		console.log("대체 왜 그러는데")
 		
 		// AJAX -> doAddMessage 실행 및 출력값 가져오기
 		$.post('./AddMessage',{
@@ -461,7 +488,6 @@ a {
 		function(data) {
 			uidx = data["uidx"];
 		},'json'); 
-		console.log("대체 왜 그러는데123123123");
 		form.contents.value = '';
 		form.contents.focus();
 		return false;
@@ -773,33 +799,27 @@ a {
 			<!-- 신고하기 팝업 영역  -->
 			
 			<div id="popup2" class="Pstyle2">	
-				<form onsubmit="sendMessage(this); return false;">
-					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
-					글주인번호<input type="text" id="chat_host"name="chat_host" value="${vo.uidx}"><br>
-					<c:if test="${userLoginInfo.uidx == vo.uidx}">
-					<input type="text" name="invited" value="${chatlist.uidx}">
-					</c:if>
-					<c:if test="${userLoginInfo.uidx != vo.uidx}">
-					<input type="text" name="invited" value="${userLoginInfo.uidx}">
-					</c:if>
-					<input type="text" name="uidx" value="${userLoginInfo.uidx}">
-					<input type="text" name="nickName" value="${userLoginInfo.nickName}"readonly="readonly">
-					<input type="text" name="contents" placeholder="내용" >
-					<input type="submit" value="전송">
+				<form onsubmit="report(this); return false;">
+					<select name="report_type">
+						<option value="0">노쇼</option>		
+						<option value="1">비속어&비매너채팅</option>		
+						<option value="2">게시물 규칙 위반</option>		
+						<option value="3">허위매물</option>		
+						<option value="4">기타</option>		
+					</select>		
+					
+					<textarea name="contents"></textarea>
+					
+					<input type="file" name="attach">
+					
+					<input type="submit" value="신고하기">
 				</form>
-					<div class="chat-list" id="chat" ></div>
-					<input type="button" id="btn_close2" value="닫 기">
 			</div>
 			<c:if test="${uidx != null }">
 				<div class="wrap2">
-					<input type="button" id="btn_open2" value="연락하기">
+					<input type="button" id="btn_open2" value="신고하기">
 				</div>
 			</c:if>
-			
-			
-			
-			
-			
 			
 			
 			
@@ -833,11 +853,16 @@ a {
 			<c:if test="${uidx != null }">
 				<div id="Neighbor_area">
 				<c:if test="${result == 0 }">
-				<button onclick="addNeighbor(); return false;">이웃추가</button>
+				<button onclick="addNeighbor(); return false;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+						  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+						  <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+						</svg> 이웃추가</button>
 				</c:if>
 				
 				<c:if test="${result != 0}">
-				<button onclick="delNeighbor(); return false;">이웃삭제</button>
+				<button onclick="delNeighbor(); return false;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-x-fill" viewBox="0 0 16 16">
+					  <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"/>
+					</svg> 이웃삭제</button>
 				</c:if>
 				</div>
 			</c:if>
@@ -845,11 +870,14 @@ a {
 			<c:if test="${uidx != null }">
 				<div id="Wish_area">
 				<c:if test="${wish == 0}">
-				<button onclick="addWish(); return false;" > 찜 </button>
+						<button onclick="addWish(); return false;" > <img src="../images/Wish_off.png" style="width:50px; heigh:50px;">
+						</button>
 				</c:if>
 	
 				<c:if test="${wish != 0}">
-				<button onclick="delWish(); return false;" > 찜 삭제 </button>
+					<button onclick="delWish(); return false;" > <img src="../images/Wish_on.png" style="width:50px; heigh:50px;">
+					
+					</button>
 				</c:if>
 				</div>
 			</c:if>

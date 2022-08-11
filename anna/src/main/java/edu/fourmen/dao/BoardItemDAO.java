@@ -32,12 +32,12 @@ public class BoardItemDAO {
 		return sqlSession.selectList(efdb+".selectAll",pm);
 		
 	}
-	public List<BoardItemVO> selectAllbyuser(BoardItemVO vo,SearchVO svo) {
+	public List<BoardItemVO> selectAllbyuser(BoardItemVO vo, SearchVO svo) {
 		return sqlSession.selectList(efdb+".selectAllbyuser",vo);
 		
 	}
 		
-	public int boarditemswrite(BoardItemVO vo, HttpServletRequest request) {
+	public int boarditemswrite(BoardItemVO vo) {
 		return sqlSession.insert(efdb+".boarditemswrite",vo);
 	}
 	
@@ -103,5 +103,9 @@ public class BoardItemDAO {
 		
 	public int delWish(BoardItemVO wvo) {
 		return sqlSession.delete(efdb+".delWish",wvo);
+	}
+	
+	public int report_target(BoardItemVO vo) {
+		return sqlSession.insert(efdb+".report_target",vo);
 	}
 }
