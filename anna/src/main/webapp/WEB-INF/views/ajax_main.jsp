@@ -31,6 +31,8 @@
 */
 .body {
 	padding-top: -56px;
+	
+	
 }
 a {
   color: #000;
@@ -53,24 +55,7 @@ a {
 	margin-left: 3px;
 }
 
-.bottom_menu {
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	height: 130px;
-	z-index: 100;
-	border-top: 1px solid black;
-	background-color: white
-}
 
-.bottom_menu>div {
-	float: left;
-	width: 20%;
-	height: 100%;
-	text-align: center;
-	padding-top: 20px;
-}
 
 @media ( min-width : 576px) {
 	.col-md-2 {
@@ -84,29 +69,28 @@ a {
 	}
 }
 
-.navbar {
-	height: 150;
-}
+
 
 .offcanvas-collapse {
 	top: 150px;
 }
 
-.navbar-toggler-icon {
-	width: 4.5em;
-	height: 5.5em;
-}
 
-.navbar-brand {
-	margin-left: 2rem;
-}
-
-.navbar-dark .navbar-toggler-icon {
-	margin: 0 1rem;
-}
 
 .logo {
 	padding-left: 2.5rem;
+}
+
+@media all and (max-width:  767px){
+	
+	#myCarousel, #search, #bestitem, #boardlist, #productname  {
+		display:none;
+	}
+	
+	#itemlist {
+		margin-top: -106px;
+	}
+	
 }
 </style>
 	
@@ -114,6 +98,7 @@ a {
 	
 </head>
 <body>
+	<div class="wrapper" id="mainWrapper">
 
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">		
 							
@@ -139,7 +124,8 @@ a {
 								</c:forEach>
 								</c:if>
 							
-
+	</div>
+	</div>
 								
 			
 			
