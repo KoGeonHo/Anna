@@ -17,27 +17,17 @@ body {
 
 #footer {
 	background:#fff;
-	position:fixed; 
-	bottom:0px;
-	z-index:10000;
 }
 
 @media all and (max-width:  767px){
 	
 	.pc-header  {
 		display:none;
-		z-index : 10000;
-		background-color : #fff;
 	}
 	
 	.main {
-		padding-bottom: 70px;
+		overflow:auto;
 	}
-	
-	.wrapper {
-    	margin-bottom:70px;
-	}
-	
 	
 	
 }
@@ -46,7 +36,6 @@ body {
 
 	.navbar, .collapse, #menu{
 		display:none;
-		z-index : 10000;
 	}
 	
 	#footer {

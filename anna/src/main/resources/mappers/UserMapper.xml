@@ -228,4 +228,48 @@
 		LIMIT 1, 10;
 	</select> 
 	
+	
+	<select id="getChatList" parameterType="int" resultType="chatVO">
+	
+		SELECT 
+			a.item_idx,
+			a.invited,
+			(select nickName FROM AnnaUser WHERE uidx = a.invited) invitedNickName,
+			a.chat_host,
+			(select nickName FROM AnnaUser WHERE uidx = a.chat_host) hostNickName,
+			(select b.contents from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as lastChat,
+			(select date_format(b.cdate,'%Y/%m/%d %p %H:%i') from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as lastChatDate
+		FROM 
+			chat a 
+		WHERE 
+			chat_host = #{uidx} OR
+			invited = #{uidx}
+		GROUP BY item_idx, chat_host, invited
+		ORDER BY lastChatDate DESC
+		
+	</select>
+	
+	<select id="getChatViewList" parameterType="chatVO" resultType="chatVO">
+		SELECT 
+			a.item_idx,
+			a.uidx,
+			a.invited,
+			(select nickName FROM AnnaUser WHERE uidx = a.invited) invitedNickName,
+			a.chat_host,
+			(select nickName FROM AnnaUser WHERE uidx = a.chat_host) hostNickName,
+			a.contents,
+			date_format(a.cdate,'%Y/%m/%d %p %H:%i') as cDate,
+			a.chat_read
+		FROM
+			chat a
+		WHERE
+			a.item_idx = #{item_idx} AND
+			a.chat_host = #{chat_host} AND
+			a.invited = #{invited}
+	</select>
+	
 </mapper>
+
+
+
+

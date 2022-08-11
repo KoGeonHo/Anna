@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.UserVO;
 
 @Repository
@@ -111,5 +112,18 @@ public class UserDAO {
 	public UserVO keepLogin(int uidx) {
 		
 		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.keepLogin",uidx);
+	}
+
+
+	public List<ChatMessageVO> getChatList(int uidx) {
+		
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getChatList",uidx);
+	}
+
+
+	public List<ChatMessageVO> getChatViewList(ChatMessageVO cmvo) {
+		
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getChatViewList",cmvo);
+		
 	}
 }

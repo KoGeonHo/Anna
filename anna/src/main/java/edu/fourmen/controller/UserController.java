@@ -24,6 +24,7 @@ import edu.fourmen.service.MailService;
 import edu.fourmen.service.UserService;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.UserVO;
 
 @RequestMapping(value="/user")
@@ -586,5 +587,51 @@ public class UserController {
 		
 		return "user/neighborMng";
 		
+	}
+	
+	//채팅 리스트
+	@RequestMapping(value="/chatList.do")
+	public String chatList(Model model,HttpServletRequest request,HttpSession session) {
+		
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		List<ChatMessageVO> chatList = userService.getChatList(uidx);
+		
+		model.addAttribute("path",path);
+		
+		model.addAttribute("chatList",chatList);
+		
+		return "user/chatList";
+	}
+	
+	//채팅방
+	@RequestMapping(value="/chatView.do")
+	public String chatView(ChatMessageVO cmvo,Model model,HttpServletRequest request,HttpSession session) {
+		
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		List<ChatMessageVO> chatViewList = userService.getChatViewList(cmvo);
+		
+		String audience = "";
+		
+		if(cmvo.getInvited() == uidx) {
+			UserVO audienceInfo = userService.getUserInfo(cmvo.getChat_host());
+			audience = audienceInfo.getNickName();
+		}else if(cmvo.getChat_host() == uidx) {
+			UserVO audienceInfo = userService.getUserInfo(cmvo.getInvited());
+			audience = audienceInfo.getNickName();
+		}
+		
+		model.addAttribute("audience",audience);
+		
+		model.addAttribute("path",path);
+		
+		model.addAttribute("chatViewList",chatViewList);
+		
+		return "user/chatView";
 	}
 }

@@ -5,28 +5,86 @@ public class ChatMessageVO extends BoardItemVO{
 	private long cidx;
 	private int uidx;
 	private int invited;
-	private String content;
+	private String contents;
 	private int chat_host;
 	private int item_idx;
+	private String cDate;
+	private String lastChat;
+	private String lastChatDate;
+	private String invitedNickName;
+	private String hostNickName;
+	private int chat_read;
 	
-	
-	
-	
-	public ChatMessageVO(){}
-	
-	public ChatMessageVO(long cidx, int uidx, int invited, String content, int chat_host,  int item_idx) {
-		this.cidx = cidx;
-		this.uidx = uidx;
-		this.invited = invited;
-		this.content = content;
-		this.chat_host = chat_host;
-		this.item_idx = item_idx;
-	
-	
-	
-	
+
+	public int getChat_read() {
+		return chat_read;
 	}
 
+
+
+	public void setChat_read(int chat_read) {
+		this.chat_read = chat_read;
+	}
+
+
+
+	public String getInvitedNickName() {
+		return invitedNickName;
+	}
+
+
+
+	public void setInvitedNickName(String invitedNickName) {
+		this.invitedNickName = invitedNickName;
+	}
+
+
+
+	public String getHostNickName() {
+		return hostNickName;
+	}
+
+
+
+	public void setHostNickName(String hostNickName) {
+		this.hostNickName = hostNickName;
+	}
+
+
+
+	public String getcDate() {
+		return cDate;
+	}
+
+
+
+	public void setcDate(String cDate) {
+		this.cDate = cDate;
+	}
+
+
+
+	public String getLastChat() {
+		return lastChat;
+	}
+
+
+
+	public void setLastChat(String lastChat) {
+		this.lastChat = lastChat;
+	}
+
+
+
+	public String getLastChatDate() {
+		return lastChatDate;
+	}
+
+
+
+	public void setLastChatDate(String lastChatDate) {
+		this.lastChatDate = lastChatDate;
+	}
 
 
 
@@ -66,13 +124,13 @@ public class ChatMessageVO extends BoardItemVO{
 
 
 
-	public String getContent() {
-		return content;
+	public String getContents() {
+		return contents;
 	}
 
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setContents(String content) {
+		this.contents = content;
 	}
 
 	public int getChat_host() {

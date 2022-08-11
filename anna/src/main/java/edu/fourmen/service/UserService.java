@@ -5,6 +5,7 @@ import java.util.List;
 
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.UserVO;
 
 public interface UserService {
@@ -26,5 +27,7 @@ public interface UserService {
 	List<UserVO> neighborList(int uidx);
 	List<BoardVO> myTownCommunityList(String location_auth);
 	UserVO keepLogin(int uidx);
+	List<ChatMessageVO> getChatList(int uidx);
+	List<ChatMessageVO> getChatViewList(ChatMessageVO cmvo);
 	
 }
