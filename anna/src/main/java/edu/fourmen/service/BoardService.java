@@ -40,5 +40,7 @@ public interface BoardService {
 	int HitUp(int Bidx);
 	
 	int boardDelete(int Bidx);
+	
+	int boardModify(BoardVO vo);
 
 }

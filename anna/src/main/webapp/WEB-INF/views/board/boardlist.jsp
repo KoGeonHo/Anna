@@ -1,119 +1,185 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %> <!-- 세션사용하겠다는 뜻 -->
+<%@ page session="true" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
-<link rel="stylesheet" href="<%= request.getContextPath()%>/css/bootstrap.css">
+	
+	<title>안녕? 나야!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+	<meta charset="UTF-8">
+	
+<script src="${ path }/js/jquery-3.6.0.js"></script>
+<script src="${ path }/js/bootstrap.js"></script>
+<script src="${ path }/js/common/common.js"></script>
 
-	<script src="<%= request.getContextPath()%>/js/bootstrap.js"></script>
-	<link href="<%= request.getContextPath()%>/css/offcanvas.css" rel="stylesheet" type="text/css" />
+
+
+
+
+		    
+
+<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
+
+<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
+<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/mfb.css" rel="stylesheet">
+<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
+
+<link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/css/default.css?ver=1701">
+<link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/skin/board/gallery/style.css?ver=171222">
+<link rel="stylesheet" href="http://sample.paged.kr/purewhite/theme/pagedtheme/css/board.common.css?ver=1701">
+
+		
+<!--   Slick Slider -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>	
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!--   Slick Slider -->
+	
+	
+<!-- path는 request.getContextPath()를 가져온것. -->	
+
+
+	
 <style>
 
-/* 
-아주 작은(Extra small)	xs	576px 미만	스마트폰 세로
-작은(Small)	sm	576px 이상	스마트폰 가로
-중간(Medium)	md	768px 이상	타블렛
-큰(Large)	lg	992px 이상	데스크탑
-아주 큰(Extra large)	xl	1200px 이상	큰 데스크탑
- */
- 
-.body {
-	padding-top: -56px;
-}
-
-.row {
-	padding: 0px;
-	margin: 0px;
-}
-
-.container {
-	justify-content: center;
-	align-items: center;
-}
+/*
+반응형 기준 기록
+	아주작은(xs)  576px 미만	  스마트폰 세로
+	작은(sm) 	  576px 이상	  스마트폰 가로
+	중간(md)	  768px 이상	  타블렛
+	큰(lg)   	  992px 이상	  데스크탑
+	아주큰(xl)	  1200px 이상	  큰 데스크탑
+*/
 
 
-.bottom_menu {
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	height: 130px;
-	z-index: 100;
-	border-top: 1px solid black;
-	background-color: white
-}
-
-.bottom_menu>div {
-	float: left;
-	width: 20%;
-	height: 100%;
-	text-align: center;
-	padding-top: 20px;
-}
-
-@media ( min-width : 576px) {
-	.col-md-2 {
-		width: 30%;
-	}
-}
-
-@media ( min-width : 1200px) {
-	.col-md-2 {
-		width: 16.66666667%;
-	}
-}
-
-.navbar {
-	height: 150;
-}
-
-.offcanvas-collapse {
-	top: 150px;
-}
-
-.navbar-toggler-icon {
-	width: 4.5em;
-	height: 5.5em;
-}
-
-.navbar-brand {
-	margin-left: 2rem;
-}
-
-.navbar-dark .navbar-toggler-icon {
-	margin: 0 1rem;
-}
-
-.logo {
-	padding-left: 2.5rem;
-}
-
-.menu li ul{
-
-	display:none;
-
-}
-
-.menu li:hover ul{
-
-	display:block;
-
-}
-
-.card img{
-height : 300px;
-
-
-}
-
-
+  
 </style>
-<script>
+
+
+
+
+
+</head>
+<body>
+
+<div class="wrapper">
+		<!-- 헤더 및 메뉴 -->
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
+		
+		<div class="wrapper">
+			<div class="container main">
+
+		
+			
+
+	
+			<form method="get" action="boardlist.do?">
+				<input type="text" value="${pm.board_type}" name="board_type">
+				<select name="SearchType">
+					<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
+					<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
+					<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
+				</select>
+				<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
+				<input type="submit" value="검색">
+			</form>
+			<c:if test="${pm.board_type eq 'free'}">
+				<a href="BoardWrite.do?board_type=free">쓰기</a>
+			</c:if>
+			<c:if test="${pm.board_type eq 'job'}">
+				<a href="BoardWrite.do?board_type=job">쓰기</a>
+			</c:if>
+			<c:if test="${pm.board_type eq 'meeting'}">
+				<a href="BoardWrite.do?board_type=meeting">쓰기</a>
+			</c:if>
+			<c:if test="${pm.board_type eq 'hotplace'}">
+				<a href="BoardWrite.do?board_type=hotplace">쓰기</a>
+			</c:if>
+			<hr>
+			
+			<form>
+			
+			<div id="bo_gall" style="width:100%">
+					<ul id="gall_ul" class="gall_row">
+			
+			<c:if test="${board.size()>0}">
+							<c:forEach var="vo" items="${board}">
+				
+						<li class="gall_li col-gn-3 gallWST">
+            				<div class="gall_box">
+                				<div class="gall_chk">
+                                	<span class="sound_only"></span>
+                				</div>
+                				<div class="gall_con">
+                    			<div class="gall_boxa">
+                        			<a href="http://sample.paged.kr/purewhite/bbs/board.php?bo_table=gallery&amp;wr_id=7">
+                  					<em class="iconPs bo_tit">
+                                             
+                                                                   </em>
+                  <i class="imgAr"><img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="../images/noimg.jpg" style="width :200px; height : 200px"></i>                  <em class="gall_info">
+                     <span class="sound_only">조회 </span>
+                     <i class="fa fa-eye" aria-hidden="true"></i>${vo.hit }<span class="gall_date"><span class="sound_only">작성일 </span><i class="fa fa-clock-o" aria-hidden="true"></i>${vo.wdate }</span>
+                     <u><span class="sound_only">작성자 </span>${vo.nickName }</u>
+                  </em>
+                        </a>
+                    </div>
+                    <div class="gall_text_href">
+                                                <a href="http://sample.paged.kr/purewhite/bbs/board.php?bo_table=gallery&amp;wr_id=7" class="bo_tit">
+                            ${vo.title }                                                     </a>
+                    </div>
+                </div>
+            </div>
+        	</li>
+			
+			</c:forEach>
+						</c:if>
+			
+		</ul>
+			</div>	
+			
+				<c:if test="${board.size() ==0}">		
+					<h3>등록된 게시물이 없습니다.</h3>
+				</c:if>
+				<div class="container">
+					<div class="row">		
+						<c:if test="${board.size()>0}">
+							<c:forEach var="vo" items="${board}">
+							
+						<div class="card col-md-3">
+						<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="300" class="img">	
+						<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
+							${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount} 조회수 ${vo.hit}
+						</div>
+						
+					
+							</c:forEach>
+						</c:if>
+						
+					</div>
+				</div>
+			</form>
+			<c:if test="${pm.board_type eq 'free'}">
+			<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
+					<div class="container">
+						<div class="row card-list-container thumbnails">
+						
+						</div>
+					</div>
+				</section>
+			</c:if>
+	</div>
+		</div>
+		<!-- 푸터는 고정 -->
+		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
+	</div>
+		<script>
 //스크롤 시 이벤트 처리
 
 
@@ -128,6 +194,7 @@ $(window).on("scroll",function(){
 	
 	//위로 스크롤된 길이
 	let scrollTop = $(window).scrollTop();
+	console.log(scrollTop);
 	//웹브라우저 창의 높이
 	let windowHeight = $(window).height();
 	//문서 전체의 높이
@@ -184,107 +251,24 @@ const GetList = function(currentPage){
 
 
 </script>
-</head>
-<body>
+<script>
 
-			<div class="b-example-divider ">
-				<div class="container ">
-					<div class="d-md-none d-lg-block d-xl-block">
-		
-						<header class="d-flex  align-items-center justify-content-center justify-content-sm-between py-3 mb-1 ">
-						<div class="logo">
-							<a href="/" class="d-flex align-items-center col-md-3 mb-1 col-sm-3 mb-md-0 text-dark text-decoration-none ">		
-									<img src="images/logo.png" width="70%">
-							</a>
-							</div>
-						<div class="menu">
-							<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
-								<li><a href="boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
-								<li><a href="FreeBoard.do" class="nav-link px-3 link-dark">커뮤니티</a>
-									<ul>
-										<li><a href="boardlist.do?board_type=free">일상&amp;소통</a></li>
-										<li><a href="boardlist.do?board_type=job">구인구직</a></li>
-										<li><a href="boardlist.do?board_type=meeting">모임</a></li>
-										<li><a href="boardlist.do?board_type=hotplace">우리동네 핫플레이스</a></li>
-									</ul>
-								</li>
-								<li><a href="#" class="nav-link px-3 link-dark ">고객센터</a></li>
-								<li><a href="#" class="nav-link px-3 link-dark">마이페이지</a></li>
-							</ul>
-						</div>
-							<div class="col-md-3 text-end">
-								<c:if test="${uidx == null }">
-		
-									<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/login.do';">로그인</button>
-									<button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/join.do';">회원가입</button>
-								</c:if>
-								<c:if test="${uidx != null }">
-									<button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/user/logout.do';">로그아웃</button>
-									<button type="button" class="btn " style="background-color: #BBCE53; color: #fff;">물음표</button>
-								</c:if>
-							</div>
-						</header>
-					</div>
-				</div>
-			</div>
-			
+$(".view").mouseover(function(){
+	$(".viewimg").css("display","block")
+	
+	});
 
+$(".view").mouseout(function(){
+	$(".viewimg").css("display","none")
 	
-			<form method="get" action="boardlist.do?">
-				<input type="text" value="${pm.board_type}" name="board_type">
-				<select name="SearchType">
-					<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
-					<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
-					<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
-				</select>
-				<input type="text" name="SearchVal" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
-				<input type="submit" value="검색">
-			</form>
-			<c:if test="${pm.board_type eq 'free'}">
-				<a href="BoardWrite.do?board_type=free">쓰기</a>
-			</c:if>
-			<c:if test="${pm.board_type eq 'job'}">
-				<a href="BoardWrite.do?board_type=job">쓰기</a>
-			</c:if>
-			<c:if test="${pm.board_type eq 'meeting'}">
-				<a href="BoardWrite.do?board_type=meeting">쓰기</a>
-			</c:if>
-			<c:if test="${pm.board_type eq 'hotplace'}">
-				<a href="BoardWrite.do?board_type=hotplace">쓰기</a>
-			</c:if>
-			<hr>
-			
-			<form>		
-				<c:if test="${board.size() ==0}">		
-					<h3>등록된 게시물이 없습니다.</h3>
-				</c:if>
-				<div class="container">
-					<div class="row">		
-						<c:if test="${board.size()>0}">
-							<c:forEach var="vo" items="${board}">
-							
-						<div class="card col-md-3">
-						<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"  onerror=this.src="../images/noimg.jpg" width="100%" height="225" >	
-						<h4> <a href="viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a> </h4>
-							${vo.nickName}  좋아요${vo.cntLike} 댓글 ${vo.ccount} 조회수 ${vo.hit}
-						</div>
-						
-					
-							</c:forEach>
-						</c:if>
-						
-					</div>
-				</div>
-			</form>
-			<c:if test="${pm.board_type eq 'free'}">
-			<section id="card-list" class="card-list"><!-- 무한스크롤부분 -->
-					<div class="container">
-						<div class="row card-list-container thumbnails">
-						
-						</div>
-					</div>
-				</section>
-			</c:if>
-	
+});
+
+
+
+</script>
+
+
+
+
 </body>
 </html>

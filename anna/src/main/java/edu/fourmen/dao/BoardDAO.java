@@ -102,4 +102,9 @@ public class BoardDAO {
 		
 		return sqlSession.selectList(namespace+".selectboard",pm);
 	}
+	
+	public int boardModify(BoardVO vo) {
+		
+		return sqlSession.update(namespace+".boardModify", vo);
+	}
 }
