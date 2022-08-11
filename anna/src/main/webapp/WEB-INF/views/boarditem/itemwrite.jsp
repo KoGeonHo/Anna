@@ -80,7 +80,8 @@
               
                     // 해시태그가 중복되었는지 확인
                     if (result.length == 0) { 
-                        $("#tag-list").append("<li class='tag-item' name='keyword'>"+tagValue+"<span class='del-btn' idx='"+counter+"'>x</span></li>");
+                       // $("#tag-list").append("<li class='tag-item' name='keyword'>"+tagValue+"<span class='del-btn' idx='"+counter+"'>x</span></li>");
+                        $("#tag-list").append("<input type='text' class='tag-item' name='keyword'value="+tagValue+"><span class='del-btn' idx='"+counter+"'>x</span>");
                         addTag(tagValue);
                         self.val("");
                     } else {
@@ -121,20 +122,19 @@
 	<input type="hidden" name="addr_code" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 	
 	<!-- 키워드는 키워드 전체 검색에 포함시키고, 쿼리에 키워드 검색 추가 db에 넣을때 , 붙여서 넣는방식으로 건호형꺼 참고 -->
-	키워드:<!-- <input type="text" name="keyword" > --><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 		<br>
 		<div class="tr_hashTag_area">
-    <p><strong>키워드</strong></p>
+   			 <p><strong>키워드</strong></p>
            <div class="form-group">
                 <input type="hidden" value="" name="tag" id="rdTag" />
             </div>
         
-             <ul id="tag-list" ></ul>
+             <div id="tag-list" ></div>
                         
             <div class="form-group">
             	<input type="text" id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 300px;"/>
            </div>
-</div>
+		</div>
 	가격:<input type="text" name="price" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 		<br>
 	거래상태:<input type="text" name="state" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
@@ -146,7 +146,6 @@
 				
 		<br/><br/>
 		<a href="#this" class="btn" id="addFile">파일 추가</a>
-	<button type="button" >작성하기2</button>
 	<button>작성하기</button>
 	<button onclick="loaction.href='itemwrite.do'">취소하기</button>
 	

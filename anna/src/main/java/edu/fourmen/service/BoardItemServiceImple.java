@@ -25,8 +25,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 	
 	
 	@Override
-	public int boarditemswrite(BoardItemVO vo, HttpServletRequest request) {
-		return boarditemdao.boarditemswrite(vo,request);
+	public int boarditemswrite(BoardItemVO vo) {
+		return boarditemdao.boarditemswrite(vo);
 	}
 
 
@@ -127,5 +127,10 @@ public  class BoardItemServiceImple implements BoardItemService{
 	@Override
 	public int delWish(BoardItemVO wvo) {
 		return boarditemdao.delWish(wvo);
+	}
+	
+	@Override
+	public int report_target(BoardItemVO vo) {
+		return boarditemdao.report_target(vo);
 	}
 }

@@ -1,5 +1,7 @@
 package edu.fourmen.vo;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class BoardItemVO extends UserVO {
@@ -9,7 +11,7 @@ public class BoardItemVO extends UserVO {
 	private int chat_host;
 	private int cate_idx;
 	private String Title;
-	private String Contents;
+	private String contents;
 	private String nickName;
 	private String wdate;
 	private String addr1;
@@ -27,9 +29,7 @@ public class BoardItemVO extends UserVO {
 	private MultipartFile file9;
 	private MultipartFile file10;
 	
-	
-	
-	public  String image1;
+	private String image1;
 	private String image2;
 	private String image3;
 	private String image4;
@@ -40,7 +40,9 @@ public class BoardItemVO extends UserVO {
 	private String image9;
 	private String image10;
 	private String fileName;
+	
 	private String Keyword;
+	
 	private String Price;
 	private String offer;
 	private int hit;
@@ -48,7 +50,6 @@ public class BoardItemVO extends UserVO {
 	
 	private String SearchType;
 	private String SearchVal;
-	
 	
 	private int pageNum;
 	private int amount;
@@ -63,24 +64,59 @@ public class BoardItemVO extends UserVO {
 	
 	private int neighbor_idx;
 	
+	private int target;
+	private int report_type;
+	private int evidence;
+	private String attach;
+	private String repoter;
+
 	
-	
-	
-	
+	public int getReport_type() {
+		return report_type;
+	}
+	public void setReport_type(int report_type) {
+		this.report_type = report_type;
+	}
+	public String getRepoter() {
+		return repoter;
+	}
+	public void setRepoter(String repoter) {
+		this.repoter = repoter;
+	}
+	public String getAttach() {
+		return attach;
+	}
+	public void setAttach(String attach) {
+		this.attach = attach;
+	}
+	public int getEvidence() {
+		return evidence;
+	}
+	public void setEvidence(int evidence) {
+		this.evidence = evidence;
+	}
+	public int getTarget() {
+		return target;
+	}
+	public void setTarget(int target) {
+		this.target = target;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 	public int getChat_host() {
 		return chat_host;
 	}
 	public void setChat_host(int chat_host) {
 		this.chat_host = chat_host;
 	}
+	
 	public String getContents() {
-		return Contents;
+		return contents;
 	}
 	public void setContents(String contents) {
-		Contents = contents;
+		this.contents = contents;
 	}
-	
-	
 	public int getNeighbor_idx() {
 		return neighbor_idx;
 	}
@@ -340,6 +376,10 @@ public class BoardItemVO extends UserVO {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+	
+	
+	
+	
 	public String getKeyword() {
 		return Keyword;
 	}

@@ -302,4 +302,30 @@
 		delete from Wish_list
 		where item_idx = #{item_idx} and uidx = #{uidx}
 	</delete>
+	
+	<insert id="report_target" parameterType="BoardItemVO">
+		 insert into report(
+					 bidx
+					 ,item_idx
+					 ,repoter
+					 ,target
+					 ,evidence
+					 ,attach
+					 ,report_type
+					 ,contents
+					 ,report_date
+					 )
+					 values
+					 (
+					 #{item_idx}
+					 ,#{item_idx}
+					 ,#{repoter}
+					 ,#{target}
+					 ,#{evidence}
+					 ,#{attach}
+					 ,#{report_type}
+					 ,#{contents}
+					 ,date_format(now(),'%y-%m-%d-%h:%i')
+			 )           
+	</insert>
 </mapper>
