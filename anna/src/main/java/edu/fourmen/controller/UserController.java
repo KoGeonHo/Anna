@@ -626,6 +626,21 @@ public class UserController {
 			audience = audienceInfo.getNickName();
 		}
 		
+		List<Integer> listForSetRead = new ArrayList<Integer>();
+		
+		for(ChatMessageVO list : chatViewList) {
+			//System.out.println(list.getCidx());
+			if(uidx != list.getUidx() && list.getChat_read() == 1) {
+				listForSetRead.add((int)list.getCidx());
+			}
+		}
+		
+		if(listForSetRead.size() != 0) {
+			userService.chatSetRead(listForSetRead);
+		}
+		
+		//System.out.println(listForSetRead);
+		
 		model.addAttribute("audience",audience);
 		
 		model.addAttribute("path",path);
@@ -633,5 +648,30 @@ public class UserController {
 		model.addAttribute("chatViewList",chatViewList);
 		
 		return "user/chatView";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sendMessage.do", produces = "application/json; charset=utf8")
+	public String sendMessage(ChatMessageVO cmvo){
+		
+		int result = boardItemService.insertChat(cmvo);
+		
+		return result+"";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getMessage.do", produces = "application/json; charset=utf8")
+	public ChatMessageVO getMessage(ChatMessageVO cmvo){
+		
+		ChatMessageVO getMessage = userService.getMessageNoRead(cmvo);
+		//System.out.println(getMessage);
+		List<Integer> listForSetRead = new ArrayList<Integer>();
+		if(getMessage != null) {
+			listForSetRead.add((int)getMessage.getCidx());
+			userService.chatSetRead(listForSetRead);
+		}
+		
+		
+		return getMessage;
 	}
 }
