@@ -307,4 +307,17 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
+	public void chatSetRead(List<Integer> listForSetRead) {
+
+		userDAO.chatSetRead(listForSetRead);
+		
+	}
+
+	@Override
+	public ChatMessageVO getMessageNoRead(ChatMessageVO cmvo) {
+		
+		return userDAO.getMessageNoRead(cmvo);
+	}
+
 }

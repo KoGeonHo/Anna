@@ -29,5 +29,7 @@ public interface UserService {
 	UserVO keepLogin(int uidx);
 	List<ChatMessageVO> getChatList(int uidx);
 	List<ChatMessageVO> getChatViewList(ChatMessageVO cmvo);
+	void chatSetRead(List<Integer> listForSetRead);
+	ChatMessageVO getMessageNoRead(ChatMessageVO cmvo);
 	
 }

@@ -14,7 +14,20 @@ public class ChatMessageVO extends BoardItemVO{
 	private String invitedNickName;
 	private String hostNickName;
 	private int chat_read;
+	private int newMessages;
 	
+
+	public int getNewMessages() {
+		return newMessages;
+	}
+
+
+
+	public void setNewMessages(int newMessages) {
+		this.newMessages = newMessages;
+	}
+
+
 
 	public int getChat_read() {
 		return chat_read;

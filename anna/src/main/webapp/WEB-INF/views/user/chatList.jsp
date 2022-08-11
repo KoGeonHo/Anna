@@ -43,6 +43,9 @@
 									<c:if test="${ uidx eq i.invited}">
 										${ i.hostNickName }
 									</c:if>
+									<c:if test="${ i.newMessages > 0 }">
+										<div style="width: 25px;height: 25px; display:inline-block;padding: 0;line-height: 25px;text-align: center;color: #fff;background: red;border-radius: 100px;">${i.newMessages}</div>
+									</c:if>
 								</div>
 								<div class="text-end">${ i.lastChat }<span style="font-size:0.8rem;">(${ i.lastChatDate })</span></div>
 							</div>
@@ -51,8 +54,6 @@
 				</div>
 			</div>
 		</div>
-		
-		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		

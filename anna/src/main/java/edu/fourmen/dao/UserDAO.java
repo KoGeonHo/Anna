@@ -126,4 +126,17 @@ public class UserDAO {
 		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getChatViewList",cmvo);
 		
 	}
+
+
+	public void chatSetRead(List<Integer> listForSetRead) {
+
+		sqlSession.update("edu.fourmen.mapper.userMapper.chatSetRead",listForSetRead);
+		
+	}
+
+
+	public ChatMessageVO getMessageNoRead(ChatMessageVO cmvo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.getMessageNoRead",cmvo);
+	}
 }
