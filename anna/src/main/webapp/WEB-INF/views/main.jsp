@@ -28,13 +28,13 @@ let currentPage = 1;
 //현재 페이지가 로딩중인지 여부를 저장할 변수
 let isLoding=false;
 $(function(){
-	$("#mainWrapper").on("scroll",function(){
+	$("#main").on("scroll",function(){
 		var scrollTop = $(this).scrollTop();
         var innerHeight = $(this).innerHeight();
         var scrollHeight = $(this).prop('scrollHeight');
-       // console.log(scrollTop + innerHeight);
+        //console.log(scrollTop + innerHeight);
         //console.log("scrollHeight:"+scrollHeight);
-		 if((scrollTop + innerHeight) >= scrollHeight){
+		 if((scrollTop + innerHeight)+1 >= scrollHeight){
 			 console.log(isLoding);
 				//만일 현재 마지막 페이지라면
 				if(currentPage == ${totalPageCount} || isLoding){
@@ -104,13 +104,41 @@ const GetList = function(currentPage){
 		//검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
 		data : "pagenumber="+currentPage+"&SearchType=${searchType}&SearchVal=${searchVal}",
 		//FreeBoard.jsp의 내용이 data로 들어온다. 
-		success:function(data){
-			//console.log(data);
+		success:function(data){			
+			//console.log(data.appendList);
+			let appendList = data.appendList;
+			let html = "";
+			
+			for(let i = 0; i < appendList.length; i++){
+				//console.log(appendList[i].uidx);
+				html +='<div class="col-lg-3  col-md-12 ">';
+				html +='	<div class="card">';
+				html +='<a href="boarditem/itemview.do?item_idx='+appendList[i].item_idx+'${vo.item_idx}">';
+				html +='<img src="<%=request.getContextPath()%>/resources/upload/'+appendList[i].image1+'"';
+				html +='onerror=this.src="images/noimg_item.jpg" width="100%" height="255">';
+				html +='</a>';
+				html +='<div class="card-body">';
+				html +='<h6 class="card-title">';
+				html +='<a href="boarditem/itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
+				html +='</h6>';
+				html +='<p class="card-text">'+appendList[i].price+'원</p>';
+				html +='<button type="button"';
+				html +='class="btn btn-sm btn-outline-secondary"';
+				html +='	style="float: right">view 5</button>';
+				html +='	<button type="button"';
+				html +='	class="btn btn-sm btn-outline-secondary"';
+				html +='	style="float: right">♥2</button>';
+				html +='</div>';
+				html +='</div>';
+				html +='	</div>';
+			}
+			
+			//console.log(html);
 			//응답된 문자열은 html형식이다. 
 			//해당 문자열은 .card-list-container div에 html로 해석하라고 추가한다.
-			$(".card-list-container").append(data);
+			$(".card-list-container").append(html);
 			//로딩바를 숨긴다.
-			$(".back-drop").hide();
+			//$(".back-drop").hide();
 			//로딩중이 아니라고 표시한다.
 			isLoding=false;
 			//console.log("ajax"); 
@@ -233,13 +261,13 @@ a {
 
 <body>
 
-<div class="wrapper">
+<div class="wrapper" >
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 
-	<div class="wrapper" id="mainWrapper">
-			<div class="main"  id="main">
+
+			<div class="main"  id="main" style="overflow:auto;">
 
 	<!-- 슬라이드 -->
 
@@ -554,7 +582,7 @@ width: 50px;
 					</div>
 					<hr id="productname">
 
-					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" >
+					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card-list-container"  >
 
 						<c:if test="${list.size() > 0}">
 							<c:forEach var="vo" items="${list}">
@@ -587,12 +615,12 @@ width: 50px;
 						</c:if>
 					</div>
 
-					<div id="card-list" class="card-list">
-						<!-- 무한스크롤부분 -->
+					<!-- <div id="card-list" class="card-list">
+						무한스크롤부분
 						<div class="container">
 							<div class="row card-list-container thumbnails"></div>
 						</div>
-					</div>
+					</div> -->
 
 
 
@@ -607,7 +635,7 @@ width: 50px;
 
 </div>
 </div>
-</div>
+
 
 <!-- 퀵메뉴 시작 -->
 			<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
