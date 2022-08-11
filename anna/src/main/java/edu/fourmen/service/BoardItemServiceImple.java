@@ -113,4 +113,19 @@ public  class BoardItemServiceImple implements BoardItemService{
 		return boarditemdao.delneighbor(vo);
 	}
 
+
+	@Override
+	public int addWish(BoardItemVO vo) {
+		return boarditemdao.addwist(vo);
+	}
+
+	@Override
+	public int checkWish(BoardItemVO wvo) {
+		return boarditemdao.checkWish(wvo);
+	}
+	
+	@Override
+	public int delWish(BoardItemVO wvo) {
+		return boarditemdao.delWish(wvo);
+	}
 }

@@ -395,18 +395,48 @@ a {
 </style>
 	
 <script>
+	//찜 부분
+	function addWish(){
+		$.post('addWish',{
+			item_idx : ${vo.item_idx},
+			uidx : ${userLoginInfo.uidx},
+		},'json');
+		$('#Wish_area').load(location.href+' #Wish_area');
+		//location.reload();
+			console.log("찜 완료");
+	}
+	function delWish(){
+		$.post('delWish',{
+			item_idx : ${vo.item_idx},
+			uidx : ${userLoginInfo.uidx},
+		},'json');
+		$('#Wish_area').load(location.href+' #Wish_area');
+		//location.reload();
+			console.log("찜 삭제 완료");
+	}
+
+	
+
+		//신고 팝업 여는 부분
+		$(function(){
+			$("#btn_open2").click(function(){ //레이어 팝업 열기 버튼 클릭 시
+				$('#popup2').bPopup();
+			});
+			$("#btn_close2").click(function(){ //닫기
+				$('#popup2').bPopup().close();  
+			});			
+		});
+		//채팅 리스트 여는 부분
 		$(function(){
 			$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
 				$('#popup').bPopup();
 			});
-			
 			$("#btn_close").click(function(){ //닫기
 				$('#popup').bPopup().close();  
 			});			
-	
 		});
-</script>
-<script>
+		
+		//채팅부분
 	let invited=0;
 	function sendMessage(form) {
 		//작성자, 내용 유효성 검사
@@ -453,11 +483,11 @@ a {
 				var chatlist = data[i];
 				Chat__lastReceivedchatlistcidx = chatlist.cidx;
 				Chat__drawMessages(chatlist);
-				
+				//$("#chat").scrollTop($("#chat")[0].scrollHeight);
 				
 			}
-			setTimeout(Chat__loadNewMessages,1000);
-			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+			//setTimeout($("#chat").scrollTop($("#chat")[0].scrollHeight),1000);
+			
 
 		}, 'json');
 
@@ -482,21 +512,19 @@ a {
 	
 	function addNeighbor(form) {
 		//작성자, 내용 유효성 검사
-		form.uidx.value = form.uidx.value.trim();
-		if (form.uidx.value.length == 0) {
+		if (${userLoginInfo.uidx} == null) {
 			alert('회원만 이웃추가 기능을 사용할 수 있습니다');
 			return false;
 		}
-
 		// AJAX -> addNeighbor 실행 및 출력값 가져오기
 		$.post('./addNeighbor',{
-			neighbor_idx : form.neighbor_idx.value,
-			uidx : form.uidx.value,
-			item_idx : form.item_idx.value,
+			neighbor_idx : ${vo.uidx},
+			uidx : ${userLoginInfo.uidx},
+			item_idx : ${vo.item_idx},
 		}, function(data) {
 			uidx = data["uidx"];
 		},'json');
-			location.reload();
+		$('#Neighbor_area').load(location.href+' #Neighbor_area');
 	}
 	
 
@@ -504,13 +532,13 @@ a {
 		
 		// AJAX -> delNeighbor 실행 및 출력값 가져오기
 		$.post('./delNeighbor',{
-			neighbor_idx : form.neighbor_idx.value,
-			uidx : form.uidx.value,
-			item_idx : form.item_idx.value,
+			neighbor_idx : ${vo.uidx},
+			uidx : ${userLoginInfo.uidx},
+			item_idx :  ${vo.item_idx},
 		}, function(data) {
 			uidx = data["uidx"];
 		},'json');
-			location.reload();
+		$('#Neighbor_area').load(location.href+' #Neighbor_area');
 	}
 	
 
@@ -719,16 +747,16 @@ a {
 				</div>
 </form>
 							<h2>${vo.nickName}님	의 다른상품</h2>
+				<a href="../user/myPage.do?uidx=${vo.uidx}">더 보기</a>
 			<div class="container-fluid">
 				<div class="row">
-				<a href="../user/myPage.do?uidx=${vo.uidx}">더 보기</a>
 					<c:if test="${youritem.size() > 0}">
 						<c:forEach var="vo" items="${youritem}">
 							<div class="col-lg-2 col-md-4" >
 								<div class="card">
 								<img src="../resources/upload/${vo.image1}" >
 										<div class="card-body">
-											<input type="hidden" id="chat_host"value="${vo.uidx}">
+											<input type="text" value="${vo.uidx}">
 											<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
 											<p class="card-text">${vo.price}원</p>
 											<p class="card-text">${vo.nickName}</p>
@@ -741,28 +769,58 @@ a {
 					</c:if>
 				</div>
 			</div>
-			<!--팝업 영역 시작 -->
-			<div id="popup" class="Pstyle">	
+			
+			<!-- 신고하기 팝업 영역  -->
+			
+			<div id="popup2" class="Pstyle2">	
 				<form onsubmit="sendMessage(this); return false;">
 					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
-					<input type="text" name="chat_host" value="${vo.uidx}"><br>
-					
+					글주인번호<input type="text" id="chat_host"name="chat_host" value="${vo.uidx}"><br>
 					<c:if test="${userLoginInfo.uidx == vo.uidx}">
 					<input type="text" name="invited" value="${chatlist.uidx}">
 					</c:if>
 					<c:if test="${userLoginInfo.uidx != vo.uidx}">
 					<input type="text" name="invited" value="${userLoginInfo.uidx}">
 					</c:if>
-					
-					
 					<input type="text" name="uidx" value="${userLoginInfo.uidx}">
 					<input type="text" name="nickName" value="${userLoginInfo.nickName}"readonly="readonly">
 					<input type="text" name="contents" placeholder="내용" >
 					<input type="submit" value="전송">
 				</form>
-					<div class="chat-list" id="chat" >
-					</div>
-					
+					<div class="chat-list" id="chat" ></div>
+					<input type="button" id="btn_close2" value="닫 기">
+			</div>
+			<c:if test="${uidx != null }">
+				<div class="wrap2">
+					<input type="button" id="btn_open2" value="연락하기">
+				</div>
+			</c:if>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- 채팅 팝업 영역  -->
+			<div id="popup" class="Pstyle">	
+				<form onsubmit="sendMessage(this); return false;">
+					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
+					글주인번호<input type="text" id="chat_host"name="chat_host" value="${vo.uidx}"><br>
+					<c:if test="${userLoginInfo.uidx == vo.uidx}">
+					<input type="text" name="invited" value="${chatlist.uidx}">
+					</c:if>
+					<c:if test="${userLoginInfo.uidx != vo.uidx}">
+					<input type="text" name="invited" value="${userLoginInfo.uidx}">
+					</c:if>
+					<input type="text" name="uidx" value="${userLoginInfo.uidx}">
+					<input type="text" name="nickName" value="${userLoginInfo.nickName}"readonly="readonly">
+					<input type="text" name="contents" placeholder="내용" >
+					<input type="submit" value="전송">
+				</form>
+					<div class="chat-list" id="chat" ></div>
 					<input type="button" id="btn_close" value="닫 기">
 			</div>
 			<c:if test="${uidx != null }">
@@ -770,28 +828,31 @@ a {
 					<input type="button" id="btn_open" value="연락하기">
 				</div>
 			</c:if>
+			
+			<!-- 이웃 영역 시작 -->
 			<c:if test="${uidx != null }">
+				<div id="Neighbor_area">
 				<c:if test="${result == 0 }">
-				<form onsubmit="addNeighbor(this); return false;">
-						<input type="submit" value="이웃추가" id="or">
-						<input type=text name="uidx" value="${userLoginInfo.uidx}">
-						<input type="text" name="neighbor_idx" value="${vo.uidx}">
-						<input type="hidden" name="item_idx" value="${vo.item_idx}">
-				</form>
+				<button onclick="addNeighbor(); return false;">이웃추가</button>
 				</c:if>
 				
 				<c:if test="${result != 0}">
-				<form onsubmit="delNeighbor(this); return false;">
-						<input type="submit" value="이웃삭제" id="or">
-						<input type="text" name="uidx" value="${userLoginInfo.uidx}">
-						<input type="text" name="neighbor_idx" value="${vo.uidx}">
-						<input type="hidden" name="item_idx" value="${vo.item_idx}">
-				</form>
+				<button onclick="delNeighbor(); return false;">이웃삭제</button>
 				</c:if>
+				</div>
 			</c:if>
-			
-			
-			
+
+			<c:if test="${uidx != null }">
+				<div id="Wish_area">
+				<c:if test="${wish == 0}">
+				<button onclick="addWish(); return false;" > 찜 </button>
+				</c:if>
+	
+				<c:if test="${wish != 0}">
+				<button onclick="delWish(); return false;" > 찜 삭제 </button>
+				</c:if>
+				</div>
+			</c:if>
 	<!-- 	<script>
 		const $element = document.querySelector(".chat-list");
 

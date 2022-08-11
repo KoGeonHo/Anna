@@ -289,4 +289,17 @@
 	 		and item_idx = #{item_idx}
 	 		  order by a.cdate desc
 	</select>
+	
+	<insert id="addWish">
+		insert into Wish_list(uidx, item_idx) values(#{uidx},#{item_idx})
+	</insert>
+	
+	<select id="checkWish" parameterType="BoardItemVO" resultType="int">
+		 select count(*) from Wish_list where item_idx = #{item_idx} and uidx = #{uidx}
+	</select>
+	
+	<delete id ="delWish" parameterType="BoardItemVO">
+		delete from Wish_list
+		where item_idx = #{item_idx} and uidx = #{uidx}
+	</delete>
 </mapper>

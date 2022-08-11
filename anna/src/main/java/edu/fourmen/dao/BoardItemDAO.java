@@ -93,4 +93,15 @@ public class BoardItemDAO {
 		return sqlSession.delete(efdb+".delneighbor",vo);
 	}
 	
+	public int addwist(BoardItemVO vo){
+		return sqlSession.insert(efdb+".addWish",vo);
+	}
+	
+	public int checkWish(BoardItemVO wvo) {
+		return sqlSession.selectOne(efdb+".checkWish",wvo);
+	}
+		
+	public int delWish(BoardItemVO wvo) {
+		return sqlSession.delete(efdb+".delWish",wvo);
+	}
 }
