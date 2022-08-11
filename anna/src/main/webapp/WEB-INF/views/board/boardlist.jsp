@@ -123,7 +123,8 @@
                                              
                                                                    </em>
                   <i class="imgAr"><img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="../images/noimg.jpg" style="width :200px; height : 200px"></i>                  <em class="gall_info">
-                     <span class="sound_only">조회 </span><i class="fa fa-eye" aria-hidden="true"></i> ${vo.hit }<span class="gall_date"><span class="sound_only">작성일 </span><i class="fa fa-clock-o" aria-hidden="true"></i>${vo.wdate }</span>
+                     <span class="sound_only">조회 </span>
+                     <i class="fa fa-eye" aria-hidden="true"></i>${vo.hit }<span class="gall_date"><span class="sound_only">작성일 </span><i class="fa fa-clock-o" aria-hidden="true"></i>${vo.wdate }</span>
                      <u><span class="sound_only">작성자 </span>${vo.nickName }</u>
                   </em>
                         </a>
