@@ -2,6 +2,7 @@ package edu.fourmen.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.fourmen.service.BoardItemService;
 import edu.fourmen.service.BoardService;
@@ -147,8 +149,9 @@ public class HomeController {
 		return "main";
 	}
 	
-	@RequestMapping(value = "/ajax_main.do")
-	public String main2(PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
+	@ResponseBody
+	@RequestMapping(value = "/ajax_main.do", produces = "application/json; charset=utf8")
+	public HashMap<String, Object> main2(PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
 		
 		if(svo.getSearchType() == null) {
 			svo.setSearchType("TITLE");
@@ -210,10 +213,11 @@ public class HomeController {
 		
 		List<BoardItemVO> list = boardItemService.list(vo,pm);
 		
+		HashMap<String, Object> result = new HashMap<String,Object>();
+
+		result.put("appendList", list);
 		
-		model.addAttribute("pm",pm);
-		model.addAttribute("list", list);
-		return "ajax_main";
+		return result;
 	}
 	
 	
