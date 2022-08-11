@@ -29,24 +29,22 @@
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="wrapper">
-			<div class="container main" style="flex:1; overflow:hidden;">
-				<h3 class="border-bottom" style="padding:1rem; margin:0px;">${ audience }님과의 채팅</h3>
-				<div class="chatbox" style="width:100%; height:100%; overflow-y:auto; position:relative;">
-					<c:if test="${chatViewList.size() > 0}">
-						<c:forEach var="i" items="${chatViewList}">
-							<c:if test="${ i.uidx eq uidx }">
-								<div class="text-end border-bottom" style="padding:10px;">
-									나<br>
-									${i.contents}
-								</div>
-							</c:if>
-						</c:forEach>
-					</c:if>		
-					<div style="position:absolute; bottom:0;">
-						123
-					</div>
-				</div>
+		<div class="container main">
+			<h3 class="border-bottom" style="padding:1rem; margin:0px;">${ audience }님과의 채팅</h3>
+			<div class="chatbox" style="width:100%; overflow-y:auto; ">
+				<c:if test="${chatViewList.size() > 0}">
+					<c:forEach var="i" items="${chatViewList}">
+						<c:if test="${ i.uidx eq uidx }">
+							<div class="text-end border-bottom" style="padding:10px;">
+								나<br>
+								${i.contents}
+							</div>
+						</c:if>
+					</c:forEach>
+				</c:if>	
+			</div>
+			<div>
+				123
 			</div>
 		</div>
 		
