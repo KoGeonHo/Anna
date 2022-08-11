@@ -417,19 +417,19 @@ a {
 
 	
 
+		//신고 팝업 여는 부분
+		$(function(){
+			$("#btn_open2").click(function(){ //레이어 팝업 열기 버튼 클릭 시
+				$('#popup2').bPopup();
+			});
+			$("#btn_close2").click(function(){ //닫기
+				$('#popup2').bPopup().close();  
+			});			
+		});
 		//채팅 리스트 여는 부분
 		$(function(){
 			$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
 				$('#popup').bPopup();
-				/* 	//chat_read 변경 부분
-				function chat_read() {
-					$.get('./getMessages',{
-						chat_read : 2 ,
-					}, 'json');
-					console.log("asd");
-					}
-				//chat_read 변경 끝 */
-				setTimeout(Chat__loadNewMessages,1000);
 			});
 			$("#btn_close").click(function(){ //닫기
 				$('#popup').bPopup().close();  
@@ -483,10 +483,11 @@ a {
 				var chatlist = data[i];
 				Chat__lastReceivedchatlistcidx = chatlist.cidx;
 				Chat__drawMessages(chatlist);
+				//$("#chat").scrollTop($("#chat")[0].scrollHeight);
 				
 			}
-			//setTimeout(Chat__loadNewMessages,1000);
-			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+			//setTimeout($("#chat").scrollTop($("#chat")[0].scrollHeight),1000);
+			
 
 		}, 'json');
 
@@ -768,7 +769,42 @@ a {
 					</c:if>
 				</div>
 			</div>
-			<!-- 채팅 팝업 영역 시작 -->
+			
+			<!-- 신고하기 팝업 영역  -->
+			
+			<div id="popup2" class="Pstyle2">	
+				<form onsubmit="sendMessage(this); return false;">
+					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
+					글주인번호<input type="text" id="chat_host"name="chat_host" value="${vo.uidx}"><br>
+					<c:if test="${userLoginInfo.uidx == vo.uidx}">
+					<input type="text" name="invited" value="${chatlist.uidx}">
+					</c:if>
+					<c:if test="${userLoginInfo.uidx != vo.uidx}">
+					<input type="text" name="invited" value="${userLoginInfo.uidx}">
+					</c:if>
+					<input type="text" name="uidx" value="${userLoginInfo.uidx}">
+					<input type="text" name="nickName" value="${userLoginInfo.nickName}"readonly="readonly">
+					<input type="text" name="contents" placeholder="내용" >
+					<input type="submit" value="전송">
+				</form>
+					<div class="chat-list" id="chat" ></div>
+					<input type="button" id="btn_close2" value="닫 기">
+			</div>
+			<c:if test="${uidx != null }">
+				<div class="wrap2">
+					<input type="button" id="btn_open2" value="연락하기">
+				</div>
+			</c:if>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<!-- 채팅 팝업 영역  -->
 			<div id="popup" class="Pstyle">	
 				<form onsubmit="sendMessage(this); return false;">
 					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
@@ -787,13 +823,13 @@ a {
 					<div class="chat-list" id="chat" ></div>
 					<input type="button" id="btn_close" value="닫 기">
 			</div>
-			<!-- 신고 팝업 영역 시작 -->
-			
 			<c:if test="${uidx != null }">
 				<div class="wrap2">
 					<input type="button" id="btn_open" value="연락하기">
 				</div>
 			</c:if>
+			
+			<!-- 이웃 영역 시작 -->
 			<c:if test="${uidx != null }">
 				<div id="Neighbor_area">
 				<c:if test="${result == 0 }">
