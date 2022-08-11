@@ -215,23 +215,26 @@
 	 WHERE b.isDel ='N'
 	  
 <if test='board_type != null'>
-	   AND board_type = #{board_type}
+	   AND b.board_type = #{board_type}
 </if>
 <if test='searchType != null and searchType.equals("All")'>
-	   AND b.Contents like concat('%',#{SearchVal},'%')
+	  
+	   AND (b.Contents like concat('%',#{SearchVal},'%')
 	 	OR u.nickname like concat('%',#{SearchVal},'%')
-	    OR b.Title like concat('%',#{SearchVal},'%')
+	    OR b.Title like concat('%',#{SearchVal},'%'))
 	 		
 	 	</if>
 <if test='searchType != null and searchType.equals("title")'>
+	   
 	   AND b.Title like concat('%',#{SearchVal},'%')
 </if>
 <if test='searchType != null and searchType.equals("contentWriter")'>
-	   AND b.Contents like concat('%',#{SearchVal},'%')
-	 	OR u.nickname like concat('%',#{SearchVal},'%')	
+       
+	   AND (b.Contents like concat('%',#{SearchVal},'%')
+	 	OR u.nickname like concat('%',#{SearchVal},'%'))
 </if>
 	 ORDER BY b.Wdate desc
-<if test='board_type.equals("free")'>	 
+<if test='board_type.equals("free")'> 
 	 limit #{startPage}, #{pageNum}
 </if>
 </select>

@@ -117,9 +117,9 @@ public class BoardController {
 		return "board/FreeBoard";
 	}
 	
-	
+	@ResponseBody
 	@RequestMapping(value="/ajax_board.do")
-	public String ajax_FreeBoard(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
+	public HashMap<String, Object> ajax_FreeBoard(SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
 		
 		//한 페이지에 몇개씩 표시할 것인지
 		int pagecount = 12;
@@ -141,9 +141,6 @@ public class BoardController {
 		int pageNum = pagecount;
 		
 		// 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
-		
-		
-		
 
 		// 설정해준 값들을 해당 객체에 담는다.
 		pm.setStartPage(startPage);
@@ -166,16 +163,18 @@ public class BoardController {
 		request.setAttribute("totalRow", totalRow);
 		request.setAttribute("pagenumber", pagenumber);
 		
-		List<BoardVO> freeboard = boardService.selectfreeboard(pm);
+		List<BoardVO> board = boardService.selectboard(pm);
 		int Ccount = boardService.getCTotal(bv);
 		
 		bv.setCcount(Ccount);
 	
-		model.addAttribute("freeboard", freeboard);
-		model.addAttribute("svo", svo);
+		 HashMap<String, Object> result = new HashMap<String,Object>();
+
+	     result.put("appendList",board);
+
 		
 
-		return "board/ajax_board";
+		return result;
 	}
 	
 	@RequestMapping(value="/BoardWrite.do", method= RequestMethod.GET)
