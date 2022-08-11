@@ -236,4 +236,22 @@
 </if>
 </select>
 
+<update id="boardModify" parameterType="boardvo">
+	UPDATE Board
+	   SET Title = #{Title}
+	   	  ,Contents = #{Contents}
+	   	  ,Wdate = now()
+	   	  ,Location = #{Location}
+
+	   	  ,Image1 = #{Image1}
+
+	   	  ,Image2 = #{Image2}
+	   	  ,Image3 = #{Image3}
+	   	  ,Image4 = #{Image4}
+	   	  ,Image5 = #{Image5}
+	 WHERE Bidx = #{Bidx}
+
+
+</update>
+
 </mapper>

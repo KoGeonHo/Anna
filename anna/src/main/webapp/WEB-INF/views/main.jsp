@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
+<%@ page trimDirectiveWhitespaces="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -13,51 +14,60 @@
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
 <script src="${ path }/js/common/common.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 
 
-
-
-
-		    
-
-<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
-
-<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
-<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
-<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/mfb.css" rel="stylesheet">
-<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
-
-		
-<!--   Slick Slider -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>	
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<!--   Slick Slider -->
-	
-	
-<!-- path는 request.getContextPath()를 가져온것. -->	
-
-	<script>
+<script>
 //스크롤 시 이벤트 처리
-
+console.log("hi");
+//위로 스크롤된 길이
 
 
 //페이지가 처음 로딩될 때 1page를 보여주기 때문에 초기값을 1로 지정한다.
 let currentPage = 1;
 //현재 페이지가 로딩중인지 여부를 저장할 변수
 let isLoding=false;
-
+$(function(){
+	$("#mainWrapper").on("scroll",function(){
+		var scrollTop = $(this).scrollTop();
+        var innerHeight = $(this).innerHeight();
+        var scrollHeight = $(this).prop('scrollHeight');
+       // console.log(scrollTop + innerHeight);
+        //console.log("scrollHeight:"+scrollHeight);
+		 if((scrollTop + innerHeight) >= scrollHeight){
+			 console.log(isLoding);
+				//만일 현재 마지막 페이지라면
+				if(currentPage == ${totalPageCount} || isLoding){
+					
+					return; // 함수를 여기서 끝낸다.
+				}
+				//현재 로딩 중이라고 표시한다.
+				isLoding= true;
+				//console.log("탔습니다.");
+				//로딩바를 띄우고
+				$(".back-drop").show();
+				//요청할 페이지 번호를 1증가시킨다.
+				currentPage++;
+				//추가로 받아올 페이지를 서버에 ajax 요청을 하고
+				//console.log("inscroll" + currentPage);
+				GetList(currentPage)
+		}
+	});
+});
+/* 
 //웹브라우저의 창을 스크롤할 때마다  호출되는 함수 등록
 $(window).on("scroll",function(){
 	
-	//위로 스크롤된 길이
 	let scrollTop = $(window).scrollTop();
+	console.log(scrollTop+"난 스크롤");
 	//웹브라우저 창의 높이
 	let windowHeight = $(window).height();
+	console.log(windowHeight+"난 윈도우");
 	//문서 전체의 높이
 	let documentHeight = $(document).height();
+	console.log(documentHeight+"난 문서");
+	
+
 	//바닥까지 스크롤 되었는지 여부를 알아낸다.
 	let isBottom = scrollTop + windowHeight >= documentHeight;
 	
@@ -79,7 +89,7 @@ $(window).on("scroll",function(){
 		//console.log("inscroll" + currentPage);
 		GetList(currentPage);
 	}
-});
+}); */
 
 //카드 리스트를 가져오는 함수
 
@@ -89,7 +99,7 @@ const GetList = function(currentPage){
 	//무한스크롤
 	$.ajax({
 	
-		url : "ajax_board.do",
+		url : "ajax_main.do",
 		method : "GET",
 		//검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
 		data : "pagenumber="+currentPage+"&SearchType=${searchType}&SearchVal=${searchVal}",
@@ -110,6 +120,30 @@ const GetList = function(currentPage){
 
 
 </script>
+
+
+		    
+
+<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
+
+<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/mfb.css" rel="stylesheet">
+<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
+
+		
+<!--   Slick Slider -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>	
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<!--   Slick Slider -->
+	
+	
+<!-- path는 request.getContextPath()를 가져온것. -->	
+
+
 	
 <style>
 
@@ -123,6 +157,8 @@ const GetList = function(currentPage){
 */
 .body {
 	padding-top: -56px;
+	
+	
 }
 a {
   color: #000;
@@ -202,8 +238,8 @@ a {
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 
-	<div class="wrapper" id="container-pc">
-
+	<div class="wrapper" id="mainWrapper">
+			<div class="main"  id="main">
 
 	<!-- 슬라이드 -->
 
@@ -569,42 +605,22 @@ width: 50px;
 
 
 
-	<!-- 상품 -->
-
-
-	<!--
-				<a href="sample1.do">sample1.do</a> |
-				<a href="sample2.do">sample2.do</a> |
-				<br>
-				<a href="user/register.do">register로 이동</a>	
-				<br>
-				<a href="user/join.do">회원가입하기</a><br>
-				<br> 
-				-->
-
-	
-
-
-	
-
-
-		<!-- 퀵메뉴 시작 -->
-			<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
-
-
-			
-		<!-- 퀵메뉴 종료 -->
-
-
-
-
-
 </div>
+</div>
+</div>
+
+<!-- 퀵메뉴 시작 -->
+			<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
+		<!-- 퀵메뉴 종료 -->
+		
+
 
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
-</div>
+
+
+	
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
  <script src="https://getbootstrap.kr/docs/5.1/examples/offcanvas-navbar/offcanvas.js"></script>

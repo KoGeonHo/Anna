@@ -45,4 +45,10 @@ public interface BoardItemService {
 	public int neighbor_check(BoardItemVO bvo);
 	
 	public int delneighbor(BoardItemVO vo);
+	
+	public int addWish(BoardItemVO vo);
+	
+	public int checkWish(BoardItemVO wvo);
+	
+	public int delWish(BoardItemVO wvo);
 }

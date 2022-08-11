@@ -27,6 +27,7 @@ import org.apache.commons.io.FilenameUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -436,7 +437,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/BoardModify.do", method=RequestMethod.POST)
-	public String BoardModify(BoardVO vo, HttpServletRequest request) throws IOException {
+	public String BoardModify(BoardVO vo, HttpServletRequest request, HttpSession session) throws IOException {
+		
+		session = request.getSession();
 		
 		// 파일 업로드 처리
 
@@ -447,6 +450,8 @@ public class BoardController {
 		String fileName4=null;
 		String fileName5=null;
 		
+	
+		
 		Date date = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm ");
 		formatter.format(date);
@@ -455,9 +460,9 @@ public class BoardController {
 		MultipartFile uploadFile = vo.getFileName1();
 		if (!uploadFile.isEmpty()) {
 			String originalFileName = uploadFile.getOriginalFilename();
-			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
 			//UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName= formatter.format(date)+originalFileName+"."+ext;
+			fileName= formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
 			System.out.println(request.getSession().getServletContext().getRealPath("/main/resources/upload/"));
 			uploadFile.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
 			String oPath = request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName; // 원본 경로
@@ -501,9 +506,9 @@ public class BoardController {
 		MultipartFile uploadFile2 = vo.getFileName2();
 		if (!uploadFile2.isEmpty()) {
 			String originalFileName = uploadFile2.getOriginalFilename();
-			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-			UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName2=uuid+"."+ext;
+			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			//UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName2=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"2"+"_"+originalFileName;
 			uploadFile2.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName2));
 			System.out.println("이미지2저장완료");
 		}
@@ -514,9 +519,9 @@ public class BoardController {
 		MultipartFile uploadFile3 = vo.getFileName3();
 		if (!uploadFile3.isEmpty()) {
 			String originalFileName = uploadFile3.getOriginalFilename();
-			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-			UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName3=uuid+"."+ext;
+			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			//UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName3=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"3"+"_"+originalFileName;
 			uploadFile3.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName3));
 			System.out.println("이미지3저장완료");
 		}
@@ -527,9 +532,9 @@ public class BoardController {
 		MultipartFile uploadFile4 = vo.getFileName4();
 		if (!uploadFile4.isEmpty()) {
 			String originalFileName = uploadFile4.getOriginalFilename();
-			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-			UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName4=uuid+"."+ext;
+			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			//UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName4=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"4"+"_"+originalFileName;
 			uploadFile4.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName4));
 		}
 		vo.setImage4(fileName4);
@@ -539,15 +544,17 @@ public class BoardController {
 		MultipartFile uploadFile5 = vo.getFileName5();
 		if (!uploadFile5.isEmpty()) {
 			String originalFileName = uploadFile5.getOriginalFilename();
-			String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-			UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName5=uuid+"."+ext;
+			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+			//UUID uuid = UUID.randomUUID();	//UUID 구하기
+			fileName5=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"5"+"_"+originalFileName;
 			uploadFile5.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName5));
 		}
 		vo.setImage5(fileName5);
 	}
+	
+		boardService.boardModify(vo);
 		
-		return "board/boardlist";
+		return "board/FreeBoard";
 	}
 	
 	@RequestMapping(value="/test.do")
