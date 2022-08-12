@@ -105,7 +105,40 @@ public class BoardItemDAO {
 		return sqlSession.delete(efdb+".delWish",wvo);
 	}
 	
+	public int WishCount(BoardItemVO vo) {
+		return sqlSession.selectOne(efdb+".WishCount",vo);
+	}
+
+	public List<BoardItemVO> mywish(BoardItemVO vo){
+		return sqlSession.selectList(efdb+".mywish",vo);
+	}
+	
+	
+	
 	public int report_target(BoardItemVO vo) {
 		return sqlSession.insert(efdb+".report_target",vo);
 	}
+	
+	public int addviewCount(BoardItemVO vo) {
+		return sqlSession.update(efdb+".addviewCount",vo);
+	}
+	
+	public int viewCount(BoardItemVO vo) {
+		return sqlSession.selectOne(efdb+".viewCount",vo);
+	}
+	
+	public List<BoardItemVO> myblackList(BoardItemVO vo) {
+		return sqlSession.selectList(efdb+".myblackList",vo);
+	}
+	
+	public int addblackList(BoardItemVO vo) {
+		return sqlSession.insert(efdb+".addblackList",vo);
+	}
+	
+	public int delmyblackList(BoardItemVO vo) {
+		return sqlSession.delete(efdb+".delmyblackList",vo);
+	}
+	
+	
+	
 }

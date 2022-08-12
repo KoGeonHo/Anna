@@ -133,4 +133,50 @@ public  class BoardItemServiceImple implements BoardItemService{
 	public int report_target(BoardItemVO vo) {
 		return boarditemdao.report_target(vo);
 	}
+
+
+	@Override
+	public int WishCount(BoardItemVO vo) {
+		return boarditemdao.WishCount(vo);
+	}
+
+	@Override
+	public List<BoardItemVO> mywish(BoardItemVO vo) {
+		return boarditemdao.mywish(vo);
+	}
+	
+	
+	
+	
+	@Override
+	public int viewCount(BoardItemVO vo) {
+		return boarditemdao.viewCount(vo);
+	}
+
+
+	@Override
+	public int addviewCount(BoardItemVO vo) {
+		return boarditemdao.addviewCount(vo);
+	}
+
+
+	@Override
+	public List<BoardItemVO> myblackList(BoardItemVO vo) {
+		return boarditemdao.myblackList(vo);
+	}
+
+
+	@Override
+	public int addblackList(BoardItemVO vo) {
+		return boarditemdao.addblackList(vo);
+	}
+
+
+	@Override
+	public int delmyblackList(BoardItemVO vo) {
+		return boarditemdao.delmyblackList(vo);
+	}
+
+
+	
 }

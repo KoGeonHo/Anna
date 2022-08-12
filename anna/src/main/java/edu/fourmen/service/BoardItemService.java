@@ -53,4 +53,23 @@ public interface BoardItemService {
 	public int delWish(BoardItemVO wvo);
 	
 	public int report_target(BoardItemVO vo);
+	
+	public int WishCount(BoardItemVO vo);
+	
+	public List<BoardItemVO> mywish(BoardItemVO vo);
+	
+	public int addviewCount(BoardItemVO vo);
+
+	public int viewCount(BoardItemVO vo);
+	
+	public List<BoardItemVO> myblackList(BoardItemVO vo);
+	  
+	public int addblackList(BoardItemVO vo);
+	
+	public int delmyblackList(BoardItemVO vo);   
+	
+	
+	
+	
+	
 }

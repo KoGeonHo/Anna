@@ -400,7 +400,26 @@ a {
 	 border: 5px solid #fff;
 	 padding: 20px;
 	 background-color: #fff;
-	}    		
+	}    	
+	
+	#Wish_area{
+	width:50px;
+	height: 50px;
+	}
+	
+	#Wish_area .image { 
+	width: 50px;
+	height : 50px;
+	position:relative;text-align:center;color:#FFFFFF; 
+	}
+	#Wish_area .image p { position: absolute;top:50%;left:50%;
+			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
+			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
+			margin : auto;}
+	
+	
+	
+		
 </style>
 	
 <script>
@@ -435,6 +454,9 @@ a {
 				$('#popup2').bPopup().close();  
 			});			
 		});
+		
+		
+		
 		//신고 글 작성하는 부분
 		function report(form){
 		$.post('report',{
@@ -444,12 +466,11 @@ a {
 			evidence : 1,
 			target : ${vo.uidx},
 			contents : form.contents.value,
-			report_type : form.report_type.value,
-			
+		
 		},'json');
 		//location.reload();
-		alert("tr");
 		$('#popup2').bPopup().close();  
+		alert("신고완료");
 			console.log("신고 완료");
 	}
 		
@@ -611,6 +632,7 @@ a {
 							<div style="right;">
 								<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
 								<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
+								조회수 : ${viewCount}
 							</div>
 				<hr>
 				
@@ -799,7 +821,7 @@ a {
 			<!-- 신고하기 팝업 영역  -->
 			
 			<div id="popup2" class="Pstyle2">	
-				<form onsubmit="report(this); return false;">
+				<form onsubmit="report(this); return false;" enctype="multipart/form-data">
 					<select name="report_type">
 						<option value="0">노쇼</option>		
 						<option value="1">비속어&비매너채팅</option>		
@@ -826,7 +848,7 @@ a {
 			
 			<!-- 채팅 팝업 영역  -->
 			<div id="popup" class="Pstyle">	
-				<form onsubmit="sendMessage(this); return false;">
+				<form onsubmit="sendMessage(this); return false;" id="frm">
 					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
 					글주인번호<input type="text" id="chat_host"name="chat_host" value="${vo.uidx}"><br>
 					<c:if test="${userLoginInfo.uidx == vo.uidx}">
@@ -869,37 +891,22 @@ a {
 
 			<c:if test="${uidx != null }">
 				<div id="Wish_area">
-				<c:if test="${wish == 0}">
-						<button onclick="addWish(); return false;" > <img src="../images/Wish_off.png" style="width:50px; heigh:50px;">
-						</button>
-				</c:if>
-	
-				<c:if test="${wish != 0}">
-					<button onclick="delWish(); return false;" > <img src="../images/Wish_on.png" style="width:50px; heigh:50px;">
-					
-					</button>
-				</c:if>
+					<c:if test="${wish == 0}">
+							<div class="image">
+								<img src="../images/Wish_off.png" style="width:50px; height:50px;" onclick="addWish(); return false;" >
+								<p>${wishCount}</p>
+							</div>
+					</c:if>
+		
+					<c:if test="${wish != 0}">
+						<div class="image">
+							<img src="../images/Wish_on.png" style="width:50px; height:50px;" onclick="delWish(); return false;" >
+							<p style="background-color:ce3746;">${wishCount}</p>
+						</div>
+					</c:if>
 				</div>
 			</c:if>
-	<!-- 	<script>
-		const $element = document.querySelector(".chat-list");
-
-			// 현재의 최하단 구하기
-			const eh = $element.clientHeight  + $element.scrollTop;
-
-			// 요소가 추가되어 길이가 길어지기 전에 비교
-			const isScroll = $element.scrollHeight <= eh;
-
-			// -- 요소 추가하는 코드 --
-
-			// 스크롤이 최하단 일때만 고정
-			if (isScroll) {
-			  $element.scrollTop = $element.scrollHeight;
-			}
-		</script> -->
 	<!--팝업 영역 끝 -->
- 조회수,
-	 신고하기,
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 	<script src ="../js/boarditem.js"></script>
