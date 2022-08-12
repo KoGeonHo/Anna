@@ -43,4 +43,5 @@ public interface BoardService {
 	
 	int boardModify(BoardVO vo);
 
+	int reportinsert(BoardVO vo);
 }

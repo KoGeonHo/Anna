@@ -420,6 +420,7 @@ a {
 			uidx : ${userLoginInfo.uidx},
 		},'json');
 		$('#Wish_area').load(location.href+' #Wish_area');
+		
 		//location.reload();
 			console.log("찜 삭제 완료");
 	}

@@ -34,6 +34,29 @@
 
 
 </insert>
+<insert id="reportinsert">
+	INSERT INTO report(
+			 bidx
+			,repoter 
+			,target
+			,evidence
+			,attach
+			,report_type
+			,contents
+			 
+	)VALUES(
+			 #{Bidx}
+			,#{repoter}
+			,#{target}
+			,#{evidence}
+			,#{attach}
+			,#{report_type}
+			,#{contents}
+			
+	)
+
+
+</insert>
 
 
 
@@ -236,6 +259,10 @@
 	 ORDER BY b.Wdate desc
 <if test='board_type.equals("free")'> 
 	 limit #{startPage}, #{pageNum}
+</if>
+<if test = 'board_type'>
+
+
 </if>
 </select>
 

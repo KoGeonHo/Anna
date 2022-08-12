@@ -126,17 +126,23 @@ margin : 0px auto;
 		</div>
 		
 		<div id="report_contents">
-			<form method="post">		    	
-	    		<div>신고유형 : 커뮤니티</div>   	   
-	    		<div>신고닉네임 : ${bv.nickName}</div>
+			<form id="reportFrm">		    
+				<input type="text" name= "Bidx" value="${bv.bidx}" id="bidx">
+				<input type="text" name="evidence"value="2">
+	    		<div>
+	    			신고유형 : <select name="report_type" id="report_type">
+	    						<option value="2">게시물 규칙위반</option>
+	    						<option value="4">기타</option>
+	    					</select>
+	    		</div>   	   
+	    		<div>신고닉네임 : ${bv.nickName}<input type="text" value="${bv.uidx}" name="target"></div>
 	    		<div>제목 : <input type="text" name="title"></div>
-	    		<div>신고일 <input type="date" name="date" id='currentDate'></div>
-	    		<div>상세설명 <textarea></textarea></div>
-	    		<div>신고자 ${userLoginInfo.nickName}</div>
-	    		<div>첨부파일 <input type="file" name="file"></div>
+	    		<div>상세설명 <textarea name="contents" id="contents"></textarea></div>
+	    		<div>신고자: ${userLoginInfo.nickName}<input type="text" name="repoter" value="${userLoginInfo.uidx}"></div>
+	    		첨부파일 <input type="file" name="FileName1">
 	    	
 	    		<div>
-	    			<button >접수하기</button>
+	    			<button  id="report_btn">접수하기</button>
 	    			<button type="button" id="close_button">닫기</button>
 	    		</div>
     		</form>
@@ -404,9 +410,34 @@ margin : 0px auto;
 					
 					Like();
 					
-					 document.getElementById('currentDate').value = 
-				     new Date().toISOString().substring(0, 10); //현재시간
-				     
+ 					
+				    	 
+					var formData = new FormData($('#reportFrm')[0]);
+					var inputFile = $("input[name='FileName1']");
+					var files = inputFile[0].files;
+						console.log(files);
+						for(var i=0; i < files.length; i++){
+							formData.append("uploadFile", files[i]);
+						}
+						
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',	// 필수
+						url: 'report.do',
+						data: formData,		// 필수
+						processData: false,	// 필수
+						contentType: false,	// 필수
+						cache: false,
+						success: function (result) {
+							alert("성공인가?");
+						},
+						error: function (e) {
+							alert("실패");
+						}
+					});
+					
+				   
+				    
 				    
 					</script>
 </body>

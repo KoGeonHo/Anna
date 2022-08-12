@@ -107,4 +107,9 @@ public class BoardDAO {
 		
 		return sqlSession.update(namespace+".boardModify", vo);
 	}
+	
+	public int reportinsert(BoardVO vo) {
+		
+		return sqlSession.insert(namespace+".reportinsert",vo);
+	}
 }
