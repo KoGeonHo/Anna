@@ -165,230 +165,133 @@
 			<h5 style="color:#fff; text-align:right; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/main.do';">HOME</h5> 
             
         </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="fas fa-user-friends"><i class=" "></i></div>
-                                &nbsp;회원관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link"  href="../admin/admin_user.do">회원리스트</a>
-                                    <a class="nav-link" href="../admin/admin_report.do">신고리스트</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                사이트 관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                   <a class="nav-link collapsed" href="../admin/admin_boarditem.do">거래목록</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트 배너 설정</a>
-                                </nav>
-                            </div>
-                </nav>
-            </div>
+	<div id="layoutSidenav">
+		<div id="layoutSidenav_nav">
+			<nav class="sb-sidenav accordion sb-sidenav-dark"
+				id="sidenavAccordion">
+				<div class="sb-sidenav-menu">
+					<div class="nav">
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapseLayouts" aria-expanded="false"
+							aria-controls="collapseLayouts">
+							<div class="fas fa-user-friends">
+								<i class=" "></i>
+							</div> &nbsp;회원관리
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+						<div class="collapse" id="collapseLayouts"
+							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="../admin/admin_user.do">회원리스트</a> <a
+									class="nav-link" href="../admin/admin_report.do">신고리스트</a>
+							</nav>
+						</div>
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapsePages" aria-expanded="false"
+							aria-controls="collapsePages">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-book-open"></i>
+							</div> 사이트 관리
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+						<div class="collapse" id="collapsePages"
+							aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav accordion"
+								id="sidenavAccordionPages">
+								<a class="nav-link collapsed" href="../admin/admin_boarditem.do">거래목록</a>
+								<a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
+								<a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
+								<a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
+								<a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트
+									배너 설정</a>
+							</nav>
+						</div>
+			</nav>
+		</div>
 
 
 
-            <div id="layoutSidenav_content"> 
-                <main>
-                <div class="container-fluid px-4">
-            <!-- 검색 -->
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid px-4">
+					<!-- 검색 -->
 					<div class="container">
 						<div class="d-md-none d-lg-block d-xl-block">
-					    <div class="row">
-					        <div class="col-md-1 col-sm-0"></div>
-					        <div class="col-md-10  col-sm-12" >
-                                <h6 style="font-weight:bold">⚫️ 거래목록 검색</h6>
-                                <br>
-					            <form class="d-flex ">
-                                    
-						          <input class="form-control me-6 vh-20" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
-						          <button class="btn btn-outline-primary" type="submit">Search</button>
-						        </form>
-					        
-					        </div>
-					        <div class="col-md-1 col-sm-0"></div>
-					    </div>
-					    </div>
-					    </div>	
-                        </div>
-				  	<!-- 검색 -->
+							<div class="row">
+								<div class="col-md-1 col-sm-0"></div>
+								<div class="col-md-10  col-sm-12">
+									<h6 style="font-weight: bold">⚫️ 거래목록 검색</h6>
+									<br>
+									<form class="d-flex ">
 
+										<input class="form-control me-6 vh-20" type="search"
+											placeholder="검색어를 입력하세요" aria-label="Search">
+										<button class="btn btn-outline-primary" type="submit">Search</button>
+									</form>
 
-                      
-                   
-                       
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <table id="datatablesSimple">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>판매자</th>
-                                                <th>상품명</th>
-                                                <th>판매금액</th>
-                                                <th>작성일</th>
-                                                <th>판매글 조회 & 삭제</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                              
-                                             <tr>    
-                                           		 <th>2</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>3</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>4</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>5</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>6</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>7</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>8</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>9</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>10</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>11</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>12</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>    
-                                           		 <th>13</th>
-                                                <th>test111</th>
-                                                <th>아이패드 7세대 실버 ㅍㅍㅍ</th>
-                                                <th>350,000원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상품 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                
-                                            
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
-                    </div>
+								</div>
+								<div class="col-md-1 col-sm-0"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 검색 -->
 
 
 
-                
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+
+				<div class="card mb-4">
+					<div class="card-body">
+						<table id="datatablesSimple">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>판매자</th>
+									<th>상품명</th>
+									<th>판매금액</th>
+									<th>작성일</th>
+									<th>판매글 조회 &amp; 삭제</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${list.size() > 0}">
+									<c:forEach var="vo" items="${list}">
+										<tr>
+											<th>${vo.item_idx}</th>
+											<th>${vo.nickName }</th>
+											<th>${vo.title}</th>
+											<th>${vo.price}원</th>
+											<th>${vo.wdate }</th>
+											<th>
+											<button type="button" class="btn " style="background-color: #00AAB2; color: #fff;"
+														   onclick="javascript:location.href='${ path }/boarditem/itemview.do?item_idx=${vo.item_idx}';"
+													       style="font-size: 14px;">게시글 조회</button>&nbsp;
+											<button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"
+												           onclick="del(${vo.item_idx});" style="font-size: 14px;">삭제</button></th>
+									</c:forEach>
+								</c:if>
+							</tbody>
+						</table>
+					</div>
+				</div>
+		</div>
+		</main>
+	</div>
+	<script>
+		function del(item_idx){
+		if(confirm('삭제하시겠습니까?'))   
+		location.href='${ path }/boarditem/itemdelete.do?item_idx='+item_idx;}
+	</script>
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath()%>/js/admin_user.js"></script>
         <script src="<%=request.getContextPath()%>/js/simple-datatables@latest.js"></script>
 
