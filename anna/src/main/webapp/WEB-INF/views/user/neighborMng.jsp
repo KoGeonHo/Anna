@@ -30,11 +30,25 @@
 		
 		<div class="container main" style="flex:1; overflow:auto;">
 			<h3 class="border-bottom" style="padding:1rem; margin:0px;">이웃 관리</h3>
-			<c:if test="${ empty nList }">
-				<div class='text-center'>
-					등록한 이웃이 없습니다.
-				</div>
-			</c:if>
+			<div class="border-bottom" style="padding:10px; display:flex; ">
+				<c:if test="${ empty nList }">
+					<div class='text-center'>
+						등록한 이웃이 없습니다.
+					</div>
+				</c:if>
+				<c:if test="${ not empty nList }">
+					<c:forEach var="i" items="${ nList }">
+						<div style="width:100px; height:100px;"><img src="${i.profile_image}" style="width:80px; height:80px; border-radius:100px; margin:10px;"></div>
+						<div style="flex:1;">
+							<div>${ i.nickName }</div>
+							<div>${ i.introduce }</div>
+						</div>
+						<div class="text-center" style="width:80px;">
+							<button type="button">버튼</button>
+						</div>
+					</c:forEach>
+				</c:if>
+			</div>
 		</div>
 		
 		<!-- 푸터는 고정 -->

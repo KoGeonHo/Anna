@@ -671,7 +671,19 @@ public class UserController {
 			userService.chatSetRead(listForSetRead);
 		}
 		
-		
 		return getMessage;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/checkNewMessage.do",produces = "application/json; charset=utf8")
+	public List<ChatMessageVO> checkNewMessage(HttpServletRequest request,HttpSession session){
+
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		List<ChatMessageVO> chatList = userService.getChatList(uidx);
+		
+		return chatList;
 	}
 }

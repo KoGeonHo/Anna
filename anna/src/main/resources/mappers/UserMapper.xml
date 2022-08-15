@@ -191,13 +191,14 @@
 			uidx,
 			nickName,
 			user_email,
-			profile_image
+			profile_image,
+			introduce
 		FROM 
 			AnnaUser
 		WHERE 
 			uidx 
 		IN
-			(SELECT uidx FROM Neighbor WHERE uidx = #{ uidx })
+			(SELECT neighbor_idx FROM Neighbor WHERE uidx = #{ uidx })
 			 
 	</select>
 	

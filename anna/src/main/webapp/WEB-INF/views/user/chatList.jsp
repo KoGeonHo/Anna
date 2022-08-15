@@ -23,6 +23,45 @@
 <link href="${ path }/css/mfb.css" rel="stylesheet">
 <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
 <!-- path는 request.getContextPath()를 가져온것. -->
+
+<script>
+	
+	$(function(){
+		getChatList();
+		setInterval(function(){
+			getChatList();
+		},10*1000);
+	});
+	
+	function getChatList(){
+		$.ajax({
+			url : "checkNewMessage.do",
+			success : function(chatList){
+				let html = "";
+				for(let i = 0; i < chatList.length; i++){
+					html += '<div class="tr border-bottom" style="padding:10px;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
+					html += '<div>';
+					if(${uidx} == chatList[i].chat_host){
+						html += chatList[i].invitedNickName;
+					}else{
+						html += chatList[i].hostNickName;
+					}
+					if(chatList[i].newMessages > 0){
+						html += ' <div style="width: 25px;height: 25px; display:inline-block;padding: 0;line-height: 25px;text-align: center;color: #fff;background: red;border-radius: 100px;">'+chatList[i].newMessages+'</div>'
+					}
+					html += '</div>';
+					html += '<div class="text-end">'+chatList[i].lastChat+'<span style="font-size:0.8rem;">('+chatList[i].lastChatDate+')</span></div>';
+					html += '</div>';
+					
+				}
+				$("#chatDiv").html(html);
+				console.log("chatListReloaded");
+			},
+		});
+	}
+
+</script>
+
 </head>
 <body>
 	<div class="wrapper">
@@ -32,7 +71,7 @@
 		<div class="wrapper">
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">채팅 목록</h3>
-				<div class="table">
+				<div class="table" id="chatDiv">
 					<c:if test="${chatList.size() > 0}">
 						<c:forEach var="i" items="${chatList}">
 							<div class="tr border-bottom" style="padding:10px;" onclick="location.href='chatView.do?item_idx=${i.item_idx}&chat_host=${i.chat_host}&invited=${i.invited}'">
@@ -47,7 +86,7 @@
 										<div style="width: 25px;height: 25px; display:inline-block;padding: 0;line-height: 25px;text-align: center;color: #fff;background: red;border-radius: 100px;">${i.newMessages}</div>
 									</c:if>
 								</div>
-								<div class="text-end">${ i.lastChat }<span style="font-size:0.8rem;">(${ i.lastChatDate })</span></div>
+								<div class="text-end">${ i.lastChat }<span style="font-size:0.8rem;">(${i.lastChatDate})</span></div>
 							</div>
 						</c:forEach>
 					</c:if>		
