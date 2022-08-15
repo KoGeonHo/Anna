@@ -248,7 +248,7 @@
 					</div>
 					<div style="display:inline-block; vertical-align: middle;">
 						<div>${ userInfo.nickName }</div>
-						<div>내 정보</div>
+						<div onclick="location.href='userInfoView.do'">내 정보</div>
 					</div>
 				</div>
 				<div class="row">
@@ -276,7 +276,7 @@
 						<div class="text-center btn-circle">이웃</div>
 						<div class="text-center">이웃 관리</div>
 					</div>
-					<div class="col-4" style="padding:0px;">
+					<div class="col-4" style="padding:0px;" onclick="alert('준비중입니다.')">
 						<div class="text-center btn-circle">질문</div>
 						<div class="text-center">자주하는 질문</div>
 					</div>

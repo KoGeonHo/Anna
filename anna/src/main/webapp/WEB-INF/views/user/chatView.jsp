@@ -76,8 +76,8 @@
 				$("#sendBtn").css("background","#ccc");
 				setTimeout(function(){
 					$("#chatContents").prop("disabled",false);
-					$("#sendBtn").prop("disabled",false);
-					$("#sendBtn").css("background","#00AAB2");
+					/* $("#sendBtn").prop("disabled",false);
+					$("#sendBtn").css("background","#00AAB2"); */
 					$("#chatContents").focus();
 				},1000);
 			},

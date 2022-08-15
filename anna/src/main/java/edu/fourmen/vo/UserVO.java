@@ -15,7 +15,14 @@ public class UserVO{
 	private String profile_image;
 	private String introduce;
 	private String keepLogin;
+	private String jdate;
 	
+	public String getJdate() {
+		return jdate;
+	}
+	public void setJdate(String jdate) {
+		this.jdate = jdate;
+	}
 	public String getKeepLogin() {
 		return keepLogin;
 	}
