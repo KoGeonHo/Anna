@@ -12,6 +12,7 @@
 		 <typeAlias type="edu.fourmen.vo.Criteria" alias="criteria"/>
 		 <typeAlias type="edu.fourmen.vo.ChatMessageVO" alias="chatVO"/>
 		 <typeAlias type="edu.fourmen.vo.QnAVO" alias="QnAVO"/>
+		 <typeAlias type="edu.fourmen.vo.ReportVO" alias="ReportVO"/>
 
 
 

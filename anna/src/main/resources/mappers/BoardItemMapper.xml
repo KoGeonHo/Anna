@@ -17,11 +17,19 @@
 			 , b.Price
 			 , b.image1
 			 , b.isDel
+			 , b.state
+			 , b.keyword
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  
 			and b.isDel ='N'
 		<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("keyword")'>
+		   AND b.keyword like concat ('%',#{searchVal},'%')
+		</if>
+		<if test='searchType != null and searchType.equals("nickName")'>
+		   AND u.nickName like concat ('%',#{searchVal},'%')
 		</if>
 		 <if test='cate_idx != 0 and cate_idx != null'>
 		 	and cate_idx = #{cate_idx}
@@ -243,10 +251,11 @@
 	</insert>
 	
 
-	<delete id="delneighbor">
+	<delete id="delneighbor" parameterType="hashmap">
 		delete from Neighbor 
-		where uidx = #{uidx} 
-		and neighbor_idx = #{neighbor_idx}
+		where 
+		uidx = #{uidx} AND
+		neighbor_idx = #{ neighbor_idx }
 	</delete>
 	
 	<insert id="insertChat" parameterType="chatVO">
@@ -288,9 +297,6 @@
  				where a.uidx =  c.uidx 
  				and a.chat_host = #{chat_host} 
  				order by a.item_idx desc
- 		  
- 		  
- 		  
 	</select>
 	
 	<select id="mychat" parameterType="chatVO" resultType="chatVO">
@@ -311,29 +317,29 @@
 	
 	<select id="mywish" parameterType="int" resultType="BoardItemVo">
 			select 
-		 		b.item_idx
-					 , b.Title
-					 , b.uidx
-					 , b.contents
-					 , b.wdate
-					 , b.cate_idx
-					 , b.image1
-					 , b.image2
-					 , b.image3
-					 , b.image4
-					 , b.image5
-					 , b.image6
-					 , b.image7
-					 , b.image8
-					 , b.image9
-					 , b.image10
-					 , u.nickName
-					 , b.Keyword
-					 , b.Price
-					 , b.offer
-					 , b.state
-		 		 from Board_Items b, AnnaUser u 
-		 where b.uidx = u.uidx and item_idx = any(select item_idx from Wish_list where uidx = #{uidx})
+             b.item_idx
+                , b.Title
+                , b.uidx
+                , b.contents
+                , b.wdate
+                , b.cate_idx
+                , b.image1
+                , b.image2
+                , b.image3
+                , b.image4
+                , b.image5
+                , b.image6
+                , b.image7
+                , b.image8
+                , b.image9
+                , b.image10
+                , (select nickName from AnnaUser where uidx = b.uidx) as nickName
+                , b.Keyword
+                , b.Price
+                , b.offer
+                , b.state
+              from Board_Items b
+       where b.item_idx in (select item_idx from Wish_list where uidx = #{uidx})
 	</select>
 	
 	
@@ -343,7 +349,7 @@
 		where item_idx = #{item_idx} and uidx = #{uidx}
 	</delete>
 	
-	<insert id="report_target" parameterType="BoardItemVO">
+	<insert id="report_target" parameterType="ReportVO">
 		 insert into report(
 					 bidx
 					 ,item_idx
@@ -361,7 +367,7 @@
 					 ,#{item_idx}
 					 ,#{repoter}
 					 ,#{target}
-					 ,#{evidence}
+					 ,1
 					 ,#{attach}
 					 ,#{report_type}
 					 ,#{contents}

@@ -50,7 +50,13 @@
 		<br>
 	가격:<input type="text" name="price" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 		<br>
-	거래상태:<input type="text" name="state" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+		
+	거래상태:<select name="state">
+			<option value="1">거래중</option>
+			<option value="2">거래완료</option>
+			<option value="3">예약중</option>
+		  </select>
+	
 		<br>
 
 	

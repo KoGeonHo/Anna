@@ -13,7 +13,24 @@ public class PageMaker extends BoardItemVO{
 	private String SearchType;
 	private String SearchVal;
 	private String board_type;
+	private String keyword;
+	private String nickName;
 	
+	
+	
+	
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 	public int getTotalCount() {
 		return totalCount;
 	}

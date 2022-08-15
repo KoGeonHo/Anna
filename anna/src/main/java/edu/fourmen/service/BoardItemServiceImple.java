@@ -11,7 +11,7 @@ import edu.fourmen.dao.BoardItemDAO;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
-
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.SearchVO;
 import edu.fourmen.vo.UserVO;
 
@@ -109,8 +109,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public int delneighbor(BoardItemVO vo) {
-		return boarditemdao.delneighbor(vo);
+	public int delneighbor(int neighbor_idx, int uidx) {
+		return boarditemdao.delneighbor(neighbor_idx, uidx);
 	}
 
 
@@ -130,8 +130,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 	}
 	
 	@Override
-	public int report_target(BoardItemVO vo) {
-		return boarditemdao.report_target(vo);
+	public int report_target(ReportVO rvo) {
+		return boarditemdao.report_target(rvo);
 	}
 
 
@@ -144,8 +144,6 @@ public  class BoardItemServiceImple implements BoardItemService{
 	public List<BoardItemVO> mywish(BoardItemVO vo) {
 		return boarditemdao.mywish(vo);
 	}
-	
-	
 	
 	
 	@Override
