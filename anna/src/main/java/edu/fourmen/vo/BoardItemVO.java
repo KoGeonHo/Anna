@@ -10,6 +10,7 @@ public class BoardItemVO extends UserVO {
 	private int uidx;
 	private int chat_host;
 	private int cate_idx;
+	private int black_idx;
 	private String Title;
 	private String contents;
 	private String nickName;
@@ -71,6 +72,32 @@ public class BoardItemVO extends UserVO {
 	private String repoter;
 
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public int getBlack_idx() {
+		return black_idx;
+	}
+	public void setBlack_idx(int black_idx) {
+		this.black_idx = black_idx;
+	}
 	public int getReport_type() {
 		return report_type;
 	}

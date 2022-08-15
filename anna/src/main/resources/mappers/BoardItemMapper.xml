@@ -16,8 +16,10 @@
 			 , u.nickName
 			 , b.Price
 			 , b.image1
+			 , b.isDel
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  
+			and b.isDel ='N'
 		<if test='searchType != null and searchType.equals("title")'>
 		   AND b.title like concat ('%',#{searchVal},'%')
 		</if>
@@ -204,12 +206,16 @@
 
 	
 	<select id="myNeighbor">
-		select neighbor_idx from Neighbor where uidx = #{uidx}
+		select neighbor_idx, 
+		(select nickName from AnnaUser where uidx = neighbor_idx ) as nickName 
+		from Neighbor where uidx = #{uidx}
 	</select>
 	
 	<select id="yourNeighbor">
-		select	neighbor_idx from Neighbor where uidx = #{uidx}
-
+		select neighbor_idx, 
+		(select nickName from AnnaUser where uidx = neighbor_idx ) as nickName 
+		from Neighbor where uidx = #{youidx}
+										<!-- 임시로 지정한것! 바꿀것!@!#!!@#@!@# -->
 	</select>
 	
 	<select id="neighbor_check" resultType="int" parameterType="BoardItemVO">
@@ -218,6 +224,11 @@
 		 and  neighbor_idx = #{neighbor_idx}
 	</select>
 	
+	<select id="neighbor_list" resultType="BoardItemVO" parameterType="int">
+		select neighbor_idx,(
+ 			select nickname from AnnaUser where uidx = neighbor_idx )as nickName 
+ 		from Neighbor where uidx = #{uidx}
+	</select>	
 	<insert id="addNeighbor" >
 		insert into Neighbor
 					(
@@ -298,6 +309,35 @@
 		 select count(*) from Wish_list where item_idx = #{item_idx} and uidx = #{uidx}
 	</select>
 	
+	<select id="mywish" parameterType="int" resultType="BoardItemVo">
+			select 
+		 		b.item_idx
+					 , b.Title
+					 , b.uidx
+					 , b.contents
+					 , b.wdate
+					 , b.cate_idx
+					 , b.image1
+					 , b.image2
+					 , b.image3
+					 , b.image4
+					 , b.image5
+					 , b.image6
+					 , b.image7
+					 , b.image8
+					 , b.image9
+					 , b.image10
+					 , u.nickName
+					 , b.Keyword
+					 , b.Price
+					 , b.offer
+					 , b.state
+		 		 from Board_Items b, AnnaUser u 
+		 where b.uidx = u.uidx and item_idx = any(select item_idx from Wish_list where uidx = #{uidx})
+	</select>
+	
+	
+	
 	<delete id ="delWish" parameterType="BoardItemVO">
 		delete from Wish_list
 		where item_idx = #{item_idx} and uidx = #{uidx}
@@ -328,4 +368,43 @@
 					 ,date_format(now(),'%y-%m-%d-%h:%i')
 			 )           
 	</insert>
+	
+	<select id="WishCount" parameterType="int" resultType="int">
+		select count(uidx) from Wish_list where item_idx = #{item_idx}
+	</select>
+	
+	<update id="addviewCount" parameterType="int">
+		update Board_Items set hit = hit+1 where item_idx = #{item_idx}
+	</update>
+	
+	<select id="viewCount" parameterType="int" resultType="int">
+		select hit from Board_Items where item_idx = #{item_idx}
+	</select>
+	
+	<select id="myblackList" parameterType="int" resultType="BoardItemVO"> 
+		 select black_idx,
+ 		(select nickname from AnnaUser where uidx = black_idx)as 
+ 		nickName  
+ 		from blackList where uidx = #{uidx}
+	</select>
+	
+	<delete id="delmyblackList" parameterType="BoardItemVO">
+		delete from blackList 
+		where uidx = #{uidx} 
+		and black_idx = #{black_idx}
+	</delete>
+	
+	<insert id="addblackList" parameterType="BoardItemVO">
+		insert into blackList (
+							  uidx
+							 ,black_idx
+							) values (
+							 #{uidx}
+							,#{black_idx}
+							)
+	</insert>
+	
+	
+	
+	
 </mapper>
