@@ -89,6 +89,10 @@ public class BoardItemDAO {
 		return sqlSession.selectOne(efdb+".neighbor_check",bvo);
 	}
 	
+	public List<BoardItemVO> neighbor_list(BoardItemVO nvo){
+		return sqlSession.selectList(efdb+".neighbor_list",nvo);
+	}
+	 
 	public int delneighbor(BoardItemVO vo) {
 		return sqlSession.delete(efdb+".delneighbor",vo);
 	}

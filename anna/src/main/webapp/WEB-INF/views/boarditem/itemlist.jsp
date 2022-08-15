@@ -210,7 +210,17 @@ function delWish(){
 		console.log("찜 삭제 완료");
 }
 
-
+function delNeighbor(form) {
+	
+	// AJAX -> delNeighbor 실행 및 출력값 가져오기
+	$.post('./delNeighbor',{
+		neighbor_idx : ${vo.neighbor_idx},
+		uidx : ${userLoginInfo.uidx},
+	}, function(data) {
+		uidx = data["uidx"];
+	},'json');
+	$('#Neighbor_area').load(location.href+' #Neighbor_area');
+}
 
 </script>
 <style>
@@ -327,8 +337,25 @@ height:250px;
 					</c:forEach>
 				</c:if>
 			</div>
-			mywish
-						
+
+			내 이웃리스트(임시)
+			<div>
+				<c:if test= "${myneighbor.size() > 0}">
+					<c:forEach var="vo" items="${myneighbor}">
+						<div class="col-lg-3">
+							<div class="card">
+								<span onclick="delNeighbor(); return false;">이웃 삭제</span>
+								<div class="card-body">
+								<input type="hidden" value=">${vo.uidx}">
+								닉네임 : ${vo.nickName}
+								</div>
+							</div>
+								<br>
+						</div>
+					</c:forEach>
+				</c:if>
+			
+			</div>						
 			
 		<c:if test="${uidx == null}">
 		<a href="../user/login.do">로그인하기</a>
@@ -478,7 +505,7 @@ height:250px;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 <script src ="../js/boardlist.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 		
 		</div>
 		<!-- 푸터는 고정 -->

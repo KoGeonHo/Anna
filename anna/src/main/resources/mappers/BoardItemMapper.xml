@@ -224,6 +224,11 @@
 		 and  neighbor_idx = #{neighbor_idx}
 	</select>
 	
+	<select id="neighbor_list" resultType="BoardItemVO" parameterType="int">
+		select neighbor_idx,(
+ 			select nickname from AnnaUser where uidx = neighbor_idx )as nickName 
+ 		from Neighbor where uidx = #{uidx}
+	</select>	
 	<insert id="addNeighbor" >
 		insert into Neighbor
 					(

@@ -178,5 +178,11 @@ public  class BoardItemServiceImple implements BoardItemService{
 	}
 
 
+	@Override
+	public List<BoardItemVO> neighbor_list(BoardItemVO nvo) {
+		return boarditemdao.neighbor_list(nvo);
+	}
+
+
 	
 }

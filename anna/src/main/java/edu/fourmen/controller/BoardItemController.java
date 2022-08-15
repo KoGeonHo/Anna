@@ -52,7 +52,7 @@ public class BoardItemController {
 
 	@RequestMapping(value = "/itemlist.do")
 
-	public String itemlist(HttpSession session,PageMaker pm, SearchVO svo,BoardItemVO vo,BoardItemVO bvo,  HttpServletRequest request, Model model) {
+	public String itemlist(HttpSession session,BoardItemVO nvo,PageMaker pm, SearchVO svo,BoardItemVO vo,BoardItemVO bvo,  HttpServletRequest request, Model model) {
 		session = request.getSession();
 		int uidx = (int) session.getAttribute("uidx");
 		System.out.println(uidx);
@@ -119,8 +119,7 @@ public class BoardItemController {
 		
 		
 		//전체 상품 리스트 받아오기
-	    List<
-	    BoardItemVO> list = boarditemService.list(vo,pm);
+	    List<BoardItemVO> list = boarditemService.list(vo,pm);
 	    //최저가 상품 정보 받아오기
 	    BoardItemVO ssang = boarditemService.MinPrice(pm);
 
@@ -139,6 +138,10 @@ public class BoardItemController {
 		model.addAttribute("mywish",mywish);
 		System.out.println(mywish+"mywish");
 	    
+		List<BoardItemVO> myneighbor = boarditemService.neighbor_list(nvo);
+		model.addAttribute("myneighbor",myneighbor);
+		
+		
 		return "boarditem/itemlist";
 	}
 
