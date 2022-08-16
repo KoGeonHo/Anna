@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.fourmen.service.AdminService;
 import edu.fourmen.service.BoardItemService;
 import edu.fourmen.service.UserService;
 import edu.fourmen.vo.BoardItemVO;
@@ -45,10 +46,13 @@ public class BoardItemController {
 	
 	@Autowired
 	BoardItemService boarditemService;
-
+	
+	@Autowired
+	AdminService adminService;
+	
 	@RequestMapping(value = "/itemlist.do")
 
-	public String itemlist(HttpSession session,BoardItemVO nvo,PageMaker pm, SearchVO svo,BoardItemVO vo,BoardItemVO bvo,  HttpServletRequest request, Model model) {
+	public String itemlist(BoardItemVO wvo,UserVO uvo,HttpSession session,BoardItemVO nvo,PageMaker pm, SearchVO svo,BoardItemVO vo,BoardItemVO bvo,  HttpServletRequest request, Model model) {
 		session = request.getSession();
 		int uidx = (int) session.getAttribute("uidx");
 		
@@ -63,9 +67,7 @@ public class BoardItemController {
 		}
 		
 		
-		
-		
-		
+	
 		
 		
 		//한 페이지에 몇개씩 표시할 것인지
@@ -116,7 +118,7 @@ public class BoardItemController {
 		//전체 상품 리스트 받아오기
 	    List<BoardItemVO> list = boarditemService.list(vo,pm);
 	    //최저가 상품 정보 받아오기
-	    BoardItemVO ssang = boarditemService.MinPrice(pm);
+	    List<BoardItemVO> ssang = boarditemService.MinPrice(pm);
 
 	    model.addAttribute("ssang",ssang);
 	    model.addAttribute("pm",pm);
@@ -135,6 +137,11 @@ public class BoardItemController {
 		List<BoardItemVO> myneighbor = boarditemService.neighbor_list(nvo);
 		model.addAttribute("myneighbor",myneighbor);
 		
+		
+		int wish = boarditemService.checkWish(wvo);
+		model.addAttribute("wish",wish);
+		int wishCount = boarditemService.WishCount(vo);
+		model.addAttribute("wishCount",wishCount);
 		
 		return "boarditem/itemlist";
 	}
@@ -254,14 +261,13 @@ public class BoardItemController {
 		}
 		
 		int wish = boarditemService.checkWish(wvo);
-		int wishCount = boarditemService.WishCount(vo);
 		model.addAttribute("wish",wish);
+		int wishCount = boarditemService.WishCount(vo);
 		model.addAttribute("wishCount",wishCount);
 		boarditemService.addviewCount(vo);
 		int viewCount = boarditemService.viewCount(vo);
 		model.addAttribute("viewCount",viewCount);
 		
-
 		
 		
 		return "boarditem/itemview";
@@ -955,9 +961,9 @@ public class BoardItemController {
 		
 		
 		
-			int result = boarditemService.itemmodify(vo);
+			boarditemService.itemmodify(vo);
 			
-		return "redirect:/boarditem/itemview.do?item_idx="+item_idx;
+		return "redirect:/boarditem/itemview.do?item_idx="+vo.getItem_idx();
 		
 	}
 	
@@ -1112,6 +1118,8 @@ public class BoardItemController {
 		session = request.getSession();
 		
 		int uidx = (int)session.getAttribute("uidx");
+		System.out.println(uidx +"uidxuidx");
+		System.out.println(neighbor_idx);
 		boarditemService.delneighbor(neighbor_idx, uidx);
 		System.out.println("이웃삭제 완료");
 		
@@ -1134,6 +1142,15 @@ public class BoardItemController {
 		
 		boarditemService.delWish(vo);
 		System.out.println("찜 삭제 완료");
+		return 1;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/updatestate")
+	public int updatestate(int state, int item_idx) {
+		
+		boarditemService.update_state(state, item_idx);
+		System.out.println("거래상태 업데이트 완료");
 		return 1;
 	}
 	

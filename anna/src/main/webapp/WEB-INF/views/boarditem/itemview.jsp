@@ -457,35 +457,6 @@ a {
 		
 		
 		
-		//신고 글 작성하는 부분
-	/* 	
-		formdate = 
-		function delNeighbor() {
-		$.ajax({
-			url : 'delNeighbor',
-			data : 'neighbor_idx=${vo.uidx}',
-			success : function(data){
-				console.log("완");
-				$('#Neighbor_area').load(location.href+' #Neighbor_area');
-			}
-		}); */
-		/* function report(form){
-		$.post('report',{
-			item_idx : ${vo.item_idx},
-			bidx : ${vo.item_idx},
-			repoter : ${userLoginInfo.uidx},
-			evidence : 1,
-			target : ${vo.uidx},
-			contents : form.contents.value,
-			file1 : form.fiel1.value,
-		
-		},'json');
-		//location.reload();
-		$('#popup2').bPopup().close();  
-		alert("신고완료");
-			console.log("신고 완료");
-	} */
-		
 		
 		//채팅 리스트 여는 부분
 		$(function(){
@@ -596,15 +567,24 @@ a {
 				$('#Neighbor_area').load(location.href+' #Neighbor_area');
 			}
 		});
-		// AJAX -> delNeighbor 실행 및 출력값 가져오기
-		/* $.post('./delNeighbor',{
-			neighbor_idx : ${vo.uidx},
-		}, function(data) {
-			uidx = data["uidx"];
-		},'json'); */
-		
 	}
-	
+/* 	function updatestate() {
+		$.ajax({
+			url : 'updatestate',
+			data : state= $("#state").val(),
+				   item_idx = ${vo.item_idx}
+			success : function(data){
+				console.log("거래상태 변경 완료");
+			}
+		});
+	} */
+	function updatestate(){
+		$.post('updatestate',{
+			state : $('.state').val(),
+			item_idx : ${vo.item_idx},
+		},'json');
+			console.log("거래상태 변경 완료");
+	}
 
 </script>
 		
@@ -650,11 +630,16 @@ a {
 								<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
 								<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
 								조회수 : ${viewCount}
+								
+								<c:if test="${userLoginInfo.uidx == vo.uidx}">
+											<select name="state" class="state" onchange="updatestate();">
+												<option value="1">거래중</option>
+												<option value="2">거래완료</option>
+												<option value="3">예약중</option>
+											</select>
+								</c:if>
 							</div>
 				<hr>
-				
-
-
 						<div class="slider-1" >
 
 						    <div class="slides">
@@ -805,7 +790,7 @@ a {
 								<p class="card-text">판매가격 : ${vo.price}</p>
 								<p class="card-text">거래지역 : ${vo.addr2}</p>
 								<p class="card-text">키워드 : ${vo.keyword}</p>
-					
+							
 						</div><!-- card body 끝 -->
 					</div>
 				</div>
@@ -821,18 +806,20 @@ a {
 								<div class="card">
 								<img src="../resources/upload/${vo.image1}" >
 										<div class="card-body">
-											<input type="text" value="${vo.uidx}">
+											<input type="hidden" value="${vo.uidx}">
 											<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
 											<p class="card-text">${vo.price}원</p>
 											<p class="card-text">${vo.nickName}</p>
 											<p class="card-text">${vo.wdate}</p> 
-										<c:if test="${userLoginInfo.udix == vo.uidx}">
-											<select name="state">
-												<option value="1">거래중</option>
-												<option value="2">거래완료</option>
-												<option value="3">예약중</option>
-											</select>
-										</c:if>
+											<c:if test="${vo.state == 1}">
+											<p class="card-text">거래중</p> 
+											</c:if>
+											<c:if test="${vo.state == 2}">
+											<p class="card-text">거래완료</p> 
+											</c:if>
+											<c:if test="${vo.state == 3}">
+											<p class="card-text">예약중</p> 
+											</c:if>
 										</div>
 								</div>
 								<br>

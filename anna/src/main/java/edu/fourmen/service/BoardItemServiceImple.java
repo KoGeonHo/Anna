@@ -44,7 +44,6 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 
-
 	@Override
 	public int totalCount(PageMaker pm) {
 		return boarditemdao.totalCount(pm);
@@ -70,7 +69,7 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public BoardItemVO MinPrice(PageMaker pm) {
+	public List<BoardItemVO> MinPrice(PageMaker pm) {
 		return boarditemdao.MinPrice(pm);
 
 	}					
@@ -179,6 +178,12 @@ public  class BoardItemServiceImple implements BoardItemService{
 	@Override
 	public List<BoardItemVO> neighbor_list(BoardItemVO nvo) {
 		return boarditemdao.neighbor_list(nvo);
+	}
+
+
+	@Override
+	public int update_state(int state, int item_idx) {
+		return boarditemdao.update_state(state, item_idx);
 	}
 
 

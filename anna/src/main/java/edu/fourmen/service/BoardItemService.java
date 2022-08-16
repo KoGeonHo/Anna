@@ -28,9 +28,11 @@ public interface BoardItemService {
 	
 	public int itemmodify(BoardItemVO vo);
 	
+	public int update_state(int state, int item_idx);
+	
 	public int itemdelete(BoardItemVO vo);
 
-	public BoardItemVO MinPrice(PageMaker pm);
+	public List<BoardItemVO> MinPrice(PageMaker pm);
 
 	public int insertChat(ChatMessageVO cvo);	
 	
@@ -69,9 +71,6 @@ public interface BoardItemService {
 	public int addblackList(BoardItemVO vo);
 	
 	public int delmyblackList(BoardItemVO vo);   
-	
-	
-	
 	
 	
 }

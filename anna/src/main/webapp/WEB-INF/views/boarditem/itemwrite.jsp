@@ -92,8 +92,8 @@
 	            var index = $(this).attr("idx");
 	            tag[index] = "";
 	            $(this).parent().remove();
-	        });
-	})
+				})
+	    });
 	</script>
 </head>
 <body>
@@ -136,15 +136,10 @@
 			가격:<input type="text" name="price" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 				<br>
 					
-			거래상태:<select name="state">
-					<option value="1">거래중</option>
-					<option value="2">거래완료</option>
-					<option value="3">예약중</option>
-				  </select>
 	
 						<div id="fileDiv">
 						<input type="file" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
-						<a href="#this" class="btn" id="delete" name="delete">삭제</a>
+						
 						</div>
 						
 				<br/><br/>

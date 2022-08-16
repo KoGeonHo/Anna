@@ -63,9 +63,8 @@ public class BoardItemDAO {
 		return sqlSession.update(efdb+".itemdelete",vo);
 	}
 
-	public BoardItemVO MinPrice(PageMaker pm) {
-
-		return sqlSession.selectOne(efdb+".MinPrice",pm);
+	public List<BoardItemVO> MinPrice(PageMaker pm) {
+		return sqlSession.selectList(efdb+".MinPrice",pm);
 	}
 
 	public int insertChat(ChatMessageVO cvo) {
@@ -101,10 +100,6 @@ public class BoardItemDAO {
 		
 		del.put("uidx", uidx);
 		del.put("neighbor_idx", neigbor_idx);
-		
-		//System.out.println("del:"+del);
-
-		//return 0;
 		
 		return sqlSession.delete(efdb+".delneighbor",del);
 		
@@ -156,6 +151,13 @@ public class BoardItemDAO {
 		return sqlSession.delete(efdb+".delmyblackList",vo);
 	}
 	
-	
-	
+	public int update_state(int state, int item_idx) {
+		
+		HashMap<String,Integer> del = new HashMap<String,Integer>();
+		
+			del.put("state", state);
+			del.put("item_idx", item_idx);
+		
+		return sqlSession.update(efdb+".udate_state",del);
+	}
 }

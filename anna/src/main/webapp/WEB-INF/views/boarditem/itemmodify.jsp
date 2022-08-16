@@ -26,7 +26,7 @@
 </script>
 </head>
 <body>
-<h2>중고거래글 작성 페이지</h2>
+<h2>중고거래글 수정 페이지</h2>
 <form action="itemmodify.do" method="post" enctype="multipart/form-data" name="frm">
 	<input type="hidden" name="uidx" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 
@@ -68,10 +68,7 @@
 		</div>
 		
 		<br/><br/>
-		<a href="#this" class="btn" id="addFile">파일 추가</a>
-		<a href="#this" class="btn" id="write">작성하기</a>
-		<a href="#this" class="btn" id="list">목록으로</a>
-
+		<a href="#this" class="btn" id="addFile">파일 추가</a> ${vo.image1}
 	<button id="saveBtn">작성하기</button>
 	<button>취소하기</button>
 	

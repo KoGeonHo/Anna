@@ -6,6 +6,13 @@ public class BoardItemVO {
 	 
 	private int item_idx;
 	private int uidx;
+	private int myuidx;
+	public int getMyuidx() {
+		return myuidx;
+	}
+	public void setMyuidx(int myuidx) {
+		this.myuidx = myuidx;
+	}
 	private int chat_host;
 	private int cate_idx;
 	private int black_idx;
@@ -63,29 +70,6 @@ public class BoardItemVO {
 	
 	private int neighbor_idx;
 	
-	private int target;
-	private int report_type;
-	private int evidence;
-	private String attach;
-	private String repoter;
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -95,36 +79,6 @@ public class BoardItemVO {
 	}
 	public void setBlack_idx(int black_idx) {
 		this.black_idx = black_idx;
-	}
-	public int getReport_type() {
-		return report_type;
-	}
-	public void setReport_type(int report_type) {
-		this.report_type = report_type;
-	}
-	public String getRepoter() {
-		return repoter;
-	}
-	public void setRepoter(String repoter) {
-		this.repoter = repoter;
-	}
-	public String getAttach() {
-		return attach;
-	}
-	public void setAttach(String attach) {
-		this.attach = attach;
-	}
-	public int getEvidence() {
-		return evidence;
-	}
-	public void setEvidence(int evidence) {
-		this.evidence = evidence;
-	}
-	public int getTarget() {
-		return target;
-	}
-	public void setTarget(int target) {
-		this.target = target;
 	}
 	public void setNickName(String nickName) {
 		this.nickName = nickName;

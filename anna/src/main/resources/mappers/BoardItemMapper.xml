@@ -5,14 +5,14 @@
  
  
 <mapper namespace="edu.fourmen.mapper.boardItemMapper">
-	
+
 
 	<select id="selectAll" resultType="BoardItemVO" parameterType="pagemaker" >
-		SELECT b.item_idx
+	SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
 			 , b.contents
-			 , b.wdate
+			 , date_format(b.wdate,'%y-%m-%d-%h:%i')as wdate
 			 , u.nickName
 			 , b.Price
 			 , b.image1
@@ -22,18 +22,14 @@
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  
 			and b.isDel ='N'
-		<if test='searchType != null and searchType.equals("title")'>
-		   AND b.title like concat ('%',#{searchVal},'%')
-		</if>
-		<if test='searchType != null and searchType.equals("keyword")'>
-		   AND b.keyword like concat ('%',#{searchVal},'%')
-		</if>
-		<if test='searchType != null and searchType.equals("nickName")'>
-		   AND u.nickName like concat ('%',#{searchVal},'%')
+		<if test='searchVal != null '>
+		   AND ( b.title like concat ('%',#{searchVal},'%')  
+		   or b.keyword like concat ('%',#{searchVal},'%') )
 		</if>
 		 <if test='cate_idx != 0 and cate_idx != null'>
 		 	and cate_idx = #{cate_idx}
 		 </if>
+		 
 		 ORDER BY b.item_idx desc limit #{startPage}, #{pageNum}
 	</select>
 	
@@ -43,9 +39,10 @@
 			 , b.Title
 			 , b.uidx
 			 , b.contents
-			 , b.wdate
+			 , date_format(b.wdate,'%y-%m-%d-%h:%i')as wdate
 			 , u.nickName
 			 , b.Price
+			 , b.state
 			 , b.image1
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  and b.uidx = #{uidx}
@@ -59,16 +56,28 @@
 				inner join AnnaUser u
 				on b.uidx = u.uidx
 			 where b.isDel = 'N'
-		<if test='searchType != null and searchType.equals("title")'>
-		   AND b.title like concat ('%',#{searchVal},'%')
-		 </if>
 		   <if test='cate_idx != 0 and cate_idx != null'>
 		 	and cate_idx = #{cate_idx}
 		 </if>
-			
-			
 	</select>
 	
+	<select id="myitemlist" parameterType="int" resultType="BoardItemVO">
+			SELECT b.item_idx
+			 , b.Title
+			 , b.uidx
+			 , b.contents
+			 , b.wdate
+			 , u.nickName
+			 , b.Price
+			 , b.image1
+			 , b.isDel
+			 , b.state
+			 , b.keyword
+			FROM Board_Items b, AnnaUser u
+			WHERE b.uidx = u.uidx  
+			and b.isDel ='N'
+			and b.uidx = #{uidx}
+	</select>
 
 	
 	<insert id="boarditemswrite">
@@ -120,7 +129,7 @@
 						,#{price}
 						,#{offer}
 						,1
-						,#{state}
+						,1
 						,'N'
 						)
 	</insert>
@@ -206,7 +215,7 @@
 			inner join AnnaUser u
 			on b.uidx = u.uidx
 			 where b.isDel = 'N' 
-			<if test='searchType != null and searchType.equals("title")'>
+			<if test='searchVal != null'>
 		   AND b.title like concat ('%',#{searchVal},'%')
 			</if>
 	order by b.wdate desc limit 0,1
@@ -255,7 +264,7 @@
 		delete from Neighbor 
 		where 
 		uidx = #{uidx} AND
-		neighbor_idx = #{ neighbor_idx }
+		neighbor_idx = #{neighbor_idx}
 	</delete>
 	
 	<insert id="insertChat" parameterType="chatVO">
@@ -349,7 +358,7 @@
 		where item_idx = #{item_idx} and uidx = #{uidx}
 	</delete>
 	
-	<insert id="report_target" parameterType="ReportVO">
+	<insert id="report_target" >
 		 insert into report(
 					 bidx
 					 ,item_idx
@@ -410,6 +419,9 @@
 							)
 	</insert>
 	
+	<update id="udate_state" parameterType="hashmap">
+		 update Board_Items set state = #{state} where item_idx = #{item_idx}
+	</update>
 	
 	
 	

@@ -17,6 +17,14 @@
 <script src="${ path }/js/common/common.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
 <!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet"/>
+
+<link type="text/css" rel="stylesheet" href="${path}/css/slick.css"/>
+
+<link rel="stylesheet" href="${path}/css/font-awesome.min.css">
+		
+<link type="text/css" rel="stylesheet" href="${path}/css/style.css"/>
+
 <link href="${path}/css/bootstrap.css" rel="stylesheet" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
@@ -162,21 +170,23 @@
 	            //console.log(appendList[i].uidx);
 	            html +='<div class="col-lg-3  col-md-12 ">';
 	            html +='   <div class="card">';
-	            html +='<a href="boarditem/itemview.do?item_idx='+appendList[i].item_idx+'${vo.item_idx}">';
+	            html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'${vo.item_idx}">';
 	            html +='<img src="<%=request.getContextPath()%>/resources/upload/'+appendList[i].image1+'"';
 	            html +='onerror=this.src="../images/no_imgborder.jpg" width="100%" height="255">';
 	            html +='</a>';
 	            html +='<div class="card-body">';
 	            html +='<h6 class="card-title">';
-	            html +='<a href="boarditem/itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
+	            html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
 	            html +='</h6>';
 	            html +='<p class="card-text">'+appendList[i].price+'원</p>';
+	            html +='<p class="card-text">'+appendList[i].nickName+'</p>';
+	            html +='<p class="card-text">'+appendList[i].wdate+'</p>';
 	            html +='<button type="button"';
 	            html +='class="btn btn-sm btn-outline-secondary"';
-	            html +='   style="float: right">view 5</button>';
-	            html +='   <button type="button"';
-	            html +='   class="btn btn-sm btn-outline-secondary"';
-	            html +='   style="float: right">♥2</button>';
+	            html +='style="float: right">view 5</button>';
+	            html +='<button type="button"';
+	            html +='class="btn btn-sm btn-outline-secondary"';
+	            html +='style="float: right">♥2</button>';
 	            html +='</div>';
 	            html +='</div>';
 	            html +='   </div>';
@@ -194,9 +204,6 @@
 	      }   
 	   });
 	}
-
-
-
 
 
 /* 
@@ -225,12 +232,11 @@ function delNeighbor(form) {
 </script>
 <style>
 
-.col-lg-3 .card img {
-
+/* .section .container . row. .col-lg-3 .row .products-tabs  .product .product-img  img{
 width:100%;
 height:250px;
 
-}
+} */
 
 
 ul{
@@ -285,21 +291,53 @@ li{
 .box-inner {width: 800px; padding: 10px;}
 
 
-/* 반응형 */
-@media ( max-width: 400px ) {
+/* 반응형 */@media all and (max-width:  767px){
+   
+   #myCarousel, #search, #bestitem, #boardlist, #productname  {
+      display:none;
+   }
+   
+   #itemlist {
+      margin-top: -106px;
+   }
+ 
+ 	
 
-.container.row.col-lg-12.card.card-body{
-	width:100%;
+	
+	.products-tabs .product .product-body .image { 
+	width: 50px;
+	height : 50px;
+	position:relative;text-align:center;color:#FFFFFF; 
+	}
+	.products-tabs .product .product-body .image p { position: absolute;top:50%;left:50%;
+			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
+			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
+			margin : auto;}
+
+}
+ 
+   
 }
 
-.col-lg-3 .card img {
-
-width:293px;
-height:250px;
+@media all and (min-width :768px){
+.product-img{
+	width : 100%;
+	heigh : 100%;
 }
 
-}
 
+	
+	.products-tabs .product .product-body .image { 
+	width: 50px;
+	height : 50px;
+	position:relative;text-align:center;color:#FFFFFF; 
+	}
+	.products-tabs .product .product-body .image p { position: absolute;top:50%;left:50%;
+			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
+			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
+			margin : auto;}
+
+}
 
 </style>
 </head>
@@ -311,60 +349,23 @@ height:250px;
 		<div class="main" id="main" style="overflow: auto;">
 			<input type="hidden" name="uidx" value="${userLoginInfo.uidx}">
 			
-			내 블랙리스트 (임시)
-			<c:if test="${not empty blackList}">
-					<c:forEach var="vo" items="${blackList}">
-						${vo.nickName} , ${vo.black_idx} ||
-					</c:forEach>
-			</c:if>
-			<br>
-			내 찜리스트(임시)
-			<div id="wish-list">
-				<c:if test= "${mywish.size() > 0}">
-					<c:forEach var="vo" items="${mywish}">
-						<div class="col-lg-3">
-							<div class="card">
-								<span onclick="delWish(); return false;">찜 삭제</span>
-								<input type="hidden" id="wish_item_idx" value="${vo.item_idx}">					
-								<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" ></a>
-								<div class="card-body">
-								<input type="hidden" value=">${vo.uidx}">
-									<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
-								</div>
-							</div>
-								<br>
-						</div>
-					</c:forEach>
-				</c:if>
+		<%-- 어드민 목록
+		<c:if test="${alist.size() > 0}">
+		<c:forEach var="vo" items="${alist}">
+			<div class="col-lg-3">
+				<div class="card">
+					<div class="card-body">
+					<input type="hidden" value=">${vo.uidx}">
+						<p class="card-text">${vo.nickname}원</p>
+						<p class="card-text">${vo.user_Email}</p>
+						<p class="card-text">${vo.jdate}</p>
+					</div>
+				</div>
 			</div>
-
-			내 이웃리스트(임시)
-			<div>
-				<c:if test= "${myneighbor.size() > 0}">
-					<c:forEach var="vo" items="${myneighbor}">
-						<div class="col-lg-3">
-							<div class="card">
-								<span onclick="delNeighbor(); return false;">이웃 삭제</span>
-								<div class="card-body">
-								<input type="hidden" value=">${vo.uidx}">
-								닉네임 : ${vo.nickName}
-								</div>
-							</div>
-								<br>
-						</div>
-					</c:forEach>
-				</c:if>
+		</c:forEach>
+		</c:if> --%>
 			
-			</div>					
-			
-		<c:if test="${uidx == null}">
-		<a href="../user/login.do">로그인하기</a>
-		</c:if>
 		
-		<c:if test="${uidx != null}">
-		<a href="../user/logout.do">로그아웃</a>
-		</c:if>
-			<a href="itemwrite.do">중고거래글 작성하기</a>
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#">AnnA</a>
@@ -391,9 +392,15 @@ height:250px;
 				</div>
 			</nav>
 <br>
-<hr>
 <br>
-
+<c:if test="${uidx == null}">
+		<a href="../user/login.do">로그인하기</a>
+		</c:if>
+		
+		<c:if test="${uidx != null}">
+		<a href="../user/logout.do">로그아웃</a>
+		</c:if>
+			<a href="itemwrite.do">중고거래글 작성하기</a>
 			<!-- 카테고리  -->
 			<div>
 				<div style="width:100px; background-color:grey;"class="slide-toggle">
@@ -420,11 +427,11 @@ height:250px;
 			
 				
 		<form method="get" action="itemlist.do">
-			<select name="searchType">
+			 <%--<select name="searchType">
 				<option value="title" <c:if test="${!empty svo.searchType and svo.searchType eq 'title'}">selected</c:if>>제목</option>
-				<option value="nickName" <c:if test="${!empty svo.searchType and svo.searchType eq 'nickName'}">selected</c:if>>작성자</option>
+				<option value="nickName" <c:if test="${!empty svo.searchType and svo.searchType eq 'nickName' }">selected</c:if>>작성자</option>
 				<option value="keyword" <c:if test="${!empty svo.searchType and svo.searchType eq 'keyword'}">selected</c:if>>태그</option>
-			</select>
+			</select> --%>
 			<input type="text" name="searchVal" 
 					<c:if test="${!empty svo.searchVal}">
 					value=${svo.searchVal}
@@ -432,22 +439,27 @@ height:250px;
 			<input type="submit" value="검색">
 		</form>
 			<div>
-				<c:if test="${!empty pm.searchVal}">	
-				<h1>${userLoginInfo.nickName} 님이 검색하신 ${pm.searchVal} 의 최저가 상품입니다</h1>
-					<div class="col-lg-3">
-						<div class="card">
-						<a href="itemview.do?item_idx=${ssang.item_idx}"><img src="../resources/upload/${ssang.image1}" ></a>
-							<div class="card-body">
-							<input type="hidden" value=">${ssang.uidx}">
-								<h5 class="card-title"><a href="itemview.do?item_idx=${ssang.item_idx}">${ssang.title}</a></h5>
-								<p class="card-text">${ssang.price}원</p>
-								<p class="card-text">${ssang.nickName}</p>
-								<p class="card-text">${ssang.wdate}</p>
+				<c:if test="${!empty pm.searchVal}">
+					<c:forEach var="ssang" items="${ssang}">
+						<h1>${userLoginInfo.nickName} 님이 검색하신 ${pm.searchVal} 의 최저가 상품입니다</h1>
+				
+						<div class="col-lg-3">
+							<div class="card">
+							<a href="itemview.do?item_idx=${ssang.item_idx}"><img src="../resources/upload/${ssang.image1}" ></a>
+								<div class="card-body">
+								<input type="hidden" value=">${ssang.uidx}">
+									<h5 class="card-title"><a href="itemview.do?item_idx=${ssang.item_idx}">${ssang.title}</a></h5>
+									<p class="card-text">${ssang.price}원</p>
+									<p class="card-text">${ssang.nickName}</p>
+									<p class="card-text">${ssang.wdate}</p>
+								</div>
 							</div>
+								<br>
 						</div>
-							<br>
-					</div>
-	
+					</c:forEach>
+				</c:if>
+				<c:if test="${!empty pm.searchVal and ssang.size()==0}">
+				검색 결과가 없습니다.
 				</c:if>
 			</div>
 <br>
@@ -455,10 +467,6 @@ height:250px;
 <br>
 			<!-- 채팅 리스트 -->
 			<div id="popup" class="Pstyle">	
-					<div class="mychatlist"  >
-					</div>
-					세션 uidx = ${userLoginInfo.uidx}"
-					
 					<input type="button" id="btn_close" value="닫 기">
 			</div>
 			<div class="wrap2">
@@ -470,39 +478,66 @@ height:250px;
 			
 <hr>
 
-	<div class="container">
-		<div class="row">
-		<c:if test="${list.size() > 0}">
-		<c:forEach var="vo" items="${list}">
+	<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- Products tab & slick -->
+					<c:if test="${list.size() > 0}">
+					<c:forEach var="vo" items="${list}">
+					<div class="col-lg-3">
+						<div class="row">
+							<div class="products-tabs">
+								<!-- tab -->
+										<!-- product -->
+										<div class="product">
+											<div class="product-img">
+												<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/no_imgborder.jpg" ></a>
+											</div>
+											<div class="product-body">
+												<h3 class="product-name"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h3>
+												
+												<h4 class="product-price">${vo.price} </h4>
+												<div id="Wish_area">
+					<%-- <c:if test="${${userLoginInfo.uidx == null }">
+							<div class="image">
+								<img src="../images/Wish_off.png" style="width:50px; height:50px;" >
+								<p>${wishCount}</p>
+							</div>
+					</c:if>
 		
-			<div class="col-lg-3">
-				<div class="card">
-				<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/no_imgborder.jpg" ></a>
-
-					<div class="card-body">
-					<input type="hidden" value=">${vo.uidx}">
-						<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5> <c:if test="${vo.state ==1 }">
-						거래중
-						</c:if>
-						<c:if test="${vo.state ==2 }">
-						거래완료
-						</c:if>
-						<c:if test="${vo.state ==3 }">
-						예약중
-						</c:if>
-						
-						<p class="card-text">${vo.price}원</p>
-						<p class="card-text">${vo.nickName}</p>
-						<p class="card-text">${vo.wdate}</p>
-					</div>
+					<c:if test="${wish != 0}">
+						<div class="image">
+							<img src="../images/Wish_on.png" style="width:50px; height:50px;" onclick="delWish(); return false;" >
+							<p style="background-color:ce3746;">${wishCount}</p>
+						</div>
+					</c:if> --%>
 				</div>
-					<br>
-			</div>
+												<div class="product-btns">
+													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+												</div>
+											</div>
+										</div>
+										<!-- /product -->
+									<div id="slick-nav-1" class="products-slick-nav"></div>
+								</div>
+								<!-- /tab -->
+							</div>
+						</div>
 					</c:forEach>
-		</c:if>
+					</c:if>
+					<!-- Products tab & slick -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
 		</div>
-	</div>
-	
+		<!-- /SECTION -->
+		
+		
 	<!-- 무한스크롤부분 -->
 <section id="card-list" class="card-list">
 	<div class="container">
@@ -517,7 +552,12 @@ height:250px;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 <script src ="../js/boardlist.js"></script>
 <script src="https://cdn.jsivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-		
+
+<!-- jQuery Plugins -->	
+		<script src="${path}/js/slick.min.js"></script>
+		<script src="${path}/js/boarditemMain.js"></script>
+
+
 		</div>
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>

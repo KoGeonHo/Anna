@@ -13,7 +13,7 @@
 		FROM 
 			AnnaUser	
 		WHERE
-			isDel='N'			
+			isDel='N'
 	</select>
 	
 	<select id="selectadminQna" resultType="QnAVO">
