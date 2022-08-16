@@ -162,6 +162,11 @@ const GetList = function(currentPage){
 <link href="css/mfb.css" rel="stylesheet">
 <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
 
+
+
+
+
+
 		
 <!--   Slick Slider -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>	
@@ -254,6 +259,7 @@ a {
 }
 
 @media all and (min-width :768px){
+}
 
 
   
@@ -326,6 +332,14 @@ a {
 	<!-- 슬라이드 -->
 
 
+
+
+		
+		
+
+		
+		
+		
 	<!-- 검색 -->
 	<div id="search">
 	<div class="container">
@@ -402,10 +416,11 @@ a {
 											<p class="card-text">${vo.price}원</p>
 											<button type="button"
 												class="btn btn-sm btn-outline-secondary"
-												style="float: right">view 5</button>
+												style="float: right">♥12</button>
 											<button type="button"
 												class="btn btn-sm btn-outline-secondary"
-												style="float: right">♥2</button>
+												style="float: right">View 2</button>
+												
 										</div>
 									</div>
 								</div>
@@ -543,10 +558,12 @@ width: 50px;
 													<p class="card-text"></p>
 													<button type="button"
 														class="btn btn-sm btn-outline-secondary"
-														style="float: left">♥2</button>
+														style="float: left">♥${vo.cntLike}</button>
+														
 													<button type="button"
 														class="btn btn-sm btn-outline-secondary"
-														style="float: left">view 5</button>
+														style="float: left"><img src="images/icon_main_riply.png" width="50%" style="margin-top: -2px;" > ${vo.ccount}</button>
+														
 													
 												</div>
 											</div>
