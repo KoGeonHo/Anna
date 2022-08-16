@@ -15,8 +15,13 @@ public class PageMaker extends BoardItemVO{
 	private String board_type;
 	private String keyword;
 	private String nickName;
+	private int epage;
+	private int SearchUidx;
 	
-	
+	public PageMaker() {
+		this.setPage(1);
+		this.setPageNum(15);
+	}
 	
 	
 	public String getNickName() {
@@ -66,7 +71,10 @@ public class PageMaker extends BoardItemVO{
 		return pageNum;
 	}
 	public void setPageNum(int pageNum) {
-
+		if (pageNum <=0 || pageNum >100) {
+			this.pageNum = 15;
+			return;
+		}
 		this.pageNum = pageNum;
 	}
 	public int getDisplayPageNum() {
@@ -87,6 +95,7 @@ public class PageMaker extends BoardItemVO{
 	}
 	
 	public void calcData() {
+
 		
 		endPage = (int)(Math.ceil(getPage()/(double)displayPageNum)*displayPageNum); //마지막 페이지 설정 10 20 30
 		
@@ -95,13 +104,15 @@ public class PageMaker extends BoardItemVO{
 		int tempEndPage = (int)(Math.ceil(totalCount/(double)getPageNum())); //리스트 마지막 페이지
 		
 		if(endPage > tempEndPage) { //endPage가 리스트 마지막 페이지보다 높다면 일치시킨다.
-				endPage = tempEndPage;
+				endPage = tempEndPage;		
+		}
 				
 		prev = startPage == 1 ? false:true; //시작 페이지가 1이면 false를 리턴하고 1이 아니면 true를 리턴해서 나타나게 한다.
-		next = endPage*getPageNum() >= totalCount? false:true; //endPage에 위치한 게시글까지 합쳐도 게시글의 총합보다 낮으면 true를 줘서
+		next = (endPage*getPageNum() >= totalCount) ? false:true; //endPage에 위치한 게시글까지 합쳐도 게시글의 총합보다 낮으면 true를 줘서
 																//나타나게 하고 총합보디 높다면 false를 줘서 안나타나게 한다.
-			
-		}
+			// a? b:c     a가 참이면 b를 리턴 거짓이면 c를 리턴
+		
+		
 	}
 	public String getSearchType() {
 		return SearchType;
@@ -120,6 +131,22 @@ public class PageMaker extends BoardItemVO{
 	}
 	public void setBoard_type(String board_type) {
 		this.board_type = board_type;
+	}
+	public int getEpage() {
+		return epage;
+	}
+	public void setEpage(int epage) {
+		this.epage = epage;
+	}
+
+
+	public int getSearchUidx() {
+		return SearchUidx;
+	}
+
+
+	public void setSearchUidx(int searchUidx) {
+		SearchUidx = searchUidx;
 	}
 
 	

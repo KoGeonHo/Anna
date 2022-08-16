@@ -61,12 +61,9 @@
 									<td class="td">${ i.wDate }</td>
 									<td class="td">
 										<c:if test="${ i.state eq 0 }">
-											미열람
-										</c:if>
-										<c:if test="${ i.state eq 1 }">
 											처리중
 										</c:if>
-										<c:if test="${ i.state eq 2 }">
+										<c:if test="${ i.state eq 1 }">
 											처리완료
 										</c:if>
 									</td>

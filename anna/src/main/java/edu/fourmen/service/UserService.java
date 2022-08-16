@@ -23,7 +23,7 @@ public interface UserService {
 	void kakaoLogout(String access_Token);
 	int updateLocation(UserVO vo);
 	String getLocation(int uidx);
-	List<BoardItemVO> getInterestedItem(List<String> interested);
+	List<BoardItemVO> getInterestedItem(List<String> keyWord,int uidx);
 	List<UserVO> neighborList(int uidx);
 	List<BoardVO> myTownCommunityList(String location_auth);
 	UserVO keepLogin(int uidx);
@@ -31,5 +31,6 @@ public interface UserService {
 	List<ChatMessageVO> getChatViewList(ChatMessageVO cmvo);
 	void chatSetRead(List<Integer> listForSetRead);
 	ChatMessageVO getMessageNoRead(ChatMessageVO cmvo);
+	List<BoardItemVO> myBoardItemList(int uidx);
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.SearchVO;
 
 @Repository
@@ -106,5 +107,10 @@ public class BoardDAO {
 	public int boardModify(BoardVO vo) {
 		
 		return sqlSession.update(namespace+".boardModify", vo);
+	}
+	
+	public int reportinsert(ReportVO vo) {
+		
+		return sqlSession.insert(namespace+".reportinsert",vo);
 	}
 }

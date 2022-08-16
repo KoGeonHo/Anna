@@ -29,6 +29,7 @@ public class CustomerController {
 	private String path = "/anna";
 
 	
+	//문의하기(QnA)게시판 목록
 	@RequestMapping(value="/QnAList.do")
 	public String QnAList(Model model,HttpServletRequest request,HttpSession session) {
 		
@@ -46,6 +47,7 @@ public class CustomerController {
 		
 	}
 	
+	//문의하기(QnA)게시판 작성페이지
 	@RequestMapping(value="/QnAWrite.do",method=RequestMethod.GET)
 	public String QnAWrite(Model model) {
 		
@@ -54,6 +56,7 @@ public class CustomerController {
 		return "customer/QnAWrite";
 	}
 	
+	//문의하기(QnA)게시판 입력처리
 	@RequestMapping(value="/QnAWrite.do",method=RequestMethod.POST)
 	public String QnAWrite(QnAVO vo,HttpServletResponse response,HttpServletRequest request,HttpSession session) throws IllegalStateException, IOException {
 		
@@ -96,6 +99,7 @@ public class CustomerController {
 		return "redirect:/customer/QnAList.do";
 	}
 	
+	//문의하기(QnA)게시판 조회페이지
 	@RequestMapping(value="/QnAView.do")
 	public String QnAView(int qidx,Model model) {
 		
@@ -108,6 +112,7 @@ public class CustomerController {
 		return "customer/QnAView";
 	}
 	
+	//문의하기(QnA)게시판 삭제 처리
 	@RequestMapping(value="/QnADel.do")
 	public String QnADel(int qidx) {
 		
@@ -115,4 +120,36 @@ public class CustomerController {
 		
 		return "redirect:/customer/QnAList.do";
 	}
+	
+	//문의하기 관리자 답변
+	@RequestMapping(value="/QnAAnswer.do")
+	public String QnAAnswer(QnAVO vo,HttpServletRequest request,HttpSession session) {
+		
+		session = request.getSession();
+		
+		int ans_uidx = (int)session.getAttribute("uidx");
+		
+		vo.setAns_uidx(ans_uidx);
+		
+		int result = customerService.QnAAnswer(vo);
+		
+		return "redirect:/customer/QnAView.do?qidx="+vo.getQidx();
+		
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -126,17 +126,22 @@ margin : 0px auto;
 		</div>
 		
 		<div id="report_contents">
-			<form method="post">		    	
-	    		<div>신고유형 : 커뮤니티</div>   	   
-	    		<div>신고닉네임 : ${bv.nickName}</div>
-	    		<div>제목 : <input type="text" name="title"></div>
-	    		<div>신고일 <input type="date" name="date" id='currentDate'></div>
-	    		<div>상세설명 <textarea></textarea></div>
-	    		<div>신고자 ${userLoginInfo.nickName}</div>
-	    		<div>첨부파일 <input type="file" name="file"></div>
+			<form id="reportFrm">		    
+				<input type="text" name= "Bidx" value="${bv.bidx}" id="bidx">
+				<input type="text" name="evidence"value="2" id="evidence">
+	    		<div>
+	    			신고유형 : <select name="report_type" id="report_type">
+	    						<option value="2">게시물 규칙위반</option>
+	    						<option value="4">기타</option>
+	    					</select>
+	    		</div>   	   
+	    		<div>신고닉네임 : ${bv.nickName}<input type="text" value="${bv.uidx}" id="target"></div>
+	    		<div>상세설명 <textarea name="contents" id="contents"></textarea></div>
+	    		<div>신고자: ${userLoginInfo.nickName}<input type="text" id="repoter" value="${userLoginInfo.uidx}"></div>
+	    		첨부파일 <input type="file" name="file2" id="file">
 	    	
 	    		<div>
-	    			<button >접수하기</button>
+	    			<button  id="report_btn">접수하기</button>
 	    			<button type="button" id="close_button">닫기</button>
 	    		</div>
     		</form>
@@ -403,11 +408,46 @@ margin : 0px auto;
 					}
 					
 					Like();
+
+					</script>
+					<script>
+					function report(){
+						var file2 = $('input[name="test2"]').get(0).files[0];
+						var bidx = $("#bidx").val()
+						var evidence = $("#evidence").val()
+						var target = $("#target").val()
+						var contents = $("#contents").val
+						var repoter = $("#repoter").val
+						var file = file2[0].files;
+						
+						console.log(file+"파일입니다.");
+						
+						
+						var formData = new FormData();
+						formData.append('evidence', evidence);
+						formData.append('bidx', bidx);
+						formData.append('file1', file1);
+						formData.append('target', target);
+						formData.append('contents', contents);
+						formData.append('repoter', repoter);
+
+						$.ajax({
+							type : 'POST',
+							url : '/report.do',
+							processData:false,
+							contentType: false,
+						    data: formData,
+							success : function(json){
+								alert("등록되었습니다.");
+								
+							},
+							error: function(xhr, status, error){
+								alert("실패."+error);
+							}
+						});
+					}
 					
-					 document.getElementById('currentDate').value = 
-				     new Date().toISOString().substring(0, 10); //현재시간
-				     
-				    
+					
 					</script>
 </body>
 </html>

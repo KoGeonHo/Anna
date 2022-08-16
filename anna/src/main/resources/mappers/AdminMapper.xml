@@ -24,7 +24,7 @@
 		,DATE_FORMAT(a.wdate, '%Y-%m-%d') AS wdate
 		,a.uidx, (
 		 select nickName from AnnaUser b where b.uidx = a.uidx 
-		   )as nickName  from QnA a 
+		   )as userNickName  from QnA a 
 	</select>
 
 

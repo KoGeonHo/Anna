@@ -25,6 +25,7 @@ public class BoardVO extends UserVO{
 	private int Ccount;
 	private int cntLike;
 	
+
 	public MultipartFile getFileName4() {
 		return FileName4;
 	}
@@ -148,6 +149,8 @@ public class BoardVO extends UserVO{
 	public void setCntLike(int cntLike) {
 		this.cntLike = cntLike;
 	}
+
+
 	
 
 

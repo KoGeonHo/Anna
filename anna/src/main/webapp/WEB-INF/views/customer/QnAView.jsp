@@ -22,7 +22,30 @@
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
 <!-- path는 request.getContextPath()를 가져온것. -->
+<script>
+	
+	$(function(){
 
+		if("${ userLoginInfo.isAdmin }" == 'Y'){
+			$("textarea[name=answer]").focus();
+		}
+	});
+	
+	function Answer(){
+		let answer = $("textarea[name=answer]");
+		
+		if(answer.val() == ""){
+			alert("답변 내용을 입력하세요");
+			answer.focus();
+		}else{
+			let url ="QnAAnswer.do?qidx=${QnAItem.qidx}&answer="+answer.val();
+			//console.log(url);
+			location.href = url;
+		}
+		
+	}
+
+</script>
 </head>
 <body>
 	<div class="wrapper">
@@ -34,6 +57,12 @@
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의하기 - ${ QnAItem.title }</h3>
 				<div class="row border-bottom tr">
+					<div class="col-4 th" style="display:table-cell;">작성일</div>
+					<div class="col-8 td" style="display:table-cell;">
+						${ QnAItem.wDate }
+					</div>
+				</div>
+				<div class="row border-bottom tr">
 					<div class="col-4 th" style="display:table-cell;">문의유형</div>
 					<div class="col-8 td" style="display:table-cell;">
 						${ QnAItem.qType }
@@ -43,12 +72,9 @@
 					<div class="col-4 th" style="display:table-cell;">처리상태</div>
 					<div class="col-8 td" style="display:table-cell;">
 						<c:if test="${ QnAItem.state eq 0 }">
-							미열람
-						</c:if>
-						<c:if test="${ QnAItem.state eq 1 }">
 							처리중
 						</c:if>
-						<c:if test="${ QnAItem.state eq 2 }">
+						<c:if test="${ QnAItem.state eq 1 }">
 							처리완료
 						</c:if>
 					</div>
@@ -56,7 +82,7 @@
 				<div class="row border-bottom tr">
 					<div class="col-4 th">내용</div>
 					<div class="col-8 td">
-						${ QnAItem.contents }
+						${QnAItem.contents}
 					</div>
 				</div>
 				<div class="row border-bottom tr">
@@ -72,23 +98,47 @@
 						<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="alert('준비중입니다.');">첨부파일 보기</button>
 					</div>
 				</div>
-				<c:if test="${ QnAItem.state eq 2 }">
+				<c:if test="${ userLoginInfo.isAdmin eq 'N' and QnAItem.state eq 1}">
+					<div class="row border-bottom tr">
+						<div class="col-4 th">답변자</div>
+						<div class="col-8 td">
+							관리자
+						</div>
+					</div>
+					<div class="row border-bottom tr">
+						<div class="col-4 th">답변일</div>
+						<div class="col-8 td">
+							${ QnAItem.ans_date }
+						</div>
+					</div>
 					<div class="row border-bottom tr">
 						<div class="col-4 th">답변</div>
 						<div class="col-8 td">
-							${ QnAItem.answer }
+							${QnAItem.answer}
+						</div>
+					</div>
+				</c:if>
+				<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
+					<div class="row border-bottom tr">
+						<div class="col-4 th">답변</div>
+						<div class="col-8 td">
+							<textarea wrap="hard" name="answer" class="form-control" style="resize:none; height:120px;">${ QnAItem.answer }</textarea>
 						</div>
 					</div>
 				</c:if>
 				<div class="row tr">
 					<div class="col-12 td text-end">
-						<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnADel.do?qidx=<%=request.getParameter("qidx")%>'">삭제</button>
-						<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAList.do'">목록</button>
+						<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
+							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="Answer()">답변</button>
+						</c:if>
+						<c:if test="${ userLoginInfo.isAdmin eq 'N' }">
+							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnADel.do?qidx=<%=request.getParameter("qidx")%>'">삭제</button>
+							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAList.do'">목록</button>
+						</c:if>
 					</div>
 				</div>
 			</div>	
 		</div>
-		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->	

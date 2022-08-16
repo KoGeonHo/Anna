@@ -21,7 +21,17 @@
 
      <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-  
+<style>
+
+#location_kakao{
+
+display: none;
+
+}
+
+
+
+</style>
 </head>
 <body>
 
@@ -33,7 +43,7 @@
 <input type="text" name="uidx" value="${uidx}">
 <input type="text" name="Location" value="${userLoginInfo.location_auth}">										
 
-<select name="board_type" onchange="locationMap()" id="board_type">
+<select name="board_type" onchange="javascript:locationMap(this);" id="board_type">
 	<option value="free">일상&amp;소통</option>
 	<option value="job">구인구직</option>
 	<option value="meeting">만남</option>
@@ -45,7 +55,7 @@
 <textarea id="summernote" class="summernote" name="Contents"></textarea>
 <div id="location_kakao">
 
-
+이게 위치정보 넣어야 할때만 나타나면 성공임
 
 </div>
 <div id="boxWrap">
@@ -134,10 +144,29 @@ function chk_file_type(obj) {
 </script>
 <script>
 
-function locationMap(){
 
+
+
+function locationMap(obj){
+	
+	var board_type = $("#board_type").val();
+	
+	console.log(board_type);
+	
+	if(board_type != 'free'){
+	
+		$("#location_kakao").css("display","block")
+
+	}else if(board_type == 'free'){
+		
+		$("#location_kakao").css("display","none")
+	}
 }
 
+
+function myListener(obj) {alert(obj.value);
+// 선택된 option의 value가 출력된다!    }
+}
 </script>
 
 </body>

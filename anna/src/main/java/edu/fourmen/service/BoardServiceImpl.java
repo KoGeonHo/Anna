@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import edu.fourmen.dao.BoardDAO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.SearchVO;
 
 @Service
@@ -118,6 +119,13 @@ public class BoardServiceImpl implements BoardService {
 	public int boardModify(BoardVO vo) {
 		
 		return boardDao.boardModify(vo);
+	}
+
+
+	@Override
+	public int reportinsert(ReportVO vo) {
+		
+		return boardDao.reportinsert(vo);
 	}
 
 

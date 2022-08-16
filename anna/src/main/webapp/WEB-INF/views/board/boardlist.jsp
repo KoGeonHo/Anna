@@ -81,11 +81,14 @@
 		<div class="col-md-12  col-sm-12 d-flex">
 			<form method="get" action="boardlist.do?" class="d-flex ">
 				<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
-				<select name="SearchType" class="border rounded-2">
+				<c:if test="${pm.board_type != 'free'}">
+				<input type="hidden" value="1" name="page">
+				</c:if>
+				<%-- <select name="SearchType" class="border rounded-2">
 					<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
 					<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
 					<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
-				</select>
+				</select> --%>
 				<input type="text" name="SearchVal" class="search-control" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
 				<input type="submit" value="검색" class="btn btn-outline-primary">
 			</form>
@@ -147,6 +150,58 @@
 				</ul>
 			</div>	
 		</c:if>
+		<c:if test="${pm.board_type != 'free'}">
+		<div class="list">
+				
+						<div class="tr border-bottom">
+							<div class="th" style="width:50%;">제목</div>
+				
+							<div class="th" style="width:20%;">작성자</div>
+							<div class="th" style="width:20%;">작성일</div>
+							<div class="th" style="width:10%;">조회수</div>
+						</div>
+						<c:if test="${ not empty board }">
+							<c:forEach var="i" items="${ board }">
+								<div class="tr border-bottom">
+									<div class="td text-center" style="width:50%;"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${i.bidx }">${ i.title }</a></div>
+									<div class="td text-center" style="width:20%;">${ i.nickName }</div>
+									<div class="td text-center" style="width:20%;">${ i.wdate }</div>
+									<div class="td text-center" style="width:10%;">${ i.hit }</div>
+								</div>
+							</c:forEach>
+						</c:if>
+			</div>
+			
+			<table style="width:800px;text-align:center;">
+				<tr>
+					
+			<c:if test="${pm.isPrev() == true}">
+				<td style="width:300px;text-align:right;">
+				<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}">◀</a>
+					</td>
+			</c:if>
+					
+			
+
+					
+			<c:forEach var="i" begin="${pm.getStartPage()}" end="${pm.getEndPage()}">
+				<td>
+    			<span><a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${i}&SearchVal=${pm.searchVal}">${i}</a></span>
+				</td>
+			</c:forEach>
+				
+				
+			<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
+				<td style="width:300px;text-align:left;">
+					<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}">▶</a>
+				</td>
+			</c:if>
+			
+				</tr>
+			</table>
+			</c:if>
+			
+		
 				
 				
 			</form>

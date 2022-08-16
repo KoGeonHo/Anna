@@ -269,9 +269,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<BoardItemVO> getInterestedItem(List<String> interested) {
+	public List<BoardItemVO> getInterestedItem(List<String> keyWord,int uidx) {
 		
-		return userDAO.getInterestedItem(interested);
+		return userDAO.getInterestedItem(keyWord,uidx);
 		
 	}
 
@@ -318,6 +318,13 @@ public class UserServiceImpl implements UserService{
 	public ChatMessageVO getMessageNoRead(ChatMessageVO cmvo) {
 		
 		return userDAO.getMessageNoRead(cmvo);
+	}
+
+	@Override
+	public List<BoardItemVO> myBoardItemList(int uidx) {
+		
+		return userDAO.myBoardItemList(uidx);
+		
 	}
 
 }

@@ -16,6 +16,7 @@ public class UserVO{
 	private String introduce;
 	private String keepLogin;
 	private String jdate;
+	private String isAdmin;
 	
 	public String getJdate() {
 		return jdate;
@@ -106,6 +107,12 @@ public class UserVO{
 	}
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
+	}
+	public String getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(String isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 	

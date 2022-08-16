@@ -1,6 +1,7 @@
 package edu.fourmen.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -82,9 +83,14 @@ public class UserDAO {
 	}
 
 
-	public List<BoardItemVO> getInterestedItem(List<String> interested) {
+	public List<BoardItemVO> getInterestedItem(List<String> keyWord,int uidx) {
 		
-		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getInterestedItem",interested);
+		HashMap<String,Object> list = new HashMap<String,Object>();
+		
+		list.put("keyWord", keyWord);
+		list.put("uidx", uidx);
+		
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getInterestedItem",list);
 		
 	}
 
@@ -139,4 +145,17 @@ public class UserDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.getMessageNoRead",cmvo);
 	}
+
+
+	public List<BoardItemVO> myBoardItemList(int uidx) {
+		
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.myBoardItemList",uidx);
+		
+	}
 }
+
+
+
+
+
+
