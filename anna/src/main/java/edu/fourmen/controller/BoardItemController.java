@@ -6,7 +6,6 @@ import java.io.File;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +15,14 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.JPopupMenu.Separator;
 
 import org.imgscalr.Scalr;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,10 +31,10 @@ import edu.fourmen.service.UserService;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.SearchVO;
 
 import edu.fourmen.vo.UserVO;
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 @RequestMapping(value = "/boarditem")
 @Controller
@@ -55,7 +51,6 @@ public class BoardItemController {
 	public String itemlist(HttpSession session,BoardItemVO nvo,PageMaker pm, SearchVO svo,BoardItemVO vo,BoardItemVO bvo,  HttpServletRequest request, Model model) {
 		session = request.getSession();
 		int uidx = (int) session.getAttribute("uidx");
-		System.out.println(uidx);
 		
 		//블랙리스트 조회
 		
@@ -136,7 +131,6 @@ public class BoardItemController {
 		List<BoardItemVO> mywish = boarditemService.mywish(vo);
 		
 		model.addAttribute("mywish",mywish);
-		System.out.println(mywish+"mywish");
 	    
 		List<BoardItemVO> myneighbor = boarditemService.neighbor_list(nvo);
 		model.addAttribute("myneighbor",myneighbor);
@@ -148,10 +142,6 @@ public class BoardItemController {
 	@ResponseBody
 	@RequestMapping(value = "/ajax_main.do", produces = "application/json; charset=utf8")
 	   public HashMap<String, Object> main2(PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
-	      
-		
-		System.out.println("asdkpjasedfohjzsdiopfgjszik;edrjghnszirghn");
-		
 		
 	      if(svo.getSearchType() == null) {
 	         svo.setSearchType("TITLE");
@@ -232,7 +222,6 @@ public class BoardItemController {
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		model.addAttribute("vo", vo);
 		
-		int chat_host = vo.getUidx();
 		
 		List<BoardItemVO> list = boarditemService.list(vo,pm);
 		model.addAttribute("list", list);
@@ -262,21 +251,14 @@ public class BoardItemController {
 			int W_item_idx = vo.getItem_idx();
 			wvo.setItem_idx(W_item_idx);
 			wvo.setUidx(uidx);
-			
-			System.out.println(uidx +"asdsad");
-			System.out.println(W_item_idx + "12312");
 		}
 		
 		int wish = boarditemService.checkWish(wvo);
 		int wishCount = boarditemService.WishCount(vo);
-		System.out.println(wishCount +"찜한 회원수");
-		System.out.println(wish +"찜체크");
 		model.addAttribute("wish",wish);
 		model.addAttribute("wishCount",wishCount);
-		int addviewCount = boarditemService.addviewCount(vo);
-		System.out.println(addviewCount +"조회수 추가");
+		boarditemService.addviewCount(vo);
 		int viewCount = boarditemService.viewCount(vo);
-		System.out.println(viewCount + "조회수 조회");
 		model.addAttribute("viewCount",viewCount);
 		
 
@@ -294,12 +276,10 @@ public class BoardItemController {
 
 	@RequestMapping(value = "itemwrite.do", method = RequestMethod.POST)
 	public String itemwrite(BoardItemVO vo, HttpServletRequest request, HttpServletResponse response,
-			HttpSession session, Model model, MultipartFile file) throws IllegalStateException, IOException {
+			HttpSession session, Model model) throws IllegalStateException, IOException {
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-		UserVO userinfo = (UserVO) session.getAttribute("login");
 		String fileName = null;
 		UUID uuid = UUID.randomUUID();
-		// System.out.println(vo.getFile1().getOriginalFilename()+"파일1");
 
 		if (vo.getFile1() != null) {
 			MultipartFile uploadFile1 = vo.getFile1();
@@ -614,17 +594,13 @@ public class BoardItemController {
 
 		session = request.getSession();
 		
-		UserVO login = (UserVO) session.getAttribute("login");
 		/*
-		 */List<String> list = new ArrayList();
 		 System.out.println(vo.getKeyword()+"맨 처음 받은 키워드");
 		 System.out.println(vo.getKeyword().split(",")+"두번째 받은 키워드");
 		 
 		 String[] str = vo.getKeyword().split(",");
 		 String asd = "";
 		 for(String s : str) {
-			 
-				//System.out.println("#"+s);
 			 	asd += "#"+s;
 				System.out.println(asd);
 		 }
@@ -638,7 +614,7 @@ public class BoardItemController {
 		
 		// vo.setMidx(login.getMidx());
 
-		int result = boarditemService.boarditemswrite(vo);
+		 boarditemService.boarditemswrite(vo);
 
 		model.addAttribute("vo", vo);
 
@@ -1004,14 +980,6 @@ public class BoardItemController {
 	 */
 	
 
-	@RequestMapping(value="/chat")
-	public String showMain(int item_idx, Model model) {
-		BoardItemVO vo = boarditemService.selectitem(item_idx);
-		model.addAttribute("vo",vo);
-		return "boarditem/chat";
-	}
-	
-
 	@RequestMapping("/AddMessage")
 	@ResponseBody
 	public Map AddMessage(BoardItemVO vo ,ChatMessageVO cvo,String nickName, String cdate,  String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
@@ -1128,7 +1096,7 @@ public class BoardItemController {
 	@ResponseBody
 	@RequestMapping("/addNeighbor")
 	public String addNeighbor(HttpSession
-			  session,HttpServletRequest request ,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
+			session,HttpServletRequest request ,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
 		session = request.getSession();
 		int uidx = (int) session.getAttribute("uidx");
 		
@@ -1139,11 +1107,12 @@ public class BoardItemController {
 	
 	@ResponseBody
 	@RequestMapping("/delNeighbor")
-	public String delNeighbor(HttpSession
-			 session,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
+	public String delNeighbor(HttpServletRequest request,HttpSession session, int neighbor_idx) {
 		
-		neighbor_idx = vo.getUidx(); //neighbor_idx 안에 글 주인의 uidx를 넣음
-		boarditemService.delneighbor(vo);
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		boarditemService.delneighbor(neighbor_idx, uidx);
 		System.out.println("이웃삭제 완료");
 		
 		return "이웃삭제 완료";
@@ -1168,24 +1137,45 @@ public class BoardItemController {
 		return 1;
 	}
 	
-	@ResponseBody
-	@RequestMapping("/report")
-	public String report_taget(BoardItemVO vo,String contents) {
+	@RequestMapping(value="/report.do")
+	public String report_taget(ReportVO rvo,HttpServletRequest request) throws IllegalStateException, IOException {
 		
-		System.out.println(vo.getAttach()+"zz");
+		System.out.println("신고하기 들어왔음");
+		
+		  UUID uuid = UUID.randomUUID(); 
+		  String fileName =""; 
+		  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+		 System.out.println(rvo.getFile1()+"신고하기 파일확인");
+		
+		  if (rvo.getFile1() != null) { MultipartFile uploadFile1 = rvo.getFile1(); //
+			 // String uploadFile11 = uploadFile1.getOriginalFilename()+uuid.toString(); 
+			  if(!uploadFile1.isEmpty()) { 
+				 fileName = uuid + "_" +uploadFile1.getOriginalFilename(); uploadFile1.transferTo(new File(path,fileName));
+				 System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
+				  }
+			  BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+			  BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC,
+			  Scalr.Mode.FIT_TO_HEIGHT, 450);
+			  
+			  String thumbnailName = path + File.separator + "s-" + fileName;
+			  
+			  // System.out.println("thumbnailName"+thumbnailName);
+			  
+			  File newFile = new File(thumbnailName); //
+			  System.out.println("newFile:"+newFile); String formatName =
+			  fileName.substring(fileName.lastIndexOf(".") + 1); //
+			  System.out.println("destImg"+destImg); boolean flag = ImageIO.write(destImg,
+			  formatName.toUpperCase(), newFile); System.out.println("복사여부 flag" + flag);
+			  
+			  thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+			  rvo.setAttach(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일 // 이름 }
+		  }
 		
 		
-		/*
-		 * if (vo.getFile8() != null) { MultipartFile uploadFile8 = vo.getFile8(); if
-		 * (!uploadFile8.isEmpty()) { // String uploadFile22 =
-		 * uploadFile2.getOriginalFilename()+uuid.toString(); fileName = uuid + "_" +
-		 * uploadFile8.getOriginalFilename(); uploadFile8.transferTo(new File(path,
-		 * fileName)); }
-		 */		
-		
-		boarditemService.report_target(vo);
+		boarditemService.report_target(rvo);
 		System.out.println("신고 완료");
-		return "ㅅㄱ";
+		System.out.println(rvo.getItem_idx()+"신고당한 글 번호");
+		return "redirect:/boarditem/itemview.do?item_idx="+rvo.getItem_idx();
 	}
 	
 	

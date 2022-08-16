@@ -1,10 +1,8 @@
 package edu.fourmen.vo;
-
 import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
-public class BoardItemVO extends UserVO {
+public class BoardItemVO {
 	 
 	private int item_idx;
 	private int uidx;

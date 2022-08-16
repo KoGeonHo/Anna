@@ -199,7 +199,7 @@
 
 
 
-
+/* 
 function delWish(){
 	$.post('delWish',{
 		item_idx : $("#wish_item_idx").val(),
@@ -221,7 +221,7 @@ function delNeighbor(form) {
 	},'json');
 	$('#Neighbor_area').load(location.href+' #Neighbor_area');
 }
-
+ */
 </script>
 <style>
 
@@ -355,7 +355,7 @@ height:250px;
 					</c:forEach>
 				</c:if>
 			
-			</div>						
+			</div>					
 			
 		<c:if test="${uidx == null}">
 		<a href="../user/login.do">로그인하기</a>
@@ -422,6 +422,8 @@ height:250px;
 		<form method="get" action="itemlist.do">
 			<select name="searchType">
 				<option value="title" <c:if test="${!empty svo.searchType and svo.searchType eq 'title'}">selected</c:if>>제목</option>
+				<option value="nickName" <c:if test="${!empty svo.searchType and svo.searchType eq 'nickName'}">selected</c:if>>작성자</option>
+				<option value="keyword" <c:if test="${!empty svo.searchType and svo.searchType eq 'keyword'}">selected</c:if>>태그</option>
 			</select>
 			<input type="text" name="searchVal" 
 					<c:if test="${!empty svo.searchVal}">
@@ -479,7 +481,16 @@ height:250px;
 
 					<div class="card-body">
 					<input type="hidden" value=">${vo.uidx}">
-						<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5>
+						<h5 class="card-title"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h5> <c:if test="${vo.state ==1 }">
+						거래중
+						</c:if>
+						<c:if test="${vo.state ==2 }">
+						거래완료
+						</c:if>
+						<c:if test="${vo.state ==3 }">
+						예약중
+						</c:if>
+						
 						<p class="card-text">${vo.price}원</p>
 						<p class="card-text">${vo.nickName}</p>
 						<p class="card-text">${vo.wdate}</p>

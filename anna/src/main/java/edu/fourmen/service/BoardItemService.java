@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
-
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.SearchVO;
 import edu.fourmen.vo.UserVO;
 
@@ -46,7 +46,7 @@ public interface BoardItemService {
 	
 	public List<BoardItemVO> neighbor_list(BoardItemVO nvo);
 	
-	public int delneighbor(BoardItemVO vo);
+	public int delneighbor(int neighbor_idx, int uidx);
 	
 	public int addWish(BoardItemVO vo);
 	
@@ -54,7 +54,7 @@ public interface BoardItemService {
 	
 	public int delWish(BoardItemVO wvo);
 	
-	public int report_target(BoardItemVO vo);
+	public int report_target(ReportVO rvo);
 	
 	public int WishCount(BoardItemVO vo);
 	

@@ -458,7 +458,18 @@ a {
 		
 		
 		//신고 글 작성하는 부분
-		function report(form){
+	/* 	
+		formdate = 
+		function delNeighbor() {
+		$.ajax({
+			url : 'delNeighbor',
+			data : 'neighbor_idx=${vo.uidx}',
+			success : function(data){
+				console.log("완");
+				$('#Neighbor_area').load(location.href+' #Neighbor_area');
+			}
+		}); */
+		/* function report(form){
 		$.post('report',{
 			item_idx : ${vo.item_idx},
 			bidx : ${vo.item_idx},
@@ -466,13 +477,14 @@ a {
 			evidence : 1,
 			target : ${vo.uidx},
 			contents : form.contents.value,
+			file1 : form.fiel1.value,
 		
 		},'json');
 		//location.reload();
 		$('#popup2').bPopup().close();  
 		alert("신고완료");
 			console.log("신고 완료");
-	}
+	} */
 		
 		
 		//채팅 리스트 여는 부분
@@ -575,17 +587,22 @@ a {
 	}
 	
 
-	function delNeighbor(form) {
-		
+	function delNeighbor() {
+		$.ajax({
+			url : 'delNeighbor',
+			data : 'neighbor_idx=${vo.uidx}',
+			success : function(data){
+				console.log("완");
+				$('#Neighbor_area').load(location.href+' #Neighbor_area');
+			}
+		});
 		// AJAX -> delNeighbor 실행 및 출력값 가져오기
-		$.post('./delNeighbor',{
+		/* $.post('./delNeighbor',{
 			neighbor_idx : ${vo.uidx},
-			uidx : ${userLoginInfo.uidx},
-			item_idx :  ${vo.item_idx},
 		}, function(data) {
 			uidx = data["uidx"];
-		},'json');
-		$('#Neighbor_area').load(location.href+' #Neighbor_area');
+		},'json'); */
+		
 	}
 	
 
@@ -809,6 +826,13 @@ a {
 											<p class="card-text">${vo.price}원</p>
 											<p class="card-text">${vo.nickName}</p>
 											<p class="card-text">${vo.wdate}</p> 
+										<c:if test="${userLoginInfo.udix == vo.uidx}">
+											<select name="state">
+												<option value="1">거래중</option>
+												<option value="2">거래완료</option>
+												<option value="3">예약중</option>
+											</select>
+										</c:if>
 										</div>
 								</div>
 								<br>
@@ -819,27 +843,27 @@ a {
 			</div>
 			
 			<!-- 신고하기 팝업 영역  -->
-			
 			<div id="popup2" class="Pstyle2">	
-				<form onsubmit="report(this); return false;" enctype="multipart/form-data">
+				<!-- form 은 기본 전송방식이 post 임!! 잊지말것  -->
+				<form action="report.do" enctype="multipart/form-data" method="POST">
 					<select name="report_type">
 						<option value="0">노쇼</option>		
-						<option value="1">비속어&비매너채팅</option>		
-						<option value="2">게시물 규칙 위반</option>		
-						<option value="3">허위매물</option>		
-						<option value="4">기타</option>		
-					</select>		
-					
+						<option value="1">비속어&비매너채팅</option>
+						<option value="2">게시물 규칙 위반</option>
+						<option value="3">허위매물</option>	
+						<option value="4">기타</option>
+					</select>
 					<textarea name="contents"></textarea>
-					
-					<input type="file" name="attach">
-					
+					<input type="hidden" name="item_idx" value="${vo.item_idx}">
+					<input type="hidden" name="repoter" value="${userLoginInfo.uidx}">
+					<input type="hidden" name="target" value="${vo.uidx}">
+					<input type="file" name="file1">
 					<input type="submit" value="신고하기">
 				</form>
 			</div>
 			<c:if test="${uidx != null }">
 				<div class="wrap2">
-					<input type="button" id="btn_open2" value="신고하기">
+					<input type="submit" id="btn_open2" value="신고하기">
 				</div>
 			</c:if>
 			

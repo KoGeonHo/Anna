@@ -118,7 +118,6 @@
 			<br>
 			<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 			<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-			<input type="hidden" name="addr_code" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 			
 			<!-- 키워드는 키워드 전체 검색에 포함시키고, 쿼리에 키워드 검색 추가 db에 넣을때 , 붙여서 넣는방식으로 건호형꺼 참고 -->
 				<br>
@@ -136,8 +135,13 @@
 				</div>
 			가격:<input type="text" name="price" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 				<br>
-			거래상태:<input type="text" name="state" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-				<br>
+					
+			거래상태:<select name="state">
+					<option value="1">거래중</option>
+					<option value="2">거래완료</option>
+					<option value="3">예약중</option>
+				  </select>
+	
 						<div id="fileDiv">
 						<input type="file" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
 						<a href="#this" class="btn" id="delete" name="delete">삭제</a>

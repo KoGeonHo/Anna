@@ -1,5 +1,7 @@
 package edu.fourmen.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.SearchVO;
 import edu.fourmen.vo.UserVO;
 
@@ -83,7 +86,6 @@ public class BoardItemDAO {
 	public int addNeighbor(BoardItemVO vo) {
 		return sqlSession.insert(efdb+".addNeighbor",vo);
 	}
-	
 
 	public int neighbor_check(BoardItemVO bvo) {
 		return sqlSession.selectOne(efdb+".neighbor_check",bvo);
@@ -93,8 +95,19 @@ public class BoardItemDAO {
 		return sqlSession.selectList(efdb+".neighbor_list",nvo);
 	}
 	 
-	public int delneighbor(BoardItemVO vo) {
-		return sqlSession.delete(efdb+".delneighbor",vo);
+	public int delneighbor(int uidx, int neigbor_idx) {
+		
+		HashMap<String,Integer> del = new HashMap<String,Integer>();
+		
+		del.put("uidx", uidx);
+		del.put("neighbor_idx", neigbor_idx);
+		
+		//System.out.println("del:"+del);
+
+		//return 0;
+		
+		return sqlSession.delete(efdb+".delneighbor",del);
+		
 	}
 	
 	public int addwist(BoardItemVO vo){
@@ -119,8 +132,8 @@ public class BoardItemDAO {
 	
 	
 	
-	public int report_target(BoardItemVO vo) {
-		return sqlSession.insert(efdb+".report_target",vo);
+	public int report_target(ReportVO rvo) {
+		return sqlSession.insert(efdb+".report_target",rvo);
 	}
 	
 	public int addviewCount(BoardItemVO vo) {
