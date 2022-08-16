@@ -1119,7 +1119,7 @@ public class BoardItemController {
 		
 		int uidx = (int)session.getAttribute("uidx");
 		System.out.println(uidx +"uidxuidx");
-		System.out.println(neighbor_idx);
+		System.out.println(neighbor_idx+"neighbor_idx");
 		boarditemService.delneighbor(neighbor_idx, uidx);
 		System.out.println("이웃삭제 완료");
 		
