@@ -21,34 +21,49 @@
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
 <!-- path는 request.getContextPath()를 가져온것. -->
+<script>
+	function delNeighbor(neighbor_idx){
+		$.ajax({
+			url : "${path}/boarditem/delNeighbor",
+			data : "neighbor_idx="+neighbor_idx,
+			success : function(){
+				location.reload();
+			}
+		});
+		
+		//${path}/BoardItem/delNeighbor?uidx=${uidx}&neighbor_idx=${i.uidx}
+	}
+</script>
 </head>
 <body>
 	<div class="wrapper">
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		
 		<div class="container main" style="flex:1; overflow:auto;">
 			<h3 class="border-bottom" style="padding:1rem; margin:0px;">이웃 관리</h3>
-			<div class="border-bottom" style="padding:10px; display:flex; ">
-				<c:if test="${ empty nList }">
+			<div class="text-end border-bottom" style="padding:5px;">검색</div>
+			<c:if test="${ empty nList }">
+				<div class="border-bottom" style="padding:10px;">
 					<div class='text-center'>
 						등록한 이웃이 없습니다.
 					</div>
-				</c:if>
-				<c:if test="${ not empty nList }">
+				</div>
+			</c:if>
+			<c:if test="${ not empty nList }">
+				<div class="border-bottom" style="padding:10px; display:flex;">
 					<c:forEach var="i" items="${ nList }">
 						<div style="width:100px; height:100px;"><img src="${i.profile_image}" style="width:80px; height:80px; border-radius:100px; margin:10px;"></div>
 						<div style="flex:1;">
-							<div>${ i.nickName }</div>
+							<div><h5>${ i.nickName }</h5></div>
 							<div>${ i.introduce }</div>
 						</div>
-						<div class="text-center" style="width:80px;">
-							<button type="button">버튼</button>
+						<div class="text-center" style="width:80px; margin:auto;">
+							<button type="button" onclick="delNeighbor(${i.uidx})">삭제</button>
 						</div>
 					</c:forEach>
-				</c:if>
-			</div>
+				</div>
+			</c:if>
 		</div>
 		
 		<!-- 푸터는 고정 -->

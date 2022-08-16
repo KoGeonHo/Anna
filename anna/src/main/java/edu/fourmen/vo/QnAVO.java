@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class QnAVO {
 	private int qidx;
 	private int uidx;
+	private String userNickName;
 	private String qType;
 	private String title;
 	private String contents;
@@ -16,7 +17,13 @@ public class QnAVO {
 	private String answer;
 	private String ans_date;
 	private String isDel;
-	
+
+	public String getUserNickName() {
+		return userNickName;
+	}
+	public void setUserNickName(String userNickName) {
+		this.userNickName = userNickName;
+	}
 	public String getIsDel() {
 		return isDel;
 	}

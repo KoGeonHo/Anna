@@ -69,7 +69,7 @@
 						<c:if test="${ length < 20 }" >
 							${ QnAItem.attach } 
 						</c:if>
-						<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="window.open('');">첨부파일 보기</button>
+						<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="alert('준비중입니다.');">첨부파일 보기</button>
 					</div>
 				</div>
 				<c:if test="${ QnAItem.state eq 2 }">
