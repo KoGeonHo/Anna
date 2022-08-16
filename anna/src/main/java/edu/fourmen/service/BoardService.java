@@ -7,6 +7,7 @@ import java.util.List;
 
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.SearchVO;
 
 public interface BoardService {
@@ -43,5 +44,7 @@ public interface BoardService {
 	
 	int boardModify(BoardVO vo);
 
-	int reportinsert(BoardVO vo);
+	int reportinsert(ReportVO vo);
+
+	
 }
