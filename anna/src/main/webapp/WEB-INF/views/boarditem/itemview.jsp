@@ -826,6 +826,13 @@ a {
 											<p class="card-text">${vo.price}원</p>
 											<p class="card-text">${vo.nickName}</p>
 											<p class="card-text">${vo.wdate}</p> 
+										<c:if test="${userLoginInfo.udix == vo.uidx}">
+											<select name="state">
+												<option value="1">거래중</option>
+												<option value="2">거래완료</option>
+												<option value="3">예약중</option>
+											</select>
+										</c:if>
 										</div>
 								</div>
 								<br>
