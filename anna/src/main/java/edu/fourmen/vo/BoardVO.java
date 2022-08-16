@@ -24,13 +24,8 @@ public class BoardVO extends UserVO{
 	private MultipartFile FileName5;
 	private int Ccount;
 	private int cntLike;
-	private int target;
-	private int report_type;
-	private int evidence;
-	private String attach;
-	private int repoter;
-
 	
+
 	public MultipartFile getFileName4() {
 		return FileName4;
 	}
@@ -154,36 +149,7 @@ public class BoardVO extends UserVO{
 	public void setCntLike(int cntLike) {
 		this.cntLike = cntLike;
 	}
-	public int getTarget() {
-		return target;
-	}
-	public void setTarget(int target) {
-		this.target = target;
-	}
-	public int getReport_type() {
-		return report_type;
-	}
-	public void setReport_type(int report_type) {
-		this.report_type = report_type;
-	}
-	public int getEvidence() {
-		return evidence;
-	}
-	public void setEvidence(int evidence) {
-		this.evidence = evidence;
-	}
-	public String getAttach() {
-		return attach;
-	}
-	public void setAttach(String attach) {
-		this.attach = attach;
-	}
-	public int getRepoter() {
-		return repoter;
-	}
-	public void setRepoter(int repoter) {
-		this.repoter = repoter;
-	}
+
 
 	
 

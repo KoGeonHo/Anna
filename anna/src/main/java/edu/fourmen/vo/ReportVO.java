@@ -19,6 +19,7 @@ public class ReportVO {
 	
 	MultipartFile file1;
 	
+	private MultipartFile[] file2;
 	
 	
 	public MultipartFile getFile1() {
@@ -98,6 +99,12 @@ public class ReportVO {
 	}
 	public void setBan_date(String ban_date) {
 		this.ban_date = ban_date;
+	}
+	public MultipartFile[] getFile2() {
+		return file2;
+	}
+	public void setFile2(MultipartFile[] file2) {
+		this.file2 = file2;
 	}
 	
 	

@@ -35,10 +35,11 @@ position: fixed;
 
    <h2>글 수정</h2>
     
-<form action="BoardModify.do" method="post" enctype="multipart/form-data">
+<form action="BoardModify.do" method="post">
 
 <input type="text" name="Location" value="${userLoginInfo.location_auth}">
-<input type="text" name="board_type" value="${bv.board_type }">
+<input type="hidden" name="board_type" value="${bv.board_type }">
+<input type="hidden" name="Bidx" value="${bv.bidx }">
 
 <c:if test="${bv.board_type eq 'free'}">
 	일상&amp;소통
@@ -76,14 +77,6 @@ position: fixed;
 <c:if test="${bv.image5 != null}">
 	<span>${bv.image5}</span>
 </c:if>
- 
-<div id="boxWrap">
-<button type="button" id="file_btn">추가</button><br>
-파일 1:
-<input type="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
-
-
-</div>
 
 <button type="button">취소</button>
 <button>작성완료</button>
@@ -124,46 +117,7 @@ $('#summernote').summernote({
 	  
 	});
 </script>
-<script>
 
-$(document).ready(function() {
-	var i=2; // 변수설정은 함수의 바깥에 설정!
-  $("#file_btn").click(function() {
-    if(i<=5){
-    	
-    	$("#boxWrap").append("파일"+i+":<input type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>");
-    }
-    
-    i++;
-   
-    
-
-  });
-});
-
-function chk_file_type(obj) {
-    var file_kind = obj.value.lastIndexOf('.');
-    var file_name = obj.value.substring(file_kind+1,obj.length); 
-    var file_type = file_name.toLowerCase();
-
-
-
-   var check_file_type = new Array();
-    check_file_type=['jpg','gif','png','jpeg','bmp',];
-
-
-
-    if(check_file_type.indexOf(file_type)==-1){
-     alert('이미지 파일만 선택할 수 있습니다.');
-     var parent_Obj=obj.parentNode
-     var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
-     return false;
-     
-     }
-    
-}
-
-</script>
 <script type="text/javascript">
 
 $(".view").mouseover(function(){

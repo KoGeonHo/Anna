@@ -107,18 +107,16 @@
 	  INNER JOIN AnnaUser u
 	  	ON b.uidx = u.uidx
 	 WHERE b.isDel = 'N'
-		  <if test='searchType != null and searchType.equals("All")'>
-	 	    AND b.Contents like concat('%',#{SearchVal},'%')
-	 	    OR u.nickname like concat('%',#{SearchVal},'%')
-	 		OR b.Title like concat('%',#{SearchVal},'%')	
-	 	</if>
-	   <if test='searchType != null and searchType.equals("title")'>
-	 		AND b.Title like concat('%',#{SearchVal},'%')
-	 	</if>
-	 	<if test='searchType != null and searchType.equals("contentWriter")'>
-	 		AND b.Contents like concat('%',#{SearchVal},'%')
-	 		OR u.nickname like concat('%',#{SearchVal},'%')
-	 	</if>
+<if test='board_type != null'>
+	   AND b.board_type = #{board_type}
+</if>
+<if test="searchVal != null">
+	AND (b.Contents like concat('%',#{SearchVal},'%')
+	 	OR u.nickname like concat('%',#{SearchVal},'%')
+	    OR b.Title like concat('%',#{SearchVal},'%')) 
+	
+</if>
+
 </select>
 
 <select id="viewBoard" resultType="boardvo" parameterType="int"> 
@@ -230,17 +228,27 @@
 		  ,b.board_type
 		  ,b.isDel
 		  ,b.Image1
-		  ,b.ccount
+		  ,(select count(*) from reply r where r.Bidx = b.Bidx) as ccount
 		  ,(select count(*) from Board_like c where c.Bidx = b.Bidx) as cntLike
 	  FROM Board b
 	 INNER JOIN AnnaUser u
 	  	ON b.uidx = u.uidx
 	 WHERE b.isDel ='N'
 	  
-<if test='board_type != null'>
+<if test='board_type != null and searchUidx == 0'>
 	   AND b.board_type = #{board_type}
 </if>
-<if test='searchType != null and searchType.equals("All")'>
+
+<if test="searchVal != null">
+	AND (b.Contents like concat('%',#{SearchVal},'%')
+	 	OR u.nickname like concat('%',#{SearchVal},'%')
+	    OR b.Title like concat('%',#{SearchVal},'%')) 
+	
+</if>
+<if test="searchUidx != 0">
+	AND b.uidx = #{searchUidx}
+</if>
+<!-- <if test='searchType != null and searchType.equals("All")'>
 	  
 	   AND (b.Contents like concat('%',#{SearchVal},'%')
 	 	OR u.nickname like concat('%',#{SearchVal},'%')
@@ -255,30 +263,27 @@
        
 	   AND (b.Contents like concat('%',#{SearchVal},'%')
 	 	OR u.nickname like concat('%',#{SearchVal},'%'))
-</if>
+</if> -->
 	 ORDER BY b.Wdate desc
+
 <if test='board_type.equals("free")'> 
 	 limit #{startPage}, #{pageNum}
 </if>
-<if test = 'board_type'>
 
+<if test = 'board_type != "free"'>
+
+	limit #{epage}, #{pageNum}
 
 </if>
+
 </select>
 
-<update id="boardModify" parameterType="boardvo">
+<update id="boardModify">
 	UPDATE Board
 	   SET Title = #{Title}
 	   	  ,Contents = #{Contents}
 	   	  ,Wdate = now()
 	   	  ,Location = #{Location}
-
-	   	  ,Image1 = #{Image1}
-
-	   	  ,Image2 = #{Image2}
-	   	  ,Image3 = #{Image3}
-	   	  ,Image4 = #{Image4}
-	   	  ,Image5 = #{Image5}
 	 WHERE Bidx = #{Bidx}
 
 

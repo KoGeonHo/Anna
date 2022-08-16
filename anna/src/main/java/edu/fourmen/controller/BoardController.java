@@ -40,6 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 import edu.fourmen.service.BoardService;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.SearchVO;
 import edu.fourmen.vo.UserVO;
 
@@ -441,120 +442,9 @@ public class BoardController {
 	public String BoardModify(BoardVO vo, HttpServletRequest request, HttpSession session) throws IOException {
 		
 		session = request.getSession();
-		
-		// 파일 업로드 처리
-
-
-		String fileName=null;
-		String fileName2=null;
-		String fileName3=null;
-		String fileName4=null;
-		String fileName5=null;
-		
-	
-		
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm ");
-		formatter.format(date);
-		System.out.println(formatter.format(date));
-	if(vo.getFileName1() != null) {
-		MultipartFile uploadFile = vo.getFileName1();
-		if (!uploadFile.isEmpty()) {
-			String originalFileName = uploadFile.getOriginalFilename();
-			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-			//UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName= formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
-			System.out.println(request.getSession().getServletContext().getRealPath("/main/resources/upload/"));
-			uploadFile.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
-			String oPath = request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName; // 원본 경로
-			File oFile = new File(oPath); //파일 클래스를 생성 그 안에 원본 경로를 담는다.
-
-			int index = oPath.lastIndexOf("."); //문자열에서 특정 문자열의 위치 값(index)를 반환한다.
-												//indexOf가 처음 발견되는 문자열에 대한 index를 반환하는 반면,
-												//lastIndexOf는 마지막 문자열의 index를 반환한다.
-												// 확장자 찾으려고 "." 위치를 찾는듯하다
-			
-			String ext2 = oPath.substring(index + 1); // 파일 확장자  //해당 위치부터 해서 확장자 부분을 짜름(?)
-
-			String tPath = oFile.getParent() + File.separator + "t-" + oFile.getName(); // 썸네일저장 경로
-			System.out.println(tPath+"썸넬 저장경로");
-			File tFile = new File(tPath); //파일 클래스를 생성 그 안에 썸네일 저장경로를 담는다.
-
-			//double ratio = 2; // 이미지 축소 비율
-			
-			try {
-				//(int) (oImage.getWidth() / ratio); // 생성할 썸네일이미지의 너비
-				//(int) (oImage.getHeight() / ratio)// 생성할 썸네일이미지의 높이
-				BufferedImage oImage = ImageIO.read(oFile); // 원본이미지
-				int tWidth =  200;// 생성할 썸네일이미지의 너비
-				int tHeight = 200; // 생성할 썸네일이미지의 높이
-				
-				BufferedImage tImage = new BufferedImage(tWidth, tHeight, BufferedImage.TYPE_3BYTE_BGR); // 썸네일이미지
-				Graphics2D graphic = tImage.createGraphics();
-				Image image = oImage.getScaledInstance(tWidth, tHeight, Image.SCALE_SMOOTH);
-				graphic.drawImage(image, 0, 0, tWidth, tHeight, null);
-				graphic.dispose(); // 리소스를 모두 해제
-
-				ImageIO.write(tImage, ext2, tFile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		vo.setImage1(fileName);
-	}
-	
-	if(vo.getFileName2() != null) {
-		MultipartFile uploadFile2 = vo.getFileName2();
-		if (!uploadFile2.isEmpty()) {
-			String originalFileName = uploadFile2.getOriginalFilename();
-			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-			//UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName2=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"2"+"_"+originalFileName;
-			uploadFile2.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName2));
-			System.out.println("이미지2저장완료");
-		}
-		vo.setImage2(fileName2);
-	}
-	
-	if(vo.getFileName3() !=null) {
-		MultipartFile uploadFile3 = vo.getFileName3();
-		if (!uploadFile3.isEmpty()) {
-			String originalFileName = uploadFile3.getOriginalFilename();
-			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-			//UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName3=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"3"+"_"+originalFileName;
-			uploadFile3.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName3));
-			System.out.println("이미지3저장완료");
-		}
-		vo.setImage3(fileName3);
-	}
-	
-	if(vo.getFileName4() !=null) {
-		MultipartFile uploadFile4 = vo.getFileName4();
-		if (!uploadFile4.isEmpty()) {
-			String originalFileName = uploadFile4.getOriginalFilename();
-			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-			//UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName4=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"4"+"_"+originalFileName;
-			uploadFile4.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName4));
-		}
-		vo.setImage4(fileName4);
-	}
-	
-	if(vo.getFileName5() !=null) {
-		MultipartFile uploadFile5 = vo.getFileName5();
-		if (!uploadFile5.isEmpty()) {
-			String originalFileName = uploadFile5.getOriginalFilename();
-			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-			//UUID uuid = UUID.randomUUID();	//UUID 구하기
-			fileName5=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"5"+"_"+originalFileName;
-			uploadFile5.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName5));
-		}
-		vo.setImage5(fileName5);
-	}
-	
 		boardService.boardModify(vo);
-		
+		System.out.println("수정됨");
+		System.out.println(vo.getBidx()+"bidx");
 		return "board/FreeBoard";
 	}
 	
@@ -584,10 +474,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/boardlist.do") //게시판 통합
-	public String boardlist(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
+	public String boardlist(Model model, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
+		
+		System.out.println(pm.getSearchUidx());
+		
+		String boardtype = "free";
 		
 		session = request.getSession();
-		
+		if(pm.getBoard_type().equals(boardtype)) {
 		//한 페이지에 몇개씩 표시할 것인지
 		int pagecount = 12;
 		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
@@ -633,14 +527,42 @@ public class BoardController {
 		request.setAttribute("totalRow", totalRow);
 		request.setAttribute("pagenumber", pagenumber);
 		
-		List<BoardVO> board = boardService.selectboard(pm);
-		int Ccount = boardService.getCTotal(bv);
 		
-		bv.setCcount(Ccount);
+		
+		}else if(!pm.getBoard_type().equals(boardtype)) {
+			
+
+		
+
+			int cnt = boardService.totalCount(pm);
+			
+			int epage = (pm.getPage()-1)*15;
+			
+	
+
+			// 설정해준 값들을 해당 객체에 담는다.
+			
+			pm.setEpage(epage);
+			
+			System.out.println(pm.getTotalCount()+"위에서 찍는 토탈");
+
+			pm.setTotalCount(cnt);
+			System.out.println(pm.getPage()+"page?");
+			System.out.println(pm.getStartPage()+"?");
+			System.out.println(pm.getEndPage()+"?end");
+			System.out.println(pm.getTotalCount()+"토탈");
+			
+		}
+		
+		List<BoardVO> board = boardService.selectboard(pm);
+
+		
+		System.out.println(pm.getPageNum()+"num");
+		System.out.println(pm.isNext()+"next");
+		
 		
 		model.addAttribute("pm", pm);
 		model.addAttribute("board", board);
-		model.addAttribute("svo", svo);
 		
 		return "board/boardlist";
 		
@@ -648,32 +570,11 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping("/report.do")
-	public String report(BoardVO vo, HttpServletRequest request, HttpSession session) throws IOException {
+	public String report(ReportVO vo, HttpServletRequest request, HttpSession session) throws IOException {
 		
-		System.out.println(vo.getBidx());
-		String fileName = null;
 		
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm ");
-		formatter.format(date);
 		
-		System.out.println(vo.getFileName1()+"들어갑니다");
 		
-		if(vo.getFileName1() != null) {
-			MultipartFile uploadFile = null;
-			System.out.println(uploadFile+"이건 찍힘");
-			
-				String originalFileName = uploadFile.getOriginalFilename();
-				System.out.println(originalFileName+"여기");
-				//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
-				//UUID uuid = UUID.randomUUID();	//UUID 구하기
-				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"report"+"_"+originalFileName;
-				uploadFile.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
-				System.out.println(fileName);
-			
-			vo.setAttach(fileName);
-			System.out.println(vo.getAttach()+"파일이름");
-		}
 		
 		
 		
