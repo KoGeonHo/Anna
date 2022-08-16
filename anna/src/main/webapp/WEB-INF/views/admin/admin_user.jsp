@@ -108,6 +108,7 @@
 			#modal_list > table > tr > td{
 				width : 30px;			
 				border-bottom: 1px solid #cdd0d4;	
+				
 			}
 			
 			#td_line {
@@ -136,6 +137,10 @@
 			.form-select form-select-sm{
 				border:1px solid #3881B4;
 			}
+			
+			 .dataTable-table > tbody > tr > td {
+				 text-align: center;
+			 }  
 			
 </style>
 
@@ -253,44 +258,43 @@
             <a class="navbar-brand ps-3" href="../admin/admin_user.do">관리자페이지</a>
             <!-- Sidebar Toggle-->
            
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <h5 style="color:#fff; text-align:right; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/main.do';">HOME</h5> 
 
             
         </nav>
         <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="fas fa-user-friends"><i class=" "></i></div>
-                                 &nbsp;회원관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link"  href="../admin/admin_user.do">회원리스트</a>
-                                    <a class="nav-link" href="../admin/admin_report.do">신고리스트</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                사이트 관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="../admin/admin_boarditem.do">거래목록</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트 배너 설정</a>
-                                    
-                                </nav>
-                            </div>
-                </nav>
-            </div>
+	            <div id="layoutSidenav_nav">
+	                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+	                    <div class="sb-sidenav-menu">
+	                        <div class="nav">
+	                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+	                                <div class="fas fa-user-friends"><i class=" "></i></div>
+	                                 &nbsp;회원관리
+	                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+	                            </a>
+	                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+	                                <nav class="sb-sidenav-menu-nested nav">
+	                                    <a class="nav-link"  href="../admin/admin_user.do">회원리스트</a>
+	                                    <a class="nav-link" href="../admin/admin_report.do">신고리스트</a>
+	                                </nav>
+	                            </div>
+	                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+	                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+	                                사이트 관리
+	                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+	                            </a>
+	                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+	                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+	                                    <a class="nav-link collapsed" href="../admin/admin_boarditem.do">판매글 관리</a>
+	                                   <a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
+	                                   <a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
+	                                   <a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
+	                                   <a class="nav-link collapsed" href="void(0);" onclick="alert('준비중입니다');return false;">이벤트 배너 설정</a>
+	                                    
+	                                </nav>
+	                            </div>
+	                </nav>
+	            </div>
 
 
 
@@ -331,7 +335,7 @@
                                                 <th>No</th>
                                                 <th>닉네임</th>
                                                 <th>이메일</th>
-                                                <!-- <th>가입일</th> -->
+                                                <th>가입일</th>
                                              <!--    <th>노쇼</th>
                                                 <th>거래온도</th> -->
                                                 <th>관리</th>
@@ -345,74 +349,48 @@
 													<td>${vo.uidx}</td>										
 													<td>${vo.nickName}</td>										
 													<td>${vo.user_email}</td>										
-													<%-- <td>${vo.jdate}</td>	추가 예정 --%>
-													<td><button type="button" id="openModalPop" class="btn " style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">관리</button>
-                                              		</td>									
-												</tr>
-												
-												</c:forEach>
-												</c:if> 
-                                             </tbody>
-                                 		   </table>
-															<%-- <div id= "modal"> 
+													<td>${vo.jdate}</td>	
+													<td><button  data-toggle="modal" type="button" data-target="#pop_content" id="openModalPop" class="btn " style="background-color: #00AAB2; color: #fff;" 
+													>관리</button>
+                                              	  <c:if test="${UserList.size()>0 }">
+												<c:forEach var="vo" items="${UserList}"> 
+															 <div id= "modal"> 
 															</div>
-															    <div id = "banner_online">
-															        
+															    <div id = "banner_online">															        
 															        <h1>회원 상세정보</h1><br>
-															        <div class="pop_content">
+															        <div class="pop_content" id="pop_content">
 															             <table border="0" name="modal_list" style="text-align:  left; border-bottom: 1px solid #cdd0d4;">
-															             <tr>
-																				<td id="td_line" width="130px;" height= "40px;" >이름</td>
-																				<td id="td_line">홍길동</td>
-																			</tr>
 																			<tr>
 																			    <td id="td_line" width="130px;" height= "40px;">닉네임</td>
-																			    <td id="td_line">anna</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">성별</td>
-																			    <td id="td_line">남</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">아이디</td>
-																			    <td id="td_line">test1111</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line"  width="130px;" height= "40px;">비밀번호</td>
-																			    <td id="td_line">test1111</td>
+																			    <td id="td_line">${vo.nickName}</td>
 																			</tr>
 																			<tr>
 																			    <td id="td_line" width="130px;" height= "40px;">이메일</td>
-																			    <td id="td_line">abcdefg@naver.com</td>
+																			    <td id="td_line">${vo.user_email}</td>
 																			</tr>
 																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">전화번호</td>
-																			    <td id="td_line">010-1234-5678</td>
-																			</tr>
-																			<tr >
-																			    <td id="td_line" width="130px;" height= "40px;">주소</td>
-																			    <td id="td_line">전라북도 전주시 덕진구 금암동</td>
-																			</tr>
-																			<tr id="td_line" >
-																			    <td  width="130px;" height= "40px;">제재횟수</td>
-																			    <td >1회</td>
-																			</tr>
+																			    <td id="td_line" width="130px;" height= "40px;">가입일</td>
+																			    <td id="td_line">${vo.jdate}</td>
+																			</tr>																		
 																		    </table>
 																		    <br>
-																		    																		         
+																											         
 															        </div>
 															        <div id="menu_box">
-															        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+															       			 <select class="form-select form-select-sm" aria-label=".form-select-sm example">
 																				  <option selected>권한</option>
 																				  <option value="1">유저</option>
 																				  <option value="2">관리자</option>
-																				</select>&nbsp;
+																			 </select>&nbsp;
 																				<button type="button"  id="close_button" class="btn " style="background-color: #3881B4; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">닫기</button>
-															       			</div>
+															       	</div>
 															       			<button type="button"  id="close_button" class="btn " style="background-color: #4A4A48; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">설정</button>
 															       			<button type="button"  id="openModalPop_1" class="btn " style="background-color: #00AAB2; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">수정</button>
-															        </div> --%>
-															        
+															      </div>
+															        </c:forEach>
+												</c:if>	
+															        </c:forEach>
+												</c:if>
 															        
 															  
 															
@@ -469,12 +447,17 @@
 															       			&nbsp;
 															       			<button type="button"  id="close_button_1" class="btn " style="background-color: #00AAB2; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">수정</button>
 															        </div>
-															        </div> --%>
+															        </div> 
 															        
+															</td>									
+												</tr>--%>
+												
+												 
+                                             </tbody>
+                                 		   </table>
 															
 															
-															
-														 <!-- <script type="text/javascript">
+														 <script type="text/javascript">
 															$(document).ready(function() {
 															    $("#openPop").click(function() {
 															        $("#banner_online").show();
@@ -482,7 +465,7 @@
 															
 															    $("#openModalPop").click(function() {
 															        $("#banner_online").fadeIn();
-															        $("#modal").fadeIn();
+															        $("#modal").fadeIn();		
 															    });
 															
 															    $("#close_button").click(function(){
@@ -495,6 +478,23 @@
 															        $("#modal").fadeOut();
 															    });
 															});
+															
+															var UIDX="";
+														    var NICKNAME="";
+														    var USER_EMAIL="";
+														    var JDATE="";
+														    
+														    $(document).ready(function() {     
+														        $('#pop_content').on('show.bs.modal', function(event) {          
+														        	UIDX = $(event.relatedTarget).data('uidx');
+														        	NICKNAME = $(event.relatedTarget).data('nickName');
+														        	USER_EMAIL = $(event.relatedTarget).data('user_email');
+														        	JDATE = $(event.relatedTarget).data('jdate');
+														        });
+														    });
+														    
+															
+															
 															</script>
 															
 															<script type="text/javascript">
@@ -512,18 +512,16 @@
 															        $("#banner_online_1").fadeOut();
 															        $("#modal").fadeOut();
 															    });
-															});					
-															
-														
-															</script> -->
-                                          
+															});		
+															</script>			
+
                                             
                                             
                                         
                                 </div>
                             </div>
+		                    </main>
                         </div>
-                    </main>
                     </div>
 
 

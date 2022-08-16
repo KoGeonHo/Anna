@@ -25,6 +25,8 @@
 		,a.uidx, (
 		 select nickName from AnnaUser b where b.uidx = a.uidx 
 		   )as userNickName  from QnA a 
+		   WHERE
+			isDel='N'
 	</select>
 
 

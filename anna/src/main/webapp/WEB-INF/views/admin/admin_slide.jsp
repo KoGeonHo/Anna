@@ -176,7 +176,6 @@
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="../admin/admin_user.do">관리자페이지</a>
             <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             
             <h5 style="color:#fff; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/main.do';">HOME</h5> 
 
@@ -205,7 +204,7 @@
                             </a>
                             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                   <a class="nav-link collapsed" href="../admin/admin_boarditem.do">거래목록</a>
+                                   <a class="nav-link collapsed" href="../admin/admin_boarditem.do">판매글 관리</a>
                                    <a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
                                    <a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
                                    <a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
