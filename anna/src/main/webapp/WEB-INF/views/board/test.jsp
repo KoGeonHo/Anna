@@ -126,8 +126,8 @@ margin : 0px auto;
 		</div>
 		
 		<div id="report_contents">
-			<form id="reportFrm">		    
-				<input type="text" name= "Bidx" value="${bv.bidx}" id="bidx">
+			<form id="reportFrm" action="report.do" enctype="multipart/form-data" method="post">		    
+				<input type="text" name= "bidx" value="${bv.bidx}" id="bidx">
 				<input type="text" name="evidence"value="2" id="evidence">
 	    		<div>
 	    			신고유형 : <select name="report_type" id="report_type">
@@ -135,9 +135,9 @@ margin : 0px auto;
 	    						<option value="4">기타</option>
 	    					</select>
 	    		</div>   	   
-	    		<div>신고닉네임 : ${bv.nickName}<input type="text" value="${bv.uidx}" id="target"></div>
+	    		<div>신고닉네임 : ${bv.nickName}<input type="text" value="${bv.uidx}" name="target"></div>
 	    		<div>상세설명 <textarea name="contents" id="contents"></textarea></div>
-	    		<div>신고자: ${userLoginInfo.nickName}<input type="text" id="repoter" value="${userLoginInfo.uidx}"></div>
+	    		<div>신고자: ${userLoginInfo.nickName}<input type="text" name="repoter" value="${userLoginInfo.uidx}"></div>
 	    		첨부파일 <input type="file" name="file2" id="file">
 	    	
 	    		<div>
@@ -411,29 +411,15 @@ margin : 0px auto;
 
 					</script>
 					<script>
-					function report(){
-						var file2 = $('input[name="test2"]').get(0).files[0];
-						var bidx = $("#bidx").val()
-						var evidence = $("#evidence").val()
-						var target = $("#target").val()
-						var contents = $("#contents").val
-						var repoter = $("#repoter").val
-						var file = file2[0].files;
+					
+					$('#report_btn').click(function() {
 						
-						console.log(file+"파일입니다.");
-						
-						
-						var formData = new FormData();
-						formData.append('evidence', evidence);
-						formData.append('bidx', bidx);
-						formData.append('file1', file1);
-						formData.append('target', target);
-						formData.append('contents', contents);
-						formData.append('repoter', repoter);
+						var formData = new FormData($("#reportFrm")[0]);
+					
 
 						$.ajax({
 							type : 'POST',
-							url : '/report.do',
+							url : 'report.do',
 							processData:false,
 							contentType: false,
 						    data: formData,
@@ -445,8 +431,7 @@ margin : 0px auto;
 								alert("실패."+error);
 							}
 						});
-					}
-					
+					});
 					
 					</script>
 </body>

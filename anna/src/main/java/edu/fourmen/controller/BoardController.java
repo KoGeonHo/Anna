@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -445,7 +446,7 @@ public class BoardController {
 		boardService.boardModify(vo);
 		System.out.println("수정됨");
 		System.out.println(vo.getBidx()+"bidx");
-		return "board/FreeBoard";
+		return "redirect:/board/boardlist.do?board_type=free"; //redirect://board/boardlist.do
 	}
 	
 	@RequestMapping(value="/test.do")
@@ -570,14 +571,40 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping("/report.do")
-	public String report(ReportVO vo, HttpServletRequest request, HttpSession session) throws IOException {
+	public String report(ReportVO vo, MultipartHttpServletRequest multi, HttpSession session) throws IOException {
 		
-		
-		
-		
-		
-		
-		
+		// 저장 경로 설정
+				String root = multi.getSession().getServletContext().getRealPath("/");
+				String path = root+"resources/upload/";
+				
+				String newFileName = ""; // 업로드 되는 파일명
+				
+				Date date = new Date();
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+				
+				File dir = new File(path);
+				if(!dir.isDirectory()){
+					dir.mkdir();
+				}
+				
+				Iterator<String> files = multi.getFileNames();
+				while(files.hasNext()){
+					String uploadFile = files.next();
+								
+					MultipartFile mFile = multi.getFile(uploadFile);
+					String fileName = mFile.getOriginalFilename();
+					System.out.println("실제 파일 이름 : " +fileName);
+					newFileName = formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+fileName;
+					
+					try {
+						mFile.transferTo(new File(path+newFileName));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				vo.setAttach(newFileName);
+				
+
 		boardService.reportinsert(vo);
 		
 		return "";
