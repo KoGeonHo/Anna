@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.fourmen.service.BoardService;
@@ -209,6 +210,7 @@ public class BoardController {
 		
 	if(vo.getFileName1() != null) {
 		MultipartFile uploadFile = vo.getFileName1();
+			//System.out.println(uploadFile);
 		if (!uploadFile.isEmpty()) {
 			String originalFileName = uploadFile.getOriginalFilename();
 			//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
@@ -421,7 +423,7 @@ public class BoardController {
 		boardService.boardDelete(Bidx);
 		System.out.println("삭제완료");
 		
-		return "redirect:/board/FreeBoard.do";
+		return "redirect:/board/boardlist.do";
 	}
 	
 	@RequestMapping(value="/BoardModify.do", method=RequestMethod.GET)
@@ -581,7 +583,7 @@ public class BoardController {
 		return "board/test";
 	}
 	
-	@RequestMapping(value="/boardlist.do")
+	@RequestMapping(value="/boardlist.do") //게시판 통합
 	public String boardlist(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
 		
 		session = request.getSession();
@@ -644,7 +646,41 @@ public class BoardController {
 		
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping("/report.do")
+	public String report(BoardVO vo, HttpServletRequest request, HttpSession session) throws IOException {
+		
+		System.out.println(vo.getBidx());
+		String fileName = null;
+		
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm ");
+		formatter.format(date);
+		
+		System.out.println(vo.getFileName1()+"들어갑니다");
+		
+		if(vo.getFileName1() != null) {
+			MultipartFile uploadFile = null;
+			System.out.println(uploadFile+"이건 찍힘");
+			
+				String originalFileName = uploadFile.getOriginalFilename();
+				System.out.println(originalFileName+"여기");
+				//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
+				//UUID uuid = UUID.randomUUID();	//UUID 구하기
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"report"+"_"+originalFileName;
+				uploadFile.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
+				System.out.println(fileName);
+			
+			vo.setAttach(fileName);
+			System.out.println(vo.getAttach()+"파일이름");
+		}
+		
+		
+		
+		boardService.reportinsert(vo);
+		
+		return "";
+	}
 	
 	
 	

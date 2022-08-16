@@ -147,6 +147,18 @@
 				</ul>
 			</div>	
 		</c:if>
+		
+		<c:if test="${pm.board_type != 'free' }">
+			<table>
+			<c:if test="${board.size()>0}">
+				<c:forEach var="vo" items="${board}">
+					<tr>
+						<td>이거</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+			</table>
+		</c:if>
 				
 				
 			</form>

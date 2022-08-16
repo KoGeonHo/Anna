@@ -121,5 +121,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 
+	@Override
+	public int reportinsert(BoardVO vo) {
+		
+		return boardDao.reportinsert(vo);
+	}
+
+
 
 }
