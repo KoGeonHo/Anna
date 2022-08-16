@@ -265,13 +265,14 @@
 												<c:forEach var="vo" items="${QnAList}"> 
 												<tr>
                                                 <th>${vo.qidx}</th>
-                                                <%-- <th>${vo.nikName}</th> --%>
+                                                 <th>${vo.userNickName}</th> 
                                                 <th>${vo.title}</th>
                                                 <th>${vo.contents}</th>
                                                 <th>${vo.wDate}</th>
-                                                <th>/</th>
+                                                <th>처리중</th>
+                                               
 
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
+                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/customer/QnAView.do?qidx=${vo.qidx}';" style="font-size: 14px;">게시글 조회</button>&nbsp;
                                                 <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
                                                 </tr>
 												</c:forEach>
