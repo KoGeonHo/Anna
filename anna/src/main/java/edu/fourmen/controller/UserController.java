@@ -98,7 +98,10 @@ public class UserController {
 
 					session.setAttribute("uidx", userInfo.getUidx());
 					
+					//System.out.println("isAdmin? : "+userInfo.getIsAdmin());
+					
 					session.setAttribute("userLoginInfo", userInfo);
+					
 					
 					//로그인 유지체크를 한경우 쿠키를생성한다.
 					if(vo.getKeepLogin() != null) {
@@ -110,7 +113,13 @@ public class UserController {
 			        		response.addCookie(cookie);
 			        	}
 					}
-					pw.append("<script>location.href='"+request.getContextPath()+"/main.do';</script>");
+					
+					
+					if(userInfo.getIsAdmin().equals("Y")) {
+						pw.append("<script>location.href='"+request.getContextPath()+"/admin/admin_user.do';</script>");
+					}else {
+						pw.append("<script>location.href='"+request.getContextPath()+"/main.do';</script>");
+					}
 					
 					pw.flush();
 					
@@ -312,7 +321,13 @@ public class UserController {
             		
             		userLoginInfo = userService.login(userLoginInfo);
             		
-        			moveTo = path+"/main.do";
+            		String isAdmin = userLoginInfo.getIsAdmin();
+            		
+            		if(isAdmin.equals("Y")) {
+            			moveTo = path+"/admin/admin_user.do";
+            		}else {
+            			moveTo = path+"/main.do";
+            		}
         			
             	}
             	
@@ -323,6 +338,8 @@ public class UserController {
         		userLoginInfo.setUser_email(kakao_email);
         		
         		userLoginInfo = userService.login(userLoginInfo);
+        		
+        		String isAdmin = userLoginInfo.getIsAdmin();
 
         		
         		if(userLoginInfo.getKakao_auth() == "") {
@@ -335,8 +352,11 @@ public class UserController {
 
         		//System.out.println(kakao_email);
         		
-    			moveTo = path+"/user/myPage.do";
-        			
+        		if(isAdmin.equals("Y")) {
+        			moveTo = path+"/admin/admin_user.do";
+        		}else {
+        			moveTo = path+"/main.do";
+        		}
         	}
         	System.out.println(keepLogin);
         	//로그인 유지체크를 한경우 쿠키를생성한다.
@@ -379,44 +399,40 @@ public class UserController {
 		
 		System.out.println(session.getMaxInactiveInterval());
 		
-		int uidx = 0;
-		
-		List<BoardItemVO> list = new ArrayList<BoardItemVO>();
-		
-		List<BoardVO> blist = new ArrayList<BoardVO>();
-		
-		uidx = (int)session.getAttribute("uidx");
+		int uidx = (int)session.getAttribute("uidx");
+
+		List<BoardVO> myTownCommunityList = new ArrayList<BoardVO>();
 		
 		UserVO uv = (UserVO)session.getAttribute("userLoginInfo");
 		
 		//System.out.println(uv.getLocation_auth());
 		
 		UserVO userInfo = userService.getUserInfo(uidx);
+
+		List<String> keyWord = new ArrayList<String>();
 		
-		if(userInfo.getInterested() != null) {
-			String[] ArrayInterested = userInfo.getInterested().split(",");
-			List<String> listInterested = new ArrayList<String>();
-			
-			for(int i = 0; i < ArrayInterested.length; i++) {
-				listInterested.add(ArrayInterested[i]);
-			}
-			
-			list = userService.getInterestedItem(listInterested);
-			
-		} else {
-			List<String> listInterested = new ArrayList<String>();
-			list = userService.getInterestedItem(listInterested);
+		String[] ArrayInterested = userInfo.getInterested().split(",");
+		
+		for(int i = 0; i < ArrayInterested.length; i++) {
+			keyWord.add(ArrayInterested[i]);
 		}
+		
+		List<BoardItemVO> interestedList = userService.getInterestedItem(keyWord,uidx);
+			
+		List<BoardItemVO> myBoardItemList = userService.myBoardItemList(uidx);
 		
 		if(uv.getLocation_auth() != null) {
-			blist = userService.myTownCommunityList(uv.getLocation_auth());
+			myTownCommunityList = userService.myTownCommunityList(uv.getLocation_auth());
 		}
+		
 		
 		//System.out.println(blist);
 
-		model.addAttribute("myTownCommunityList",blist);
+		model.addAttribute("myBoardItemList",myBoardItemList);
 		
-		model.addAttribute("interestedList",list);
+		model.addAttribute("myTownCommunityList",myTownCommunityList);
+		
+		model.addAttribute("interestedList",interestedList);
 		
 		model.addAttribute("userInfo",userInfo);
 		

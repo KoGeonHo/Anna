@@ -22,10 +22,14 @@
 		$(".slide-btn-prev").click(function(){
 			let slideContainer = $(this).data("container");
 			slideWidth = $(slideContainer).css("width").replace("px","");
+			let itemSize = $(this).data("itemsize");
+			let NextMax = -((Math.ceil(itemSize / 5) - 1) * slideWidth);
 			slide = $($(this).data("slide"));
 			if((parseInt(slide.css("left").replace("px",""))%slideWidth) == 0){
 				let left = slide.css("left").replace("px","");
-				if((parseInt(left)+parseInt(slideWidth)) > 0){
+				if(slide.css("left").replace("px","") == 0){
+					left = NextMax;
+				}else if((parseInt(left)+parseInt(slideWidth)) > 0){
 					left = 0;
 				}
 				else{
@@ -36,12 +40,13 @@
 		});
 		
 		$(".slide-btn-next").click(function(){
+			let itemSize = $(this).data("itemsize");
 			let slideContainer = $(this).data("container");
 			slideWidth = $(slideContainer).css("width").replace("px","");
 			slide = $($(this).data("slide"));
 			if((parseInt(slide.css("left").replace("px",""))%slideWidth) == 0){
 				left = slide.css("left").replace("px","");
-				let NextMax = -((Math.ceil(${ interestedList.size() / 5 })-1)*slideWidth);
+				let NextMax = -((Math.ceil(itemSize / 5) - 1) * slideWidth);
 				if((parseInt(left)-parseInt(slideWidth)) >= parseInt(NextMax)){
 					left = (parseInt(left)-parseInt(slideWidth));
 				}else{
@@ -167,22 +172,33 @@
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님이 관심있어 할만한 상품</div>
 					<div style="float:right; padding:5px;">더 보기</div>
 					
-					<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative;">
-						<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
-						<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
-						<div id="slider-interested" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
-							<c:forEach var="vo" items="${interestedList}">
-								<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
-									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-										<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-										<div class="card-body">
-									    	<span style="display:block;">${ vo.title }</span>
-									  	</div>
+					<c:if test="${interestedList.size() > 0}">
+						<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative;">
+							<c:if test="${interestedList.size() > 5}">
+								<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ interestedList.size() }" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
+								<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ interestedList.size() }" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
+							</c:if>
+							<div id="slider-interested" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
+								<c:forEach var="vo" items="${interestedList}">
+									<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
+										<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
+											<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+											<div class="card-body">
+										    	<span style="display:block;">${ vo.title }</span>
+										  	</div>
+										</div>
 									</div>
-								</div>
-							</c:forEach>
+								</c:forEach>
+							</div>
 						</div>
-					</div>
+					</c:if>
+					<c:if test="${interestedList.size() eq 0}">
+						<div style="width:100%; height:200px; clear:both; display:flex;">
+							<div style="flex:1; margin:auto; text-align:center; cursor:pointer;" onclick="location.href='userInfoMod.do'">
+								등록된 키워드로 등록된상품이 없습니다.
+							</div>
+						</div>
+					</c:if>
 				</div>
 				<hr>
 				
@@ -190,22 +206,33 @@
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님의 판매중인 상품</div>
 					<div style="float:right; padding:5px;">더 보기</div>
 					
-					<div id="slideOfMyItem" style="width:100%; clear:both; overflow:hidden; position:relative;">
-						<div class="slide-btn slide-btn-prev" data-slide="#slider-myItem" data-container="#slideOfMyItem" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
-						<div class="slide-btn slide-btn-next" data-slide="#slider-myItem" data-container="#slideOfMyItem" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
-						<div id="slider-myItem" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
-							<c:forEach var="vo" items="${interestedList}">
-								<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
-									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-										<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-										<div class="card-body">
-									    	<span style="display:block;">${ vo.title }</span>
-									  	</div>
+					<c:if test="${myBoardItemList.size() > 0}">
+						<div id="slideOfMyItem" style="width:100%; clear:both; overflow:hidden; position:relative;">
+							<c:if test="${myBoardItemList.size() > 5}">
+								<div class="slide-btn slide-btn-prev" data-slide="#slider-myItem" data-container="#slideOfMyItem" data-itemsize="${ myBoardItemList.size() }" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
+								<div class="slide-btn slide-btn-next" data-slide="#slider-myItem" data-container="#slideOfMyItem" data-itemsize="${ myBoardItemList.size() }" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
+							</c:if>
+							<div id="slider-myItem" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
+								<c:forEach var="vo" items="${myBoardItemList}">
+									<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
+										<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
+											<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+											<div class="card-body">
+										    	<span style="display:block;">${ vo.title }</span>
+										  	</div>
+										</div>
 									</div>
-								</div>
-							</c:forEach>
+								</c:forEach>
+							</div>
 						</div>
-					</div>
+					</c:if>
+					<c:if test="${myBoardItemList.size() eq 0}">
+						<div style="width:100%; height:200px; clear:both; display:flex;">
+							<div style="flex:1; margin:auto; text-align:center;">
+								현재 판매중인 상품이 없습니다.
+							</div>
+						</div>
+					</c:if>
 				</div>
 				<hr>
 				
@@ -223,7 +250,7 @@
 						</div>
 						<c:if test="${ not empty myTownCommunityList }">
 							<c:forEach var="i" items="${ myTownCommunityList }">
-								<div class="tr border-bottom">
+								<div class="tr border-bottom" onclick="location.href='${path}/board/viewBoard.do?Bidx=${i.bidx}'">
 									<div class="td text-center" style="width:50%;">${ i.title }</div>
 									<div class="td text-center" style="width:10%;">${ i.board_type }</div>
 									<div class="td text-center" style="width:10%;">${ i.nickName }</div>
@@ -231,6 +258,11 @@
 									<div class="td text-center" style="width:10%;">${ i.hit }</div>
 								</div>
 							</c:forEach>
+						</c:if>
+						<c:if test="${ empty myTownCommunityList }">
+							<div class="tr border-bottom" style="height:200px; display:flex; margin-bottom:20px;">
+								<div style="flex:1; margin:auto; text-align:center;">현재 등록된 동네에는 등록된 게시글이 없습니다.</div>
+							</div>
 						</c:if>
 					</div>
 				</div>

@@ -35,4 +35,9 @@ public class CustomerDAO {
 		
 		return sqlSession.update("edu.fourmen.mapper.customerMapper.QnADel",qidx);
 	}
+
+	public int QnAAnswer(QnAVO vo) {
+
+		return sqlSession.update("edu.fourmen.mapper.customerMapper.QnAAnswer",vo);
+	}
 }
