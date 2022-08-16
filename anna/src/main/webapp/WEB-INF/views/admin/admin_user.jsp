@@ -321,7 +321,7 @@
 
 
                       
-                   
+												
                        
                             <div class="card mb-4">
                                 <div class="card-body">
@@ -329,29 +329,32 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>아이디</th>
-                                                <th>비밀번호</th>
-                                                <th>이름</th>
+                                                <th>닉네임</th>
                                                 <th>이메일</th>
-                                                <th>가입일</th>
-                                                <th>노쇼</th>
-                                                <th>거래온도</th>
+                                                <!-- <th>가입일</th> -->
+                                             <!--    <th>노쇼</th>
+                                                <th>거래온도</th> -->
                                                 <th>관리</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" id="openModalPop" class="btn " style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">관리</button>
-                                              
-															<div id= "modal"> 
+                                        <tbody>                                       
+                                        
+               							   <c:if test="${UserList.size()>0 }">
+												<c:forEach var="vo" items="${UserList}"> 
+												<tr>
+													<td>${vo.uidx}</td>										
+													<td>${vo.nickName}</td>										
+													<td>${vo.user_email}</td>										
+													<%-- <td>${vo.jdate}</td>	추가 예정 --%>
+													<td><button type="button" id="openModalPop" class="btn " style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">관리</button>
+                                              		</td>									
+												</tr>
+												
+												</c:forEach>
+												</c:if> 
+                                             </tbody>
+                                 		   </table>
+															<%-- <div id= "modal"> 
 															</div>
 															    <div id = "banner_online">
 															        
@@ -408,12 +411,12 @@
 															       			</div>
 															       			<button type="button"  id="close_button" class="btn " style="background-color: #4A4A48; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">설정</button>
 															       			<button type="button"  id="openModalPop_1" class="btn " style="background-color: #00AAB2; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">수정</button>
-															        </div>
+															        </div> --%>
 															        
 															        
 															  
 															
-															    <div id = "banner_online_1">
+															    <%-- <div id = "banner_online_1">
 															        
 															        <h1>회원 상세정보</h1><br>
 															        <div class="pop_content_1">
@@ -466,12 +469,12 @@
 															       			&nbsp;
 															       			<button type="button"  id="close_button_1" class="btn " style="background-color: #00AAB2; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">수정</button>
 															        </div>
-															        </div>
+															        </div> --%>
 															        
 															
 															
 															
-														 <script type="text/javascript">
+														 <!-- <script type="text/javascript">
 															$(document).ready(function() {
 															    $("#openPop").click(function() {
 															        $("#banner_online").show();
@@ -509,138 +512,14 @@
 															        $("#banner_online_1").fadeOut();
 															        $("#modal").fadeOut();
 															    });
-															});
-															
+															});					
 															
 														
-															</script>
-                                                </th>
-                                                
-                                            </tr>
-                                            <tr>	
-                                                <th>2</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>4</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>5</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>6</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>7</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>8</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>9</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>10</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>11</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>12</th>
-                                                <th>test111</th>
-                                                <th>1234</th>
-                                                <th>홍길동</th>
-                                                <th>test@naver.com</th>
-                                                <th>2022-07-25</th>
-                                                <th>0</th>
-                                                <th>36.5°</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">관리</button></th>
-                                            </tr>
+															</script> -->
+                                          
                                             
-                                        </tbody>
-                                    </table>
+                                            
+                                        
                                 </div>
                             </div>
                         </div>

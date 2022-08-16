@@ -167,37 +167,52 @@
             
         </nav>
         <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="fas fa-user-friends"><i class=" "></i></div>
-                                &nbsp;회원관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link"  href="../admin/admin_user.do">회원리스트</a>
-                                    <a class="nav-link" href="../admin/admin_report.do">신고리스트</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                사이트 관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                   <a class="nav-link collapsed" href="../admin/admin_boarditem.do">거래목록</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트 배너 설정</a>
-                                </nav>
-                            </div>
-                </nav>
-            </div>
+		<div id="layoutSidenav_nav">
+			<nav class="sb-sidenav accordion sb-sidenav-dark"
+				id="sidenavAccordion">
+				<div class="sb-sidenav-menu">
+					<div class="nav">
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapseLayouts" aria-expanded="false"
+							aria-controls="collapseLayouts">
+							<div class="fas fa-user-friends">
+								<i class=" "></i>
+							</div> &nbsp;회원관리
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+						<div class="collapse" id="collapseLayouts"
+							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="../admin/admin_user.do">회원리스트</a> <a
+									class="nav-link" href="../admin/admin_report.do">신고리스트</a>
+							</nav>
+						</div>
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapsePages" aria-expanded="false"
+							aria-controls="collapsePages">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-book-open"></i>
+							</div> 사이트 관리
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+						<div class="collapse" id="collapsePages"
+							aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav accordion"
+								id="sidenavAccordionPages">
+								<a class="nav-link collapsed" href="../admin/admin_boarditem.do">거래목록</a>
+								<a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
+								<a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
+								<a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
+								<a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트
+									배너 설정</a>
+							</nav>
+						</div>
+			</nav>
+		</div>
 
 
 
@@ -246,137 +261,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
+                                          <c:if test="${QnAList.size()>0 }">
+												<c:forEach var="vo" items="${QnAList}"> 
+												<tr>
+                                                <th>${vo.qidx}</th>
+                                                <%-- <th>${vo.nikName}</th> --%>
+                                                <th>${vo.title}</th>
+                                                <th>${vo.contents}</th>
+                                                <th>${vo.wDate}</th>
+                                                <th>/</th>
+
                                                 <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
                                                 <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
                                                 </tr>
+												</c:forEach>
+												</c:if>
+                                            
+            
                                                 
-                                                <tr>
-                                                <th>2</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>3</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>4</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>5</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>6</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>7</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>8</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>9</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>10</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>11</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>12</th>
-                                                <th>test111</th>
-                                                <th>가격 제안이 뭐예요?</th>
-                                                <th>올라온 금액보다 저렴하게 구입하고 싶으면 판매자하고 가격 제안으로 싸게 살 수 있나요? </th>
-                                                <th>2022-07-25</th>
-                                                <th>처리중</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
                                               
                                              
                                                 

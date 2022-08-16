@@ -183,6 +183,12 @@ const GetList = function(currentPage){
 	큰(lg)   	  992px 이상	  데스크탑
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
+.myCarousel { 
+	z-index : 100;
+}
+
+
+
 .body {
 	padding-top: -56px;
 	
@@ -356,7 +362,6 @@ a {
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2 ">
-								<h6 style="text-align: right;">더보기</h6>
 							</div>
 							<hr>
 						</div>
@@ -531,17 +536,18 @@ width: 50px;
 											<div class="card shadow-sm">
 												<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"	 onerror=this.src="images/noimg_item.jpg" width="100%"  height="225">
 												</a>
-												<div class="card-body">
+												<div class="card-body" style="border : 0;">
 													<h6 class="card-title">
 														<a href="board/viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a>
 													</h6>
 													<p class="card-text"></p>
 													<button type="button"
 														class="btn btn-sm btn-outline-secondary"
-														style="float: right">view 5</button>
+														style="float: left">♥2</button>
 													<button type="button"
 														class="btn btn-sm btn-outline-secondary"
-														style="float: right">♥2</button>
+														style="float: left">view 5</button>
+													
 												</div>
 											</div>
 										</div>
@@ -634,7 +640,7 @@ width: 50px;
 
 
 </div>
-</div>
+
 
 
 <!-- 퀵메뉴 시작 -->
@@ -648,7 +654,7 @@ width: 50px;
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
 
 
-	
+	</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
  <script src="https://getbootstrap.kr/docs/5.1/examples/offcanvas-navbar/offcanvas.js"></script>

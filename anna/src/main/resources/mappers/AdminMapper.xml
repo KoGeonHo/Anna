@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="edu.fourmen.mapper.adminMapper">
+
+	<select id="selectadminUser" resultType="UserVO">
+		SELECT uidx		
+		,nickname
+		,user_Email
+		,DATE_FORMAT(jdate, '%Y-%m-%d') AS jdate
+		FROM 
+			AnnaUser	
+		WHERE
+			isDel='N'			
+	</select>
+	
+	<select id="selectadminQna" resultType="QnAVO">
+		SELECT a.qidx
+		,a.qType
+		,a.title
+		,a.contents
+		,DATE_FORMAT(a.wdate, '%Y-%m-%d') AS wdate
+		,a.uidx, (
+		 select nickName from AnnaUser b where b.uidx = a.uidx 
+		   )as nickName  from QnA a 
+	</select>
+
+
+	
+	
+	
+</mapper>
+
+
+
+

@@ -42,8 +42,7 @@
 				
 				.mb-4 {
 					border: 0;
-				}
-				
+				}	
 				
 </style>
         
@@ -52,7 +51,7 @@
         
         
         <!-- 관리자 정보 메뉴  -->
-<style type="text/css">
+		<style type="text/css">
 
 			#modal {
 				position: fixed;
@@ -172,525 +171,579 @@
 
             
         </nav>
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="fas fa-user-friends"><i class=" "></i></div>
-                                &nbsp;회원관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link"  href="../admin/admin_user.do">회원리스트</a>
-                                    <a class="nav-link" href="../admin/admin_report.do">신고리스트</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                사이트 관리
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                   <a class="nav-link collapsed" href="../admin/admin_boarditem.do">거래목록</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트 배너 설정</a>
-                                </nav>
-                            </div>
-                           
-                </nav>
-            </div>
+	<div id="layoutSidenav">
+		<div id="layoutSidenav_nav">
+			<nav class="sb-sidenav accordion sb-sidenav-dark"
+				id="sidenavAccordion">
+				<div class="sb-sidenav-menu">
+					<div class="nav">
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapseLayouts" aria-expanded="false"
+							aria-controls="collapseLayouts">
+							<div class="fas fa-user-friends">
+								<i class=" "></i>
+							</div> &nbsp;회원관리
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+						<div class="collapse" id="collapseLayouts"
+							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="../admin/admin_user.do">회원리스트</a> <a
+									class="nav-link" href="../admin/admin_report.do">신고리스트</a>
+							</nav>
+						</div>
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapsePages" aria-expanded="false"
+							aria-controls="collapsePages">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-book-open"></i>
+							</div> 사이트 관리
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+						<div class="collapse" id="collapsePages"
+							aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav accordion"
+								id="sidenavAccordionPages">
+								<a class="nav-link collapsed" href="../admin/admin_boarditem.do">거래목록</a>
+								<a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
+								<a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
+								<a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
+								<a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트
+									배너 설정</a>
+							</nav>
+						</div>
+			</nav>
+		</div>
 
 
 
-            <div id="layoutSidenav_content"> 
-                <main>
-                <div class="container-fluid px-4">
-            <!-- 검색 -->
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid px-4">
+					<!-- 검색 -->
 					<div class="container">
 						<div class="d-md-none d-lg-block d-xl-block">
-					    <div class="row">
-					        <div class="col-md-1 col-sm-0"></div>
-					        <div class="col-md-10  col-sm-12" >
-                                <h6 style="font-weight:bold">⚫️ 게시글 검색</h6>
-                                <br>
-					            <form class="d-flex ">
-                                    
-						          <input class="form-control me-6 vh-20" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
-						          <button class="btn btn-outline-primary" type="submit">Search</button>
-						        </form>
-					        
-					        </div>
-					        <div class="col-md-1 col-sm-0"></div>
-					    </div>
-					    </div>
-					    </div>	
-                        </div>
-				  	<!-- 검색 -->
+							<div class="row">
+								<div class="col-md-1 col-sm-0"></div>
+								<div class="col-md-10  col-sm-12">
+									<h6 style="font-weight: bold">⚫️ 게시글 검색</h6>
+									<br>
+									<form class="d-flex" method="get" action="admin_board.do?">
+										<input class="form-control me-6 vh-20 search-control" type="search" name="SearchVal"
+											placeholder="검색어를 입력하세요" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> aria-label="Search">
+										<button class="btn btn-outline-primary" type="submit">Search</button>
+									</form>
 
-
-                      
-                   
-                   <section id="about_tab" style="margin:100px 0;">
-					    <div class="tabs" style="text-align:left; padding-left: 30px; padding-right: 30px;">
-					        <input id="tab1" type="radio" name="tab_btn" checked/>
-					        <label for="tab1">일상 &amp; 소통</label>
-					
-					        <input id="tab2" type="radio" name="tab_btn"/>
-					        <label for="tab2">구인 &amp; 구직</label>
-					
-					        <input id="tab3" type="radio" name="tab_btn"/>
-					        <label for="tab3">모임</label>
-					        <div class="line"></div>
-					        
-					        <!-- 탭1-->
-					        <div id="info"  class="about_inner"> 
-					        
-					        
-                       
-                             <div class="card mb-4">
-                                <div class="card-body">
-                                    <table id="datatablesSimple">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>닉네임</th>
-                                                <th>제목</th>                                                
-                                                <th>작성일</th>
-                                                <th>게시글 조회 &amp; 삭제</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <th>test</th>
-                                                <th>이사 관련 질문드립니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>2</th>
-                                                <th>test</th>
-                                                <th>에어팟 2세대 분실했는데 습득한분..?</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>3</th>
-                                                <th>test</th>
-                                                <th>숏컷헤어 잘하는 미용실 있나요?</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>4</th>
-                                                <th>test</th>
-                                                <th>천연비누 만들어보려는데 재료 어디서파는지 아시는분</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>5</th>
-                                                <th>test</th>
-                                                <th>에어팟 2세대 분실했는데 습득한분..?</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>6</th>
-                                                <th>test</th>
-                                                <th>숏컷헤어 잘하는 미용실 있나요?</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>7</th>
-                                                <th>test</th>
-                                                <th>천연비누 만들어보려는데 재료 어디서파는지 아시는분</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>8</th>
-                                                <th>test</th>
-                                                <th>이사 관련 질문드립니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>9</th>
-                                                <th>test</th>
-                                                <th>이사 관련 질문드립니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>10</th>
-                                                <th>test</th>
-                                                <th>이사 관련 질문드립니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>11</th>
-                                                <th>test</th>
-                                                <th>이사 관련 질문드립니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                
-                                               <tr>
-                                                <th>12</th>
-                                                <th>test</th>
-                                                <th>이사 관련 질문드립니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            
-                            </div>
-        <!-- 탭1-->
-        
-
-        <!-- 탭2-->
-        <div id="peple" class="about_inner">
-           
-           
-           <div class="card mb-4">
-                                <div class="card-body">
-                                    <table id="datatablesSimple_1">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>닉네임</th>
-                                                <th>제목</th>                                                
-                                                <th>작성일</th>
-                                                <th>게시글 조회 &amp; 삭제</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <th>test</th>
-                                                <th>백엔드 개발자 구합니다 / 이젠컴퓨터학원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>2</th>
-                                                <th>test</th>
-                                                <th>디자이너 구합니다 시간 금액 협의 후 결정</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>3</th>
-                                                <th>test</th>
-                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다  </th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>4</th>
-                                                <th>test</th>
-                                                <th>가족같은 분위기의 고깃집 알바 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>5</th>
-                                                <th>test</th>
-                                                <th>백엔드 개발자 구합니다 / 이젠컴퓨터학원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>6</th>
-                                                <th>test</th>
-                                                <th>디자이너 구합니다 시간 금액 협의 후 결정</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>7</th>
-                                                <th>test</th>
-                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다 </th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>8</th>
-                                                <th>test</th>
-                                                <th>가족같은 분위기의 고깃집 알바 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>9</th>
-                                                <th>test</th>
-                                                <th>백엔드 개발자 구합니다 / 이젠컴퓨터학원</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>10</th>
-                                                <th>test</th>
-                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>11</th>
-                                                <th>test</th>
-                                                <th>가족같은 분위기의 고깃집 알바 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                
-                                               <tr>
-                                                <th>12</th>
-                                                <th>test</th>
-                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            
-                            
-           
-           
-           
-        </div>
-        <!-- 탭2-->
-        
-
-        <!-- 탭3-->
-        <div id="history" class="about_inner">
-        	
-        	
-        	
-        	
-        	 
-        	<div class="card mb-4">
-                                <div class="card-body">
-                                    <table id="datatablesSimple_3">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>닉네임</th>
-                                                <th>제목</th>                                                
-                                                <th>작성일</th>
-                                                <th>게시글 조회 &amp; 삭제</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <th>test</th>
-                                                <th>번개 모임 인원 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>2</th>
-                                                <th>test</th>
-                                                <th>등산 모임 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>3</th>
-                                                <th>test</th>
-                                                <th>노래방 모임 멤버 구합니다  </th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>4</th>
-                                                <th>test</th>
-                                                <th>맛집 탐방하실 분들 구해요</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>5</th>
-                                                <th>test</th>
-                                                <th>모여서 여행가실분</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>6</th>
-                                                <th>test</th>
-                                                <th>안나FC 선수단 모집합니다 지원 주세요</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>7</th>
-                                                <th>test</th>
-                                                <th>배그 4인 돌릴사람 연락주세요</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>8</th>
-                                                <th>test</th>
-                                                <th>노래방 모임 멤버 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>9</th>
-                                                <th>test</th>
-                                                <th>등산 모임 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>10</th>
-                                                <th>test</th>
-                                                <th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                <tr>
-                                                <th>11</th>
-                                                <th>test</th>
-                                                <th>주마다 봉사다닐 분들 모집해요</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                
-                                               <tr>
-                                                <th>12</th>
-                                                <th>test</th>
-                                                <th>번개 모임 인원 구합니다</th>
-                                                <th>2022-07-25</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
-                                                
-                                                
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            </div>
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        	
-        </div>
-        </div>
-        </section>
-        </main>
-        
-        <!-- 탭3-->
-                            
-                            
-                            
-                        </div>
-                  
-                    </div>
+								</div>
+								<div class="col-md-1 col-sm-0"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 검색 -->
 
 
 
-                
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+				<section id="about_tab" style="margin: 100px 0;">
+					<div class="tabs"
+						style="text-align: left; padding-left: 30px; padding-right: 30px;">
+						<input id="tab1" type="radio" name="tab_btn" checked /> <label
+							for="tab1">일상 &amp; 소통</label> <input id="tab2" type="radio"
+							name="tab_btn" /> <label for="tab2">구인 &amp; 구직</label> <input
+							id="tab3" type="radio" name="tab_btn" /> <label for="tab3">모임</label>
+						<div class="line"></div>
+
+						<!-- 일상 & 소통 start-->
+						<div id="info" class="about_inner">
+							<div class="card mb-4">
+								<div class="card-body">
+									<table id="datatablesSimple">
+										<thead>
+											<tr>
+												<th>No</th>
+												<th>닉네임</th>
+												<th>제목</th>
+												<th>작성일</th>
+												<th>게시글 조회 &amp; 삭제</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<c:if test="${freeboard.size() ==0}">
+
+												<h3>등록된 게시물이 없습니다.</h3>
+											</c:if>
+
+											<c:if test="${freeboard.size()>0 }">
+												<c:forEach var="vo" items="${freeboard}">
+													<c:if test="${vo.board_type eq 'free' }">
+														<tr>
+															<th id="bidx">${vo.bidx}</th>
+															<th>${vo.nickName }</th>
+															<th>${vo.title}</th>
+															<th>${vo.wdate }</th>
+															<th>
+																<button type="button" class="btn "
+																	style="background-color: #00AAB2; color: #fff;"
+																	onclick="javascript:location.href='${ path }/board/viewBoard.do?Bidx=${vo.bidx}';"
+																	style="font-size: 14px;">게시글 조회</button>&nbsp;
+																<button type="button" id="openModalPop" class="btn"
+																	style="background-color: #E51D21; color: #fff;"
+																	onclick="del(${vo.bidx});" style="font-size: 14px;">삭제</button>
+															</th>
+														</tr>
+													</c:if>
+												</c:forEach>
+											</c:if>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<script>
+						function del(bidx){
+							if(confirm('삭제하시겠습니까?'))   
+							  location.href='${ path }/board/BoardDelete.do?Bidx='+bidx;}
+						</script>
+
+						<!-- 일상 & 소통 end-->
+
+
+						<!-- 구인 & 구직 start-->
+						<div id="peple" class="about_inner">
+
+
+							<div class="card mb-4">
+								<div class="card-body">
+									<table id="datatablesSimple_1">
+										<thead>
+											<tr>
+												<th>No</th>
+												<th>닉네임</th>
+												<th>제목</th>
+												<th>작성일</th>
+												<th>게시글 조회 &amp; 삭제</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>1</th>
+												<th>test</th>
+												<th>백엔드 개발자 구합니다 / 이젠컴퓨터학원</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>2</th>
+												<th>test</th>
+												<th>디자이너 구합니다 시간 금액 협의 후 결정</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>3</th>
+												<th>test</th>
+												<th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>4</th>
+												<th>test</th>
+												<th>가족같은 분위기의 고깃집 알바 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>5</th>
+												<th>test</th>
+												<th>백엔드 개발자 구합니다 / 이젠컴퓨터학원</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>6</th>
+												<th>test</th>
+												<th>디자이너 구합니다 시간 금액 협의 후 결정</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>7</th>
+												<th>test</th>
+												<th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>8</th>
+												<th>test</th>
+												<th>가족같은 분위기의 고깃집 알바 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>9</th>
+												<th>test</th>
+												<th>백엔드 개발자 구합니다 / 이젠컴퓨터학원</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>10</th>
+												<th>test</th>
+												<th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>11</th>
+												<th>test</th>
+												<th>가족같은 분위기의 고깃집 알바 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+
+											<tr>
+												<th>12</th>
+												<th>test</th>
+												<th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+
+
+
+
+						</div>
+						<!-- 구인 & 구직 end-->
+
+
+						<!-- 모임 start-->
+						<div id="history" class="about_inner">
+
+
+
+
+
+							<div class="card mb-4">
+								<div class="card-body">
+									<table id="datatablesSimple_3">
+										<thead>
+											<tr>
+												<th>No</th>
+												<th>닉네임</th>
+												<th>제목</th>
+												<th>작성일</th>
+												<th>게시글 조회 &amp; 삭제</th>
+
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>1</th>
+												<th>test</th>
+												<th>번개 모임 인원 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>2</th>
+												<th>test</th>
+												<th>등산 모임 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>3</th>
+												<th>test</th>
+												<th>노래방 모임 멤버 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>4</th>
+												<th>test</th>
+												<th>맛집 탐방하실 분들 구해요</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>5</th>
+												<th>test</th>
+												<th>모여서 여행가실분</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>6</th>
+												<th>test</th>
+												<th>안나FC 선수단 모집합니다 지원 주세요</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>7</th>
+												<th>test</th>
+												<th>배그 4인 돌릴사람 연락주세요</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>8</th>
+												<th>test</th>
+												<th>노래방 모임 멤버 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>9</th>
+												<th>test</th>
+												<th>등산 모임 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>10</th>
+												<th>test</th>
+												<th>유튜브 ‘남도의 하루’ 편집자 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+											<tr>
+												<th>11</th>
+												<th>test</th>
+												<th>주마다 봉사다닐 분들 모집해요</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+
+											<tr>
+												<th>12</th>
+												<th>test</th>
+												<th>번개 모임 인원 구합니다</th>
+												<th>2022-07-25</th>
+												<th><button type="button" class="btn "
+														style="background-color: #00AAB2; color: #fff;"
+														onclick="javascript:location.href='<%=request.getContextPath()%>/"
+														style="font-size: 14px;">게시글 조회</button>&nbsp;
+													<button type="button" id="openModalPop" class="btn "
+														style="background-color: #E51D21; color: #fff;"
+														style="font-size: 14px;">삭제</button></th>
+											</tr>
+
+
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<!-- 모임 end-->
+
+
+
+
+
+
+					</div>
+		</div>
+		</section>
+		</main>
+
+
+
+
+
+	</div>
+
+	</div>
+
+
+
+
+
+
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath()%>/js/admin_user.js"></script>
         <script src="<%=request.getContextPath()%>/js/simple-datatables@latest.js"></script>
 
