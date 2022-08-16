@@ -37,4 +37,10 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		return customerDAO.QnADel(qidx);
 	}
+
+	@Override
+	public int QnAAnswer(QnAVO vo) {
+		
+		return customerDAO.QnAAnswer(vo);
+	}
 }

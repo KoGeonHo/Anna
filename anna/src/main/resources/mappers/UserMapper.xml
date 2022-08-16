@@ -44,7 +44,8 @@
 			location_auth,
 			kakao_auth,
 			interested,
-			user_pwd
+			user_pwd,
+			isAdmin
 		FROM 
 			AnnaUser
 		WHERE
@@ -62,7 +63,8 @@
 			location_auth,
 			kakao_auth,
 			interested,
-			user_pwd
+			user_pwd,
+			isAdmin
 		FROM 
 			AnnaUser
 		WHERE
@@ -147,7 +149,7 @@
 			
 	</select>
 	
-	<select id="getInterestedItem" parameterType="java.util.List" resultType="BoardItemVO">
+	<select id="getInterestedItem" parameterType="hashmap" resultType="BoardItemVO">
 	
 		SELECT
 			item_idx,
@@ -177,29 +179,48 @@
 		FROM
 			Board_Items
 		WHERE
-			isdel = 'N' limit 1,15
-		<!-- WHERE
-			<foreach collection="list" item="item" separator="OR" open="(" close=")">
+			isdel = 'N' AND
+			uidx != #{ uidx }
+			<foreach collection="keyWord" item="item"  separator="OR" open="AND (" close=")">
 				keyword like concat('%',#{item},'%')
-			</foreach> -->
-			
+			</foreach>
+		LIMIT 0,15
 	</select>
 	
-	<select id="neighborList" parameterType="int" resultType="UserVO">
-		
-		SELECT 
+	<select id="myBoardItemList" parameterType="int" resultType="BoardItemVO">
+	
+		select
+			item_idx,
 			uidx,
-			nickName,
-			user_email,
-			profile_image,
-			introduce
-		FROM 
-			AnnaUser
-		WHERE 
-			uidx 
-		IN
-			(SELECT neighbor_idx FROM Neighbor WHERE uidx = #{ uidx })
-			 
+			cate_idx,
+			title,
+			contents,
+			wdate,
+			addr1,
+			addr2,
+			addr_code,
+			image1,
+			image2,
+			image3,
+			image4,
+			image5,
+			image6,
+			image7,
+			image8,
+			image9,
+			image10,
+			keyword,
+			price,
+			offer,
+			hit,
+			state
+		FROM
+			Board_Items
+		WHERE
+			isDel = 'N' AND
+			uidx = #{ uidx }
+		ORDER BY wdate desc
+		LIMIT 0,15
 	</select>
 	
 	<select id="myTownCommunityList" parameterType="java.util.List" resultType="boardvo"> 
@@ -220,14 +241,33 @@
 			b.image5
 		FROM 
 			Board b
-		<!-- WHERE
-			location in  -->
-			<!-- <foreach collection="list" item="item" separator="," open="(" close=")">
-				#{item}
-			</foreach> -->
-		ORDER BY bidx DESC
-		LIMIT 1, 10;
+		WHERE
+			isDel = 'N' 
+			<foreach collection="list" item="item" separator="OR" open="AND (" close=")">
+				location like concat('%',#{item},'%')
+			</foreach>
+		ORDER BY wDate DESC
+		LIMIT 0, 5;
+		
 	</select> 
+	
+	<select id="neighborList" parameterType="int" resultType="UserVO">
+		
+		SELECT 
+			uidx,
+			nickName,
+			user_email,
+			profile_image,
+			introduce
+		FROM 
+			AnnaUser
+		WHERE 
+			uidx 
+		IN
+			(SELECT neighbor_idx FROM Neighbor WHERE uidx = #{ uidx })
+			 
+	</select>
+	
 	
 	
 	<select id="getChatList" parameterType="int" resultType="chatVO">
@@ -311,6 +351,9 @@
 			chat_read = 1
 			
 	</select>
+	
+	
+	
 </mapper>
 
 

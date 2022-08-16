@@ -51,11 +51,11 @@
   			title,
   			attach,
   			contents,
-  			DATE_FORMAT(wDate,'%Y-%m-%d'),
+  			DATE_FORMAT(wDate,'%Y-%m-%d') as wDate,
   			state,
   			ans_uidx,
   			answer,
-  			ans_date
+  			DATE_FORMAT(ans_date,'%Y-%m-%d') as ans_date
   		FROM
   			QnA
   		WHERE
@@ -70,8 +70,22 @@
   		SET
   			isDel = 'Y'
   		WHERE
-  			qidx = #{qidx}
+  			qidx = #{ qidx }
   		
+  	</update>
+  	
+  	<update id="QnAAnswer" parameterType="QnAVO" >
+  	
+  		UPDATE
+  			QnA
+  		SET
+  			answer = #{ answer },
+  			ans_uidx = #{ ans_uidx },
+  			ans_date = now(),
+  			state = 1
+  		WHERE
+  			qidx = #{ qidx }
+  	
   	</update>
   
 </mapper>
