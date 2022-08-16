@@ -113,7 +113,7 @@
             			<div class="gall_box" >
                 			<div class="gall_con">
                     			<div class="gall_boxa">
-                        			<a href="viewBoard.do?Bidx=${vo.bidx}">
+                        			<a href="viewBoard.do?Bidx=${vo.bidx}&board_type=${vo.board_type}">
                   						<em class="iconPs bo_tit"></em>
                   						<i class="imgAr">
                   							<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px">
@@ -134,7 +134,7 @@
                         			</a>
                     			</div>
 			                    <div class="gall_text_href bo_tit" >
-			                    	<a href="viewBoard.do?Bidx=${vo.bidx}" style="float:left;">
+			                    	<a href="viewBoard.do?Bidx=${vo.bidx}&board_type=${vo.board_type}" style="float:left;">
 			                            ${vo.title }
 			                        </a>
 			                        <span style="float:right;"><img src="../images/icon_comment.png" style="margin-top: -1px; margin-right: 3px; height: 15px;">${vo.ccount}</span>
@@ -163,7 +163,7 @@
 						<c:if test="${ not empty board }">
 							<c:forEach var="i" items="${ board }">
 								<div class="tr border-bottom">
-									<div class="td text-center" style="width:50%;"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${i.bidx }">${ i.title }</a></div>
+									<div class="td text-center" style="width:50%;"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${i.bidx}&board_type=${i.board_type}">${ i.title }</a></div>
 									<div class="td text-center" style="width:20%;">${ i.nickName }</div>
 									<div class="td text-center" style="width:20%;">${ i.wdate }</div>
 									<div class="td text-center" style="width:10%;">${ i.hit }</div>
@@ -283,7 +283,7 @@ const GetList = function(currentPage){
 	            html += '<div class="gall_box">';
 	            html += '<div class="gall_con">';
 	            html += '<div class="gall_boxa">';
-	            html += '<a href="viewBoard.do?Bidx='+appendList[i].bidx+'${vo.bidx}">';
+	            html += '<a href="viewBoard.do?Bidx='+appendList[i].bidx+'&board_type='+appendList[i].board_type+'">';
 	            html += '<em class="iconPs bo_tit"></em>';
 	            html += '<i class="imgAr">';
 	            html += '<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"alt="없어요"onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px"></i>';
@@ -298,7 +298,7 @@ const GetList = function(currentPage){
 	            html += '<u><span>작성자 </span>'+appendList[i].nickName+'</u>';
 	            html += '</em></a></div>';
 	            html += '<div class="gall_text_href bo_tit">';
-	            html += '<a href="viewBoard.do?Bidx='+appendList[i].bidx+'${vo.bidx}" style="float:left;">'+appendList[i].title+'</a>'
+	            html += '<a href="viewBoard.do?Bidx='+appendList[i].bidx+'&board_type='+appendList[i].board_type+'" style="float:left;">'+appendList[i].title+'</a>'
 	            html += '<span style="float:right;"><img src="../images/icon_comment.png" style="margin-top: -1px; margin-right: 3px; height: 15px;">'+appendList[i].ccount+'</span>';
 	            html += '<span style="float:right;"><img src="../images/icon_like.png" height="23px" style="margin-top:-4px;">'+appendList[i].cntLike+'</span>';
 	         	html += '</div></div></div></li>';
