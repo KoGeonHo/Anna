@@ -23,7 +23,40 @@
 <link href="${ path }/css/mfb.css" rel="stylesheet">
 <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
 <!-- path는 request.getContextPath()를 가져온것. -->
-
+<style>
+	
+	.item_thumbnail {
+		border:1px solid #ddd; 
+		border-radius:10px; 
+		padding:0; 
+		width:80px; 
+		height:80px;
+	}
+	
+	.profileImg_div {
+		width:80px; 
+		text-align:center;
+		margin:auto;
+	}
+	
+	.profileImg {
+		width:80px; 
+		height:auto; 
+		border-radius:100px;
+	}
+	
+	.NewMessageAlert {
+		width:25px; 
+		height:25px; 
+		position:absolute; 
+		padding:0; 
+		line-height:25px; 
+		text-align:center; 
+		color:#fff; 
+		background:red; 
+		border-radius:100px;
+	}
+</style>
 <script>
 	
 	$(function(){
@@ -39,27 +72,56 @@
 			success : function(chatList){
 				let html = "";
 				for(let i = 0; i < chatList.length; i++){
-					html += '<div class="tr border-bottom" style="padding:10px;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
-					html += '<div>';
-					if(${uidx} == chatList[i].chat_host){
-						html += chatList[i].invitedNickName;
-					}else{
-						html += chatList[i].hostNickName;
+					html += '<div class="tr border-bottom" style="padding:5px; display:flex; position:relative;">';
+					html += '<div class="profileImg_div" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
+					
+					if(chatList[i].chat_host == ${uidx}){
+						html += '<img src="'+chatList[i].invitedProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
+					}else if(chatList[i].invited == ${uidx}) {
+						html += '<img src="'+chatList[i].hostProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
 					}
-					if(chatList[i].newMessages > 0){
-						html += ' <div style="width: 25px;height: 25px; display:inline-block;padding: 0;line-height: 25px;text-align: center;color: #fff;background: red;border-radius: 100px;">'+chatList[i].newMessages+'</div>'
+					
+					html += '</div>';
+					html += '<div style="flex:1; margin:auto;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
+					html += '<div style="padding:5px;">';
+					
+					var today = new Date();
+
+					var year = today.getFullYear();
+					var month = ('0' + (today.getMonth() + 1)).slice(-2);
+					var day = ('0' + today.getDate()).slice(-2);
+
+					var dateString = year + '/' + month  + '/' + day;
+					let lastChatDate = chatList[i].lastChatDate;
+					
+					if(lastChatDate.split(" ")[0] == dateString){
+						lastChatDate = lastChatDate.split(" ")[1]+" "+lastChatDate.split(" ")[2];
+					}else{
+						lastChatDate = lastChatDate.split(" ")[0];
+					}
+					
+					if(chatList[i].chat_host == ${uidx}){
+						html += chatList[i].invitedNickName+'<span style="font-size:0.8rem;">('+lastChatDate+')</span>';
+					}else if(chatList[i].invited == ${uidx}) {
+						html += chatList[i].hostNickName+'<span style="font-size:0.8rem;">('+lastChatDate+')</span>';
 					}
 					html += '</div>';
-					html += '<div class="text-end">'+chatList[i].lastChat+'<span style="font-size:0.8rem;">('+chatList[i].lastChatDate+')</span></div>';
+					html += '<div style="padding:5px; font-size:0.8rem; margin-left:10px;" class="text-start">'+chatList[i].lastChat+'</div>';
+					html += '</div>';
+					html += '<div style="width:80px; text-align:center; margin:auto;">';
+					html += '<img src="${path}/images/upload/'+chatList[i].itemThumbNail+'" class="item_thumbnail" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+chatList[i].item_idx+'\'" onerror="this.onerror=null; this.src=\'${path}/images/noimg_item.jpg\';">';
+					html += '</div>';
+					if(chatList[i].newMessages > 0){
+						html += '<div class="NewMessageAlert">'+chatList[i].newMessages+'</div>';
+					}
 					html += '</div>';
 					
 				}
 				$("#chatDiv").html(html);
-				console.log("chatListReloaded");
-			},
+			}
 		});
 	}
-
+ 
 </script>
 
 </head>
@@ -72,24 +134,35 @@
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">채팅 목록</h3>
 				<div class="table" id="chatDiv">
-					<c:if test="${chatList.size() > 0}">
+					<div>
+						Loading...
+					</div>
+					<%-- <c:if test="${chatList.size() > 0}">
 						<c:forEach var="i" items="${chatList}">
-							<div class="tr border-bottom" style="padding:10px;" onclick="location.href='chatView.do?item_idx=${i.item_idx}&chat_host=${i.chat_host}&invited=${i.invited}'">
-								<div>
-									<c:if test="${ uidx eq i.chat_host}">
-										${ i.invitedNickName }
-									</c:if>
-									<c:if test="${ uidx eq i.invited}">
-										${ i.hostNickName }
-									</c:if>
-									<c:if test="${ i.newMessages > 0 }">
-										<div style="width: 25px;height: 25px; display:inline-block;padding: 0;line-height: 25px;text-align: center;color: #fff;background: red;border-radius: 100px;">${i.newMessages}</div>
-									</c:if>
+							<div class="tr border-bottom" style="padding:5px; display:flex; position:relative;">
+								<div style="width:80px; text-align:center; margin:auto;" onclick="location.href='chatView.do?item_idx=${i.item_idx}&chat_host=${i.chat_host}&invited=${i.invited}'">
+									<img src="${path}/images/NoProfile.png" style="width:80px; height:auto;">
 								</div>
-								<div class="text-end">${ i.lastChat }<span style="font-size:0.8rem;">(${i.lastChatDate})</span></div>
+								<div style="flex:1; margin:auto;" onclick="location.href='chatView.do?item_idx=${i.item_idx}&chat_host=${i.chat_host}&invited=${i.invited}'">
+									<div style="padding:5px;">
+										<c:if test="${ uidx eq i.chat_host}">
+											${ i.invitedNickName }<span style="font-size:0.8rem;">(${i.lastChatDate})</span>
+										</c:if>
+										<c:if test="${ uidx eq i.invited}">
+											${ i.hostNickName }<span style="font-size:0.8rem;">(${i.lastChatDate})</span>
+										</c:if>
+									</div>
+									<div style="padding:5px; font-size:0.8rem; margin-left:10px;" class="text-start">${ i.lastChat }</div>
+								</div>
+								<div style="width:80px; text-align:center; margin:auto;">
+									<img src="${path}/images/upload/${i.itemThumbNail}" style="border:1px solid #ddd; border-radius:10px; padding:0; width:80px; height:80px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/noimg_item.jpg';">
+								</div>
+								<c:if test="${ i.newMessages > 0 }">
+									<div style="width:25px; height:25px; position:absolute; padding:0; line-height:25px; text-align:center; color:#fff; background:red; border-radius:100px;">${i.newMessages}</div>
+								</c:if>
 							</div>
 						</c:forEach>
-					</c:if>		
+					</c:if>		 --%>
 				</div>
 			</div>
 		</div>

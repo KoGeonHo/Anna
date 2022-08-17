@@ -130,6 +130,7 @@
 					<div class="col-12 td text-end">
 						<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
 							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="Answer()">답변</button>
+							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/admin/admin_qna.do'">목록으로</button>
 						</c:if>
 						<c:if test="${ userLoginInfo.isAdmin eq 'N' }">
 							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnADel.do?qidx=<%=request.getParameter("qidx")%>'">삭제</button>

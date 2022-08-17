@@ -273,10 +273,10 @@
 		<div class="wrapper" id='container-mobile'>
 			<!-- MyPage for Mobile -->
 			<div class="container main" >
-				<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
-				<div class="border-bottom">
+				<h3 style="padding:1rem; margin:0px;">마이 페이지</h3>
+				<div class="border-bottom border-top">
 					<div style="display:inline-block;">
-						<img src="${ userInfo.profile_image }" style="border-radius:100px; width:100px; height:auto;padding:1rem;">
+						<img src="${ userInfo.profile_image }" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/NoProfile.png';" style="border-radius:100px; width:110px; height:auto; padding:10px;">
 					</div>
 					<div style="display:inline-block; vertical-align: middle;">
 						<div>${ userInfo.nickName }</div>
@@ -292,7 +292,7 @@
 						<div class="text-center btn-circle">판매</div>
 						<div class="text-center">판매 내역</div>
 					</div>
-					<div class="col-4" style="padding:0px;">
+					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/user/wishList.do'">
 						<div class="text-center btn-circle">찜</div>
 						<div class="text-center">찜 목록</div>
 					</div>

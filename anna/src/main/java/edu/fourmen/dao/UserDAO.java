@@ -152,6 +152,13 @@ public class UserDAO {
 		return sqlSession.selectList("edu.fourmen.mapper.userMapper.myBoardItemList",uidx);
 		
 	}
+
+
+	public List<BoardItemVO> getWishList(int uidx) {
+		
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getWishList",uidx);
+		
+	}
 }
 
 
