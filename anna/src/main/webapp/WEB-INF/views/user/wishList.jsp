@@ -21,19 +21,6 @@
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
 <!-- path는 request.getContextPath()를 가져온것. -->
-<script>
-	function delNeighbor(neighbor_idx){
-		$.ajax({
-			url : "${path}/boarditem/delNeighbor",
-			data : "neighbor_idx="+neighbor_idx,
-			success : function(){
-				location.reload();
-			}
-		});
-		
-		//${path}/BoardItem/delNeighbor?uidx=${uidx}&neighbor_idx=${i.uidx}
-	}
-</script>
 </head>
 <body>
 	<div class="wrapper">
@@ -41,28 +28,33 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div class="container main" style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem; margin:0px;">이웃 관리</h3>
-			<div class="text-end border-bottom" style="padding:5px;">검색</div>
-			<c:if test="${ empty nList }">
+			<h3 class="border-bottom" style="padding:1rem; margin:0px;">찜 목록</h3>
+			<c:if test="${ empty wishList }">
 				<div class="border-bottom" style="padding:10px;">
 					<div class='text-center'>
-						등록한 이웃이 없습니다.
+						찜 목록이 비어있습니다.
 					</div>
 				</div>
 			</c:if>
-			<c:if test="${ not empty nList }">
-				<c:forEach var="i" items="${ nList }">
-					<div class="border-bottom" style="padding:10px; display:flex;">
-						<div style="width:100px; height:100px;"><img src="${i.profile_image}" onerror="this.onerror=null; this.src='${path}/images/NoProfile.png';" style="width:80px; height:80px; border-radius:100px; margin:10px;"></div>
+			<c:if test="${ not empty wishList }">
+				<c:forEach var="i" items="${ wishList }">
+					<div style="padding:10px; display:flex;">
+						<div style="width:100px; height:100px;"><img src="${i.image1}" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';" style="width:80px; height:80px; border-radius:100px; margin:10px;"></div>
 						<div style="flex:1; margin:auto; padding:10px;">
-							<div><h5>${ i.nickName }</h5></div>
-							<div>${ i.introduce }</div>
+							<div><h5>${ i.title }</h5></div>
+							<div>${ i.keyword }</div>
+							<div>
+								<c:if test="${ i.state eq 1 }">거래중</c:if>
+								<c:if test="${ i.state eq 2 }">예약중</c:if>
+								<c:if test="${ i.state eq 3 }">거래완료</c:if>
+								${ i.price }원</div>
 						</div>
-						<div class="text-center" style="width:100px; margin:auto;">
+						<%-- <div class="text-center" style="width:100px; margin:auto;">
 							<button type="button" class="btn" onclick="" style="background:#00AAB2; color:#fff; margin:5px;">작성글</button>
 							<button type="button" class="btn" onclick="delNeighbor(${i.uidx})" style="background:#00AAB2; color:#fff; margin:5px;">삭제</button>
-						</div>
+						</div> --%>
 					</div>
+					<div class="text-end border-bottom">찜count 채팅count</div>
 				</c:forEach>
 			</c:if>
 		</div>

@@ -589,7 +589,7 @@ public class UserController {
 	
 	//이웃관리 페이지
 	@RequestMapping(value="/neighborMng.do")
-	public String neighborMng(String[] dong,Model model,HttpSession session, HttpServletRequest request) {
+	public String neighborMng(Model model,HttpSession session, HttpServletRequest request) {
 		
 		model.addAttribute("path",path);
 		
@@ -604,6 +604,30 @@ public class UserController {
 		return "user/neighborMng";
 		
 	}
+	
+	
+	//찜목록
+	@RequestMapping(value="/wishList.do")
+	public String wishList(Model model,HttpSession session, HttpServletRequest request) {
+		
+		session = request.getSession();
+
+		int uidx = (int)session.getAttribute("uidx");
+		
+		List<BoardItemVO> wishList = userService.getWishList(uidx);
+		
+		model.addAttribute("wishList",wishList);
+		
+		model.addAttribute("path",path);
+		
+		return "user/wishList";
+	}
+	
+	
+	
+	
+	
+	
 	
 	//채팅 리스트
 	@RequestMapping(value="/chatList.do")
@@ -655,7 +679,15 @@ public class UserController {
 			userService.chatSetRead(listForSetRead);
 		}
 		
-		//System.out.println(listForSetRead);
+		BoardItemVO itemVO = boardItemService.selectitem(cmvo.getItem_idx());
+		
+		UserVO hostInfo = userService.getUserInfo(cmvo.getChat_host());
+		
+		//System.out.println(cmvo.getItem_idx());
+		
+		model.addAttribute("itemVO",itemVO);
+		
+		model.addAttribute("hostInfo",hostInfo);
 		
 		model.addAttribute("audience",audience);
 		
@@ -666,6 +698,7 @@ public class UserController {
 		return "user/chatView";
 	}
 	
+	//채팅 메세지 전송
 	@ResponseBody
 	@RequestMapping(value="/sendMessage.do", produces = "application/json; charset=utf8")
 	public String sendMessage(ChatMessageVO cmvo){
@@ -675,6 +708,7 @@ public class UserController {
 		return result+"";
 	}
 	
+	//채팅 메세지 받기
 	@ResponseBody
 	@RequestMapping(value="/getMessage.do", produces = "application/json; charset=utf8")
 	public ChatMessageVO getMessage(ChatMessageVO cmvo){
@@ -690,6 +724,7 @@ public class UserController {
 		return getMessage;
 	}
 	
+	//채팅 목록 새로운 메세지 갱신
 	@ResponseBody
 	@RequestMapping(value="/checkNewMessage.do",produces = "application/json; charset=utf8")
 	public List<ChatMessageVO> checkNewMessage(HttpServletRequest request,HttpSession session){

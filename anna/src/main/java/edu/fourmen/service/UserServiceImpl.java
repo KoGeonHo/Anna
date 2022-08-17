@@ -327,4 +327,10 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
+	public List<BoardItemVO> getWishList(int uidx) {
+		
+		return userDAO.getWishList(uidx);
+	}
+
 }

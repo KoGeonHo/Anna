@@ -32,5 +32,6 @@ public interface UserService {
 	void chatSetRead(List<Integer> listForSetRead);
 	ChatMessageVO getMessageNoRead(ChatMessageVO cmvo);
 	List<BoardItemVO> myBoardItemList(int uidx);
+	List<BoardItemVO> getWishList(int uidx);
 	
 }

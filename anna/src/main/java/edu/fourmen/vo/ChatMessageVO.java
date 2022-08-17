@@ -12,10 +12,26 @@ public class ChatMessageVO extends BoardItemVO{
 	private String lastChat;
 	private String lastChatDate;
 	private String invitedNickName;
+	private String invitedProfileImg;
 	private String hostNickName;
+	private String hostProfileImg;
 	private int chat_read;
 	private int newMessages;
+	private String itemThumbNail;
 	
+
+	
+	public String getItemThumbNail() {
+		return itemThumbNail;
+	}
+
+
+
+	public void setItemThumbNail(String itemThumbNail) {
+		this.itemThumbNail = itemThumbNail;
+	}
+
+
 
 	public int getNewMessages() {
 		return newMessages;
@@ -165,6 +181,33 @@ public class ChatMessageVO extends BoardItemVO{
 
 	public void setItem_idx(int item_idx) {
 		this.item_idx = item_idx;
+	}
+
+
+
+
+
+
+	public String getInvitedProfileImg() {
+		return invitedProfileImg;
+	}
+
+
+
+	public void setInvitedProfileImg(String invitedProfileImg) {
+		this.invitedProfileImg = invitedProfileImg;
+	}
+
+
+
+	public String getHostProfileImg() {
+		return hostProfileImg;
+	}
+
+
+
+	public void setHostProfileImg(String hostProfileImg) {
+		this.hostProfileImg = hostProfileImg;
 	}
 
 	
