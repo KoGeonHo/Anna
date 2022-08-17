@@ -54,6 +54,7 @@
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
 
+
 .nickName{
 
 font-size :12px;
@@ -72,10 +73,6 @@ font-size :12px;
 margin: 0 5px 0 0;
 }
 
-.con{
-
-width: calc(100% - 35px);
-}
 
 .com-btn{
     display: block;
@@ -117,26 +114,105 @@ text-decoration: none;
 
 }
 
-@media all and (max-width : 776px){
+@media all and (max-width : 767px){
 
-.search-control{
-	width:100%;
+	.con{
 
+	width: calc(100% - 35px);
+	
 	}
 	
-.tr border-bottom{
-	width:100%;
+	.title{
+	
+	text-align: left;
+	width: calc(100% - 35px);
 	
 	
 	}
-.td{
-font-size: 10px;
+	
+
+
+	#mlist >*{
+	
+	display: block;
+	
+	}
+	
+	#plist > *{
+	
+	display: none;
+	
+	}
+	
+	#plist-top > *{
+	
+	display: none;
+	
+	}
+
+	.search-control{
+		width:100%;
+	
+		}
+		
+	.p{
+	
+	display:none;
+	
+	}
+	
+	.value{
+	
+	display:block;
+	
+	}
+	
 }
 
-.th{
-font-size: 10px;
-}
+@media all and (min-width : 768px){
+
+
+	#plist > *{
 	
+	display: block;
+	
+	}
+	
+	.p{
+	
+	display:block;
+	
+	}
+
+	
+	#plist-top > *{
+	
+	display: table-cel;
+	
+	}
+	
+	#mlist > *{
+	
+	display: none;
+	
+	}
+
+	.title{
+
+	width: 40%;
+	text-align:center !important;
+	padding: 10px;
+    display: table-cell;
+	
+	}
+	
+	.value{
+	
+	display:none;
+	
+	}
+
+
 }
 
 
@@ -237,55 +313,55 @@ font-size: 10px;
 			</div>	
 		</c:if>
 		<c:if test="${pm.board_type != 'free'}">
-		<div class="list">
-				
-						<div class="tr border-bottom">
-							<div class="th" style="width:40%;">제목</div>
-							<div class="th" style="width:20%;">작성자</div>
-							<div class="th" style="width:20%;">작성일</div>
-							<div class="th" style="width:10%;">조회수</div>
-							<div class="th" style="width:10%;">추천</div>
-						</div>
+				<div class="list">
+					<div class="tr border-bottom" id="plist-top">
+						<div class="th" style="width:40%;">제목</div>
+						<div class="th" style="width:20%;">작성자</div>
+						<div class="th" style="width:20%;">작성일</div>
+						<div class="th" style="width:10%;">조회수</div>
+						<div class="th" style="width:10%;">추천</div>
+					</div>
 						<c:if test="${ not empty board }">
 							<c:forEach var="vo" items="${ board }">
-							<div class="border-bottom d-flex">
-								<div class="con">
-								<a href="" class="we">
-									<div class="s">
-										<span>${vo.title }</span>
-										<c:if test="${vo.image1 != null}">
-										<span><img src="../images/icon_image.png" style="height:15px; margin-top: -5px;"></span>
-										</c:if>
-									</div>
+						
+						
 								
-								</a>
-								<div>
-									<span class="nickName">${vo.nickName}</span> 
-									<span class="hit">조회${vo.hit}</span>
-									<span class="wdate">${vo.wdate }</span>
+								<div class="tr border-bottom d-flex">
+									
+										<a href="#" class="mlink">
+											<div class="title"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${vo.bidx}" class="p">${vo.title }</a>
+												<a href="">
+													<div class="value">
+														<span>${vo.title }</span>
+														<c:if test="${vo.image1 != null}">
+															<span><img src="../images/icon_image.png" style="height:15px; margin-top: -5px;"></span>
+														</c:if>
+													</div>
+												</a>
+												<div class="value">
+													<span class="nickName">${vo.nickName}</span> 
+													<span class="hit">조회${vo.hit}</span>
+													<span class="wdate">${vo.wdate }</span>
+												</div>
+											</div>
+											<a href="" class="com-btn value">
+												<span class="ccount">${vo.ccount }</span>
+												<span>댓글</span>
+											</a>
+											<div class="td text-center p" style="width:20%;">${ vo.nickName }</div>
+											<div class="td text-center p" style="width:20%;">${ vo.wdate }</div>
+											<div class="td text-center p" style="width:10%;">${ vo.hit }</div>
+											<div class="td text-center p" style="width:10%;">${ vo.cntLike}</div>
+										</a>
+									
 								</div>
 								
 							
-								</div>
-								<a href="" class="com-btn">
-									<span class="ccount">${vo.ccount }</span>
-									<span>댓글</span>
-								</a>
-							</div>
-						
-								
-								<div class="tr border-bottom">
-									<div class="td text-center" style="width:40%;"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${vo.bidx}">${vo.title }</a></div>
-									<div class="td text-center" style="width:20%;">${ vo.nickName }</div>
-									<div class="td text-center" style="width:20%;">${ vo.wdate }</div>
-									<div class="td text-center" style="width:10%;">${ vo.hit }</div>
-									<div class="td text-center" style="width:10%;">${ vo.cntLike}</div>
-								</div>
 							</c:forEach>
 						</c:if>
-			</div>
+					</div>
 			
-			<table style="width:800px;text-align:center;">
+			<table style="width:100%;text-align:center;">
 				<tr>
 					
 			<c:if test="${pm.isPrev() == true}">
