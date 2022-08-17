@@ -868,6 +868,7 @@ textarea.input {
 
 .product .product-img {
   position: relative;
+  boder-bottom :solid black 1px;
 }
 
 .product .product-img>a>img {
@@ -920,6 +921,7 @@ textarea.input {
 
 .product .product-body .product-name>a {
   font-weight: 700;
+  font-size : 18px;
 }
 
 .product .product-body .product-name>a:hover, .product .product-body .product-name>a:focus {
@@ -928,7 +930,8 @@ textarea.input {
 
 .product .product-body .product-price {
   color: #D10024;
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 550;
 }
 
 .product .product-body .product-price .product-old-price {

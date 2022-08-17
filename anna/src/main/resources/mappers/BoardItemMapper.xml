@@ -19,6 +19,10 @@
 			 , b.isDel
 			 , b.state
 			 , b.keyword
+			 , b.addr_code
+			 , b.hit
+			 , (select count(*) from Wish_list w where w.item_idx = b.item_idx and w.uidx = #{uidx} ) as WishCheck
+			 , (select count(uidx)as WishCount from Wish_list where item_idx = b.item_idx)as WishCount
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  
 			and b.isDel ='N'
@@ -90,16 +94,36 @@
 						,addr1
 						,addr2
 						,addr_Code
+						<if test="image1 != null">
 						,image1
+						</if>
+						<if test="image2 != null">
 						,image2
+						</if>
+						<if test="image3 != null">
 						,image3
+						</if>
+						<if test="image4 != null">
 						,image4
+						</if>
+						<if test="image5 != null">
 						,image5
+						</if>
+						<if test="image6 != null">
 						,image6
+						</if>
+						<if test="image7 != null">
 						,image7
+						</if>
+						<if test="image8 != null">
 						,image8
+						</if>
+						<if test="image9 != null">
 						,image9
+						</if>
+						<if test="image10 != null">
 						,image10
+						</if>
 						,Keyword
 						,Price
 						,offer
@@ -115,16 +139,36 @@
 						,#{addr1}
 						,#{addr2}
 						,#{addr_code}
+						<if test="image1 != null">
 						,#{image1}
+						</if>
+						<if test="image2 != null">
 						,#{image2}
+						</if>
+						<if test="image3 != null">
 						,#{image3}
+						</if>
+						<if test="image4 != null">
 						,#{image4}
+						</if>
+						<if test="image5 != null">
 						,#{image5}
+						</if>
+						<if test="image6 != null">
 						,#{image6}
+						</if>
+						<if test="image7 != null">
 						,#{image7}
+						</if>
+						<if test="image8 != null">
 						,#{image8}
+						</if>
+						<if test="image9 != null">
 						,#{image9}
+						</if>
+						<if test="image10 != null">
 						,#{image10}
+						</if>
 						,#{keyword}
 						,#{price}
 						,#{offer}
@@ -169,16 +213,36 @@
 						,addr1 = #{addr1}
 						,addr2 = #{addr2}
 						,addr_Code = #{addr_code}
+						<if test="image1 != null">
 						,image1 = #{image1}
+						</if>
+						<if test="image2 != null">
 						,image2 = #{image2}
+						</if>
+						<if test="image3 != null">
 						,image3 = #{image3}
+						</if>
+						<if test="image4 != null">
 						,image4 = #{image4}
+						</if>
+						<if test="image5 != null">
 						,image5 = #{image5}
+						</if>
+						<if test="image6 != null">
 						,image6 = #{image6}
+						</if>
+						<if test="image7 != null">
 						,image7 = #{image7}
+						</if>
+						<if test="image8 != null">
 						,image8 = #{image8}
+						</if>
+						<if test="image9 != null">
 						,image9 = #{image9}
+						</if>
+						<if test="image10 != null">
 						,image10 = #{image10}
+						</if>
 						,Keyword = #{keyword}
 						,Price = #{price}
 						,offer = #{offer}
@@ -211,6 +275,7 @@
 			 , b.Price
 			 , b.offer
 			 , b.state
+			 , b.hit
 			from Board_Items b
 			inner join AnnaUser u
 			on b.uidx = u.uidx
@@ -323,6 +388,7 @@
 	<select id="checkWish" parameterType="BoardItemVO" resultType="int">
 		 select count(*) from Wish_list where item_idx = #{item_idx} and uidx = #{uidx}
 	</select>
+	
 	
 	<select id="mywish" parameterType="int" resultType="BoardItemVo">
 			select 

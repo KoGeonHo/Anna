@@ -101,12 +101,22 @@ ul.imgs li{
 	height:450px;
 }
 
-@media ( max-width: 400px ) {
+/*557 보다 크거나 같아야 하고 991거나 작아야 같아야함 태블릿용*/ 
+@media all and (577px <= width <= 991px){
+
+
+
+}
+
+
+
+/* 400이하 모바일*/
+@media ( max-width: 420px ) {
 
 .row{
 
 }
-	img{
+.card-body img{
 
 	width:100%;
 
@@ -585,6 +595,7 @@ a {
 			item_idx : ${vo.item_idx},
 		},'json');
 			console.log("거래상태 변경 완료");
+			$('#state').load(location.href+' #state');
 	}
 
 </script>
@@ -628,17 +639,22 @@ a {
 							</c:if>
 							
 							<div style="right;">
+								<c:if test="${vo.state != 3}">
 								<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
+								</c:if>
 								<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
 								조회수 : ${viewCount}
-								
-								<c:if test="${userLoginInfo.uidx == vo.uidx}">
-											<select name="state" class="state" onchange="updatestate();">
-												<option value="1">거래중</option>
-												<option value="2">거래완료</option>
-												<option value="3">예약중</option>
-											</select>
-								</c:if>
+								<div id="state">
+									<c:if test="${userLoginInfo.uidx == vo.uidx}">
+										<c:if test="${vo.state != 3}">
+												<select name="state" class="state" onchange="updatestate();">
+													<option value="1">거래중</option>
+													<option value="2">예약중</option>
+													<option value="3">거래완료</option>
+												</select>
+										</c:if>
+									</c:if>
+								</div>
 							</div>
 				<hr>
 						<div class="slider-1" >
@@ -707,6 +723,7 @@ a {
 								<div></div>
 						         </c:if>
 						    </div>
+						    <c:if test="${vo.image2 != null }">
 						    <div class="side-btns">
 						        <div>
 						            <span><i class="fas fa-angle-left"></i></span>
@@ -715,6 +732,7 @@ a {
 						            <span><i class="fas fa-angle-right"></i></span>
 						        </div>
 						    </div>
+						    </c:if>
 						</div>
 										
 				
@@ -785,10 +803,16 @@ a {
 							<input type="hidden"  id="vo.item_idx"value="${vo.item_idx}">
 							<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
 
-
+								
 								<p class="card-text">판매자 : ${vo.nickName}</p>
 								<p class="card-text">내용 : ${vo.contents}</p>
 								<p class="card-text">판매가격 : ${vo.price}</p>
+								<c:if test="${vo.offer ==1 }">
+								<p class="card-text">가격제안 : 불가능</p>
+								</c:if>
+								<c:if test="${vo.offer ==2 }">
+								<p class="card-text">가격제안 : 가능</p>
+								</c:if>
 								<p class="card-text">거래지역 : ${vo.addr2}</p>
 								<p class="card-text">키워드 : ${vo.keyword}</p>
 							
@@ -816,10 +840,10 @@ a {
 											<p class="card-text">거래중</p> 
 											</c:if>
 											<c:if test="${vo.state == 2}">
-											<p class="card-text">거래완료</p> 
+											<p class="card-text">예약중</p> 
 											</c:if>
 											<c:if test="${vo.state == 3}">
-											<p class="card-text">예약중</p> 
+											<p class="card-text">거래완료</p> 
 											</c:if>
 										</div>
 								</div>
@@ -877,12 +901,13 @@ a {
 					<div class="chat-list" id="chat" ></div>
 					<input type="button" id="btn_close" value="닫 기">
 			</div>
-			<c:if test="${uidx != null }">
-				<div class="wrap2">
-					<input type="button" id="btn_open" value="연락하기">
-				</div>
+			<c:if test="${vo.state != 3}">
+				<c:if test="${uidx != null and uidx != userLoginInfo.uidx}">
+					<div class="wrap2">
+						<input type="button" id="btn_open" value="연락하기">
+					</div>
+				</c:if>
 			</c:if>
-			
 			<!-- 이웃 영역 시작 -->
 			<c:if test="${uidx != null }">
 				<div id="Neighbor_area">

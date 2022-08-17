@@ -17,7 +17,21 @@ public class PageMaker extends BoardItemVO{
 	private String nickName;
 	private int epage;
 	private int SearchUidx;
+	private int uidx;
 	
+	
+	
+	
+	public int getUidx() {
+		return uidx;
+	}
+
+
+	public void setUidx(int uidx) {
+		this.uidx = uidx;
+	}
+
+
 	public PageMaker() {
 		this.setPage(1);
 		this.setPageNum(15);

@@ -52,18 +52,14 @@ public class BoardItemController {
 	
 	@RequestMapping(value = "/itemlist.do")
 
-	public String itemlist(BoardItemVO wvo,UserVO uvo,HttpSession session,BoardItemVO nvo,PageMaker pm, SearchVO svo,BoardItemVO vo,BoardItemVO bvo,  HttpServletRequest request, Model model) {
+	public String itemlist(HttpSession session,BoardItemVO nvo,PageMaker pm,BoardItemVO vo,  HttpServletRequest request, Model model) {
 		session = request.getSession();
-		int uidx = (int) session.getAttribute("uidx");
 		
 		//블랙리스트 조회
 		
 		
-		if(svo.getSearchType() == null) {
-			svo.setSearchType("TITLE");
-		}
-		if(svo.getSearchVal() == null) {
-			svo.setSearchVal("");
+		if(pm.getSearchVal() == null) {
+			pm.setSearchVal("");
 		}
 		
 		
@@ -113,35 +109,25 @@ public class BoardItemController {
 				request.setAttribute("pagenumber", pagenumber);
 		
 		
-		
+		System.out.println();
 		
 		//전체 상품 리스트 받아오기
+		int uidx = (int) session.getAttribute("uidx");
+		pm.setUidx(uidx);
 	    List<BoardItemVO> list = boarditemService.list(vo,pm);
+	    
+	    
+	    
 	    //최저가 상품 정보 받아오기
 	    List<BoardItemVO> ssang = boarditemService.MinPrice(pm);
-
+	    
 	    model.addAttribute("ssang",ssang);
 	    model.addAttribute("pm",pm);
 	    model.addAttribute("list", list);
 	    
-	    bvo.setUidx(uidx);
-	    List<BoardItemVO> blackList = boarditemService.myblackList(bvo);
-		System.out.println(blackList +"블랙리스트 조회");
-		model.addAttribute("blackList",blackList);
 	    
-
-		List<BoardItemVO> mywish = boarditemService.mywish(vo);
-		
-		model.addAttribute("mywish",mywish);
 	    
-		List<BoardItemVO> myneighbor = boarditemService.neighbor_list(nvo);
-		model.addAttribute("myneighbor",myneighbor);
-		
-		
-		int wish = boarditemService.checkWish(wvo);
-		model.addAttribute("wish",wish);
-		int wishCount = boarditemService.WishCount(vo);
-		model.addAttribute("wishCount",wishCount);
+		//리스트에서 볼때 각각의 글 공간 안에 찜 수 넣으려고 만듬
 		
 		return "boarditem/itemlist";
 	}
@@ -262,7 +248,7 @@ public class BoardItemController {
 		
 		int wish = boarditemService.checkWish(wvo);
 		model.addAttribute("wish",wish);
-		int wishCount = boarditemService.WishCount(vo);
+		int wishCount = boarditemService.WishCount(item_idx);
 		model.addAttribute("wishCount",wishCount);
 		boarditemService.addviewCount(vo);
 		int viewCount = boarditemService.viewCount(vo);
@@ -295,30 +281,7 @@ public class BoardItemController {
 				uploadFile1.transferTo(new File(path, fileName));
 
 				System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
-			}
-			// BufferedImage inputImage = ImageIO.read(file.getInputStream());
-			// int newWidth = 500;
-			// int newHeight = 500;// 변경할 가로 길이 int newHeight = 300; // 변경할 세로 길이
-			// String option = newWidth+"x"+newHeight;
-			// Image image = ImageIO.read(new
-			// File(path,uploadFile1.getOriginalFilename()));//원본 이미지 가져오기 // 이미지 품질 설정
-			//
-			// Image resizeImage = image.getScaledInstance(newWidth, newHeight,
-			// Image.SCALE_SMOOTH);
-			// FileOutputStream out = new FileOutputStream(path +option+".jpg");
-			// ImageIO.write((RenderedImage) resizeImage, "jpg", out);
 			
-			// //새이미지 저장하기
-			// BufferedImage newImage = new BufferedImage(newWidth, newHeight,BufferedImage.TYPE_INT_RGB);
-			// MultipartFile reimage = (MultipartFile)newImage;
-			//
-			// fileName = uuid+"_"+reimage.getOriginalFilename();
-			// System.out.println(fileName+"리사이즈된 파일네임 입니다.");
-			//
-			// Graphics graphics = newImage.getGraphics();
-			// graphics.drawImage(resizeImage, 0, 0, null);
-			// graphics.dispose();
-			//
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -336,7 +299,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage1(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																						// 이름
 		}
 
 		if (vo.getFile2() != null) {
@@ -345,7 +308,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile2.getOriginalFilename();
 				uploadFile2.transferTo(new File(path, fileName));
-			}
+			
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
 
@@ -364,7 +327,7 @@ public class BoardItemController {
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage2(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 																									// 이름
-
+			}
 		}
 
 		if (vo.getFile3() != null) {
@@ -373,7 +336,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile3.getOriginalFilename();
 				uploadFile3.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -392,7 +355,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage3(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																						// 이름
 		}
 
 		if (vo.getFile4() != null) {
@@ -401,7 +364,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile4.getOriginalFilename();
 				uploadFile4.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -420,7 +383,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage4(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																						// 이름
 		}
 
 		if (vo.getFile5() != null) {
@@ -429,8 +392,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile5.getOriginalFilename();
 				uploadFile5.transferTo(new File(path, fileName));
-			}
-
+			
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
 
@@ -448,7 +410,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage5(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}
 		}
 
 		if (vo.getFile6() != null) {
@@ -457,7 +419,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile6.getOriginalFilename();
 				uploadFile6.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -477,7 +439,7 @@ public class BoardItemController {
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage6(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 																									// 이름
-
+			}
 		}
 
 		if (vo.getFile7() != null) {
@@ -486,7 +448,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile7.getOriginalFilename();
 				uploadFile7.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -502,7 +464,8 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage7(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			
+			}																						// 이름
 		}
 
 		if (vo.getFile8() != null) {
@@ -511,7 +474,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile8.getOriginalFilename();
 				uploadFile8.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -531,7 +494,7 @@ public class BoardItemController {
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage8(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 																									// 이름
-
+			}
 		}
 
 		if (vo.getFile9() != null) {
@@ -540,7 +503,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile9.getOriginalFilename();
 				uploadFile9.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -560,7 +523,7 @@ public class BoardItemController {
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage9(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 																									// 이름
-
+			}
 		}
 
 		if (vo.getFile10() != null) {
@@ -569,7 +532,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile10.getOriginalFilename();
 				uploadFile10.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -585,7 +548,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage10(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																						// 이름
 		}
 
 		/*
@@ -664,30 +627,7 @@ public class BoardItemController {
 				uploadFile1.transferTo(new File(path, fileName));
 
 				System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
-			}
-			// BufferedImage inputImage = ImageIO.read(file.getInputStream());
-			// int newWidth = 500;
-			// int newHeight = 500;// 변경할 가로 길이 int newHeight = 300; // 변경할 세로 길이
-			// String option = newWidth+"x"+newHeight;
-			// Image image = ImageIO.read(new
-			// File(path,uploadFile1.getOriginalFilename()));//원본 이미지 가져오기 // 이미지 품질 설정
-			//
-			// Image resizeImage = image.getScaledInstance(newWidth, newHeight,
-			// Image.SCALE_SMOOTH);
-			// FileOutputStream out = new FileOutputStream(path +option+".jpg");
-			// ImageIO.write((RenderedImage) resizeImage, "jpg", out);
-			
-			// //새이미지 저장하기
-			// BufferedImage newImage = new BufferedImage(newWidth, newHeight,BufferedImage.TYPE_INT_RGB);
-			// MultipartFile reimage = (MultipartFile)newImage;
-			//
-			// fileName = uuid+"_"+reimage.getOriginalFilename();
-			// System.out.println(fileName+"리사이즈된 파일네임 입니다.");
-			//
-			// Graphics graphics = newImage.getGraphics();
-			// graphics.drawImage(resizeImage, 0, 0, null);
-			// graphics.dispose();
-			//
+		
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -705,7 +645,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage1(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																					// 이름
 		}
 
 		if (vo.getFile2() != null) {
@@ -714,7 +654,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile2.getOriginalFilename();
 				uploadFile2.transferTo(new File(path, fileName));
-			}
+			
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
 
@@ -733,7 +673,7 @@ public class BoardItemController {
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage2(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 																									// 이름
-
+			}
 		}
 
 		if (vo.getFile3() != null) {
@@ -742,7 +682,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile3.getOriginalFilename();
 				uploadFile3.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -761,7 +701,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage3(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																						// 이름
 		}
 
 		if (vo.getFile4() != null) {
@@ -770,7 +710,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile4.getOriginalFilename();
 				uploadFile4.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -789,7 +729,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage4(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																						// 이름
 		}
 
 		if (vo.getFile5() != null) {
@@ -798,7 +738,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile5.getOriginalFilename();
 				uploadFile5.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -817,7 +757,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage5(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																					// 이름
 		}
 
 		if (vo.getFile6() != null) {
@@ -826,7 +766,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile6.getOriginalFilename();
 				uploadFile6.transferTo(new File(path, fileName));
-			}
+		
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -845,7 +785,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage6(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																					// 이름
 
 		}
 
@@ -855,7 +795,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile7.getOriginalFilename();
 				uploadFile7.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -871,7 +811,7 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage7(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																					// 이름
 		}
 
 		if (vo.getFile8() != null) {
@@ -880,7 +820,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile8.getOriginalFilename();
 				uploadFile8.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -900,7 +840,7 @@ public class BoardItemController {
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage8(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 																									// 이름
-
+			}
 		}
 
 		if (vo.getFile9() != null) {
@@ -909,7 +849,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile9.getOriginalFilename();
 				uploadFile9.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -929,7 +869,7 @@ public class BoardItemController {
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage9(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 																									// 이름
-
+			}
 		}
 
 		if (vo.getFile10() != null) {
@@ -938,7 +878,7 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName = uuid + "_" + uploadFile10.getOriginalFilename();
 				uploadFile10.transferTo(new File(path, fileName));
-			}
+			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -954,11 +894,8 @@ public class BoardItemController {
 
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage10(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+			}																					// 이름
 		}
-
-		
-		
 		
 		
 			boarditemService.itemmodify(vo);
@@ -1023,7 +960,6 @@ public class BoardItemController {
 	public List<ChatMessageVO> getMessages(BoardItemVO vo,int from,ChatMessageVO cvo,HttpSession session,Model model) {
 		
 		int chat_read = 0;
-		System.out.println(chat_read +"d이거 들어오냐");
 		
 		String nickName = (String)session.getAttribute("nickName");
 		int invited = (int) session.getAttribute("uidx");
@@ -1046,8 +982,7 @@ public class BoardItemController {
 	
 	@RequestMapping("/mychatlist")
 	@ResponseBody
-	public List mychatlist(int chat_host,ChatMessageVO cvo,HttpSession session,HttpServletRequest request) {
-		System.out.println("채팅목록창 열었다");
+	public List<ChatMessageVO> mychatlist(int chat_host,ChatMessageVO cvo,HttpSession session,HttpServletRequest request) {
 		session = request.getSession();
 		
 		
@@ -1055,7 +990,6 @@ public class BoardItemController {
 		cvo.setChat_host(chat_host);
 		
 		List<ChatMessageVO> mychatlist = boarditemService.mychatlist(cvo);
-		System.out.println(mychatlist+"이거 왜 안 찍히는데");
 		return mychatlist;
 	}
 	
@@ -1067,7 +1001,6 @@ public class BoardItemController {
 		
 		
 		List<ChatMessageVO> mychat = boarditemService.mychat(cvo);
-		System.out.println(mychat+"이거 왜 안 찍히는데");
 		return mychat;
 	}
 /*

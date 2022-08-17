@@ -6,16 +6,12 @@ public class BoardItemVO {
 	 
 	private int item_idx;
 	private int uidx;
-	private int myuidx;
-	public int getMyuidx() {
-		return myuidx;
-	}
-	public void setMyuidx(int myuidx) {
-		this.myuidx = myuidx;
-	}
 	private int chat_host;
 	private int cate_idx;
 	private int black_idx;
+	private int WishCount;
+	private int WishCheck;
+	
 	private String Title;
 	private String contents;
 	private String nickName;
@@ -72,6 +68,20 @@ public class BoardItemVO {
 	
 	
 	
+	
+	
+	public int getWishCheck() {
+		return WishCheck;
+	}
+	public void setWishCheck(int wishCheck) {
+		WishCheck = wishCheck;
+	}
+	public int getWishCount() {
+		return WishCount;
+	}
+	public void setWishCount(int wishCount) {
+		WishCount = wishCount;
+	}
 	
 	
 	public int getBlack_idx() {

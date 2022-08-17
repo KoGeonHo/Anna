@@ -58,7 +58,7 @@ public interface BoardItemService {
 	
 	public int report_target(ReportVO rvo);
 	
-	public int WishCount(BoardItemVO vo);
+	public int WishCount(int item_idx);
 	
 	public List<BoardItemVO> mywish(BoardItemVO vo);
 	

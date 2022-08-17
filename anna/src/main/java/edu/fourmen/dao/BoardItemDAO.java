@@ -106,6 +106,7 @@ public class BoardItemDAO {
 		
 	}
 	
+	
 	public int addwist(BoardItemVO vo){
 		return sqlSession.insert(efdb+".addWish",vo);
 	}
@@ -118,8 +119,8 @@ public class BoardItemDAO {
 		return sqlSession.delete(efdb+".delWish",wvo);
 	}
 	
-	public int WishCount(BoardItemVO vo) {
-		return sqlSession.selectOne(efdb+".WishCount",vo);
+	public int WishCount(int item_idx) {
+		return sqlSession.selectOne(efdb+".WishCount",item_idx);
 	}
 
 	public List<BoardItemVO> mywish(BoardItemVO vo){
