@@ -92,19 +92,35 @@
 
 
 
+@media all and (min-width: 1200px){
+	.gall_row .box_clear{clear:none;}
+	.gall_row  > li.col-gn-0,.gall_row  > li.gallWST.col-gn-3,.gall_row  > li.gallWST.col-gn-4,.gall_row  > li.gallWST.col-gn-5,.gall_row  > li.gallWST.col-gn-6,.gall_row  > li.gallWST.col-gn-7,.gall_row  > li.gallWST.col-gn-8,.gall_row  > li.gallWST.col-gn-9,.gall_row  > li.gallWST.col-gn-10
+	{width:25% !important;}
+	.gall_row  > li.gallWST.col-gn-1,.gall_row  > li.gallWST.col-gn-2{width:50% !important;}
+	
+}
 
 
-@media all and (max-width: 800px)
+@media all and (992px <= width <= 1199px){
+	.gall_row .box_clear{clear:none;}
+	.gall_row  > li.col-gn-0,.gall_row  > li.gallWST.col-gn-3,.gall_row  > li.gallWST.col-gn-4,.gall_row  > li.gallWST.col-gn-5,.gall_row  > li.gallWST.col-gn-6,.gall_row  > li.gallWST.col-gn-7,.gall_row  > li.gallWST.col-gn-8,.gall_row  > li.gallWST.col-gn-9,.gall_row  > li.gallWST.col-gn-10
+	{width:33.33333% !important;}
+	.gall_row  > li.gallWST.col-gn-1,.gall_row  > li.gallWST.col-gn-2{width:50% !important;}
+	
+}
+
+
+@media all and (577px <= width <= 991px)
 {
 	.gall_row .box_clear{clear:none;}
 	.gall_row  > li.col-gn-0,.gall_row  > li.gallWST.col-gn-3,.gall_row  > li.gallWST.col-gn-4,.gall_row  > li.gallWST.col-gn-5,.gall_row  > li.gallWST.col-gn-6,.gall_row  > li.gallWST.col-gn-7,.gall_row  > li.gallWST.col-gn-8,.gall_row  > li.gallWST.col-gn-9,.gall_row  > li.gallWST.col-gn-10
-	{width:33.33333333% !important;}
+	{width:50% !important;}
 	.gall_row  > li.gallWST.col-gn-1,.gall_row  > li.gallWST.col-gn-2{width:50% !important;}
 }
-@media all and (max-width: 680px)
+@media all and (max-width: 576px)
 {
 	.gall_row  > li.col-gn-0,.gall_row  > li.gallWST.col-gn-3,.gall_row  > li.gallWST.col-gn-4,.gall_row  > li.gallWST.col-gn-5,.gall_row  > li.gallWST.col-gn-6,.gall_row  > li.gallWST.col-gn-7,.gall_row  > li.gallWST.col-gn-8,.gall_row  > li.gallWST.col-gn-9,.gall_row  > li.gallWST.col-gn-10
-	{width:50% !important;}
+	{width:100% !important;}
 	.gall_row  > li.gallWST.col-gn-1,.gall_row  > li.gallWST.col-gn-2{width:100% !important;}
 }
 

@@ -59,9 +59,17 @@ display:block;
 
 .img {
 
-width : 100%;
+width : 50%;
+height: 500px;
+margin: 0px auto;
 
+}
 
+.board_img{
+
+width : 75%;
+margin : 0px auto;
+text-align : center;
 }
 
 a{
@@ -110,9 +118,35 @@ margin : 0px auto;
 	background: rgba(0, 0, 0, 0.5);
 	z-index: 99;
 	display: none;
-
+}
+@media(577px <= width <= 767px){
+	.comment-box{
+			width:100%;
+		}
+		.comment-input{
+			width: 83%;
+		}
+		.comment_box{
+			width: 100%;
+		}
 }
 
+
+@media(max-width: 576px){
+	.comment-box{
+		width:100%;
+	}
+	.comment-input{
+		width: 83%;
+	}
+	.comment_box{
+		width: 100%;
+	}
+	
+	.Reply_btn{
+		width : 16%;
+	}
+}
 
 </style>
 </head>
@@ -178,26 +212,26 @@ margin : 0px auto;
 				
 					
 					<c:if test="${bv.image1 != null}">
-					<div><img src="../resources/upload/${bv.image1}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
+					<div class="board_img"><img src="../resources/upload/${bv.image1}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
 					</c:if>
 					
 					<c:if test="${bv.image2 != null}">
-					<div><img src="../resources/upload/${bv.image2}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
+					<div class="board_img"><img src="../resources/upload/${bv.image2}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
 					</c:if>
 					
 					<c:if test="${bv.image3 != null}">
-					<div><img src="../resources/upload/${bv.image3}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
+					<div class="board_img"><img src="../resources/upload/${bv.image3}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
 				    </c:if>
 				    
 				    <c:if test="${bv.image4 != null}">
-					<div><img src="../resources/upload/${bv.image4}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
+					<div class="board_img"><img src="../resources/upload/${bv.image4}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
 				    </c:if>
 				    
 				    <c:if test="${bv.image5 != null}">
-					<div><img src="../resources/upload/${bv.image5}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
+					<div class="board_img"><img src="../resources/upload/${bv.image5}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
 				    </c:if>
 					<c:if test="${bv.uidx == uidx}"> 
-				    	<a href="BoardModify.do?Bidx=${bv.bidx }&board_type=${bv.board_type}">수정</a>
+				    	<a href="BoardModify.do?Bidx=${bv.bidx }">수정</a>
 				    	<a href="BoardDelete.do?Bidx=${bv.bidx}">삭제</a>
 				    </c:if>
 				    <c:if test="${bv.uidx != uidx }">

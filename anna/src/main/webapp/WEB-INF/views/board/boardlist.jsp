@@ -54,6 +54,92 @@
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
 
+.nickName{
+
+font-size :12px;
+margin: 0 5px 0 0;
+}
+
+.wdate{
+
+font-size :12px;
+margin: 0 5px 0 0;
+}
+
+.hit{
+
+font-size :12px;
+margin: 0 5px 0 0;
+}
+
+.con{
+
+width: calc(100% - 35px);
+}
+
+.com-btn{
+    display: block;
+    margin-left: 5px;
+    width: 30px;
+    height: 50px;
+    background: #f7f7f7;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 11px;
+
+}
+
+.com-btn > span{
+
+font-size: 11px;
+display: block;
+
+}
+
+.com-btn > .ccount{
+
+padding: 12px 0 5px;
+
+}
+
+a{
+
+text-decoration: none;
+
+}
+
+@media all and (577px <= width <= 767px){
+
+.search-control{
+	width:300px;
+
+	}
+
+}
+
+@media all and (max-width : 776px){
+
+.search-control{
+	width:100%;
+
+	}
+	
+.tr border-bottom{
+	width:100%;
+	
+	
+	}
+.td{
+font-size: 10px;
+}
+
+.th{
+font-size: 10px;
+}
+	
+}
+
+
 
   
 </style>
@@ -94,7 +180,7 @@
 			</form>
 			
 			
-			<button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='${ path }/board/BoardWrite.do';">글쓰기</button>
+			<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='${ path }/board/BoardWrite.do';">글쓰기</button>
 		</div>
 			
 			<form>
@@ -113,7 +199,7 @@
             			<div class="gall_box" >
                 			<div class="gall_con">
                     			<div class="gall_boxa">
-                        			<a href="viewBoard.do?Bidx=${vo.bidx}&board_type=${vo.board_type}">
+                        			<a href="viewBoard.do?Bidx=${vo.bidx}">
                   						<em class="iconPs bo_tit"></em>
                   						<i class="imgAr">
                   							<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px">
@@ -134,7 +220,7 @@
                         			</a>
                     			</div>
 			                    <div class="gall_text_href bo_tit" >
-			                    	<a href="viewBoard.do?Bidx=${vo.bidx}&board_type=${vo.board_type}" style="float:left;">
+			                    	<a href="viewBoard.do?Bidx=${vo.bidx}" style="float:left;">
 			                            ${vo.title }
 			                        </a>
 			                        <span style="float:right;"><img src="../images/icon_comment.png" style="margin-top: -1px; margin-right: 3px; height: 15px;">${vo.ccount}</span>
@@ -154,19 +240,46 @@
 		<div class="list">
 				
 						<div class="tr border-bottom">
-							<div class="th" style="width:50%;">제목</div>
-				
+							<div class="th" style="width:40%;">제목</div>
 							<div class="th" style="width:20%;">작성자</div>
 							<div class="th" style="width:20%;">작성일</div>
 							<div class="th" style="width:10%;">조회수</div>
+							<div class="th" style="width:10%;">추천</div>
 						</div>
 						<c:if test="${ not empty board }">
-							<c:forEach var="i" items="${ board }">
+							<c:forEach var="vo" items="${ board }">
+							<div class="border-bottom d-flex">
+								<div class="con">
+								<a href="" class="we">
+									<div class="s">
+										<span>${vo.title }</span>
+										<c:if test="${vo.image1 != null}">
+										<span><img src="../images/icon_image.png" style="height:15px; margin-top: -5px;"></span>
+										</c:if>
+									</div>
+								
+								</a>
+								<div>
+									<span class="nickName">${vo.nickName}</span> 
+									<span class="hit">조회${vo.hit}</span>
+									<span class="wdate">${vo.wdate }</span>
+								</div>
+								
+							
+								</div>
+								<a href="" class="com-btn">
+									<span class="ccount">${vo.ccount }</span>
+									<span>댓글</span>
+								</a>
+							</div>
+						
+								
 								<div class="tr border-bottom">
-									<div class="td text-center" style="width:50%;"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${i.bidx}&board_type=${i.board_type}">${ i.title }</a></div>
-									<div class="td text-center" style="width:20%;">${ i.nickName }</div>
-									<div class="td text-center" style="width:20%;">${ i.wdate }</div>
-									<div class="td text-center" style="width:10%;">${ i.hit }</div>
+									<div class="td text-center" style="width:40%;"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${vo.bidx}">${vo.title }</a></div>
+									<div class="td text-center" style="width:20%;">${ vo.nickName }</div>
+									<div class="td text-center" style="width:20%;">${ vo.wdate }</div>
+									<div class="td text-center" style="width:10%;">${ vo.hit }</div>
+									<div class="td text-center" style="width:10%;">${ vo.cntLike}</div>
 								</div>
 							</c:forEach>
 						</c:if>
@@ -237,9 +350,10 @@ var scrollHeight = $(this).prop('scrollHeight');
 
         
        if((scrollTop + innerHeight)+1 >= scrollHeight){
-          console.log(isLoding+"겁나찍힘");
+          
             //만일 현재 마지막 페이지라면
             if(currentPage == ${totalPageCount} || isLoding){
+            	
             	
                return; // 함수를 여기서 끝낸다.
             }
@@ -270,10 +384,11 @@ const GetList = function(currentPage){
 		url : "ajax_board.do",
 		method : "GET",
 		//검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
-		data : "board_type=${pm.board_type}&pagenumber="+currentPage+"&SearchType=${searchType}&SearchVal=${searchVal}",
+		data : "board_type=${pm.board_type}&pagenumber="+currentPage+"&SearchVal=${pm.searchVal}",
 		//FreeBoard.jsp의 내용이 data로 들어온다. 
 		success:function(data){
-			 console.log(data.appendList);
+			 //console.log(data.appendList);
+		
 			let appendList = data.appendList;
 	         let html = "";
 	         

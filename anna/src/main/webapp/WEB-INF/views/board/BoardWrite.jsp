@@ -23,25 +23,40 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <style>
 
+html{
+
+width : 100%;
+
+}
+
+body {
+
+
+}
+
 #location_kakao{
 
 display: none;
 
 }
 
+.note{
+
+
+}
 
 
 </style>
 </head>
 <body>
+<div class="container main">
 
 
-
-    <h1>Summernote</h1>
+    <h1>글쓰기</h1>
     
 <form action="BoardWrite.do" method="post" enctype="multipart/form-data">
-<input type="text" name="uidx" value="${uidx}">
-<input type="text" name="Location" value="${userLoginInfo.location_auth}">										
+<input type="hidden" name="uidx" value="${uidx}">
+<input type="hidden" name="Location" value="${userLoginInfo.location_auth}">										
 
 <select name="board_type" onchange="javascript:locationMap(this);" id="board_type">
 	<option value="free">일상&amp;소통</option>
@@ -51,8 +66,9 @@ display: none;
 </select>
 
 <input type="text" name="Title" placeholder="제목을 입력해주세요">
- 
+ <div class="note">
 <textarea id="summernote" class="summernote" name="Contents"></textarea>
+</div>
 <div id="location_kakao">
 
 이게 위치정보 넣어야 할때만 나타나면 성공임
@@ -66,6 +82,7 @@ display: none;
 <button type="button">취소</button>
 <button>작성완료</button>
 </form>
+</div>
 
 <script>
 $('#summernote').summernote({
