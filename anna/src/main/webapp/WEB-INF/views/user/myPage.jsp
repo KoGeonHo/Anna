@@ -164,7 +164,7 @@
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		
-		<div class="wrapper" id="container-pc">
+		<div class="wrapper" id="container-pc" style="padding-bottom:100px;">
 			<!-- MyPage for Pc -->
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
@@ -266,6 +266,37 @@
 						</c:if>
 					</div>
 				</div>
+				
+				<div id="myCommunity">
+					<div style="float:left; padding:5px;">내가 작성한 글</div>
+					<div style="float:right; padding:5px;">더 보기</div>
+					<div class="list">
+				
+						<div class="tr border-bottom">
+							<div class="th" style="width:50%;">제목</div>
+							<div class="th" style="width:10%;">구분</div>
+							<div class="th" style="width:10%;">작성자</div>
+							<div class="th" style="width:20%;">작성일</div>
+							<div class="th" style="width:10%;">조회수</div>
+						</div>
+						<c:if test="${ not empty myCommunity }">
+							<c:forEach var="i" items="${ myCommunity }">
+								<div class="tr border-bottom" onclick="location.href='${path}/board/viewBoard.do?Bidx=${i.bidx}'">
+									<div class="td text-center" style="width:50%;">${ i.title }</div>
+									<div class="td text-center" style="width:10%;">${ i.board_type }</div>
+									<div class="td text-center" style="width:10%;">${ i.nickName }</div>
+									<div class="td text-center" style="width:20%;">${ i.wdate }</div>
+									<div class="td text-center" style="width:10%;">${ i.hit }</div>
+								</div>
+							</c:forEach>
+						</c:if>
+						<c:if test="${ empty myCommunity }">
+							<div class="tr border-bottom" style="height:200px; display:flex; margin-bottom:20px;">
+								<div style="flex:1; margin:auto; text-align:center;">현재 등록된 동네에는 등록된 게시글이 없습니다.</div>
+							</div>
+						</c:if>
+					</div>
+				</div>
 			</div>
 			<!-- MyPage for Pc -->
 		</div>
@@ -300,7 +331,7 @@
 						<div class="text-center btn-circle">관심</div>
 						<div class="text-center">관심 상품</div>
 					</div>
-					<div class="col-4" style="padding:0px;">
+					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/board/boardlist.do?board_type=notice'">
 						<div class="text-center btn-circle">공지</div>
 						<div class="text-center">공지사항</div>
 					</div>

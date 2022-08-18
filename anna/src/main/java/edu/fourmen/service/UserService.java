@@ -33,5 +33,6 @@ public interface UserService {
 	ChatMessageVO getMessageNoRead(ChatMessageVO cmvo);
 	List<BoardItemVO> myBoardItemList(int uidx);
 	List<BoardItemVO> getWishList(int uidx);
+	List<BoardVO> getMyCommunity(int uidx);
 	
 }

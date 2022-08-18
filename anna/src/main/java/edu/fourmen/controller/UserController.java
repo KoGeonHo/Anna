@@ -425,8 +425,11 @@ public class UserController {
 			myTownCommunityList = userService.myTownCommunityList(uv.getLocation_auth());
 		}
 		
-		
 		//System.out.println(blist);
+		
+		List<BoardVO> myCommunity = userService.getMyCommunity(uidx);
+		
+		model.addAttribute("myCommunity",myCommunity);
 
 		model.addAttribute("myBoardItemList",myBoardItemList);
 		

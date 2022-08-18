@@ -82,7 +82,7 @@
 			</div>
 		</div>
 		
-		<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>
+		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		

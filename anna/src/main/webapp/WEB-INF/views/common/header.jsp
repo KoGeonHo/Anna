@@ -16,15 +16,15 @@
 					</div>
 					<div class="text-end" style="width:130px;">
 						<c:if test="${ empty uidx }">
-							<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='${ path }/user/login.do';">
+							<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="location.href='${ path }/user/login.do';">
 								로그인
 							</button>
-							<button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="javascript:loacrion.href='${ path }/user/join.do';">
+							<button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="loacrion.href='${ path }/user/join.do';">
 								회원가입
 							</button>
 						</c:if>
 						<c:if test="${ not empty uidx }">
-							<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='${ path }/user/logout.do';">
+							<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="location.href='${ path }/user/logout.do';">
 								로그아웃
 							</button>
 						</c:if>
@@ -37,29 +37,29 @@
 						<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
 							<li>
 								<ul style="list-style:none; padding-inline-start:0;">
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/boarditem/itemlist.do'">중고거래</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/boarditem/itemlist.do'">중고거래</li>
 								</ul>
 							</li>
 							<li>
 								<ul style="list-style:none; padding-inline-start:0;">
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=notice'">공지사항</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=free'">일상소통</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=job'">구인구직</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=meeting'">모임</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=hotplace'">핫플레이스</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=notice'">공지사항</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=free'">일상소통</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=job'">구인구직</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=meeting'">모임</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=hotplace'">핫플레이스</li>
 								</ul>
 							<li>
 								<ul style="list-style:none; padding-inline-start:0;">
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/customer/QnAList.do'">자주하는질문</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/customer/QnAList.do'">문의하기</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="alert('준비중입니다.');">자주하는질문</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/customer/QnAList.do'">문의하기</li>
 								</ul>
 							<li>
 								<ul style="list-style:none; padding-inline-start:0;">
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/user/myPage.do'">마이페이지</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/user/userInfoView.do'">내정보</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/user/neighborMng.do'">이웃관리</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/user/myPage.do'">구매내역</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/user/myPage.do'">판매내역</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/myPage.do'">마이페이지</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/userInfoView.do'">내정보</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/neighborMng.do'">이웃관리</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/myPage.do'">구매내역</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/myPage.do'">판매내역</li>
 								</ul>
 							</li>
 						</ul>
@@ -111,7 +111,7 @@
 		<nav class="navbar navbar-dark" style=" background:#00AAB2;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<select class="form-select" aria-label="Default select example">
+					<select class="form-select" aria-label="Default select example" onchange="alert('해당 기능은 준비중입니다.')">
 						<option>내 동네</option>
 					</select>
 		    		<script>

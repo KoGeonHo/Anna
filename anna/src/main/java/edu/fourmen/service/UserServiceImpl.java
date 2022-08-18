@@ -333,4 +333,10 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getWishList(uidx);
 	}
 
+	@Override
+	public List<BoardVO> getMyCommunity(int uidx) {
+		
+		return userDAO.getMyCommunity(uidx);
+	}
+
 }
