@@ -34,14 +34,6 @@
 	width: calc(100% - 35px);
 
 }    
-
-#li{
-
-	background-color: black;
-
-
-}
-    
  
 .th {
 	background:#eee;
@@ -93,24 +85,25 @@ display: none;
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">글 쓰기</h3>
 		
-				<form method="POST" action="QnAWrite.do" enctype="multipart/form-data">
+				<form action="BoardWrite.do" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="uidx" value="${uidx}">
+					<input type="hidden" name="Location" value="${userLoginInfo.location_auth}">
 				
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">제목</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<input type="text" class="form-control" name="Title">
+							<input type="text" class="form-control" name="Title" placeholder="제목을 입력해주세요">
 						</div>
 					</div>
 					
 					<div class="row border-bottom tr">
-						<div class="col-4 th" style="display:table-cell;">문의 유형</div>
+						<div class="col-4 th" style="display:table-cell;">게시판 분류</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<select name="qType">
-								<option value="system">시스템오류</option>
-								<option value="login">로그인</option>
-								<option value="service">서비스이용</option>
-								<option value="bannedItem">판매 금지 품목</option>
-								<option value="ETC">기타</option>
+							<select name="board_type" onchange="javascript:locationMap(this);" id="board_type">
+								<option value="free">일상&amp;소통</option>
+								<option value="job">구인구직</option>
+								<option value="meeting">모임</option>
+								<option value="hotplace">우리동네 핫플레이스</option>
 							</select>
 						</div>
 					</div>
@@ -134,42 +127,22 @@ display: none;
 					<div class="text-end tr">
 						<div class="td">
 							<button class="btn" style="background:#00AAB2; color:#fff;">등록</button>
-							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/customer/QnAList.do'">취소</button>
+							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/board/boardlist.do?=${pm.board_type}'">취소</button>
 						</div>
 					</div>
+					<div id="location_kakao">
+
+					서비스 준비중입니다.
+					
+					</div>
 				</form>
+				<input type="text" class="boardtype" value="${pm.board_type}">
 			</div>
 		</div>
-<input type="hidden" class="boardtype" value="${pm.board_type}">
 
-    <h1>글쓰기</h1>
-    
-<form action="BoardWrite.do" method="post" enctype="multipart/form-data">
-<input type="hidden" name="uidx" value="${uidx}">
-<input type="hidden" name="Location" value="${userLoginInfo.location_auth}">										
 
-<select name="board_type" onchange="javascript:locationMap(this);" id="board_type">
-	<option value="free">일상&amp;소통</option>
-	<option value="job">구인구직</option>
-	<option value="meeting">모임</option>
-	<option value="hotplace">우리동네 핫플레이스</option>
-</select>
 
-<input type="text" id="" name="Title" placeholder="제목을 입력해주세요">
- <div class="note">
-<textarea id="summernote" class="summernote" name="Contents"></textarea>
-</div>
-<div id="location_kakao">
 
-이게 위치정보 넣어야 할때만 나타나면 성공임
-
-</div>
-
-<button type="button">취소</button>
-<button>작성완료</button>
-</form>
-
-<input type="hidden" class="boardtype" value="${pm.board_type}">
 		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
