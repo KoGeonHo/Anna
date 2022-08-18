@@ -42,11 +42,16 @@
 							</li>
 							<li>
 								<ul style="list-style:none; padding-inline-start:0;">
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=free'">커뮤니티</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=notice'">공지사항</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=free'">일상소통</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=job'">구인구직</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=meeting'">모임</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/board/boardlist.do?board_type=hotplace'">핫플레이스</li>
 								</ul>
 							<li>
 								<ul style="list-style:none; padding-inline-start:0;">
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/customer/QnAList.do'">고객센터</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/customer/QnAList.do'">자주하는질문</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="javascript:location.href='${path}/customer/QnAList.do'">문의하기</li>
 								</ul>
 							<li>
 								<ul style="list-style:none; padding-inline-start:0;">
