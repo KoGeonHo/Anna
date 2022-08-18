@@ -233,7 +233,7 @@
 									<form class="d-flex" method="get" action="admin_board.do?">
 										<input class="form-control me-6 vh-20 search-control" type="search" name="SearchVal"
 											placeholder="검색어를 입력하세요" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> aria-label="Search">
-										<button class="btn btn-outline-primary" type="submit">Search</button>
+										<button class="btn btn-outline-primary" type="submit" href="void(0);" onclick="alert('준비중입니다');return false;">Search</button>
 									</form>
 
 								</div>
