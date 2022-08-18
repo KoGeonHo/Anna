@@ -55,6 +55,7 @@
 				
 			}
 		});
+		
 		$("#chatContents").keyup(function(e){
 			if(e.keyCode != 13){
 				if($(this).val() != ""){
@@ -66,6 +67,7 @@
 				}
 			}
 		});
+		
 	});
 	
 	function sendMessage(){
@@ -74,6 +76,9 @@
 		let chat_host = <%=request.getParameter("chat_host")%>;
 		let contents = $("#chatContents").val();
 		let chatData = "item_idx="+item_idx+"&invited="+invited+"&chat_host="+chat_host+"&contents="+contents+"&uidx=${uidx}";
+		$("#chatContents").prop("disabled",true);
+		$("#sendBtn").prop("disabled",true);
+		$("#sendBtn").css("background","#ccc");
 		$.ajax({
 			url : "sendMessage.do",
 			data : chatData,
@@ -87,9 +92,6 @@
 				$("#chatContents").val("");
 				$("#chatbox").append(html);
 				$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
-				$("#chatContents").prop("disabled",true);
-				$("#sendBtn").prop("disabled",true);
-				$("#sendBtn").css("background","#ccc");
 				setTimeout(function(){
 					$("#chatContents").prop("disabled",false);
 					/* $("#sendBtn").prop("disabled",false);
@@ -120,9 +122,19 @@
 			success : function(result){
 				if(result != ""){
 					let html = "";
-					html += '<div class="text-start border-bottom" style="padding:10px;">';
-					html += '${audience}<br>';
-					html += result.contents;
+					
+					html += '<div class="text-start border-bottom" style="padding:10px; display:flex;">';
+					html += '<div>';
+					if(result.uidx == result.chat_host){
+						html += '<img src="'+result.hostProfileImg+'" style="width:50px; height:auto; border-radius:100px;" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
+					}else if(result.uidx == result.invited){
+						html += '<img src="'+result.invitedProfileImg+'" style="width:50px; height:auto; border-radius:100px;" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
+					}
+					html += '</div>';
+					html += '<div style="flex:1; margin:auto; margin-left:10px;">';
+					html += '<div>${audience}</div>';
+					html += '<div>'+result.contents+'</div>';
+					html += '</div>';
 					html += '</div>';
 					$("#chatbox").append(html);
 					$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);

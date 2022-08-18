@@ -37,7 +37,7 @@
 		<br>
 		<span style="font-size:0.9rem;">myPage</span>
 	</div><!--
-	--><div class="ft-icon text-center" style="width:20vw; display:inline-block;">
+	--><div class="ft-icon text-center" style="width:20vw; display:inline-block;" onclick="alert('준비중입니다.')">
 		<img src="${ path }/images/icon_quick.png">
 		<br>
 		<span style="font-size:0.9rem;">메뉴</span>
