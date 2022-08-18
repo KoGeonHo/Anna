@@ -117,10 +117,10 @@ public class BoardController {
 	public String BoardWrite(Model model, HttpSession session, HttpServletRequest request, PageMaker pm) {
 		
 		session = request.getSession();
+
+		model.addAttribute("pm",pm);
 		
 		System.out.println(pm.getBoard_type());
-		
-		model.addAttribute("pm",pm);
 
 		return "board/BoardWrite";
 	}
@@ -379,31 +379,7 @@ public class BoardController {
 //		System.out.println(vo.getBidx()+"bidx");
 		return "redirect:/board/boardlist.do?board_type="+vo.getBoard_type(); //redirect://board/boardlist.do
 	}
-	
-	@RequestMapping(value="/test.do")
-	public String test(int Bidx,Model model, HttpServletRequest request, HttpSession session) {
-				
-		model.addAttribute("path","/anna");
-		
-		session = request.getSession();
-		
-		BoardVO bv = boardService.viewBoard(Bidx);
-		
-		BoardVO vo = new BoardVO();
-		
-		boardService.HitUp(Bidx);
-		
-		vo.setBidx(Bidx);
-		if(session.getAttribute("uidx") != null) {
-			vo.setUidx(Integer.parseInt(String.valueOf(session.getAttribute("uidx"))));
-		}
-		model.addAttribute("bv", bv);
-		model.addAttribute("like",boardService.Likeyn(vo));
-		
-//		System.out.println("like");
-		
-		return "board/test";
-	}
+
 	
 	@RequestMapping(value="/boardlist.do") //게시판 통합
 	public String boardlist(Model model, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
