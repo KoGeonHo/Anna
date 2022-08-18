@@ -54,7 +54,6 @@ public class BoardItemController {
 
 	public String itemlist(HttpSession session,BoardItemVO nvo,PageMaker pm,BoardItemVO vo,  HttpServletRequest request, Model model) {
 		session = request.getSession();
-		
 		//블랙리스트 조회
 		
 		
@@ -134,7 +133,12 @@ public class BoardItemController {
 
 	@ResponseBody
 	@RequestMapping(value = "/ajax_main.do", produces = "application/json; charset=utf8")
-	   public HashMap<String, Object> main2(PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
+	   public HashMap<String, Object> main2(HttpSession session,PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
+		
+		session = request.getSession();
+		
+		
+		  
 		
 	      if(svo.getSearchType() == null) {
 	         svo.setSearchType("TITLE");
@@ -192,7 +196,9 @@ public class BoardItemController {
 	      request.setAttribute("pagenumber", pagenumber);
 	      
 	      
+	      int uidx = (int) session.getAttribute("uidx");
 	      
+	      pm.setUidx(uidx);
 	      
 	      List<BoardItemVO> list = boarditemService.list(vo,pm);
 	      

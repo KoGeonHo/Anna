@@ -590,10 +590,14 @@ a {
 		});
 	} */
 	function updatestate(){
+		if($('.state').val() == 3){
+			alert("거래완료로 변경하면 더 이상 수정이 불가능합니다")
+		}
 		$.post('updatestate',{
 			state : $('.state').val(),
 			item_idx : ${vo.item_idx},
-		},'json');
+		},
+		'json');
 			console.log("거래상태 변경 완료");
 			$('#state').load(location.href+' #state');
 	}

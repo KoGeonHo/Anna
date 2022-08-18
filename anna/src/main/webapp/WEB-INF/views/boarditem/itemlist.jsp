@@ -213,13 +213,13 @@
 				html +='		'+appendList[i].hit+' 조회수';
 				html +='		<div id="Wish_area">';
 						if (appendList[i].wishCheck == 0){
-				html +='				'+appendList[i].wishCheck+'				<div class="image">';
+				html +='							<div class="image">';
 				html +='									<img src="../images/Wish_off.png" style="width:50px; height:50px;" >';
 				html +='									<p>'+appendList[i].wishCount+'</p>';
 				html +='								</div>';
 						}
 						if (appendList[i].wishCheck != 0){
-				html +='						'+appendList[i].wishCheck+'		<div class="image">';
+				html +='							<div class="image">';
 				html +='								<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >';
 				html +='								<p style="background-color:ce3746;">'+appendList[i].wishCount+'</p>';
 				html +='							</div>';
@@ -238,7 +238,7 @@
 	         //console.log(html);
 	         //응답된 문자열은 html형식이다. 
 	         //해당 문자열은 .card-list-container div에 html로 해석하라고 추가한다.
-	         $(".card-list-container").append("<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>"+html);
+	         $(".card-list-container").append(html);
 	         //로딩바를 숨긴다.
 	         //$(".back-drop").hide();
 	         //로딩중이 아니라고 표시한다.
@@ -521,19 +521,6 @@ li{
 				</c:if>
 			</div>
 <br>
-<hr>
-<br>
-			<!-- 채팅 리스트 -->
-			<div id="popup" class="Pstyle">	
-					<input type="button" id="btn_close" value="닫 기">
-			</div>
-			<div class="wrap2">
-				<input type="button" id="btn_open" value="채팅리스트">
-			</div>
-				
-			
-			
-			
 <hr>
 
 	<div class="section">
