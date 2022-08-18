@@ -38,7 +38,7 @@
 		 </if> 
 		 <if test="interested != null">
 		 	<foreach collection="interested" item="item"  separator="OR" open="AND (" close=")">
-				b.keyword like concat('%',#{item},'%')
+				b.keyword like concat('%',#{item},'%') and b.uidx != #{pagemaker.uidx}
 			</foreach>
 		 </if> 
 		 
