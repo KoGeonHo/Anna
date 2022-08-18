@@ -13,4 +13,8 @@ $(function(){
 		}
 		
 	});
+	
+	$(".main").mousemove(function(){
+		NavSlideUp();
+	});
 });

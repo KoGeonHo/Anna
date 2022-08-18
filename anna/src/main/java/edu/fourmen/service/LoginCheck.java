@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import edu.fourmen.vo.UserVO;
+
 
 public class LoginCheck extends HandlerInterceptorAdapter{
 
@@ -45,8 +47,38 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 				
 			} else {
 				
-				return true;	
-				
+				if(requestUrl.contains("/admin")) {
+					
+					UserVO userLoginInfo = (UserVO)session.getAttribute("userLoginInfo");
+					
+					//System.out.println(userLoginInfo.getIsAdmin());
+					
+					String isAdmin = userLoginInfo.getIsAdmin();
+
+					//System.out.println(isAdmin.equals("Y"));
+					
+					if(!isAdmin.equals("Y")){
+						
+						PrintWriter pw = response.getWriter();
+						
+						pw.append("<script>alert('잘못된 접근입니다.'); location.href='"+request.getContextPath()+"/main.do';</script>");
+						
+						pw.flush();
+						
+						pw.close();
+						
+						return false;
+						
+					} else {
+						
+						return true;
+						
+					}
+				} else {
+					
+					return true;	
+					
+				}
 			}
 		}
 		
