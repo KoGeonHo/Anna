@@ -30,6 +30,9 @@
 		   AND ( b.title like concat ('%',#{searchVal},'%')  
 		   or b.keyword like concat ('%',#{searchVal},'%') )
 		</if>
+		<if test='searchUidx != 0 '>
+			AND b.uidx = #{searchUidx}
+		</if>
 		 <if test='cate_idx != 0 and cate_idx != null'>
 		 	and cate_idx = #{cate_idx}
 		 </if>
@@ -60,9 +63,16 @@
 				inner join AnnaUser u
 				on b.uidx = u.uidx
 			 where b.isDel = 'N'
-		   <if test='cate_idx != 0 and cate_idx != null'>
-		 	and cate_idx = #{cate_idx}
-		 </if>
+		   <if test='searchVal != null '>
+		   AND ( b.title like concat ('%',#{searchVal},'%')  
+		   or b.keyword like concat ('%',#{searchVal},'%') )
+			</if>
+			<if test='searchUidx != 0 '>
+				AND b.uidx = #{searchUidx}
+			</if>
+			 <if test='cate_idx != 0 and cate_idx != null'>
+			 	and cate_idx = #{cate_idx}
+			 </if>
 	</select>
 	
 	<select id="myitemlist" parameterType="int" resultType="BoardItemVO">
@@ -280,9 +290,13 @@
 			inner join AnnaUser u
 			on b.uidx = u.uidx
 			 where b.isDel = 'N' 
-			<if test='searchVal != null'>
-		   AND b.title like concat ('%',#{searchVal},'%')
-			</if>
+		<if test='searchVal != null '>
+		   AND ( b.title like concat ('%',#{searchVal},'%')  
+		   or b.keyword like concat ('%',#{searchVal},'%') )
+		</if>
+		 <if test='cate_idx != 0 and cate_idx != null'>
+		 	and cate_idx = #{cate_idx}
+		 </if>
 	order by b.wdate desc limit 0,1
 	</select>
 

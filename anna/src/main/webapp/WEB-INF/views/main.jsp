@@ -118,7 +118,7 @@ const GetList = function(currentPage){
 				html +='<img src="<%=request.getContextPath()%>/resources/upload/'+appendList[i].image1+'"';
 				html +='onerror=this.src="images/noimg_item.jpg" width="100%" height="255">';
 				html +='</a>';
-				html +='<div class="card-body">';
+				html +='<div class="card-body" "text-align: center; padding-top: 5px;">';
 				html +='<h6 class="card-title">';
 				html +='<a href="boarditem/itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
 				html +='</h6>';
@@ -133,6 +133,9 @@ const GetList = function(currentPage){
 				html +='</div>';
 				html +='	</div>';
 			}
+			
+		
+			
 			
 			//console.log(html);
 			//응답된 문자열은 html형식이다. 
@@ -367,76 +370,84 @@ a {
 
 
 	<!-- 인기상품 start -->
-	<div id = "bestitem">
-	<main>
-		<div class="album py-5 ">
-				<div class="container">
+			<div id="bestitem">
+				<main>
+					<div class="album py-5 ">
+						<div class="container">
 
-					<div class="container ">  
-						<div class="row ">
-							<div class="col-md-2">
-								<h4>｜인기 상품</h4>
+							<div class="container ">
+								<div class="row ">
+									<div class="col-md-2">
+										<h4>｜인기 상품</h4>
+									</div>
+									<div class="col-md-8"></div>
+									<div class="col-md-2 "></div>
+									<hr>
+								</div>
 							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2 ">
-							</div>
-							<hr>
 						</div>
 					</div>
-				</div>
-		</div>
 
-	</main>
-	
-
- 	<!--   Slick Slider -->
- 	<div class="container ">
-			<div class="row">
-	<!-- stlye 은 slick 영역 확인용 -->
-	<div style="padding-top: 30px; background-color: #fff; margin-top:-75px;" >
-	  	<div id="slider-div"  >
-
-			<c:if test="${list.size() > 0}">
-							<c:forEach var="vo" items="${list}">
+				</main>
 
 
-								<div class="col-lg-3  col-md-12 ">
+				<!--   Slick Slider -->
+				<div class="container ">
+					<div class="row">
+						<!-- stlye 은 slick 영역 확인용 -->
+						<div
+							style="padding-top: 30px; background-color: #fff; margin-top: -75px;">
+							<div id="slider-div">
 
-									<div class="card">
-										<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"> <img
-											src="<%=request.getContextPath()%>/resources/upload/${vo.image1}"
-											onerror=this.src="images/noimg_item.jpg" width="100%"
-											height="255">
-										</a>
+								<c:if test="${list.size() > 0}">
+									<c:forEach var="vo" items="${list}">
 
-										<div class="card-body">
-											<h6 class="card-title" id="itemtitle">
-												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
-											</h6>
-											<p class="card-text" id="itemprice">${vo.price}원</p>
-											<button type="button"
-												class="btn btn-sm btn-outline-secondary"
-												style="float: right">♥12</button>
-											<button type="button"
-												class="btn btn-sm btn-outline-secondary"
-												style="float: right">View 2</button>
-												
+
+										<div class="col-lg-3  col-md-12 ">
+
+											<div class="card">
+												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">
+													<img
+													src="<%=request.getContextPath()%>/resources/upload/${vo.image1}" onerror=this.src= "images/noimg_item.jpg" width="100%"height="255">
+												</a>
+												<div class="card-body"
+													style="text-align: center; padding-top: 5px;">
+													<h7 class="card-title"
+														style="color:#E52421; font-weight :  bold; font-size:14px;">
+													<c:if test="${vo.state==1}">
+														<h7 class="product-price">거래중</h7>
+													</c:if> <c:if test="${vo.state==2}">
+														<h7 class="product-price">예약중</h7>
+													</c:if> <c:if test="${vo.state==3}">
+														<h7 class="product-price">거래완료</h7>
+													</c:if> </h7>
+													<h6 class="card-title" id="itemtitle">
+														<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
+													</h6>
+													<p class="card-text" id="itemtitle"
+														style="color: #00AAB2; font-size: 17px">${vo.price}<span
+															style="color: #000;">원</span>
+													</p>
+													<div style="display: inline-block; margin: 0px auto;">
+														<h7 class="card-text" style="color:#6C757D; ">♥ 2
+														View 5</h7>
+													</div>
+												</div>
+											</div>
 										</div>
-									</div>
-								</div>
-							</c:forEach>
-						</c:if>
-	  	</div>
-	</div>
-	</div>
-	<script>
+									</c:forEach>
+								</c:if>
+							</div>
+						</div>
+					</div>
+					<script>
 	function setCommas(itemprice) {  
 		return itemprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");}
 
 	</script>
-	
-	
-	<script>
+
+
+					<script>
   		$(function(){
 			$('#slider-div').slick({
 				slide: 'div',		//슬라이드 되어야 할 태그 ex) div, li 
@@ -473,120 +484,100 @@ a {
 			});
   		})  		
 	</script>
-	
-	
-	<style>
-	
+
+
+					<style>
 #slidebtn {
-width: 50px;
-  color: white;
-  font-size: 35px;
- 	line-height: 50px;
-
-}
-	
-	.slick-prev {
-   
-    position: absolute;
-    z-index: 100;
-    top: 42%;
-    left: 18px;
-    border : 0;
-
+	width: 50px;
+	color: white;
+	font-size: 35px;
+	line-height: 50px;
 }
 
-	.slick-next {
-   
-    position: absolute;
-    z-index: 100;
-    top: 42%;
-    right: 18px;
-    border : 0;
-
+.slick-prev {
+	position: absolute;
+	z-index: 100;
+	top: 42%;
+	left: 18px;
+	border: 0;
 }
 
-
+.slick-next {
+	position: absolute;
+	z-index: 100;
+	top: 42%;
+	right: 18px;
+	border: 0;
+}
 </style>
-	</div>
- 	 <!--   Slick Slider -->
+				</div>
+				<!--   Slick Slider -->
 
-<!-- 인기상품 end -->
+				<!-- 인기상품 end -->
 
 
-	<!-- 게시글 -->
-	<main>
-		<div class="album py-5" id="boardlist">
-			<div class="container">
-
-					<div class="container ">
-						<div class="row">
-							<div class="col-md-2">
-								<h4>｜일상 & 소통</h4>
+				<!-- 게시글 -->
+				<main>
+					<div class="album py-5" id="boardlist">
+						<div class="container">
+							<div class="container ">
+								<div class="row">
+									<div class="col-md-2">
+										<h4>｜일상 & 소통</h4>
+									</div>
+									<div class="col-md-8"></div>
+									<div class="col-md-2">
+										<h6 style="text-align: right;">
+											<a href="board/FreeBoard.do">더보기</a>
+										</h6>
+									</div>
+								</div>
 							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2">
-								<h6 style="text-align: right;">
-									<a href="board/FreeBoard.do">더보기</a>
-								</h6>
-							</div>
+							<hr>
+							<form>
+								<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+									<c:if test="${freeboard.size() ==0}">
+										<h3>등록된 게시물이 없습니다.</h3>
+									</c:if>
+
+									<c:if test="${freeboard.size()>0 }">
+										<c:forEach var="vo" items="${freeboard}">
+											<c:if test="${vo.board_type eq 'free' }">
+
+												<div class="col">
+													<div class="card shadow-sm">
+														<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"
+															onerror=this.src= "images/noimg_item.jpg" width="100%" height="225">
+														</a>
+														<div class="card-body" style="border: 0;">
+															<h6 class="card-title" id="itemtitle">
+																<a href="board/viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a>
+															</h6>
+															<p class="card-text"></p>
+															<button type="button" class="btn btn-sm btn-outline-secondary" style="float: left">♥${vo.cntLike}</button>
+
+															<button type="button"
+																class="btn btn-sm btn-outline-secondary" style="float: left">
+																<img src="images/icon_main_riply.png" width="50%" style="margin-top: -2px;"> ${vo.ccount}
+															</button>
+														</div>
+													</div>
+												</div>
+											</c:if>
+										</c:forEach>
+									</c:if>
+								</div>
+							</form>
 						</div>
 					</div>
-					<hr>
-
-
-					<form>
-						<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-
-
-
-
-							<c:if test="${freeboard.size() ==0}">
-
-								<h3>등록된 게시물이 없습니다.</h3>
-							</c:if>
-
-							<c:if test="${freeboard.size()>0 }">
-								<c:forEach var="vo" items="${freeboard}">
-									<c:if test="${vo.board_type eq 'free' }">
-
-										<div class="col">
-											<div class="card shadow-sm">
-												<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"	 onerror=this.src="images/noimg_item.jpg" width="100%"  height="225">
-												</a>
-												<div class="card-body" style="border : 0;">
-													<h6 class="card-title" id="itemtitle">
-														<a href="board/viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a>
-													</h6>
-													<p class="card-text"></p>
-													<button type="button"
-														class="btn btn-sm btn-outline-secondary"
-														style="float: left">♥${vo.cntLike}</button>
-														
-													<button type="button"
-														class="btn btn-sm btn-outline-secondary"
-														style="float: left"><img src="images/icon_main_riply.png" width="50%" style="margin-top: -2px;" > ${vo.ccount}</button>
-														
-													
-												</div>
-											</div>
-										</div>
-									</c:if>
-								</c:forEach>
-							</c:if>
-
-						</div>
-					</form>				
 			</div>
-		</div>
-		</div>
-		<br>
-
-	</main>
-	<!-- 게시글 -->
+			<br>
+			</main>
+			<!-- 게시글 -->
 
 
 
-	<!-- 상품 -->
+			<!-- 상품 -->
 	<div id="itemlist">
 	<main>
 		<div class="album py-5 ">
@@ -611,10 +602,8 @@ width: 50px;
 
 						<c:if test="${list.size() > 0}">
 							<c:forEach var="vo" items="${list}">
-
-
+							
 								<div class="col-lg-3  col-md-12 ">
-
 									<div class="card">
 										<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"> <img
 											src="<%=request.getContextPath()%>/resources/upload/${vo.image1}"
@@ -644,23 +633,11 @@ width: 50px;
 							</c:forEach>
 						</c:if>
 					</div>
-
-					<!-- <div id="card-list" class="card-list">
-						무한스크롤부분
-						<div class="container">
-							<div class="row card-list-container thumbnails"></div>
-						</div>
-					</div> -->
-
-
-
-
 				</div>
 			</div>
 		</div>
 	</main>
 </div>
-
 
 
 </div>

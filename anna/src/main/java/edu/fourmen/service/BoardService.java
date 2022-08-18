@@ -15,7 +15,6 @@ public interface BoardService {
 	
 	int writeBoard(BoardVO vo);
 	
-	List<BoardVO> selectfreeboard(PageMaker pm);
 	
 	List<BoardVO> selectboard(PageMaker pm);
 

@@ -25,12 +25,6 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public List<BoardVO> selectfreeboard(PageMaker pm) {
-		
-		return boardDao.selectfreeboard(pm);
-	}
-
-	@Override
 	public List<BoardVO> selectboard(PageMaker pm) {
 		
 		return boardDao.selectboard(pm);
