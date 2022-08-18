@@ -38,8 +38,8 @@
 			</c:if>
 			<c:if test="${ not empty wishList }">
 				<c:forEach var="i" items="${ wishList }">
-					<div style="padding:10px; display:flex;">
-						<div style="width:100px; height:100px;"><img src="${i.image1}" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';" style="width:80px; height:80px; border-radius:100px; margin:10px;"></div>
+					<div style="padding:0 10px; display:flex;">
+						<div><img src="${i.image1}" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';" style="width:110px; height:110px; border:2px solid #ccc; border-radius:10px; margin:10px;"></div>
 						<div style="flex:1; margin:auto; padding:10px;">
 							<div><h5>${ i.title }</h5></div>
 							<div>${ i.keyword }</div>
@@ -54,7 +54,10 @@
 							<button type="button" class="btn" onclick="delNeighbor(${i.uidx})" style="background:#00AAB2; color:#fff; margin:5px;">삭제</button>
 						</div> --%>
 					</div>
-					<div class="text-end border-bottom">찜count 채팅count</div>
+					<div class="text-end border-bottom" style="padding:5px;">
+						<img src="${path}/images/icon_chat_count.png" style="width:34px; height:auto; padding:3px;">${ i.chatCount }
+						<img src="${path}/images/icon_wish_count.png" style="width:30px; height:auto; padding:5px;">${ i.wishCount }
+						</div>
 				</c:forEach>
 			</c:if>
 		</div>

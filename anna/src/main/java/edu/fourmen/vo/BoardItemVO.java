@@ -11,6 +11,7 @@ public class BoardItemVO {
 	private int black_idx;
 	private int WishCount;
 	private int WishCheck;
+	private int chatCount;
 	
 	private String Title;
 	private String contents;
@@ -70,6 +71,12 @@ public class BoardItemVO {
 	
 	
 	
+	public int getChatCount() {
+		return chatCount;
+	}
+	public void setChatCount(int chatCount) {
+		this.chatCount = chatCount;
+	}
 	public int getWishCheck() {
 		return WishCheck;
 	}

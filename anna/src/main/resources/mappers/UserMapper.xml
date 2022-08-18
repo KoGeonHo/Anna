@@ -397,32 +397,34 @@
 	<select id="getWishList" parameterType="int" resultType="BoardItemVO">
 	
 		SELECT
-			item_idx,
-			uidx,
-			cate_idx,
-			title,
-			contents,
-			wdate,
-			addr1,
-			addr2,
-			addr_code,
-			image1,
-			image2,
-			image3,
-			image4,
-			image5,
-			image6,
-			image7,
-			image8,
-			image9,
-			image10,
-			keyword,
-			price,
-			offer,
-			hit,
-			state
+			a.item_idx,
+			a.uidx,
+			a.cate_idx,
+			a.title,
+			a.contents,
+			a.wdate,
+			a.addr1,
+			a.addr2,
+			a.addr_code,
+			a.image1,
+			a.image2,
+			a.image3,
+			a.image4,
+			a.image5,
+			a.image6,
+			a.image7,
+			a.image8,
+			a.image9,
+			a.image10,
+			a.keyword,
+			a.price,
+			a.offer,
+			a.hit,
+			a.state,
+			(SELECT count(*) FROM Wish_list where item_idx = a.item_idx) as WishCount,
+			(select count(*) from (SELECT * FROM chat b GROUP BY b.item_idx, b.chat_host, b.invited) c WHERE c.item_idx = a.item_idx) as chatCount
 		FROM
-			Board_Items
+			Board_Items a
 		WHERE
 			item_idx IN (SELECT item_idx FROM Wish_list where uidx = #{uidx})
 	

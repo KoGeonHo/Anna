@@ -170,7 +170,7 @@
 				<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
 				<div id="listOfInterested">
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님이 관심있어 할만한 상품</div>
-					<div style="float:right; padding:5px;">더 보기</div>
+					<div style="float:right; padding:5px;" onclick="location.href='${path}/boarditem/itemlist.do?interested=${userLoginInfo.interested}'">더 보기</div>
 					
 					<c:if test="${ not empty userLoginInfo.interested }">
 						<c:if test="${interestedList.size() > 0}">
@@ -213,7 +213,7 @@
 				
 				<div id="listOfCommunity">
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님의 판매중인 상품</div>
-					<div style="float:right; padding:5px;">더 보기</div>
+					<div style="float:right; padding:5px;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">더 보기</div>
 					
 					<c:if test="${myBoardItemList.size() > 0}">
 						<div id="slideOfMyItem" style="width:100%; clear:both; overflow:hidden; position:relative;">
@@ -247,7 +247,7 @@
 				
 				<div id="listOfCommunity">
 					<div style="float:left; padding:5px;">우리동네 커뮤니티</div>
-					<div style="float:right; padding:5px;">더 보기</div>
+					<div style="float:right; padding:5px;" onclick="location.href='${path}/board/boardlist.do?location_auth=${userLoginInfo.location_auth}'">더 보기</div>
 					<div class="list">
 				
 						<div class="tr border-bottom">
@@ -278,7 +278,7 @@
 				
 				<div id="myCommunity">
 					<div style="float:left; padding:5px;">내가 작성한 글</div>
-					<div style="float:right; padding:5px;" onclick="${path}/board/boardlist.do?searchUidx=${uidx}">더 보기</div>
+					<div style="float:right; padding:5px;" onclick="location.href='${path}/board/boardlist.do?searchUidx=${uidx}'">더 보기</div>
 					<div class="list">
 				
 						<div class="tr border-bottom">
@@ -328,7 +328,7 @@
 						<div class="text-center btn-circle">구매</div>
 						<div class="text-center">구매 내역</div>
 					</div>
-					<div class="col-4" style="padding:0px;">
+					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">
 						<div class="text-center btn-circle">판매</div>
 						<div class="text-center">판매 내역</div>
 					</div>
@@ -336,7 +336,7 @@
 						<div class="text-center btn-circle">찜</div>
 						<div class="text-center">찜 목록</div>
 					</div>
-					<div class="col-4" style="padding:0px;">
+					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/boarditem/itemlist.do?interested=${userLoginInfo.interested}'">
 						<div class="text-center btn-circle">관심</div>
 						<div class="text-center">관심 상품</div>
 					</div>
