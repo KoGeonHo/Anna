@@ -2,6 +2,9 @@
 <%@ page session="true" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -118,21 +121,28 @@ const GetList = function(currentPage){
 				html +='<img src="<%=request.getContextPath()%>/resources/upload/'+appendList[i].image1+'"';
 				html +='onerror=this.src="images/noimg_item.jpg" width="100%" height="255">';
 				html +='</a>';
-				html +='<div class="card-body" "text-align: center; padding-top: 5px;">';
-				html +='<h6 class="card-title">';
-				html +='<a href="boarditem/itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
+				html +='<div class="card-body" style="text-align: center; padding-top: 5px;">';
+				html +='<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">';
+				if( appendList[i].state == 1) {
+	            html +='			<h7 class="product-price">거래중 </h7>';
+	           			}									
+	       		if( appendList[i].state == 2) {
+	            html +='			<h7 class="product-price">예약중</h7>';
+	            		}
+	         		if( appendList[i].state == 3) {
+				html +='			<h7 class="product-price">거래완료</h7>';
+	            		}
+				html +='</h7>';
+				html +='<h6 class="card-title" id="itemtitle">';
+				html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
 				html +='</h6>';
-				html +='<p class="card-text">'+appendList[i].price+'원</p>';
-				html +='<button type="button"';
-				html +='class="btn btn-sm btn-outline-secondary"';
-				html +='	style="float: right">view 5</button>';
-				html +='	<button type="button"';
-				html +='	class="btn btn-sm btn-outline-secondary"';
-				html +='	style="float: right">♥2</button>';
+				html +='<h7 class="card-text" style="color:#6C757D;">♥2 <img src="images/icon_main_view.png"> 5</h7>';
+				html +='<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">'+appendList[i].price+'<fmt:formatNumber value="${vo.price}" pattern="#,###"/><span style="color:#000;">원</span></p>';
 				html +='</div>';
 				html +='</div>';
 				html +='	</div>';
 			}
+			
 			
 		
 			
@@ -408,7 +418,7 @@ a {
 											<div class="card">
 												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">
 													<img
-													src="<%=request.getContextPath()%>/resources/upload/${vo.image1}" onerror=this.src= "images/noimg_item.jpg" width="100%"height="255">
+													src="<%=request.getContextPath()%>/resources/upload/${vo.image1}" onerror=this.src="images/noimg_item.jpg" width="100%"height="255">
 												</a>
 												<div class="card-body"
 													style="text-align: center; padding-top: 5px;">
@@ -425,7 +435,7 @@ a {
 														<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
 													</h6>
 													<p class="card-text" id="itemtitle"
-														style="color: #00AAB2; font-size: 17px">${vo.price}<span
+														style="color: #00AAB2; font-size: 17px"><fmt:formatNumber value="${vo.price}" pattern="#,###"/><span
 															style="color: #000;">원</span>
 													</p>
 													<div style="display: inline-block; margin: 0px auto;">
@@ -440,11 +450,6 @@ a {
 							</div>
 						</div>
 					</div>
-					<script>
-	function setCommas(itemprice) {  
-		return itemprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");}
-
-	</script>
 
 
 					<script>
@@ -546,8 +551,8 @@ a {
 
 												<div class="col">
 													<div class="card shadow-sm">
-														<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"
-															onerror=this.src= "images/noimg_item.jpg" width="100%" height="225">
+														<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" 
+														onerror=this.src="images/noimg_item.jpg"  width="100%" height="225">
 														</a>
 														<div class="card-body" style="border: 0;">
 															<h6 class="card-title" id="itemtitle">
@@ -625,7 +630,8 @@ a {
 											<h6 class="card-title" id="itemtitle"	>
 												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
 											</h6>
-											<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
+											<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px"><fmt:formatNumber value="${vo.price}" pattern="#,###"/>
+											<span style="color:#000;">원</span></p>
 											<h7 class="card-text" style="color:#6C757D;">♥2 <img src="images/icon_main_view.png"> 5</h7>											
 										</div>
 									</div>
