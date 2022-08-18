@@ -19,9 +19,9 @@
 <!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet"/>
 
-<link type="text/css" rel="stylesheet" href="${path}/css/slick.css"/>
-
-<link rel="stylesheet" href="${path}/css/font-awesome.min.css">
+<%-- <link type="text/css" rel="stylesheet" href="${path}/css/slick.css"/> --%>
+<%-- 
+<link rel="stylesheet" href="${path}/css/font-awesome.min.css"> --%>
 		
 <link type="text/css" rel="stylesheet" href="${path}/css/style.css"/>
 
@@ -167,7 +167,7 @@
 	         let html = "";
 	         
 	         for(let i = 0; i < appendList.length; i++){
-	      <%--  html +='<div class="col-lg-3  col-md-12 ">';
+	    <%--    html +='<div class="col-lg-3  col-md-12 ">';
 	            html +='   <div class="card">';
 	            html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'${vo.item_idx}">';
 	            html +='<img src="<%=request.getContextPath()%>/resources/upload/'+appendList[i].image1+'"';
@@ -188,14 +188,53 @@
 	            html +='style="float: right">♥2</button>';
 	            html +='</div>';
 	            html +='</div>';
-	            html +='   </div>'; --%>
+	            html +='   </div>'; 
+	             --%>
 	            
-	            html +='<div class="col-lg-3 col-md-12 ">';
+	            
+	            	html +='	<div class="col-lg-3  col-md-12 ">'; 
+	            		html +='	<div class="card">'; 
+	            			html +='	<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>'; 
+	            				html +='		<div class="card-body" style ="text-align: center; padding-top: 5px; ">						'; 					
+	            					html +='						<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">'; 
+	            						html +='					<c:if test="${vo.state==1}">'; 
+	            							html +='	<h7 class="product-price"  >거래중</h7>'; 
+	            								html +='	</c:if>												'; 
+	            									html +='	<c:if test="${vo.state==2}">			'; 
+	            										html +='		<h7 class="product-price" >예약중</h7>'; 
+	            											html +='		</c:if>											'; 	
+	            												html +='		<c:if test="${vo.state==3}" >			'; 
+	            													html +='			<h7 class="product-price" >거래완료</h7>'; 
+	            														html +='		</c:if>'; 
+	            															html +='			</h7>'; 
+	            																html +='	<h6 class="card-title" id="itemtitle"	>'; 
+	            																	html +='		<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>'; 
+	            																		html +='	</h6>'; 
+	            																			html +='	<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>'; 
+	            																				html +='		${vo.hit} 조회수'; 
+	            																					html +='	<div id="Wish_area">'; 
+	            																						html +='	<c:if test="${vo.wishCheck == 0 }">'; 
+	            																							html +='	<div class="image">'; 
+	            																								html +='	<img src="../images/Wish_off.png" style="width:50px; height:50px;" >'; 
+	            																									html +='<p>${vo.wishCount}</p>'; 
+	            																										html +='	</div>'; 
+	            																											html +='	</c:if>'; 
+	            																												html +='	<c:if test="${vo.wishCheck != 0}">'; 
+	            																													html +='	<div class="image">'; 
+	            																														html +='	<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >'; 
+	            																															html +='	<p style="background-color:ce3746;">${vo.wishCount}</p>'; 
+	            																																html +='	</div>'; 
+	            																																	html +='	</c:if> '; 
+	            																																		html +='		</div>		'; 									
+	            																																			html +='	</div>'; 
+	            																																				html +='</div>'; 
+	            
+	        /*     html +='<div class="col-lg-3 col-md-12 ">';
 	            html +='<div class="row">';
 	            html +='<div class="products-tabs">';
 	            html +='	<div class="product">';
 	            html +='		<div class="product-img">';
-	            html +='			<a href="itemview.do?item_idx='+appendList[i].item_idx+'"><img src="../resources/upload/'+appendList[i].image1+'" onerror=this.src="../images/no_imgborder.jpg" ></a>';
+	            html +='			<a href="itemview.do?item_idx='+appendList[i].item_idx+'"><img src="../resources/upload/'+appendList[i].image1+'" onerror=this.src="../images/noimg_item.jpg" ></a>';
 	            html +='		</div>';
 	            html +='	<div class="product-body">';
 	            html +='		<h3 class="product-name"><a href="itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a></h3>';
@@ -230,7 +269,7 @@
 				html +='<div id="slick-nav-1" class="products-slick-nav"></div>';
 				html +='</div>';
 				html +='</div>';
-				html +='</div>';
+				html +='</div>'; */
 	            
 	            
 	         }
@@ -489,7 +528,7 @@ height:250px;
 										<!-- product -->
 										<div class="product">
 											<div class="product-img">
-												<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/no_imgborder.jpg" ></a>
+												<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
 											</div>
 											<div class="product-body">
 												<h3 class="product-name"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h3>
@@ -548,53 +587,45 @@ height:250px;
 					<!-- Products tab & slick -->
 					<c:if test="${list.size() > 0}">
 					<c:forEach var="vo" items="${list}">
-					<div class="col-lg-3">
-						<div class="row">
-							<div class="products-tabs">
-								<!-- tab -->
-										<!-- product -->
-										<div class="product">
-											<div class="product-img">
-												<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/no_imgborder.jpg" ></a>
-											</div>
-											<div class="product-body">
-												<h3 class="product-name"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h3>
-												
-												<%-- <h4 class="product-price">지역번호 ${vo.addr_code} </h4> --%>
-												<h4 class="product-price">${vo.price} 원</h4>
+					<div class="col-lg-3  col-md-12 ">
+						<div class="card">
+							<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
+									<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
+													<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
 												<c:if test="${vo.state==1}">
-												<h4 class="product-price">거래중</h4>
+													<h7 class="product-price"  >거래중</h7>
 												</c:if>												
-												<c:if test="${vo.state==2}">
-												<h4 class="product-price">예약중</h4>
+												<c:if test="${vo.state==2}">			
+													<h7 class="product-price" >예약중</h7>
 												</c:if>												
-												<c:if test="${vo.state==3}">
-												<h4 class="product-price">거래완료</h4>
-												</c:if>										
-												${vo.hit} 조회수
-											<div id="Wish_area">
-												<c:if test="${vo.wishCheck == 0 }">
-														<div class="image">
-															<img src="../images/Wish_off.png" style="width:50px; height:50px;" >
-															<p>${vo.wishCount}</p>
-														</div>
+												<c:if test="${vo.state==3}" >			
+													<h7 class="product-price" >거래완료</h7>
 												</c:if>
-									
-												<c:if test="${vo.wishCheck != 0}">
-													<div class="image">
-														<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >
-														<p style="background-color:ce3746;">${vo.wishCount}</p>
-													</div>
-												</c:if> 
-											</div>
-											</div>
-										</div>
-										<!-- /product -->
-									<div id="slick-nav-1" class="products-slick-nav"></div>
-								</div>
-								<!-- /tab -->
-							</div>
+													</h7>
+											<h6 class="card-title" id="itemtitle"	>
+												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
+											</h6>
+										<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
+											${vo.hit} 조회수
+										<div id="Wish_area">
+											<c:if test="${vo.wishCheck == 0 }">
+												<div class="image">
+													<img src="../images/Wish_off.png" style="width:50px; height:50px;" >
+													<p>${vo.wishCount}</p>
+														</div>
+											</c:if>
+																	
+											<c:if test="${vo.wishCheck != 0}">
+												<div class="image">
+													<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >
+													<p style="background-color:ce3746;">${vo.wishCount}</p>
+												</div>
+											</c:if> 
+										</div>											
+									</div>
 						</div>
+					</div>
+
 					</c:forEach>
 					</c:if>
 					<!-- Products tab & slick -->
