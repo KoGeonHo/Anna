@@ -254,7 +254,7 @@
                                                 <th>내용</th>
                                                 <th>작성일</th>
                                                 <th>상태</th>
-                                                <th>판매글 조회 & 삭제</th>
+                                                <th>문의글 조회</th>
 
                                             </tr>
                                         </thead>
@@ -267,11 +267,16 @@
                                                 <th>${vo.title}</th>
                                                 <th>${vo.contents}</th>
                                                 <th>${vo.wDate}</th>
-                                                <th>처리중</th>
-                                               
+                                                <th><c:if test="${ vo.state == 0 }">
+															처리중
+														</c:if>
+														<c:if test="${ vo.state == 1 }">
+															처리완료
+														</c:if>
+												</th>                                           
 
                                                 <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/customer/QnAView.do?qidx=${vo.qidx}';" style="font-size: 14px;">게시글 조회</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                                <!-- <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button> --></th>
                                                 </tr>
 												</c:forEach>
 												</c:if>
