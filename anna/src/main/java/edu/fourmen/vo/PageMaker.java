@@ -15,10 +15,22 @@ public class PageMaker extends BoardItemVO{
 	private int epage;
 	private int SearchUidx;
 	private int uidx;
+	private String interested;
 	
 	
 	
 	
+	
+	public String getInterested() {
+		return interested;
+	}
+
+
+	public void setInterested(String interested) {
+		this.interested = interested;
+	}
+
+
 	public int getUidx() {
 		return uidx;
 	}

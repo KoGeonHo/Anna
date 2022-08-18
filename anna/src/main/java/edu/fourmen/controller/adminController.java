@@ -101,7 +101,7 @@ public class adminController {
 
 		
 		//전체 상품 리스트 받아오기
-	    List<BoardItemVO> list = boardItemService.list(vo,pm);
+	    List<BoardItemVO> list = boardItemService.list(pm);
 	    
 	    
 	    boardItemService.MinPrice(pm);
@@ -170,7 +170,7 @@ public class adminController {
 		
 		request.setAttribute("plist", plist);
 		
-		List<BoardVO> freeboard = boardService.selectfreeboard(pm);
+		List<BoardVO> freeboard = boardService.selectboard(pm);
 	
 		model.addAttribute("freeboard", freeboard);	
 		model.addAttribute("svo", svo);
