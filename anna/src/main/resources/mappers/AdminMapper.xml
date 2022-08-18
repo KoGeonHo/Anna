@@ -31,6 +31,25 @@
 			isDel='N'
 	</select>
 
+	<select id="getReportList" resultType="ReportVO">
+	
+		SELECT
+			ridx,
+			bidx,
+			item_idx,
+			repoter,
+			target,
+			evidence,
+			attach,
+			report_type,
+			contents,
+			DATE_FORMAT(report_date, '%Y-%m-%d') AS report_date,
+			ban,
+			ban_date
+		FROM
+			report
+		
+	</select>
 
 	
 	

@@ -298,7 +298,14 @@ text-decoration: none;
 				</form>
 			</div>
 			<div>
-				<button type="button" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do';">글쓰기</button>
+				<c:if test="${ pm.board_type eq 'notice' }">
+					<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
+						<button type="button" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${ pm.board_type }';">글쓰기</button>
+					</c:if>
+				</c:if>
+				<c:if test="${ pm.board_type ne 'notice' }">
+					<button type="button" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${ pm.board_type }';">글쓰기</button>
+				</c:if>
 			</div>
 			
 		</div>

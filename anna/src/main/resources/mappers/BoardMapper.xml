@@ -87,11 +87,12 @@
 	
 </if>
 <if test="pm.searchUidx != 0">
-	AND b.uidx = #{pm.searchUidx}
+	AND b.uidx = #{pm.searchUidx} AND b.board_type != 'notice'
 </if>
+
 <if test="locationList != null">
 	<foreach collection="locationList" item="item"  separator="OR" open="AND (" close=")">
-		b.location like concat('%',#{item},'%')
+		b.location like concat('%',#{item},'%') AND b.board_type != 'notice'
 	</foreach>
 </if>
 <!-- <if test='board_type != null'>
@@ -235,11 +236,11 @@
 	
 </if>
 <if test="pm.searchUidx != 0">
-	AND b.uidx = #{pm.searchUidx}
+	AND b.uidx = #{pm.searchUidx} AND b.board_type != 'notice'
 </if>
 <if test="locationList != null">
 	<foreach collection="locationList" item="item"  separator="OR" open="AND (" close=")">
-		b.location like concat('%',#{item},'%')
+		b.location like concat('%',#{item},'%') AND b.board_type != 'notice'
 	</foreach>
 </if>
 <!-- <if test='searchType != null and searchType.equals("All")'>

@@ -55,9 +55,9 @@ width : 341px;
 }
 
 .LikeBtn{
-height:25px;
-
-display:block;
+	height:25px;
+	vertical-align: middle;
+	display:inline-block;
 }
 
 .comment-box{
@@ -199,10 +199,7 @@ margin : 0px auto;
 		<div class="wrapper">
 		<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;">
 			<div class="container main">
-				
-		
-				<form style="width :1070px; margin: 0px auto;">
-					<h4 class="" style="padding:0; margin:0px 0px 25px 0px; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 8px;">
+				<h4 class="border-bottom" style="padding:5px; margin:0;  text-decoration-thickness: 1px; text-underline-offset: 8px;">
 						<c:if test="${bv.board_type eq 'free'}">
 							<a href="boardlist.do?board_type=free">일상&소통</a>
 						</c:if>
@@ -215,29 +212,48 @@ margin : 0px auto;
 						<c:if test="${bv.board_type eq 'hotplace'}">
 							<a href="boardlist.do?board_type=hotplace">핫플레이스</a>
 						</c:if>
-					
+						<c:if test="${bv.board_type eq 'notice'}">
+							<a href="boardlist.do?board_type=notice">공지사항</a>
+						</c:if>
 					</h4>
+		
+				<form style="margin: 0px auto;">
 					
-				
 					<div class="row border-bottom tr">
 						<div class="col-2 th" style="display:table-cell;">제목</div>
-						<div class="col-6 td d-flex" style="display:table-cell;">${bv.title}<input type="image" src="../images/icon_unlike.png" class="LikeBtn"></div>
+						<div class="col-4 td" style="display:table-cell;">
+							${bv.title}
+							<c:if test="${ bv.board_type ne 'notice' }">
+								<input type="image" src="../images/icon_unlike.png" class="LikeBtn">
+							</c:if>
+						</div>
 						<div class="col-2 th" style="display:table-cell;">작성일</div>
-						<div class="col-2 td" style="display:table-cell;">${bv.wdate}</div>				
+						<div class="col-4 td" style="display:table-cell;">${bv.wdate}</div>				
 					</div>
 					<div class="row border-bottom tr">
 						<div class="col-2 th" style="display:table-cell;">작성자</div>
-						<div class="col-2 td" style="display:table-cell;">${bv.nickName}</div>
+						<div class="col-4 td" style="display:table-cell;">
+							<c:if test="${ bv.board_type eq 'notice' }">
+								관리자
+							</c:if>
+							<c:if test="${ bv.board_type ne 'notice' }">
+								${bv.nickName}
+							</c:if>
+						</div>
 						<div class="col-2 th" style="display:table-cell;">조회수</div>
-						<div class="col-2 td" style="display:table-cell;">${bv.hit}</div>
+						<div class="col-1 td" style="display:table-cell;">${bv.hit}</div>
 						<div class="col-2 th" style="display:table-cell;">추천</div>
-						<div class="col-2 td" style="display:table-cell;">${bv.cntLike}</div>
+						<div class="col-1 td" style="display:table-cell;">${bv.cntLike}</div>
+					</div>
+					<div class="row border-bottom tr">
+						<div class="col-2 th" style="display:table-cell;">첨부파일</div>
+						<div class="col-10 td" style="display:table-cell;" onclick="alert('준비중입니다.')">${bv.image1}</div>
 					</div>
 					<div class="row border-bottom tr">
 						<div class="col-2 th" style="display:table-cell; height:500px">내용</div>
 						<div class="col-10 td" style="display:table-cell;">
 							${bv.contents }<br>
-							<c:if test="${bv.image1 != null}">
+							<%-- <c:if test="${bv.image1 != null}">
 								<div class="board_img"><img src="../resources/upload/${bv.image1}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
 							</c:if>
 							
@@ -255,7 +271,7 @@ margin : 0px auto;
 						    
 						    <c:if test="${bv.image5 != null}">
 								<div class="board_img"><img src="../resources/upload/${bv.image5}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
-						    </c:if>
+						    </c:if> --%>
 						</div>
 					</div>
 					<c:if test="${bv.uidx == uidx}"> 
@@ -276,7 +292,7 @@ margin : 0px auto;
 				    
 				   
     
-
+				<c:if test="${ bv.board_type ne 'notice' }">
                     <div class="comment-box">
    		                 <div class="comment-count">댓글 <span id="count">0</span></div>
  
@@ -303,6 +319,7 @@ margin : 0px auto;
     			    <div class="comment_Box"> <!-- 댓글이 들어갈 박스 -->
 
 	                </div>
+				</c:if>
 	                <div style="height: 150px"></div>
 	                
 	                

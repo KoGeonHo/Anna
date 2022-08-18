@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import edu.fourmen.dao.AdminDAO;
 import edu.fourmen.vo.QnAVO;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.UserVO;
 
 @Service
@@ -18,14 +19,22 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public List<UserVO> getUserList() {
 
-
 		return adminDAO.getUserList();
+	
 	}
 
 	@Override
 	public List<QnAVO> getQnaList() {
 		
 		return adminDAO.getQnaList();
+		
+	}
+
+	@Override
+	public List<ReportVO> getReportList() {
+		
+		return adminDAO.getReportList();
+		
 	}
 	
 	

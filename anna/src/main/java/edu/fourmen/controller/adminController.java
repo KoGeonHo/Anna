@@ -20,6 +20,7 @@ import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.QnAVO;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.SearchVO;
 import edu.fourmen.vo.UserVO;
 
@@ -47,7 +48,11 @@ public class adminController {
 	}
 	
 	@RequestMapping(value="/admin_report")
-	public String admin_report() {
+	public String admin_report(Model model) {
+		
+		List<ReportVO> ReportList = adminService.getReportList();
+		
+		model.addAttribute("ReportList",ReportList);
 		
 		return "admin/admin_report";
 	}
@@ -129,7 +134,15 @@ public class adminController {
 	}
 	
 	@RequestMapping(value="/admin_notice")
-	public String admin_notice() {		
+	public String admin_notice(Model model) {		
+		
+		PageMaker pm = new PageMaker();
+		
+		pm.setBoard_type("notice");
+		
+		List<BoardVO> noticeList = boardService.selectboard(pm);
+		
+		model.addAttribute("noticeList",noticeList);
 		
 		return "admin/admin_notice";
 	}
