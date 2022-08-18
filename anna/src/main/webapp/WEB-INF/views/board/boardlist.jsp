@@ -278,26 +278,28 @@ text-decoration: none;
 			<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;">
 			
 	<div class="container">
-		<div class="col-md-12  col-sm-12 " style="float:right;">
-			
-			<form method="get" action="boardlist.do" class="d-flex " style="float:right;" id="search">
-				
-				<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
-				<c:if test="${pm.board_type != 'free'}">
-				<input type="hidden" value="1" name="page">
-				<input type="hidden" value="${pm.searchUidx}" name="searchUidx">
-				</c:if>
-				<%-- <select name="SearchType" class="border rounded-2">
-					<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
-					<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
-					<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
-				</select> --%>
-				<input type="text" name="SearchVal" class="search-control" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
-				<input type="submit" value="검색" class="btn btn-outline-primary">
-				<button type="button" class="btn" style="background-color: #00AAB2;color: #fff;" onclick="javascript:location.href='${ path }/board/BoardWrite.do';">글쓰기</button>
-			</form>
-			
-			
+		<div class="col-md-12  col-sm-12 " style="float:right; display: flex; ">
+			<div style="flex:1">
+				<form method="get" action="boardlist.do" class="d-flex " style=" margin: 0 0 25px 0" id="search">
+					
+					<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
+					<c:if test="${pm.board_type != 'free'}">
+					<input type="hidden" value="1" name="page">
+					<input type="hidden" value="${pm.searchUidx}" name="searchUidx">
+					</c:if>
+					<%-- <select name="SearchType" class="border rounded-2">
+						<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
+						<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
+						<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
+					</select> --%>
+					<input type="text" name="SearchVal" class="search-control" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
+					<input type="submit" value="검색" class="btn btn-outline-primary">
+					
+				</form>
+			</div>
+			<div>
+				<button type="button" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do';">글쓰기</button>
+			</div>
 			
 		</div>
 			
@@ -376,7 +378,7 @@ text-decoration: none;
 								<div class="tr border-bottom d-flex">
 									
 										<a href="#" class="mlink">
-											<div class="title"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${vo.bidx}" class="p">${vo.title }</a>
+											<div class="title"><a href="<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${vo.bidx}" class="p">${vo.title }</a>
 												<a href="">
 													<div class="value">
 														<span>${vo.title }</span>
