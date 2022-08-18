@@ -37,9 +37,9 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public List<BoardItemVO> list(BoardItemVO vo,PageMaker pm) {
+	public List<BoardItemVO> list(PageMaker pm) {
 		
-		return boarditemdao.selectAll(vo,pm);
+		return boarditemdao.selectAll(pm);
 	}
 
 

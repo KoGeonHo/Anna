@@ -101,7 +101,7 @@ public class adminController {
 
 		
 		//전체 상품 리스트 받아오기
-	    List<BoardItemVO> list = boardItemService.list(vo,pm);
+	    List<BoardItemVO> list = boardItemService.list(pm);
 	    
 	    
 	    boardItemService.MinPrice(pm);

@@ -55,14 +55,16 @@ public class BoardItemController {
 	
 	
 	@RequestMapping(value = "/itemlist.do")
-	public String itemlist(HttpSession session,BoardItemVO nvo,PageMaker pm,BoardItemVO vo,  HttpServletRequest request, Model model) {
+	public String itemlist(HttpSession session,PageMaker pm,BoardItemVO vo,  HttpServletRequest request, Model model) {
 		session = request.getSession();
-		//블랙리스트 조회
+		
 		if(pm.getSearchVal() == null) {
 			pm.setSearchVal("");
 		}
+		
+		
 		//한 페이지에 몇개씩 표시할 것인지
-				int pagecount = 12;
+				int pagecount = 8;
 				//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 				int pagenumber = 1;
 				//페이지 번호가 파라미터로 전달되는지 읽어와본다.
@@ -107,10 +109,11 @@ public class BoardItemController {
 		System.out.println();
 		
 		//전체 상품 리스트 받아오기
+		
 		int uidx = (int) session.getAttribute("uidx");
 		pm.setUidx(uidx);
-	    List<BoardItemVO> list = boarditemService.list(vo,pm);
-	    
+		System.out.println(pm.getInterested()+"pm에서 가져옴");
+	    List<BoardItemVO> list = boarditemService.list(pm);
 	    
 	    
 	    //최저가 상품 정보 받아오기
@@ -136,14 +139,10 @@ public class BoardItemController {
 		
 		  
 		
-	      if(svo.getSearchType() == null) {
-	         svo.setSearchType("TITLE");
-	      }
-	      if(svo.getSearchVal() == null) {
-	         svo.setSearchVal("");
-	      }
+		if(pm.getSearchVal() == null) {
+			pm.setSearchVal("");
+		}
 	      
-	      System.out.println();
 	      
 	      
 	      //한 페이지에 몇개씩 표시할 것인지
@@ -195,8 +194,8 @@ public class BoardItemController {
 	      int uidx = (int) session.getAttribute("uidx");
 	      
 	      pm.setUidx(uidx);
-	      
-	      List<BoardItemVO> list = boarditemService.list(vo,pm);
+	     
+	      List<BoardItemVO> list = boarditemService.list(pm);
 	      
 	      HashMap<String, Object> result = new HashMap<String,Object>();
 
@@ -218,7 +217,7 @@ public class BoardItemController {
 		model.addAttribute("vo", vo);
 		
 		
-		List<BoardItemVO> list = boarditemService.list(vo,pm);
+		List<BoardItemVO> list = boarditemService.list(pm);
 		model.addAttribute("list", list);
 
 		
@@ -282,7 +281,6 @@ public class BoardItemController {
 				fileName = uuid + "_" + uploadFile1.getOriginalFilename();
 				uploadFile1.transferTo(new File(path, fileName));
 
-				System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
 			
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
@@ -565,23 +563,15 @@ public class BoardItemController {
 
 		session = request.getSession();
 		
-		/*
-		 System.out.println(vo.getKeyword()+"맨 처음 받은 키워드");
-		 System.out.println(vo.getKeyword().split(",")+"두번째 받은 키워드");
+		 String str = vo.getKeyword().replace(",","#");
 		 
-		 String[] str = vo.getKeyword().split(",");
-		 String asd = "";
-		 for(String s : str) {
-			 	asd += "#"+s;
-				System.out.println(asd);
-		 }
-		 vo.setKeyword(""+asd+"");
+		 vo.setKeyword(str);
 		 
 			/* vo.setKeyword("#"+s); */
-		/*
-		 * List<String> list2 = "#"+s ; System.out.println("#"+list2);
-		 * System.out.println(list2 + "키워드 리스트2222 자르고난후");
-		 */
+		
+		//  List<String> list2 = "#"; System.out.println("#"+list2);
+		// System.out.println(list2 + "키워드 리스트2222 자르고난후");
+		 
 		
 		// vo.setMidx(login.getMidx());
 
