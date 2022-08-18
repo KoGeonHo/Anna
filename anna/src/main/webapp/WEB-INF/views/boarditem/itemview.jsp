@@ -286,13 +286,6 @@ html {
     font-family: "Noto Sans KR", sans-serif;
 }
 
-/* 노말라이즈 */
-body, ul, li, h1, h2, h3, h4, h5 {
-    margin:0;
-    padding:0;
-    list-style:none;
-}
-
 a {
     color:inherit;
     text-decoration:none;
@@ -384,7 +377,6 @@ a {
 }
 
 /* 슬라이더 1 끝 */
- 	body{margin:0;padding:0;max-height:800px}	
 	.wrap	{position:absolute;top:50%;left:50%;width:200px;height:100px;margin-top:-50px;margin-left:-100px;}
 	
 	table {width:100%;border-collapse:collapse; border:0; empty-cells:show; border-spacing:0; padding:0;}
@@ -433,7 +425,6 @@ a {
 </style>
 	
 <script>
-	//찜 부분
 	function addWish(){
 		$.post('addWish',{
 			item_idx : ${vo.item_idx},
@@ -479,36 +470,103 @@ a {
 			});			
 		});
 		
-		//채팅부분
-	let invited=0;
-	function sendMessage(form) {
-		//작성자, 내용 유효성 검사
+		let flagChat = 1;
+		$(function(){
+			$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
+			$("#chatContents").keydown(function(e){
+				if(e.shiftKey&&e.keyCode == 13){
+					console.log("쉬프트 엔터 동시에 누름");
+				}else if(e.keyCode == 13){
+					if(!$("#sendBtn").prop("disabled")){
+						sendMessage();
+					}
+					return false;
+					
+				}
+			});
+			$("#chatContents").keyup(function(e){
+				if(e.keyCode != 13){
+					if($(this).val() != ""){
+						$("#sendBtn").prop("disabled",false);
+						$("#sendBtn").css("background","#00AAB2");
+					}else{
+						$("#sendBtn").prop("disabled",true);
+						$("#sendBtn").css("background","#ccc");
+					}
+				}
+			});
+		});
 		
-		form.contents.value = form.contents.value.trim();
-		if (form.contents.value.length == 0) {
-			alert('내용 입력하세요');
-			form.contents.focus();
-			return false;
+		
+		
+		function sendMessage(){
+			let item_idx = <%=request.getParameter("item_idx")%>;
+			let invited = ${userLoginInfo.uidx};
+<%-- 			let invited = <%=request.getParameter("invited")%>;
+			let chat_host = <%=request.getParameter("chat_host")%>; --%>
+			let chat_host =${vo.uidx};
+			let contents = $("#chatContents").val();
+			let chatData = "item_idx="+item_idx+"&invited="+invited+"&chat_host="+chat_host+"&contents="+contents+"&uidx=${uidx}";
+			$.ajax({
+				url : "AddMessage",
+				data : chatData,
+				success : function(){
+					let html = "";
+					html += '<div class="text-end border-bottom" style="padding:10px;">';
+					html += '${ userLoginInfo.nickName }<br>';
+					html += contents;
+					html += '</div>';
+					//console.log("Message Send Success");
+					$("#chatContents").val("");
+					$("#chatbox").append(html);
+					$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
+					$("#chatContents").prop("disabled",true);
+					$("#sendBtn").prop("disabled",true);
+					$("#sendBtn").css("background","#ccc");
+					setTimeout(function(){
+						$("#chatContents").prop("disabled",false);
+						/* $("#sendBtn").prop("disabled",false);
+						$("#sendBtn").css("background","#00AAB2"); */
+						$("#chatContents").focus();
+					},1000);
+				},
+				erorr : function(){
+					console.log("Message Send Failed");
+				}
+			});
 		}
 		
-		// AJAX -> doAddMessage 실행 및 출력값 가져오기
-		$.post('./AddMessage',{
-			nickName : form.nickName.value,
-			contents : form.contents.value,
-			item_idx : form.item_idx.value,
-			chat_host :form.chat_host.value,
-			uidx : form.uidx.value, 
-			invited : form.invited.value,
-		},  
-		function(data) {
-			uidx = data["uidx"];
-		},'json'); 
-		form.contents.value = '';
-		form.contents.focus();
-		return false;
-	}
+		
+		let item_idx = <%=request.getParameter("item_idx")%>;
+		let invited = ${userLoginInfo.uidx};
+<%-- 			let invited = <%=request.getParameter("invited")%>;
+		let chat_host = <%=request.getParameter("chat_host")%>; --%>
+		let chat_host =${vo.uidx};
+		setInterval(chkMessage, 500);
+		
+		function chkMessage(){
+			
+			let Data = "item_idx="+item_idx+"&invited="+invited+"&chat_host="+chat_host+"&uidx=${uidx}";
+			
+			$.ajax({
+				url : "getMessage.do",
+				data : Data,
+				success : function(result){
+					if(result != ""){
+						let html = "";
+						html += '<div class="text-start border-bottom" style="padding:10px;">';
+						html += '${audience}<br>';
+						html += result.contents;
+						html += '</div>';
+						$("#chatbox").append(html);
+						$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
+					}
+				}
+			});
+			
+		}
 	
-	
+	/* 
 	var Chat__lastReceivedchatlistcidx = -1;
 	
 	
@@ -546,7 +604,7 @@ a {
 		Chat__loadNewMessages();
 		
 	});
-	
+	 */
 	
 	
 	
@@ -605,23 +663,31 @@ a {
 </script>
 		
 	
-<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
-<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
-<!-- path는 request.getContextPath()를 가져온것. -->
-		
+ <!-- include libraries(jQuery, bootstrap) -->
+        <!-- include libraries(jQuery, bootstrap) -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <!-- include summernote css/js-->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+	<<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
+	<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
+	<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+	<link href="${ path }/css/mfb.css" rel="stylesheet">
+	<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
+	<!-- path는 request.getContextPath()를 가져온것. -->
+	<!-- 지도 API - 필요없으면 지워도 됨 -->
+	<script type='text/javascript' src='https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=9ff16331dfd542b6a5b0'></script>	
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ad11d9178deb7b571198c476ec55ad0f"></script>
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	<!-- 지도 API -->
 </head>
-<body>
 <div class="wrapper">
 		<!-- 헤더 및 메뉴 -->
-		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		
-		<div class="wrapper">
-			<div class="container main">
-	
-	
-
+	<div class="container main">
 	
 		
 
@@ -636,10 +702,31 @@ a {
 					<div class="card-body">
 						
 							<c:if test="${vo.cate_idx == 1}">
-						상품카테고리 > 가전 
+						상품카테고리 > 가전제품 
 							</c:if>
 							<c:if test="${vo.cate_idx == 2}">
-						상품카테고리 > 주방
+						상품카테고리 > 생활용품
+							</c:if>
+							<c:if test="${vo.cate_idx == 3}">
+						상품카테고리 > 완구&취미
+							</c:if>
+							<c:if test="${vo.cate_idx == 4}">
+						상품카테고리 > 패션&의류
+							</c:if>
+							<c:if test="${vo.cate_idx == 5}">
+						상품카테고리 > 인테리어
+							</c:if>
+							<c:if test="${vo.cate_idx == 6}">
+						상품카테고리 > 반려동물용품
+							</c:if>
+							<c:if test="${vo.cate_idx == 7}">
+						상품카테고리 > 뷰티&악세
+							</c:if>
+							<c:if test="${vo.cate_idx == 8}">
+						상품카테고리 > 자동차용품
+							</c:if>
+							<c:if test="${vo.cate_idx == 9}">
+						상품카테고리 > 스포츠&레저
 							</c:if>
 							
 							<div style="right;">
@@ -665,34 +752,34 @@ a {
 
 						    <div class="slides">
 						    	<c:if test="${vo.image1 != null}">
-						        <div class="active"><img src="../resources/upload${vo.image1}" onclick="window.open(this.src)"></div>
+						        <div class="active"><img src="../resources/upload${vo.image1}" onerror=this.src="../images/no_imgborder.jpg"></div>
 						        </c:if>
 						        <c:if test="${vo.image2 != null}">
-						        <div ><img src="../resources/upload/${vo.image2}" onclick="window.open(this.src)"></div>
+						        <div ><img src="../resources/upload/${vo.image2}" onerror=this.src="../images/no_imgborder.jpg"></div>
 						         </c:if>
 						        <c:if test="${vo.image3 != null}">
-						        <div ><img src="../resources/upload/${vo.image3}"></div>
+						        <div ><img src="../resources/upload/${vo.image3}" onerror=this.src="../images/no_imgborder.jpg"></div>
 						         </c:if>
 						        <c:if test="${vo.image4 != null}">
-						        <div ><img src="../resources/upload/${vo.image4}"></div>
+						        <div ><img src="../resources/upload/${vo.image4}"onerror=this.src="../images/no_imgborder.jpg"></div>
 						         </c:if>
 						        <c:if test="${vo.image5 != null}">
-						        <div ><img src="../resources/upload/${vo.image5}"></div>
+						        <div ><img src="../resources/upload/${vo.image5}"onerror=this.src="../images/no_imgborder.jpg"></div>
 						         </c:if>
 						        <c:if test="${vo.image6 != null}">
-						        <div ><img src="../resources/upload/${vo.image6}"></div>
+						        <div ><img src="../resources/upload/${vo.image6}"onerror=this.src="../images/no_imgborder.jpg"></div>
 						         </c:if>
 						        <c:if test="${vo.image7 != null}">
-						        <div ><img src="../resources/upload/${vo.image7}"></div>
+						        <div ><img src="../resources/upload/${vo.image7}"onerror=this.src="../images/no_imgborder.jpg"></div>
 						         </c:if>
 						        <c:if test="${vo.image8 != null}">
-						        <div ><img src="../resources/upload/${vo.image8}"></div>
+						        <div ><img src="../resources/upload/${vo.image8}"onerror=this.src="../images/no_imgborder.jpg"></div>
 						         </c:if>
 						        <c:if test="${vo.image9 != null}">
-						        <div ><img src="../resources/upload/${vo.image9}"></div>
+						        <div ><img src="../resources/upload/${vo.image9}"onerror=this.src="../images/no_imgborder.jpg"></div>
 						         </c:if>
 						        <c:if test="${vo.image10 != null}">
-						        <div ><img src="../resources/upload/${vo.image10}"></div>
+						        <div ><img src="../resources/upload/${vo.image10}"onerror=this.src="../images/no_imgborder.jpg"></div>
 						        </c:if>
 						    </div>
 						    <div class="page-btns">
@@ -825,8 +912,7 @@ a {
 				</div>
 				</div>
 </form>
-							<h2>${vo.nickName}님	의 다른상품</h2>
-				<a href="../user/myPage.do?uidx=${vo.uidx}">더 보기</a>
+							<h2><a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님	의 다른상품</h2>
 			<div class="container-fluid">
 				<div class="row">
 					<c:if test="${youritem.size() > 0}">
@@ -854,6 +940,9 @@ a {
 								<br>
 							</div>
 						</c:forEach>
+					</c:if>
+					<c:if test="${youritem.size() <= 0}">
+						관련 상품이 없습니다
 					</c:if>
 				</div>
 			</div>
@@ -888,25 +977,58 @@ a {
 			
 			<!-- 채팅 팝업 영역  -->
 			<div id="popup" class="Pstyle">	
-				<form onsubmit="sendMessage(this); return false;" id="frm">
-					<input type="text" name="item_idx" value="${vo.item_idx}"><br>
-					글주인번호<input type="text" id="chat_host"name="chat_host" value="${vo.uidx}"><br>
-					<c:if test="${userLoginInfo.uidx == vo.uidx}">
-					<input type="text" name="invited" value="${chatlist.uidx}">
-					</c:if>
-					<c:if test="${userLoginInfo.uidx != vo.uidx}">
-					<input type="text" name="invited" value="${userLoginInfo.uidx}">
-					</c:if>
-					<input type="text" name="uidx" value="${userLoginInfo.uidx}">
-					<input type="text" name="nickName" value="${userLoginInfo.nickName}"readonly="readonly">
-					<input type="text" name="contents" placeholder="내용" >
+				<div id="chatbox" style="width:100%; overflow-y:auto; flex:1; border:2px solid #aaa; border-radius:5px; padding:10px;">
+						<c:if test="${chatViewList.size() > 0}">
+							<c:forEach var="i" items="${chatViewList}">
+								<c:if test="${ i.uidx eq uidx }">
+									<div class="text-end border-bottom" style="padding:10px;">
+										<div>${ userLoginInfo.nickName }</div>
+										<div>${i.contents}</div>
+									</div>
+								</c:if>
+								<c:if test="${ i.uidx ne uidx }">
+									<div class="text-start border-bottom" style="padding:10px; display:flex;">
+										<div>
+											<c:if test="${ i.uidx eq i.chat_host }">
+												<img src="${i.hostProfileImg}" style="width:50px; height:auto; border-radius:100px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/NoProfile.png';">
+											</c:if>
+											<c:if test="${ i.uidx eq i.invited }">
+												<img src="${i.invitedProfileImg}" style="width:50px; height:auto; border-radius:100px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/NoProfile.png';">
+											</c:if>
+										</div>
+										<div style="flex:1; margin:auto; margin-left:10px;">
+											<div>${audience}</div>
+											<div>${i.contents}</div>
+										</div>
+									</div>
+								</c:if>
+							</c:forEach>
+						</c:if>	
+					</div>
+				
+							
+				<form style="width:100%; margin:0px;">
+						<div id="chatInput" style="padding:10px 0; width:100%; display:flex;">
+							<div class="td" style="flex:1; padding:0; margin:auto;">
+								<textarea class="form-control" id="chatContents" style="height:60px; display:inline-block; width:100%; resize:none;"></textarea>
+							</div>
+							<div class="td text-end" style="width:70px; padding:5;">
+								<button class="btn" type="button" id="sendBtn" style="width:60px; height:60px; background: #ccc; color:#fff;" disabled onclick="sendMessage()">전송</button>
+							</div>
+						</div>
+					</form>
+				<%-- <form onsubmit="sendMessage(this); return false;" id="frm">
+					<input type="hidden" name="item_idx" value="${vo.item_idx}"><br>
+					<input type="hidden" id="chat_host"name="chat_host" value="${vo.uidx}"><br>
+					<input type="hidden" name="invited" value="${userLoginInfo.uidx}">
+					<input type="text" name="contents" id="chatContents" placeholder="내용" >	
 					<input type="submit" value="전송">
 				</form>
 					<div class="chat-list" id="chat" ></div>
-					<input type="button" id="btn_close" value="닫 기">
+					<input type="button" id="btn_close" value="닫 기"> --%>
 			</div>
 			<c:if test="${vo.state != 3}">
-				<c:if test="${uidx != null and uidx != userLoginInfo.uidx}">
+				<c:if test="${uidx != null or uidx == userLoginInfo.uidx}">
 					<div class="wrap2">
 						<input type="button" id="btn_open" value="연락하기">
 					</div>
@@ -953,8 +1075,6 @@ a {
 	<script src ="../js/boarditem.js"></script>
 	<script src ="../js/boarditem2.js"></script>
 	
-	
-	</div>
 		</div>
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>

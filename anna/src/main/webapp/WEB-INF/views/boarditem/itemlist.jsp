@@ -258,10 +258,10 @@ height:250px;
 } */
 
 
-ul{
+.cate_menu ul{
 	list-style:none;
 }
-li{
+.cate_menu li{
 	float:left;
 	margin-right:20px;
 }
@@ -306,10 +306,14 @@ li{
 	display:none;
 }
 
-.box {float:left; overflow: hidden; background: #f0e68c;}
-.box-inner {width: 800px; padding: 10px;}
+.box {float:left; overflow: hidden;}
+.box-inner {width: auto; padding: 10px;}
 
+.cate_menu > u{
+ background-color:red;
 
+}
+/* max가  0부터 ~ 까지라는뜨 */
 /* 반응형 */@media all and (max-width:  767px){
    
    #myCarousel, #search, #bestitem, #boardlist, #productname  {
@@ -332,8 +336,12 @@ li{
 			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
 			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
 			margin : auto;}
-
-}
+	
+	#search-area{
+		width:100%;
+		text-align:center;
+	}
+	
  
  #Wish_area{
 	width:50px;
@@ -349,10 +357,8 @@ li{
 			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
 			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
 			margin : auto;}
- 
-   
+	}
 }
-
 @media all and (min-width :400px){
 .product-img{
 	width : 100%;
@@ -370,7 +376,7 @@ li{
 			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
 			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
 			margin : auto;}
-
+			
 
 
 	#Wish_area{
@@ -387,7 +393,12 @@ li{
 			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
 			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
 			margin : auto;}
-
+	
+		
+	#search-area{
+		width:100%;
+		text-align:center;
+	}
 }
 
 </style>
@@ -427,40 +438,46 @@ li{
 			</nav>
 <br>
 <br>
-			
+		<div id="asd">
 			<!-- 카테고리  -->
-			<div>
-				<div style="width:100px; background-color:grey;"class="slide-toggle">
-			카테고리
-				</div>																				
+				<div>
+					<!-- div style="width:100px; background-color:grey;"class="slide-toggle">
+				카테고리
+					</div>		 -->																		
 					<div style=" height:70px;">
-					
-					<div class="box">
-					    <div class="box-inner">
-					    	<ul>
-								<li><a href="itemlist.do" class="cate_menu">전체</a></li>
-								<li><a href="itemlist.do?cate_idx=1" class="cate_gory">가전</a></li>
-								<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
-								<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
-								<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
-								<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
-								<li><a href="itemlist.do?cate_idx=2" class="cate_gory">취미</a></li>
-							</ul>
-					    </div>
-					</div>
+						<div class="box">
+						    <div class="box-inner">
+						    	<ul class="cate_menu">
+									<li class="cate_gory"><a href="itemlist.do" >전체</a></li>
+									<li class="cate_gory"><a href="itemlist.do?cate_idx=1" >가전제품</a></li>
+									<li class="cate_gory"><a href="itemlist.do?cate_idx=2">생활용품</a></li>
+									<li class="cate_gory"><a href="itemlist.do?cate_idx=3">완구&취미</a></li>
+									<li class="cate_gory"><a href="itemlist.do?cate_idx=4">패션&의류</a></li>
+									<li class="cate_gory"><a href="itemlist.do?cate_idx=5">인테리어</a></li>
+									<li class="cate_gory"><a href="itemlist.do?cate_idx=6">반려동물용품</a></li>
+									<li class="cate_gory"><a href="itemlist.do?cate_idx=7">뷰티&악세</a></li>
+									<li class="cate_gory"><a href="itemlist.do?cate_idx=8">자동차용품</a></li>
+									<li class="cate_gory"><a href="itemlist.do?cate_idx=9">스포츠&레저용품</a></li>
+								</ul>
+						    </div>
+						</div>
+					</div>		
 				</div>		
-			</div>		
-		<div class="col-md-12  col-sm-12 d-flex">
-			<form method="get" action="itemlist.do"  class="d-flex">
-				<input type="text" name="searchVal" class="search-control"  placeholder="검색어를 입력해주세요"
-						<c:if test="${!empty svo.searchVal}">
-						value=${svo.searchVal}
-						</c:if>>
-				<input type="submit" value="검색" class="btn btn-outline-primary">
-			</form>
-				<button class="btn" style="background-color: #00AAB2; color: #fff;" onclick='location.href="itemwrite.do"'>글쓰기</button>
+			<!-- 카테고리 끝 -->
 		</div>
 			<div>
+			<!-- 검색창 시작 -->
+			<div class="col-md-12  col-sm-12 d-flex" id="search-area">
+				<form method="get" action="itemlist.do"  class="d-flex">
+					<input type="text" name="searchVal" class="search-control"  placeholder="검색어를 입력해주세요"
+							<c:if test="${!empty svo.searchVal}">
+							value=${svo.searchVal}
+							</c:if>>
+					<input type="submit" value="검색" class="btn btn-outline-primary">
+				</form>
+					<button class="btn" style="background-color: #00AAB2; color: #fff;" onclick='location.href="itemwrite.do"'>글쓰기</button>
+			</div>
+			<!-- 검색창 끝 -->
 				<c:if test="${!empty pm.searchVal}">
 					<c:forEach var="vo" items="${ssang}">
 						<h1>${userLoginInfo.nickName} 님이 검색하신 ${pm.searchVal} 의 최저가 상품입니다</h1>

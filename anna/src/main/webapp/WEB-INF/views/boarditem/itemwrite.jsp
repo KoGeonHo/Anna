@@ -10,7 +10,6 @@
 <title> 상품 등록 페이지</title>
  <!-- include libraries(jQuery, bootstrap) -->
         <!-- include libraries(jQuery, bootstrap) -->
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
     <!-- include summernote css/js-->
@@ -102,53 +101,98 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div class="container main">
-		<form action="itemwrite.do" method="post" enctype="multipart/form-data" name="frm" id="joinFrm">
-			<input type="hidden" name="uidx" value="${uidx}">
 		
-			제목: <input type="text" name="title">
-			<input type="hidden" name="addr_code" value="${userLoginInfo.location_auth} readonly="readonly">
-			카테고리:<select name="cate_idx">
-					<option value="1">가전제품</option>
-				   </select>
-			가격제안:<select name="offer">
-					<option value="1">불가능</option>
-					<option value="2">가능</option>
-				   </select>
-			<textarea id="summernote" name="contents" ></textarea>
-			<br>
-			<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-			<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-			
-			<!-- 키워드는 키워드 전체 검색에 포함시키고, 쿼리에 키워드 검색 추가 db에 넣을때 , 붙여서 넣는방식으로 건호형꺼 참고 -->
-				<br>
-				<div class="tr_hashTag_area">
-		   			 <p><strong>키워드</strong></p>
-		           <div class="form-group">
-		                <input type="hidden" value="" name="tag" id="rdTag" />
-		            </div>
-		        
-		             <div id="tag-list" ></div>
-		                        
-		            <div class="form-group">
-		            	<input type="text" id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 300px;"/>
-		           </div>
-				</div>
-			가격:<input type="number" name="price" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-				<br>
+		<h3 class="border-bottom" style="padding:1rem; margin:0px;">판매글 작성하기</h3>
+				<form method="POST" action="itemwrite.do" enctype="multipart/form-data" name="frm" id="joinFrm">
 					
-	
-						<div id="fileDiv">
-						<input type="file" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
-						
+					<input type="hidden" name="uidx" value="${uidx}">
+					<input type="hidden" name="addr_code" value="${userLoginInfo.location_auth} readonly="readonly">
+					<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+					<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">제목</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<input type="text" class="form-control" name="title">
 						</div>
-						
-				<br/><br/>
-				<a href="#this" class="btn" id="addFile">파일 추가</a>
-			<button>작성하기</button>
-			<button onclick="loaction.href='itemwrite.do'">취소하기</button>
+					</div>
+					
 			
-		</form>
-		
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">카테고리</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<select name="cate_idx">
+								<option value="1">가전제품</option>
+								<option value="2">생활용품</option>
+								<option value="3">완구&취미</option>
+								<option value="4">패션&의류</option>
+								<option value="5">인테리어</option>
+								<option value="6">반려동물용품</option>
+								<option value="7">뷰티&악세</option>
+								<option value="8">자동차용품</option>
+								<option value="9">스포츠&레저용품</option>
+						    </select>
+						</div>
+					</div>
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">가격제안</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<select name="offer">
+								<option value="1">불가능</option>
+								<option value="2">가능</option>
+						    </select>
+						</div>
+					</div>
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">가격</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<input type="number" class="form-control" name="price" ><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+						</div>
+					</div>
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">내용</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<textarea class="form-control" name="contents" rows="10" cols="25"></textarea>
+						</div>
+					</div>
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">키워드</div>
+						<div class="col-8 td" style="display:table-cell;">
+			           		<div class="form-group">
+			              	  <input type="hidden" value="" name="tag" id="rdTag" />
+			          		</div>
+			             <div id="tag-list" ></div>
+				           	 <div class="form-group">
+				            	<input type="text" id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 300px;"/>
+				          	 </div>
+						</div>
+					</div>
+					
+					
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<div id="fileDiv">
+								<input type="file" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
+							</div>
+								<br/><br/>
+							<a href="#this" class="btn" id="addFile">파일 추가</a>
+							</div>
+					</div>
+					
+					<div class="text-end tr">
+						<div class="td">
+							<button class="btn" style="background:#00AAB2; color:#fff;">등록</button>
+							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='itemlist.do'" >취소</button>
+						</div>
+					</div>
+					
+					
+					
+				</form>
 		<script>
 		    $(document).ready(function () {
 		
@@ -179,8 +223,8 @@
 		
 		</script>
 			<script type="text/javascript">
-				var gfv_count = 2;
-			
+				var gfv_count = gfv_count++;
+				
 				$(document).ready(function(){
 					$("#list").on("click", function(e){ //목록으로 버튼
 						e.preventDefault();
@@ -217,7 +261,7 @@
 				
 				function fn_addFile(){
 					var str = "<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-					$("#fileDiv").append("<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
+					$("#fileDiv").append("<p style='margin:auto;'><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
 					$("a[name='delete']").on("click", function(e){ //삭제 버튼
 						e.preventDefault();
 						fn_deleteFile($(this));
