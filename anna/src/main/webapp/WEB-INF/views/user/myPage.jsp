@@ -184,8 +184,18 @@
 										<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 											<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
 												<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-												<div class="card-body">
-											    	<span style="display:block;">${ vo.title }</span>
+												<div class="card-body text-center">
+													<div>
+														<b>${ vo.title }</b>
+														<c:if test="${ vo.state eq 2 }"><span style="padding:5px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span></c:if>
+														<c:if test="${ vo.state eq 3 }"><span style="padding:5px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span></c:if>
+													</div>
+													<div>
+														<span style="color:#00AAB2;">${ vo.price }</span>원
+													</div>
+											    	<div class="text-end">
+											    		<img src="${path}/images/icon_wish_count.png" style="width:26px; padding:2px;"> ${ vo.wishCount }&nbsp;<img src="${path}/images/icon_chat_count.png" style="width:28px; padding:1px;"> ${ vo.chatCount }
+											    	</div>
 											  	</div>
 											</div>
 										</div>
@@ -213,7 +223,8 @@
 				
 				<div id="listOfCommunity">
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님의 판매중인 상품</div>
-					<div style="float:right; padding:5px;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">더 보기</div>
+					<div style="float:right; padding:5px;" onclick="alert('준비중입니다.')">더 보기</div>
+					<%-- <div style="float:right; padding:5px;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">더 보기</div> --%>
 					
 					<c:if test="${myBoardItemList.size() > 0}">
 						<div id="slideOfMyItem" style="width:100%; clear:both; overflow:hidden; position:relative;">
@@ -226,8 +237,18 @@
 									<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 										<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
 											<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-											<div class="card-body">
-										    	<span style="display:block;">${ vo.title }</span>
+											<div class="card-body text-center">
+												<div>
+													<b>${ vo.title }</b>
+													<c:if test="${ vo.state eq 2 }"><span style="padding:5px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span></c:if>
+													<c:if test="${ vo.state eq 3 }"><span style="padding:5px; border-radius:5px; background:gray; color:#fff;">거래완료</span></c:if>
+												</div>
+												<div>
+													<span style="color:#00AAB2;">${ vo.price }</span>원
+												</div>
+										    	<div class="text-end">
+										    		<img src="${path}/images/icon_wish_count.png" style="width:26px; padding:2px;"> ${ vo.wishCount }&nbsp;<img src="${path}/images/icon_chat_count.png" style="width:28px; padding:1px;"> ${ vo.chatCount }
+										    	</div>
 										  	</div>
 										</div>
 									</div>
@@ -320,18 +341,22 @@
 					</div>
 					<div style="display:inline-block; vertical-align: middle;">
 						<div>${ userInfo.nickName }</div>
-						<div onclick="location.href='userInfoView.do'">내 정보</div>
+						<div><span onclick="location.href='userInfoView.do'">내 정보</span>&nbsp;<span onclick="location.href='logout.do'">로그아웃</span></div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-4" style="padding:0px;">
-						<div class="text-center btn-circle">구매</div>
+						<div class="text-center btn-circle" onclick="alert('준비중입니다.')">구매</div>
 						<div class="text-center">구매 내역</div>
 					</div>
-					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">
+					<div class="col-4" style="padding:0px;" onclick="alert('준비중입니다.')">
 						<div class="text-center btn-circle">판매</div>
 						<div class="text-center">판매 내역</div>
 					</div>
+					<%-- <div class="col-4" style="padding:0px;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">
+						<div class="text-center btn-circle">판매</div>
+						<div class="text-center">판매 내역</div>
+					</div> --%>
 					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/user/wishList.do'">
 						<div class="text-center btn-circle">찜</div>
 						<div class="text-center">찜 목록</div>

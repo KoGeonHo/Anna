@@ -87,7 +87,13 @@ display: none;
 		
 				<form action="BoardWrite.do" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="uidx" value="${uidx}">
-					<input type="hidden" name="Location" value="${userLoginInfo.location_auth}">
+					<c:if test="${ pm.board_type eq 'notice' }">
+						<input type="hidden" name="Location" value="notice">
+					</c:if>
+					<c:if test="${ pm.board_type ne 'notice' }">
+						<input type="hidden" name="Location" value="${userLoginInfo.location_auth}">
+					</c:if>
+					
 				
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">제목</div>
@@ -99,12 +105,18 @@ display: none;
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">게시판 분류</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<select name="board_type" onchange="javascript:locationMap(this);" id="board_type">
-								<option value="free">일상&amp;소통</option>
-								<option value="job">구인구직</option>
-								<option value="meeting">모임</option>
-								<option value="hotplace">우리동네 핫플레이스</option>
-							</select>
+							<c:if test="${ pm.board_type eq 'notice' }"> 
+								공지사항 
+								<input type="hidden" name="board_type" value="notice">
+							</c:if>
+							<c:if test="${ pm.board_type ne 'notice' }">
+								<select name="board_type" onchange="javascript:locationMap(this);" id="board_type">
+									<option value="free" <c:if test="${ pm.board_type eq 'free' }"> selected </c:if>>일상&amp;소통</option>
+									<option value="job" <c:if test="${ pm.board_type eq 'job' }"> selected </c:if>>구인구직</option>
+									<option value="meeting" <c:if test="${ pm.board_type eq 'meeting' }"> selected </c:if>>모임</option>
+									<option value="hotplace" <c:if test="${ pm.board_type eq 'hotplace' }"> selected </c:if>>우리동네 핫플레이스</option>
+								</select>
+							</c:if>
 						</div>
 					</div>
 					
@@ -119,7 +131,7 @@ display: none;
 						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
 						
 						<div id="boxWrap" class="col-8 td" style="display:table-cell;">
-							<button type="button" id="file_btn">추가</button>
+							<!-- <button type="button" id="file_btn">추가</button> -->
 							<input class="form-control" type="file" id="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
 						</div>
 					</div>
@@ -136,7 +148,7 @@ display: none;
 					
 					</div>
 				</form>
-				<input type="text" class="boardtype" value="${pm.board_type}">
+				<%-- <input type="text" class="boardtype" value="${pm.board_type}"> --%>
 			</div>
 		</div>
 

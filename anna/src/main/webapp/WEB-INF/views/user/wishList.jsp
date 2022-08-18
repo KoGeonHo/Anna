@@ -38,15 +38,14 @@
 			</c:if>
 			<c:if test="${ not empty wishList }">
 				<c:forEach var="i" items="${ wishList }">
-					<div style="padding:0 10px; display:flex;">
+					<div style="padding:0 10px; display:flex; cursor:pointer;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ i.item_idx }'">
 						<div><img src="${i.image1}" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';" style="width:110px; height:110px; border:2px solid #ccc; border-radius:10px; margin:10px;"></div>
 						<div style="flex:1; margin:auto; padding:10px;">
 							<div><h5>${ i.title }</h5></div>
 							<div>${ i.keyword }</div>
 							<div>
-								<c:if test="${ i.state eq 1 }">거래중</c:if>
-								<c:if test="${ i.state eq 2 }">예약중</c:if>
-								<c:if test="${ i.state eq 3 }">거래완료</c:if>
+								<c:if test="${ i.state eq 2 }"><span style="padding:5px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span></c:if>
+								<c:if test="${ i.state eq 3 }"><span style="padding:5px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span></c:if>
 								${ i.price }원</div>
 						</div>
 						<%-- <div class="text-center" style="width:100px; margin:auto;">

@@ -59,7 +59,7 @@
 							<div>${ i.introduce }</div>
 						</div>
 						<div class="text-center" style="width:100px; margin:auto;">
-							<button type="button" class="btn" onclick="" style="background:#00AAB2; color:#fff; margin:5px;">작성글</button>
+							<button type="button" class="btn" onclick="alert('준비중입니다.')" style="background:#00AAB2; color:#fff; margin:5px;">작성글</button>
 							<button type="button" class="btn" onclick="delNeighbor(${i.uidx})" style="background:#00AAB2; color:#fff; margin:5px;">삭제</button>
 						</div>
 					</div>

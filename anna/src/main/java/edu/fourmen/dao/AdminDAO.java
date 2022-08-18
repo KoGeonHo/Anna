@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.fourmen.vo.QnAVO;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.UserVO;
 
 @Repository
@@ -22,6 +23,12 @@ public class AdminDAO {
 	public List<QnAVO> getQnaList() {
 
 		return sqlSession.selectList("edu.fourmen.mapper.adminMapper.selectadminQna");
+	}
+
+	public List<ReportVO> getReportList() {
+		
+		return sqlSession.selectList("edu.fourmen.mapper.adminMapper.getReportList");
+		
 	}
 	
 }

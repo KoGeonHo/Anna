@@ -242,7 +242,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+	                                        <c:if test="${ not empty noticeList }">
+							            		<c:forEach var="i" items="${ noticeList }">
+							            			<tr>
+							            				<th>${ i.bidx }</th>
+							            				<th>관리자</th>
+							            				<th>${ i.title }</th>
+							            				<th>${ i.wdate }</th>
+							                         	<th>
+															<button type="button" class="btn " style="background-color: #00AAB2; color: #fff; font-size: 14px;" >게시글 조회</button>&nbsp;
+							                    			<button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff; font-size: 14px;">삭제</button>
+														</th>
+				                          			</tr>
+				                          		</c:forEach>
+							            	</c:if>
+                                            <%-- <tr>
                                                 <th>1</th>
                                                 <th>관리자</th>
                                                 <th>개인정보처리방침이 개절될 예정이에요</th>
@@ -348,7 +362,7 @@
                                                 <th>2022-07-25</th>
                                                 <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">게시글 조회</button>&nbsp;
                                                 <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
-                                                </tr>
+                                                </tr> --%>
                                                 
                                                 
                                               

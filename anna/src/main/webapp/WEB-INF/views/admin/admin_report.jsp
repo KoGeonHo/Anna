@@ -191,7 +191,7 @@
                                    <a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
                                    <a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
                                    <a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트 배너 설정</a>
+                                   <!-- <a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트 배너 설정</a> -->
                                    <a class="nav-link collapsed" href="void(0);" onclick="alert('준비중입니다');return false;">이벤트 배너 설정</a>
                                 </nav>
                             </div>
@@ -236,16 +236,31 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>신고유형</th>
-                                                <th>신고닉네임</th>
-                                                <th>신고명</th>
+                                                <th>신고대상</th>
+                                                <!-- <th>신고명</th> -->
                                                 <th>상세설명</th>
                                                 <th>신고일</th>
                                                 <th>신고자</th>
-                                                <th>노쇼</th>
+                                                <!-- <th>노쇼</th> -->
                                                 <th>상세보기</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        	<c:if test="${ not empty ReportList }">
+	                                        	<c:forEach var="i" items="${ ReportList }">
+	                                        		<tr>
+	                                        			<th>${ i.ridx }</th>
+	                                        			<th>${ i.report_type }</th>
+	                                        			<th>${ i.target }</th>
+	                                        			<th>${ i.contents }</th>
+	                                        			<th>${ i.report_date }</th>
+	                                        			<th>${ i.repoter }</th>
+	                                        			<th><button type="button" id="openModalPop" class="btn" style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;" onclick="alert('준비중입니다.')">상세보기</button>
+	                                        		</tr>
+	                                        	</c:forEach>
+                                        	</c:if>
+                                        
+                                        <%-- 
                                             <tr>
                                                 <th>1</th>
                                                 <th>상품거래</th>
@@ -452,7 +467,7 @@
                                                 <th>sungmin111</th>
                                                 <th>1N</th>
                                                 <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
+                                            </tr> --%>
                                             
                                         </tbody>
                                     </table>
