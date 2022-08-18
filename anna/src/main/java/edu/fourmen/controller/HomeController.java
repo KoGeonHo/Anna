@@ -69,7 +69,7 @@ public class HomeController {
 		
 		request.setAttribute("plist", plist);
 		
-		List<BoardVO> freeboard = boardService.selectfreeboard(pm);
+		List<BoardVO> freeboard = boardService.selectboard(pm);
 	
 		model.addAttribute("freeboard", freeboard);		
 
@@ -180,7 +180,7 @@ return "main";
 				
 				request.setAttribute("plist", plist);
 				
-				List<BoardVO> freeboard = boardService.selectfreeboard(pm);
+				List<BoardVO> freeboard = boardService.selectboard(pm);
 			
 				model.addAttribute("freeboard", freeboard);		
 		

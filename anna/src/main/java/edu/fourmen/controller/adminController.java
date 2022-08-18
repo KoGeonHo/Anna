@@ -170,7 +170,7 @@ public class adminController {
 		
 		request.setAttribute("plist", plist);
 		
-		List<BoardVO> freeboard = boardService.selectfreeboard(pm);
+		List<BoardVO> freeboard = boardService.selectboard(pm);
 	
 		model.addAttribute("freeboard", freeboard);	
 		model.addAttribute("svo", svo);
