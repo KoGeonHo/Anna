@@ -1,27 +1,54 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page session="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>글쓰기 페이지</title>
 <!-- include libraries(jQuery, bootstrap) -->
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+   	<script src="${ path }/js/bootstrap.js"></script>
+	<script src="${ path }/js/common/common.js"></script>
 
-    <!-- include summernote css/js-->
+<!-- 지도 API - 필요없으면 지워도 됨 -->
+	<script type='text/javascript' src='https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=9ff16331dfd542b6a5b0'></script>	
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ad11d9178deb7b571198c476ec55ad0f"></script>
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<!-- 지도 API -->
 
+<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
+	
+	<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
+	<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+	<!-- include summernote css/js-->
 
+<!-- path는 request.getContextPath()를 가져온것. -->
 
-  <script src="${pageContext.request.contextPath}/js/summernote-lite.js"></script>
-  <script src="${pageContext.request.contextPath}/js/summernote-ko-KR.js"></script>
-
-
-     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <style>
+    
+#file{
+	width: calc(100% - 35px);
+
+}    
+    
+ 
+.th {
+	background:#eee;
+	text-align:center;
+	vertical-align:middle;
+}
+.th, .td{
+	padding:10px;
+}
+
+.tr{
+	display:table; 
+	width:100%;
+}
 
 html{
 
@@ -50,6 +77,61 @@ display: none;
 </head>
 <body>
 <div class="container main">
+<div class="wrapper">
+		<!-- 헤더 및 메뉴 -->
+		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
+		
+		<div class="wrapper">
+			<div class="container main">
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의 하기</h3>
+				<form method="POST" action="QnAWrite.do" enctype="multipart/form-data">
+				
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">제목</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<input type="text" class="form-control" name="title">
+						</div>
+					</div>
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">문의 유형</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<select name="qType">
+								<option value="system">시스템오류</option>
+								<option value="login">로그인</option>
+								<option value="service">서비스이용</option>
+								<option value="bannedItem">판매 금지 품목</option>
+								<option value="ETC">기타</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">내용</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<textarea class="form-control" id="summernote" name="contents" rows="10" cols="25"></textarea>
+						</div>
+					</div>
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
+						
+						<div id="boxWrap" class="col-8 td" style="display:table-cell;">
+							<button type="button" id="file_btn">추가</button>
+							<input class="form-control" type="file" id="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
+						</div>
+					</div>
+					
+					<div class="text-end tr">
+						<div class="td">
+							<button class="btn" style="background:#00AAB2; color:#fff;">등록</button>
+							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/customer/QnAList.do'">취소</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 
 
     <h1>글쓰기</h1>
@@ -74,62 +156,37 @@ display: none;
 이게 위치정보 넣어야 할때만 나타나면 성공임
 
 </div>
-<div id="boxWrap">
-<button type="button" id="file_btn">추가</button>
-<input type="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
-</div>
 
 <button type="button">취소</button>
 <button>작성완료</button>
 </form>
+		
+		<!-- 푸터는 고정 -->
+		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
+	</div>
 </div>
+</body>
+
+
+
 
 <script>
-$('#summernote').summernote({
-	  // 에디터 높이
-	  height: 150,
-	  // 에디터 한글 설정
-	  lang: "ko-KR",
-	  // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
-	  focus : true,
-	  toolbar: [
-		    // 글꼴 설정
-		    ['fontname', ['fontname']],
-		    // 글자 크기 설정
-		    ['fontsize', ['fontsize']],
-		    // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-		    // 글자색
-		    ['color', ['forecolor','color']],
-		    // 표만들기
-		    ['table', ['table']],
-		    // 글머리 기호, 번호매기기, 문단정렬
-		    ['para', ['ul', 'ol', 'paragraph']],
-		    // 줄간격
-		    ['height', ['height']],
-		    // 그림첨부, 링크만들기, 동영상첨부
-		    ['insert',['picture','link','video']],
-		    // 코드보기, 확대해서보기, 도움말
-		    ['view', ['codeview','fullscreen', 'help']]
-		  ],
-		  // 추가한 글꼴
-		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-		 // 추가한 폰트사이즈
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-	  
-	});
-</script>
-<script>
+
 
 $(document).ready(function() {
 	var i=2; // 변수설정은 함수의 바깥에 설정!
   $("#file_btn").click(function() {
     if(i<=5){
     	
-    	$("#boxWrap").append("<input type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>");
+    	$("#boxWrap").append("<input class='form-control' id='file' type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'><a class='del'>삭제</a>");
     }
     
     i++;
+    
+    if(i==6){
+    	$("#file_btn").css("display","none");
+    }
    
     
 

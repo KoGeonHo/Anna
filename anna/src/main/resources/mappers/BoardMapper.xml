@@ -60,44 +60,6 @@
 
 
 
-<select id="selectfreeboard" resultType="boardvo" parameterType="pagemaker">
-	SELECT b.Bidx
-		  ,b.Title
-		  ,b.Uidx
-		  ,b.Contents
-		  ,b.Hit
-		  ,date_format(b.Wdate,'%y-%m-%d-%h:%i')as Wdate
-		  ,u.nickname
-		  ,b.board_type
-		  ,b.isDel
-		  ,b.Image1
-		  ,b.ccount
-		  ,(select count(*) from Board_like c where c.Bidx = b.Bidx) as cntLike
-	  FROM Board b
-	 INNER JOIN AnnaUser u
-	  	ON b.uidx = u.uidx
-	 WHERE b.isDel ='N'
-	   AND board_type = 'free' 
-	   <if test='searchType != null and searchType.equals("All")'>
-	 	    AND b.Contents like concat('%',#{SearchVal},'%')
-	 	    OR u.nickname like concat('%',#{SearchVal},'%')
-	 		OR b.Title like concat('%',#{SearchVal},'%')
-	 		
-	 	</if>
-	   <if test='searchType != null and searchType.equals("title")'>
-	 		AND b.Title like concat('%',#{SearchVal},'%')
-	 		
-	 		
-	 	</if>
-	 	<if test='searchType != null and searchType.equals("contentWriter")'>
-	 		AND b.Contents like concat('%',#{SearchVal},'%')
-	 		OR u.nickname like concat('%',#{SearchVal},'%')	
-	 	</if> 
-	 	
-	 	ORDER BY b.Wdate desc
-	 	limit #{startPage}, #{pageNum}
-	 	
-</select>
 
 
 
@@ -114,7 +76,9 @@
 	AND (b.Contents like concat('%',#{SearchVal},'%')
 	 	OR u.nickname like concat('%',#{SearchVal},'%')
 	    OR b.Title like concat('%',#{SearchVal},'%'))
-	
+</if>
+<if test="uidx != 0">
+	AND b.uidx = #{uidx}
 </if>
 
 </select>
@@ -235,7 +199,7 @@
 	  	ON b.uidx = u.uidx
 	 WHERE b.isDel ='N'
 	  
-<if test='board_type != null and searchUidx == 0'>
+<if test='board_type != null and  searchUidx == 0'>
 	   AND b.board_type = #{board_type}
 </if>
 
@@ -266,14 +230,12 @@
 </if> -->
 	 ORDER BY b.Wdate desc
 
-<if test='board_type.equals("free")'> 
+<if test='board_type != null and board_type.equals("free")'> 
 	 limit #{startPage}, #{pageNum}
 </if>
 
-<if test = 'board_type != "free"'>
-
+<if test = '(board_type == null or board_type != "free")'>
 	limit #{epage}, #{pageNum}
-
 </if>
 
 </select>
