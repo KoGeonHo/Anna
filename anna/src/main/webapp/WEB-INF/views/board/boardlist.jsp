@@ -54,7 +54,6 @@
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
 
-
 .nickName{
 
 font-size :12px;
@@ -361,11 +360,11 @@ text-decoration: none;
 						</c:if>
 					</div>
 			
-			<table style="width:100%;text-align:center;">
+			<table style="width:100%; text-align:center; justify-content: center;">
 				<tr>
 					
 			<c:if test="${pm.isPrev() == true}">
-				<td style="width:300px;text-align:right;">
+				<td style="width:300px;">
 				<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}">◀</a>
 					</td>
 			</c:if>
@@ -388,6 +387,7 @@ text-decoration: none;
 			
 				</tr>
 			</table>
+			<div style="height: 300px;"></div>
 			</c:if>
 			
 		
