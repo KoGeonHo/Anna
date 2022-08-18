@@ -34,6 +34,13 @@
 	width: calc(100% - 35px);
 
 }    
+
+#li{
+
+	background-color: black;
+
+
+}
     
  
 .th {
@@ -84,13 +91,14 @@ display: none;
 		
 		<div class="wrapper">
 			<div class="container main">
-				<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의 하기</h3>
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">글 쓰기</h3>
+		
 				<form method="POST" action="QnAWrite.do" enctype="multipart/form-data">
 				
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">제목</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<input type="text" class="form-control" name="title">
+							<input type="text" class="form-control" name="Title">
 						</div>
 					</div>
 					
@@ -132,7 +140,7 @@ display: none;
 				</form>
 			</div>
 		</div>
-
+<input type="hidden" class="boardtype" value="${pm.board_type}">
 
     <h1>글쓰기</h1>
     
@@ -143,11 +151,11 @@ display: none;
 <select name="board_type" onchange="javascript:locationMap(this);" id="board_type">
 	<option value="free">일상&amp;소통</option>
 	<option value="job">구인구직</option>
-	<option value="meeting">만남</option>
+	<option value="meeting">모임</option>
 	<option value="hotplace">우리동네 핫플레이스</option>
 </select>
 
-<input type="text" name="Title" placeholder="제목을 입력해주세요">
+<input type="text" id="" name="Title" placeholder="제목을 입력해주세요">
  <div class="note">
 <textarea id="summernote" class="summernote" name="Contents"></textarea>
 </div>
@@ -160,6 +168,8 @@ display: none;
 <button type="button">취소</button>
 <button>작성완료</button>
 </form>
+
+<input type="hidden" class="boardtype" value="${pm.board_type}">
 		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
@@ -172,6 +182,12 @@ display: none;
 
 
 <script>
+
+var boardtype = $(".boardtype").val();
+
+console.log(boardtype);
+
+$('#board_type').val(boardtype).prop("selected",true);
 
 
 $(document).ready(function() {

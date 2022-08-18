@@ -24,6 +24,21 @@
 
 <style>
 
+.th {
+	background:#eee;
+	text-align:center;
+	vertical-align:middle;
+}
+.th, .td{
+	padding:10px;
+}
+
+.tr{
+	display:table; 
+	width:100%;
+}
+
+
 #commentstyle{
 
 border-width: 1px 0px 0px 0px ;
@@ -182,6 +197,29 @@ margin : 0px auto;
     	</div>
 		<div class="wrapper">
 			<div class="container main">
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">글 쓰기</h3>
+		
+				<form method="POST" action="QnAWrite.do" enctype="multipart/form-data">
+				
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">제목</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<input type="text" class="form-control" name="Title" value="${bv.title }">
+						</div>
+					</div>
+
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">내용</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<textarea class="form-control" id="summernote" name="contents" rows="10" cols="25"></textarea>
+						</div>
+					</div>
+					
+					
+					
+				</form>
+			
+			
 				<h4 class="border-bottom" style="padding:1rem; margin:0px;">
 					<c:if test="${bv.board_type eq 'free'}">
 						<a href="FreeBoard.do">일상소통</a>

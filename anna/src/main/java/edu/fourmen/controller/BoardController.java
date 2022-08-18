@@ -43,7 +43,6 @@ import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.ReportVO;
 
-import edu.fourmen.vo.UserVO;
 
 @Controller
 @RequestMapping(value="/board")
@@ -115,11 +114,13 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/BoardWrite.do", method= RequestMethod.GET)
-	public String BoardWrite(HttpSession session, HttpServletRequest request, UserVO uv) {
+	public String BoardWrite(Model model, HttpSession session, HttpServletRequest request, PageMaker pm) {
 		
 		session = request.getSession();
 		
+		System.out.println(pm.getBoard_type());
 		
+		model.addAttribute("pm",pm);
 
 		return "board/BoardWrite";
 	}
