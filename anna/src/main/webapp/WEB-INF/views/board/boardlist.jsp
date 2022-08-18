@@ -54,6 +54,24 @@
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
 
+.pageing{
+
+	list-style:none;
+	margin:0px auto;
+	padding:0;
+
+}
+
+.pageing > li{
+
+	margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    border : 0;
+    float: left;
+
+
+}
+
 .nickName{
 
 font-size :12px;
@@ -106,15 +124,39 @@ text-decoration: none;
 
 @media all and (577px <= width <= 767px){
 
-.search-control{
+	.search-control{
+	
 	width:300px;
 
+	}
+	
+	#search >*{
+	
+	font-size: 15px;
+	
+	}
+	
+
+}
+
+@media all and (max-width: 576px){
+
+	.search-control{
+		width:100%;
+		
+		}
+		
+	#search >*{
+	
+	font-size: 5px;
+	height : 30px;
 	}
 
 }
 
 @media all and (max-width : 767px){
 
+	
 	.con{
 
 	width: calc(100% - 35px);
@@ -149,10 +191,7 @@ text-decoration: none;
 	
 	}
 
-	.search-control{
-		width:100%;
-	
-		}
+
 		
 	.p{
 	
@@ -239,8 +278,9 @@ text-decoration: none;
 			<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;">
 			
 	<div class="container">
-		<div class="col-md-12  col-sm-12 d-flex">
-			<form method="get" action="boardlist.do?" class="d-flex ">
+		<div class="col-md-12  col-sm-12 " style="float:right;">
+			
+			<form method="get" action="boardlist.do" class="d-flex " style="float:right;" id="search">
 				<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
 				<c:if test="${pm.board_type != 'free'}">
 				<input type="hidden" value="1" name="page">
@@ -252,18 +292,21 @@ text-decoration: none;
 				</select> --%>
 				<input type="text" name="SearchVal" class="search-control" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
 				<input type="submit" value="검색" class="btn btn-outline-primary">
+				<button type="button" class="btn" style="background-color: #00AAB2;color: #fff;" onclick="javascript:location.href='${ path }/board/BoardWrite.do';">글쓰기</button>
 			</form>
 			
 			
-			<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='${ path }/board/BoardWrite.do';">글쓰기</button>
+			
 		</div>
 			
-			<form>
+		<form>
 			
+
+		<c:if test="${pm.board_type eq 'free'}">
 			<c:if test="${board.size() ==0}">		
 				<h3>등록된 게시물이 없습니다.</h3>
 			</c:if>
-		<c:if test="${pm.board_type eq 'free'}">	
+		
 			<div id="bo_gall" style="width:100%">
 				<ul id="gall_ul" class="gall_row">
 			
@@ -311,7 +354,7 @@ text-decoration: none;
 				</ul>
 			</div>	
 		</c:if>
-		<c:if test="${pm.board_type != 'free'}">
+		<c:if test="${pm.board_type != null and pm.board_type != 'free'}">
 				<div class="list">
 					<div class="tr border-bottom" id="plist-top">
 						<div class="th" style="width:40%;">제목</div>
@@ -320,6 +363,9 @@ text-decoration: none;
 						<div class="th" style="width:10%;">조회수</div>
 						<div class="th" style="width:10%;">추천</div>
 					</div>
+					<c:if test="${board.size() ==0}">		
+						<h3>등록된 게시물이 없습니다.</h3>
+					</c:if>
 						<c:if test="${ not empty board }">
 							<c:forEach var="vo" items="${ board }">
 						
@@ -360,40 +406,122 @@ text-decoration: none;
 						</c:if>
 					</div>
 			
-			<table style="width:100%; text-align:center; justify-content: center;">
-				<tr>
+			<ul style="width:30%;text-align:center; justify-content: center;" class="pageing">
+				
 					
 			<c:if test="${pm.isPrev() == true}">
-				<td style="width:300px;">
-				<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}">◀</a>
-					</td>
+				<li style="width:300px;">
+					<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}">◀</a>
+				</li>
 			</c:if>
 					
 			
 
 					
 			<c:forEach var="i" begin="${pm.getStartPage()}" end="${pm.getEndPage()}">
-				<td>
-    			<span><a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${i}&SearchVal=${pm.searchVal}">${i}</a></span>
-				</td>
+				<li>
+    				<span><a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${i}&SearchVal=${pm.searchVal}">${i}</a></span>
+				</li>
 			</c:forEach>
 				
 				
 			<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
-				<td style="width:300px;text-align:left;">
+				<li style="width:300px;text-align:left;">
 					<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}">▶</a>
-				</td>
+				</li>
 			</c:if>
 			
-				</tr>
-			</table>
+				
+			</ul>
+			<div style="height: 300px;"></div>
+			</c:if>
+			
+			<c:if test="${pm.board_type == null and pm.uidx !=0}">
+				<div class="list">
+					<div class="tr border-bottom" id="plist-top">
+						<div class="th" style="width:40%;">제목</div>
+						<div class="th" style="width:20%;">작성자</div>
+						<div class="th" style="width:20%;">작성일</div>
+						<div class="th" style="width:10%;">조회수</div>
+						<div class="th" style="width:10%;">추천</div>
+					</div>
+					<c:if test="${board.size() ==0}">		
+						<h3>등록된 게시물이 없습니다.</h3>
+					</c:if>
+						<c:if test="${ not empty board }">
+							<c:forEach var="vo" items="${ board }">
+						
+						
+								
+								<div class="tr border-bottom d-flex">
+									
+										<a href="#" class="mlink">
+											<div class="title"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${vo.bidx}" class="p">${vo.title }</a>
+												<a href="">
+													<div class="value">
+														<span>${vo.title }</span>
+														<c:if test="${vo.image1 != null}">
+															<span><img src="../images/icon_image.png" style="height:15px; margin-top: -5px;"></span>
+														</c:if>
+													</div>
+												</a>
+												<div class="value">
+													<span class="nickName">${vo.nickName}</span> 
+													<span class="hit">조회${vo.hit}</span>
+													<span class="wdate">${vo.wdate }</span>
+												</div>
+											</div>
+											<a href="" class="com-btn value">
+												<span class="ccount">${vo.ccount }</span>
+												<span>댓글</span>
+											</a>
+											<div class="td text-center p" style="width:20%;">${ vo.nickName }</div>
+											<div class="td text-center p" style="width:20%;">${ vo.wdate }</div>
+											<div class="td text-center p" style="width:10%;">${ vo.hit }</div>
+											<div class="td text-center p" style="width:10%;">${ vo.cntLike}</div>
+										</a>
+									
+								</div>
+								
+							
+							</c:forEach>
+						</c:if>
+					</div>
+			
+			<ul style="width:30%;text-align:center; justify-content: center;" class="pageing">
+				
+					
+			<c:if test="${pm.isPrev() == true}">
+				<li>
+					<a href="${ path }/board/boardlist.do?page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}">◀</a>
+				</li>
+			</c:if>
+					
+			
+
+					
+			<c:forEach var="i" begin="${pm.getStartPage()}" end="${pm.getEndPage()}">
+				<li>
+    				<span><a href="${ path }/board/boardlist.do?page=${i}&SearchVal=${pm.searchVal}">${i}</a></span>
+				</li>
+			</c:forEach>
+				
+				
+			<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
+				<li style="text-align:left;">
+					<a href="${ path }/board/boardlist.do?page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}">▶</a>
+				</li>
+			</c:if>
+			
+				
+			</ul>
 			<div style="height: 300px;"></div>
 			</c:if>
 			
 		
 				
 				
-			</form>
+		</form>
 
 			
 

@@ -34,17 +34,6 @@ public class BoardDAO {
 		return sqlSession.selectOne(namespace+".viewBoard",Bidx);
 	}
 	
-	public List<BoardVO> selectfreeboard(PageMaker pm){ //일상&소통 게시판리스트
-
-		return sqlSession.selectList(namespace+".selectfreeboard", pm);
-	}
-	
-	public List<BoardVO> selectjobboard(PageMaker pm){
-		
-		
-		return sqlSession.selectList(namespace+".selectjobboard",pm);
-	}
-	
 	public int totalCount(PageMaker pm) {
 		
 		int result = sqlSession.selectOne(namespace+".totalCount", pm);
