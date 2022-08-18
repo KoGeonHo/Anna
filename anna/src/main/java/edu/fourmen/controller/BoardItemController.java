@@ -49,22 +49,18 @@ public class BoardItemController {
 	
 	@Autowired
 	AdminService adminService;
+	String path = "/anna";
+	
+	
+	
 	
 	@RequestMapping(value = "/itemlist.do")
-
 	public String itemlist(HttpSession session,BoardItemVO nvo,PageMaker pm,BoardItemVO vo,  HttpServletRequest request, Model model) {
 		session = request.getSession();
 		//블랙리스트 조회
-		
-		
 		if(pm.getSearchVal() == null) {
 			pm.setSearchVal("");
 		}
-		
-		
-	
-		
-		
 		//한 페이지에 몇개씩 표시할 것인지
 				int pagecount = 12;
 				//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
@@ -931,15 +927,13 @@ public class BoardItemController {
 
 	@RequestMapping("/AddMessage")
 	@ResponseBody
-	public Map AddMessage(BoardItemVO vo ,ChatMessageVO cvo,String nickName, String cdate,  String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
+	public Map AddMessage(ChatMessageVO cvo ,HttpServletRequest request, HttpSession session) {
 		System.out.println("이쯤에");
 		session = request.getSession();
 		
-		int invited = (int) session.getAttribute("uidx"); //세션의 uidx값을 invited 에 넣음
 		
-		int result = boarditemService.insertChat(cvo);
+		boarditemService.insertChat(cvo);
 		
-		boarditemService.selectChat(cvo);
 		//ajax가 가져갈 출력값 개체 생성
 		Map rs = new HashMap<String, Object>();
 		
@@ -959,24 +953,71 @@ public class BoardItemController {
 		return "d";
 	}
 	
+	//채팅방
+		@RequestMapping(value="/chatView.do")
+		public String chatView(ChatMessageVO cmvo,Model model,HttpServletRequest request,HttpSession session) {
+			
+			session = request.getSession();
+			
+			int uidx = (int)session.getAttribute("uidx");
+			
+			List<ChatMessageVO> chatViewList = userService.getChatViewList(cmvo);
+			
+			String audience = "";
+			
+			if(cmvo.getInvited() == uidx) {
+				UserVO audienceInfo = userService.getUserInfo(cmvo.getChat_host());
+				audience = audienceInfo.getNickName();
+			}else if(cmvo.getChat_host() == uidx) {
+				UserVO audienceInfo = userService.getUserInfo(cmvo.getInvited());
+				audience = audienceInfo.getNickName();
+			}
+			
+			List<Integer> listForSetRead = new ArrayList<Integer>();
+			
+			for(ChatMessageVO list : chatViewList) {
+				//System.out.println(list.getCidx());
+				if(uidx != list.getUidx() && list.getChat_read() == 1) {
+					listForSetRead.add((int)list.getCidx());
+				}
+			}
+			
+			if(listForSetRead.size() != 0) {
+				userService.chatSetRead(listForSetRead);
+			}
+			
+			BoardItemVO itemVO = boarditemService.selectitem(cmvo.getItem_idx());
+			
+			UserVO hostInfo = userService.getUserInfo(cmvo.getChat_host());
+			
+			//System.out.println(cmvo.getItem_idx());
+			
+			model.addAttribute("itemVO",itemVO);
+			
+			model.addAttribute("hostInfo",hostInfo);
+			
+			model.addAttribute("audience",audience);
+			
+			model.addAttribute("path",path);
+			
+			model.addAttribute("chatViewList",chatViewList);
+			
+			return "user/chatView";
+		}
 	
-	
-	@RequestMapping("/getMessages")
 	@ResponseBody
-	public List<ChatMessageVO> getMessages(BoardItemVO vo,int from,ChatMessageVO cvo,HttpSession session,Model model) {
+	@RequestMapping(value="/getMessage.do", produces = "application/json; charset=utf8")
+	public ChatMessageVO getMessage(ChatMessageVO cmvo){
 		
-		int chat_read = 0;
+		ChatMessageVO getMessage = userService.getMessageNoRead(cmvo);
+		//System.out.println(getMessage);
+		List<Integer> listForSetRead = new ArrayList<Integer>();
+		if(getMessage != null) {
+			listForSetRead.add((int)getMessage.getCidx());
+			userService.chatSetRead(listForSetRead);
+		}
 		
-		String nickName = (String)session.getAttribute("nickName");
-		int invited = (int) session.getAttribute("uidx");
-		int chat_host = vo.getChat_host();
-		int item_idx = vo.getItem_idx();
-		cvo.setNickName(nickName);
-		cvo.setChat_host(chat_host);
-		cvo.setInvited(invited);
-		cvo.setItem_idx(item_idx);
-		List<ChatMessageVO> chatlist = boarditemService.selectChat(cvo);
-		return chatlist;
+		return getMessage;
 	}
 	
 	@RequestMapping("/clear")
