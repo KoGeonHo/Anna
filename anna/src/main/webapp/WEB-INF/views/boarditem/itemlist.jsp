@@ -309,7 +309,7 @@ height:250px;
 .box {float:left; overflow: hidden;}
 .box-inner {width: auto; padding: 10px;}
 
-.cate_menu > u{
+#cate_gory > u{
  background-color:red;
 
 }
@@ -410,7 +410,6 @@ height:250px;
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div class="main" id="main" style="overflow: auto;">
 			<input type="hidden" name="uidx" value="${userLoginInfo.uidx}">
-			
 				<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#">AnnA</a>
@@ -438,6 +437,7 @@ height:250px;
 			</nav>
 <br>
 <br>
+
 		<div id="asd">
 			<!-- 카테고리  -->
 				<div>
@@ -448,16 +448,16 @@ height:250px;
 						<div class="box">
 						    <div class="box-inner">
 						    	<ul class="cate_menu">
-									<li class="cate_gory"><a href="itemlist.do" >전체</a></li>
-									<li class="cate_gory"><a href="itemlist.do?cate_idx=1" >가전제품</a></li>
-									<li class="cate_gory"><a href="itemlist.do?cate_idx=2">생활용품</a></li>
-									<li class="cate_gory"><a href="itemlist.do?cate_idx=3">완구&취미</a></li>
-									<li class="cate_gory"><a href="itemlist.do?cate_idx=4">패션&의류</a></li>
-									<li class="cate_gory"><a href="itemlist.do?cate_idx=5">인테리어</a></li>
-									<li class="cate_gory"><a href="itemlist.do?cate_idx=6">반려동물용품</a></li>
-									<li class="cate_gory"><a href="itemlist.do?cate_idx=7">뷰티&악세</a></li>
-									<li class="cate_gory"><a href="itemlist.do?cate_idx=8">자동차용품</a></li>
-									<li class="cate_gory"><a href="itemlist.do?cate_idx=9">스포츠&레저용품</a></li>
+									<li id="cate_gory"><a href="itemlist.do">전체</a></li>
+									<li id="cate_gory"><a href="itemlist.do?cate_idx=1" >가전제품</a></li>
+									<li id="cate_gory"><a href="itemlist.do?cate_idx=2">생활용품</a></li>
+									<li id="cate_gory"><a href="itemlist.do?cate_idx=3">완구&취미</a></li>
+									<li id="cate_gory"><a href="itemlist.do?cate_idx=4">패션&의류</a></li>
+									<li id="cate_gory"><a href="itemlist.do?cate_idx=5">인테리어</a></li>
+									<li id="cate_gory"><a href="itemlist.do?cate_idx=6">반려동물용품</a></li>
+									<li id="cate_gory"><a href="itemlist.do?cate_idx=7">뷰티&악세</a></li>
+									<li id="cate_gory"><a href="itemlist.do?cate_idx=8">자동차용품</a></li>
+									<li id="cate_gory"><a href="itemlist.do?cate_idx=9">스포츠&레저용품</a></li>
 								</ul>
 						    </div>
 						</div>

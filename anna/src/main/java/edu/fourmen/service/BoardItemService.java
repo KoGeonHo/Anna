@@ -16,7 +16,7 @@ import edu.fourmen.vo.UserVO;
 
 public interface BoardItemService {
 
-	public List<BoardItemVO> list (BoardItemVO vo, PageMaker pm);// 전체 리스트
+	public List<BoardItemVO> list (PageMaker pm);// 전체 리스트
 
 	public List<BoardItemVO> selectAllbyuser (BoardItemVO vo, SearchVO svo);//판매자의 다른상품
 	

@@ -1030,7 +1030,7 @@ a {
 			<c:if test="${vo.state != 3}">
 				<c:if test="${uidx != null or uidx == userLoginInfo.uidx}">
 					<div class="wrap2">
-						<input type="button" id="btn_open" value="연락하기">
+						<input type="button" id="btn_open" value="연락하기" onclick="location.href=/user/chatView.do?item_idx= &chat_host= &invited= ">
 					</div>
 				</c:if>
 			</c:if>

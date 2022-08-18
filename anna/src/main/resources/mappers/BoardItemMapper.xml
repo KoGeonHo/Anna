@@ -7,7 +7,7 @@
 <mapper namespace="edu.fourmen.mapper.boardItemMapper">
 
 
-	<select id="selectAll" resultType="BoardItemVO" parameterType="pagemaker" >
+	<select id="selectAll" resultType="BoardItemVO" parameterType="hashmap" >
 	SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
@@ -21,23 +21,29 @@
 			 , b.keyword
 			 , b.addr_code
 			 , b.hit
-			 , (select count(*) from Wish_list w where w.item_idx = b.item_idx and w.uidx = #{uidx} ) as WishCheck
+			 , (select count(*) from Wish_list w where w.item_idx = b.item_idx and w.uidx = #{pagemaker.uidx} ) as WishCheck
 			 , (select count(uidx)as WishCount from Wish_list where item_idx = b.item_idx)as WishCount
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  
 			and b.isDel ='N'
-		<if test='searchVal != null '>
-		   AND ( b.title like concat ('%',#{searchVal},'%')  
-		   or b.keyword like concat ('%',#{searchVal},'%') )
+		<if test='pagemaker.searchVal != null '>
+		   AND ( b.title like concat ('%',#{pagemaker.searchVal},'%')  
+		   or b.keyword like concat ('%',#{pagemaker.searchVal},'%') )
 		</if>
-		<if test='searchUidx != 0 '>
-			AND b.uidx = #{searchUidx}
+		<if test='pagemaker.searchUidx != 0 '>
+			AND b.uidx = #{pagemaker.searchUidx}
 		</if>
-		 <if test='cate_idx != 0 and cate_idx != null'>
-		 	and cate_idx = #{cate_idx}
-		 </if>
+		 <if test='pagemaker.cate_idx != 0 and cate_idx != null'>
+		 	and cate_idx = #{pagemaker.cate_idx}
+		 </if> 
+		 <if test="interested != null">
+		 	<foreach collection="interested" item="item"  separator="OR" open="AND (" close=")">
+				b.keyword like concat('%',#{item},'%')
+			</foreach>
+		 </if> 
 		 
-		 ORDER BY b.item_idx desc limit #{startPage}, #{pageNum}
+		 
+		ORDER BY b.item_idx desc limit #{pagemaker.startPage}, #{pagemaker.pageNum}
 	</select>
 	
 	

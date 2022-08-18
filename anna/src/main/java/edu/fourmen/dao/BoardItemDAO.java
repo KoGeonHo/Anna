@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +30,23 @@ public class BoardItemDAO {
 	
 	private static final String efdb = "edu.fourmen.mapper.boardItemMapper";
 	
-	public List<BoardItemVO> selectAll(BoardItemVO vo,PageMaker pm) {
-		return sqlSession.selectList(efdb+".selectAll",pm);
+	public List<BoardItemVO> selectAll(PageMaker pm) {
+		
+		
+		
+		HashMap<String,Object> del = new HashMap<String,Object>();
+		String[] key = null;
+		
+		System.out.println(pm.getInterested() +"::key");
+		if(pm.getInterested() != null) {
+			key  = pm.getInterested().split(",");
+		}
+		
+		
+		del.put("pagemaker", pm);
+		del.put("interested", key);
+		
+		return sqlSession.selectList(efdb+".selectAll",del);
 		
 	}
 	public List<BoardItemVO> selectAllbyuser(BoardItemVO vo, SearchVO svo) {
