@@ -167,8 +167,7 @@
 	         let html = "";
 	         
 	         for(let i = 0; i < appendList.length; i++){
-	            //console.log(appendList[i].uidx);
-	            html +='<div class="col-lg-3  col-md-12 ">';
+	      <%--  html +='<div class="col-lg-3  col-md-12 ">';
 	            html +='   <div class="card">';
 	            html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'${vo.item_idx}">';
 	            html +='<img src="<%=request.getContextPath()%>/resources/upload/'+appendList[i].image1+'"';
@@ -189,7 +188,51 @@
 	            html +='style="float: right">♥2</button>';
 	            html +='</div>';
 	            html +='</div>';
-	            html +='   </div>';
+	            html +='   </div>'; --%>
+	            
+	            html +='<div class="col-lg-3 col-md-12 ">';
+	            html +='<div class="row">';
+	            html +='<div class="products-tabs">';
+	            html +='	<div class="product">';
+	            html +='		<div class="product-img">';
+	            html +='			<a href="itemview.do?item_idx='+appendList[i].item_idx+'"><img src="../resources/upload/'+appendList[i].image1+'" onerror=this.src="../images/no_imgborder.jpg" ></a>';
+	            html +='		</div>';
+	            html +='	<div class="product-body">';
+	            html +='		<h3 class="product-name"><a href="itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a></h3>';
+	            html +='		<h4 class="product-price">'+appendList[i].price+' 원</h4>';
+	            html +='		<h4 class="product-price">'+appendList[i].nickName+'</h4>';
+	            		if( appendList[i].state == 1) {
+	            html +='			<h4 class="product-price">거래중 '+appendList[i].state+'</h4>';
+	           			}									
+	            		if( appendList[i].state == 2) {
+	            html +='			<h4 class="product-price">예약중123123123</h4>';
+	            		}
+	            		if( appendList[i].state == 3) {
+				html +='			<h4 class="product-price">거래완료</h4>';
+	            		}
+				html +='		'+appendList[i].hit+' 조회수';
+				html +='		<div id="Wish_area">';
+						if (appendList[i].wishCheck == 0){
+				html +='							<div class="image">';
+				html +='									<img src="../images/Wish_off.png" style="width:50px; height:50px;" >';
+				html +='									<p>'+appendList[i].wishCount+'</p>';
+				html +='								</div>';
+						}
+						if (appendList[i].wishCheck != 0){
+				html +='							<div class="image">';
+				html +='								<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >';
+				html +='								<p style="background-color:ce3746;">'+appendList[i].wishCount+'</p>';
+				html +='							</div>';
+						}				
+				html +='					</div>';
+				html +='					</div>';
+				html +='				</div>';
+				html +='<div id="slick-nav-1" class="products-slick-nav"></div>';
+				html +='</div>';
+				html +='</div>';
+				html +='</div>';
+	            
+	            
 	         }
 	         
 	         //console.log(html);
@@ -205,30 +248,6 @@
 	   });
 	}
 
-
-/* 
-function delWish(){
-	$.post('delWish',{
-		item_idx : $("#wish_item_idx").val(),
-		uidx : ${userLoginInfo.uidx},
-	},'json');
-	$('#wish-list').load(location.href+' #wish-list');
-	//location.reload();
-		console.log("찜 삭제 완료");
-}
-
-function delNeighbor(form) {
-	
-	// AJAX -> delNeighbor 실행 및 출력값 가져오기
-	$.post('./delNeighbor',{
-		neighbor_idx : ${vo.neighbor_idx},
-		uidx : ${userLoginInfo.uidx},
-	}, function(data) {
-		uidx = data["uidx"];
-	},'json');
-	$('#Neighbor_area').load(location.href+' #Neighbor_area');
-}
- */
 </script>
 <style>
 
@@ -316,10 +335,25 @@ li{
 
 }
  
+ #Wish_area{
+	width:50px;
+	height: 50px;
+	}
+	
+	#Wish_area .image { 
+	width: 50px;
+	height : 50px;
+	position:relative;text-align:center;color:#FFFFFF; 
+	}
+	#Wish_area .image p { position: absolute;top:50%;left:50%;
+			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
+			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
+			margin : auto;}
+ 
    
 }
 
-@media all and (min-width :768px){
+@media all and (min-width :400px){
 .product-img{
 	width : 100%;
 	heigh : 100%;
@@ -337,6 +371,23 @@ li{
 			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
 			margin : auto;}
 
+
+
+	#Wish_area{
+	width:50px;
+	height: 50px;
+	}
+	
+	#Wish_area .image { 
+	width: 50px;
+	height : 50px;
+	position:relative;text-align:center;color:#FFFFFF; 
+	}
+	#Wish_area .image p { position: absolute;top:50%;left:50%;
+			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
+			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
+			margin : auto;}
+
 }
 
 </style>
@@ -349,24 +400,7 @@ li{
 		<div class="main" id="main" style="overflow: auto;">
 			<input type="hidden" name="uidx" value="${userLoginInfo.uidx}">
 			
-		<%-- 어드민 목록
-		<c:if test="${alist.size() > 0}">
-		<c:forEach var="vo" items="${alist}">
-			<div class="col-lg-3">
-				<div class="card">
-					<div class="card-body">
-					<input type="hidden" value=">${vo.uidx}">
-						<p class="card-text">${vo.nickname}원</p>
-						<p class="card-text">${vo.user_Email}</p>
-						<p class="card-text">${vo.jdate}</p>
-					</div>
-				</div>
-			</div>
-		</c:forEach>
-		</c:if> --%>
-			
-		
-			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<div class="container-fluid">
 					<a class="navbar-brand" href="#">AnnA</a>
 							<button class="navbar-toggler" type="button"
@@ -393,19 +427,12 @@ li{
 			</nav>
 <br>
 <br>
-<c:if test="${uidx == null}">
-		<a href="../user/login.do">로그인하기</a>
-		</c:if>
-		
-		<c:if test="${uidx != null}">
-		<a href="../user/logout.do">로그아웃</a>
-		</c:if>
-			<a href="itemwrite.do">중고거래글 작성하기</a>
+			
 			<!-- 카테고리  -->
 			<div>
 				<div style="width:100px; background-color:grey;"class="slide-toggle">
-					카테고리
-				</div>
+			카테고리
+				</div>																				
 					<div style=" height:70px;">
 					
 					<div class="box">
@@ -423,39 +450,70 @@ li{
 					</div>
 				</div>		
 			</div>		
-			
-			
-				
-		<form method="get" action="itemlist.do">
-			 <%--<select name="searchType">
-				<option value="title" <c:if test="${!empty svo.searchType and svo.searchType eq 'title'}">selected</c:if>>제목</option>
-				<option value="nickName" <c:if test="${!empty svo.searchType and svo.searchType eq 'nickName' }">selected</c:if>>작성자</option>
-				<option value="keyword" <c:if test="${!empty svo.searchType and svo.searchType eq 'keyword'}">selected</c:if>>태그</option>
-			</select> --%>
-			<input type="text" name="searchVal" 
-					<c:if test="${!empty svo.searchVal}">
-					value=${svo.searchVal}
-					</c:if>>
-			<input type="submit" value="검색">
-		</form>
+		<div class="col-md-12  col-sm-12 d-flex">
+			<form method="get" action="itemlist.do"  class="d-flex">
+				<input type="text" name="searchVal" class="search-control"  placeholder="검색어를 입력해주세요"
+						<c:if test="${!empty svo.searchVal}">
+						value=${svo.searchVal}
+						</c:if>>
+				<input type="submit" value="검색" class="btn btn-outline-primary">
+			</form>
+				<button class="btn" style="background-color: #00AAB2; color: #fff;" onclick='location.href="itemwrite.do"'>글쓰기</button>
+		</div>
 			<div>
 				<c:if test="${!empty pm.searchVal}">
-					<c:forEach var="ssang" items="${ssang}">
+					<c:forEach var="vo" items="${ssang}">
 						<h1>${userLoginInfo.nickName} 님이 검색하신 ${pm.searchVal} 의 최저가 상품입니다</h1>
-				
+						
 						<div class="col-lg-3">
-							<div class="card">
-							<a href="itemview.do?item_idx=${ssang.item_idx}"><img src="../resources/upload/${ssang.image1}" ></a>
-								<div class="card-body">
-								<input type="hidden" value=">${ssang.uidx}">
-									<h5 class="card-title"><a href="itemview.do?item_idx=${ssang.item_idx}">${ssang.title}</a></h5>
-									<p class="card-text">${ssang.price}원</p>
-									<p class="card-text">${ssang.nickName}</p>
-									<p class="card-text">${ssang.wdate}</p>
+						<div class="row">
+							<div class="products-tabs">
+								<!-- tab -->
+										<!-- product -->
+										<div class="product">
+											<div class="product-img">
+												<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/no_imgborder.jpg" ></a>
+											</div>
+											<div class="product-body">
+												<h3 class="product-name"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h3>
+												
+												<%-- <h4 class="product-price">지역번호 ${vo.addr_code} </h4> --%>
+												<h4 class="product-price">${vo.price} 원</h4>
+												<c:if test="${vo.state==1}">
+												<h4 class="product-price">거래중</h4>
+												</c:if>												
+												<c:if test="${vo.state==2}">
+												<h4 class="product-price">예약중</h4>
+												</c:if>												
+												<c:if test="${vo.state==3}">
+												<h4 class="product-price">거래완료</h4>
+												</c:if>										
+												${vo.hit} 조회수
+											<div id="Wish_area">
+												<c:if test="${vo.wishCheck == 0 }">
+														<div class="image">
+															<img src="../images/Wish_off.png" style="width:50px; height:50px;" >
+															<p>${vo.wishCount}</p>
+														</div>
+												</c:if>
+									
+												<c:if test="${vo.wishCheck != 0}">
+													<div class="image">
+														<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >
+														<p style="background-color:ce3746;">${vo.wishCount}</p>
+													</div>
+												</c:if> 
+											</div>
+											</div>
+										</div>
+										<!-- /product -->
+									<div id="slick-nav-1" class="products-slick-nav"></div>
 								</div>
+								<!-- /tab -->
 							</div>
-								<br>
 						</div>
+						
+						
 					</c:forEach>
 				</c:if>
 				<c:if test="${!empty pm.searchVal and ssang.size()==0}">
@@ -463,19 +521,6 @@ li{
 				</c:if>
 			</div>
 <br>
-<hr>
-<br>
-			<!-- 채팅 리스트 -->
-			<div id="popup" class="Pstyle">	
-					<input type="button" id="btn_close" value="닫 기">
-			</div>
-			<div class="wrap2">
-				<input type="button" id="btn_open" value="채팅리스트">
-			</div>
-				
-			
-			
-			
 <hr>
 
 	<div class="section">
@@ -498,27 +543,33 @@ li{
 											<div class="product-body">
 												<h3 class="product-name"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h3>
 												
-												<h4 class="product-price">${vo.price} </h4>
-												<div id="Wish_area">
-					<%-- <c:if test="${${userLoginInfo.uidx == null }">
-							<div class="image">
-								<img src="../images/Wish_off.png" style="width:50px; height:50px;" >
-								<p>${wishCount}</p>
-							</div>
-					</c:if>
-		
-					<c:if test="${wish != 0}">
-						<div class="image">
-							<img src="../images/Wish_on.png" style="width:50px; height:50px;" onclick="delWish(); return false;" >
-							<p style="background-color:ce3746;">${wishCount}</p>
-						</div>
-					</c:if> --%>
-				</div>
-												<div class="product-btns">
-													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-												</div>
+												<%-- <h4 class="product-price">지역번호 ${vo.addr_code} </h4> --%>
+												<h4 class="product-price">${vo.price} 원</h4>
+												<c:if test="${vo.state==1}">
+												<h4 class="product-price">거래중</h4>
+												</c:if>												
+												<c:if test="${vo.state==2}">
+												<h4 class="product-price">예약중</h4>
+												</c:if>												
+												<c:if test="${vo.state==3}">
+												<h4 class="product-price">거래완료</h4>
+												</c:if>										
+												${vo.hit} 조회수
+											<div id="Wish_area">
+												<c:if test="${vo.wishCheck == 0 }">
+														<div class="image">
+															<img src="../images/Wish_off.png" style="width:50px; height:50px;" >
+															<p>${vo.wishCount}</p>
+														</div>
+												</c:if>
+									
+												<c:if test="${vo.wishCheck != 0}">
+													<div class="image">
+														<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >
+														<p style="background-color:ce3746;">${vo.wishCount}</p>
+													</div>
+												</c:if> 
+											</div>
 											</div>
 										</div>
 										<!-- /product -->
@@ -551,12 +602,14 @@ li{
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 <script src ="../js/boardlist.js"></script>
-<script src="https://cdn.jsivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+<!-- <script src="https://cdn.jsivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+ -->
 <!-- jQuery Plugins -->	
-		<script src="${path}/js/slick.min.js"></script>
-		<script src="${path}/js/boarditemMain.js"></script>
-
+	<!-- 	<script src="../js/slick.min.js"></script>
+		<script src="../js/boarditemMain.js"></script> -->
+		<!-- <script src="../js/nouiskider.min.js"></script>
+		<script src="../js/jquery.zomm.min.js"></script>
+ -->
 
 		</div>
 		<!-- 푸터는 고정 -->

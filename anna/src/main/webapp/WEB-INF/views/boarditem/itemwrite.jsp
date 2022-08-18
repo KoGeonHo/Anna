@@ -106,7 +106,7 @@
 			<input type="hidden" name="uidx" value="${uidx}">
 		
 			제목: <input type="text" name="title">
-			지역정보 : <input type="text" name="addr_code" value="${userLoginInfo.location_auth}">
+			<input type="hidden" name="addr_code" value="${userLoginInfo.location_auth} readonly="readonly">
 			카테고리:<select name="cate_idx">
 					<option value="1">가전제품</option>
 				   </select>
@@ -133,7 +133,7 @@
 		            	<input type="text" id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 300px;"/>
 		           </div>
 				</div>
-			가격:<input type="text" name="price" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+			가격:<input type="number" name="price" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 				<br>
 					
 	
@@ -255,11 +255,11 @@
 				$("#joinFrm").submit(function(){
 				    var fileCheck = $("#file").val();
 				    if(!fileCheck){
-				        alert("사진을 첨부해주세요");
+				        alert("사진을 한 장 이상 첨부해주세요");
 				       return false;
 				    }
 				    });
-				</script>
+				</script> 
 
 		</div>
 		<!-- 푸터는 고정 -->

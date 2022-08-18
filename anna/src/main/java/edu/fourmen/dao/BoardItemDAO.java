@@ -94,7 +94,8 @@ public class BoardItemDAO {
 		return sqlSession.selectList(efdb+".neighbor_list",nvo);
 	}
 	 
-	public int delneighbor(int uidx, int neigbor_idx) {
+	//다른 곳에서 파라미터 순서 다르게 넣으면 타입이 같아서 값이 순서에 맞지 않게 들어감.!! 꼭 순서에 유의할것!!
+	public int delneighbor(int neigbor_idx,int uidx) {
 		
 		HashMap<String,Integer> del = new HashMap<String,Integer>();
 		
@@ -104,6 +105,7 @@ public class BoardItemDAO {
 		return sqlSession.delete(efdb+".delneighbor",del);
 		
 	}
+	
 	
 	public int addwist(BoardItemVO vo){
 		return sqlSession.insert(efdb+".addWish",vo);
@@ -117,8 +119,8 @@ public class BoardItemDAO {
 		return sqlSession.delete(efdb+".delWish",wvo);
 	}
 	
-	public int WishCount(BoardItemVO vo) {
-		return sqlSession.selectOne(efdb+".WishCount",vo);
+	public int WishCount(int item_idx) {
+		return sqlSession.selectOne(efdb+".WishCount",item_idx);
 	}
 
 	public List<BoardItemVO> mywish(BoardItemVO vo){

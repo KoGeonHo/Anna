@@ -135,8 +135,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public int WishCount(BoardItemVO vo) {
-		return boarditemdao.WishCount(vo);
+	public int WishCount(int item_idx) {
+		return boarditemdao.WishCount(item_idx);
 	}
 
 	@Override
@@ -185,6 +185,7 @@ public  class BoardItemServiceImple implements BoardItemService{
 	public int update_state(int state, int item_idx) {
 		return boarditemdao.update_state(state, item_idx);
 	}
+
 
 
 	
