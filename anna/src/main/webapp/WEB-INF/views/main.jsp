@@ -189,7 +189,7 @@ const GetList = function(currentPage){
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
 .myCarousel { 
-	z-index : 100;
+	z-index : 1;
 }
 
 
@@ -302,14 +302,14 @@ a {
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img src="images/slide_1.png" width="100%">
+					<img src="images/slide_2.png" width="100%">
 
 					<div class="container">
 						<div class="carousel-caption"></div>
 					</div>
 				</div>
 				<div class="carousel-item">
-					<img src="images/slide.png" width="100%">
+					<img src="images/slide_2.png" width="100%">
 
 					<div class="container">
 						<div class="carousel-caption text-end"></div>
@@ -660,9 +660,9 @@ width: 50px;
 
 
 
-<!-- 퀵메뉴 시작 -->
+<%-- <!-- 퀵메뉴 시작 -->
 			<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
-		<!-- 퀵메뉴 종료 -->
+		<!-- 퀵메뉴 종료 --> --%>
 		
 
 

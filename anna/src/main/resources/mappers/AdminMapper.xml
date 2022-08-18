@@ -9,6 +9,7 @@
 		SELECT uidx		
 		,nickname
 		,user_Email
+		,isAdmin
 		,DATE_FORMAT(jdate, '%Y-%m-%d') AS jdate
 		FROM 
 			AnnaUser	
@@ -21,6 +22,7 @@
 		,a.qType
 		,a.title
 		,a.contents
+		,a.state
 		,DATE_FORMAT(a.wdate, '%Y-%m-%d') AS wdate
 		,a.uidx, (
 		 select nickName from AnnaUser b where b.uidx = a.uidx 
