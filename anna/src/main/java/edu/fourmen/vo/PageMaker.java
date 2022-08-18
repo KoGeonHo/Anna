@@ -10,11 +10,8 @@ public class PageMaker extends BoardItemVO{
 	private int pageNum; // 화면에 보여줄 게시글 수
 	private int displayPageNum = 10; // < 1 2 3 4 5 6 7 8 9 10 > 페이지바?
 	private int page; //
-	private String SearchType;
 	private String SearchVal;
 	private String board_type;
-	private String keyword;
-	private String nickName;
 	private int epage;
 	private int SearchUidx;
 	
@@ -23,19 +20,6 @@ public class PageMaker extends BoardItemVO{
 		this.setPageNum(15);
 	}
 	
-	
-	public String getNickName() {
-		return nickName;
-	}
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-	public String getKeyword() {
-		return keyword;
-	}
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
 	public int getTotalCount() {
 		return totalCount;
 	}
@@ -114,12 +98,7 @@ public class PageMaker extends BoardItemVO{
 		
 		
 	}
-	public String getSearchType() {
-		return SearchType;
-	}
-	public void setSearchType(String searchType) {
-		SearchType = searchType;
-	}
+
 	public String getSearchVal() {
 		return SearchVal;
 	}

@@ -45,7 +45,7 @@
 			,contents
 			 
 	)VALUES(
-			 #{Bidx}
+			 #{bidx}
 			,#{repoter}
 			,#{target}
 			,#{evidence}
@@ -66,7 +66,7 @@
 		  ,b.Uidx
 		  ,b.Contents
 		  ,b.Hit
-		  ,b.Wdate
+		  ,date_format(b.Wdate,'%y-%m-%d-%h:%i')as Wdate
 		  ,u.nickname
 		  ,b.board_type
 		  ,b.isDel
@@ -113,7 +113,7 @@
 <if test="searchVal != null">
 	AND (b.Contents like concat('%',#{SearchVal},'%')
 	 	OR u.nickname like concat('%',#{SearchVal},'%')
-	    OR b.Title like concat('%',#{SearchVal},'%')) 
+	    OR b.Title like concat('%',#{SearchVal},'%'))
 	
 </if>
 
@@ -122,7 +122,7 @@
 <select id="viewBoard" resultType="boardvo" parameterType="int"> 
 	SELECT b.Title
 		  ,b.Contents
-		  ,b.Wdate
+		  ,date_format(b.Wdate,'%y-%m-%d-%h:%i')as Wdate
 		  ,b.board_type
 		  ,b.Hit
 		  ,(select count(*) from Board_like c where c.Bidx = b.Bidx) as cntLike
@@ -168,7 +168,7 @@
   		  ,r.Bidx as Bidx
   		  ,u.nickName as nickName
   		  ,r.contents as contents
-  		  ,r.Wdate as Wdate
+  		  ,date_format(r.Wdate,'%y-%m-%d-%h:%i')as Wdate
   	  FROM reply r, AnnaUser u
   	 WHERE r.Bidx = #{Bidx}
   	   AND r.Uidx = u.uidx
@@ -223,7 +223,7 @@
 		  ,b.Uidx
 		  ,b.Contents
 		  ,b.Hit
-		  ,b.Wdate
+		  ,date_format(b.Wdate,'%y-%m-%d-%h:%i')as Wdate
 		  ,u.nickname
 		  ,b.board_type
 		  ,b.isDel

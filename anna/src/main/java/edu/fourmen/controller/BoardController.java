@@ -12,10 +12,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import java.util.UUID;
+
 
 import javax.imageio.ImageIO;
 
@@ -23,13 +24,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FilenameUtils;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
+
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,7 +42,7 @@ import edu.fourmen.service.BoardService;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.ReportVO;
-import edu.fourmen.vo.SearchVO;
+
 import edu.fourmen.vo.UserVO;
 
 @Controller
@@ -52,76 +53,9 @@ public class BoardController {
 	BoardService boardService;
 
 	
-	@RequestMapping(value="/FreeBoard.do")
-	public String FreeBoard(Model model, SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
-		
-		session = request.getSession();
-		
-		//한 페이지에 몇개씩 표시할 것인지
-		int pagecount = 12;
-		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
-		int pagenumber = 1;
-		//페이지 번호가 파라미터로 전달되는지 읽어와본다.
-		String strPageNum = request.getParameter("pagenumber");
-		//만일 페이지 번호가 파리미터로 넘어온다면
-		if(strPageNum != null) {
-			//숫자로 바꿔서 보여줄 페이지 번호를 지정한다.
-			pagenumber = Integer.parseInt(strPageNum);
-		}
-		
-		//보여줄 페이지의 시작 ROWNUM - 0부터 시작
-		int startPage = 0+ (pagenumber - 1)* pagecount;
-		//보여줄 페이지의 끝 ROWNUM
-		int endPage = pagenumber*pagecount;
-		
-		int pageNum = pagecount;
-		
-		// 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
-		
-
-		
-
-		// 설정해준 값들을 해당 객체에 담는다.
-		pm.setStartPage(startPage);
-		pm.setEndPage(endPage);
-		pm.setPageNum(pageNum);
-		
-		//ArrayList 객체의 참조값을 담을 지역변수를 만든다.
-		ArrayList<PageMaker> plist = null;
-		//전체 row의 개수를 담을 지역변수를 미리 만든다. -검색 조건이 들어온 경우 '검색 결과 갯수'가 된다.
-		int totalRow = 0;
-
-		//글의 개수
-		totalRow = boardService.totalCount(pm);
-		
-		//전체 페이지 갯수 구하기
-		int totalPageCount = (int)Math.ceil(totalRow / (double)pagecount);
-		
-		request.setAttribute("plist", plist);
-		request.setAttribute("totalPageCount", totalPageCount);
-		request.setAttribute("totalRow", totalRow);
-		request.setAttribute("pagenumber", pagenumber);
-		
-		List<BoardVO> freeboard = boardService.selectfreeboard(pm);
-		int Ccount = boardService.getCTotal(bv);
-		
-		bv.setCcount(Ccount);
-	
-		model.addAttribute("freeboard", freeboard);
-		model.addAttribute("svo", svo);
-		
-		
-		
-		
-		
-		
-
-		return "board/FreeBoard";
-	}
-	
 	@ResponseBody
 	@RequestMapping(value="/ajax_board.do")
-	public HashMap<String, Object> ajax_FreeBoard(SearchVO svo, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
+	public HashMap<String, Object> ajax_FreeBoard(HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
 		
 		//한 페이지에 몇개씩 표시할 것인지
 		int pagecount = 12;
@@ -156,6 +90,7 @@ public class BoardController {
 		
 		//글의 개수
 		totalRow = boardService.totalCount(pm);
+		
 		
 		//전체 페이지 갯수 구하기
 		int totalPageCount = (int)Math.ceil(totalRow / (double)pagecount);
@@ -184,10 +119,7 @@ public class BoardController {
 		
 		session = request.getSession();
 		
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
-		formatter.format(date);
-		System.out.println(formatter.format(date));
+		
 
 		return "board/BoardWrite";
 	}
@@ -308,7 +240,7 @@ public class BoardController {
 			boardService.writeBoard(vo);
 		
 	
-		return "redirect:/board/FreeBoard.do"; 	
+		return "redirect:/board/boardlist.do?board_type="+vo.getBoard_type(); 	
 	}
 	
 
@@ -316,8 +248,10 @@ public class BoardController {
 	@RequestMapping(value="/viewBoard.do")
 	public String viewBoard(int Bidx,Model model, HttpServletRequest request, HttpSession session) {
 		
+		model.addAttribute("path","/anna");
+		
 		session = request.getSession();
-
+		
 		BoardVO bv = boardService.viewBoard(Bidx);
 		
 		BoardVO vo = new BoardVO();
@@ -325,14 +259,11 @@ public class BoardController {
 		boardService.HitUp(Bidx);
 		
 		vo.setBidx(Bidx);
-		
 		if(session.getAttribute("uidx") != null) {
 			vo.setUidx(Integer.parseInt(String.valueOf(session.getAttribute("uidx"))));
 		}
 		model.addAttribute("bv", bv);
 		model.addAttribute("like",boardService.Likeyn(vo));
-		
-		System.out.println("like");
 		
 		return "board/viewBoard";
 	}
@@ -345,7 +276,7 @@ public class BoardController {
 		
 		session = request.getSession();
 		//rv.setUidx((int)session.getAttribute("uidx"));
-		System.out.println("댓글 등록 통신 성공");
+		System.out.println("댓글 등록 성공");
 //		if(session.getAttribute("login") == null) {
 //			return "fail";
 //		} else {
@@ -357,7 +288,7 @@ public class BoardController {
 		
 			boardService.commentwrite(rv);//댓글작성
 			boardService.Ccount(Bidx);
-			System.out.println("댓글 등록 서비스 성공");
+			System.out.println("댓글 등록 성공");
 			return "InsertSuccess";
 //		}
 	}
@@ -424,7 +355,7 @@ public class BoardController {
 		boardService.boardDelete(Bidx);
 		System.out.println("삭제완료");
 		
-		return "redirect:/board/boardlist.do";
+		return "redirect:/board/boardlist.do?board_type="+vo.getBoard_type();
 	}
 	
 	@RequestMapping(value="/BoardModify.do", method=RequestMethod.GET)
@@ -443,9 +374,9 @@ public class BoardController {
 		
 		session = request.getSession();
 		boardService.boardModify(vo);
-		System.out.println("수정됨");
-		System.out.println(vo.getBidx()+"bidx");
-		return "board/FreeBoard";
+//		System.out.println("수정됨");
+//		System.out.println(vo.getBidx()+"bidx");
+		return "redirect:/board/boardlist.do?board_type="+vo.getBoard_type(); //redirect://board/boardlist.do
 	}
 	
 	@RequestMapping(value="/test.do")
@@ -468,7 +399,7 @@ public class BoardController {
 		model.addAttribute("bv", bv);
 		model.addAttribute("like",boardService.Likeyn(vo));
 		
-		System.out.println("like");
+//		System.out.println("like");
 		
 		return "board/test";
 	}
@@ -476,7 +407,7 @@ public class BoardController {
 	@RequestMapping(value="/boardlist.do") //게시판 통합
 	public String boardlist(Model model, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
 		
-		System.out.println(pm.getSearchUidx());
+		//System.out.println(pm.getSearchUidx());
 		
 		String boardtype = "free";
 		
@@ -518,7 +449,7 @@ public class BoardController {
 
 		//글의 개수
 		totalRow = boardService.totalCount(pm);
-		
+		System.out.println(totalRow +"boardlist");
 		//전체 페이지 갯수 구하기
 		int totalPageCount = (int)Math.ceil(totalRow / (double)pagecount);
 		
@@ -529,9 +460,9 @@ public class BoardController {
 		
 		
 		
-		}else if(!pm.getBoard_type().equals(boardtype)) {
+		}else if(!pm.getBoard_type().equals(boardtype)) { //board_type=free가 아닐때만 작동
 			
-
+			//리스트 페이징
 		
 
 			int cnt = boardService.totalCount(pm);
@@ -544,21 +475,21 @@ public class BoardController {
 			
 			pm.setEpage(epage);
 			
-			System.out.println(pm.getTotalCount()+"위에서 찍는 토탈");
+//			System.out.println(pm.getTotalCount()+"위에서 찍는 토탈");
 
 			pm.setTotalCount(cnt);
-			System.out.println(pm.getPage()+"page?");
-			System.out.println(pm.getStartPage()+"?");
-			System.out.println(pm.getEndPage()+"?end");
-			System.out.println(pm.getTotalCount()+"토탈");
+//			System.out.println(pm.getPage()+"page?");
+//			System.out.println(pm.getStartPage()+"?");
+//			System.out.println(pm.getEndPage()+"?end");
+//			System.out.println(pm.getTotalCount()+"토탈");
 			
 		}
 		
 		List<BoardVO> board = boardService.selectboard(pm);
 
 		
-		System.out.println(pm.getPageNum()+"num");
-		System.out.println(pm.isNext()+"next");
+//		System.out.println(pm.getPageNum()+"num");
+//		System.out.println(pm.isNext()+"next");
 		
 		
 		model.addAttribute("pm", pm);
@@ -570,14 +501,40 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping("/report.do")
-	public String report(ReportVO vo, HttpServletRequest request, HttpSession session) throws IOException {
+	public String report(ReportVO vo, MultipartHttpServletRequest multi, HttpSession session) throws IOException {
 		
-		
-		
-		
-		
-		
-		
+		// 저장 경로 설정
+				String root = multi.getSession().getServletContext().getRealPath("/");
+				String path = root+"resources/upload/";
+				
+				String newFileName = ""; // 업로드 되는 파일명
+				
+				Date date = new Date();
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+				
+				File dir = new File(path);
+				if(!dir.isDirectory()){
+					dir.mkdir();
+				}
+				
+				Iterator<String> files = multi.getFileNames();
+				while(files.hasNext()){
+					String uploadFile = files.next();
+								
+					MultipartFile mFile = multi.getFile(uploadFile);
+					String fileName = mFile.getOriginalFilename();
+					System.out.println("실제 파일 이름 : " +fileName);
+					newFileName = formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+fileName;
+					
+					try {
+						mFile.transferTo(new File(path+newFileName));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				vo.setAttach(newFileName);
+				
+
 		boardService.reportinsert(vo);
 		
 		return "";
