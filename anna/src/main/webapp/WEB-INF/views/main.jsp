@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+﻿<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
@@ -15,6 +15,7 @@
 <script src="${ path }/js/bootstrap.js"></script>
 <script src="${ path }/js/common/common.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
+<link href="https://webfontworld.github.io/naver/NanumSquare.css" rel="stylesheet">
 
 
 <script>
@@ -261,7 +262,9 @@ a {
 @media all and (min-width :768px){
 }
 
-
+#itemtitle {
+	font-weight :  bold;
+}
   
 </style>
 
@@ -350,7 +353,7 @@ a {
 					<form class="d-flex ">
 						<input class="form-control me-6 vh-20" type="search"
 							placeholder="검색어를 입력하세요" aria-label="Search">
-						<button class="btn btn-outline-primary" type="submit">Search</button>
+						<button class="btn btn-outline-primary" type="submit" href="void(0);" onclick="alert('준비중입니다');return false;">Search</button>
 					</form>
 
 				</div>
@@ -390,11 +393,8 @@ a {
  	<div class="container ">
 			<div class="row">
 	<!-- stlye 은 slick 영역 확인용 -->
-	<div style="padding:30px 100px; background-color: #fff; margin-top:-75px;" >
+	<div style="padding-top: 30px; background-color: #fff; margin-top:-75px;" >
 	  	<div id="slider-div"  >
-
-
-			
 
 			<c:if test="${list.size() > 0}">
 							<c:forEach var="vo" items="${list}">
@@ -410,10 +410,10 @@ a {
 										</a>
 
 										<div class="card-body">
-											<h6 class="card-title">
+											<h6 class="card-title" id="itemtitle">
 												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
 											</h6>
-											<p class="card-text">${vo.price}원</p>
+											<p class="card-text" id="itemprice">${vo.price}원</p>
 											<button type="button"
 												class="btn btn-sm btn-outline-secondary"
 												style="float: right">♥12</button>
@@ -426,12 +426,14 @@ a {
 								</div>
 							</c:forEach>
 						</c:if>
-			
-			
-				
 	  	</div>
 	</div>
 	</div>
+	<script>
+	function setCommas(itemprice) {  
+		return itemprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");}
+
+	</script>
 	
 	
 	<script>
@@ -488,7 +490,7 @@ width: 50px;
     position: absolute;
     z-index: 100;
     top: 42%;
-    left: -80px;
+    left: 18px;
     border : 0;
 
 }
@@ -498,7 +500,7 @@ width: 50px;
     position: absolute;
     z-index: 100;
     top: 42%;
-    right: -80px;
+    right: 18px;
     border : 0;
 
 }
@@ -552,7 +554,7 @@ width: 50px;
 												<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"	 onerror=this.src="images/noimg_item.jpg" width="100%"  height="225">
 												</a>
 												<div class="card-body" style="border : 0;">
-													<h6 class="card-title">
+													<h6 class="card-title" id="itemtitle">
 														<a href="board/viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a>
 													</h6>
 													<p class="card-text"></p>
@@ -619,18 +621,23 @@ width: 50px;
 											onerror=this.src="images/noimg_item.jpg" width="100%"
 											height="255">
 										</a>
-
-										<div class="card-body">
-											<h6 class="card-title">
+										<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
+											<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
+												<c:if test="${vo.state==1}">
+												<h7 class="product-price"  >거래중</h7>
+												</c:if>												
+												<c:if test="${vo.state==2}">
+												<h7 class="product-price" >예약중</h7>
+												</c:if>												
+												<c:if test="${vo.state==3}" >
+												<h7 class="product-price" >거래완료</h7>
+												</c:if>
+											</h7>
+											<h6 class="card-title" id="itemtitle"	>
 												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
 											</h6>
-											<p class="card-text">${vo.price}원</p>
-											<button type="button"
-												class="btn btn-sm btn-outline-secondary"
-												style="float: right">view 5</button>
-											<button type="button"
-												class="btn btn-sm btn-outline-secondary"
-												style="float: right">♥2</button>
+											<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
+											<h7 class="card-text" style="color:#6C757D;">♥2 <img src="images/icon_main_view.png"> 5</h7>											
 										</div>
 									</div>
 								</div>

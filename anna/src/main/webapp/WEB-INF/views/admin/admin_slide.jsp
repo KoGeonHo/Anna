@@ -208,7 +208,7 @@
                                    <a class="nav-link collapsed" href="../admin/admin_qna.do">문의사항</a>
                                    <a class="nav-link collapsed" href="../admin/admin_notice.do">공지사항</a>
                                    <a class="nav-link collapsed" href="../admin/admin_board.do">커뮤니티</a>
-                                   <a class="nav-link collapsed" href="../admin/admin_slide.do">이벤트 배너 설정</a>
+                                   <a class="nav-link collapsed" href="../admin/admin_slide.do" >이벤트 배너 설정</a>
                                 </nav>
                             </div>
                 </nav>
