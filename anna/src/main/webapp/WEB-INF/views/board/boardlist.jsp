@@ -281,9 +281,11 @@ text-decoration: none;
 		<div class="col-md-12  col-sm-12 " style="float:right;">
 			
 			<form method="get" action="boardlist.do" class="d-flex " style="float:right;" id="search">
+				
 				<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
 				<c:if test="${pm.board_type != 'free'}">
 				<input type="hidden" value="1" name="page">
+				<input type="hidden" value="${pm.searchUidx}" name="searchUidx">
 				</c:if>
 				<%-- <select name="SearchType" class="border rounded-2">
 					<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
@@ -354,7 +356,7 @@ text-decoration: none;
 				</ul>
 			</div>	
 		</c:if>
-		<c:if test="${pm.board_type != null and pm.board_type != 'free'}">
+		<c:if test="${pm.board_type != 'free'}">
 				<div class="list">
 					<div class="tr border-bottom" id="plist-top">
 						<div class="th" style="width:40%;">제목</div>
@@ -420,7 +422,16 @@ text-decoration: none;
 					
 			<c:forEach var="i" begin="${pm.getStartPage()}" end="${pm.getEndPage()}">
 				<li>
-    				<span><a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${i}&SearchVal=${pm.searchVal}">${i}</a></span>
+    				<span><a href="${ path }/board/boardlist.do?
+					<c:if test="${pm.board_type != null }">
+					board_type=${pm.board_type}
+					</c:if>
+					
+					&page=${i}&SearchVal=${pm.searchVal}
+					<c:if test="${pm.searchUidx != null }">
+					&searchUidx=${pm.searchUidx}
+					</c:if>
+					">${i}</a></span>
 				</li>
 			</c:forEach>
 				
@@ -436,7 +447,7 @@ text-decoration: none;
 			<div style="height: 300px;"></div>
 			</c:if>
 			
-			<c:if test="${pm.board_type == null and pm.uidx !=0}">
+			<%-- <c:if test="${pm.board_type == null and pm.uidx !=0}">
 				<div class="list">
 					<div class="tr border-bottom" id="plist-top">
 						<div class="th" style="width:40%;">제목</div>
@@ -516,7 +527,7 @@ text-decoration: none;
 				
 			</ul>
 			<div style="height: 300px;"></div>
-			</c:if>
+			</c:if> --%>
 			
 		
 				

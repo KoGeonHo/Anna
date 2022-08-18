@@ -52,8 +52,7 @@
         
         <interceptor>
             <mapping path="/user/*.do"/>
-            <mapping path="/customer/*.do"/>
-            <mapping path="/boarditem/*.do"/>
+            <mapping path="/admin/*.do"/>
             <beans:ref bean="LoginCheckInterceptor"/>
         </interceptor>
     </interceptors>

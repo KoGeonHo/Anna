@@ -172,30 +172,39 @@
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님이 관심있어 할만한 상품</div>
 					<div style="float:right; padding:5px;">더 보기</div>
 					
-					<c:if test="${interestedList.size() > 0}">
-						<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative;">
-							<c:if test="${interestedList.size() > 5}">
-								<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ interestedList.size() }" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
-								<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ interestedList.size() }" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
-							</c:if>
-							<div id="slider-interested" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
-								<c:forEach var="vo" items="${interestedList}">
-									<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
-										<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-											<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-											<div class="card-body">
-										    	<span style="display:block;">${ vo.title }</span>
-										  	</div>
+					<c:if test="${ not empty userLoginInfo.interested }">
+						<c:if test="${interestedList.size() > 0}">
+							<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative;">
+								<c:if test="${interestedList.size() > 5}">
+									<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ interestedList.size() }" id="slide-btn-prev" style="left:0;"><img src='${path}/images/slicbtn_prev.png'></div>
+									<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ interestedList.size() }" id="slide-btn-next" style="right:0;"><img src='${path}/images/slicbtn_next.png'></div>
+								</c:if>
+								<div id="slider-interested" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
+									<c:forEach var="vo" items="${interestedList}">
+										<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
+											<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
+												<img src="<%=request.getContextPath()%>/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+												<div class="card-body">
+											    	<span style="display:block;">${ vo.title }</span>
+											  	</div>
+											</div>
 										</div>
-									</div>
-								</c:forEach>
+									</c:forEach>
+								</div>
 							</div>
-						</div>
+						</c:if>
+						<c:if test="${interestedList.size() eq 0}">
+							<div style="width:100%; height:200px; clear:both; display:flex;">
+								<div style="flex:1; margin:auto; text-align:center; ">
+									등록된 키워드로 등록된상품이 없습니다.
+								</div>
+							</div>
+						</c:if>
 					</c:if>
-					<c:if test="${interestedList.size() eq 0}">
+					<c:if test="${ empty userLoginInfo.interested }">
 						<div style="width:100%; height:200px; clear:both; display:flex;">
 							<div style="flex:1; margin:auto; text-align:center; cursor:pointer;" onclick="location.href='userInfoMod.do'">
-								등록된 키워드로 등록된상품이 없습니다.
+								등록된 키워드가 없습니다. 키워드를 등록해주세요.
 							</div>
 						</div>
 					</c:if>
@@ -269,7 +278,7 @@
 				
 				<div id="myCommunity">
 					<div style="float:left; padding:5px;">내가 작성한 글</div>
-					<div style="float:right; padding:5px;">더 보기</div>
+					<div style="float:right; padding:5px;" onclick="${path}/board/boardlist.do?searchUidx=${uidx}">더 보기</div>
 					<div class="list">
 				
 						<div class="tr border-bottom">
@@ -292,7 +301,7 @@
 						</c:if>
 						<c:if test="${ empty myCommunity }">
 							<div class="tr border-bottom" style="height:200px; display:flex; margin-bottom:20px;">
-								<div style="flex:1; margin:auto; text-align:center;">현재 등록된 동네에는 등록된 게시글이 없습니다.</div>
+								<div style="flex:1; margin:auto; text-align:center;">아직 작성한 게시글이 없습니다.</div>
 							</div>
 						</c:if>
 					</div>

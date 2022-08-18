@@ -121,7 +121,12 @@
 		UPDATE
 			AnnaUser
 		SET
-			interested = #{ interested }
+			<if test="interested != null and interested != ''">
+				interested = #{ interested }
+			</if>
+			<if test="interested == null or interested == ''">
+				interested = null
+			</if>
 		WHERE 
 			uidx = #{ uidx }
 			

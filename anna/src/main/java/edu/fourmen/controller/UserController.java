@@ -67,7 +67,7 @@ public class UserController {
 		
 		response.setContentType("text/html; charset=utf-8");
 		
-		System.out.println(vo.getKeepLogin());
+		//System.out.println(vo.getKeepLogin());
 		
 		PrintWriter pw = response.getWriter();
 		
@@ -211,11 +211,7 @@ public class UserController {
 	@RequestMapping(value = "/getKakaoAuthUrl.do", produces = "application/text; charset=utf8")
 	public String getKakaoAuthUrl(String keepLogin,HttpServletRequest request, HttpSession session) {
 		
-		if(keepLogin.equals("false")) {
-			System.out.println("false");
-		}else {
-			System.out.println("true");
-		}
+		/**/
 		
 		session = request.getSession();
 		
@@ -358,7 +354,7 @@ public class UserController {
         			moveTo = path+"/main.do";
         		}
         	}
-        	System.out.println(keepLogin);
+        	//System.out.println(keepLogin);
         	//로그인 유지체크를 한경우 쿠키를생성한다.
         	
         	if(keepLogin.equals("true")) {
@@ -397,7 +393,7 @@ public class UserController {
 		
 		session = request.getSession();
 		
-		System.out.println(session.getMaxInactiveInterval());
+		//System.out.println(session.getMaxInactiveInterval());
 		
 		int uidx = (int)session.getAttribute("uidx");
 
@@ -411,10 +407,13 @@ public class UserController {
 
 		List<String> keyWord = new ArrayList<String>();
 		
-		String[] ArrayInterested = userInfo.getInterested().split(",");
+		String[] ArrayInterested = null; 
 		
-		for(int i = 0; i < ArrayInterested.length; i++) {
-			keyWord.add(ArrayInterested[i]);
+		if(userInfo.getInterested() != null) {
+			ArrayInterested = userInfo.getInterested().split(",");
+			for(int i = 0; i < ArrayInterested.length; i++) {
+				keyWord.add(ArrayInterested[i]);
+			}
 		}
 		
 		List<BoardItemVO> interestedList = userService.getInterestedItem(keyWord,uidx);
@@ -528,7 +527,7 @@ public class UserController {
 	@RequestMapping(value="/emailChk.do", produces = "application/text; charset=utf8")
 	public String emailChk(String user_email) {
 		
-		System.out.println(user_email);
+		//System.out.println(user_email);
 		
 		int result = userService.emailChk(user_email);
 		

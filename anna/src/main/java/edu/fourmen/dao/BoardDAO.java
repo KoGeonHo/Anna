@@ -3,6 +3,7 @@ package edu.fourmen.dao;
 
 
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -36,7 +37,20 @@ public class BoardDAO {
 	
 	public int totalCount(PageMaker pm) {
 		
-		int result = sqlSession.selectOne(namespace+".totalCount", pm);
+		HashMap<String,Object> HM = new HashMap<>();
+		
+		String[] locationList = null;
+		
+		if(pm.getLocation_auth() != null) {
+			locationList = pm.getLocation_auth().split(",");
+		}
+		
+		System.out.println("searchUidx:"+pm.getSearchUidx());
+		
+		HM.put("pm",pm);
+		HM.put("locationList",locationList);
+		
+		int result = sqlSession.selectOne(namespace+".totalCount", HM);
 		
 		return result; 
 	}
@@ -90,7 +104,21 @@ public class BoardDAO {
 	
 	public List<BoardVO> selectboard(PageMaker pm){
 		
-		return sqlSession.selectList(namespace+".selectboard",pm);
+		HashMap<String,Object> HM = new HashMap<>();
+		
+		String[] locationList = null;
+		
+		if(pm.getLocation_auth() != null) {
+			locationList = pm.getLocation_auth().split(",");
+		}
+		
+		System.out.println("searchUidx:"+pm.getSearchUidx());
+		
+		HM.put("pm",pm);
+		HM.put("locationList",locationList);
+		
+		
+		return sqlSession.selectList(namespace+".selectboard",HM);
 	}
 	
 	public int boardModify(BoardVO vo) {
