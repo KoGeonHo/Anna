@@ -16,11 +16,22 @@ public class PageMaker extends BoardItemVO{
 	private int SearchUidx;
 	private int uidx;
 	private String interested;
+	private String location_auth;
 	
 	
 	
 	
 	
+	public String getLocation_auth() {
+		return location_auth;
+	}
+
+
+	public void setLocation_auth(String location_auth) {
+		this.location_auth = location_auth;
+	}
+
+
 	public String getInterested() {
 		return interested;
 	}

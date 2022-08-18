@@ -63,13 +63,38 @@
 
 
 
-<select id="totalCount" parameterType="pagemaker" resultType="int">
-	SELECT COUNT(Bidx)
+<select id="totalCount" parameterType="hashmap" resultType="int">
+	<!-- SELECT COUNT(Bidx)
 	  FROM Board b
 	  INNER JOIN AnnaUser u
 	  	ON b.uidx = u.uidx
-	 WHERE b.isDel = 'N'
-<if test='board_type != null'>
+	 WHERE b.isDel = 'N' -->
+	 SELECT 
+		count(*)
+	  FROM Board b
+	 INNER JOIN AnnaUser u
+	  	ON b.uidx = u.uidx
+	 WHERE b.isDel ='N'
+	 	  
+<if test='pm.board_type != null and pm.board_type != ""'>
+	   AND b.board_type = #{pm.board_type}
+</if>
+
+<if test="pm.searchVal != null">
+	AND (b.Contents like concat('%',#{pm.SearchVal},'%')
+	 	OR u.nickname like concat('%',#{pm.SearchVal},'%')
+	    OR b.Title like concat('%',#{pm.SearchVal},'%')) 
+	
+</if>
+<if test="pm.searchUidx != 0">
+	AND b.uidx = #{pm.searchUidx}
+</if>
+<if test="locationList != null">
+	<foreach collection="locationList" item="item"  separator="OR" open="AND (" close=")">
+		b.location like concat('%',#{item},'%')
+	</foreach>
+</if>
+<!-- <if test='board_type != null'>
 	   AND b.board_type = #{board_type}
 </if>
 <if test="searchVal != null">
@@ -79,7 +104,7 @@
 </if>
 <if test="uidx != 0">
 	AND b.uidx = #{uidx}
-</if>
+</if> -->
 
 </select>
 
@@ -181,7 +206,7 @@
 	 WHERE Bidx = #{Bidx}
 </update>
 
-<select id="selectboard" resultType="boardvo" parameterType="pagemaker">
+<select id="selectboard" resultType="boardvo" parameterType="hashmap">
 	SELECT b.Bidx
 		  ,b.Title
 		  ,b.Uidx
@@ -199,18 +224,23 @@
 	  	ON b.uidx = u.uidx
 	 WHERE b.isDel ='N'
 	  
-<if test='board_type != null and  searchUidx == 0'>
-	   AND b.board_type = #{board_type}
+<if test='pm.board_type != null and pm.board_type != ""'>
+	   AND b.board_type = #{pm.board_type}
 </if>
 
-<if test="searchVal != null">
-	AND (b.Contents like concat('%',#{SearchVal},'%')
-	 	OR u.nickname like concat('%',#{SearchVal},'%')
-	    OR b.Title like concat('%',#{SearchVal},'%')) 
+<if test="pm.searchVal != null">
+	AND (b.Contents like concat('%',#{pm.SearchVal},'%')
+	 	OR u.nickname like concat('%',#{pm.SearchVal},'%')
+	    OR b.Title like concat('%',#{pm.SearchVal},'%')) 
 	
 </if>
-<if test="searchUidx != 0">
-	AND b.uidx = #{searchUidx}
+<if test="pm.searchUidx != 0">
+	AND b.uidx = #{pm.searchUidx}
+</if>
+<if test="locationList != null">
+	<foreach collection="locationList" item="item"  separator="OR" open="AND (" close=")">
+		b.location like concat('%',#{item},'%')
+	</foreach>
 </if>
 <!-- <if test='searchType != null and searchType.equals("All")'>
 	  
@@ -230,13 +260,16 @@
 </if> -->
 	 ORDER BY b.Wdate desc
 
-<if test='board_type != null and board_type.equals("free")'> 
-	 limit #{startPage}, #{pageNum}
+<if test='pm.board_type != null and pm.board_type.equals("free")'> 
+	 limit #{pm.startPage}, #{pm.pageNum}
 </if>
 
-<if test = '(board_type == null or board_type != "free")'>
-	limit #{epage}, #{pageNum}
+<if test = '(pm.board_type == null or pm.board_type != "free")'>
+	limit #{pm.epage}, #{pm.pageNum}
 </if>
+
+	
+
 
 </select>
 

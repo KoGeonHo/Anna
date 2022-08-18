@@ -278,7 +278,7 @@
 				
 				<div id="myCommunity">
 					<div style="float:left; padding:5px;">내가 작성한 글</div>
-					<div style="float:right; padding:5px;">더 보기</div>
+					<div style="float:right; padding:5px;" onclick="${path}/board/boardlist.do?searchUidx=${uidx}">더 보기</div>
 					<div class="list">
 				
 						<div class="tr border-bottom">
