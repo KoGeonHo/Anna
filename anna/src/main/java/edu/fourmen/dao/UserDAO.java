@@ -110,6 +110,7 @@ public class UserDAO {
 		
 		for(int i = 0; i < ArrayLocation.length; i++) {
 			locationList.add(ArrayLocation[i]);
+			System.out.println(ArrayLocation[i]);
 		}
 		
 		return sqlSession.selectList("edu.fourmen.mapper.userMapper.myTownCommunityList",locationList);

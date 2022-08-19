@@ -39,7 +39,7 @@
 			<c:if test="${ not empty wishList }">
 				<c:forEach var="i" items="${ wishList }">
 					<div style="padding:0 10px; display:flex; cursor:pointer;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ i.item_idx }'">
-						<div><img src="${i.image1}" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';" style="width:110px; height:110px; border:2px solid #ccc; border-radius:10px; margin:10px;"></div>
+						<div><img src="${ path }/resources/upload/${i.image1}" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';" style="width:110px; height:110px; border:2px solid #ccc; border-radius:10px; margin:10px;"></div>
 						<div style="flex:1; margin:auto; padding:10px;">
 							<div><h5>${ i.title }</h5></div>
 							<div>${ i.keyword }</div>

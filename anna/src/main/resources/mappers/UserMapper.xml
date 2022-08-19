@@ -433,6 +433,7 @@
 			Board_Items a
 		WHERE
 			item_idx IN (SELECT item_idx FROM Wish_list where uidx = #{uidx})
+		ORDER BY a.wdate DESC
 	
 	</select>
 	
