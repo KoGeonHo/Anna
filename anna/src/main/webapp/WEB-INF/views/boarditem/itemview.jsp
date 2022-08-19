@@ -59,8 +59,8 @@ viewport {
 	width:100%;
 	height:100%;
 }
-
-.row .col-lg-2 .card img {
+/* 상대방의 다른상품 리스트 이미지 크기 */
+.row .col-lg-3 .card img {
 	width: 100%;
 	height: 150px;
 }
@@ -118,7 +118,7 @@ ul.imgs li {
 margin-left: 25%;
 }
 /*557 보다 크거나 같아야 하고 991거나 작아야 같아야함 태블릿용*/
-@media all and (420px <= width <= 767px) {
+@media all and (577px <= width <= 991px) {
 }
 
 /* 400이하 모바일*/
@@ -166,7 +166,6 @@ margin-left: 0%;
 		height: 250px;
 		margin: 0 auto;
 		overflow-x: hidden;
-		overflow-y: hidden;
 		display: block
 	}
 	.inner-list {
@@ -177,7 +176,6 @@ margin-left: 0%;
 	}
 	.inner {
 		padding: 0;
-		width:100%;
 	}
 	.slider-1 {
 		width: 100%;
@@ -323,7 +321,7 @@ a {
 .slider-1>.slides>div {
 	position: absolute;
 	width: 500px;
-	height: 500px;
+	/* height: 500px; */
 	top: 0;
 	left: 0;
 	right: 0;
@@ -512,143 +510,6 @@ a:link {
 			});			
 		});
 		
-		let flagChat = 1;
-		$(function(){
-			$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
-			$("#chatContents").keydown(function(e){
-				if(e.shiftKey&&e.keyCode == 13){
-					console.log("쉬프트 엔터 동시에 누름");
-				}else if(e.keyCode == 13){
-					if(!$("#sendBtn").prop("disabled")){
-						sendMessage();
-					}
-					return false;
-					
-				}
-			});
-			$("#chatContents").keyup(function(e){
-				if(e.keyCode != 13){
-					if($(this).val() != ""){
-						$("#sendBtn").prop("disabled",false);
-						$("#sendBtn").css("background","#00AAB2");
-					}else{
-						$("#sendBtn").prop("disabled",true);
-						$("#sendBtn").css("background","#ccc");
-					}
-				}
-			});
-		});
-		
-		
-		
-		function sendMessage(){
-			let item_idx = <%=request.getParameter("item_idx")%>;
-			let invited = ${userLoginInfo.uidx};
-<%-- 			let invited = <%=request.getParameter("invited")%>;
-			let chat_host = <%=request.getParameter("chat_host")%>; --%>
-			let chat_host =${vo.uidx};
-			let contents = $("#chatContents").val();
-			let chatData = "item_idx="+item_idx+"&invited="+invited+"&chat_host="+chat_host+"&contents="+contents+"&uidx=${uidx}";
-			$.ajax({
-				url : "AddMessage",
-				data : chatData,
-				success : function(){
-					let html = "";
-					html += '<div class="text-end border-bottom" style="padding:10px;">';
-					html += '${ userLoginInfo.nickName }<br>';
-					html += contents;
-					html += '</div>';
-					//console.log("Message Send Success");
-					$("#chatContents").val("");
-					$("#chatbox").append(html);
-					$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
-					$("#chatContents").prop("disabled",true);
-					$("#sendBtn").prop("disabled",true);
-					$("#sendBtn").css("background","#ccc");
-					setTimeout(function(){
-						$("#chatContents").prop("disabled",false);
-						/* $("#sendBtn").prop("disabled",false);
-						$("#sendBtn").css("background","#00AAB2"); */
-						$("#chatContents").focus();
-					},1000);
-				},
-				erorr : function(){
-					console.log("Message Send Failed");
-				}
-			});
-		}
-		
-		
-		let item_idx = <%=request.getParameter("item_idx")%>;
-		let invited = ${userLoginInfo.uidx};
-<%-- 			let invited = <%=request.getParameter("invited")%>;
-		let chat_host = <%=request.getParameter("chat_host")%>; --%>
-		let chat_host =${vo.uidx};
-		setInterval(chkMessage, 500);
-		
-		function chkMessage(){
-			
-			let Data = "item_idx="+item_idx+"&invited="+invited+"&chat_host="+chat_host+"&uidx=${uidx}";
-			
-			$.ajax({
-				url : "getMessage.do",
-				data : Data,
-				success : function(result){
-					if(result != ""){
-						let html = "";
-						html += '<div class="text-start border-bottom" style="padding:10px;">';
-						html += '${audience}<br>';
-						html += result.contents;
-						html += '</div>';
-						$("#chatbox").append(html);
-						$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
-					}
-				}
-			});
-			
-		}
-	
-	/* 
-	var Chat__lastReceivedchatlistcidx = -1;
-	
-	
-	function Chat__loadNewMessages() {
-		$.get('./getMessages',{
-			item_idx : ${vo.item_idx},
-			chat_host : $("#chat_host").val(),
-			uidx : ${userLoginInfo.uidx},
-			from : Chat__lastReceivedchatlistcidx + 1 
-		}, function(data) {
-			
-			for ( let i = 0; i < data.length; i++ ) {
-				var chatlist = data[i];
-				Chat__lastReceivedchatlistcidx = chatlist.cidx;
-				Chat__drawMessages(chatlist);
-				//$("#chat").scrollTop($("#chat")[0].scrollHeight);
-				
-			}
-			//setTimeout($("#chat").scrollTop($("#chat")[0].scrollHeight),1000);
-			
-
-		}, 'json');
-
-	}
-	function Chat__drawMessages(chatlist) {
-		var html = '[' +chatlist.cidx + '] (' + chatlist.nickName + ') : ' + chatlist.contents;
-		
-		if(chatlist.uidx == ${uidx}){
-			$('.chat-list').append('<div style="text-align:right;">'+ html + '</div>');
-		}else if(chatlist.uidx != ${uidx}){
-			$('.chat-list').append('<div style="text-align:left;">' + html + '</div>');
-			}
-	}
-	$(function() {
-		Chat__loadNewMessages();
-		
-	});
-	 */
-	
-	
 	
 	function addNeighbor(form) {
 		//작성자, 내용 유효성 검사
@@ -946,12 +807,7 @@ a:link {
 										</c:if>
 
 										<div style="">
-											<c:if test="${vo.uidx == userLoginInfo.uidx}">
-												<c:if test="${vo.state != 3}">
-													<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
-												</c:if>
-												<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
-											</c:if>
+											
 											조회수 : ${viewCount} 
 											<div id="count-area">
 												찜 :${wishCount}
@@ -981,6 +837,12 @@ a:link {
 																		<option value="2">예약중</option>
 																		<option value="3">거래완료</option>
 																	</select>
+																</c:if>
+																<c:if test="${vo.uidx == userLoginInfo.uidx}">
+																	<c:if test="${vo.state != 3}">
+																		<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
+																	</c:if>
+																	<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
 																</c:if>
 															</c:if>
 														</div>
@@ -1370,16 +1232,15 @@ a:link {
 						</div>
 						<!-- card body 끝 -->
 					</div>
-					<hr>
-			<div style="">
-				<h2 style="text-align: center;"><a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님 의다른상품</h2>
-			</div>	
+		<div>
+			<h2 style="text-align: center;"><a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님 의다른상품</h2>
+		</div>	
 			<div class="container-fluid">
 				<div class="row">
 					<c:if test="${youritem.size() > 0}">
 						<c:forEach var="vo" items="${youritem}">
-							<div class="col-lg-2  col-md-12 " style="margin-bottom: 10px; ">
-						<div class="card" style="height:100%;">
+							<div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">
+						<div class="card">
 							<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" style="width: 100%;" onerror=this.src="../images/noimg_item.jpg" ></a>
 									<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
 													<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
@@ -1398,6 +1259,7 @@ a:link {
 											</h6>
 										<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
 											${vo.hit} 조회수
+										<%-- 
 										<div id="Wish_area">
 											<c:if test="${vo.wishCheck == 0 }">
 												<div class="image">
@@ -1411,7 +1273,8 @@ a:link {
 											<span style="background-color:ce3746;">${vo.wishCount}</span>
 										</div>
 									</c:if> 
-								</div>											
+								</div>							 
+								--%>				
 							</div>
 						</div>
 					</div>
@@ -1419,7 +1282,7 @@ a:link {
 					</c:if>
 					
 					<c:if test="${youritem.size() <= 0}">
-						<div style="text-align: center; border-top: solid 1px; height:300px;">
+						<div style="text-align: center; border-top: solid 1px;}">
 							<h3 style="text-align: center;">${vo.nickName}님의다른 상품이 없습니다</h3>
 						</div>
 					</c:if>
