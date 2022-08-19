@@ -30,5 +30,11 @@ public class AdminDAO {
 		return sqlSession.selectList("edu.fourmen.mapper.adminMapper.getReportList");
 		
 	}
+
+	public void toggleAdmin(UserVO vo) {
+
+		sqlSession.update("edu.fourmen.mapper.adminMapper.toggleAdmin",vo);
+		
+	}
 	
 }

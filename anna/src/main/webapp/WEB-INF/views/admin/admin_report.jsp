@@ -147,7 +147,10 @@
 			
 </style>
 
-
+<script>
+	alert("준비중입니다.");
+	history.back();
+</script>
  
 
 </head>

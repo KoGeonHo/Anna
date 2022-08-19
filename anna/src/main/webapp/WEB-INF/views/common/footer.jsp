@@ -1,8 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
-<% String uri = request.getRequestURI(); %>
 <div id="footer" class="border-top" style="box-sizing: border-box; width:100vw; padding:0.8rem 0;">
 	<div class="ft-icon text-center" style="width:20vw; display:inline-block; border-right:1px solid #ddd;" onclick="location.href='${path}/main.do';">
-		<%if(uri.contains("/main")){ %>
+		<%if(uri.contains("/main") || uri.contains("/boarditem") || uri.contains("/customer")){ %>
 			<img src="${ path }/images/icon_home_click.png">
 		<%} else {%>
 			<img src="${ path }/images/icon_home.png">
@@ -11,7 +10,7 @@
 		<span style="font-size:0.9rem;">홈</span>
 	</div><!--  
 	--><div class="ft-icon text-center" style="width:20vw; display:inline-block; border-right:1px solid #ddd;" onclick="location.href='${path}/board/boardlist.do?board_type=free'">
-		<%if(uri.contains("/board")){ %>
+		<%if(uri.contains("/board/")){ %>
 			<img src="${ path }/images/icon_comm_click.png">
 		<%} else {%>
 			<img src="${ path }/images/icon_comm.png">

@@ -47,6 +47,33 @@
         
        
 
+<script>
+	function toggleAdmin(e,nickName,uidx){
+		if(e.value == 'Y'){
+			if(confirm(nickName+"님을 권한을 관리자로 변경하시겠습니까?")){
+				
+			}else{
+				e.value = 'N';
+				return false;
+			}
+		}else{
+			if(confirm(nickName+"님을 권한을 회원으로 변경하시겠습니까?")){
+				
+			}else{
+				e.value = 'Y';
+				return false;
+			}
+		}
+		
+		$.ajax({
+			url : "toggleAdmin.do",
+			data : "isAdmin="+e.value+"&uidx="+uidx,
+			success : function(){
+				console.log("success");
+			}
+		});
+	}
+</script>
 
   
 
@@ -161,18 +188,9 @@
 											<td>${vo.nickName}</td>
 											<td>${vo.user_email}</td>
 											<td>${vo.jdate}</td>
-											<td><select class="form-select form-select-sm"aria-label=".form-select-sm example">
-													<option selected>
-														<c:if test="${ vo.isAdmin == 'N' }">
-														유저
-														</c:if>
-														<c:if test="${ vo.isAdmin == 'Y' }">
-														관리자
-														</c:if>
-													</option>
-													<option value="1">----------</option>
-													<option value="N">유저</option>
-													<option value="Y">관리자</option>
+											<td><select class="form-select form-select-sm"aria-label=".form-select-sm example" onchange="toggleAdmin(this,'${ vo.nickName }',${vo.uidx})">
+													<option value="N"<c:if test="${ vo.isAdmin == 'N' }"> selected</c:if>>유저</option>
+													<option value="Y"<c:if test="${ vo.isAdmin == 'Y' }"> selected</c:if>>관리자</option>
 											</select></td>
 									</c:forEach>
 								</c:if>

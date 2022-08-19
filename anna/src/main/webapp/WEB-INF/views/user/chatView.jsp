@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+ <% pageContext.setAttribute("chat_host", request.getParameter("chat_host")); %>
 <html>
 <head>
 <title>안녕? 나야!</title>
@@ -42,6 +43,7 @@
 </style>
 <script>
 	let flagChat = 1;
+	let prevSelected = ${itemVO.state};
 	$(function(){
 		$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
 		$("#chatContents").keydown(function(e){
@@ -67,6 +69,11 @@
 				}
 			}
 		});
+		
+		$("#changeState").on("focus",function(){
+			prevSelected = $(this).val();
+			console.log(prevSelected);
+		})
 		
 	});
 	
@@ -143,6 +150,40 @@
 		});
 		
 	}
+	
+	function updateState(selectBox){
+		let state = selectBox.value;
+		if(state == 3){
+			if(!confirm("거래 완료로 변경하시면 더이상 상대방과 채팅이 불가능 하며,\n거래상태를 변경할수 없게 됩니다.\n거래 완료로 변경하시겠습니까?")){
+				$("#changeState").val(prevSelected);
+				return false;
+			}
+		}else if(state == 2){
+			if(!confirm("판매중인 게시글에도 예약중으로 노출됩니다. 예약중으로 변경 하시겠습니까?")){
+				$("#changeState").val(prevSelected);
+				return false;
+			}
+		}else if(state == 1){
+			if(!confirm("거래중으로 변경합니다.")){
+				$("#changeState").val(prevSelected);
+				return false;
+			}
+		}
+		let item_idx = <%=request.getParameter("item_idx")%>;
+		$.ajax({
+			url : "${path}/boarditem/updatestate",
+			data : "state="+state+"&item_idx="+item_idx,
+			success : function(){
+				if(state == 3){
+					$("#chatContents").prop("disabled",true);
+					$("#changeState").prop("disabled",true);
+				}else{
+					$("#chatContents").prop("disabled",false);
+				}
+				console.log("success");
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -153,8 +194,26 @@
 		<div class="container main" style="display:flex; flex-direction:column; flex:1; height:100%; overflow:auto;" >
 			<div style="flex:1; display:flex; width:100%; height:100%;">
 				<div id="chat-container" style="display:flex; flex-direction:column; flex:1;">
-					<div style="padding:10px;">
-						<h3>${ audience }님과의 채팅</h3>
+					<div style="display:flex;">
+						<div style="padding:10px; flex:1;">
+							<h3 style="margin:0;font-size: 1.3rem; font-weight: bold;">${ audience }님과의 채팅</h3>
+						</div>
+						<c:if test="${ chat_host eq uidx }">
+							<div style="margin:auto;">
+								<select id="changeState" onchange="updateState(this)" <c:if test="${ itemVO.state eq 3 }">disabled</c:if>>
+									<option value="1" <c:if test="${ itemVO.state eq 1 }">selected</c:if>>거래중</option>
+									<option value="2" <c:if test="${ itemVO.state eq 2 }">selected</c:if>>예약중</option>
+									<option value="3" <c:if test="${ itemVO.state eq 3 }">selected</c:if>>거래완료</option>
+								</select>
+							</div>
+						</c:if>
+						<c:if test="${ chat_host ne uidx }">
+							<div style="margin:auto;">
+								<c:if test="${ itemVO.state eq 1 }"><span style="padding:5px; border-radius:5px; background:#00AAB2; color:#fff; font-size:0.8rem;">거래중</span></c:if>
+								<c:if test="${ itemVO.state eq 2 }"><span style="padding:5px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span></c:if>
+								<c:if test="${ itemVO.state eq 3 }"><span style="padding:5px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span></c:if>
+							</div>
+						</c:if>
 					</div>
 					<div id="chatbox" style="width:100%; overflow-y:auto; flex:1; border:2px solid #aaa; border-radius:5px; padding:10px;">
 						<c:if test="${chatViewList.size() > 0}">
@@ -187,7 +246,7 @@
 					<form style="width:100%; margin:0px;">
 						<div id="chatInput" style="padding:10px 0; width:100%; display:flex;">
 							<div class="td" style="flex:1; padding:0; margin:auto;">
-								<textarea class="form-control" id="chatContents" style="height:60px; display:inline-block; width:100%; resize:none;"></textarea>
+								<textarea class="form-control" id="chatContents" <c:if test="${ itemVO.state eq 3 }">disabled</c:if> style="height:60px; display:inline-block; width:100%;resize:none;" placeholder="채팅내용을 입력하세요."></textarea>
 							</div>
 							<div class="td text-end" style="width:70px; padding:5;">
 								<button class="btn" type="button" id="sendBtn" style="width:60px; height:60px; background: #ccc; color:#fff;" disabled onclick="sendMessage()">전송</button>
