@@ -194,7 +194,9 @@ text-decoration: none;
 	
 	text-align: left;
 	width: calc(100% - 35px);
-	
+	text-overflow: ellipsis;
+	white-space  : nowrap;
+	overflow     : hidden;
 	
 	}
 	
@@ -286,7 +288,10 @@ text-decoration: none;
 	text-align:center !important;
 	padding: 10px;
     display: table-cell;
-	
+    
+	white-space  : nowrap;
+	overflow : hidden;
+	text-overflow: ellipsis;
 	}
 	
 	.value{
@@ -684,7 +689,7 @@ const GetList = function(currentPage){
 	            html += '<a href="viewBoard.do?Bidx='+appendList[i].bidx+'&board_type='+appendList[i].board_type+'">';
 	            html += '<em class="iconPs bo_tit"></em>';
 	            html += '<i class="imgAr">';
-	            html += '<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}"alt="없어요"onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px"></i>';
+	            html += '<img src="<%=request.getContextPath()%>/resources/upload/t-'+appendList[i].Image1+'"alt="없어요"onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px"></i>';
 	            html += '<em class="gall_info">';
 	            html += '<span>조회 </span>';
 	            html += '<i class="fa fa-eye" aria-hidden="true"></i>';
