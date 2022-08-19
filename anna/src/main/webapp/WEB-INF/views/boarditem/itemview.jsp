@@ -110,8 +110,8 @@ ul.imgs li {
 
 .slides img {
 	    float: left;
-    margin-left: 80px;
-    width: 552px;
+    /* margin-left: 80px; */
+    width:100%;
     height: 400px;
 }
 
@@ -170,8 +170,8 @@ ul.imgs li {
 		padding: 0;
 	}
 	.slider-1 {
-		width: 500px;
-		height: 480px;
+		width: 100%;
+		height: 400px;
 		position: relative;
 		display: none;
 	}
@@ -220,6 +220,7 @@ ul.imgs li {
 	.slider-1>.slides>div.active {
 		opacity: 1;
 		display: none;
+		width:100%;
 	}
 	.slider-1>.slides>div.active img {
 		width: 100%;
@@ -278,8 +279,8 @@ a {
 
 /* 슬라이더 1 시작 */
 .slider-1 {
-	width: 500px;
-	height: 480px;
+	width: 100%;
+	height: 400px;
 	position: relative;
 }
 
@@ -728,24 +729,72 @@ table td {
 
 		
 			<!-- 신고하기 팝업 영역  -->
-			<div id="popup2" class="Pstyle2">
-				<!-- form 은 기본 전송방식이 post 임!! 잊지말것  -->
-				<form action="report.do" enctype="multipart/form-data" method="POST">
-					<select name="report_type">
-						<option value="0">노쇼</option>
-						<option value="1">비속어&비매너채팅</option>
-						<option value="2">게시물 규칙 위반</option>
-						<option value="3">허위매물</option>
-						<option value="4">기타</option>
-					</select>
-					<textarea name="contents"></textarea>
-					<input type="hidden" name="item_idx" value="${vo.item_idx}">
-					<input type="hidden" name="repoter" value="${userLoginInfo.uidx}">
-					<input type="hidden" name="target" value="${vo.uidx}"> <input
-						type="file" name="file1"> <input type="submit"
-						value="신고하기">
+				<div id="popup2" class="Pstyle2">
+					<!-- form 은 기본 전송방식이 post 임!! 잊지말것  -->
+					<form method="POST" action="report.do" enctype="multipart/form-data" name="frm" id="joinFrm">
+						<div class="row border-bottom tr">
+						<input type="hidden" name="item_idx" value="${vo.item_idx}">
+						<input type="hidden" name="repoter" value="${userLoginInfo.uidx}">
+						<input type="hidden" name="target" value="${vo.uidx}">
+							<div class="col-4 th" style="display:table-cell;">신고유형</div>
+							<div class="col-8 td" style="display:table-cell;">
+								<select name="report_type">
+									<option value="0">노쇼</option>
+									<option value="1">비속어&비매너채팅</option>
+									<option value="2">게시물 규칙 위반</option>
+									<option value="3">허위매물</option>
+									<option value="4">기타</option>
+								</select>
+							</div>
+						</div>
+						<div class="row border-bottom tr">
+							<div class="col-4 th" style="display:table-cell;">제목</div>
+							<div class="col-8 td" style="display:table-cell;">
+								<input type="text" class="form-control" name="title">
+							</div>
+						</div>
+					
+						<div class="row border-bottom tr">
+							<div class="col-4 th" style="display:table-cell;">내용</div>
+							<div class="col-8 td" style="display:table-cell;">
+								<textarea name="contents"></textarea>
+							</div>
+						</div>
+					
+						<div class="row border-bottom tr">
+							<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
+							<div class="col-8 td" style="display:table-cell;">
+								<div id="fileDiv">
+									<input type="file" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
+								</div>
+									<br/><br/>
+								<a href="#this" class="btn" id="addFile">파일 추가</a>
+								</div>
+						</div>
+						
+						<div class="text-end tr">
+							<div class="td">
+								<button class="btn" style="background:#00AAB2; color:#fff;">신고하기</button>
+								<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='itemlist.do'" >취소</button>
+							</div>
+						</div>
 				</form>
-			</div>
+				<%-- <form action="report.do" enctype="multipart/form-data" method="POST">
+						<select name="report_type">
+							<option value="0">노쇼</option>
+							<option value="1">비속어&비매너채팅</option>
+							<option value="2">게시물 규칙 위반</option>
+							<option value="3">허위매물</option>
+							<option value="4">기타</option>
+						</select>
+						<textarea name="contents"></textarea>
+						<input type="hidden" name="item_idx" value="${vo.item_idx}">
+						<input type="hidden" name="repoter" value="${userLoginInfo.uidx}">
+						<input type="hidden" name="target" value="${vo.uidx}"> <input
+							type="file" name="file1"> <input type="submit"
+							value="신고하기">
+					</form> --%>
+				</div>
 
 
 			<!-- 채팅 팝업 영역  -->
@@ -795,50 +844,51 @@ table td {
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-12">
-							<div class="card">
+								<div class="card">
 
-						<div class="card-body">
+									<div class="card-body">
 
-							<c:if test="${vo.cate_idx == 1}">
-						상품카테고리 > 가전제품 
-							</c:if>
-							<c:if test="${vo.cate_idx == 2}">
-						상품카테고리 > 생활용품
-							</c:if>
-							<c:if test="${vo.cate_idx == 3}">
-						상품카테고리 > 완구&취미
-							</c:if>
-							<c:if test="${vo.cate_idx == 4}">
-						상품카테고리 > 패션&의류
-							</c:if>
-							<c:if test="${vo.cate_idx == 5}">
-						상품카테고리 > 인테리어
-							</c:if>
-							<c:if test="${vo.cate_idx == 6}">
-						상품카테고리 > 반려동물용품
-							</c:if>
-							<c:if test="${vo.cate_idx == 7}">
-						상품카테고리 > 뷰티&악세
-							</c:if>
-							<c:if test="${vo.cate_idx == 8}">
-						상품카테고리 > 자동차용품
-							</c:if>
-							<c:if test="${vo.cate_idx == 9}">
-						상품카테고리 > 스포츠&레저
-							</c:if>
+										<c:if test="${vo.cate_idx == 1}">
+											상품카테고리 > 가전제품 
+										</c:if>
+										<c:if test="${vo.cate_idx == 2}">
+										상품카테고리 > 생활용품
+										</c:if>
+										<c:if test="${vo.cate_idx == 3}">
+										상품카테고리 > 완구&취미
+										</c:if>
+										<c:if test="${vo.cate_idx == 4}">
+										상품카테고리 > 패션&의류
+										</c:if>
+										<c:if test="${vo.cate_idx == 5}">
+										상품카테고리 > 인테리어
+										</c:if>
+										<c:if test="${vo.cate_idx == 6}">
+										상품카테고리 > 반려동물용품
+										</c:if>
+										<c:if test="${vo.cate_idx == 7}">
+										상품카테고리 > 뷰티&악세
+										</c:if>
+										<c:if test="${vo.cate_idx == 8}">
+										상품카테고리 > 자동차용품
+										</c:if>
+										<c:if test="${vo.cate_idx == 9}">
+										상품카테고리 > 스포츠&레저
+										</c:if>
 
-							<div style="">
-								<c:if test="${vo.uidx == userLoginInfo.uidx}">
-									<c:if test="${vo.state != 3}">
-										<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
-									</c:if>
-									<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
-								</c:if>
-								<div id="count-area">
-								조회수 : ${viewCount} 찜 : ${wishCount}
-								</div>
-							</div>
-							<div id="state">
+										<div style="">
+											<c:if test="${vo.uidx == userLoginInfo.uidx}">
+												<c:if test="${vo.state != 3}">
+													<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
+												</c:if>
+												<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
+											</c:if>
+											조회수 : ${viewCount} 
+											<div id="count-area">
+												찜 :${wishCount}
+											</div>
+											</div>
+										<div id="state">
 											<c:if test="${userLoginInfo.uidx == vo.uidx}">
 												<c:if test="${vo.state != 3}">
 													<select name="state" class="state"
@@ -850,10 +900,10 @@ table td {
 												</c:if>
 											</c:if>
 										</div>
-						</div>
-					</div>
+									</div>
+								</div>
 
-					
+
 
 
 
@@ -864,7 +914,7 @@ table td {
 
 												<div class="slides">
 													<c:if test="${vo.image1 != null}">
-														<div class="active">
+														<div class="active" style="width:100%;">
 															<img src="../resources/upload${vo.image1}"
 																onerror=this.src="../images/no_imgborder.jpg">
 														</div>
@@ -1047,7 +1097,7 @@ table td {
 													<c:if test="${uidx != null }">
 														<div class="wrap2">
 															<input type="submit" id="btn_open2" class="btn btn"
-																value="신고하기" style="margin:">
+																value="신고하기" class="btn" style="background-color: #00AAB2; color: #fff;">
 														</div>
 													</c:if>
 
@@ -1055,8 +1105,7 @@ table td {
 														<c:if
 															test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
 															<div class="wrap2">
-																<input type="button" value="연락하기" class="btn"
-																	style="background-color: #f49f2b; color: #fff;"
+																<input type="button" value="연락하기" class="btn" style="background-color: #00AAB2; color: #fff;"
 																	onclick="location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'">
 															</div>
 														</c:if>
@@ -1066,15 +1115,13 @@ table td {
 														<div id="Neighbor_area">
 															<c:if test="${result == 0 }">
 																<button onclick="addNeighbor(); return false;"
-																	class="btn"
-																	style="background-color: #cccccc; color: #fff;">
+																	class="btn" style="background-color: #00AAB2; color: #fff;">
 																	이웃추가</button>
 															</c:if>
 
 															<c:if test="${result != 0}">
 																<button onclick="delNeighbor(); return false;"
-																	class="btn"
-																	style="background-color: #00AAB2; color: #fff;">
+																	class="btn" style="background-color: #00AAB2; color: #fff;">
 																	이웃삭제</button>
 															</c:if>
 														</div>
@@ -1083,14 +1130,14 @@ table td {
 													<c:if test="${uidx != null }">
 														<div id="Wish_area">
 															<c:if test="${wish == 0}">
-																<button class="btn" style="width:90px; height:38px;background-color: green; color: white;"
+																<button class="btn" style="width:90px; height:38px;background-color: #00AAB2; color: #fff;"
 																		onclick="addWish(); return false;">
 																	<p>찜 추가</p>
 																</button>
 															</c:if>
 															
 															<c:if test="${wish != 0}">
-																<button class="btn" style="width:90px; height:38px;background-color: green; color: white;"
+																<button class="btn" style="width:90px; height:38px;background-color: #00AAB2; color: #fff;"
 																		onclick="delWish(); return false;">
 																	<p>찜 삭제</p>
 																</button>
@@ -1283,7 +1330,8 @@ table td {
 			</div>
 		</div>
 	</div>
-	
+	</div>
+	</div>
 	
 	
 	

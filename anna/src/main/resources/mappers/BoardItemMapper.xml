@@ -33,7 +33,7 @@
 		<if test='pagemaker.searchUidx != 0 '>
 			AND b.uidx = #{pagemaker.searchUidx}
 		</if>
-		 <if test='pagemaker.cate_idx != 0 and cate_idx != null'>
+		 <if test='pagemaker.cate_idx != 0 and pagemaker.cate_idx != null'>
 		 	and cate_idx = #{pagemaker.cate_idx}
 		 </if> 
 		 <if test="interested != null">
@@ -446,8 +446,7 @@
 	
 	<insert id="report_target" >
 		 insert into report(
-					 bidx
-					 ,item_idx
+					 item_idx
 					 ,repoter
 					 ,target
 					 ,evidence
@@ -459,7 +458,6 @@
 					 values
 					 (
 					 #{item_idx}
-					 ,#{item_idx}
 					 ,#{repoter}
 					 ,#{target}
 					 ,1
