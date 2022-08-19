@@ -60,7 +60,7 @@
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  and b.uidx = #{uidx}
 			and b.item_idx not like #{item_idx}
-			order by item_idx limit 1,6
+			order by item_idx limit 1,5
 	</select>
 	<select id="totalCount" resultType="Integer" parameterType="pagemaker">
 			SELECT 
@@ -110,36 +110,16 @@
 						,addr1
 						,addr2
 						,addr_Code
-						<if test="image1 != null">
 						,image1
-						</if>
-						<if test="image2 != null">
 						,image2
-						</if>
-						<if test="image3 != null">
 						,image3
-						</if>
-						<if test="image4 != null">
 						,image4
-						</if>
-						<if test="image5 != null">
 						,image5
-						</if>
-						<if test="image6 != null">
 						,image6
-						</if>
-						<if test="image7 != null">
 						,image7
-						</if>
-						<if test="image8 != null">
 						,image8
-						</if>
-						<if test="image9 != null">
 						,image9
-						</if>
-						<if test="image10 != null">
 						,image10
-						</if>
 						,Keyword
 						,Price
 						,offer
@@ -155,36 +135,16 @@
 						,#{addr1}
 						,#{addr2}
 						,#{addr_code}
-						<if test="image1 != null">
 						,#{image1}
-						</if>
-						<if test="image2 != null">
 						,#{image2}
-						</if>
-						<if test="image3 != null">
 						,#{image3}
-						</if>
-						<if test="image4 != null">
 						,#{image4}
-						</if>
-						<if test="image5 != null">
 						,#{image5}
-						</if>
-						<if test="image6 != null">
 						,#{image6}
-						</if>
-						<if test="image7 != null">
 						,#{image7}
-						</if>
-						<if test="image8 != null">
 						,#{image8}
-						</if>
-						<if test="image9 != null">
 						,#{image9}
-						</if>
-						<if test="image10 != null">
 						,#{image10}
-						</if>
 						,#{keyword}
 						,#{price}
 						,#{offer}

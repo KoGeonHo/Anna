@@ -544,7 +544,7 @@ a:link {
 						</div>
 						 --%>
 						<div class="col-lg-3  col-md-12 ">
-						<div class="card">
+						<div class="card" >
 							<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
 									<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
 													<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
@@ -600,8 +600,9 @@ a:link {
 					<!-- Products tab & slick -->
 					<c:if test="${list.size() > 0}">
 					<c:forEach var="vo" items="${list}">
-				<br><br>	<div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">
-						<div class="card">
+				<br><br>	
+				<div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">
+						<div class="card" style="height:100%;">
 							<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
 									<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
 													<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
