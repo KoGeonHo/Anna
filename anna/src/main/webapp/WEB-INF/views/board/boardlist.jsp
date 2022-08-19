@@ -59,6 +59,7 @@
 	list-style:none;
 	margin:0px auto;
 	padding:0;
+	 text-align : center
 
 }
 
@@ -68,6 +69,7 @@
     padding: 0 0 0 0;
     border : 0;
     float: left;
+    
 
 
 }
@@ -142,21 +144,46 @@ text-decoration: none;
 @media all and (max-width: 576px){
 
 	.search-control{
-		width:100%;
+		width:75%;
 		
 		}
 		
 	#search >*{
 	
-	font-size: 5px;
-	height : 30px;
+
+	
 	}
 
 }
 
 @media all and (max-width : 767px){
 
+	.pageing{
 	
+	width:40%;
+	
+	}
+	
+
+
+	#search{
+	
+	margin:25px 0 0 0;
+	
+	}
+	
+	#btn{
+	
+	margin:25px 0 0 0;
+	
+	}
+	
+	
+	.m-none{
+	
+	display: none;
+	
+	}
 	.con{
 
 	width: calc(100% - 35px);
@@ -168,6 +195,12 @@ text-decoration: none;
 	text-align: left;
 	width: calc(100% - 35px);
 	
+	
+	}
+	
+	.mdiv{
+	
+	height:100px;
 	
 	}
 	
@@ -208,6 +241,18 @@ text-decoration: none;
 }
 
 @media all and (min-width : 768px){
+
+	.pageing{
+	
+	width:15%;
+	
+	}
+
+	.mdiv{
+	
+	height:150px;
+	
+	}
 
 
 	#plist > *{
@@ -272,15 +317,15 @@ text-decoration: none;
 		
 		
 		
-			<div class="main" id="main" style="overflow: auto;">
+			<div class="main" id="main" style="overflow: auto; flex:1;">
 
 		
-			<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;">
+			<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;" class="m-none">
 			
 	<div class="container">
-		<div class="col-md-12  col-sm-12 " style="float:right; display: flex; ">
+		<div class="col-md-12  col-sm-12 " style=" display: flex; ">
 			<div style="flex:1">
-				<form method="get" action="boardlist.do" class="d-flex " style=" margin: 0 0 25px 0" id="search">
+				<form method="get" action="boardlist.do" class="d-flex "  id="search">
 					
 					<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
 					<c:if test="${pm.board_type != 'free'}">
@@ -300,11 +345,11 @@ text-decoration: none;
 			<div>
 				<c:if test="${ pm.board_type eq 'notice' }">
 					<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
-						<button type="button" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${ pm.board_type }';">글쓰기</button>
+						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${ pm.board_type }';">글쓰기</button>
 					</c:if>
 				</c:if>
 				<c:if test="${ pm.board_type ne 'notice' }">
-					<button type="button" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${ pm.board_type }';">글쓰기</button>
+					<button type="button" id="btn"class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${ pm.board_type }';">글쓰기</button>
 				</c:if>
 			</div>
 			
@@ -315,7 +360,7 @@ text-decoration: none;
 
 		<c:if test="${pm.board_type eq 'free'}">
 			<c:if test="${board.size() ==0}">		
-				<h3>등록된 게시물이 없습니다.</h3>
+				<div style="margin: 15px 0 0 0;"><span style="font-size:25px">등록된 게시물이 없습니다.</span></div>
 			</c:if>
 		
 			<div id="bo_gall" style="width:100%">
@@ -375,7 +420,7 @@ text-decoration: none;
 						<div class="th" style="width:10%;">추천</div>
 					</div>
 					<c:if test="${board.size() ==0}">		
-						<h3>등록된 게시물이 없습니다.</h3>
+						<div style="margin: 15px 0 0 0;"><span style="font-size:25px">등록된 게시물이 없습니다.</span></div>
 					</c:if>
 						<c:if test="${ not empty board }">
 							<c:forEach var="vo" items="${ board }">
@@ -386,7 +431,7 @@ text-decoration: none;
 									
 										<a href="#" class="mlink">
 											<div class="title"><a href="<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${vo.bidx}" class="p">${vo.title }</a>
-												<a href="">
+												<a href="<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${vo.bidx}">
 													<div class="value">
 														<span>${vo.title }</span>
 														<c:if test="${vo.image1 != null}">
@@ -395,16 +440,30 @@ text-decoration: none;
 													</div>
 												</a>
 												<div class="value">
-													<span class="nickName">${vo.nickName}</span> 
+													<span class="nickName">
+														<c:if test="${pm.board_type ne 'notice' }">
+															${ vo.nickName }
+														</c:if>
+														<c:if test="${pm.board_type eq 'notice' }">
+															관리자
+														</c:if>
+													</span> 
 													<span class="hit">조회${vo.hit}</span>
 													<span class="wdate">${vo.wdate }</span>
 												</div>
 											</div>
-											<a href="" class="com-btn value">
+											<a class="com-btn value">
 												<span class="ccount">${vo.ccount }</span>
 												<span>댓글</span>
 											</a>
-											<div class="td text-center p" style="width:20%;">${ vo.nickName }</div>
+											<div class="td text-center p" style="width:20%;">
+												<c:if test="${pm.board_type ne 'notice' }">
+													${ vo.nickName }
+												</c:if>
+												<c:if test="${pm.board_type eq 'notice' }">
+													관리자
+												</c:if>
+											</div>
 											<div class="td text-center p" style="width:20%;">${ vo.wdate }</div>
 											<div class="td text-center p" style="width:10%;">${ vo.hit }</div>
 											<div class="td text-center p" style="width:10%;">${ vo.cntLike}</div>
@@ -417,11 +476,11 @@ text-decoration: none;
 						</c:if>
 					</div>
 			
-			<ul style="width:30%;text-align:center; justify-content: center;" class="pageing">
+			<ul style="justify-content: center;" class="pageing">
 				
 					
 			<c:if test="${pm.isPrev() == true}">
-				<li style="width:300px;">
+				<li>
 					<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}">◀</a>
 				</li>
 			</c:if>
@@ -446,14 +505,14 @@ text-decoration: none;
 				
 				
 			<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
-				<li style="width:300px;text-align:left;">
+				<li style="text-align:right;">
 					<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}">▶</a>
 				</li>
 			</c:if>
 			
 				
 			</ul>
-			<div style="height: 300px;"></div>
+			<div class="mdiv"></div>
 			</c:if>
 			
 			<%-- <c:if test="${pm.board_type == null and pm.uidx !=0}">

@@ -103,8 +103,7 @@ height : 54px;
 
 #report_contents{
 
-	height: 610px;
-	width: 503px;
+
 	border: 1px solid black;
 	box-shadow: 3px 3px 7px 1px grey;
 	background-color: white;
@@ -113,16 +112,12 @@ height : 54px;
 	position: fixed;
 	margin-left: 35%;
 	margin-top: 13%;
+	padding:20px;
 	
 
 }
 
-#report_contents div{
-width : 400px;
-text-align : center;
-margin : 0px auto;
 
-}
 
 .report_back{
 
@@ -135,6 +130,19 @@ margin : 0px auto;
 	z-index: 99;
 	display: none;
 }
+
+.userview{
+
+	position: fixed;
+	width: 120px;
+	height: 55px;
+	margin-left: -307px;
+    margin-top: 33px;
+	background: white;
+	z-index: 99;
+	display: none;
+
+}
 @media(577px <= width <= 767px){
 	.comment-box{
 			width:100%;
@@ -145,7 +153,13 @@ margin : 0px auto;
 		.comment_box{
 			width: 100%;
 		}
+		.m-none{
+	
+	display: none;
+	
+	}
 }
+
 
 
 @media(max-width: 576px){
@@ -162,6 +176,12 @@ margin : 0px auto;
 	.Reply_btn{
 		width : 16%;
 	}
+	
+	.m-none{
+	
+	display: none;
+	
+	}
 }
 
 </style>
@@ -177,29 +197,44 @@ margin : 0px auto;
 		
 		<div id="report_contents">
 			<form id="reportFrm" action="report.do" enctype="multipart/form-data" method="post">		    
-				<input type="text" name= "bidx" value="${bv.bidx}" id="bidx">
-				<input type="text" name="evidence"value="2" id="evidence">
-	    		<div>
-	    			신고유형 : <select name="report_type" id="report_type">
-	    						<option value="2">게시물 규칙위반</option>
-	    						<option value="4">기타</option>
-	    					</select>
-	    		</div>   	   
-	    		<div>신고닉네임 : ${bv.nickName}<input type="text" value="${bv.uidx}" name="target"></div>
-	    		<div>상세설명 <textarea name="contents" id="contents"></textarea></div>
-	    		<div>신고자: ${userLoginInfo.nickName}<input type="text" name="repoter" value="${userLoginInfo.uidx}"></div>
-	    		첨부파일 <input type="file" name="file2" id="file">
-	    	
-	    		<div>
+				<input type="hidden" name= "bidx" value="${bv.bidx}" id="bidx">
+				<input type="hidden" name="evidence"value="2" id="evidence">
+	    		<div class="row border-bottom tr">
+	    			<div class="col-4 th" style="display:table-cell;">신고유형</div> 
+	    			<div class="col-8 td" style="display:table-cell;">
+		    			<select name="report_type" id="report_type">
+		    				<option value="2">게시물 규칙위반</option>
+		    				<option value="4">기타</option>
+		    			</select>
+		    		</div>	
+	    		</div>
+	    		<div class="row border-bottom tr">
+	    			<div class="col-4 th" style="display:table-cell;">신고닉네임</div>
+	    			<div class="col-8 td" style="display:table-cell;">${bv.nickName}<input type="hidden" value="${bv.uidx}" name="target"></div>
+	    		</div>
+	    		<div class="row border-bottom tr">
+	    			<div class="col-4 th" style="display:table-cell;">상세설명</div>
+	    			<div class="col-8 td" style="display:table-cell;"><textarea name="contents" id="contents" style="height: 150px;width: 100%;resize: none;"></textarea></div>
+	    		</div>
+	    		<div class="row border-bottom tr">
+	    			<div class="col-4 th" style="display:table-cell;">신고자</div>
+	    			<div class="col-8 td" style="display:table-cell;">${userLoginInfo.nickName}<input type="hidden" name="repoter" value="${userLoginInfo.uidx}"></div>
+	    		</div>
+	    		<div class="row border-bottom tr">
+	    			<div class="col-4 th" style="display:table-cell;">첨부파일</div>
+	    			<div class="col-8 td" style="display:table-cell;"><input type="file" class="form-control" name="file2" id="file"></div>
+	    		</div>
+	    		
+	    		<div style="float:right;">
 	    			<button  id="report_btn">접수하기</button>
 	    			<button type="button" id="close_button">닫기</button>
 	    		</div>
     		</form>
     	</div>
 		<div class="wrapper">
-		<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;">
+			<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;" class="m-none">
 			<div class="container main">
-				<h4 class="border-bottom" style="padding:5px; margin:0;  text-decoration-thickness: 1px; text-underline-offset: 8px;">
+				<h4  class="border-bottom" style="padding:5px; margin:0; text-decoration-thickness: 1px; text-underline-offset: 8px;">
 						<c:if test="${bv.board_type eq 'free'}">
 							<a href="boardlist.do?board_type=free">일상&소통</a>
 						</c:if>
@@ -224,7 +259,7 @@ margin : 0px auto;
 						<div class="col-4 td" style="display:table-cell;">
 							${bv.title}
 							<c:if test="${ bv.board_type ne 'notice' }">
-								<input type="image" src="../images/icon_unlike.png" class="LikeBtn">
+								<input type="image" src="../images/icon_unlike.png" class="LikeBtn" style="margin: -5px 0 0 0">
 							</c:if>
 						</div>
 						<div class="col-2 th" style="display:table-cell;">작성일</div>
@@ -237,8 +272,12 @@ margin : 0px auto;
 								관리자
 							</c:if>
 							<c:if test="${ bv.board_type ne 'notice' }">
-								${bv.nickName}
+								<div><a class="user" onclick="view()">${bv.nickName}</a></div>
 							</c:if>
+						</div>
+						<div class="userview">
+									<a class="" onclick="ready()">이웃추가</a> <br>
+									<a class="" onclick="ready()">유저 정보보기</a>
 						</div>
 						<div class="col-2 th" style="display:table-cell;">조회수</div>
 						<div class="col-1 td" style="display:table-cell;">${bv.hit}</div>
@@ -247,7 +286,11 @@ margin : 0px auto;
 					</div>
 					<div class="row border-bottom tr">
 						<div class="col-2 th" style="display:table-cell;">첨부파일</div>
-						<div class="col-10 td" style="display:table-cell;" onclick="alert('준비중입니다.')">${bv.image1}</div>
+						<div class="col-10 td" style="display:table-cell;" onclick="alert('준비중입니다.')">${bv.image1}
+							<c:if test="${bv.image1 == null}">
+								첨부파일이 존재하지 않습니다.
+							</c:if>
+						</div>
 					</div>
 					<div class="row border-bottom tr">
 						<div class="col-2 th" style="display:table-cell; height:500px">내용</div>
@@ -278,7 +321,7 @@ margin : 0px auto;
 				    	<a href="BoardModify.do?Bidx=${bv.bidx }">수정</a>
 				    	<a href="BoardDelete.do?Bidx=${bv.bidx}">삭제</a>
 				    </c:if>
-				    <c:if test="${bv.uidx != uidx }">
+				    <c:if test="${bv.uidx != uidx and bv.board_type != 'notice'}">
 				    	<div style="margin: auto; height: 25px" id="report"><a class="report" style="cursor:pointer; float:right; ">신고</a></div>
 				    </c:if>
 				</form>
@@ -344,6 +387,27 @@ margin : 0px auto;
 					        $(".report_back").fadeOut();
 					        
 					    });
+					    
+					   
+					    
+					    
+					    function view(){
+						    if($(".userview").css("display") == "block"){
+							        $(".userview").fadeOut();
+						    }else{
+						    	$(".userview").fadeIn();
+						    	
+						    }
+					    	
+					    }
+					    
+					    function ready(){
+						    
+					    	alert("서비스 준비중입니다.");
+					    }
+					
+					
+					  
 					
 					
 					$(function(){
@@ -465,7 +529,7 @@ margin : 0px auto;
 								url : 'likeDown',
 								data : "Bidx="+Bidx+"&Uidx="+Uidx,
 								success : function(data) {
-									alert('취소 성공');
+									alert('추천 취소');
 									location.reload();
 								}
 							})// 아작스 끝
@@ -482,7 +546,7 @@ margin : 0px auto;
 								url : 'likeUp',
 								data : "Bidx="+Bidx+"&Uidx="+Uidx,
 								success : function(data) {
-									alert('성공염');
+									alert('추천');
 									location.reload();
 								}
 							})// 아작스 끝
