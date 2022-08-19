@@ -19,7 +19,7 @@ import java.util.Map;
 
 
 import javax.imageio.ImageIO;
-
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -247,17 +247,48 @@ public class BoardController {
 
 
 	@RequestMapping(value="/viewBoard.do")
-	public String viewBoard(int Bidx,Model model, HttpServletRequest request, HttpSession session) {
+	public String viewBoard(int Bidx,Model model, HttpServletRequest request, HttpSession session, HttpServletResponse response ) {
 		
 		model.addAttribute("path","/anna");
 		
+		int result = 0;
+		
 		session = request.getSession();
+		
 		
 		BoardVO bv = boardService.viewBoard(Bidx);
 		
 		BoardVO vo = new BoardVO();
 		
-		boardService.HitUp(Bidx);
+		Cookie[] cookies = request.getCookies(); //쿠키 정보들을 가져옴
+		int viewcookie = 0;
+		
+		for(Cookie cookie : cookies) {
+			if(cookie.getName().equals("viewcookie")) { //쿠키들 중에 viewcookie 이름이 있는지 확인
+				viewcookie = 1;
+				
+				if(cookie.getValue().contains(request.getParameter("Bidx"))) { // 쿠키안에 접속한 글의 번호가 있는지 확인
+					
+					
+				}else { //쿠키에 글 번호가 없다면 추가해주고 조회수 올리기 
+					cookie.setValue(cookie.getValue()+"_"+ request.getParameter("Bidx"));
+					
+					response.addCookie(cookie);
+					
+					result = boardService.HitUp(Bidx);
+				}
+			}
+			
+			if(viewcookie == 0) { // 쿠키가 없다면 쿠키 만들어주고 조회수 올리기
+				Cookie cookie1 = new Cookie("viewcookie", request.getParameter("Bidx"));
+				response.addCookie(cookie1);
+				
+				result = boardService.HitUp(Bidx);
+			}
+			
+		}
+		
+		
 		
 		vo.setBidx(Bidx);
 		if(session.getAttribute("uidx") != null) {
