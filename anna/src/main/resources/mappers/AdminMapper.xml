@@ -52,7 +52,15 @@
 	</select>
 
 	
+	<update id="toggleAdmin" parameterType="UserVO">
 	
+		UPDATE 
+			AnnaUser
+		SET
+			isAdmin = #{isAdmin}
+		WHERE
+			uidx = #{uidx}
+	</update>
 	
 </mapper>
 

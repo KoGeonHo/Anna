@@ -10,8 +10,7 @@
 <script src="${ path }/js/bootstrap.js"></script>
 <script src="${ path }/js/common/common.js"></script>
 <script type='text/javascript' src='https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=7b9a8af3d576479db243'></script>	
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ad11d9178deb7b571198c476ec55ad0f"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
@@ -23,6 +22,7 @@
 			url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
 			data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
 			success : function(data){
+				//console.log(navigator.geolocation);
 				if(navigator.geolocation){
 					navigator.geolocation.getCurrentPosition(function(position){
 						
@@ -51,6 +51,8 @@
 	    	    			}
 	    	    		});
 					})
+				}else{
+					//console.log("geolocation사용불가");
 				}
 				
 			}
@@ -85,22 +87,25 @@
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	
-		<div id="loading" style="width:100%; height:100%; background:#000; position:relative; color:white; line-height:100%;" class="text-center">
-			<div style="line-height:500px;">
-			<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-  			Loading...
-  			</div>
-		</div>
 		
-		<div class="container main" style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem; margin:0px;">동네설정</h3>
-			<form id="locationFrm" action="locationView.do">
-				<div class='text-center' style='padding:1rem;'>거래를 원하시는 동네를 선택해주세요.</div>
-				<div id="dongList">
-				</div>
-			</form>
-			<div class="text-end"><button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="chkChkBox()">확인</button></div>
-			<div class="text-end"><button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="location.href='userInfoView.do'">돌아가기</button></div>
+		
+		<div id="wrapper" style="overflow:auto; flex:1; position:relative; display:flex;">
+			<div id="loading" style="width:100%; height:100%; flex:1; background:#000; display:flex; position:absolute; color:white;" class="text-center">
+				<div style="margin:auto;">
+					<span class="spinner-grow spinner-grow-sm" style="margin:auto;"role="status" aria-hidden="true"></span>
+	  			Loading...
+	  			</div>
+			</div>
+			<div class="container main" style="flex:1; ">
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">동네설정</h3>
+				<form id="locationFrm" action="locationView.do">
+					<div class='text-center' style='padding:1rem;'>거래를 원하시는 동네를 선택해주세요.</div>
+					<div id="dongList">
+					</div>
+				</form>
+				<div class="text-end"><button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="chkChkBox()">확인</button></div>
+				<div class="text-end"><button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="location.href='userInfoView.do'">돌아가기</button></div>
+			</div>
 		</div>
 		
 		

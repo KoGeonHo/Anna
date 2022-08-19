@@ -32,6 +32,10 @@
 	background:#eee;
 }
 
+.td {
+	font-size:0.9rem;
+}
+
 </style>
 </head>
 <body>
@@ -42,7 +46,7 @@
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem;">회원정보</h3>
 				<div id="profile" class="border-bottom" style="width:100%;">
-					<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
+					<div style="display:inline-block;" onclick="alert('준비중입니다.')"><img class="profile-image" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/NoProfile.png';" style="border-radius:100px;"  src="${ userInfo.profile_image }"></div>
 					<div style="display:inline-block;">
 						<div>
 							${ userInfo.nickName }님의 프로필
@@ -51,15 +55,15 @@
 				</div>
 				<div class="row border-bottom">
 					<div class="col-3 text-center th" style="padding:1rem;">닉네임</div>
-					<div class="col-9" style="padding:1rem;">${ userInfo.nickName }</div>
+					<div class="col-9 td" style="padding:1rem;">${ userInfo.nickName }</div>
 				</div>
 				<div class="row border-bottom">
 					<div class="col-3 text-center th" style="padding:1rem;">이메일</div>
-					<div class="col-9" style="padding:1rem;">${ userInfo.user_email }</div>
+					<div class="col-9 td" style="padding:1rem;">${ userInfo.user_email }</div>
 				</div>
 				<div class="row border-bottom">
 					<div class="col-3 text-center th" style="padding:1rem;">내동네</div>
-					<div class="col-9" style="padding:1rem; align-self:center;" id="locaList">
+					<div class="col-9 td" style="padding:1rem; align-self:center;" id="locaList">
 						
 						<c:if test="${ empty userInfo.location_auth }">
 							<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 등록하기</button>
@@ -108,7 +112,7 @@
 				</div>
 				<div class="row border-bottom">
 					<div class="col-3 text-center th" style="padding:1rem; min-width:4rem;">관심사</div>
-					<div class="col-9" style="padding:1rem;">
+					<div class="col-9 td" style="padding:1rem;">
 						<c:if test="${ not empty userInfo.interested }">
 							${ userInfo.interested }
 						</c:if>
@@ -120,7 +124,7 @@
 				<div style="padding:5px 0;">
 					<div class="text-end">
 						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/user/userInfoMod.do';">회원정보 수정</button>
-						<button class="btn" style="background:#BBCE53; color:#fff;">비밀번호 변경</button>
+						<button class="btn" style="background:#BBCE53; color:#fff;" onclick="alert('준비중입니다.')">비밀번호 변경</button>
 					</div>
 				</div>
 			</div>

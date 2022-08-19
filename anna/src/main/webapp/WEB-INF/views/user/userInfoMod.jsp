@@ -85,6 +85,12 @@ form {
 			
 		}
 		
+		$("#input-interested").on("keyup",function(e){
+			if(e.keyCode == 13){
+				addInterested();
+			}
+		});
+		
 	});
 	
 	function delKeyword(item){

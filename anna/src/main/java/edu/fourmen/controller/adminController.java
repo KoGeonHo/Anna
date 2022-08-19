@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.fourmen.service.AdminService;
 import edu.fourmen.service.BoardItemService;
@@ -200,8 +201,20 @@ public class adminController {
 		return "admin/admin_slide";
 	}
 	
-
-
+	
+	@ResponseBody
+	@RequestMapping(value="/toggleAdmin.do")
+	public void toggleAdmin(int uidx,String isAdmin) {
+		
+		UserVO vo = new UserVO();
+		
+		vo.setUidx(uidx);
+		vo.setIsAdmin(isAdmin);
+		
+		adminService.toggleAdmin(vo);
+		
+		
+	}
 	
 	
 

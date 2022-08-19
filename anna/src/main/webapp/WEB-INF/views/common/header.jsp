@@ -1,4 +1,5 @@
 <%@ page language="java"  pageEncoding="utf-8"%>
+<% String uri = request.getRequestURI(); %>
 <!-- PC 헤더 START-->
 		<div id="header-container">
 			<div class="pc-header border-bottom">
@@ -19,9 +20,9 @@
 							<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="location.href='${ path }/user/login.do';">
 								로그인
 							</button>
-							<button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="loacrion.href='${ path }/user/join.do';">
+							<%-- <button type="button" class="btn" style="background-color: #BBCE53; color: #fff;" onclick="loacrion.href='${ path }/user/join.do';">
 								회원가입
-							</button>
+							</button> --%>
 						</c:if>
 						<c:if test="${ not empty uidx }">
 							<button type="button" class="btn" style="background-color: #00AAB2; color: #fff;" onclick="location.href='${ path }/user/logout.do';">
@@ -159,24 +160,75 @@
 			</div>
 		</nav>
 		<!-- 모바일 헤더 END -->
+		<%if(!uri.contains("/user/chat") && uri.contains("/user")){%>
+			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:56px; background:#00AAB2;">
+				<div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
+					마이페이지
+				</div>
+				<div class="menu-item" onclick="location.href='${ path }/user/userInfoView.do'">
+					내정보
+				</div>
+				<div class="menu-item" onclick="location.href='${ path }/user/neighborMng.do'">
+					이웃관리
+				</div>
+				<div class="menu-item" onclick="location.href='${ path }/user/wishList.do'">
+					찜목록
+				</div>
+				<%-- <div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
+					구매내역
+				</div>
+				<div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
+					판매내역
+				</div> --%>
+			</div>
+		<%} else if(uri.contains("/board/")){%>
+			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:56px; background:#00AAB2;">
+				<div class="menu-item" onclick="location.href='${path}/board/boardlist.do?board_type=notice'">
+					공지사항
+				</div>
+				<div class="menu-item" onclick="location.href='${path}/board/boardlist.do?board_type=free'">
+					일상소통
+				</div>
+				<div class="menu-item" onclick="location.href='${path}/board/boardlist.do?board_type=job'">
+					구인구직
+				</div>
+				<div class="menu-item" onclick="location.href='${path}/board/boardlist.do?board_type=meeting'">
+					모임
+				</div>
+				<div class="menu-item" onclick="location.href='${path}/board/boardlist.do?board_type=hotplace'">
+					핫플레이스
+				</div>
+				<%-- <div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
+					판매내역
+				</div> --%>
+			</div>			
+		<%} else {%>
+			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:56px; background:#00AAB2;">
+				<div class="menu-item" onclick="location.href='${path}/boarditem/itemlist.do'">
+					중고거래
+				</div>
+				<div class="menu-item" onclick="location.href='${path}/board/boardlist.do?board_type=free'">
+					커뮤니티
+				</div>
+				<div class="menu-item" onclick="location.href='${path}/customer/QnAList.do'">
+					고객센터
+				</div>
+				<div class="menu-item" onclick="location.href='${path}/user/myPage.do'">
+					마이페이지
+				</div>
+			</div>
+		<%}%>
 		
-		<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:56px; background:#00AAB2;">
-			<div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
-				마이페이지
-			</div>
-			<div class="menu-item" onclick="location.href='${ path }/user/userInfoView.do'">
-				내정보
-			</div>
-			<div class="menu-item" onclick="location.href='${ path }/user/neighborMng.do'">
-				이웃관리
-			</div>
-			<div class="menu-item" onclick="location.href='${ path }/user/wishList.do'">
-				찜목록
-			</div>
-			<%-- <div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
-				구매내역
-			</div>
-			<div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
-				판매내역
-			</div> --%>
-		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

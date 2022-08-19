@@ -14,4 +14,6 @@ public interface AdminService {
 
 	List<ReportVO> getReportList();
 
+	void toggleAdmin(UserVO vo);
+
 }
