@@ -37,7 +37,6 @@ viewport {
 }
 
 #viewcontent {
-	margin-left: 50px;
 }
 
 .outer {
@@ -56,8 +55,9 @@ viewport {
 	display: none;
 }
 
-.inner {
-	
+.inner > img{
+	width:100%;
+	height:100%;
 }
 
 .row .col-lg-2 .card img {
@@ -114,16 +114,24 @@ ul.imgs li {
     width:100%;
     height: 400px;
 }
-
+#btn-area{
+margin-left: 25%;
+}
 /*557 보다 크거나 같아야 하고 991거나 작아야 같아야함 태블릿용*/
-@media all and (577px <= width <= 991px) {
+@media all and (420px <= width <= 767px) {
 }
 
 /* 400이하 모바일*/
 @media ( max-width : 420px ) {
-	.row {
-		
-	}
+
+#btn-area{
+margin-left: 0%;
+}
+
+	
+#viewcontent {
+	margin-left: 0px;
+}
 	.card-body img {
 		width: 100%;
 		height: 250px;
@@ -158,6 +166,7 @@ ul.imgs li {
 		height: 250px;
 		margin: 0 auto;
 		overflow-x: hidden;
+		overflow-y: hidden;
 		display: block
 	}
 	.inner-list {
@@ -168,6 +177,7 @@ ul.imgs li {
 	}
 	.inner {
 		padding: 0;
+		width:100%;
 	}
 	.slider-1 {
 		width: 100%;
@@ -235,6 +245,7 @@ ul.imgs li {
 		height: 100%;
 		cursor: pointer;
 		display: none;
+		background-color : grey;
 	}
 	.slider-1>.side-btns>div:last-child {
 		left: auto;
@@ -423,7 +434,7 @@ table td {
 }
 
 #Wish_area {
-	width: 50px;
+	width: 90px;
 	height: 50px;
 }
 
@@ -444,6 +455,13 @@ table td {
 		1px black;
 	margin: auto;
 }
+
+
+a:link {
+  color : black;
+  text-decoration: none;
+}
+
 </style>
 
 <script>
@@ -671,16 +689,67 @@ table td {
 		});
 	} */
 	function updatestate(){
-		if($('.state').val() == 3){
-			alert("거래완료로 변경하면 더 이상 수정이 불가능합니다")
+		
+		if($('.state').val() == 1){
+			var result = confirm("거래 상태를 거래중 으로 변경하시겠습니까?");
+			if(result == true){
+				$.post('updatestate',{
+					state : $('.state').val(),
+					item_idx : ${vo.item_idx},
+				},
+				'json');
+					console.log("거래중으로 변경 완료");
+					//$('#state').load(location.href+' #state');
+			    alert("거래중 처리가 완료되었습니다.");
+			    
+			}else if(result == false){
+				$(".state").val(${vo.state});
+				//$('#state').load(location.href+' #state');
+			    alert("처리를 취소하였습니다.");
+			}
 		}
-		$.post('updatestate',{
-			state : $('.state').val(),
-			item_idx : ${vo.item_idx},
-		},
-		'json');
-			console.log("거래상태 변경 완료");
-			$('#state').load(location.href+' #state');
+		
+		
+		if($('.state').val() == 2){
+			var result = confirm("거래 상태를 예약중으로 변경하시겠습니까?");
+			if(result == true){
+				$.post('updatestate',{
+					state : $('.state').val(),
+					item_idx : ${vo.item_idx},
+				},
+				'json');
+					console.log("예약중으로 변경 완료");
+					//$('#state').load(location.href+' #state');
+			    alert("예약중 처리가 완료되었습니다.");
+			    
+			}else if(result == false){
+				$(".state").val(${vo.state});
+				//$('#state').load(location.href+' #state');
+			    alert("처리를 취소하였습니다.");
+			}
+		}
+		
+		
+		if($('.state').val() == 3){
+			var result = confirm("거래 상태를 거래완료로 변경하면 더 이상 상대방과의 채팅이나 글 수정이 불가능합니다. 변경하시겠습니까?");
+			if(result){
+			
+				$.post('updatestate',{
+					state : $('.state').val(),
+					item_idx : ${vo.item_idx},
+				},
+				'json');
+					console.log("거래상태 변경 완료");
+				//	$('#state').load(location.href+' #state');
+			    alert("거래완료 처리가 완료되었습니다.");
+			    
+			}else{
+				//$('#state').load(location.href+' #state');
+				$(".state").val(${vo.state});
+			    alert("처리를 취소하였습니다.");
+			}
+		}
+		
 	}
 
 </script>
@@ -722,7 +791,7 @@ table td {
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="main" id="main" style="overflow: auto;">
+		<div class="main" id="main" style="overflow-y: auto; overflow-x:hidden;">
 
 				<div class="container">
 					<div class="row">
@@ -775,7 +844,7 @@ table td {
 						<div class="text-end tr">
 							<div class="td">
 								<button class="btn" style="background:#00AAB2; color:#fff;">신고하기</button>
-								<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='itemlist.do'" >취소</button>
+								<button class="btn" style="background:#00AAB2; color:#fff;" type="button" id="btn_close2" >취소</button>
 							</div>
 						</div>
 				</form>
@@ -844,7 +913,7 @@ table td {
 					<div class="container">
 						<div class="row">
 							<div class="col-sm-12">
-								<div class="card">
+								<%-- <div class="card">
 
 									<div class="card-body">
 
@@ -888,23 +957,37 @@ table td {
 												찜 :${wishCount}
 											</div>
 											</div>
-										<div id="state">
-											<c:if test="${userLoginInfo.uidx == vo.uidx}">
-												<c:if test="${vo.state != 3}">
-													<select name="state" class="state"
-														onchange="updatestate();">
-														<option value="1">거래중</option>
-														<option value="2">예약중</option>
-														<option value="3">거래완료</option>
-													</select>
-												</c:if>
-											</c:if>
-										</div>
+										
 									</div>
+								</div> --%>
+								<div  class="border-bottom" style="display:flex;">
+									<span style="padding:10px;  font-size: 3rem; font-weight: bold;">${vo.title}</span>
+								
+														<div id="state" style="margin:auto 10px; text-align:start;">
+															<c:if test="${userLoginInfo.uidx == vo.uidx}">
+																<c:if test="${vo.state != 3}">
+																	<select name="state" class="state"
+																		onchange="updatestate();">
+																		<c:if test="${vo.state == 1 }">
+																		<option value="${vo.state}" selected disabled hidden>거래중</option>		
+																		</c:if>												
+																		<c:if test="${vo.state == 2 }">
+																		<option value="${vo.state}" selected disabled hidden>예약중</option>		
+																		</c:if>												
+																		<c:if test="${vo.state == 3 }">
+																		<option value="${vo.state}" selected disabled hidden>거래완료</option>		
+																		</c:if>												
+																		<option value="1">거래중</option>
+																		<option value="2">예약중</option>
+																		<option value="3">거래완료</option>
+																	</select>
+																</c:if>
+															</c:if>
+														</div>
+									
+								
 								</div>
-
-
-
+								
 
 
 								<div class="container">
@@ -1011,10 +1094,10 @@ table td {
 												<c:if test="${vo.image2 != null }">
 													<div class="side-btns">
 														<div>
-															<span><i class="fas fa-angle-left"></i></span>
+															<span><img src="../images/arrow-left.png" style="width:50px; height:50px;"></span>
 														</div>
 														<div>
-															<span><i class="fas fa-angle-right"></i></span>
+															<span><img src="../images/arrow-right.png" style="width:50px; height:50px;"></span>
 														</div>
 													</div>
 												</c:if>
@@ -1024,131 +1107,139 @@ table td {
 										<div class="col-sm-6">
 											<div id="viewcontent">
 											
-											<table >
-												<tr>
-													<th colspan="2" style="background-color:white ;border : 0;">
-														<p style="font-size: xxx-large; FONT-WEIGHT: 600; margin: auto;">${vo.title}</p>
+											<div style="">
+												
+												<div class="row border-bottom tr">
+													<div class="col-5 th" style="display:table-cell; background-color:white; border : 0; font-size: 20px;">판매가격</div>
 														<input type="hidden" value="${vo.uidx}"> 
 														<input type="hidden" id="vo.item_idx" value="${vo.item_idx}">
 														<input type="hidden" name="neighbor_idx" value="${vo.uidx}">
-														<br>
-													</th>
+														
+														<div class="col-8 td" style="display:table-cell;">
+															 ${vo.price} 원
+														</div>
+												</div>
 													
-												</tr>
-												
-												<tr>
+													
+												<!-- 
+												<div class="row border-bottom tr">
 													<th style="width: 100px; background-color:white; border : 0; font-size: 20px;">
-														<p class="card-text">판매가격</p>
 													</th>
 													<td style="border : 0;">
-														 ${vo.price} 원
 													</td>
-												</tr>
+													
+													<div class="col-4 th" style="display:table-cell;">내용</div>
+													<div class="col-8 td" style="display:table-cell;">
+														<textarea name="contents"></textarea>
+													</div>
+																			
+												</div> -->
 												
-												<tr>
-													<th  colspan="2" style="background-color:white; border : 0;"> <hr>
-													<p class="card-text" style="font-size: x-large; FONT-WEIGHT: 600; margin: auto; border : 0; ">${vo.nickName}</p>
-													</th>
-												</tr>
+												<div class="row border-bottom tr" style="border:0;">
+													<div class="col-5 th" style="display:table-cell; background-color:white; border:0; font-size: 20px;">판매자</div>
+													<div class="col-8 td" style="display:table-cell;">
+														${vo.nickName}
+													</div>
+												</div>
 												
 												
-												<tr>
-													<th style="width: 100px; background-color:white; border : 0;">
-														<p class="card-text">가격제안</p>
-													</th>
-													<td style="border : 0;">
+												<div class="row border-bottom tr" style="border:0;">
+													<!-- <th style="width: 100px; > -->
+													
+													<div class="col-5 th" style="display:table-cell; background-color:white; border : 0; font-size: 20px;">가격제안</div>
+													<div class="col-8 td" style="display:table-cell;">
 														<c:if test="${vo.offer ==1 }">
-															<p class="card-text"> 불가능</p>
+															<p > 불가능</p>
 														</c:if>
 														<c:if test="${vo.offer ==2 }">
-															<p class="card-text"> 가능</p>
+															<p > 가능</p>
 														</c:if>
+													</div>
 													
-													</td>
-												</tr>
-												<tr>
-													<th style="width: 100px;  background-color:white; border : 0;">
-														<p class="card-text">거래지역 </p>
-													</th>
-													<td style="border : 0;"	>
-													${vo.addr2}
-													</td>
-												</tr>
-												<tr>
-													<th style="width: 100px; background-color:white; border : 0;">
-														<p class="card-text">키워드</p>
-													</th>
-													<td style="border : 0;">
-													${vo.keyword}
-													</td>
-												</tr>
-												<tr>
-													<th style="width: 100px; background-color:white;border : 0;">
-													<p class="card-text">내용</p>
-													</th>
-													<td style="border : 0;">
-														${vo.contents}
-													</td>
-												</tr>
-												<tr>
-													<th colspan="2" style="background-color:white; border : 0;">
-													<div id="btn-area" style="float: right; display: flex;">
-
-													<c:if test="${uidx != null }">
-														<div class="wrap2">
-															<input type="submit" id="btn_open2" class="btn btn"
-																value="신고하기" class="btn" style="background-color: #00AAB2; color: #fff;">
-														</div>
-													</c:if>
-
-													<c:if test="${vo.state != 3}">
-														<c:if
-															test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
-															<div class="wrap2">
-																<input type="button" value="연락하기" class="btn" style="background-color: #00AAB2; color: #fff;"
-																	onclick="location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'">
-															</div>
-														</c:if>
-													</c:if>
-													<!-- 이웃 영역 시작 -->
-													<c:if test="${uidx != null }">
-														<div id="Neighbor_area">
-															<c:if test="${result == 0 }">
-																<button onclick="addNeighbor(); return false;"
-																	class="btn" style="background-color: #00AAB2; color: #fff;">
-																	이웃추가</button>
-															</c:if>
-
-															<c:if test="${result != 0}">
-																<button onclick="delNeighbor(); return false;"
-																	class="btn" style="background-color: #00AAB2; color: #fff;">
-																	이웃삭제</button>
-															</c:if>
-														</div>
-													</c:if>
-
-													<c:if test="${uidx != null }">
-														<div id="Wish_area">
-															<c:if test="${wish == 0}">
-																<button class="btn" style="width:90px; height:38px;background-color: #00AAB2; color: #fff;"
-																		onclick="addWish(); return false;">
-																	<p>찜 추가</p>
-																</button>
-															</c:if>
-															
-															<c:if test="${wish != 0}">
-																<button class="btn" style="width:90px; height:38px;background-color: #00AAB2; color: #fff;"
-																		onclick="delWish(); return false;">
-																	<p>찜 삭제</p>
-																</button>
-															</c:if>
-														</div>
-													</c:if>
 												</div>
-													</th>
-												</tr>
+												<div class="row border-bottom tr" style="border:0;">
+													<div class="col-5 th" style="display:table-cell; background-color:white; border : 0;font-size: 20px;">거래지역</div>
+													<div class="col-8 td" style="display:table-cell;">
+														${vo.addr2}
+													</div>
+													
+												</div>
 												
-											</table>
+												<div class="row border-bottom tr" style="border:0;">
+													<div class="col-5 th" style="display:table-cell;background-color:white; border : 0;font-size: 20px;">키워드</div>
+													<div class="col-8 td" style="display:table-cell;">
+														${vo.keyword}
+													</div>
+												</div>
+												
+												<div class="row border-bottom tr" style="border:0;">
+													<div class="col-5 th" style="display:table-cell;background-color:white; border : 0;font-size: 20px;">내용</div>
+													<div class="col-8 td" style="display:table-cell;">
+															${vo.contents}
+													</div>
+												</div>
+												<div class="row border-bottom tr" style="border:0;">
+												
+											<!-- 		<div class="col-4 th" style="display:table-cell;"></div> -->
+													<div class="col-8 td" style="display:table-cell;background-color:white; border : 0;">
+															<div id="btn-area" style="display: flex; flex-direction: row;width: 100%;  padding:0px;">
+				
+																	<c:if
+																			test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
+																		<div class="wrap2">
+																			<input type="submit" id="btn_open2" class="btn btn"
+																				value="신고하기" class="btn" style="background-color: #00AAB2; color: #fff; margin-right:15px;">
+																		</div>
+																	</c:if>
+				
+																	<c:if test="${vo.state != 3}">
+																		<c:if
+																			test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
+																			<div class="wrap2">
+																				<input type="button" value="연락하기" class="btn" style="background-color: #00AAB2; color: #fff;     margin-right: 15px;"
+																					onclick="location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'">
+																			</div>
+																		</c:if>
+																	</c:if>
+																	<!-- 이웃 영역 시작 -->
+																	<c:if test="${vo.uidx != null and vo.uidx != userLoginInfo.uidx }">
+																		<div id="Neighbor_area">
+																			<c:if test="${result == 0 }">
+																				<button onclick="addNeighbor(); return false;"
+																					class="btn" style="background-color: #00AAB2; color: #fff; ">
+																					이웃추가</button>
+																			</c:if>
+				
+																			<c:if test="${result != 0}">
+																				<button onclick="delNeighbor(); return false;"
+																					class="btn" style="background-color: #00AAB2; color: #fff;">
+																					이웃삭제</button>
+																			</c:if>
+																		</div>
+																	</c:if>
+				
+																	<c:if test="${uidx != null and vo.uidx != userLoginInfo.uidx }">
+																		<div id="Wish_area">
+																			<c:if test="${wish == 0}">
+																				<button class="btn" style="width:90px; height:38px;background-color: #00AAB2; color: #fff; margin-left:15px"
+																						onclick="addWish(); return false;">
+																					<p>찜 추가</p>
+																				</button>
+																			</c:if>
+																			
+																			<c:if test="${wish != 0}">
+																				<button class="btn" style="width:90px; height:38px;background-color: #00AAB2; color: #fff;  margin-left:15px"
+																						onclick="delWish(); return false;">
+																					<p>찜 삭제</p>
+																				</button>
+																			</c:if>
+																		</div>
+																	</c:if>
+																</div>
+													</div>
+											</div>
+												
+											</div> <!-- 테이블 div -->
 												
 												
 											
@@ -1280,49 +1371,59 @@ table td {
 						<!-- card body 끝 -->
 					</div>
 					<hr>
-						<h2 style="text-align: center;">
-				<a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님 의
-				다른상품
-			</h2>
+			<div style="">
+				<h2 style="text-align: center;"><a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님 의다른상품</h2>
+			</div>	
 			<div class="container-fluid">
 				<div class="row">
 					<c:if test="${youritem.size() > 0}">
 						<c:forEach var="vo" items="${youritem}">
-							<div class="col-lg-2 col-md-4">
-								<div class="card">
-									<img src="../resources/upload/${vo.image1}">
-									<div class="card-body">
-										<input type="hidden" value="${vo.uidx}">
-										<h5 class="card-title">
-											<a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
-										</h5>
-										<p class="card-text">${vo.price}원</p>
-										<p class="card-text">${vo.nickName}</p>
-										<p class="card-text">${vo.wdate}</p>
-										<c:if test="${vo.state == 1}">
-											<p class="card-text">거래중</p>
-										</c:if>
-										<c:if test="${vo.state == 2}">
-											<p class="card-text">예약중</p>
-										</c:if>
-										<c:if test="${vo.state == 3}">
-											<p class="card-text">거래완료</p>
-										</c:if>
-
-
-
-
-
-									</div>
-								</div>
-								<br>
+							<div class="col-lg-2  col-md-12 " style="margin-bottom: 10px; ">
+						<div class="card" style="height:100%;">
+							<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" style="width: 100%;" onerror=this.src="../images/noimg_item.jpg" ></a>
+									<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
+													<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
+												<c:if test="${vo.state==1}">
+													<h7 class="product-price"  >거래중</h7>
+												</c:if>												
+												<c:if test="${vo.state==2}">			
+													<h7 class="product-price" >예약중</h7>
+												</c:if>												
+												<c:if test="${vo.state==3}" >			
+													<h7 class="product-price" >거래완료</h7>
+												</c:if>
+													</h7>
+											<h6 class="card-title" id="itemtitle"	>
+												<a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
+											</h6>
+										<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
+											${vo.hit} 조회수
+										<div id="Wish_area">
+											<c:if test="${vo.wishCheck == 0 }">
+												<div class="image">
+													<img src="../images/Wish_off.png" style="width:16px; height:16px;" >
+													<span>${vo.wishCount}</span>
+												</div>
+											</c:if>
+									<c:if test="${vo.wishCheck != 0}">
+										<div class="image">
+											<img src="../images/Wish_on.png" style="width:16px; height:16px;">
+											<span style="background-color:ce3746;">${vo.wishCount}</span>
+										</div>
+									</c:if> 
+								</div>											
 							</div>
+						</div>
+					</div>
 						</c:forEach>
 					</c:if>
+					
 					<c:if test="${youritem.size() <= 0}">
-						<hr>
-						<h3 style="text-align: center;">${vo.nickName}님의다른 상품이 없습니다</h3>
+						<div style="text-align: center; border-top: solid 1px; height:300px;">
+							<h3 style="text-align: center;">${vo.nickName}님의다른 상품이 없습니다</h3>
+						</div>
 					</c:if>
+					
 				</div>
 			</div>
 					

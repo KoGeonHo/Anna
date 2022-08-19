@@ -15,7 +15,7 @@
     <!-- include summernote css/js-->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-	<<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
+	<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
 	<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 	<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
@@ -146,7 +146,7 @@
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">가격</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<input type="number" class="form-control" name="price" ><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+							<input type="number" class="form-control" id="price" name="price" ><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 						</div>
 					</div>
 					
@@ -223,7 +223,7 @@
 		
 		</script>
 			<script type="text/javascript">
-				var gfv_count = gfv_count++;
+				var gfv_count = 1
 				
 				$(document).ready(function(){
 					$("#list").on("click", function(e){ //목록으로 버튼
@@ -298,10 +298,14 @@
 				<script>
 				$("#joinFrm").submit(function(){
 				    var fileCheck = $("#file").val();
+				    var price = $("#price").val();
 				    if(!fileCheck){
 				        alert("사진을 한 장 이상 첨부해주세요");
 				       return false;
-				    }
+				    }else if(price.length > 10 ){
+				        alert("가격은 최대 10자리 까지 입니다.");
+					       return false;
+					    }
 				    });
 				</script> 
 

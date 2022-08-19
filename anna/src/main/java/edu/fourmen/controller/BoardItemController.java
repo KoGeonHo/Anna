@@ -563,10 +563,11 @@ public class BoardItemController {
 
 		session = request.getSession();
 		
+		if(vo.getKeyword() != null) {
 		 String str = vo.getKeyword().replace(",","#");
 		 
 		 vo.setKeyword(str);
-		 
+		}
 			/* vo.setKeyword("#"+s); */
 		
 		//  List<String> list2 = "#"; System.out.println("#"+list2);
