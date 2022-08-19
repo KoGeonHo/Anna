@@ -75,12 +75,12 @@ display: none;
 </style>
 </head>
 <body>
-<div class="container main">
+
 <div class="wrapper">
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		
+	<div class="container main">
 		<div class="wrapper">
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">글 쓰기</h3>
@@ -142,13 +142,13 @@ display: none;
 							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/board/boardlist.do?=${pm.board_type}'">취소</button>
 						</div>
 					</div>
-					<div id="location_kakao">
+					<!-- <div id="location_kakao">
 
 					서비스 준비중입니다.
 					
-					</div>
+					</div> -->
 				</form>
-				<%-- <input type="text" class="boardtype" value="${pm.board_type}"> --%>
+					<input type="hidden" class="boardtype" value="${pm.board_type}">
 			</div>
 		</div>
 
@@ -167,12 +167,6 @@ display: none;
 
 
 <script>
-
-var boardtype = $(".boardtype").val();
-
-console.log(boardtype);
-
-$('#board_type').val(boardtype).prop("selected",true);
 
 
 $(document).ready(function() {
@@ -219,11 +213,18 @@ function chk_file_type(obj) {
 </script>
 <script>
 
+var boardtype = $(".boardtype").val();
+
+console.log(boardtype);
+
+$('#board_type').val(boardtype).prop("selected");
+
 
 
 
 function locationMap(obj){
 	
+
 	var board_type = $("#board_type").val();
 	
 	console.log(board_type);

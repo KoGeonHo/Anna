@@ -30,6 +30,36 @@ position: fixed;
 
 }
 
+.viewimg2{
+
+display : none;
+position: fixed;
+
+
+}
+.viewimg3{
+
+display : none;
+position: fixed;
+
+
+}
+.viewimg4{
+
+display : none;
+position: fixed;
+
+
+}
+.viewimg5{
+
+display : none;
+position: fixed;
+
+
+}
+
+
 .th {
 	background:#eee;
 	text-align:center;
@@ -98,21 +128,40 @@ position: fixed;
 						</div>
 					</div>
 					
+					<c:if test="${bv.image1 != null}">
+						<span class="view">${bv.image1}</span><br>
+						<div class="viewimg">
+							<img src="../resources/upload/${bv.image1}" alt ="안되는데요?">
+						</div>
+					</c:if>
 					<c:if test="${bv.image2 != null}">
 						<span class="view2">${bv.image2}</span><br>
+						<div class="viewimg2">
+							<img src="../resources/upload/${bv.image2}" alt ="안되는데요?">
+						</div>
 					</c:if>
 					<c:if test="${bv.image3 != null}">
-						<span>${bv.image3}</span><br>
+						<span class="view3">${bv.image3}</span><br>
+						<div class="viewimg3">
+							<img src="../resources/upload/${bv.image3}" alt ="안되는데요?">
+						</div>
 					</c:if>
 					<c:if test="${bv.image4 != null}">
-						<span>${bv.image4}</span><br>
+						<span class="view4">${bv.image4}</span><br>
+						<div class="viewimg4">
+							<img src="../resources/upload/${bv.image4}" alt ="안되는데요?">
+						</div>
 					</c:if>
 					<c:if test="${bv.image5 != null}">
-						<span>${bv.image5}</span>
+						<span class="view5">${bv.image5}</span>
+						<div class="viewimg5">
+							<img src="../resources/upload/${bv.image5}" alt ="안되는데요?">
+						</div>
 					</c:if>
 					
 
 				</form>
+				<input type="hidden" class="boardtype" value="${bv.board_type}">
 				
 			</div>
 		</div>
@@ -126,80 +175,13 @@ position: fixed;
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
 	</div>
 
-   <h2>글 수정</h2>
-    
-<form action="BoardModify.do" method="post">
-
-<input type="text" name="Location" value="${userLoginInfo.location_auth}">
-<input type="hidden" name="board_type" value="${bv.board_type }">
-<input type="hidden" name="Bidx" value="${bv.bidx }">
-
-<c:if test="${bv.board_type eq 'free'}">
-	일상&amp;소통
-</c:if>
-<c:if test="${bv.board_type eq 'job'}">
-	구인구직
-</c:if>
-<c:if test="${bv.board_type eq 'meeting'}">
-	모임
-</c:if>
-<c:if test="${bv.board_type eq 'hotplace'}">
-	우리동네 핫플레이스
-</c:if>
-
-<input type="text" name="Title" placeholder="제목을 입력해주세요" value="${bv.title}">
- 
-<textarea id="summernote" class="summernote" name="Contents">${bv.contents }</textarea>
-
-<c:if test="${bv.image1 != null}">
-	<span class="view">${bv.image1}</span><br>
-	<div class="viewimg">
-		<img src="../resources/upload/${bv.image1}" alt ="안되는데요?">
-	</div>
-</c:if>
-
-
-<button type="button">취소</button>
-<button>작성완료</button>
-</form>
-
-<script>
-$('#summernote').summernote({
-	  // 에디터 높이
-	  height: 150,
-	  // 에디터 한글 설정
-	  lang: "ko-KR",
-	  // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
-	  focus : true,
-	  toolbar: [
-		    // 글꼴 설정
-		    ['fontname', ['fontname']],
-		    // 글자 크기 설정
-		    ['fontsize', ['fontsize']],
-		    // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-		    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-		    // 글자색
-		    ['color', ['forecolor','color']],
-		    // 표만들기
-		    ['table', ['table']],
-		    // 글머리 기호, 번호매기기, 문단정렬
-		    ['para', ['ul', 'ol', 'paragraph']],
-		    // 줄간격
-		    ['height', ['height']],
-		    // 그림첨부, 링크만들기, 동영상첨부
-		    ['insert',['picture','link','video']],
-		    // 코드보기, 확대해서보기, 도움말
-		    ['view', ['codeview','fullscreen', 'help']]
-		  ],
-		  // 추가한 글꼴
-		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-		 // 추가한 폰트사이즈
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-	  
-	});
-</script>
-
 <script type="text/javascript">
+
+var boardtype = $(".boardtype").val();
+
+console.log(boardtype);
+
+$('#board_type').val(boardtype).prop("selected",true);
 
 $(".view").mouseover(function(){
 	$(".viewimg").css("display","block")
@@ -208,6 +190,46 @@ $(".view").mouseover(function(){
 
 $(".view").mouseout(function(){
 	$(".viewimg").css("display","none")
+	
+});
+
+$(".view2").mouseover(function(){
+	$(".viewimg2").css("display","block")
+	
+	});
+
+$(".view2").mouseout(function(){
+	$(".viewimg2").css("display","none")
+	
+});
+
+$(".view3").mouseover(function(){
+	$(".viewimg3").css("display","block")
+	
+	});
+
+$(".view3").mouseout(function(){
+	$(".viewimg3").css("display","none")
+	
+});
+
+$(".view4").mouseover(function(){
+	$(".viewimg4").css("display","block")
+	
+	});
+
+$(".view4").mouseout(function(){
+	$(".viewimg4").css("display","none")
+	
+});
+
+$(".view5").mouseover(function(){
+	$(".viewimg5").css("display","block")
+	
+	});
+
+$(".view5").mouseout(function(){
+	$(".viewimg5").css("display","none")
 	
 });
 
