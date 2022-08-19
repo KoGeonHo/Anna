@@ -37,12 +37,9 @@ public class BoardItemDAO {
 		HashMap<String,Object> del = new HashMap<String,Object>();
 		String[] key = null;
 		
-		System.out.println(pm.getInterested() +"::key");
 		if(pm.getInterested() != null) {
 			key  = pm.getInterested().split(",");
 		}
-		
-		
 		del.put("pagemaker", pm);
 		del.put("interested", key);
 		

@@ -167,69 +167,84 @@
 	         let html = "";
 	         
 	         for(let i = 0; i < appendList.length; i++){
-	    <%--    html +='<div class="col-lg-3  col-md-12 ">';
-	            html +='   <div class="card">';
-	            html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'${vo.item_idx}">';
-	            html +='<img src="<%=request.getContextPath()%>/resources/upload/'+appendList[i].image1+'"';
-	            html +='onerror=this.src="../images/no_imgborder.jpg" width="100%" height="255">';
+	            html +=' <div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">';
+	            html +='<div class="card">';
+	            html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'"><img src="../resources/upload/'+appendList[i].image1+'"onerror=this.src="../images/noimg_item.jpg">';
 	            html +='</a>';
-	            html +='<div class="card-body">';
-	            html +='<h6 class="card-title">';
-	            html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
-	            html +='</h6>';
-	            html +='<p class="card-text">'+appendList[i].price+'원</p>';
-	            html +='<p class="card-text">'+appendList[i].nickName+'</p>';
-	            html +='<p class="card-text">'+appendList[i].wdate+'</p>';
-	            html +='<button type="button"';
-	            html +='class="btn btn-sm btn-outline-secondary"';
-	            html +='style="float: right">view 5</button>';
-	            html +='<button type="button"';
-	            html +='class="btn btn-sm btn-outline-secondary"';
-	            html +='style="float: right">♥2</button>';
-	            html +='</div>';
-	            html +='</div>';
-	            html +='   </div>'; 
-	             --%>
-	            
+	            html +='<div class="card-body" style ="text-align: center; padding-top: 5px; ">';											
+	            html +='		<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">';
+	           			 if (appendList[i].state==1){
+	            html +='	<h7 class="product-price"  >거래중</h7>';
+	           			 }
+	         			  if (appendList[i].state==2){
+				html +='	<h7 class="product-price" >예약중</h7>';
+						 }
+	         			  if (appendList[i].state==3){
+				html +='		<h7 class="product-price" >거래완료</h7>';
+	         			  }
+				html +='	</h7>';
+				html +='	<h6 class="card-title" id="itemtitle"	>';
+				html +='		<a href="itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
+				html +='	</h6>';
+				html +='	<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">'+appendList[i].price+'<span style="color:#000;">원</span></p>';
+				html +='		'+appendList[i].hit+' 조회수';
+				html +='	<div id="Wish_area">';
+						if (appendList[i].wishCheck == 0 ){
+				html +='						<div class="image">';
+				html +='								<img src="../images/Wish_off.png" style="width:16px; height:16px;" >';
+				html +='								<span>'+appendList[i].wishCount+'</span>';
+				html +='									</div>';
+						}
+						if (appendList[i].wishCheck != 0 ){
+				html +='							<div class="image">';
+				html +='								<img src="../images/Wish_on.png" style="width:16px; height:16px;"  >';
+				html +='								<span style="background-color:ce3746;">'+appendList[i].wishCount+'</span>';
+				html +='							</div>';
+						}
+				html +='					</div>		';									
+				html +='				</div>';
+				html +='	</div>';
+				html +='</div>';
+
+	             /* 
 	            
 	            	html +='	<div class="col-lg-3  col-md-12 ">'; 
-	            		html +='	<div class="card">'; 
-	            			html +='	<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>'; 
-	            				html +='		<div class="card-body" style ="text-align: center; padding-top: 5px; ">						'; 					
-	            					html +='						<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">'; 
-	            						html +='					<c:if test="${vo.state==1}">'; 
-	            							html +='	<h7 class="product-price"  >거래중</h7>'; 
-	            								html +='	</c:if>												'; 
-	            									html +='	<c:if test="${vo.state==2}">			'; 
-	            										html +='		<h7 class="product-price" >예약중</h7>'; 
-	            											html +='		</c:if>											'; 	
-	            												html +='		<c:if test="${vo.state==3}" >			'; 
-	            													html +='			<h7 class="product-price" >거래완료</h7>'; 
-	            														html +='		</c:if>'; 
-	            															html +='			</h7>'; 
-	            																html +='	<h6 class="card-title" id="itemtitle"	>'; 
-	            																	html +='		<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>'; 
-	            																		html +='	</h6>'; 
-	            																			html +='	<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>'; 
-	            																				html +='		${vo.hit} 조회수'; 
-	            																					html +='	<div id="Wish_area">'; 
-	            																						html +='	<c:if test="${vo.wishCheck == 0 }">'; 
-	            																							html +='	<div class="image">'; 
-	            																								html +='	<img src="../images/Wish_off.png" style="width:50px; height:50px;" >'; 
-	            																									html +='<p>${vo.wishCount}</p>'; 
-	            																										html +='	</div>'; 
-	            																											html +='	</c:if>'; 
-	            																												html +='	<c:if test="${vo.wishCheck != 0}">'; 
-	            																													html +='	<div class="image">'; 
-	            																														html +='	<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >'; 
-	            																															html +='	<p style="background-color:ce3746;">${vo.wishCount}</p>'; 
-	            																																html +='	</div>'; 
-	            																																	html +='	</c:if> '; 
-	            																																		html +='		</div>		'; 									
-	            																																			html +='	</div>'; 
-	            																																				html +='</div>'; 
-	            
-	        /*     html +='<div class="col-lg-3 col-md-12 ">';
+	            	html +='	<div class="card">'; 
+	            	html +='	<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>'; 
+	            	html +='		<div class="card-body" style ="text-align: center; padding-top: 5px; ">						'; 					
+	            	html +='						<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">'; 
+	            	html +='					<c:if test="${vo.state==1}">'; 
+	            	html +='	<h7 class="product-price"  >거래중</h7>'; 
+	            	html +='	</c:if>												'; 
+	            	html +='	<c:if test="${vo.state==2}">			'; 
+	            	html +='		<h7 class="product-price" >예약중</h7>'; 
+	            	html +='		</c:if>											'; 	
+	            	html +='		<c:if test="${vo.state==3}" >			'; 
+	            	html +='			<h7 class="product-price" >거래완료</h7>'; 
+	            	html +='		</c:if>'; 
+	            	html +='			</h7>'; 
+	            	html +='	<h6 class="card-title" id="itemtitle"	>'; 
+	            	html +='		<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>'; 
+	            	html +='	</h6>'; 
+	            	html +='	<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>'; 
+	            	html +='			${vo.hit} 조회수'; 
+	            	html +='	<div id="Wish_area">'; 
+	            	html +='		<c:if test="${vo.wishCheck == 0 }">'; 
+	            	html +='			<div class="image">'; 
+	            	html +='			<img src="../images/Wish_off.png" style="width:50px; height:50px;" >'; 
+	            	html +='			<p>${vo.wishCount}</p>'; 
+	            	html +='			</div>'; 
+	            	html +='		</c:if>'; 
+	            	html +='		<c:if test="${vo.wishCheck != 0}">'; 
+	            	html +='			<div class="image">'; 
+	            	html +='			<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >'; 
+	            	html +='			<p style="background-color:ce3746;">${vo.wishCount}</p>'; 
+	            	html +='			</div>'; 
+	            	html +='		</c:if> '; 
+	            	html +='	</div>		'; 									
+	            	html +='	</div>'; 
+	            	html +='</div>';  */
+	            	        /*     html +='<div class="col-lg-3 col-md-12 ">';
 	            html +='<div class="row">';
 	            html +='<div class="products-tabs">';
 	            html +='	<div class="product">';
@@ -277,7 +292,7 @@
 	         //console.log(html);
 	         //응답된 문자열은 html형식이다. 
 	         //해당 문자열은 .card-list-container div에 html로 해석하라고 추가한다.
-	         $(".card-list-container").append(html);
+	         $(".card-list").append(html);
 	         //로딩바를 숨긴다.
 	         //$(".back-drop").hide();
 	         //로딩중이 아니라고 표시한다.
@@ -292,7 +307,7 @@
 
 /* .section .container . row. .col-lg-3 .row .products-tabs  .product .product-img  img{
 width:100%;
-height:250px;
+height:160px;
 
 } */
 
@@ -345,13 +360,14 @@ height:250px;
 	display:none;
 }
 
+a:link {
+  color : black;
+  text-decoration: none;
+}
+
 .box {float:left; overflow: hidden;}
 .box-inner {width: auto; padding: 10px;}
 
-#cate_gory > u{
- background-color:red;
-
-}
 /* max가  0부터 ~ 까지라는뜨 */
 /* 반응형 */@media all and (max-width:  767px){
    
@@ -366,16 +382,6 @@ height:250px;
  	
 
 	
-	.products-tabs .product .product-body .image { 
-	width: 50px;
-	height : 50px;
-	position:relative;text-align:center;color:#FFFFFF; 
-	}
-	.products-tabs .product .product-body .image p { position: absolute;top:50%;left:50%;
-			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
-			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
-			margin : auto;}
-	
 	#search-area{
 		width:100%;
 		text-align:center;
@@ -383,20 +389,22 @@ height:250px;
 	
  
  #Wish_area{
-	width:50px;
-	height: 50px;
+	width:16px;
+	height: 16px;
 	}
 	
-	#Wish_area .image { 
-	width: 50px;
-	height : 50px;
+	 #Wish_area .image { 
+	width: 16px;
+	height : 16px;
 	position:relative;text-align:center;color:#FFFFFF; 
 	}
-	#Wish_area .image p { position: absolute;top:50%;left:50%;
+	 #Wish_area .image p { position: absolute;top:50%;left:50%;
 			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
 			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
 			margin : auto;}
 	}
+	
+	
 }
 @media all and (min-width :400px){
 .product-img{
@@ -405,27 +413,15 @@ height:250px;
 }
 
 
-	
-	.products-tabs .product .product-body .image { 
-	width: 50px;
-	height : 50px;
-	position:relative;text-align:center;color:#FFFFFF; 
-	}
-	.products-tabs .product .product-body .image p { position: absolute;top:50%;left:50%;
-			transform: translate(-50%, -50%);/*  background-color:#FFFFFF; */
-			text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px 1px black; 
-			margin : auto;}
-			
 
-
-	#Wish_area{
-	width:50px;
-	height: 50px;
+	  #Wish_area{
+	width:16px;
+	height: 16px;
 	}
 	
-	#Wish_area .image { 
-	width: 50px;
-	height : 50px;
+	 #Wish_area .image { 
+	width: 16px;
+	height : 16px;
 	position:relative;text-align:center;color:#FFFFFF; 
 	}
 	#Wish_area .image p { position: absolute;top:50%;left:50%;
@@ -434,10 +430,13 @@ height:250px;
 			margin : auto;}
 	
 		
-	#search-area{
+	 #search-area{
 		width:100%;
 		text-align:center;
 	}
+	
+
+	
 }
 
 </style>
@@ -449,31 +448,6 @@ height:250px;
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div class="main" id="main" style="overflow: auto;">
 			<input type="hidden" name="uidx" value="${userLoginInfo.uidx}">
-				<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<div class="container-fluid">
-					<a class="navbar-brand" href="#">AnnA</a>
-							<button class="navbar-toggler" type="button"
-								data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-								aria-controls="navbarSupportedContent" aria-expanded="false"
-								aria-label="Toggle navigation">
-								<span class="navbar-toggler-icon"></span>
-							</button>
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-							<li class="nav-item"><a class="nav-link active"
-								aria-current="page" href="#">중고거래</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">커뮤니티</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">고객센터</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
-						</ul>
-						<form class="d-flex">
-							<input class="form-control me-2" type="search" placeholder="Search"
-								aria-label="Search">
-							<button class="btn btn-outline-success" type="submit">Search</button>
-						</form>
-					</div>
-				</div>
-			</nav>
 <br>
 <br>
 
@@ -483,20 +457,20 @@ height:250px;
 					<!-- div style="width:100px; background-color:grey;"class="slide-toggle">
 				카테고리
 					</div>		 -->																		
-					<div style=" height:70px;">
+					<div style="">
 						<div class="box">
-						    <div class="box-inner">
+						    <div class="box-inner" style="width:100%;">
 						    	<ul class="cate_menu">
-									<li id="cate_gory"><a href="itemlist.do">전체</a></li>
-									<li id="cate_gory"><a href="itemlist.do?cate_idx=1" >가전제품</a></li>
-									<li id="cate_gory"><a href="itemlist.do?cate_idx=2">생활용품</a></li>
-									<li id="cate_gory"><a href="itemlist.do?cate_idx=3">완구&취미</a></li>
-									<li id="cate_gory"><a href="itemlist.do?cate_idx=4">패션&의류</a></li>
-									<li id="cate_gory"><a href="itemlist.do?cate_idx=5">인테리어</a></li>
-									<li id="cate_gory"><a href="itemlist.do?cate_idx=6">반려동물용품</a></li>
-									<li id="cate_gory"><a href="itemlist.do?cate_idx=7">뷰티&악세</a></li>
-									<li id="cate_gory"><a href="itemlist.do?cate_idx=8">자동차용품</a></li>
-									<li id="cate_gory"><a href="itemlist.do?cate_idx=9">스포츠&레저용품</a></li>
+									<li  style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do" ><span style="color:grey;">전체</span></a></li>
+									<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=1" style=""><span style="color:grey;">가전제품</span></a></li>
+									<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=2" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">생활용품</span></a></li>
+									<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=3" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">완구&취미</span></a></li>
+									<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=4" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">패션&의류</span></a></li>
+									<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=5" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">인테리어</span></a></li>
+									<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=6" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">반려동물용품</span></a></li>
+									<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=7" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;"> 뷰티&악세</span></a></li>
+									<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=8" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">자동차용품</span></a></li>
+									<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=9" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">스포츠&레저용품</span></a></li>
 								</ul>
 						    </div>
 						</div>
@@ -521,7 +495,7 @@ height:250px;
 					<c:forEach var="vo" items="${ssang}">
 						<h1>${userLoginInfo.nickName} 님이 검색하신 ${pm.searchVal} 의 최저가 상품입니다</h1>
 						
-						<div class="col-lg-3">
+				<%-- 		<div class="col-lg-3">
 						<div class="row">
 							<div class="products-tabs">
 								<!-- tab -->
@@ -533,7 +507,7 @@ height:250px;
 											<div class="product-body">
 												<h3 class="product-name"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h3>
 												
-												<%-- <h4 class="product-price">지역번호 ${vo.addr_code} </h4> --%>
+												<h4 class="product-price">지역번호 ${vo.addr_code} </h4>
 												<h4 class="product-price">${vo.price} 원</h4>
 												<c:if test="${vo.state==1}">
 												<h4 class="product-price">거래중</h4>
@@ -568,26 +542,8 @@ height:250px;
 								<!-- /tab -->
 							</div>
 						</div>
-						
-						
-					</c:forEach>
-				</c:if>
-				<c:if test="${!empty pm.searchVal and ssang.size()==0}">
-				검색 결과가 없습니다.
-				</c:if>
-			</div>
-<br>
-<hr>
-
-	<div class="section">
-			<!-- container -->
-			<div class="container">
-				<!-- row -->
-				<div class="row">
-					<!-- Products tab & slick -->
-					<c:if test="${list.size() > 0}">
-					<c:forEach var="vo" items="${list}">
-					<div class="col-lg-3  col-md-12 ">
+						 --%>
+						<div class="col-lg-3  col-md-12 ">
 						<div class="card">
 							<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
 									<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
@@ -603,29 +559,86 @@ height:250px;
 												</c:if>
 													</h7>
 											<h6 class="card-title" id="itemtitle"	>
-												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
+												<a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
 											</h6>
 										<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
 											${vo.hit} 조회수
 										<div id="Wish_area">
 											<c:if test="${vo.wishCheck == 0 }">
 												<div class="image">
-													<img src="../images/Wish_off.png" style="width:50px; height:50px;" >
-													<p>${vo.wishCount}</p>
+													<img src="../images/Wish_off.png" style="width: 16px; height: 16px;" >
+													<span>${vo.wishCount}</span>
 														</div>
 											</c:if>
 																	
 											<c:if test="${vo.wishCheck != 0}">
 												<div class="image">
-													<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >
-													<p style="background-color:ce3746;">${vo.wishCount}</p>
+													<img src="../images/Wish_on.png" style="width:16px; height:16px;"  >
+													<span style="background-color:ce3746;">${vo.wishCount}</span>
 												</div>
 											</c:if> 
 										</div>											
 									</div>
 						</div>
+						
 					</div>
+					<br><br>
+					</c:forEach>
+				</c:if>
+				<c:if test="${!empty pm.searchVal and ssang.size()==0}">
+				검색 결과가 없습니다.
+				</c:if>
+			</div>
+<br>
+<hr>
 
+	<div class="section" style="padding:0px;">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- Products tab & slick -->
+					<c:if test="${list.size() > 0}">
+					<c:forEach var="vo" items="${list}">
+				<br><br>	<div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">
+						<div class="card">
+							<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
+									<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
+													<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
+												<c:if test="${vo.state==1}">
+													<h7 class="product-price"  >거래중</h7>
+												</c:if>												
+												<c:if test="${vo.state==2}">			
+													<h7 class="product-price" >예약중</h7>
+												</c:if>												
+												<c:if test="${vo.state==3}" >			
+													<h7 class="product-price" >거래완료</h7>
+												</c:if>
+													</h7>
+											<h6 class="card-title" id="itemtitle"	>
+												<a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
+											</h6>
+										<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
+											${vo.hit} 조회수
+										<div id="Wish_area">
+											<c:if test="${vo.wishCheck == 0 }">
+												<div class="image">
+													<img src="../images/Wish_off.png" style="width:16px; height:16px;" >
+													<span>${vo.wishCount}</span>
+												</div>
+											</c:if>
+																	
+											<c:if test="${vo.wishCheck != 0}">
+												<div class="image">
+													<img src="../images/Wish_on.png" style="width:16px; height:16px;">
+													<span style="background-color:ce3746;">${vo.wishCount}</span>
+												</div>
+											</c:if> 
+										</div>											
+									</div>
+									
+						</div>
+					</div>
 					</c:forEach>
 					</c:if>
 					<!-- Products tab & slick -->
@@ -638,13 +651,11 @@ height:250px;
 		
 		
 	<!-- 무한스크롤부분 -->
-<section id="card-list" class="card-list">
 	<div class="container">
-		<div class="row card-list-container thumbnails">
-		
+		<div class="row card-list">
+		<br>
 		</div>
 	</div>
-</section>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
