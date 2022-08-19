@@ -60,6 +60,7 @@
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/userInfoView.do'">내정보</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/wishList.do'">찜목록</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/neighborMng.do'">이웃관리</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/chatList.do';">채팅목록</li>
 									<%-- <li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/myPage.do'">구매내역</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">판매내역</li> --%>
 								</ul>
