@@ -109,10 +109,11 @@ public class BoardItemController {
 		System.out.println();
 		
 		//전체 상품 리스트 받아오기
-		
+		if (session.getAttribute("uidx") != null) {
 		int uidx = (int) session.getAttribute("uidx");
 		pm.setUidx(uidx);
 		System.out.println(pm.getInterested()+"pm에서 가져옴");
+		}
 	    List<BoardItemVO> list = boarditemService.list(pm);
 	    
 	    
