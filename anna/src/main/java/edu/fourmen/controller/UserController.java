@@ -739,4 +739,27 @@ public class UserController {
 		
 		return chatList;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/passcheck.do",produces = "application/text; charset=utf8")
+	public String passchack(String password,HttpServletRequest request,HttpSession session) {
+		
+		String result = "";
+		
+		session = request.getSession();
+		
+		UserVO uv = (UserVO)session.getAttribute("userLoginInfo");
+		
+		System.out.println(password);
+		
+		if(pwdEncoder.matches(password, uv.getUser_pwd())) {
+			result = "correct";
+		}else {
+			result = "incorrect";
+		}
+		
+		System.out.println(result);
+		
+		return result;
+	}
 }
