@@ -184,17 +184,17 @@
 									<c:forEach var="vo" items="${interestedList}">
 										<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 											<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-												<img src="${ path }/resources/upload/${ vo.image1}" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+												<img src="${ path }/resources/upload/${ vo.image1 }" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
 												<div class="card-body">
-													<div class="text-start">
+													<div class="text-start" style="height:30px; display:flex; align-items:center;">
 														<c:if test="${ fn:length(vo.title) > 8 }">
 															<b>${fn:substring(vo.title,0,8) }...</b>
 														</c:if>
 														<c:if test="${ fn:length(vo.title) <= 8 }">
-															${ vo.title }
+															<b>${ vo.title }</b>
 														</c:if>
-														<c:if test="${ vo.state eq 2 }"><span style="padding:5px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span></c:if>
-														<c:if test="${ vo.state eq 3 }"><span style="padding:5px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span></c:if>
+														<c:if test="${ vo.state eq 2 }"><span style="padding:3px; border-radius:5px; background:green; color:#fff; font-size:0.8rem; margin-left:5px;">예약중</span></c:if>
+														<c:if test="${ vo.state eq 3 }"><span style="padding:3px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem; margin-left:5px;">거래완료</span></c:if>
 													</div>
 													<div>
 														<span style="color:#00AAB2;">${ vo.price }</span>원
@@ -242,17 +242,17 @@
 								<c:forEach var="vo" items="${myBoardItemList}">
 									<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 										<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-											<img src="${ path }/resources/upload/${ interestedList[j].image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+											<img src="${ path }/resources/upload/${ vo.image1 }" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
 											<div class="card-body">
-												<div class="text-start">
+												<div class="text-start" style="height:30px; display:flex; align-items:center;">
 													<c:if test="${ fn:length(vo.title) > 8 }">
 														<b>${fn:substring(vo.title,0,8) }...</b>
 													</c:if>
 													<c:if test="${ fn:length(vo.title) <= 8 }">
-														${ vo.title }
+														<b>${ vo.title }</b>
 													</c:if>
-													<c:if test="${ vo.state eq 2 }"><span style="padding:5px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span></c:if>
-													<c:if test="${ vo.state eq 3 }"><span style="padding:5px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span></c:if>
+													<c:if test="${ vo.state eq 2 }"><span style="padding:3px; border-radius:5px; background:green; color:#fff; font-size:0.8rem; margin-left:5px;">예약중</span></c:if>
+													<c:if test="${ vo.state eq 3 }"><span style="padding:3px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem; margin-left:5px;">거래완료</span></c:if>
 												</div>
 												<div>
 													<span style="color:#00AAB2;">${ vo.price }</span>원

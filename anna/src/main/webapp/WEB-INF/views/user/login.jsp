@@ -133,7 +133,7 @@
 							<input type="checkbox" id="keepLogin" name="keepLogin" value="true"><label for="keepLogin" style="margin-left:10px;">로그인 유지</label>
 						</div>
 						<div class="find-join row">
-							<div class="text-align-left col-8" >아이디/비밀번호 찾기</div>
+							<div class="text-align-left col-8" >비밀번호 찾기</div>
 							<div class="text-align-right col-4"><span onclick="location.href='join.do'">회원가입</span></div>
 						</div>
 						<div class="loginBtn">

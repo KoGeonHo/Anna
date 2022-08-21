@@ -37,6 +37,39 @@
 }
 
 </style>
+<script>
+	function passCheck(pass){
+		let password = pass.value;
+		if(password != ""){
+			$.ajax({
+				url : "passcheck.do",
+				data : "password="+password,
+				success : function(result){
+					if(result == "correct"){
+						$("#pwd_chk_msg").html("비밀번호 일치");
+						$("#btn_pwd_chk").prop("disabled",false);
+					}else{
+						$("#pwd_chk_msg").html("비밀번호 불일치");
+						$("#btn_pwd_chk").prop("disabled",true);
+					}
+				}
+			});
+		}else{
+			$("#pwd_chk_msg").html("");
+			$("#btn_pwd_chk").prop("disabled",true);
+		}
+	}
+	
+	function openModal(){
+		$("#modal_pwd_chk").fadeIn();
+	}
+	
+	function closeModal(){
+		$("#pwd_chk_msg").html("");
+		$("input[name=chkPwd]").val("");
+		$("#modal_pwd_chk").fadeOut();
+	}
+</script>
 </head>
 <body>
 	<div class="wrapper">
@@ -124,10 +157,33 @@
 				<div style="padding:5px 0;">
 					<div class="text-end">
 						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/user/userInfoMod.do';">회원정보 수정</button>
-						<button class="btn" style="background:#BBCE53; color:#fff;" onclick="alert('준비중입니다.')">비밀번호 변경</button>
+						<c:if test="${ empty userInfo.kakao_auth  }">
+							<button class="btn" style="background:#BBCE53; color:#fff;" onclick="openModal()">비밀번호 변경</button>
+						</c:if>
 					</div>
 				</div>
 			</div>
+		</div>
+		
+		<div id="modal_pwd_chk" style="display:none; position:absolute;">
+			<div style="width:100vw; height:100vh; background:rgba(0,0,0,0.5); display:flex; align-items:center; margin:auto;" >
+				<div style="padding:20px; margin:auto; background:#fff; border-radius:10px;">
+					<div class="border-bottom">
+						<h5><b>비밀번호 변경</b></h5>
+					</div>
+					<div class="text-end" style="padding:10px;">
+						<p style="padding:5px; margin:0px;">본인확인을 위해 비밀번호를<br> 입력해주세요.</p>
+						<input class="form-control" type='password' name="chkPwd" placeholder="비밀번호" onkeyup="passCheck(this)">
+					</div>
+					<div id="pwd_chk_msg" class="text-end" style="padding:10px;">
+						
+					</div>
+					<div class="text-end" style="padding:10px;">
+						<button id="btn_pwd_chk" class="btn btn1" style="background:#00AAB2; color:#fff;" disabled onclick="">비밀번호 확인</button>
+						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="closeModal()">닫기</button>
+					</div>
+				</div>
+		</div>
 		</div>
 		
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
