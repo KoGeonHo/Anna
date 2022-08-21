@@ -34,22 +34,34 @@
 	<select id="getReportList" resultType="ReportVO">
 	
 		SELECT
-			ridx,
-			bidx,
-			item_idx,
-			repoter,
-			target,
-			evidence,
-			attach,
-			report_type,
-			contents,
-			DATE_FORMAT(report_date, '%Y-%m-%d') AS report_date,
-			ban,
-			ban_date
+			r.ridx,
+			r.bidx,
+			r.item_idx,
+			r.repoter,
+			(SELECT nickname FROM AnnaUser u where u.uidx = r.repoter) AS repotername,
+			r.target,
+			(SELECT nickname FROM AnnaUser u where u.uidx = r.target) AS targetname,
+			r.evidence,
+			r.attach,
+			r.report_type,
+			r.contents,
+			DATE_FORMAT(r.report_date, '%Y-%m-%d') AS report_date,
+			r.ban,
+			r.ban_date
 		FROM
-			report
+			report r
+		
+		
 		
 	</select>
+	
+	<update id="reportapply">
+	
+		UPDATE report
+		   SET ban = 'Y'
+		 WHERE ridx = #{ridx}
+	
+	</update>
 
 	
 	<update id="toggleAdmin" parameterType="UserVO">

@@ -48,7 +48,7 @@ public class adminController {
 		return "admin/admin_user";
 	}
 	
-	@RequestMapping(value="/admin_report")
+	@RequestMapping(value="/admin_report.do")
 	public String admin_report(Model model) {
 		
 		List<ReportVO> ReportList = adminService.getReportList();

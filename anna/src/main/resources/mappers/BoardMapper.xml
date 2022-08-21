@@ -125,7 +125,7 @@
 		  ,b.Image4
 		  ,b.Image5
 	  FROM Board b, AnnaUser u
-	 WHERE b.Uidx = u.uidx	  
+	 WHERE b.Uidx = u.uidx
 	   AND b.Bidx = #{Bidx}
 </select>
 

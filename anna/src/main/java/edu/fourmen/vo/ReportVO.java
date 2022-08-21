@@ -16,6 +16,8 @@ public class ReportVO {
 	private String report_date;
 	private String ban;
 	private String ban_date;
+	private String repotername;
+	private String targetname;
 	
 	MultipartFile file1;
 	
@@ -105,6 +107,18 @@ public class ReportVO {
 	}
 	public void setFile2(MultipartFile[] file2) {
 		this.file2 = file2;
+	}
+	public String getRepotername() {
+		return repotername;
+	}
+	public void setRepotername(String repotername) {
+		this.repotername = repotername;
+	}
+	public String getTargetname() {
+		return targetname;
+	}
+	public void setTargetname(String targetname) {
+		this.targetname = targetname;
 	}
 	
 	
