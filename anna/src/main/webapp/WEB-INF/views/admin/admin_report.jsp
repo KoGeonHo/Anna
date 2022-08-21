@@ -58,7 +58,7 @@
 				display: none;
 			}
 
-			#banner_online {
+			.banner_online {
 			    height: 700px;
   			    width: 503px;
 				border: 1px solid black;
@@ -71,14 +71,14 @@
 				position: fixed;
 			}
 			
-			#banner_online h1 {
+			.banner_online h1 {
 			    font-weight: bold;
 				text-align: center;
 				font-size: 20px;
 				margin: 43px -12px 28px auto;
 			}
 			
-			#banner_online p .second {
+			.banner_online p .second {
 				margin-left: 6px;
 			}
 			
@@ -89,7 +89,7 @@
 				text-align: center;
 			}
 			
-			#banner_online_how {
+			.banner_online_how {
 				height: 78px;
 				width: 444px;
 				margin-left: 28px;
@@ -97,7 +97,7 @@
 				margin-top: 22px;
 			}
 			
-			#banner_online_how h3 {
+			.banner_online_how h3 {
 				font-size: 12px;
 				margin-left: 6px;
 				margin-top: 16px;
@@ -108,7 +108,7 @@
 			}
 			
 			
-			#modal_list > table > tr > td{
+			.modal_list > table > tr > td{
 				width : 30px;			
 				border-bottom: 1px solid #cdd0d4;	
 			}
@@ -257,11 +257,11 @@
 	                                        			<th>${ i.ridx }</th>
 	                                        			<th>
 	                                        			
-	                                        			<c:if test="${i.report_type = 0}">
-															${i.report_type}
+	                                        			<c:if test="${i.report_type == 0}">
+															${i.report_type}0
 														</c:if>
-														<c:if test="${i.report_type = 1}">
-															${i.report_type}
+														<c:if test="${i.report_type == 1}">
+															${i.report_type}1
 														</c:if>
 	                                        			
 	                                        			</th>
@@ -269,13 +269,13 @@
 	                                        			<th>${ i.contents }</th>
 	                                        			<th>${ i.report_date }</th>
 	                                        			<th>${i.repotername }</th>
-	                                        			<th><button type="button" id="openModalPop" class="btn" style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">상세보기${i.ridx }</button>
+	                                        			<th><button type="button" class="openModalPop btn" style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">상세보기${i.ridx }</button>
 	                                        			
 	                                        			
 	                                        			
-	                                        			<div id= "modal"> 
+	                                        			<div class= "modal"> 
 															</div>
-															    <div id = "banner_online">
+															    <div class = "banner_online">
 															        
 															        <h1>신고 상세보기</h1><br>
 															        <div class="pop_content">
@@ -337,17 +337,17 @@
                      <script type="text/javascript">
 															$(document).ready(function() {
 															    $("#openPop").click(function() {
-															        $("#banner_online").show();
+															        $(".banner_online").show();
 															    });
 															
-															    $("#openModalPop").click(function() {
-															        $("#banner_online").fadeIn();
-															        $("#modal").fadeIn();
+															    $(".openModalPop").click(function() {
+															        $(".banner_online").fadeIn();
+															        $(".modal").fadeIn();
 															    });
 															
 															    $("#close_button").click(function(){
-															        $("#banner_online").fadeOut();
-															        $("#modal").fadeOut();
+															        $(".banner_online").fadeOut();
+															        $(".modal").fadeOut();
 															    });
 															    
 															  
