@@ -58,7 +58,7 @@
 				display: none;
 			}
 
-			#banner_online {
+			.banner_online {
 			    height: 700px;
   			    width: 503px;
 				border: 1px solid black;
@@ -71,14 +71,14 @@
 				position: fixed;
 			}
 			
-			#banner_online h1 {
+			.banner_online h1 {
 			    font-weight: bold;
 				text-align: center;
 				font-size: 20px;
 				margin: 43px -12px 28px auto;
 			}
 			
-			#banner_online p .second {
+			.banner_online p .second {
 				margin-left: 6px;
 			}
 			
@@ -89,7 +89,7 @@
 				text-align: center;
 			}
 			
-			#banner_online_how {
+			.banner_online_how {
 				height: 78px;
 				width: 444px;
 				margin-left: 28px;
@@ -97,7 +97,7 @@
 				margin-top: 22px;
 			}
 			
-			#banner_online_how h3 {
+			.banner_online_how h3 {
 				font-size: 12px;
 				margin-left: 6px;
 				margin-top: 16px;
@@ -108,7 +108,7 @@
 			}
 			
 			
-			#modal_list > table > tr > td{
+			.modal_list > table > tr > td{
 				width : 30px;			
 				border-bottom: 1px solid #cdd0d4;	
 			}
@@ -148,8 +148,8 @@
 </style>
 
 <script>
-	alert("준비중입니다.");
-	history.back();
+	/* alert("준비중입니다.");
+	history.back(); */
 </script>
  
 
@@ -198,6 +198,8 @@
                                    <a class="nav-link collapsed" href="void(0);" onclick="alert('준비중입니다');return false;">이벤트 배너 설정</a>
                                 </nav>
                             </div>
+                    	</div>
+                    </div>
                 </nav>
             </div>
 
@@ -250,235 +252,112 @@
                                         </thead>
                                         <tbody>
                                         	<c:if test="${ not empty ReportList }">
-	                                        	<c:forEach var="i" items="${ ReportList }">
+	                                        	<c:forEach var="i" items="${ReportList}">
 	                                        		<tr>
 	                                        			<th>${ i.ridx }</th>
-	                                        			<th>${ i.report_type }</th>
-	                                        			<th>${ i.target }</th>
+	                                        			<th>
+	                                        			
+	                                        			<c:if test="${i.report_type == 0}">
+															${i.report_type}0
+														</c:if>
+														<c:if test="${i.report_type == 1}">
+															${i.report_type}1
+														</c:if>
+	                                        			
+	                                        			</th>
+	                                        			<th>${ i.targetname }</th>
 	                                        			<th>${ i.contents }</th>
 	                                        			<th>${ i.report_date }</th>
-	                                        			<th>${ i.repoter }</th>
-	                                        			<th><button type="button" id="openModalPop" class="btn" style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;" onclick="alert('준비중입니다.')">상세보기</button>
-	                                        		</tr>
-	                                        	</c:forEach>
-                                        	</c:if>
-                                        
-                                        <%-- 
-                                            <tr>
-                                                <th>1</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" id="openModalPop" class="btn " style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">상세보기</button>
-                                              
-															<div id= "modal"> 
+	                                        			<th>${i.repotername }</th>
+	                                        			<th><button type="button" class="openModalPop btn" name="btn${i}" style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">상세보기${i.ridx }</button>
+	                                        			
+	                                        			
+	                                        			
+	                                        			<div class= "modal"> 
 															</div>
-															    <div id = "banner_online">
+															    <div class = "banner_online" name="report${i}">
 															        
 															        <h1>신고 상세보기</h1><br>
 															        <div class="pop_content">
 															             <table border="0" name="modal_list" style="text-align:  left; border-bottom: 1px solid #cdd0d4;">
 															             <tr>
 																				<td id="td_line" width="130px;" height= "40px;" >신고유형</td>
-																				<td id="td_line">상품거래</td>
+																				<td id="td_line">${i.report_type }</td>
 																			</tr>
 																			<tr>
 																			    <td id="td_line" width="130px;" height= "40px;">신고닉네임</td>
-																			    <td id="td_line">namdokun</td>
+																			    <td id="td_line">${i.targetname}</td>
+																			    
 																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">신고명</td>
-																			    <td id="td_line">노쇼 신고합니다</td>
-																			</tr>
+																	
 																			<tr>
 																			    <td id="td_line" width="130px;" height= "200px;" style="vertical-align: top; padding-top: 10px;">상세설명</td>
-																			    <td id="td_line" style="vertical-align: top; padding-top: 10px;">약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요 너무 화가 납니다 홈페이지 사용자로서 패널티가 부과됬으면 합니다</td>
+																			    <td id="td_line" style="vertical-align: top; padding-top: 10px;">${i.contents }</td>
 																			</tr>
 																			<tr>
 																			    <td id="td_line"  width="130px;" height= "40px;">신고일</td>
-																			    <td id="td_line">2022.07.25</td>
+																			    <td id="td_line">${i.report_date }</td>
 																			</tr>
 																			<tr>
 																			    <td id="td_line" width="130px;" height= "40px;">신고자</td>
-																			    <td id="td_line">sungmin111</td>
+																			    <td id="td_line">${i.repotername }</td>
 																			</tr>
 																			<tr>
 																			    <td id="td_line" width="130px;" height= "40px;">첨부파일</td>
 																			    <td id="td_line">신고내용.jpg</td>
-																			</tr>
-																			
-																		    </table>
+	                                        								</tr>
+	                                        						</table>
 																		    <br>
-																		    																		         
-															        </div>
+																	</div>
 															        <div id="menu_box">
 															          <div id="menu_box">
 															       
 																				<button type="button"  id="test_button" class="btn " style="width :105px; background-color: #3881B4; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">거래글 확인</button>
 															       			 &nbsp;
-															       			<button type="button"  id="test_button" class="btn " style="background-color: #E51D21; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/ "  style="font-size: 14px;">신고 적용 </button>
+															       			<button type="button"  id="test_button" class="btn " style="background-color: #E51D21; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/reportapply.do '"  style="font-size: 14px;">신고 적용 </button>
 															       			&nbsp;
 															       			<button type="button"  id="close_button" class="btn" style="background-color: #00AAB2; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">닫기</button>
 															        </div>
 															        </div>
+															       </div>
+															       
+															       <script type="text/javascript">
+                     
+                     										var i = ${i}
 															
-															
-														 <script type="text/javascript">
-															$(document).ready(function() {
+                     										$(document).ready(function() {
 															    $("#openPop").click(function() {
-															        $("#banner_online").show();
+															        $(".banner_online").show();
 															    });
 															
-															    $("#openModalPop").click(function() {
-															        $("#banner_online").fadeIn();
-															        $("#modal").fadeIn();
+															    $(".openModalPop").click(function() {
+															        $("div[name=report+'${i}']").fadeIn();
+															        $(".modal").fadeIn();
 															    });
 															
 															    $("#close_button").click(function(){
-															        $("#banner_online").fadeOut();
-															        $("#modal").fadeOut();
+															        $(".banner_online").fadeOut();
+															        $(".modal").fadeOut();
 															    });
 															    
 															  
 															});
 															</script>
-															
-                                                </th>
-                                                
-                                            </tr>
-                                            <tr>	
-                                               <th>2</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>3</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>4</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>5</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>6</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                                <th>7</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>8</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>9</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>10</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                           <th>11</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr>
-                                            <tr>
-                                               <th>12</th>
-                                                <th>상품거래</th>
-                                                <th>namdokun</th>
-                                                <th>노쇼 신고합니다</th>
-                                                <th>약속시간도 잡고 만나자했는데 저쪽에서 잠수 탔어요</th>
-                                                <th>2022-07-25</th>
-                                                <th>sungmin111</th>
-                                                <th>1N</th>
-                                                <th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">상세보기</button></th>
-                                            </tr> --%>
+															       
+	                                        	</c:forEach>
+                                        	</c:if>
+
                                             
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                    </main>
+                         </main>
+                      </div>
+                    
                     </div>
+                    
+                     
 
 
 
