@@ -192,7 +192,7 @@ form {
 				<h3 class="border-bottom" style="padding:1rem;">회원정보수정</h3>
 				<form id="userInfoModFrm" method="POST" action="userInfoMod.do">
 					<div id="profile" class="border-bottom" style="width:100%;">
-						<div style="display:inline-block;"><img class="profile-image" style="border-radius:100px;" src="${ userInfo.profile_image }"></div>
+						<div style="display:inline-block;"><img class="profile-image" onerror="this.onerror=null; this.src='${path}/images/NoProfile.png';" style="border-radius:100px;"  src="${ userInfo.profile_image }"></div>
 						<div style="display:inline-block;">
 							<div>
 								<b>${ userInfo.nickName }</b>님의 프로필

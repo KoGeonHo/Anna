@@ -339,4 +339,12 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getMyCommunity(uidx);
 	}
 
+	@Override
+	public int updatePwd(UserVO vo) {
+		
+		return userDAO.updatePwd(vo);
+		
+	}
+
+
 }

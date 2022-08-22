@@ -427,8 +427,8 @@
 			a.offer,
 			a.hit,
 			a.state,
-			(SELECT count(*) FROM Wish_list where item_idx = a.item_idx) as WishCount,
-			(select count(*) from (SELECT * FROM chat b GROUP BY b.item_idx, b.chat_host, b.invited) c WHERE c.item_idx = a.item_idx) as chatCount
+			(SELECT count(*) FROM Wish_list where item_idx = a.item_idx) AS WishCount,
+			(SELECT count(*) FROM (SELECT * FROM chat b GROUP BY b.item_idx, b.chat_host, b.invited) c WHERE c.item_idx = a.item_idx) AS chatCount
 		FROM
 			Board_Items a
 		WHERE
@@ -436,6 +436,17 @@
 		ORDER BY a.wdate DESC
 	
 	</select>
+	
+	<update id="updatePwd" parameterType="UserVO">
+	
+		UPDATE
+			AnnaUser
+		SET
+			user_pwd = #{user_pwd}
+		WHERE 
+			uidx = #{uidx}
+	
+	</update>
 	
 </mapper>
 
