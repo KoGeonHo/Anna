@@ -448,6 +448,18 @@
 	
 	</update>
 	
+	<update id="updateRandomPwd" parameterType="UserVO">
+	
+		UPDATE
+			AnnaUser
+		SET
+			user_pwd = #{user_pwd}
+		WHERE 
+			user_email = #{user_email} AND
+			isDel = 'N'
+	
+	</update>
+	
 </mapper>
 
 

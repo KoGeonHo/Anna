@@ -174,6 +174,12 @@ public class UserDAO {
 		return sqlSession.update("edu.fourmen.mapper.userMapper.updatePwd",vo);
 		
 	}
+
+
+	public int updateRandomPwd(UserVO vo) {
+		
+		return sqlSession.update("edu.fourmen.mapper.userMapper.updateRandomPwd",vo);
+	}
 }
 
 

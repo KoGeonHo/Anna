@@ -831,13 +831,19 @@ public class UserController {
 	@RequestMapping(value="/checkEmailForFindPwd.do",produces = "application/json; charset=utf8")
 	public String checkEmailForFindPwd(String user_email) {
 		
-		if(userService.emailChk(user_email) > 0) {
-			System.out.println("가입된 이메일 주소");
-		}else {
-			System.out.println("가입되지 않은 이메일 주소");
-		}
-		
 		return userService.emailChk(user_email)+"";
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/sendRandomPwd.do",produces = "application/json; charset=utf8")
+	public void sendRandomPwd(UserVO vo) {
+		
+		String ramdomPwd = mailService.sendPwdMail(vo.getUser_email());
+		
+		vo.setUser_pwd(pwdEncoder.encode(ramdomPwd));
+		
+		int result = userService.updateRandomPwd(vo);
 		
 	}
 }

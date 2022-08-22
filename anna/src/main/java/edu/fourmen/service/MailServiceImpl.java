@@ -48,9 +48,9 @@ public class MailServiceImpl implements MailService {
         //인증메일 보내기
         try {
             MailUtils sendMail = new MailUtils(mailSender);
-            sendMail.setSubject("회원가입 이메일 인증");
+            sendMail.setSubject("안녕? 나야! 이메일 인증");
             sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
-            .append("<p>사이트에 아래의 인증번호를 입력하시면 인증이 완료됩니다.</p>")
+            .append("<p>아래의 인증번호를 입력하시면 인증이 완료됩니다.</p>")
             //.append("<a href='http://localhost:9070/newBoard/")
             //.append(email)
             //.append("&authKey=")
@@ -113,7 +113,7 @@ public class MailServiceImpl implements MailService {
 			}
 		
 
-        return "";
+        return randomPwd;
 	}
 	
 }

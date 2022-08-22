@@ -23,7 +23,7 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 		
 		String requestUrl = request.getRequestURL().toString();
 		
-		if(requestUrl.contains("/checkEmailForFindPwd") || requestUrl.contains("/findPwd") || requestUrl.contains("/login") || requestUrl.contains("/logout") || requestUrl.contains("/join") || requestUrl.contains("/getKakaoAuthUrl") || requestUrl.contains("/kakaoLogin") || requestUrl.contains("/emailChk") || requestUrl.contains("/sendAuthEmail")){ 
+		if(requestUrl.contains("/sendRandomPwd") || requestUrl.contains("/checkEmailForFindPwd") || requestUrl.contains("/findPwd") || requestUrl.contains("/login") || requestUrl.contains("/logout") || requestUrl.contains("/join") || requestUrl.contains("/getKakaoAuthUrl") || requestUrl.contains("/kakaoLogin") || requestUrl.contains("/emailChk") || requestUrl.contains("/sendAuthEmail")){ 
 			
 			return true;
 			
