@@ -1,5 +1,6 @@
 package edu.fourmen.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -152,8 +153,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public int addviewCount(BoardItemVO vo) {
-		return boarditemdao.addviewCount(vo);
+	public int addviewCount(int item_idx) {
+		return boarditemdao.addviewCount(item_idx);
 	}
 
 

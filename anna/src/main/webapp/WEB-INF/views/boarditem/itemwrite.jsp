@@ -106,7 +106,7 @@
 				<form method="POST" action="itemwrite.do" enctype="multipart/form-data" name="frm" id="joinFrm">
 					
 					<input type="hidden" name="uidx" value="${uidx}">
-					<input type="hidden" name="addr_code" value="${userLoginInfo.location_auth} readonly="readonly">
+					<input type="hidden" name="addr_code" value="${userLoginInfo.location_auth}" readonly="readonly">
 					<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 					<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 					

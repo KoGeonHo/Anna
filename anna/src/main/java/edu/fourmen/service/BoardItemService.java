@@ -1,6 +1,7 @@
 package edu.fourmen.service;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,7 +63,7 @@ public interface BoardItemService {
 	
 	public List<BoardItemVO> mywish(BoardItemVO vo);
 	
-	public int addviewCount(BoardItemVO vo);
+	public int addviewCount(int item_idx);
 
 	public int viewCount(BoardItemVO vo);
 	
