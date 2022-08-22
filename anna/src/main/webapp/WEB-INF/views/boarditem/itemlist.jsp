@@ -112,42 +112,6 @@
 	      }
 	   });
 	});
-	/* 
-	//웹브라우저의 창을 스크롤할 때마다  호출되는 함수 등록
-	$(window).on("scroll",function(){
-	   
-	   let scrollTop = $(window).scrollTop();
-	   console.log(scrollTop+"난 스크롤");
-	   //웹브라우저 창의 높이
-	   let windowHeight = $(window).height();
-	   console.log(windowHeight+"난 윈도우");
-	   //문서 전체의 높이
-	   let documentHeight = $(document).height();
-	   console.log(documentHeight+"난 문서");
-	   
-
-	   //바닥까지 스크롤 되었는지 여부를 알아낸다.
-	   let isBottom = scrollTop + windowHeight >= documentHeight;
-	   
-	   if(isBottom){
-	      console.log(isLoding);
-	      //만일 현재 마지막 페이지라면
-	      if(currentPage == ${totalPageCount} || isLoding){
-	         
-	         return; // 함수를 여기서 끝낸다.
-	      }
-	      //현재 로딩 중이라고 표시한다.
-	      isLoding= true;
-	      //console.log("탔습니다.");
-	      //로딩바를 띄우고
-	      $(".back-drop").show();
-	      //요청할 페이지 번호를 1증가시킨다.
-	      currentPage++;
-	      //추가로 받아올 페이지를 서버에 ajax 요청을 하고
-	      //console.log("inscroll" + currentPage);
-	      GetList(currentPage);
-	   }
-	}); */
 
 	//카드 리스트를 가져오는 함수
 
@@ -194,166 +158,29 @@
 				html +='</div>';
 				html +='</div>';
 				html +='</div>';
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	        	 
-	            /* html +=' <div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">';
-	            html +='<div class="card">';
-	            html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'"><img src="../resources/upload/'+appendList[i].image1+'"onerror=this.src="../images/noimg_item.jpg">';
-	            html +='</a>';
-	            html +='<div class="card-body" style ="text-align: center; padding-top: 5px; ">';											
-	            html +='		<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">';
-	           			 if (appendList[i].state==1){
-	            html +='	<h7 class="product-price"  >거래중</h7>';
-	           			 }
-	         			  if (appendList[i].state==2){
-				html +='	<h7 class="product-price" >예약중</h7>';
-						 }
-	         			  if (appendList[i].state==3){
-				html +='		<h7 class="product-price" >거래완료</h7>';
-	         			  }
-				html +='	</h7>';
-				html +='	<h6 class="card-title" id="itemtitle"	>';
-				html +='		<a href="itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
-				html +='	</h6>';
-				html +='	<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">'+appendList[i].price+'<span style="color:#000;">원</span></p>';
-				html +='		'+appendList[i].hit+' 조회수';
-				html +='	<div id="Wish_area">';
-						if (appendList[i].wishCheck == 0 ){
-				html +='						<div class="image">';
-				html +='								<img src="../images/Wish_off.png" style="width:16px; height:16px;" >';
-				html +='								<span>'+appendList[i].wishCount+'</span>';
-				html +='									</div>';
-						}
-						if (appendList[i].wishCheck != 0 ){
-				html +='							<div class="image">';
-				html +='								<img src="../images/Wish_on.png" style="width:16px; height:16px;"  >';
-				html +='								<span style="background-color:ce3746;">'+appendList[i].wishCount+'</span>';
-				html +='							</div>';
-						}
-				html +='					</div>		';									
-				html +='				</div>';
-				html +='	</div>';
-				html +='</div>'; */
-
-	             /* 
-	            
-	            	html +='	<div class="col-lg-3  col-md-12 ">'; 
-	            	html +='	<div class="card">'; 
-	            	html +='	<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>'; 
-	            	html +='		<div class="card-body" style ="text-align: center; padding-top: 5px; ">						'; 					
-	            	html +='						<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">'; 
-	            	html +='					<c:if test="${vo.state==1}">'; 
-	            	html +='	<h7 class="product-price"  >거래중</h7>'; 
-	            	html +='	</c:if>												'; 
-	            	html +='	<c:if test="${vo.state==2}">			'; 
-	            	html +='		<h7 class="product-price" >예약중</h7>'; 
-	            	html +='		</c:if>											'; 	
-	            	html +='		<c:if test="${vo.state==3}" >			'; 
-	            	html +='			<h7 class="product-price" >거래완료</h7>'; 
-	            	html +='		</c:if>'; 
-	            	html +='			</h7>'; 
-	            	html +='	<h6 class="card-title" id="itemtitle"	>'; 
-	            	html +='		<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>'; 
-	            	html +='	</h6>'; 
-	            	html +='	<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>'; 
-	            	html +='			${vo.hit} 조회수'; 
-	            	html +='	<div id="Wish_area">'; 
-	            	html +='		<c:if test="${vo.wishCheck == 0 }">'; 
-	            	html +='			<div class="image">'; 
-	            	html +='			<img src="../images/Wish_off.png" style="width:50px; height:50px;" >'; 
-	            	html +='			<p>${vo.wishCount}</p>'; 
-	            	html +='			</div>'; 
-	            	html +='		</c:if>'; 
-	            	html +='		<c:if test="${vo.wishCheck != 0}">'; 
-	            	html +='			<div class="image">'; 
-	            	html +='			<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >'; 
-	            	html +='			<p style="background-color:ce3746;">${vo.wishCount}</p>'; 
-	            	html +='			</div>'; 
-	            	html +='		</c:if> '; 
-	            	html +='	</div>		'; 									
-	            	html +='	</div>'; 
-	            	html +='</div>';  */
-	            	        /*     html +='<div class="col-lg-3 col-md-12 ">';
-	            html +='<div class="row">';
-	            html +='<div class="products-tabs">';
-	            html +='	<div class="product">';
-	            html +='		<div class="product-img">';
-	            html +='			<a href="itemview.do?item_idx='+appendList[i].item_idx+'"><img src="../resources/upload/'+appendList[i].image1+'" onerror=this.src="../images/noimg_item.jpg" ></a>';
-	            html +='		</div>';
-	            html +='	<div class="product-body">';
-	            html +='		<h3 class="product-name"><a href="itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a></h3>';
-	            html +='		<h4 class="product-price">'+appendList[i].price+' 원</h4>';
-	            html +='		<h4 class="product-price">'+appendList[i].nickName+'</h4>';
-	            		if( appendList[i].state == 1) {
-	            html +='			<h4 class="product-price">거래중 '+appendList[i].state+'</h4>';
-	           			}									
-	            		if( appendList[i].state == 2) {
-	            html +='			<h4 class="product-price">예약중123123123</h4>';
-	            		}
-	            		if( appendList[i].state == 3) {
-				html +='			<h4 class="product-price">거래완료</h4>';
-	            		}
-				html +='		'+appendList[i].hit+' 조회수';
-				html +='		<div id="Wish_area">';
-						if (appendList[i].wishCheck == 0){
-				html +='							<div class="image">';
-				html +='									<img src="../images/Wish_off.png" style="width:50px; height:50px;" >';
-				html +='									<p>'+appendList[i].wishCount+'</p>';
-				html +='								</div>';
-						}
-						if (appendList[i].wishCheck != 0){
-				html +='							<div class="image">';
-				html +='								<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >';
-				html +='								<p style="background-color:ce3746;">'+appendList[i].wishCount+'</p>';
-				html +='							</div>';
-						}				
-				html +='					</div>';
-				html +='					</div>';
-				html +='				</div>';
-				html +='<div id="slick-nav-1" class="products-slick-nav"></div>';
-				html +='</div>';
-				html +='</div>';
-				html +='</div>'; */
-	            
 	            
 	         }
 	         
-	         //console.log(html);
-	         //응답된 문자열은 html형식이다. 
-	         //해당 문자열은 .card-list-container div에 html로 해석하라고 추가한다.
 	         $("#item_list").append(html);	         
-	         //$(".card-list").append(html);
-	         
 	         
 	         //로딩바를 숨긴다.
 	         //$(".back-drop").hide();
 	         //로딩중이 아니라고 표시한다.
 	         isLoding=false;
-	         //console.log("ajax"); 
 	      }   
 	   });
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </script>
 <style>
 
@@ -699,7 +526,7 @@ a:link {
 												<a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
 											</h6>
 										<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
-											${vo.hit} 조회수
+											${vo.hit} 조회수123
 										<div id="Wish_area">
 											<c:if test="${vo.wishCheck == 0 }">
 												<div class="image">
@@ -735,9 +562,21 @@ a:link {
 						<!-- Products tab & slick -->
 						<c:if test="${list.size() > 0}">
 							<c:forEach var="vo" items="${list}">
+								<script>
+									function addviewcount(obj) {
+										
+										$.post('./addviewcount',{
+											item_idx : ${vo.item_idx},
+										}, function(data) {
+										},'json');
+											$('.card-img-top').off('click');
+											console.log("조회수 증가");
+										}
+									
+								</script>
 								<div class="card-container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">
-									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-										<img src="${ path }/resources/upload/${ vo.image1}" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
+										<img src="${ path }/resources/upload/${ vo.image1}"   style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
 										<div class="card-body" style="padding:10px;">
 											<div class="text-start" style="height:30px; display:flex; align-items:center;">
 												<c:if test="${ fn:length(vo.title) > 8 }">

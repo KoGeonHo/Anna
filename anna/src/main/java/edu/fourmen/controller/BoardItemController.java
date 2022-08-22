@@ -5,13 +5,19 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -63,6 +69,9 @@ public class BoardItemController {
 		}
 		
 		
+		
+		
+		
 		//한 페이지에 몇개씩 표시할 것인지
 				int pagecount = 12;
 				//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
@@ -106,13 +115,10 @@ public class BoardItemController {
 				request.setAttribute("pagenumber", pagenumber);
 		
 		
-		System.out.println();
-		
 		//전체 상품 리스트 받아오기
 		if (session.getAttribute("uidx") != null) {
 			int uidx = (int) session.getAttribute("uidx");
 			pm.setUidx(uidx);
-			System.out.println(pm.getInterested()+"pm에서 가져옴");
 		}
 	    List<BoardItemVO> list = boarditemService.list(pm);
 	    
@@ -125,6 +131,9 @@ public class BoardItemController {
 	    model.addAttribute("list", list);
 	    
 	    
+	    
+		
+		
 	    
 		//리스트에서 볼때 각각의 글 공간 안에 찜 수 넣으려고 만듬
 		
@@ -204,18 +213,68 @@ public class BoardItemController {
 	      
 	      return result;
 	   }
-	    
+	
+	@ResponseBody
+	@RequestMapping("/addviewcount")
+	public int addviewcount(BoardItemVO vo) {
+		int item_idx = vo.getItem_idx();
+		vo.setItem_idx(item_idx);
+		boarditemService.addviewCount(item_idx);
+		return 1;
+	}
 
 	
 	@RequestMapping(value = "itemview.do")
 	public String selectitem(BoardItemVO wvo,BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
-			HttpSession session, Model model) {
+			HttpSession session, Model model) throws ParseException {
 		
 
 		session = request.getSession();
 		
+		if(session.getAttribute("uidx") != null) {
+		int uidx = (int) session.getAttribute("uidx");
+		}
+		
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		model.addAttribute("vo", vo);
+		
+		//끌올 시작
+		SimpleDateFormat df= new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		//캘린더 클래스로 현재 시간 불러온 부분
+		
+		//끌올버튼 기간제한 부분
+		Date now = new Date();//현재 시간 추출
+		cal.setTime(now); //현재 시간 캘린더에 넣음
+		String nowtime = df.format(cal.getTime()); // 영문으로 출력되는걸 타입 변환을 이용해서 잘랐음
+		Date realnowtime = df.parse(nowtime); // 잘라놓은 날짜를 다시 데이트 타입으로 전환
+		
+		String wwdate = vo.getWdate();  //작성된 글의 시간을 추출해서 넣기
+		Date date = df.parse(wwdate); // 추출해서 넣은 작성시간을 Date 타입으로 변경
+		
+		cal.setTime(date); // 캘린더 함수에 추가
+		
+		/*
+		 * cal.add(Calendar.MONTH, 1);// 캘린더 함수를 통해 넣은 시간에 1달을 더함
+		 * System.out.println("한달 후"+ df.format(cal.getTime())); // 더해진 시간 확인
+		 * 
+		 * String updatewdate = df.format(cal.getTime()); // 1달이 더해진 시간을 string 타입에 넣음
+		 * Date wdate = df.parse(updatewdate);// string 타입을 date 타입으로 전환
+		 */		
+		
+		int Sec = (int) ((realnowtime.getTime() - date.getTime()) / 1000); //두 날짜의 차이를 초 단위로 만듬
+		int Days = Sec / (24*60*60) ; // 초 단위로 만든 두 날짜의 차이를 일(하루) 기준으로 만듬
+		model.addAttribute("Days", Days); //두 날짜의 차이를 화면으로 보냄
+		
+		
+		//
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		List<BoardItemVO> list = boarditemService.list(pm);
@@ -224,14 +283,18 @@ public class BoardItemController {
 		
 		List<BoardItemVO> youritem = boarditemService.selectAllbyuser(vo, svo);
 		model.addAttribute("youritem", youritem);
-		System.out.println(youritem+"판매자의 다른 상품 리스트");
+		
+		Cookie cookie = new Cookie ("item_idx", Integer.toString(item_idx)); // 쿠키에 "키값",값 넣기
+		cookie.setPath("/");//쿠키의 유효한 디렉토리를 설정하는것 + 모든 경로에서 접근하게 하는것
+		cookie.setMaxAge(60*60*24*7);//일주일간 쿠키 유지
+		response.addCookie(cookie);//쿠키에 추가
 		
 		
 		
 		//이웃체크
 		if(session.getAttribute("uidx") != null) {
-		int uidx = (int) session.getAttribute("uidx");
 		int neighbor_idx = vo.getUidx();
+		int uidx = (int) session.getAttribute("uidx");
 		bvo.setNeighbor_idx(neighbor_idx);
 		bvo.setUidx(uidx); //이게 있으면 추가가 안되고 없으면 체크가 안된다.
 		}
@@ -242,8 +305,8 @@ public class BoardItemController {
 		
 		//찜 체크
 		if(session.getAttribute("uidx") != null) {
-			int uidx = (int)session.getAttribute("uidx");
 			int W_item_idx = vo.getItem_idx();
+			int uidx = (int) session.getAttribute("uidx");
 			wvo.setItem_idx(W_item_idx);
 			wvo.setUidx(uidx);
 		}
@@ -252,7 +315,7 @@ public class BoardItemController {
 		model.addAttribute("wish",wish);
 		int wishCount = boarditemService.WishCount(item_idx);
 		model.addAttribute("wishCount",wishCount);
-		boarditemService.addviewCount(vo);
+	
 		int viewCount = boarditemService.viewCount(vo);
 		model.addAttribute("viewCount",viewCount);
 		
@@ -1128,9 +1191,32 @@ public class BoardItemController {
 	
 	@ResponseBody
 	@RequestMapping("/updatewdate")
-	public int updatewdate(int item_idx) {
+	public int updatewdate(int item_idx){
 		
+		/*
+		 * BoardItemVO result = boarditemService.selectitem(item_idx);
+		 * System.out.println(result.getWdate()+"글 작성날짜"); SimpleDateFormat df= new
+		 * SimpleDateFormat("yyyy-MM-dd"); Calendar cal = Calendar.getInstance();
+		 * 
+		 * String wwdate = result.getWdate(); //작성된 글의 시간을 추출해서 넣기 Date date =
+		 * df.parse(wwdate); // 추출해서 넣은 작성시간을 Date 타입으로 변경
+		 * 
+		 * System.out.println(date +"date"); cal.setTime(date); // 캘린더 함수에 추가
+		 * System.out.println("넣은 시간" +df.format(cal.getTime())); // 바로 위에서 넣은 값 확인
+		 * 
+		 * cal.add(Calendar.MONTH, 1);// 캘린더 함수를 통해 넣은 시간에 1달을 더함
+		 * System.out.println("바뀐 시간"+ df.format(cal.getTime())); // 더해진 시간 확인
+		 * 
+		 * String updatewdate = df.format(cal.getTime()); // 1달이 더해진 시간을 string 타입에 넣음
+		 * Date wdate = df.parse(updatewdate);// string 타입을 date 타입으로 전환
+		 * 
+		 * System.out.println(wdate.getTime() - date.getTime() / 1000 + "두 날짜간의 차이 구하기"
+		 * ); int Sec = (int) ((wdate.getTime() - date.getTime()) / 1000); int Days =
+		 * Sec / (24*60*60) ; System.out.println("두 날짜의 차이는 =" +Days+"일");
+		 */
 		boarditemService.update_wdate(item_idx);
+		
+		
 		System.out.println("끌올 완료");
 		return 1;
 	}

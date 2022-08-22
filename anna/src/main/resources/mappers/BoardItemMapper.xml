@@ -175,6 +175,7 @@
 			 , b.Price
 			 , b.offer
 			 , b.state
+			 , b.hit
 		FROM Board_Items b , AnnaUser u
 		WHERE b.uidx = u.uidx
 		AND b.item_idx = #{item_idx}

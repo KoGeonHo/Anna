@@ -144,8 +144,8 @@ public class BoardItemDAO {
 		return sqlSession.insert(efdb+".report_target",rvo);
 	}
 	
-	public int addviewCount(BoardItemVO vo) {
-		return sqlSession.update(efdb+".addviewCount",vo);
+	public int addviewCount(int item_idx) {
+		return sqlSession.update(efdb+".addviewCount",item_idx);
 	}
 	
 	public int viewCount(BoardItemVO vo) {
