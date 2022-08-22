@@ -269,13 +269,13 @@
 	                                        			<th>${ i.contents }</th>
 	                                        			<th>${ i.report_date }</th>
 	                                        			<th>${i.repotername }</th>
-	                                        			<th><button type="button" class="openModalPop btn" style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">상세보기${i.ridx }</button>
+	                                        			<th><button type="button" class="openModalPop btn" name="btn${i}" style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">상세보기${i.ridx }</button>
 	                                        			
 	                                        			
 	                                        			
 	                                        			<div class= "modal"> 
 															</div>
-															    <div class = "banner_online">
+															    <div class = "banner_online" name="report${i}">
 															        
 															        <h1>신고 상세보기</h1><br>
 															        <div class="pop_content">
@@ -321,6 +321,29 @@
 															        </div>
 															       </div>
 															       
+															       <script type="text/javascript">
+                     
+                     										var i = ${i}
+															
+                     										$(document).ready(function() {
+															    $("#openPop").click(function() {
+															        $(".banner_online").show();
+															    });
+															
+															    $(".openModalPop").click(function() {
+															        $("div[name=report+'${i}']").fadeIn();
+															        $(".modal").fadeIn();
+															    });
+															
+															    $("#close_button").click(function(){
+															        $(".banner_online").fadeOut();
+															        $(".modal").fadeOut();
+															    });
+															    
+															  
+															});
+															</script>
+															       
 	                                        	</c:forEach>
                                         	</c:if>
 
@@ -334,25 +357,7 @@
                     
                     </div>
                     
-                     <script type="text/javascript">
-															$(document).ready(function() {
-															    $("#openPop").click(function() {
-															        $(".banner_online").show();
-															    });
-															
-															    $(".openModalPop").click(function() {
-															        $(".banner_online").fadeIn();
-															        $(".modal").fadeIn();
-															    });
-															
-															    $("#close_button").click(function(){
-															        $(".banner_online").fadeOut();
-															        $(".modal").fadeOut();
-															    });
-															    
-															  
-															});
-															</script>
+                     
 
 
 
