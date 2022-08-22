@@ -72,5 +72,6 @@ public interface BoardItemService {
 	
 	public int delmyblackList(BoardItemVO vo);   
 	
+	public int update_wdate(int item_idx);
 	
 }

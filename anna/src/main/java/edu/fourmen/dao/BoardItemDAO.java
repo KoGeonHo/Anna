@@ -173,4 +173,8 @@ public class BoardItemDAO {
 		
 		return sqlSession.update(efdb+".udate_state",del);
 	}
+	
+	public int update_wdate(int item_idx) {
+		return sqlSession.update(efdb+".update_wdate",item_idx);
+	}
 }

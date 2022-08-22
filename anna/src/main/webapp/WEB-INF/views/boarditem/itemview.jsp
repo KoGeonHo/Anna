@@ -484,7 +484,6 @@ a:link {
 		//location.reload();
 			console.log("찜 삭제 완료");
 	}
-
 	
 
 		//신고 팝업 여는 부분
@@ -513,7 +512,7 @@ a:link {
 	
 	function addNeighbor(form) {
 		//작성자, 내용 유효성 검사
-		if (${userLoginInfo.uidx} == null) {
+		if (${userLoginInfo.uidx == null }) {
 			alert('회원만 이웃추가 기능을 사용할 수 있습니다');
 			return false;
 		}
@@ -612,6 +611,16 @@ a:link {
 		}
 		
 	}
+	
+function updatewdate(){
+				$.post('updatewdate',{
+					item_idx : ${vo.item_idx},
+				},
+				'json');
+					console.log("끌올 완료");
+			    alert("끌올 처리가 완료되었습니다.");
+		}
+	
 
 </script>
 
@@ -709,23 +718,6 @@ a:link {
 							</div>
 						</div>
 				</form>
-				<%-- <form action="report.do" enctype="multipart/form-data" method="POST">
-						<select name="report_type">
-							<option value="0">노쇼</option>
-							<option value="1">비속어&비매너채팅</option>
-							<option value="2">게시물 규칙 위반</option>
-							<option value="3">허위매물</option>
-							<option value="4">기타</option>
-						</select>
-						<textarea name="contents"></textarea>
-						<input type="hidden" name="item_idx" value="${vo.item_idx}">
-						<input type="hidden" name="repoter" value="${userLoginInfo.uidx}">
-						<input type="hidden" name="target" value="${vo.uidx}"> <input
-							type="file" name="file1"> <input type="submit"
-							value="신고하기">
-					</form> --%>
-				</div>
-
 
 			<!-- 채팅 팝업 영역  -->
 			<%-- <div id="popup" class="Pstyle">	
@@ -843,6 +835,7 @@ a:link {
 																		<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
 																	</c:if>
 																	<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
+																	<button onclick="updatewdate()">끌올</button>
 																</c:if>
 															</c:if>
 														</div>
@@ -981,21 +974,6 @@ a:link {
 															 ${vo.price} 원
 														</div>
 												</div>
-													
-													
-												<!-- 
-												<div class="row border-bottom tr">
-													<th style="width: 100px; background-color:white; border : 0; font-size: 20px;">
-													</th>
-													<td style="border : 0;">
-													</td>
-													
-													<div class="col-4 th" style="display:table-cell;">내용</div>
-													<div class="col-8 td" style="display:table-cell;">
-														<textarea name="contents"></textarea>
-													</div>
-																			
-												</div> -->
 												
 												<div class="row border-bottom tr" style="border:0;">
 													<div class="col-5 th" style="display:table-cell; background-color:white; border:0; font-size: 20px;">판매자</div>
@@ -1259,8 +1237,8 @@ a:link {
 											</h6>
 										<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
 											${vo.hit} 조회수
-										<%-- 
-										<div id="Wish_area">
+											<!-- div id를 바꿔서 본 글에 찜 추가 눌렀을때 안 나오게 해둠 -->
+										<div id="Wish_area2">
 											<c:if test="${vo.wishCheck == 0 }">
 												<div class="image">
 													<img src="../images/Wish_off.png" style="width:16px; height:16px;" >
@@ -1274,7 +1252,6 @@ a:link {
 										</div>
 									</c:if> 
 								</div>							 
-								--%>				
 							</div>
 						</div>
 					</div>
@@ -1297,7 +1274,7 @@ a:link {
 	</div>
 	</div>
 	
-	
+	</div>
 	
 	
 	<!--팝업 영역 끝 -->

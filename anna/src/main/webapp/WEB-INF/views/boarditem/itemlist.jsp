@@ -45,7 +45,7 @@
 	});
 
 
-
+/* 
 	function Chat__List() {
 		$.get('./mychatlist',{
 		chat_host : ${userLoginInfo.uidx}
@@ -65,15 +65,15 @@
 	$(function() {
 		Chat__List();
 		
-	});
-	
+	}); */
+	/* 
 	$(function(){
 		$(".chat").click(function(){
 			console.log("asd");
 			$('#popup').bPopup();
 		});
 	});
-
+ */
 	//스크롤 시 이벤트 처리
 	console.log("hi");
 	//위로 스크롤된 길이
