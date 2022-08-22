@@ -346,5 +346,11 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
+	public int updateRandomPwd(UserVO vo) {
+		
+		return userDAO.updateRandomPwd(vo);
+	}
+
 
 }

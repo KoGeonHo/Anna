@@ -192,7 +192,7 @@ $(function(){
 						
 					</div>
 					<div class="text-end" style="padding:10px;">
-						<button id="btn_pwd_chk" class="btn btn1" style="background:#00AAB2; color:#fff;" disabled onclick="">비밀번호 확인</button>
+						<button id="btn_pwd_chk" class="btn btn1" style="background:#00AAB2; color:#fff;" disabled onclick="location.href='changePwd.do'">비밀번호 확인</button>
 						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="closeModal()">닫기</button>
 					</div>
 				</div>
