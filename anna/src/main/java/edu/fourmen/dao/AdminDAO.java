@@ -30,11 +30,21 @@ public class AdminDAO {
 		return sqlSession.selectList("edu.fourmen.mapper.adminMapper.getReportList");
 		
 	}
+	
+	public List<ReportVO> getReportView(int ridx){
+		
+		return sqlSession.selectList("edu.fourmen.mapper.adminMapper.getReportView", ridx);
+	}
 
 	public void toggleAdmin(UserVO vo) {
 
 		sqlSession.update("edu.fourmen.mapper.adminMapper.toggleAdmin",vo);
 		
+	}
+	
+	public int reportapply(int ridx) {
+		
+		return sqlSession.update("edu.fourmen.mapper.adminMapper.reportapply", ridx);
 	}
 	
 }

@@ -47,7 +47,7 @@
         <!-- 관리자 정보 메뉴  -->
 <style type="text/css">
 
-			#modal {
+			.modal {
 				position: fixed;
 				width: 100%;
 				height: 100%;
@@ -65,8 +65,8 @@
 				box-shadow: 3px 3px 7px 1px grey;
 				background-color: white;
 				z-index: 9999;
-				margin-left: -50%;
-				margin-top: -18%;
+				margin-left: 22%;
+    			margin-top: -11%;
 				display: none;
 				position: fixed;
 			}
@@ -148,6 +148,7 @@
 </style>
 
 <script>
+let myMap = new Map();
 	/* alert("준비중입니다.");
 	history.back(); */
 </script>
@@ -231,7 +232,63 @@
 				  	<!-- 검색 -->
 
 
-                      
+                      <div class= "modal">
+						</div>
+						 <form action="admin_report.do" method="post">
+						    <div class = "banner_online">
+						        
+						        <h1>신고 상세보기</h1><br>
+						        <div class="pop_content">
+						       
+						             <table border="0" id="report_table" name="modal_list" style="text-align:  left; border-bottom: 1px solid #cdd0d4;">
+						             	<tr>
+						             		<td id="ridx">
+						             			
+						             		</td>
+						             	</tr>
+						             	
+						             	<tr>
+											<td id="td_line" width="130px;" height= "40px;" >신고유형</td>
+											<td id="report_type"></td>
+										</tr>
+										<tr>
+										    <td id="td_line" width="130px;" height= "40px;">신고닉네임</td>
+										    <td id="target"></td>
+										    
+										</tr>
+								
+										<tr>
+										    <td id="td_line" width="130px;" height= "200px;" style="vertical-align: top; padding-top: 10px;">상세설명</td>
+										    <td id="contents" style="vertical-align: top; padding-top: 10px;"></td>
+										</tr>
+										<tr>
+										    <td id="td_line"  width="130px;" height= "40px;">신고일</td>
+										    <td id="date"></td>
+										</tr>
+										<tr>
+										    <td id="td_line" width="130px;" height= "40px;">신고자</td>
+										    <td id="repoter"></td>
+										</tr>
+										<tr>
+										    <td id="td_line" width="130px;" height= "40px;">첨부파일</td>
+										    <td id="attach"></td>
+										</tr>
+								</table>
+								
+									    <br>
+								</div>
+						        <div id="menu_box">
+						          <div id="menu_box">
+						       
+											<button type="button"  id="test_button" class="btn " style="width :105px; background-color: #3881B4; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">거래글 확인</button>
+						       			 &nbsp;
+						       			<button id="test_button" class="btn " style="background-color: #E51D21; color: #fff; cursor: pointer;"  style="font-size: 14px;">신고 적용 </button>
+						       			&nbsp;
+						       			<button type="button"  id="close_button" class="btn" style="background-color: #00AAB2; color: #fff; cursor: pointer;" style="font-size: 14px;">닫기</button>
+						        </div>
+						        </div>
+						       </div>
+						       </form>
                    
                        
                             <div class="card mb-4">
@@ -253,96 +310,138 @@
                                         <tbody>
                                         	<c:if test="${ not empty ReportList }">
 	                                        	<c:forEach var="i" items="${ReportList}">
-	                                        		<tr>
-	                                        			<th>${ i.ridx }</th>
+	                                        		
+	                                        		<tr> 
+	                                        			<th>${ i.ridx } </th>
 	                                        			<th>
-	                                        			
-	                                        			<c:if test="${i.report_type == 0}">
-															${i.report_type}0
-														</c:if>
-														<c:if test="${i.report_type == 1}">
-															${i.report_type}1
-														</c:if>
+	                                        				<c:if test="${i.report_type == 0}">
+	                                        					노쇼
+															</c:if>
+															<c:if test="${i.report_type == 1}">
+	                                        					비속어&비매너채팅
+															</c:if>
+															<c:if test="${i.report_type == 2}">
+	                                        					게시물 규칙 위반
+															</c:if>
+															<c:if test="${i.report_type == 3}">
+	                                        					허위매물
+															</c:if>
+															<c:if test="${i.report_type == 4}">
+	                                        					기타
+															</c:if>
 	                                        			
 	                                        			</th>
 	                                        			<th>${ i.targetname }</th>
 	                                        			<th>${ i.contents }</th>
 	                                        			<th>${ i.report_date }</th>
 	                                        			<th>${i.repotername }</th>
-	                                        			<th><button type="button" class="openModalPop btn" name="btn${i}" style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;">상세보기${i.ridx }</button>
+                                        				
+	                                        			<th>
+	                                        			
+	                                        			<button type="button" class="openModalPop btn"  style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;" onclick="check(${i.ridx})">상세보기</button>
+	                                        			
+	                                        			<script>
+									               			function check(a){
+									               				
+									               				console.log(a);
+									               				
+									               				const ridx = a; // ridx를 함수에 넣음
+									               				console.log(ridx);
+									               				
+									               				
+									               				$.ajax({
+									               					
+									    							url : "reportview", //reportview라는 경로에
+									    							data : "ridx="+ridx, //ridx를 넘김
+									    							success : function(data) { //리턴받은 데이터로
+									    								
+									    								
+									    								
+									    									var list = data.list;
+									    							
+									    									console.log("여기까진옴");
+									    									console.log(list[0].report_type);
+									    									
+									    								       if(list[0].report_type== 0){
+									    									   		var report_type='노쇼'
+									    									   }else if(list[0].report_type == 1){
+									    										   
+									    										   var report_type='비속어&비매너채팅'
+									    									   }else if(list[0].report_type ==2){
+									    										   var report_type='게시물 규칙위반'
+									    									   }else if(list[0].report_type ==3){
+									    										   var report_type='허위매물'
+									    										   
+									    									   }else if(list[0].report_type ==4){
+									    										   
+									    										   var report_type='기타'
+									    									   }
+									    								   
+									    								   
+									    								   var target = list[0].targetname
+									    								   var content = list[0].contents
+									    								   var report_date = list[0].report_date
+									    								   var repoter = list[0].repotername
+									    								   var attach = list[0].attach
+									    								   var ridx = list[0].ridx
+									    								   
+									    								   $("#report_type").html(report_type);
+									    								   $("#target").html(target);
+									    								   $("#contents").html(content);
+									    								   $("#date").html(report_date);
+									    								   $("#repoter").html(repoter);
+									    								   $("#attach").html(attach);
+									    								   $("#ridx").html("<input type='hidden' name='ridx' value='"+ridx+"'>");
+									    								   
+									    								   /* </td>
+									    									
+									    									
+									    									for(i = 0;i < list.length;i++){
+									    										var Contents = list[i].contents;
+									    										var nickName = list[i].nickName;
+									    										comment_html += "<div id='commentstyle'><span id='nickName'><strong>" + nickName + "</strong></span><br/>";
+									    										comment_html += "<span id='Contents'>" + Contents + "</span><br>";
+									    										if(nickName=== $("#nickName").val()){
+									    											 comment_html += "<span id='delete' style='cursor:pointer;' data-id ="+Contents+">[삭제]</span><br></div>";
+									    										}
+									    										else{
+									    											comment_html += "</div>";
+									    										}
+									    									}
+									    									
+									    									console.log(comment_html);
+									    									
+									    									$(".comment_Box").html(comment_html);
+									    									
+									    									
+									    								}
+									    								else{
+									    									var comment_html = "<div>등록된 댓글이 없습니다.</div>";
+									    									$(".comment_Box").html(comment_html);
+									    								} */
+									    						
+									    							
+									    							}
+									    						});//ajax
+									    						
+									    						$(".banner_online").fadeIn();
+							    						 		$(".modal").fadeIn();
+									               				
+									               			}
+									    						
+									               			$("#close_button").click(function(){
+														        $(".banner_online").fadeOut();
+														        $(".modal").fadeOut();
+														        
+														    });
+									    						
+									    						
+									    						 
+									               		</script>
 	                                        			
 	                                        			
-	                                        			
-	                                        			<div class= "modal"> 
-															</div>
-															    <div class = "banner_online" name="report${i}">
-															        
-															        <h1>신고 상세보기</h1><br>
-															        <div class="pop_content">
-															             <table border="0" name="modal_list" style="text-align:  left; border-bottom: 1px solid #cdd0d4;">
-															             <tr>
-																				<td id="td_line" width="130px;" height= "40px;" >신고유형</td>
-																				<td id="td_line">${i.report_type }</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">신고닉네임</td>
-																			    <td id="td_line">${i.targetname}</td>
-																			    
-																			</tr>
-																	
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "200px;" style="vertical-align: top; padding-top: 10px;">상세설명</td>
-																			    <td id="td_line" style="vertical-align: top; padding-top: 10px;">${i.contents }</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line"  width="130px;" height= "40px;">신고일</td>
-																			    <td id="td_line">${i.report_date }</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">신고자</td>
-																			    <td id="td_line">${i.repotername }</td>
-																			</tr>
-																			<tr>
-																			    <td id="td_line" width="130px;" height= "40px;">첨부파일</td>
-																			    <td id="td_line">신고내용.jpg</td>
-	                                        								</tr>
-	                                        						</table>
-																		    <br>
-																	</div>
-															        <div id="menu_box">
-															          <div id="menu_box">
 															       
-																				<button type="button"  id="test_button" class="btn " style="width :105px; background-color: #3881B4; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">거래글 확인</button>
-															       			 &nbsp;
-															       			<button type="button"  id="test_button" class="btn " style="background-color: #E51D21; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/reportapply.do '"  style="font-size: 14px;">신고 적용 </button>
-															       			&nbsp;
-															       			<button type="button"  id="close_button" class="btn" style="background-color: #00AAB2; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">닫기</button>
-															        </div>
-															        </div>
-															       </div>
 															       
-															       <script type="text/javascript">
-                     
-                     										var i = ${i}
-															
-                     										$(document).ready(function() {
-															    $("#openPop").click(function() {
-															        $(".banner_online").show();
-															    });
-															
-															    $(".openModalPop").click(function() {
-															        $("div[name=report+'${i}']").fadeIn();
-															        $(".modal").fadeIn();
-															    });
-															
-															    $("#close_button").click(function(){
-															        $(".banner_online").fadeOut();
-															        $(".modal").fadeOut();
-															    });
-															    
-															  
-															});
-															</script>
 															       
 	                                        	</c:forEach>
                                         	</c:if>
@@ -357,11 +456,9 @@
                     
                     </div>
                     
-                     
-
-
-
-                
+               		
+               
+                               
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath()%>/js/admin_user.js"></script>
         <script src="<%=request.getContextPath()%>/js/simple-datatables@latest.js"></script>

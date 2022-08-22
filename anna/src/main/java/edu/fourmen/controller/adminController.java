@@ -1,9 +1,14 @@
 package edu.fourmen.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import edu.fourmen.service.AdminService;
 import edu.fourmen.service.BoardItemService;
@@ -48,8 +54,8 @@ public class adminController {
 		return "admin/admin_user";
 	}
 	
-	@RequestMapping(value="/admin_report.do")
-	public String admin_report(Model model) {
+	@RequestMapping(value="/admin_report.do", method=RequestMethod.GET)
+	public String admin_report(Model model) { 
 		
 		List<ReportVO> ReportList = adminService.getReportList();
 		
@@ -57,6 +63,43 @@ public class adminController {
 		
 		return "admin/admin_report";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/reportview", produces = "application/json; charset=utf8")
+	public Map<String, Object> getList(ReportVO rv, Model model) { // @PathVariable: URL 경로에 변수를 넣어주는
+		System.out.println("댓글 목록 컨트롤러 동작");
+		List<ReportVO> list = adminService.getReportView(rv.getRidx());//댓글목록
+		
+		ModelAndView view = new ModelAndView(); //데이터와 뷰를 동시에 설정이 가능
+		view.setViewName("/admin/admin.report"); //뷰
+		Map<String, Object> map = new HashMap<>(); //키와 밸류값으로 저장하는
+		map.put("list", list);
+		
+		
+		
+		return map;
+	}
+	
+	@RequestMapping(value="/admin_report.do", method=RequestMethod.POST)
+	public void reportapply(ReportVO rv,HttpServletResponse response) throws IOException { //신고적용
+		
+		int result = adminService.reportapply(rv.getRidx());
+		
+		PrintWriter pw = response.getWriter();
+		
+		if(result==0) {
+			
+			pw.append("<script>alert('신고적용실패');location.href='admin_report.do';</script>");
+			pw.flush();
+		}else {
+			pw.append("<script>alert('신고적용');location.href='admin_report.do';</script>");
+			pw.flush();
+			
+		}
+		
+		System.out.println("너 밴");
+	}
+
 	
 	@RequestMapping(value="/admin_boarditem")
 	public String admin_boarditem(Model model, HttpServletRequest request, HttpSession session, PageMaker pm, BoardItemVO vo) {

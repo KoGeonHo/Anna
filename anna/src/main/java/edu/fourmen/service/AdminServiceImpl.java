@@ -43,6 +43,19 @@ public class AdminServiceImpl implements AdminService{
 		adminDAO.toggleAdmin(vo);
 		
 	}
+
+	@Override
+	public List<ReportVO> getReportView(int ridx) {
+		
+		return adminDAO.getReportView(ridx);
+	}
+
+	@Override
+	public int reportapply(int ridx) {
+		
+		return adminDAO.reportapply(ridx);
+		
+	}
 	
 	
 	
