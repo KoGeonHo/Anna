@@ -188,7 +188,7 @@ public class UserController {
 		
 		if(result == 1) {
 			
-			pw.append("<script>alert('환영합니다"+vo.getNickName()+"님, 가입이 완료되었습니다.'); location.href='"+request.getContextPath()+"/user/login.do';</script>");
+			pw.append("<script>alert('환영합니다"+vo.getNickName()+"님, 가입이 완료되었습니다.'); location.href='"+path+"/user/login.do';</script>");
 			
 			pw.flush();
 			
@@ -196,7 +196,7 @@ public class UserController {
 			
 		} else {
 			
-			pw.append("<script>alert('문제가 발생하여 처리되지 않았습니다.\\n다시 시도해주세요.'); location.href='"+request.getContextPath()+"/user/joinS2.do'</script>");
+			pw.append("<script>alert('문제가 발생하여 처리되지 않았습니다.\\n다시 시도해주세요.'); location.href='"+path+"/user/joinS2.do'</script>");
 			
 			pw.flush();
 			
@@ -750,7 +750,7 @@ public class UserController {
 		
 		UserVO uv = (UserVO)session.getAttribute("userLoginInfo");
 		
-		System.out.println(password);
+		//System.out.println(password);
 		
 		if(pwdEncoder.matches(password, uv.getUser_pwd())) {
 			result = "correct";
@@ -758,8 +758,86 @@ public class UserController {
 			result = "incorrect";
 		}
 		
-		System.out.println(result);
+		//System.out.println(result);
 		
 		return result;
+	}
+	
+	@RequestMapping(value="/changePwd.do",method=RequestMethod.GET)
+	public String changePwd(Model model) {
+		
+		model.addAttribute("path",path);
+		
+		return "user/changePwd";
+		
+	}
+	
+	//비밀번호 변경
+	@RequestMapping(value="/changePwd.do",method=RequestMethod.POST)
+	public void changePwd(UserVO vo,HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException {
+		
+		session = request.getSession();
+		
+		String user_pwd = vo.getUser_pwd();
+		
+		int uidx = (int)session.getAttribute("uidx");
+
+		vo.setUser_pwd(pwdEncoder.encode(user_pwd));
+		
+		vo.setUidx(uidx);
+		
+		int result = userService.updatePwd(vo);
+		
+		PrintWriter pw = response.getWriter();
+		
+		if(result == 1) {
+			
+			String access_Token = (String)session.getAttribute("access_Token");
+			
+			userService.kakaoLogout(access_Token);
+			
+			session.invalidate();
+			
+			Cookie[] cookies = request.getCookies();  // 쿠키 값을 null로 설정
+			
+			for(Cookie cookie:cookies) {
+				if(cookie.getName().equals("uidx")) {
+					cookie.setPath("/");
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);
+				}
+			}
+			
+			pw.append("<script>alert('비밀번호변경이 완료되었습니다. 다시 로그인 해주세요!'); location.href='"+path+"/user/login.do'</script>");
+			
+			pw.flush();
+			
+			pw.close();
+		}
+		
+	
+	}
+	
+	@RequestMapping(value="/findPwd.do")
+	public String findPwd(Model model) {
+		
+		model.addAttribute("path",path);
+		
+		return "user/findPwd";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/checkEmailForFindPwd.do",produces = "application/json; charset=utf8")
+	public String checkEmailForFindPwd(String user_email) {
+		
+		if(userService.emailChk(user_email) > 0) {
+			System.out.println("가입된 이메일 주소");
+		}else {
+			System.out.println("가입되지 않은 이메일 주소");
+		}
+		
+		return userService.emailChk(user_email)+"";
+		
 	}
 }

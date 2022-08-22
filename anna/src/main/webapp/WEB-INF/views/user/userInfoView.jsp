@@ -38,27 +38,40 @@
 
 </style>
 <script>
-	function passCheck(pass){
-		let password = pass.value;
-		if(password != ""){
-			$.ajax({
-				url : "passcheck.do",
-				data : "password="+password,
-				success : function(result){
-					if(result == "correct"){
-						$("#pwd_chk_msg").html("비밀번호 일치");
-						$("#btn_pwd_chk").prop("disabled",false);
-					}else{
-						$("#pwd_chk_msg").html("비밀번호 불일치");
-						$("#btn_pwd_chk").prop("disabled",true);
+
+$(function(){
+	$("#input_pwd_chk").keyup(function(e){
+		let password = $(this).val();
+		if(e.keyCode != 13){
+			if(password != ""){
+				$.ajax({
+					url : "passcheck.do",
+					data : "password="+password,
+					success : function(result){
+						if(result == "correct"){
+							$("#pwd_chk_msg").html("비밀번호 일치");
+							$("#btn_pwd_chk").prop("disabled",false);
+						}else{
+							$("#pwd_chk_msg").html("비밀번호 불일치");
+							$("#btn_pwd_chk").prop("disabled",true);
+						}
 					}
-				}
-			});
+				});
+			}else{
+				$("#pwd_chk_msg").html("");
+				$("#btn_pwd_chk").prop("disabled",true);
+			}
 		}else{
-			$("#pwd_chk_msg").html("");
-			$("#btn_pwd_chk").prop("disabled",true);
+			if($("#btn_pwd_chk").prop("disabled")){
+				alert("비밀번호가 일치하지 않습니다.");
+			}else{
+				console.log("비밀번호 일치");
+				location.href="changePwd.do";
+			}
 		}
-	}
+	});
+});
+	
 	
 	function openModal(){
 		$("#modal_pwd_chk").fadeIn();
@@ -158,7 +171,7 @@
 					<div class="text-end">
 						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/user/userInfoMod.do';">회원정보 수정</button>
 						<c:if test="${ empty userInfo.kakao_auth  }">
-							<button class="btn" style="background:#BBCE53; color:#fff;" onclick="openModal()">비밀번호 변경</button>
+							<button id="btn_pwd_cng" class="btn" style="background:#BBCE53; color:#fff;" onclick="openModal()">비밀번호 변경</button>
 						</c:if>
 					</div>
 				</div>
@@ -173,7 +186,7 @@
 					</div>
 					<div class="text-end" style="padding:10px;">
 						<p style="padding:5px; margin:0px;">본인확인을 위해 비밀번호를<br> 입력해주세요.</p>
-						<input class="form-control" type='password' name="chkPwd" placeholder="비밀번호" onkeyup="passCheck(this)">
+						<input id="input_pwd_chk" class="form-control" type='password' name="chkPwd" placeholder="비밀번호">
 					</div>
 					<div id="pwd_chk_msg" class="text-end" style="padding:10px;">
 						

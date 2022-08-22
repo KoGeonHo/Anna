@@ -34,5 +34,6 @@ public interface UserService {
 	List<BoardItemVO> myBoardItemList(int uidx);
 	List<BoardItemVO> getWishList(int uidx);
 	List<BoardVO> getMyCommunity(int uidx);
+	int updatePwd(UserVO vo);
 	
 }

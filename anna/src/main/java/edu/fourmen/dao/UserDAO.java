@@ -167,6 +167,13 @@ public class UserDAO {
 		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getMyCommunity",uidx);
 		
 	}
+
+
+	public int updatePwd(UserVO vo) {
+		
+		return sqlSession.update("edu.fourmen.mapper.userMapper.updatePwd",vo);
+		
+	}
 }
 
 
