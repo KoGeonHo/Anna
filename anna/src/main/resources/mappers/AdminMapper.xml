@@ -55,7 +55,26 @@
 		
 	</select>
 	
-	<update id="reportapply">
+	<select id="getReportView" resultType="ReportVO" parameterType="int"> <!-- 신고상세보기 -->
+		SELECT
+			r.ridx,
+			r.bidx,
+			r.item_idx,
+			r.repoter,
+			(SELECT nickname FROM AnnaUser u where u.uidx = r.repoter) AS repotername,
+			r.target,
+			(SELECT nickname FROM AnnaUser u where u.uidx = r.target) AS targetname,
+			r.evidence,
+			r.attach,
+			r.report_type,
+			r.contents,
+			DATE_FORMAT(r.report_date, '%Y-%m-%d') AS report_date
+		 FROM report r
+		WHERE ridx = #{ridx}
+	
+	</select>
+	
+	<update id="reportapply" parameterType="int"> <!-- 신고적용 -->
 	
 		UPDATE report
 		   SET ban = 'Y'

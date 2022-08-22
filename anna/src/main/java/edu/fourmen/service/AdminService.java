@@ -13,7 +13,11 @@ public interface AdminService {
 	List<QnAVO> getQnaList();
 
 	List<ReportVO> getReportList();
+	
+	List<ReportVO> getReportView(int ridx);
 
 	void toggleAdmin(UserVO vo);
+	
+	int reportapply(int ridx);
 
 }
