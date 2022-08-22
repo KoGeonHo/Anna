@@ -110,9 +110,9 @@ public class BoardItemController {
 		
 		//전체 상품 리스트 받아오기
 		if (session.getAttribute("uidx") != null) {
-		int uidx = (int) session.getAttribute("uidx");
-		pm.setUidx(uidx);
-		System.out.println(pm.getInterested()+"pm에서 가져옴");
+			int uidx = (int) session.getAttribute("uidx");
+			pm.setUidx(uidx);
+			System.out.println(pm.getInterested()+"pm에서 가져옴");
 		}
 	    List<BoardItemVO> list = boarditemService.list(pm);
 	    
@@ -1123,6 +1123,15 @@ public class BoardItemController {
 		
 		boarditemService.update_state(state, item_idx);
 		System.out.println("거래상태 업데이트 완료");
+		return 1;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/updatewdate")
+	public int updatewdate(int item_idx) {
+		
+		boarditemService.update_wdate(item_idx);
+		System.out.println("끌올 완료");
 		return 1;
 	}
 	

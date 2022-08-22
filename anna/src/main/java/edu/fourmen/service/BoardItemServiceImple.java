@@ -187,6 +187,12 @@ public  class BoardItemServiceImple implements BoardItemService{
 	}
 
 
+	@Override
+	public int update_wdate(int item_idx) {
+		return boarditemdao.update_wdate(item_idx);
+	}
+
+
 
 	
 }

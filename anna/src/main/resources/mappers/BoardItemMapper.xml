@@ -43,7 +43,7 @@
 		 </if> 
 		 
 		 
-		ORDER BY b.item_idx desc limit #{pagemaker.startPage}, #{pagemaker.pageNum}
+		ORDER BY wdate desc limit #{pagemaker.startPage}, #{pagemaker.pageNum}
 	</select>
 	
 	
@@ -467,6 +467,10 @@
 		 update Board_Items set state = #{state} where item_idx = #{item_idx}
 	</update>
 	
+	
+	<update id="update_wdate" parameterType="int">
+		update Board_Items set wdate = now() where item_idx = #{item_idx}
+	</update>
 	
 	
 </mapper>
