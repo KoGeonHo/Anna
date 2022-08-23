@@ -79,9 +79,9 @@ public class HomeController {
 				
 				request.setAttribute("plist", plist);
 				
-				List<BoardVO> freeboard = boardService.selectboard(pm);
+				List<BoardVO> board = boardService.selectboard(pm);
 			
-				model.addAttribute("freeboard", freeboard);		
+				model.addAttribute("board", board);		
 		
 		// 게시판 불러오기
 				

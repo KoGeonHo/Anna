@@ -378,27 +378,39 @@ a {
 	<!-- 검색 -->
 
 
+<div class="container">
+			<div class="row" style="margin-top: 40px;">
+				<div class="col-md-6 "><a href=""><img src="images/main_menu_img1.jpg" style="margin-left: 20px;"></a></div>
+				<div class="col-md-6 " style="padding: 0;"><img src="images/main_menu_img2.jpg">
+				<img src="images/main_menu_img3.jpg" style="margin-top: 15px;">
+				<img src="images/main_menu_img4.jpg" style="margin-left: 22px;  margin-top: 17px;"></div>
+
+		
+	</div>
+
+
+
+
 
 	<!-- 인기상품 start -->
 			<div id="bestitem">
 				<main>
 					<div class="album py-5 ">
-						<div class="container">
 
 							<div class="container ">
-								<div class="row ">
-									<div class="col-md-2">
-										<h4>｜인기 상품</h4>
+								<div class="row" style="background-color: #f9f9f9; height: 100px; line-height : 100px;">
+									<div class="col-md-2"></div>
+									<div class="col-md-8" style="text-align:center; transform: translate(10px, 21px);">
+									<h4 style="font-weight:bold">인기상품</h4>
+									<h6 style="color:#aaa;"]>AnnA의 인기 아이템을 확인하세요</h6>
 									</div>
-									<div class="col-md-8"></div>
 									<div class="col-md-2 "></div>
-									<hr>
 								</div>
 							</div>
-						</div>
-					</div>
+							</div>
+							</main>
 
-				</main>
+				
 
 
 				<!--   Slick Slider -->
@@ -406,7 +418,7 @@ a {
 					<div class="row">
 						<!-- stlye 은 slick 영역 확인용 -->
 						<div
-							style="padding-top: 30px; background-color: #fff; margin-top: -75px;">
+							style="padding-top: 30px; background-color: #fff; margin-top: -39px;">
 							<div id="slider-div">
 
 								<c:if test="${list.size() > 0}">
@@ -491,7 +503,8 @@ a {
 	</script>
 
 
-					<style>
+<style>
+
 #slidebtn {
 	width: 50px;
 	color: white;
@@ -541,12 +554,12 @@ a {
 							<hr>
 							<form>
 								<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-									<c:if test="${freeboard.size() ==0}">
+									<c:if test="${board.size() ==0}">
 										<h3>등록된 게시물이 없습니다.</h3>
 									</c:if>
 
-									<c:if test="${freeboard.size()>0 }">
-										<c:forEach var="vo" items="${freeboard}">
+									<c:if test="${board.size()>0 }">
+										<c:forEach var="vo" items="${board}">
 											<c:if test="${vo.board_type eq 'free' }">
 
 												<div class="col">
