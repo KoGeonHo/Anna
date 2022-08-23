@@ -317,6 +317,9 @@ height : 54px;
 						    </c:if> --%>
 						</div>
 					</div>
+					<div id="map" style="width:100%;height:350px;"></div>
+
+					
 					<c:if test="${bv.uidx == uidx}"> 
 				    	<a href="BoardModify.do?Bidx=${bv.bidx }">수정</a>
 				    	<a href="BoardDelete.do?Bidx=${bv.bidx}">삭제</a>
@@ -326,15 +329,7 @@ height : 54px;
 				    </c:if>
 				</form>
 
-				
-				
-					
 
-					
-				    	
-				    
-				   
-    
 				<c:if test="${ bv.board_type ne 'notice' }">
                     <div class="comment-box">
    		                 <div class="comment-count">댓글 <span id="count">0</span></div>
@@ -583,6 +578,28 @@ height : 54px;
 						});
 					});
 					
+					
+					
+
+					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+					    mapOption = { 
+					        center: new kakao.maps.LatLng(${bv.place_location}), // 지도의 중심좌표
+					        level: 3 // 지도의 확대 레벨
+					    };
+
+					var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+					// 지도를 클릭한 위치에 표출할 마커입니다
+					var marker = new kakao.maps.Marker({ 
+					    // 지도 중심좌표에 마커를 생성합니다 
+					    position: map.getCenter() 
+					}); 
+					// 지도에 마커를 표시합니다
+					marker.setMap(map);
+
 					</script>
+					
+					
+					
 </body>
 </html>
