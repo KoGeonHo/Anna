@@ -109,7 +109,7 @@
 					html += '<div style="padding:5px; font-size:0.8rem; margin-left:10px;" class="text-start">'+chatList[i].lastChat+'</div>';
 					html += '</div>';
 					html += '<div style="width:80px; text-align:center; margin:auto;">';
-					html += '<img src="${path}/images/upload/'+chatList[i].itemThumbNail+'" class="item_thumbnail" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+chatList[i].item_idx+'\'" onerror="this.onerror=null; this.src=\'${path}/images/noimg_item.jpg\';">';
+					html += '<img src="${path}/resources/upload/'+chatList[i].itemThumbNail+'" style="padding:0" class="item_thumbnail" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+chatList[i].item_idx+'\'" onerror="this.onerror=null; this.src=\'${path}/images/noimg_item.jpg\';">';
 					html += '</div>';
 					if(chatList[i].newMessages > 0){
 						html += '<div class="NewMessageAlert">'+chatList[i].newMessages+'</div>';
