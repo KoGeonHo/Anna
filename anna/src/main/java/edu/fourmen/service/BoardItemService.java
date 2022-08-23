@@ -1,10 +1,8 @@
 package edu.fourmen.service;
 
 
-import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.ChatMessageVO;
@@ -31,7 +29,7 @@ public interface BoardItemService {
 	
 	public int update_state(int state, int item_idx);
 	
-	public int itemdelete(BoardItemVO vo);
+	public int itemdelete(int item_idx);
 
 	public List<BoardItemVO> MinPrice(PageMaker pm);
 

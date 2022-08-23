@@ -174,11 +174,25 @@
 	
 	
 	
-	
-	
-	
-	
-	
+		 
+$(document).ready(function(){
+		var auth =[ ${userLoginInfo.location_auth} ];
+			//var addr_code = auth.split(',');;				
+				
+		$(".box").change(function(){
+			if($($(this)).is(":checked")){
+				console.log("내지역만 보기 체크");
+				console.log(auth);
+				//$('input[name=addr_code]').attr('value',auth);
+				 $('#frm').append('<input type="hidden" value="'+auth+'" name="addr_code">');	        
+				//<input type="hidden" name="addr_code" id="addr_code">
+			}else{
+				$('#frm').remove($('input[name=addr_code]'));
+				console.log("내지역만 보기 체크해제")
+			}
+		});
+		
+	}); 
 	
 	
 </script>
@@ -374,14 +388,6 @@ a:link {
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div id="main" class="wrapper">
 			<div class="container main">
-			
-			
-				<!-- 용도가 무엇인지? -->
-				<input type="hidden" name="uidx" value="${userLoginInfo.uidx}">
-				<!--  -->
-				
-				
-				
 				<div class="categories text-center">
 					<ul class="cate_menu">
 						<li onclick="location.href='itemlist.do'">전체</li>
@@ -437,11 +443,14 @@ a:link {
 				<div class="searchFrm text-center" style="margin:20px;">
 					<div style="display:flex;">
 						<div style="flex:1; margin-right:10px;">		
-							<form method="get" action="itemlist.do">
+							<form method="get" action="itemlist.do" id="frm">
 								<input class="form-control text-center" type="text" name="searchVal" class="search-control" placeholder="검색어를 입력해주세요" value="${pm.searchVal}">
+								
 							</form>
+								<input type="submit" value="검색1" class="btn btn-outline-primary">
 						</div>
-						<input type="submit" value="검색" class="btn btn-outline-primary">
+						내 지역만 보기<input type="checkbox" class="box">
+						<button class="btn" style="background-color: #00AAB2; color: #fff;" onclick='location.href="itemwrite.do"'>글쓰기</button>
 					</div>
 				</div>
 				<%-- <div class="col-md-12  col-sm-12 d-flex" id="search-area">
@@ -452,7 +461,7 @@ a:link {
 							</c:if>>
 						<input type="submit" value="검색" class="btn btn-outline-primary">
 					</form>
-						<button class="btn" style="background-color: #00AAB2; color: #fff;" onclick='location.href="itemwrite.do"'>글쓰기</button>
+						
 				</div> --%>
 				<!-- 검색창 끝 -->
 					<c:if test="${!empty pm.searchVal}">
@@ -592,7 +601,12 @@ a:link {
 												<span style="color:#00AAB2;">${ vo.price }</span>원
 											</div>
 									    	<div class="text-end">
-									    		<img src="${path}/images/icon_wish_count.png" style="width:26px; padding:2px;"> ${ vo.wishCount }&nbsp;<img src="${path}/images/icon_chat_count.png" style="width:28px; padding:1px;"> ${ vo.chatCount }
+									    		<c:if test="${vo.wishCheck == 0}">
+									    		<img src="${path}/images/icon_wish_count.png" style="width:26px; padding:2px;">
+									    		</c:if>
+									    		<c:if test="${vo.wishCheck != 0}">
+									    		<img src="${path}/images/Wish_on.png" style="width:26px; padding:2px;">
+									    		</c:if>${ vo.wishCount }&nbsp;<img src="${path}/images/icon_chat_count.png" style="width:28px; padding:1px;"> ${ vo.chatCount }
 									    	</div>
 									  	</div>
 									</div>

@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import java.io.IOException;
+import java.lang.constant.Constable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -68,10 +69,17 @@ public class BoardItemController {
 			pm.setSearchVal("");
 		}
 		
-		
-		
-		
-		
+		/* String [] = vo.getAddr_code().split(','); */
+		if(vo.getAddr_code() != null) {
+		System.out.println(vo.getAddr_code()+"넘긴 auth");
+		String auth = vo.getAddr_code();
+		String[] auth2 = auth.split(",");
+			for(String a : auth2 ) {
+				System.out.println(a.substring(0,4) + "이게 리얼 ");
+				
+				vo.setAddr_code(a.substring(0,4));
+			}
+		}
 		//한 페이지에 몇개씩 표시할 것인지
 				int pagecount = 12;
 				//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
@@ -962,13 +970,13 @@ public class BoardItemController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/itemdelete.do", method=RequestMethod.GET)
-	public String delete(HttpSession session,Model model, int item_idx,BoardItemVO vo) {
+	@RequestMapping("/itemdelete")
+	public String delete(HttpSession session,Model model, int item_idx) {
 
-		int result = boarditemService.itemdelete(vo);
+		boarditemService.itemdelete(item_idx);
 		System.out.println("게시글 삭제 완료");
 		
-		return "boarditem/itemlist";
+		return "redirect:/boarditem/itemlist.do";
 	}
 	
 	/*

@@ -102,13 +102,58 @@
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div class="container main">
 		
+		
 		<h3 class="border-bottom" style="padding:1rem; margin:0px;">판매글 작성하기</h3>
 				<form method="POST" action="itemwrite.do" enctype="multipart/form-data" name="frm" id="joinFrm">
 					
 					<input type="hidden" name="uidx" value="${uidx}">
-					<input type="hidden" name="addr_code" value="${userLoginInfo.location_auth}" readonly="readonly">
+					<%-- <input type="hidden" name="addr_code" value="${userLoginInfo.location_auth}" readonly="readonly"> --%>
 					<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 					<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">거래지역</div>
+						<div class="col-8 td" style="display:table-cell;">
+						<select class="form-select" aria-label="Default select example" name="addr_code" onchange="alert('해당 기능은 준비중입니다.')">
+							<option>내 동네</option>
+						</select>
+				    		<script>
+					    		let locationList = [${ userLoginInfo.location_auth }];
+					    		let html = '';
+					    		$.ajax({
+									url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+									data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
+									success : function(data){
+										$(".spinner-border").css("display","none");
+										for(let i = 0; i < locationList.length; i++){
+											$.ajax({
+												url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
+												async : false,
+												data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
+												success : function(geojson){
+													let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
+													//dong.push(locationLevel[locationLevel.length-1]);
+													//console.log(dong);
+													html += '<option value="'+locationList[i]+'"';
+													if(i == 0){
+														html += " selected "
+													}
+													html += '>'+locationLevel[locationLevel.length-1]+'</option>'
+													$(".form-select").append('<option value="'+locationList[i]+'">'+locationLevel[locationLevel.length-1]+'</option>');
+												}
+											});
+										}
+									},
+									error: function(){
+										console.log("error");
+									}
+								});
+		    		</script>
+						</div>
+					</div>
+					
+					
+					
 					
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">제목</div>
