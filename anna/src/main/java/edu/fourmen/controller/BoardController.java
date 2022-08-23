@@ -551,6 +551,14 @@ public class BoardController {
 		return "";
 	}
 	
+	@RequestMapping(value="/FreeBoard.do")
+	public String FreeBoard() {
+		
+		return "board/FreeBoard";
+		
+		
+	}
+	
 	
 	
 	

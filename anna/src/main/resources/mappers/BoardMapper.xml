@@ -18,6 +18,7 @@
 			,Image3
 			,Image4
 			,Image5
+			,place_location
 	)VALUES(
 			 #{uidx}
 			,#{board_type}
@@ -30,6 +31,7 @@
 			,#{Image3}
 			,#{Image4}
 			,#{Image5}
+			,#{place_location}
 	)
 
 
@@ -124,6 +126,7 @@
 		  ,b.Image3
 		  ,b.Image4
 		  ,b.Image5
+		  ,b.place_location
 	  FROM Board b, AnnaUser u
 	 WHERE b.Uidx = u.uidx
 	   AND b.Bidx = #{Bidx}

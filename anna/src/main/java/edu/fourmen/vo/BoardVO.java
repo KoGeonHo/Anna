@@ -24,8 +24,15 @@ public class BoardVO extends UserVO{
 	private MultipartFile FileName5;
 	private int Ccount;
 	private int cntLike;
+	private String place_location;
 	
 
+	public String getPlace_location() {
+		return place_location;
+	}
+	public void setPlace_location(String place_location) {
+		this.place_location = place_location;
+	}
 	public MultipartFile getFileName4() {
 		return FileName4;
 	}
