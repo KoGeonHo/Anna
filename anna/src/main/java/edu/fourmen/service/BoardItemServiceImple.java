@@ -64,8 +64,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public int itemdelete(BoardItemVO vo) {
-		return boarditemdao.itemdelete(vo);
+	public int itemdelete(int item_idx) {
+		return boarditemdao.itemdelete(item_idx);
 	}
 
 

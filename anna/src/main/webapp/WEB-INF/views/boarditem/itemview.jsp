@@ -117,7 +117,6 @@ ul.imgs li {
 }
 
 #btn-area {
-	margin-left: 25%;
 }
 /*557 보다 크거나 같아야 하고 991거나 작아야 같아야함 태블릿용*/
 @media all and (577px <= width <= 991px) {
@@ -504,7 +503,7 @@ console.log("addwish");
 		
 		
 		
-		//채팅 리스트 여는 부분
+		//삭제 팝업 여는 부분
 		$(function(){
 			$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
 				$('#popup').bPopup();
@@ -622,7 +621,6 @@ console.log("addwish");
 function updatewdate(){
 	let Days = ${Days};
 			if(Days > 31){
-			
 				$.post('updatewdate',{
 					item_idx : item_idx,
 				},
@@ -634,7 +632,15 @@ function updatewdate(){
 				alert("글 작성일로부터 한 달이 지나야 끌올이 가능합니다!")
 			}
 	}
-
+	
+function itemdelete(){
+				$.post('itemdelete',{
+					item_idx : item_idx,
+				},
+				'json');
+					console.log("삭제 완료");
+			    alert("게시물 삭제가 완료되었습니다.");
+			}
 	
 </script>
 
@@ -668,25 +674,23 @@ function updatewdate(){
 <!-- <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ad11d9178deb7b571198c476ec55ad0f"></script> -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+
 <!-- 지도 API -->
+
 </head>
 <body>
 	<div class="wrapper">
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="main" id="main"
-			style="overflow-y: auto; overflow-x: hidden;">
-
+		<div class="main" id="main" style="overflow-y: auto; overflow-x: hidden;">
 			<div class="container">
 				<div class="row">
-
-
 					<!-- 신고하기 팝업 영역  -->
 					<div id="popup2" class="Pstyle2">
 						<!-- form 은 기본 전송방식이 post 임!! 잊지말것  -->
-						<form method="POST" action="report.do"
-							enctype="multipart/form-data" name="frm" id="joinFrm">
+						<form method="POST" action="report.do" enctype="multipart/form-data" name="frm" id="joinFrm">
 							<div class="row border-bottom tr">
 								<input type="hidden" name="item_idx" value="${vo.item_idx}">
 								<input type="hidden" name="repoter"
@@ -732,6 +736,7 @@ function updatewdate(){
 
 							<div class="text-end tr">
 								<div class="td">
+								
 									<button class="btn" style="background: #00AAB2; color: #fff;">신고하기</button>
 									<button class="btn" style="background: #00AAB2; color: #fff;"
 										type="button" id="btn_close2">취소</button>
@@ -740,49 +745,12 @@ function updatewdate(){
 						</form>
 						</div>
 
-						<!-- 채팅 팝업 영역  -->
-						<%-- <div id="popup" class="Pstyle">	
-				<div id="chatbox" style="width:100%; overflow-y:auto; flex:1; border:2px solid #aaa; border-radius:5px; padding:10px;">
-						<c:if test="${chatViewList.size() > 0}">
-							<c:forEach var="i" items="${chatViewList}">
-								<c:if test="${ i.uidx eq uidx }">
-									<div class="text-end border-bottom" style="padding:10px;">
-										<div>${ userLoginInfo.nickName }</div>
-										<div>${i.contents}</div>
-									</div>
-								</c:if>
-								<c:if test="${ i.uidx ne uidx }">
-									<div class="text-start border-bottom" style="padding:10px; display:flex;">
-										<div>
-											<c:if test="${ i.uidx eq i.chat_host }">
-												<img src="${i.hostProfileImg}" style="width:50px; height:auto; border-radius:100px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/NoProfile.png';">
-											</c:if>
-											<c:if test="${ i.uidx eq i.invited }">
-												<img src="${i.invitedProfileImg}" style="width:50px; height:auto; border-radius:100px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/NoProfile.png';">
-											</c:if>
-										</div>
-										<div style="flex:1; margin:auto; margin-left:10px;">
-											<div>${audience}</div>
-											<div>${i.contents}</div>
-										</div>
-									</div>
-								</c:if>
-							</c:forEach>
-						</c:if>	
-					</div> 
-				
-							
-					<form style="width:100%; margin:0px;">
-						<div id="chatInput" style="padding:10px 0; width:100%; display:flex;">
-							<div class="td" style="flex:1; padding:0; margin:auto;">
-								<textarea class="form-control" id="chatContents" style="height:60px; display:inline-block; width:100%; resize:none;"></textarea>
-							</div>
-							<div class="td text-end" style="width:70px; padding:5;">
-								<button class="btn" type="button" id="sendBtn" style="width:60px; height:60px; background: #ccc; color:#fff;" disabled onclick="sendMessage()">전송</button>
-							</div>
-						</div>
-					</form>
-			</div>--%>
+						<!-- 삭제 팝업 영역  -->
+				 <div id="popup" class="Pstyle" style="width:25%;">	
+		 				<div class="col-4 th" style="display: table-cell;">정말 게시글을 삭제하시겠습니까?</div>
+								<button class="btn" style="background: #00AAB2; color: #fff; width:50%;" onclick="itemdelete(); location.href='itemlist.do'">삭제하기</button>
+								<button class="btn" style="background: #00AAB2; color: #fff; width:50%;" type="button" id="btn_close">취소</button>
+				</div>
 
 						<div class="container">
 							<div class="row">
@@ -833,33 +801,6 @@ function updatewdate(){
 										<span
 											style="padding: 10px; font-size: 3rem; font-weight: bold;">${vo.title}</span>
 										<div id="state" style="margin: auto 10px; text-align: start;">
-											<c:if test="${userLoginInfo.uidx == vo.uidx}">
-												<c:if test="${vo.state != 3}">
-													<select name="state" class="state"
-														onchange="updatestate();">
-														<c:if test="${vo.state == 1 }">
-															<option value="${vo.state}" selected disabled hidden>거래중</option>
-														</c:if>
-														<c:if test="${vo.state == 2 }">
-															<option value="${vo.state}" selected disabled hidden>예약중</option>
-														</c:if>
-														<c:if test="${vo.state == 3 }">
-															<option value="${vo.state}" selected disabled hidden>거래완료</option>
-														</c:if>
-														<option value="1">거래중</option>
-														<option value="2">예약중</option>
-														<option value="3">거래완료</option>
-													</select>
-												</c:if>
-												<c:if test="${vo.uidx == userLoginInfo.uidx}">
-													<c:if test="${vo.state != 3}">
-														<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
-													</c:if>
-													조회수 : ${vo.hit}
-													<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
-													<button onclick="updatewdate()">끌올</button>
-												</c:if>
-											</c:if>
 										</div>
 
 
@@ -1028,8 +969,35 @@ function updatewdate(){
 															<div class="col-5 th"
 																style="display: table-cell; background-color: white; border: 0; font-size: 20px;">거래지역</div>
 															<div class="col-8 td" style="display: table-cell;">
-																${vo.addr2}</div>
-
+																<div class="addr_zone" aria-label="Default select example" name="addr_code"></div>
+													    		<script>
+														    		let locationList2 = [${ vo.addr_code }];
+														    		let html2 = '';
+														    		$.ajax({
+																		url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+																		data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
+																		success : function(data){
+																			$(".spinner-border").css("display","none");
+																			for(let i = 0; i < locationList2.length; i++){
+																				$.ajax({
+																					url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
+																					async : false,
+																					data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList2[i]+"&low_search=0",
+																					success : function(geojson){
+																						let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
+																						//dong.push(locationLevel[locationLevel.length-1]);
+																						//console.log(dong);
+																						$(".addr_zone").append('<span>'+locationLevel[locationLevel.length-1]+',</span>');
+																					}
+																				});
+																			}
+																		},
+																		error: function(){
+																			console.log("error");
+																		}
+																	});
+													    		</script>
+															</div>
 														</div>
 
 														<div class="row border-bottom tr" style="border: 0;">
@@ -1050,31 +1018,23 @@ function updatewdate(){
 															<!-- 		<div class="col-4 th" style="display:table-cell;"></div> -->
 															<div class="col-8 td"
 																style="display: table-cell; background-color: white; border: 0;">
-																<div id="btn-area"
-																	style="display: flex; flex-direction: row; width: 100%; padding: 0px;">
-
-																	<c:if
-																		test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
+																<div id="btn-area" style="display: flex; width: 100%; padding: 0px; flex-direction: row; justify-content: center;">
+																	<c:if test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
 																		<div class="wrap2">
 																			<input type="submit" id="btn_open2" class="btn btn"
 																				value="신고하기" class="btn"
 																				style="background-color: #00AAB2; color: #fff; margin-right: 15px;">
 																		</div>
-																	</c:if>
+																	
 
 																	<c:if test="${vo.state != 3}">
-																		<c:if
-																			test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
 																			<div class="wrap2">
 																				<input type="button" value="연락하기" class="btn"
 																					style="background-color: #00AAB2; color: #fff; margin-right: 15px;"
 																					onclick="location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'">
 																			</div>
-																		</c:if>
 																	</c:if>
 																	<!-- 이웃 영역 시작 -->
-																	<c:if
-																		test="${vo.uidx != null and vo.uidx != userLoginInfo.uidx }">
 																		<div id="Neighbor_area">
 																			<c:if test="${result == 0 }">
 																				<button onclick="addNeighbor(); return false;"
@@ -1090,29 +1050,50 @@ function updatewdate(){
 																					이웃삭제</button>
 																			</c:if>
 																		</div>
-																	</c:if>
 
-																	<c:if
-																		test="${uidx != null and vo.uidx != userLoginInfo.uidx }">
 																		<div id="Wish_area">
 																			<c:if test="${wish == 0}">
-																				<button class="btn"
-																					style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px"
+																				<button class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px"
 																					onclick="addWish(); return false;">
 																					<p>찜 추가</p>
 																				</button>
 																			</c:if>
 
 																			<c:if test="${wish != 0}">
-																				<button class="btn"
-																					style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px"
+																				<button class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px"
 																					onclick="delWish(); return false;">
 																					<p>찜 삭제</p>
 																				</button>
 																			</c:if>
 																		</div>
 																	</c:if>
-																</div>
+																	
+																	<c:if test="${userLoginInfo.uidx == vo.uidx}">
+																			<c:if test="${vo.state != 3}">
+																				<button onclick=" location.href='itemmodify.do?item_idx=${vo.item_idx}'" class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px">수정</button>
+																			</c:if>
+																		<button id="btn_open" class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px" >삭제</button>
+																		<button onclick="updatewdate()" class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px">끌올</button>
+																		
+																			<c:if test="${vo.state != 3}" >
+																				<select name="state" class="state btn" onchange="updatestate();"  style="width: 100px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px">
+																					<c:if test="${vo.state == 1 }">
+																						<option value="${vo.state}" selected disabled hidden>거래중</option>
+																					</c:if>
+																					<c:if test="${vo.state == 2 }">
+																						<option value="${vo.state}" selected disabled hidden>예약중</option>
+																					</c:if>
+																					<c:if test="${vo.state == 3 }">
+																						<option value="${vo.state}" selected disabled hidden>거래완료</option>
+																					</c:if>
+																					<option value="1">거래중</option>
+																					<option value="2">예약중</option>
+																					<option value="3">거래완료</option>
+																				</select>
+																			</c:if>
+																	</c:if>
+																	
+																</div><!-- btn-area  끝 -->
 															</div>
 														</div>
 
