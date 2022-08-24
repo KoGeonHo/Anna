@@ -89,14 +89,13 @@ position: fixed;
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">글 수정</h3>
 		
-				<form action="BoardModify.do" method="post" enctype="multipart/form-data">
+				<form action="BoardModify.do" method="post" enctype="multipart/form-data" id="frm">
 					<input type="hidden" name="Location" value="${userLoginInfo.location_auth}">
-					<input type="hidden" name="board_type" value="${bv.board_type }">
 					<input type="hidden" name="Bidx" value="${bv.bidx }">
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">제목</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<input type="text" class="form-control" name="Title" placeholder="제목을 입력해주세요" value="${bv.title}">
+							<input type="text" class="form-control" id="Title" name="Title" placeholder="제목을 입력해주세요" value="${bv.title}">
 						</div>
 					</div>
 					
@@ -115,51 +114,52 @@ position: fixed;
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">내용</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<textarea class="form-control" id="summernote" name="contents" rows="10" cols="25"> ${bv.contents }</textarea>
+							<textarea class="form-control" id="summernote" name="contents" rows="10" cols="25">${bv.contents }</textarea>
 						</div>
 					</div>
 					
 
 					
-					<div class="text-end tr">
-						<div class="td">
-							<button class="btn" style="background:#00AAB2; color:#fff;">등록</button>
-							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/board/boardlist.do?=${pm.board_type}'">취소</button>
-						</div>
-					</div>
 					
 					<c:if test="${bv.image1 != null}">
 						<span class="view">${bv.image1}</span><br>
 						<div class="viewimg">
-							<img src="../resources/upload/${bv.image1}" alt ="안되는데요?">
+							<img src="../resources/upload/${bv.image1}" alt ="안되는데요?" style="width:500px">
 						</div>
 					</c:if>
 					<c:if test="${bv.image2 != null}">
 						<span class="view2">${bv.image2}</span><br>
 						<div class="viewimg2">
-							<img src="../resources/upload/${bv.image2}" alt ="안되는데요?">
+							<img src="../resources/upload/${bv.image2}" alt ="안되는데요?" style="width:500px">
 						</div>
 					</c:if>
 					<c:if test="${bv.image3 != null}">
 						<span class="view3">${bv.image3}</span><br>
 						<div class="viewimg3">
-							<img src="../resources/upload/${bv.image3}" alt ="안되는데요?">
+							<img src="../resources/upload/${bv.image3}" alt ="안되는데요?" style="width:500px">
 						</div>
 					</c:if>
 					<c:if test="${bv.image4 != null}">
 						<span class="view4">${bv.image4}</span><br>
 						<div class="viewimg4">
-							<img src="../resources/upload/${bv.image4}" alt ="안되는데요?">
+							<img src="../resources/upload/${bv.image4}" alt ="안되는데요?" style="width:500px">
 						</div>
 					</c:if>
 					<c:if test="${bv.image5 != null}">
 						<span class="view5">${bv.image5}</span>
 						<div class="viewimg5">
-							<img src="../resources/upload/${bv.image5}" alt ="안되는데요?">
+							<img src="../resources/upload/${bv.image5}" alt ="안되는데요?" style="width:500px">
 						</div>
 					</c:if>
 					
-
+					
+					<div class="text-end tr">
+						<div class="td">
+							<button class="btn" style="background:#00AAB2; color:#fff;" onclick="check()">수정</button>
+							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/board/boardlist.do?=${bv.board_type}'">취소</button>
+						</div>
+					</div>
+					<input type="hidden" id="place_location" name="place_location" value="${bv.place_location}">
 				</form>
 				<input type="hidden" class="boardtype" value="${bv.board_type}">
 				
@@ -232,6 +232,34 @@ $(".view5").mouseout(function(){
 	$(".viewimg5").css("display","none")
 	
 });
+
+var title = $("#Title").val();
+
+function check(){
+	
+	var title = $("#Title").val();
+	
+	if(title == ""){
+		alert("제목을 입력하세요");
+		$("#Title").focus();
+		return false;
+	}
+	else if($("#board_type").val()==""){
+		alert("게시글 분류를 선택해주세요");
+		$("#board_type").focus();
+		return false;
+	}else if($("#summernote").val()==""){
+		alert("내용을 입력하세요");
+		$("#summernote").focus();
+		return false;
+	}else{
+		
+		$("#frm").submit();
+	}
+	
+
+}
+	
 
 </script>
 

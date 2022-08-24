@@ -246,7 +246,7 @@ text-decoration: none;
 
 	.pageing{
 	
-	width:15%;
+	width:30%;
 	
 	}
 
@@ -334,7 +334,9 @@ text-decoration: none;
 					
 					<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
 					<c:if test="${pm.board_type != 'free'}">
-					<input type="hidden" value="1" name="page">
+					<input type="hidden" value="1" name="page">	
+					</c:if>
+					<c:if test="${pm.board_type == null }">
 					<input type="hidden" value="${pm.searchUidx}" name="searchUidx">
 					</c:if>
 					<%-- <select name="SearchType" class="border rounded-2">
@@ -350,7 +352,7 @@ text-decoration: none;
 			<div>
 				<c:if test="${ pm.board_type eq 'notice' }">
 					<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
-						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${ pm.board_type }';">글쓰기</button>
+						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=notice';">글쓰기</button>
 					</c:if>
 				</c:if>
 				<c:if test="${ pm.board_type ne 'notice' }">

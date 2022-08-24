@@ -60,16 +60,9 @@ body {
 
 }
 
-#location_kakao{
-
-display: none;
-
-}
-
-.note{
 
 
-}
+
 
 
 </style>
@@ -134,7 +127,7 @@ display: none;
 			
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">글 쓰기</h3>
 		
-				<form action="BoardWrite.do" method="post" enctype="multipart/form-data" id="frm">
+				<form action="BoardWrite.do" method="post" enctype="multipart/form-data" id="frm" >
 					<input type="hidden" name="uidx" value="${uidx}">
 					<c:if test="${ pm.board_type eq 'notice' }">
 						<input type="hidden" name="Location" value="notice">
@@ -147,7 +140,7 @@ display: none;
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">제목</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<input type="text" class="form-control" name="Title" placeholder="제목을 입력해주세요">
+							<input type="text" class="form-control" name="Title" id="Title" placeholder="제목을 입력해주세요">
 						</div>
 					</div>
 					
@@ -156,7 +149,7 @@ display: none;
 						<div class="col-8 td" style="display:table-cell;">
 							<c:if test="${ pm.board_type eq 'notice' }"> 
 								공지사항 
-								<input type="hidden" name="board_type" value="notice">
+								<input type="hidden" name="board_type" id="board_type" value="notice">
 							</c:if>
 							<c:if test="${ pm.board_type ne 'notice' }">
 								<select name="board_type" onchange="javascript:locationMap(this);" id="board_type">
@@ -205,11 +198,12 @@ display: none;
 					    </div>
 					</div>
 					
+					
 					<div id="clickLatlng"></div>
 					
 					<div class="text-end tr">
 						<div class="td">
-							<button class="btn" style="background:#00AAB2; color:#fff;">등록</button>
+							<button class="btn" type="button" id="write"style="background:#00AAB2; color:#fff;" onclick="check()">작성</button>
 							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/board/boardlist.do?=${pm.board_type}'">취소</button>
 						</div>
 					</div>
@@ -331,20 +325,25 @@ function displayPlaces(places) {
             	
             	console.log(x,y);
             	
-            	$("#clickLatlng").html("<input type='text' id='place_location' name='place_location' value='"+x+","+y+"'>");
+            	 $("#clickLatlng").html("<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>");
             	
             	removeMarker();
+            	
             	
             	var cmarker = new kakao.maps.Marker();
             	
             	
             		 console.log($("#place_location").val()+"fd");
-            	 
             		 
             		 
+ 
             		 cmarker.setPosition(new kakao.maps.LatLng(x,y));
             		 
+            		 
+            		 
             		 cmarker.setMap(map);
+            		 
+            		 markers.push(cmarker);
 
             });
 
@@ -357,36 +356,47 @@ function displayPlaces(places) {
                 infowindow.close();
             };
             
+            itemEl.onclick = function(){
+            	
+            	
+            	console.log(marker.getPosition());
+            	
+            	var x = marker.getPosition().Ma;
+            	var y = marker.getPosition().La;
+            	
+            	
+            	
+            	console.log(x,y);
+            	
+            	 $("#clickLatlng").html("<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>");
+            	
+            	removeMarker();
+            	
+            	
+            	var cmarker = new kakao.maps.Marker();
+            	
+            	
+            		 console.log($("#place_location").val()+"fd");
+            		 console.log(title);
+            	 
+            		
+            		 
+            		 cmarker.setPosition(new kakao.maps.LatLng(x,y));
+            		 
+            		 
+            		 
+            		 cmarker.setMap(map);
+            		 
+            		 markers.push(cmarker);
+            		  
+            };
+            
            
         })(marker, places[i].place_name);
 
         fragment.appendChild(itemEl);
         
-        itemEl.onclick = function(){
-        	
-        	var x = marker.getPosition().Ma;
-        	var y = marker.getPosition().La;
-        	
-        	
-        	
-        	console.log(x,y);
-        	
-        	$("#clickLatlng").html("<input type='text' id='place_location' name='place_location' value='"+x+","+y+"'>");
-        	
-        	removeMarker();
-        	
-        	var cmarker = new kakao.maps.Marker();
-        	
-        	
-        		 console.log($("#place_location").val()+"fd");
-        	 
-        		 
-        		 
-        		 cmarker.setPosition(new kakao.maps.LatLng(x,y));
-        		 
-        		 cmarker.setMap(map);
-        		 
-        };
+        
         
         
     }
@@ -457,6 +467,7 @@ function addMarker(position, idx, title) {
 function removeMarker() {
     for ( var i = 0; i < markers.length; i++ ) {
         markers[i].setMap(null);
+        
     }   
     markers = [];
 }
@@ -573,23 +584,66 @@ function chk_file_type(obj) {
 </script>
 <script>
 
-
-function locationMap(obj){
-	
-	var board_type = $("#board_type option:selected").val();
-	
-	
-	console.log(board_type);
+var board_type = $("#board_type").val();
 	
 	if(board_type != 'free'){
 	
-		$(".location_kakao").css("display","block")
+		$(".map_wrap").css("display","block")
 
 	}else if(board_type == 'free'){
 		
-		$(".location_kakao").css("display","none")
+		$(".map_wrap").css("display","none")
 	}
+	
+	function locationMap(obj){
+		
+		var board_type = $("#board_type option:selected").val();
+		
+		if(board_type != 'free'){
+			$(".map_wrap").css("display","block")
+
+		}else if(board_type == 'free'){
+			$(".map_wrap").css("display","none")
+		}
+	}
+
+
+	
+	if(${uidx == null}){
+		alert("로그인 이후 이용해주세요");
+		location.href="/anna/user/login.do";
+	}
+
+
+        
+		
+var title = $("#Title").val();
+		
+function check(){
+	
+	var title = $("#Title").val();
+	
+	if(title == ""){
+		alert("제목을 입력하세요");
+		$("#Title").focus();
+		
+	}else if($("#board_type").val()==""){
+		alert("게시글 분류를 선택해주세요");
+		$("#board_type").focus();
+	}else if($("#summernote").val()==""){
+		alert("내용을 입력하세요");
+		$("#summernote").focus();
+		
+	}else{
+		
+		$("#frm").submit();
+		
+	}
+
 }
+		
+    
+
 
 
 </script>

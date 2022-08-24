@@ -25,6 +25,7 @@ public class BoardVO extends UserVO{
 	private int Ccount;
 	private int cntLike;
 	private String place_location;
+	private String place_name;
 	
 
 	public String getPlace_location() {
