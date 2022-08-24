@@ -13,7 +13,7 @@
     <!-- include summernote css/js-->
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-	<<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
+	<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
 	<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 	<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
@@ -108,11 +108,11 @@
 					<input type="hidden" name="addr_code" value="${userLoginInfo.location_auth}" readonly="readonly">
 					<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 					<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
-					
+					<input type="hidden" name="item_idx" value="${vo.item_idx}">
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">제목</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<input type="text" class="form-control" name="title" value="${vo.title}">
+							<input type="text" class="form-control" name="title" id="title" value="${vo.title}">
 						</div>
 					</div>
 					
@@ -137,22 +137,28 @@
 						<div class="col-4 th" style="display:table-cell;">가격제안</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<select name="offer">
-								<option value="1">불가능</option>
-								<option value="2">가능</option>
+								<c:if test="${vo.offer == 1}">
+									<option value="1" selected>불가능</option>
+									<option value="2"  >가능</option>
+								</c:if>
+								<c:if test="${vo.offer == 2}">
+									<option value="1">불가능</option>
+									<option value="2" selected >가능</option>
+								</c:if>
 						    </select>
 						</div>
 					</div>
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">가격</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<input type="number" class="form-control" name="price"  value="${vo.price}"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
+							<input type="number" class="form-control" name="price" id="price" value="${vo.price}"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 						</div>
 					</div>
 					
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">내용</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<textarea class="form-control" name="contents" rows="10" cols="25">${vo.contents}</textarea>
+							<textarea class="form-control" name="contents" id="contents" rows="10" cols="25">${vo.contents}</textarea>
 						</div>
 					</div>
 					
@@ -206,33 +212,36 @@
 				</form>
 
 <script>
-    $(document).ready(function () {
-
-	 
-	    //위와 같이 값을 먼저 넣어준 후 초기화를 시킨다. 그럼 아래와 같이 입력이 된다.
-	    //초기화
-		$('#summernote').summernote({
-			height : 400, // set editor height
-			minHeight : null, // set minimum height of editor
-			maxHeight : null, // set maximum height of editor
-			focus : true,
-			lang : 'ko-KR' // 기본 메뉴언어 US->KR로 변경
-		});
-	
-	    //저장버튼 클릭
-	    $(document).on('click', '#saveBtn', function () {
-	        saveContents();
-	        });
-	        
-	    });
-	 function saveContents() {
+$("#joinFrm").submit(function(){
+    var price = $("#price").val();
+    var contents = $("#contents").val();
+    var title = $("#title").val();
+    var addr = $("#addr_code").val();
     	
-        //값 가져오기
-        var Content = $('#summernote').summernote('code');        //썸머노트(설명)
-        alert("contents : " + contents);
-		
-    }
-
+    
+    	/* function addr_code(){
+    		$('#addr_code').load(location.href+' #addr_code');
+    	} */
+    
+    
+    
+		    if(title == ""){
+		    	alert("제목을 입력해주세요");
+		    	return false;
+		    }else if(addr == 0 ){
+		        alert("거래지역을 설정해주세요");
+			       return false;
+		    }else if(price.length > 10 ){
+		        alert("가격은 최대 10자리 까지 입니다.");
+			       return false;
+		    }else if(price.length == 0 ){
+		        alert("판매 가격을 작성해주세요.");
+			       return false;
+		    }else if(contents == ""	){
+		    	alert("내용을 입력해주세요");
+		    	return false;
+			}
+    });
 </script>
 	<script type="text/javascript">
 		var gfv_count = 2;

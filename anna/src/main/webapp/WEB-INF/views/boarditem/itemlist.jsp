@@ -177,24 +177,70 @@
 		 
 $(document).ready(function(){
 		var auth =[ ${userLoginInfo.location_auth} ];
-			//var addr_code = auth.split(',');;				
-				
+		//var addr_code = auth.split(',');;		
+		
+			
+			if(${userLoginInfo.uidx == null}){
+				var login = null;
+			}else if(${userLoginInfo.uidx != null}) {
+				var login = 0;
+			}
+		
+/* 				
 		$(".box").change(function(){
-			if($($(this)).is(":checked")){
-				console.log("내지역만 보기 체크");
-				console.log(auth);
-				//$('input[name=addr_code]').attr('value',auth);
-				 $('#frm').append('<input type="hidden" value="'+auth+'" name="addr_code">');	        
-				//<input type="hidden" name="addr_code" id="addr_code">
+			if(login == null){
+				alert("이 기능은 로그인 후에 이용해주세요!");
+				  $(".box").prop('checked', false) ;
+				return false;
 			}else{
-				$('#frm').remove($('input[name=addr_code]'));
-				console.log("내지역만 보기 체크해제")
+				if($($(this)).is(":checked")){
+					console.log("내지역만 보기 체크");
+					console.log(auth);
+					$("#frm").attr("action","/anna/boarditem/itemlist.do").submit();
+				}else{
+					console.log("내지역만 보기 체크해제")
+					location.href = "itemlist.do";
+				}
+			}
+		}); */
+				
+	$("#addr_code").on("change",function(){
+		var code = $("#addr_code").val();
+		var auth = <%=request.getParameter("addr_code") %>;
+		console.log(code);
+			if(code == 0){
+
+			}else {		
+				$("#frm2").attr("action","/anna/boarditem/itemlist.do").submit();
 			}
 		});
-		
-	}); 
+}); 
+
+
+$(document).ready(function(){
+	
+	var auth =[ ${userLoginInfo.location_auth} ];
+	
+	$("#write").click(function(){
+			if(${userLoginInfo.uidx == null}){
+				alert("이 기능은 로그인 후에 이용해주세요!");	
+			}else{
+				location.href="itemwrite.do";			
+			}
+			
+	});		
+	
+	$("#search").click(function(){
+			$("#frm").attr("action","/anna/boarditem/itemlist.do").submit();
+	});		
 	
 	
+}); 
+	
+$(document).ready(function () {
+	  addr_code_val = $('select.addr_code').attr('data-type');
+	  $('select.addr_code option[value=' + addr_code_val + ']').attr('selected', 'selected');
+	});
 </script>
 <style>
 
@@ -444,13 +490,53 @@ a:link {
 					<div style="display:flex;">
 						<div style="flex:1; margin-right:10px;">		
 							<form method="get" action="itemlist.do" id="frm">
-								<input class="form-control text-center" type="text" name="searchVal" class="search-control" placeholder="검색어를 입력해주세요" value="${pm.searchVal}">
-								
+								<input class="form-control text-center" type="text" id="searchVal" name="searchVal" class="search-control" placeholder="검색어를 입력해주세요" value="${pm.searchVal}">
 							</form>
-								<input type="submit" value="검색1" class="btn btn-outline-primary">
 						</div>
-						내 지역만 보기<input type="checkbox" class="box">
-						<button class="btn" style="background-color: #00AAB2; color: #fff;" onclick='location.href="itemwrite.do"'>글쓰기</button>
+							<input type="submit" value="검색" class="btn btn-outline-primary" id="search">
+							<button class="btn"  id="write" type="button"style="background-color: #00AAB2; color: #fff;" >글쓰기</button>
+							
+							<!-- 내지역 코드 전송 -->
+							<form id="frm2">
+									<select class="form-select" data-addr_code ="${addr_code}" aria-label="Default select example" id="addr_code"name="addr_code">
+										<option value="0">내 동네</option>
+									</select>
+								    		<script>
+									    		let locationList2 = [${ userLoginInfo.location_auth }];
+									    		let html2 = '';
+									    		$.ajax({
+													url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+													data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
+													success : function(data){
+														$(".spinner-border").css("display","none");
+														for(let i = 0; i < locationList2.length; i++){
+															$.ajax({
+																url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
+																async : false,
+																data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList2[i]+"&low_search=0",
+																success : function(geojson){
+																	let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
+																	//dong.push(locationLevel[locationLevel.length-1]);
+																	//console.log(dong);
+																	$(".form-select").append('<option value="'+locationList2[i]+'">'+locationLevel[locationLevel.length-1]+'</option>');
+																}
+															});
+														}
+													},
+													error: function(){
+														console.log("error");
+													}
+												});
+						    				</script>
+							</form>
+								<%-- <% String addr = request.getParameter("addr_code");
+										if(addr != null){%>
+								내 지역만 보기<input type="checkbox" class="box" id="addr" checked>
+											 <%} %>
+								<% String addr2 = request.getParameter("addr_code");
+										if(addr2 == null){%>
+								내 지역만 보기<input type="checkbox" class="box" id="addr" >
+											 <%} %> --%>
 					</div>
 				</div>
 				<%-- <div class="col-md-12  col-sm-12 d-flex" id="search-area">
@@ -659,15 +745,6 @@ a:link {
 			</div>
 			<!-- /SECTION -->
 			
-			
-		<!-- 무한스크롤부분 -->
-		<!-- <div class="container">
-			<div class="row card-list">
-			<br>
-			</div>
-		</div> -->
-	
-		
 										<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 										<script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 										<script src ="../js/boardlist.js"></script>
@@ -686,5 +763,6 @@ a:link {
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
 	</div>
+	
 </body>
 </html>

@@ -1074,18 +1074,18 @@ function itemdelete(){
 																			</c:if>
 																		<button id="btn_open" class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px" >삭제</button>
 																		<button onclick="updatewdate()" class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px">끌올</button>
-																		
 																			<c:if test="${vo.state != 3}" >
 																				<select name="state" class="state btn" onchange="updatestate();"  style="width: 100px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px">
 																					<c:if test="${vo.state == 1 }">
-																						<option value="${vo.state}" selected disabled hidden>거래중</option>
+																						<option selected disabled hidden>거래중</option>
 																					</c:if>
 																					<c:if test="${vo.state == 2 }">
-																						<option value="${vo.state}" selected disabled hidden>예약중</option>
+																						<option selected disabled hidden>예약중</option>
 																					</c:if>
 																					<c:if test="${vo.state == 3 }">
-																						<option value="${vo.state}" selected disabled hidden>거래완료</option>
+																						<option  selected disabled hidden>거래완료</option>
 																					</c:if>
+																					
 																					<option value="1">거래중</option>
 																					<option value="2">예약중</option>
 																					<option value="3">거래완료</option>
