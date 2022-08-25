@@ -279,6 +279,8 @@ function placesSearchCB(data, status, pagination) {
 
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
+	
+	
 
     var listEl = document.getElementById('placesList'), 
     menuEl = document.getElementById('menu_wrap'),
@@ -298,6 +300,8 @@ function displayPlaces(places) {
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i), 
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+            
+             
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
@@ -309,6 +313,7 @@ function displayPlaces(places) {
         (function(marker, title) {
             kakao.maps.event.addListener(marker, 'mouseover', function() {
                 displayInfowindow(marker, title);
+                
             });
 
             kakao.maps.event.addListener(marker, 'mouseout', function() {
@@ -321,22 +326,23 @@ function displayPlaces(places) {
             	var x = marker.getPosition().Ma;
             	var y = marker.getPosition().La;
             	
+            	console.log(id);
             	
+            	console.log(title);
             	
             	console.log(x,y);
             	
-            	 $("#clickLatlng").html("<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>");
+            	var html ="<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>"
+            	html += "<input type='text' id='place_name' name='place_name' value='"+title+"'>"
+            	
+            	 $("#clickLatlng").html(html);
             	
             	removeMarker();
             	
             	
             	var cmarker = new kakao.maps.Marker();
             	
-            	
-            		 console.log($("#place_location").val()+"fd");
-            		 
-            		 
- 
+
             		 cmarker.setPosition(new kakao.maps.LatLng(x,y));
             		 
             		 
@@ -360,6 +366,7 @@ function displayPlaces(places) {
             	
             	
             	console.log(marker.getPosition());
+
             	
             	var x = marker.getPosition().Ma;
             	var y = marker.getPosition().La;
@@ -368,18 +375,16 @@ function displayPlaces(places) {
             	
             	console.log(x,y);
             	
-            	 $("#clickLatlng").html("<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>");
+            	var html ="<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>"
+            	html += "<input type='text' id='place_name' name='place_name' value='"+title+"'>"
+            	
+            	 $("#clickLatlng").html(html);
             	
             	removeMarker();
             	
             	
             	var cmarker = new kakao.maps.Marker();
-            	
-            	
-            		 console.log($("#place_location").val()+"fd");
-            		 console.log(title);
-            	 
-            		
+
             		 
             		 cmarker.setPosition(new kakao.maps.LatLng(x,y));
             		 
@@ -429,7 +434,7 @@ function getListItem(index, places) {
         itemStr += '    <span>' +  places.address_name  + '</span>'; 
     }
                  
-      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+      itemStr += '  <span class="tel">' + places.phone  + '</span>' + '<span>'+ places.id +'<span>'
                 '</div>';           
 
     el.innerHTML = itemStr;

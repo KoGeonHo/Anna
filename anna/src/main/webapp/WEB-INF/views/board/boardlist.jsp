@@ -42,7 +42,10 @@
 <!-- path는 request.getContextPath()를 가져온것. -->	
 
 
-	
+<style>
+
+
+</style>	
 <style>
 
 /*
@@ -54,25 +57,6 @@
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
 
-.pageing{
-
-	list-style:none;
-	margin:0px auto;
-	padding:0;
-	 text-align : center
-
-}
-
-.pageing > li{
-
-	margin: 0 0 0 0;
-    padding: 0 0 0 0;
-    border : 0;
-    float: left;
-    
-
-
-}
 
 .nickName{
 
@@ -123,6 +107,17 @@ a{
 text-decoration: none;
 
 }
+
+.custom-table-responsive {
+  background-color: #efefef;
+  padding: 20px;
+  border-radius: 4px; }
+  
+.custom-table .tr .td, .title {
+    background: #fff;
+    border: none; }
+    
+
 
 @media all and (577px <= width <= 767px){
 
@@ -263,11 +258,7 @@ text-decoration: none;
 	
 	}
 	
-	.p{
-	
-	display:block;
-	
-	}
+
 
 	
 	#plist-top > *{
@@ -333,35 +324,28 @@ text-decoration: none;
 				<form method="get" action="boardlist.do" class="d-flex "  id="search">
 					
 					<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
+					
 					<c:if test="${pm.board_type != 'free'}">
 					<input type="hidden" value="1" name="page">	
 					</c:if>
+					
 					<c:if test="${pm.board_type == null }">
 					<input type="hidden" value="${pm.searchUidx}" name="searchUidx">
 					</c:if>
-					<%-- <select name="SearchType" class="border rounded-2">
-						<option value="All" <c:if test="${!empty pm.searchType and pm.searchType eq 'All'} ">selected</c:if>>전체</option>
-						<option value="title" <c:if test="${!empty pm.searchType and pm.searchType eq 'title' }">selected</c:if>>제목</option>
-						<option value="contentWriter" <c:if test="${!empty pm.searchType and pm.searchType eq 'contentWriter' }">selected</c:if>>내용+작성자</option>
-					</select> --%>
+					
 					<input type="text" name="SearchVal" class="search-control" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
 					<input type="submit" value="검색" class="btn btn-outline-primary">
 					
 				</form>
 			</div>
 			<div>
-				<c:if test="${ pm.board_type eq 'notice' }">
-					<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
-						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=notice';">글쓰기</button>
-					</c:if>
-				</c:if>
-				<c:if test="${ pm.board_type ne 'notice' }">
+				<c:if test="${ pm.board_type eq 'free' }">
 					<button type="button" id="btn"class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${ pm.board_type }';">글쓰기</button>
 				</c:if>
 			</div>
 			
 		</div>
-			
+
 		<form>
 			
 
@@ -418,7 +402,8 @@ text-decoration: none;
 			</div>	
 		</c:if>
 		<c:if test="${pm.board_type != 'free'}">
-				<div class="list">
+			<div class="table-responsive custom-table-responsive">
+				<div class="list custom-table">
 					<div class="tr border-bottom" id="plist-top">
 						<div class="th" style="width:40%;">제목</div>
 						<div class="th" style="width:20%;">작성자</div>
@@ -483,42 +468,51 @@ text-decoration: none;
 						</c:if>
 					</div>
 			
-			<ul style="justify-content: center;" class="pageing">
-				
-					
-			<c:if test="${pm.isPrev() == true}">
-				<li>
-					<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}">◀</a>
-				</li>
-			</c:if>
-					
-			
-
-					
-			<c:forEach var="i" begin="${pm.getStartPage()}" end="${pm.getEndPage()}">
-				<li>
-    				<span><a href="${ path }/board/boardlist.do?
-					<c:if test="${pm.board_type != null }">
-					board_type=${pm.board_type}
-					</c:if>
-					
-					&page=${i}&SearchVal=${pm.searchVal}
-					<c:if test="${pm.searchUidx != null }">
-					&searchUidx=${pm.searchUidx}
-					</c:if>
-					">${i}</a></span>
-				</li>
-			</c:forEach>
-				
-				
-			<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
-				<li style="text-align:right;">
-					<a href="${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}">▶</a>
-				</li>
-			</c:if>
 			
 				
-			</ul>
+		<div class="container">
+			<div class="bs-component mb-3">
+				<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="justify-content: space-around;">
+					<div class="btn-group me-2" role="group" aria-label="First group">
+						<c:if test="${pm.isPrev() == true}">
+							<button type="button" class="btn btn-secondary" onclick="location.href='${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}'">
+								◀
+							</button>
+						</c:if>
+								
+						
+			
+								
+						<c:forEach var="i" begin="${pm.getStartPage()}" end="${pm.getEndPage()}">
+							
+			    				<button type="button" class="btn btn-secondary" onclick="location.href='${path}/board/boardlist.do?<c:if test="${pm.board_type != null }">board_type=${pm.board_type}</c:if>&page=${i}&SearchVal=${pm.searchVal}<c:if test="${pm.searchUidx != null }">&searchUidx=${pm.searchUidx}</c:if>'">
+									${i}
+								</button>
+							
+						</c:forEach>
+							
+							
+						<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
+							<button type="button" class="btn btn-secondary" kstyle="text-align:right;" onclic="location.href='${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}'">
+								▶
+							</button>
+						</c:if>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+				<c:if test="${ pm.board_type eq 'notice' }">
+					<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
+						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=notice';">글쓰기</button>
+					</c:if>
+				</c:if>
+					<c:if test="${ pm.board_type ne 'notice' and pm.board_type ne 'free' }">
+						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=notice';">글쓰기</button>
+					</c:if>
+				
+			
+		</div>
 			<div class="mdiv"></div>
 			</c:if>
 			

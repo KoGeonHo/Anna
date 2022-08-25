@@ -157,6 +157,12 @@ public class BoardVO extends UserVO{
 	public void setCntLike(int cntLike) {
 		this.cntLike = cntLike;
 	}
+	public String getPlace_name() {
+		return place_name;
+	}
+	public void setPlace_name(String place_name) {
+		this.place_name = place_name;
+	}
 
 
 	
