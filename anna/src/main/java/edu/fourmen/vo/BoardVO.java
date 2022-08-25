@@ -25,6 +25,7 @@ public class BoardVO extends UserVO{
 	private int Ccount;
 	private int cntLike;
 	private String place_location;
+	private String place_name;
 	
 
 	public String getPlace_location() {
@@ -155,6 +156,12 @@ public class BoardVO extends UserVO{
 	}
 	public void setCntLike(int cntLike) {
 		this.cntLike = cntLike;
+	}
+	public String getPlace_name() {
+		return place_name;
+	}
+	public void setPlace_name(String place_name) {
+		this.place_name = place_name;
 	}
 
 

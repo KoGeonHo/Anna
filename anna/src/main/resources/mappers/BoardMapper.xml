@@ -19,6 +19,7 @@
 			,Image4
 			,Image5
 			,place_location
+			,place_name
 	)VALUES(
 			 #{uidx}
 			,#{board_type}
@@ -32,6 +33,7 @@
 			,#{Image4}
 			,#{Image5}
 			,#{place_location}
+			,#{place_name}
 	)
 
 
@@ -127,6 +129,7 @@
 		  ,b.Image4
 		  ,b.Image5
 		  ,b.place_location
+		  ,b.place_name
 	  FROM Board b, AnnaUser u
 	 WHERE b.Uidx = u.uidx
 	   AND b.Bidx = #{Bidx}
@@ -283,6 +286,7 @@
 	   	  ,Contents = #{Contents}
 	   	  ,Wdate = now()
 	   	  ,Location = #{Location}
+	   	  ,
 	 WHERE Bidx = #{Bidx}
 
 

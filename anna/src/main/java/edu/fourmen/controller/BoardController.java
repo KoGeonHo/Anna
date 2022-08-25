@@ -120,7 +120,7 @@ public class BoardController {
 
 		model.addAttribute("pm",pm);
 		
-		System.out.println(pm.getBoard_type());
+		
 
 		return "board/BoardWrite";
 	}
@@ -163,7 +163,7 @@ public class BoardController {
 			String ext2 = oPath.substring(index + 1); // 파일 확장자  //해당 위치부터 해서 확장자 부분을 짜름(?)
 
 			String tPath = oFile.getParent() + File.separator + "t-" + oFile.getName(); // 썸네일저장 경로
-			System.out.println(tPath+"썸넬 저장경로");
+			
 			File tFile = new File(tPath); //파일 클래스를 생성 그 안에 썸네일 저장경로를 담는다.
 
 			//double ratio = 2; // 이미지 축소 비율
@@ -197,7 +197,7 @@ public class BoardController {
 			//UUID uuid = UUID.randomUUID();	//UUID 구하기
 			fileName2=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"2"+"_"+originalFileName;
 			uploadFile2.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName2));
-			System.out.println("이미지2저장완료");
+			
 		}
 		vo.setImage2(fileName2);
 	}
@@ -210,7 +210,7 @@ public class BoardController {
 			//UUID uuid = UUID.randomUUID();	//UUID 구하기
 			fileName3=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"3"+"_"+originalFileName;
 			uploadFile3.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName3));
-			System.out.println("이미지3저장완료");
+			
 		}
 		vo.setImage3(fileName3);
 	}
@@ -308,19 +308,19 @@ public class BoardController {
 		
 		session = request.getSession();
 		//rv.setUidx((int)session.getAttribute("uidx"));
-		System.out.println("댓글 등록 성공");
+		
 //		if(session.getAttribute("login") == null) {
 //			return "fail";
 //		} else {
 //			System.out.println("로그인함. 스크랩 진행");
 			
-		System.out.println(rv.getContents()); 
-		System.out.println(rv.getNickName()); 
-		System.out.println(rv.getBidx()); 
+//		System.out.println(rv.getContents()); 
+//		System.out.println(rv.getNickName()); 
+//		System.out.println(rv.getBidx()); 
 		
 			boardService.commentwrite(rv);//댓글작성
 			boardService.Ccount(Bidx);
-			System.out.println("댓글 등록 성공");
+			
 			return "InsertSuccess";
 //		}
 	}
@@ -328,11 +328,11 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="/CommentList", produces = "application/json; charset=utf8")
 	public Map<String, Object> getList(BoardVO rv, Model model) { // @PathVariable: URL 경로에 변수를 넣어주는
-		System.out.println("댓글 목록 컨트롤러 동작");
+		
 		List<BoardVO> list = boardService.getCList(rv.getBidx());//댓글목록
 		int total = boardService.getCTotal(rv); //댓글 갯수
 		ModelAndView view = new ModelAndView(); //데이터와 뷰를 동시에 설정이 가능
-		System.out.println("댓글 갯수 " + boardService.getCTotal(rv)); //댓글갯수 확인용
+		//System.out.println("댓글 갯수 " + boardService.getCTotal(rv)); //댓글갯수 확인용
 		view.setViewName("/board/viewBoard"); //뷰
 		Map<String, Object> map = new HashMap<>(); //키와 밸류값으로 저장하는
 		map.put("list", list);
@@ -346,15 +346,12 @@ public class BoardController {
 	@ResponseBody 
 	@RequestMapping(value="/likeUp", method=RequestMethod.POST)
 	public void likeup(BoardVO vo, int Bidx, HttpSession session, HttpServletRequest request) {
-		System.out.println("컨트롤러 연결 성공");
 		
 		session = request.getSession();
 		
 		vo.setBidx(Bidx);
 		vo.setUidx((int)session.getAttribute("uidx"));
 		
-		System.out.println(Bidx);
-		System.out.println((int)session.getAttribute("uidx"));
 
 		boardService.boardLikeUP(vo);
 	
@@ -366,13 +363,9 @@ public class BoardController {
 		
 		session = request.getSession();
 		
-		System.out.println("좋아요 취소!");
-		
 		vo.setBidx(Bidx);
 		vo.setUidx((int)session.getAttribute("uidx"));
 		
-		System.out.println(Bidx);
-		System.out.println((int)session.getAttribute("uidx"));
 		boardService.boardLikeDown(vo);
 	}
 
@@ -382,10 +375,8 @@ public class BoardController {
 	public String BoardDelete(int Bidx,BoardVO vo) {
 		
 		vo.setBidx(Bidx);
-		System.out.println("Bidx");
 		
 		boardService.boardDelete(Bidx);
-		System.out.println("삭제완료");
 		
 		return "redirect:/board/boardlist.do?board_type="+vo.getBoard_type();
 	}
@@ -415,12 +406,11 @@ public class BoardController {
 	@RequestMapping(value="/boardlist.do") //게시판 통합
 	public String boardlist(Model model, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
 		
-		System.out.println(pm.getSearchUidx());
+		
 		
 		String boardtype = "free";
 		
 		session = request.getSession();
-		System.out.println(pm.getBoard_type()+"이것은 널");
 		
 		if(pm.getBoard_type() != null && pm.getBoard_type().equals(boardtype)) {
 			//한 페이지에 몇개씩 표시할 것인지
@@ -459,7 +449,6 @@ public class BoardController {
 		
 				//글의 개수
 				totalRow = boardService.totalCount(pm);
-				System.out.println(totalRow +"boardlist");
 				//전체 페이지 갯수 구하기
 				int totalPageCount = (int)Math.ceil(totalRow / (double)pagecount);
 				
@@ -497,7 +486,6 @@ public class BoardController {
 		
 
 		List<BoardVO> board = boardService.selectboard(pm);
-		System.out.println(pm.getBoard_type()+"xx");
 		
 //		System.out.println(pm.getPageNum()+"num");
 //		System.out.println(pm.isNext()+"next");
