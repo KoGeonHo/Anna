@@ -69,17 +69,26 @@ public class BoardItemController {
 			pm.setSearchVal("");
 		}
 		
-		/* String [] = vo.getAddr_code().split(','); */
-		if(vo.getAddr_code() != null) {
-		System.out.println(vo.getAddr_code()+"넘긴 auth");
-		String auth = vo.getAddr_code();
-		String[] auth2 = auth.split(",");
-			for(String a : auth2 ) {
-				System.out.println(a.substring(0,4) + "이게 리얼 ");
-				
-				vo.setAddr_code(a.substring(0,4));
-			}
+		
+		
+		if (session.getAttribute("uidx") != null) {
+			int uidx = (int) session.getAttribute("uidx");
+			pm.setUidx(uidx);
 		}
+		
+		//내 지역보기 체크
+		if(vo.getAddr_code() != null) {
+		String auth = vo.getAddr_code();
+		vo.setAddr_code(auth);
+		model.addAttribute("addr_code",auth);
+		/*
+		 * String[] auth2 = auth.split(","); for(String a : auth2 ) {
+		 * 
+		 * vo.setAddr_code(a.substring(0,4));
+			}
+		 */
+		}
+		
 		//한 페이지에 몇개씩 표시할 것인지
 				int pagecount = 12;
 				//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
@@ -123,11 +132,8 @@ public class BoardItemController {
 				request.setAttribute("pagenumber", pagenumber);
 		
 		
+		
 		//전체 상품 리스트 받아오기
-		if (session.getAttribute("uidx") != null) {
-			int uidx = (int) session.getAttribute("uidx");
-			pm.setUidx(uidx);
-		}
 	    List<BoardItemVO> list = boarditemService.list(pm);
 	    
 	    
@@ -663,10 +669,8 @@ public class BoardItemController {
 
 	@RequestMapping(value="/itemmodify.do", method=RequestMethod.GET)
 	public String modify(HttpSession session,Model model, int item_idx) {
-		UserVO userinfo = (UserVO) session.getAttribute("login");
-		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		
-		model.addAttribute("userinfo",userinfo);
+		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		model.addAttribute("vo",vo);
 		
 		return "boarditem/itemmodify";
@@ -1194,6 +1198,13 @@ public class BoardItemController {
 		
 		boarditemService.update_state(state, item_idx);
 		System.out.println("거래상태 업데이트 완료");
+		
+		
+		
+		
+		
+		
+		
 		return 1;
 	}
 	

@@ -111,12 +111,24 @@
 					<input type="hidden" name="addr1" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 					<input type="hidden" name="addr2" value="1"><!-- 임시로 uidx 1로 지정해놨으니 uservo 쪽 완성되면 바꿀것. -->
 					
+					
+					
+					
+					
+					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">제목</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<input type="text" class="form-control" id="title"name="title">
+						</div>
+					</div>
+					
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">거래지역</div>
 						<div class="col-8 td" style="display:table-cell;">
-						<select class="form-select" aria-label="Default select example" name="addr_code" onchange="alert('해당 기능은 준비중입니다.')">
-							<option>내 동네</option>
-						</select>
+							<select class="form-select" aria-label="Default select example" id="addr_code"name="addr_code" onchange="alert('해당 기능은 준비중입니다.')">
+								<option value="0" id="addr">내 동네</option>
+							</select>
 				    		<script>
 					    		let locationList = [${ userLoginInfo.location_auth }];
 					    		let html = '';
@@ -148,19 +160,10 @@
 										console.log("error");
 									}
 								});
-		    		</script>
+		    				</script>
 						</div>
 					</div>
 					
-					
-					
-					
-					<div class="row border-bottom tr">
-						<div class="col-4 th" style="display:table-cell;">제목</div>
-						<div class="col-8 td" style="display:table-cell;">
-							<input type="text" class="form-control" name="title">
-						</div>
-					</div>
 					
 			
 					<div class="row border-bottom tr">
@@ -198,7 +201,7 @@
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">내용</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<textarea class="form-control" name="contents" rows="10" cols="25"></textarea>
+							<textarea class="form-control" id="contents" name="contents" rows="10" cols="25"></textarea>
 						</div>
 					</div>
 					
@@ -230,7 +233,7 @@
 					
 					<div class="text-end tr">
 						<div class="td">
-							<button class="btn" style="background:#00AAB2; color:#fff;">등록</button>
+							<button class="btn" style="background:#00AAB2; color:#fff;">작성</button>
 							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='itemlist.do'" >취소</button>
 						</div>
 					</div>
@@ -340,19 +343,42 @@
 				    
 				}
 			</script>
-				<script>
-				$("#joinFrm").submit(function(){
-				    var fileCheck = $("#file").val();
-				    var price = $("#price").val();
-				    if(!fileCheck){
-				        alert("사진을 한 장 이상 첨부해주세요");
-				       return false;
-				    }else if(price.length > 10 ){
-				        alert("가격은 최대 10자리 까지 입니다.");
-					       return false;
-					    }
-				    });
-				</script> 
+			<script>
+			$("#joinFrm").submit(function(){
+			    var fileCheck = $("#file").val();
+			    var price = $("#price").val();
+			    var contents = $("#contents").val();
+			    var title = $("#title").val();
+			    var addr = $("#addr_code").val();
+			    	
+			    
+			    	/* function addr_code(){
+			    		$('#addr_code').load(location.href+' #addr_code');
+			    	} */
+			    
+			    
+			    
+					    if(title == ""){
+					    	alert("제목을 입력해주세요");
+					    	return false;
+					    }else if(addr == 0 ){
+					        alert("거래지역을 설정해주세요");
+						       return false;
+					    }else if(price.length > 10 ){
+					        alert("가격은 최대 10자리 까지 입니다.");
+						       return false;
+					    }else if(price.length == 0 ){
+					        alert("판매 가격을 작성해주세요.");
+						       return false;
+					    }else if(contents == ""	){
+					    	alert("내용을 입력해주세요");
+					    	return false;
+					    }else if(!fileCheck){
+					        alert("사진을 한 장 이상 첨부해주세요");
+						       return false;
+						}
+			    });
+			</script> 
 
 		</div>
 		<!-- 푸터는 고정 -->
