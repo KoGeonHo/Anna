@@ -479,19 +479,9 @@ text-decoration: none;
 								◀
 							</button>
 						</c:if>
-								
-						
-			
-								
 						<c:forEach var="i" begin="${pm.getStartPage()}" end="${pm.getEndPage()}">
-							
-			    				<button type="button" class="btn btn-secondary" onclick="location.href='${path}/board/boardlist.do?<c:if test="${pm.board_type != null }">board_type=${pm.board_type}</c:if>&page=${i}&SearchVal=${pm.searchVal}<c:if test="${pm.searchUidx != null }">&searchUidx=${pm.searchUidx}</c:if>'">
-									${i}
-								</button>
-							
+							<button type="button" class="btn btn-secondary" onclick="location.href='${path}/board/boardlist.do?<c:if test="${pm.board_type != null }">board_type=${pm.board_type}</c:if>&page=${i}&SearchVal=${pm.searchVal}<c:if test="${pm.searchUidx != null }">&searchUidx=${pm.searchUidx}</c:if>'">${i}</button>
 						</c:forEach>
-							
-							
 						<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
 							<button type="button" class="btn btn-secondary" kstyle="text-align:right;" onclic="location.href='${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}'">
 								▶
