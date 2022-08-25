@@ -1,8 +1,11 @@
 package edu.fourmen.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.fourmen.service.BoardItemService;
 import edu.fourmen.service.MailService;
@@ -715,9 +719,12 @@ public class UserController {
 	@RequestMapping(value="/getMessage.do", produces = "application/json; charset=utf8")
 	public ChatMessageVO getMessage(ChatMessageVO cmvo){
 		
+		//읽음(chat_read 가 1인) 표시 되지 않은 메세지를 불러옴
 		ChatMessageVO getMessage = userService.getMessageNoRead(cmvo);
 		//System.out.println(getMessage);
 		List<Integer> listForSetRead = new ArrayList<Integer>();
+		
+		//새로운 메세지를 채팅창에서 불러 왔으므로 읽음처리로 업데이트
 		if(getMessage != null) {
 			listForSetRead.add((int)getMessage.getCidx());
 			userService.chatSetRead(listForSetRead);
@@ -740,6 +747,8 @@ public class UserController {
 		return chatList;
 	}
 	
+	
+	//비밀번호 일치 체크
 	@ResponseBody
 	@RequestMapping(value="/passcheck.do",produces = "application/text; charset=utf8")
 	public String passchack(String password,HttpServletRequest request,HttpSession session) {
@@ -763,6 +772,8 @@ public class UserController {
 		return result;
 	}
 	
+	
+	//비밀번호 변경 페이지
 	@RequestMapping(value="/changePwd.do",method=RequestMethod.GET)
 	public String changePwd(Model model) {
 		
@@ -772,7 +783,7 @@ public class UserController {
 		
 	}
 	
-	//비밀번호 변경
+	//비밀번호 변경 처리
 	@RequestMapping(value="/changePwd.do",method=RequestMethod.POST)
 	public void changePwd(UserVO vo,HttpServletRequest request,HttpServletResponse response,HttpSession session) throws IOException {
 		
@@ -790,6 +801,8 @@ public class UserController {
 		
 		PrintWriter pw = response.getWriter();
 		
+		
+		//비밀번호가 변경 되었으므로 로그아웃 처리 후 다시 로그인
 		if(result == 1) {
 			
 			String access_Token = (String)session.getAttribute("access_Token");
@@ -818,6 +831,8 @@ public class UserController {
 	
 	}
 	
+	
+	//비밀번호 찾기 페이지
 	@RequestMapping(value="/findPwd.do")
 	public String findPwd(Model model) {
 		
@@ -827,6 +842,7 @@ public class UserController {
 	}
 	
 	
+	//비밀번호 찾기 페이지 - 가입된 이메일인지 확인
 	@ResponseBody
 	@RequestMapping(value="/checkEmailForFindPwd.do",produces = "application/json; charset=utf8")
 	public String checkEmailForFindPwd(String user_email) {
@@ -835,6 +851,8 @@ public class UserController {
 		
 	}
 	
+	
+	//임시 비밀번호를 가입된 이메일 주소로 전송
 	@ResponseBody
 	@RequestMapping(value="/sendRandomPwd.do",produces = "application/json; charset=utf8")
 	public void sendRandomPwd(UserVO vo) {
@@ -846,4 +864,72 @@ public class UserController {
 		int result = userService.updateRandomPwd(vo);
 		
 	}
+	
+	//채팅 이미지 보내기
+	@ResponseBody
+	@RequestMapping(value="/sendImage.do",produces = "application/text; charset=utf8")
+	public String sendImage(ChatMessageVO vo,MultipartFile item_image,HttpServletRequest request,HttpSession session) throws IllegalStateException, IOException {
+		
+		session = request.getSession();
+		
+		String filePath = session.getServletContext().getRealPath("/resources/images/Chat/");
+		File dir = new File(filePath);
+		
+		//System.out.println(path);
+		
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		
+		Date dateForFileName = new Date();
+		SimpleDateFormat DateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+		
+		String fileName = DateFormat.format(dateForFileName) + "_" + String.valueOf(session.getAttribute("uidx")) + "_" + item_image.getOriginalFilename();
+		//System.out.println(fileName);
+		
+		//System.out.println(vo.getAttachFile().getOriginalFilename().isEmpty());
+		
+		if(!item_image.getOriginalFilename().isEmpty()) {
+			item_image.transferTo(new File(filePath,fileName));
+		}
+		
+		String result = "&image";
+		
+		result += "<img src='"+path+"/resources/images/Chat/"+fileName+"' alt='"+item_image.getOriginalFilename()+"' style='width:200px; height:auto; border-radius:5px;'>";
+		
+		
+		System.out.println(result);
+		
+		vo.setContents(result);
+		vo.setUidx((int)session.getAttribute("uidx"));
+		
+		System.out.println(vo.getUidx());
+		System.out.println(vo.getItem_idx());
+		System.out.println(vo.getInvited());
+		System.out.println(vo.getChat_host());
+		
+		boardItemService.insertChat(vo);
+		
+		return result;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
