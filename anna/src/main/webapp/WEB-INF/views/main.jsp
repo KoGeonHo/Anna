@@ -2,6 +2,7 @@
 <%@ page session="true" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
@@ -20,7 +21,20 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script>
 <link href="https://webfontworld.github.io/naver/NanumSquare.css" rel="stylesheet">
 
+<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
 
+<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/mfb.css" rel="stylesheet">
+<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
+
+<link rel="stylesheet" href="css/boardlist1.css" type="text/css" />
+
+
+<!-- 무한스크롤 -->
 <script>
 //스크롤 시 이벤트 처리
 console.log("hi");
@@ -32,149 +46,96 @@ let currentPage = 1;
 //현재 페이지가 로딩중인지 여부를 저장할 변수
 let isLoding=false;
 $(function(){
-	$("#main").on("scroll",function(){
-		var scrollTop = $(this).scrollTop();
+   $("#main").on("scroll",function(){
+	   console.log("ㅇㅇ");
+      	var scrollTop = $(this).scrollTop();
         var innerHeight = $(this).innerHeight();
         var scrollHeight = $(this).prop('scrollHeight');
         //console.log(scrollTop + innerHeight);
         //console.log("scrollHeight:"+scrollHeight);
-		 if((scrollTop + innerHeight)+1 >= scrollHeight){
-			 console.log(isLoding);
-				//만일 현재 마지막 페이지라면
-				if(currentPage == ${totalPageCount} || isLoding){
-					
-					return; // 함수를 여기서 끝낸다.
-				}
-				//현재 로딩 중이라고 표시한다.
-				isLoding= true;
-				//console.log("탔습니다.");
-				//로딩바를 띄우고
-				$(".back-drop").show();
-				//요청할 페이지 번호를 1증가시킨다.
-				currentPage++;
-				//추가로 받아올 페이지를 서버에 ajax 요청을 하고
-				//console.log("inscroll" + currentPage);
-				GetList(currentPage)
-		}
-	});
+       if((scrollTop + innerHeight)+1 >= scrollHeight){
+          console.log(isLoding);
+            //만일 현재 마지막 페이지라면
+            if(currentPage == ${totalPageCount} || isLoding){
+               
+               return; // 함수를 여기서 끝낸다.
+            }
+            //현재 로딩 중이라고 표시한다.
+            isLoding= true;
+            //console.log("탔습니다.");
+            //로딩바를 띄우고
+            $(".back-drop").show();
+            //요청할 페이지 번호를 1증가시킨다.
+            currentPage++;
+            //추가로 받아올 페이지를 서버에 ajax 요청을 하고
+            //console.log("inscroll" + currentPage);
+            GetList(currentPage)
+      }
+   });
 });
-/* 
-//웹브라우저의 창을 스크롤할 때마다  호출되는 함수 등록
-$(window).on("scroll",function(){
-	
-	let scrollTop = $(window).scrollTop();
-	console.log(scrollTop+"난 스크롤");
-	//웹브라우저 창의 높이
-	let windowHeight = $(window).height();
-	console.log(windowHeight+"난 윈도우");
-	//문서 전체의 높이
-	let documentHeight = $(document).height();
-	console.log(documentHeight+"난 문서");
-	
-
-	//바닥까지 스크롤 되었는지 여부를 알아낸다.
-	let isBottom = scrollTop + windowHeight >= documentHeight;
-	
-	if(isBottom){
-		console.log(isLoding);
-		//만일 현재 마지막 페이지라면
-		if(currentPage == ${totalPageCount} || isLoding){
-			
-			return; // 함수를 여기서 끝낸다.
-		}
-		//현재 로딩 중이라고 표시한다.
-		isLoding= true;
-		//console.log("탔습니다.");
-		//로딩바를 띄우고
-		$(".back-drop").show();
-		//요청할 페이지 번호를 1증가시킨다.
-		currentPage++;
-		//추가로 받아올 페이지를 서버에 ajax 요청을 하고
-		//console.log("inscroll" + currentPage);
-		GetList(currentPage);
-	}
-}); */
 
 //카드 리스트를 가져오는 함수
 
 const GetList = function(currentPage){
-	//console.log("inGetList" + currentPage);
-	
-	//무한스크롤
-	$.ajax({
-	
-		url : "ajax_main.do",
-		method : "GET",
-		//검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
-		data : "pagenumber="+currentPage+"&SearchType=${searchType}&SearchVal=${searchVal}",
-		//FreeBoard.jsp의 내용이 data로 들어온다. 
-		success:function(data){			
-			//console.log(data.appendList);
-			let appendList = data.appendList;
-			let html = "";
-			
-			for(let i = 0; i < appendList.length; i++){
-				//console.log(appendList[i].uidx);
-				html +='<div class="col-lg-3  col-md-12 ">';
-				html +='	<div class="card">';
-				html +='<a href="boarditem/itemview.do?item_idx='+appendList[i].item_idx+'${vo.item_idx}">';
-				html +='<img src="<%=request.getContextPath()%>/resources/upload/'+appendList[i].image1+'"';
-				html +='onerror=this.src="images/noimg_item.jpg" width="100%" height="255">';
-				html +='</a>';
-				html +='<div class="card-body" style="text-align: center; padding-top: 5px;">';
-				html +='<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">';
-				if( appendList[i].state == 1) {
-	            html +='			<h7 class="product-price">거래중 </h7>';
-	           			}									
-	       		if( appendList[i].state == 2) {
-	            html +='			<h7 class="product-price">예약중</h7>';
-	            		}
-	         		if( appendList[i].state == 3) {
-				html +='			<h7 class="product-price">거래완료</h7>';
-	            		}
-				html +='</h7>';
-				html +='<h6 class="card-title" id="itemtitle">';
-				html +='<a href="itemview.do?item_idx='+appendList[i].item_idx+'">'+appendList[i].title+'</a>';
-				html +='</h6>';
-				html +='<h7 class="card-text" style="color:#6C757D;">♥2 <img src="images/icon_main_view.png"> 5</h7>';
-				html +='<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">'+appendList[i].price+'<fmt:formatNumber value="${vo.price}" pattern="#,###"/><span style="color:#000;">원</span></p>';
-				html +='</div>';
-				html +='</div>';
-				html +='	</div>';
+   //console.log("inGetList" + currentPage);
+   
+   //무한스크롤
+   $.ajax({
+   
+      url : "ajax_main.do",
+      method : "GET",
+      //검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
+      data : "pagenumber="+currentPage+"&SearchType=${searchType}&SearchVal=${searchVal}",
+      //FreeBoard.jsp의 내용이 data로 들어온다. 
+      success:function(data){
+         //console.log(data.appendList);
+         let appendList = data.appendList;
+         let html = "";
+         
+         for(let i = 0; i < appendList.length; i++){
+        	 
+			html +='<div class="card-container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">';
+			html +='<div class="card" style="margin:5px;" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+appendList[i].item_idx+'\'">';
+			html +='<img src="${ path }/resources/upload/'+appendList[i].image1+'" style="width:100%; height:210px;" onerror="this.onerror=null; this.src=\'${path}/images/no_image.gif\';" class="card-img-top" alt="...">';
+			html +='<div class="card-body" style="padding:10px;">';
+			html +='<div class="text-start" style="height:30px; display:flex; align-items:center;">';
+			if(appendList[i].title.length >= 8){
+				html +='<b>'+appendList[i].title.substr(0,8)+'</b>';
+			}else{
+				html +='<b>'+appendList[i].title+'</b>';
 			}
-			
-			
-		
-			
-			
-			//console.log(html);
-			//응답된 문자열은 html형식이다. 
-			//해당 문자열은 .card-list-container div에 html로 해석하라고 추가한다.
-			$(".card-list-container").append(html);
-			//로딩바를 숨긴다.
-			//$(".back-drop").hide();
-			//로딩중이 아니라고 표시한다.
-			isLoding=false;
-			//console.log("ajax"); 
-		}	
-	});
+			if(appendList[i].state == 2){
+				html += '<span style="display:inline-block; padding:3px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span>';
+			}else if(appendList[i].state == 3){
+				html += '<span style="display:inline-block; padding:3px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span>';
+			}
+			html +='</div>';
+			html +='<div>';
+			html +='<span style="color:#00AAB2;">'+appendList[i].price+'</span>원';
+			html +='</div>';
+			html +='<div class="text-end">';
+			html +='<img src="${path}/images/icon_wish_count.png" style="width:26px; padding:2px;">'+appendList[i].wishCount+' &nbsp;<img src="${path}/images/icon_chat_count.png" style="width:28px; padding:1px;"> '+appendList[i].chatCount;
+			html +='</div>';
+			html +='</div>';
+			html +='</div>';
+			html +='</div>';
+            
+         }
+         
+         $("#item_list").append(html);	         
+         
+         //로딩바를 숨긴다.
+         //$(".back-drop").hide();
+         //로딩중이 아니라고 표시한다.
+         isLoding=false;
+      }   
+   });
 }
-
-
 </script>
-
+<!-- 무한스크롤 -->
 
 		    
 
-<!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
-
-<link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
-<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
-<link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/mfb.css" rel="stylesheet">
-<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
 
 
 
@@ -188,10 +149,10 @@ const GetList = function(currentPage){
 <!--   Slick Slider -->
 	
 	
-<!-- path는 request.getContextPath()를 가져온것. -->	
+<!-- path는 request.getContextPath()를 가져온것. -->
 
 
-	
+
 <style>
 
 /*
@@ -202,24 +163,20 @@ const GetList = function(currentPage){
 	큰(lg)   	  992px 이상	  데스크탑
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
-.myCarousel { 
-	z-index : 1;
+.myCarousel {
+	z-index: 1;
 }
-
-
 
 .body {
 	padding-top: -56px;
-	
-	
-}
-a {
-  color: #000;
-  text-decoration: none;
-}
-	
 }
 
+a {
+	color: #000;
+	text-decoration: none;
+}
+
+}
 .row {
 	padding: 0px;
 	margin: 0px;
@@ -234,8 +191,6 @@ a {
 	margin-left: 3px;
 }
 
-
-
 @media ( min-width : 576px) {
 	.col-md-2 {
 		width: 30%;
@@ -248,41 +203,217 @@ a {
 	}
 }
 
-
-
 .offcanvas-collapse {
 	top: 150px;
 }
-
-
 
 .logo {
 	padding-left: 2.5rem;
 }
 
-@media all and (max-width:  767px){
-	
-	#myCarousel, #search, #bestitem, #boardlist, #productname  {
-		display:none;
+@media all and (max-width: 767px) {
+	#myCarousel, #search, #bestitem, #boardlist, #productname,
+		#kategorie_img, #event_img, #itemtitlename {
+		display: none;
 	}
-	
 	#itemlist {
 		margin-top: -106px;
 	}
-	
 }
 
-@media all and (min-width :768px){
+@media all and (min-width :768px) {
 }
 
 #itemtitle {
-	font-weight :  bold;
+	font-weight: bold;
 }
-  
 </style>
 
 
 
+
+<!-- 중고거래 style -->
+<style>
+
+/* .section .container . row. .col-lg-3 .row .products-tabs  .product .product-img  img{
+width:100%;
+height:160px;
+
+} */
+.cate_menu {
+	list-style: none;
+	margin: 20px;
+	padding-inline-start: 0px;
+}
+
+.cate_menu li {
+	display: inline-block;
+	margin-right: 20px;
+	padding-right: 5px;
+	padding-left: 5px;
+	background-color: gainsboro;
+	border-radius: 6px;
+	color: grey;
+	cursor: pointer;
+}
+
+.Pstyle {
+	opacity: 0;
+	display: none;
+	position: relative;
+	width: auto;
+	border: 5px solid #fff;
+	padding: 20px;
+	background-color: #fff;
+}
+
+.Pstyle2 {
+	opacity: 0;
+	display: none;
+	position: relative;
+	width: auto;
+	border: 5px solid #fff;
+	padding: 20px;
+	background-color: #fff;
+}
+
+#container {
+	height: 5000px;
+}
+
+#log {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: 0;
+	height: 200px;
+	background-color: rgba(0, 0, 0, 0.7);
+	text-align: center;
+	line-height: 50px;
+}
+
+#container span {
+	color: white;
+}
+
+#b {
+	display: none;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+.box {
+	float: left;
+	overflow: hidden;
+}
+
+.box-inner {
+	width: auto;
+	padding: 10px;
+}
+
+/* max가  0부터 ~ 까지라는뜨 */
+/* 반응형 */
+@media all and (max-width: 767px) {
+	#myCarousel, #search, #bestitem, #boardlist, #productname {
+		display: none;
+	}
+	#itemlist {
+		margin-top: -106px;
+	}
+	#search-area {
+		width: 100%;
+		text-align: center;
+	}
+	#Wish_area {
+		width: 16px;
+		height: 16px;
+	}
+	#Wish_area .image {
+		width: 16px;
+		height: 16px;
+		position: relative;
+		text-align: center;
+		color: #FFFFFF;
+	}
+	#Wish_area .image p {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%); /*  background-color:#FFFFFF; */
+		text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px
+			1px black;
+		margin: auto;
+	}
+}
+
+}
+@media all and (min-width :400px) {
+	.product-img {
+		width: 100%;
+		heigh: 100%;
+	}
+	#Wish_area {
+		width: 16px;
+		height: 16px;
+	}
+	#Wish_area .image {
+		width: 16px;
+		height: 16px;
+		position: relative;
+		text-align: center;
+		color: #FFFFFF;
+	}
+	#Wish_area .image p {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%); /*  background-color:#FFFFFF; */
+		text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px
+			1px black;
+		margin: auto;
+	}
+	#search-area {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+@media all and (min-width :1400px) {
+	.card-container {
+		width: 20%;
+	}
+}
+
+@media all and (max-width :1399px) {
+	.card-container {
+		width: 25%;
+	}
+}
+
+@media all and (max-width :1199px) {
+	.card-container {
+		width: 33.3333%;
+	}
+}
+
+@media all and (max-width :991px) {
+	.card-container {
+		width: 50%;
+	}
+}
+
+@media all and (max-width: 767px) {
+	.card-container {
+		width: 100%;
+	}
+}
+</style>
+<!-- 중고거래 style -->
 
 
 </head>
@@ -377,15 +508,16 @@ a {
 	</div>
 	<!-- 검색 -->
 
-
+<div id="kategorie_img" style="padding-bottom: 62px;">
 <div class="container">
 			<div class="row" style="margin-top: 40px;">
-				<div class="col-md-6 "><a href=""><img src="images/main_menu_img1.jpg" style="margin-left: 20px;"></a></div>
-				<div class="col-md-6 " style="padding: 0;"><img src="images/main_menu_img2.jpg">
-				<img src="images/main_menu_img3.jpg" style="margin-top: 15px;">
-				<img src="images/main_menu_img4.jpg" style="margin-left: 22px;  margin-top: 17px;"></div>
-
-		
+				<div class="col-md-6 "><a href="${path}/boarditem/itemlist.do"><img src="images/main_menu_img1.jpg" style="margin-left: 20px;"></a></div>
+				<div class="col-md-6 " style="padding: 0;">
+				<a href="${path}/board/boardlist.do?board_type=free"><img src="images/main_menu_img2.jpg"></a>
+				<a href="${path}/board/boardlist.do?board_type=notice'"><img src="images/main_menu_img3.jpg" style="margin-top: 15px;"></a>
+				<a href="${path}/customer/QnAList.do"><img src="images/main_menu_img4.jpg" style="margin-left: 22px;  margin-top: 17px;"></a></div>
+	</div>
+	</div>
 	</div>
 
 
@@ -395,14 +527,14 @@ a {
 	<!-- 인기상품 start -->
 			<div id="bestitem">
 				<main>
-					<div class="album py-5 ">
+					<div class="album py-5" style="background-color: #f9f9f9; height: 118px; ">
 
 							<div class="container ">
-								<div class="row" style="background-color: #f9f9f9; height: 100px; line-height : 100px;">
+								<div class="row">
 									<div class="col-md-2"></div>
-									<div class="col-md-8" style="text-align:center; transform: translate(10px, 21px);">
-									<h4 style="font-weight:bold">인기상품</h4>
-									<h6 style="color:#aaa;"]>AnnA의 인기 아이템을 확인하세요</h6>
+									<div class="col-md-8" style="text-align:center; transform: translate(10px, -14px);">
+									<h4 style="font-weight:bold; font-size:20px;">인기상품</h4>
+									<h6 style="color:#aaa; font-size:16px;">AnnA의 인기 아이템을 확인하세요</h6>
 									</div>
 									<div class="col-md-2 "></div>
 								</div>
@@ -410,7 +542,12 @@ a {
 							</div>
 							</main>
 
+		
+		
+		
 				
+			
+			
 
 
 				<!--   Slick Slider -->
@@ -418,7 +555,7 @@ a {
 					<div class="row">
 						<!-- stlye 은 slick 영역 확인용 -->
 						<div
-							style="padding-top: 30px; background-color: #fff; margin-top: -39px;">
+							style="padding-top: 30px; background-color: #fff; ">
 							<div id="slider-div">
 
 								<c:if test="${list.size() > 0}">
@@ -444,14 +581,18 @@ a {
 														<h7 class="product-price">거래완료</h7>
 													</c:if> </h7>
 													<h6 class="card-title" id="itemtitle">
-														<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
+														<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"><c:if test="${ fn:length(vo.title) > 8 }">
+													<b>${fn:substring(vo.title,0,8) }...</b>
+												</c:if>
+												<c:if test="${ fn:length(vo.title) <= 8 }">
+													${ vo.title }
+												</c:if></a>
 													</h6>
 													<p class="card-text" id="itemtitle"
-														style="color: #00AAB2; font-size: 17px"><fmt:formatNumber value="${vo.price}" pattern="#,###"/><span
-															style="color: #000;">원</span>
+														style="color: #00AAB2; font-size: 17px"><fmt:formatNumber value="${vo.price}" pattern="#,###"/><span style="color: #000;">원</span>
 													</p>
 													<div style="display: inline-block; margin: 0px auto;">
-														<h7 class="card-text" style="color:#6C757D; ">♥ 2
+														<h7 class="card-text" style="color:#6C757D; "> 2
 														View 5</h7>
 													</div>
 												</div>
@@ -535,55 +676,80 @@ a {
 
 
 				<!-- 게시글 -->
+				<main style="padding-top: 60px;">
+					<div class="album py-5" style="background-color: #f9f9f9; height: 118px; ">
+
+							<div class="container ">
+								<div class="row">
+									<div class="col-md-2"></div>
+									<div class="col-md-8" style="text-align:center; transform: translate(10px, -14px);">
+									<h5 style="font-weight:bold; font-size:20px;">일상 & 소통</h5>
+									<h6 style="color:#aaa; font-size:16px;">이웃과 따뜻해지는 동네를 만들어요</h6>
+									</div>
+									<div class="col-md-2 "></div>
+								</div>
+							</div>
+							</div>
+							</main>
 				<main>
 					<div class="album py-5" id="boardlist">
 						<div class="container">
 							<div class="container ">
-								<div class="row">
-									<div class="col-md-2">
-										<h4>｜일상 & 소통</h4>
-									</div>
-									<div class="col-md-8"></div>
-									<div class="col-md-2">
-										<h6 style="text-align: right;">
-											<a href="board/FreeBoard.do">더보기</a>
-										</h6>
-									</div>
-								</div>
 							</div>
-							<hr>
 							<form>
+							
+							
 								<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-									<c:if test="${board.size() ==0}">
-										<h3>등록된 게시물이 없습니다.</h3>
-									</c:if>
+								
+							
+		
+			<div id="bo_gall" style="width:100%">
+				<ul id="gall_ul" class="gall_row">
+			
+			<c:if test="${board.size()>0}">
+				<c:forEach var="vo" items="${board}">
+					
+					<li class="gall_li col-gn-4 gallWST" style="margin-bottom:5px;">
+            			<div class="gall_box" >
+                			<div class="gall_con">
+                    			<div class="gall_boxa">
+                        			<a href="viewBoard.do?Bidx=${vo.bidx}">
+                  						<em class="iconPs bo_tit"></em>
+                  						<i class="imgAr">
+                  							<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="images/no_imgborder.jpg" style="width :200px; height : 200px">
+                  						</i>
+                  						<em class="gall_info">
+                     						<span class="sound_only">조회 </span>
+                     						<i class="fa fa-eye" aria-hidden="true"></i>
+                     						${vo.hit}
+                     						<span class="gall_date">
+                     							<span>작성일</span>
+                     							<i class="fa fa-clock-o" aria-hidden="true"></i>
+                     							${vo.wdate }
+                     						</span>
+                     						<u>
+                     							<span>작성자 </span>${vo.nickName }
+                     						</u>
+                  						</em>
+                        			</a>
+                    			</div>
+			                    <div class="gall_text_href bo_tit" >
+			                    	<a href="viewBoard.do?Bidx=${vo.bidx}" style="float:left;">
+			                            ${vo.title }
+			                        </a>
+			                        <span style="float:right;"><img src="images/icon_comment.png" style="margin-top: -1px; margin-right: 3px; height: 15px;">${vo.ccount}</span>
+			                        <span style="float:right;"><img src="images/icon_like.png" height="23px" style="margin-top:-4px;">${vo.cntLike}</span>
+			                    </div>
+			                </div>
+            			</div>
+        			</li>
+					
+				</c:forEach>
+			</c:if>
 
-									<c:if test="${board.size()>0 }">
-										<c:forEach var="vo" items="${board}">
-											<c:if test="${vo.board_type eq 'free' }">
-
-												<div class="col">
-													<div class="card shadow-sm">
-														<a href="board/viewBoard.do?Bidx=${vo.bidx}"> <img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" 
-														onerror=this.src="images/noimg_item.jpg"  width="100%" height="225">
-														</a>
-														<div class="card-body" style="border: 0;">
-															<h6 class="card-title" id="itemtitle">
-																<a href="board/viewBoard.do?Bidx=${vo.bidx}">${vo.title}</a>
-															</h6>
-															<p class="card-text"></p>
-															<button type="button" class="btn btn-sm btn-outline-secondary" style="float: left">♥${vo.cntLike}</button>
-
-															<button type="button"
-																class="btn btn-sm btn-outline-secondary" style="float: left">
-																<img src="images/icon_main_riply.png" width="50%" style="margin-top: -2px;"> ${vo.ccount}
-															</button>
-														</div>
-													</div>
-												</div>
-											</c:if>
-										</c:forEach>
-									</c:if>
+				</ul>
+			</div>	
+								
 								</div>
 							</form>
 						</div>
@@ -591,68 +757,108 @@ a {
 			</div>
 			<br>
 			</main>
+			
+			
+			
+			
 			<!-- 게시글 -->
 
 
+			<div id="event_img">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<img src="images/main_event_img.jpg" style="margin-top: -78px;">
+						</div>
+					</div>
+				</div>
+			</div>
+
 
 			<!-- 상품 -->
-	<div id="itemlist">
-	<main>
-		<div class="album py-5 ">
-			<div class="container">
-				<div class="d-md-none d-lg-block d-xl-block">
-					<div class="container ">
-						<div class="row">
-							<div class="col-md-2">
-								<h4 id="productname">｜중고거래</h4>
-							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2">
-								<h6 id="productname" style="text-align: right;">
-									<a href="boarditem/itemlist.do">더보기</a>
-								</h6>
+			<div id="itemlist">
+				<main>
+					<div id="itemtitlename">
+						<div class="album py-5"
+							style="background-color: #f9f9f9; height: 118px; margin-top: 78px; margin-bottom: 30px;">
+
+							<div class="container ">
+								<div class="row">
+									<div class="col-md-2"></div>
+									<div class="col-md-8"
+										style="text-align: center; transform: translate(10px, -14px);">
+										<h5 style="font-weight: bold; font-size: 20px;">중고거래</h5>
+										<h6 style="color: #aaa; font-size: 16px;">최신 상품들을 만나보세요</h6>
+									</div>
+									<div class="col-md-2 "></div>
+								</div>
 							</div>
 						</div>
 					</div>
-					<hr id="productname">
 
-					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 card-list-container"  >
+					<div class="container">
+						<div class="d-md-none d-lg-block d-xl-block">
 
-						<c:if test="${list.size() > 0}">
-							<c:forEach var="vo" items="${list}">
-							
-								<div class="col-lg-3  col-md-12 ">
-									<div class="card">
-										<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"> <img
-											src="<%=request.getContextPath()%>/resources/upload/${vo.image1}"
-											onerror=this.src="images/noimg_item.jpg" width="100%"
-											height="255">
-										</a>
-										<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
-											<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
-												<c:if test="${vo.state==1}">
-												<h7 class="product-price"  >거래중</h7>
-												</c:if>												
-												<c:if test="${vo.state==2}">
-												<h7 class="product-price" >예약중</h7>
-												</c:if>												
-												<c:if test="${vo.state==3}" >
-												<h7 class="product-price" >거래완료</h7>
+
+							<div class="section" style="padding: 0px;">
+								<!-- container -->
+								<div class="container">
+									<!-- row -->
+									<div class="row" id="item_list">
+										<!-- Products tab & slick -->
+										<c:if test="${list.size() > 0}">
+											<c:forEach var="vo" items="${list}">
+
+												<div class="card-container"
+													style="display: inline-block; font-size: 1rem; flex: none; padding: 5px;">
+													<div class="card" style="margin: 5px;"
+														onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
+														<img src="${ path }/resources/upload/${ vo.image1}"
+															style="width: 100%; height: 210px;"
+															onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';"
+															class="card-img-top" alt="...">
+														<div class="card-body" style="padding: 10px;">
+															<div class="text-start"
+																style="height: 30px; display: flex; align-items: center;">
+																<c:if test="${ fn:length(vo.title) > 8 }">
+																	<b>${fn:substring(vo.title,0,8) }...</b>
+																</c:if>
+																<c:if test="${ fn:length(vo.title) <= 8 }">
+													${ vo.title }
 												</c:if>
-											</h7>
-											<h6 class="card-title" id="itemtitle"	>
-												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
-											</h6>
-											<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px"><fmt:formatNumber value="${vo.price}" pattern="#,###"/>
-											<span style="color:#000;">원</span></p>
-											<h7 class="card-text" style="color:#6C757D;">♥2 <img src="images/icon_main_view.png"> 5</h7>											
-										</div>
+																<c:if test="${ vo.state eq 2 }">
+																	<span
+																		style="display: inline-block; padding: 3px; border-radius: 5px; background: green; color: #fff; font-size: 0.8rem;">예약중</span>
+																</c:if>
+																<c:if test="${ vo.state eq 3 }">
+																	<span
+																		style="display: inline-block; padding: 3px; border-radius: 5px; background: gray; color: #fff; font-size: 0.8rem;">거래완료</span>
+																</c:if>
+															</div>
+															<div>
+																<span style="color: #00AAB2;"><fmt:formatNumber value="${vo.price}" pattern="#,###"/></span>원
+															</div>
+															<div class="text-end">
+																<img src="${path}/images/icon_wish_count.png"
+																	style="width: 26px; padding: 2px;"> ${ vo.wishCount }&nbsp;<img
+																	src="${path}/images/icon_chat_count.png"
+																	style="width: 28px; padding: 1px;"> ${ vo.chatCount }
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</c:forEach>
+										</c:if>
+										<!-- Products tab & slick -->
 									</div>
+									<!-- /row -->
 								</div>
-							</c:forEach>
-						</c:if>
+								<!-- /container -->
+							</div>
+							<!-- /SECTION -->
+						</div>
 					</div>
-				</div>
 			</div>
 		</div>
 	</main>
@@ -663,9 +869,9 @@ a {
 
 
 
-<%-- <!-- 퀵메뉴 시작 -->
+ <!-- 퀵메뉴 시작 -->
 			<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
-		<!-- 퀵메뉴 종료 --> --%>
+		<!-- 퀵메뉴 종료 --> 
 		
 
 

@@ -136,8 +136,21 @@ public class CustomerController {
 		return "redirect:/customer/QnAView.do?qidx="+vo.getQidx();
 		
 	}
+	
+	
+	//자주묻는질문(FAQ)
+		@RequestMapping(value="/FaQList.do")
+		public String FaQList(Model model) {			
+			
+			
+			model.addAttribute("path",path);
+			
+			return "customer/FaQList";
+			
+		}
+	
+	
 }
-
 
 
 
