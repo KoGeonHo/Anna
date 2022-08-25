@@ -257,11 +257,12 @@
 					html += '<div style="flex:1; margin:auto; margin-left:10px;">';
 					html += '<div style="padding:5px;">${audience}</div>';
 					html += '<div>';
-					if(result.indexOf("&image") != -1){
+					
+					if(result.contents.indexOf("&image") != -1){
 						html += '<div style="color:#fff; background:#00AAB2; border-radius:5px; display:inline-block; text-align:start;">';
 						html += result.contents.replace("&image","");
 						html += '</div>';
-					}else if(result.indexOf("&image") == -1){
+					}else if(result.contents.indexOf("&image") == -1){
 						html += '<div style="padding:5px; color:#fff; background:#00AAB2; border-radius:5px; display:inline-block; text-align:start;">';
 						html += result.contents;
 						html += '</div>';
@@ -270,10 +271,14 @@
 					html += '</div>';
 					html += '</div>';
 					$("#chatbox").append(html);
-					$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
+					
 				}
 			}
 		});
+		
+		setTimeout(function(){
+			$("#chatbox").scrollTop($('#chatbox')[0].scrollHeight);
+		},500);
 		
 	}
 	
@@ -304,6 +309,7 @@
 			success : function(){
 				if(state == 3){
 					$("#chatContents").prop("disabled",true);
+					$("#changeState").prop("disabled",true);
 					$("#changeState").prop("disabled",true);
 				}else{
 					$("#chatContents").prop("disabled",false);
