@@ -166,7 +166,7 @@
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		
-		<div class="wrapper" id="container-pc" style="padding-bottom:100px;">
+		<div class="wrapper" id="container-pc">
 			<!-- MyPage for Pc -->
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
@@ -343,9 +343,9 @@
 			<!-- MyPage for Pc -->
 		</div>
 		
-		<div class="wrapper" id='container-mobile'>
+		<div class="wrapper main" id='container-mobile'>
 			<!-- MyPage for Mobile -->
-			<div class="container main" >
+			<div class="container" style="overflow:auto;">
 				<h3 style="padding:1rem; margin:0px;">마이 페이지</h3>
 				<div class="border-bottom border-top">
 					<div style="display:inline-block;">

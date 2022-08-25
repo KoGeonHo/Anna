@@ -2,36 +2,58 @@
 html, body {
 	padding : 0px;
 	width: 100%;
+	height:100%;
 	overflow-x: hidden;
 }
 
 body { 
 	position: fixed;
+	line-height:unset !important;
 }
 
 .container {
 	justify-content: center;
 	align-items: center;
+	top:0;
+	bottom:0;
 }
 
 
 #footer {
 	background:#fff;
+	min-height:50px;
 }
+
+#footer img{
+	width:18px;
+	height:18px;
+}
+
+/* 모바일 */
 
 @media all and (max-width:  767px){
 	
 	.pc-header  {
 		display:none;
 	}
+	.navbar{
+		display:flex;
+	}
 	
+	#footer {
+		display:flex;
+	}
 	
-	
+	.main {
+		position:absolute;
+		padding-top:50px;
+		padding-bottom:50px;		
+	}
 }
 
 @media all and (min-width :768px){
 
-	.navbar, .collapse, #menu{
+	.navbar, #menu,#item_info_chat{
 		display:none;
 	}
 	
@@ -41,20 +63,36 @@ body {
 	
 }
 
+.main .container{
+	overflow:auto;
+}
+
 .menu-hide {
 	 left:100%;
 }
 
+.main{
+	height:100%;
+	
+}
+
 
 #menu{
-
 	transition: all 0.5s ease-out;
 	z-index : 10000;
 	
 }
 
-.menu-item{
+.navbar {
+	height:50px;
+	padding: 0 !important;
+	align-items:center;
+	min-height:50px;
+	z-index:1000;
+}
 
+
+.menu-item{
 	padding:1rem;
 	font-size:1rem;
 	
@@ -63,8 +101,8 @@ body {
 .wrapper {
 	display: flex;
     flex-direction: column;
-    height: 100vh;
-    overflow:auto;
+    height: 100%;
+    width:100%;
 }
 
 .ft-icon {

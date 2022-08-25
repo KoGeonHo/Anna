@@ -110,8 +110,12 @@
 		</script>
 		<!-- PC헤더  END-->
 
+
+
+
+
 		<!-- 모바일 헤더 START -->
-		<nav class="navbar navbar-dark" style=" background:#00AAB2;">
+		<nav class="navbar navbar-dark" style="background:#00AAB2;">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<select class="form-select" aria-label="Default select example" onchange="alert('해당 기능은 준비중입니다.')">
@@ -162,7 +166,7 @@
 		</nav>
 		<!-- 모바일 헤더 END -->
 		<%if(!uri.contains("/user/chat") && uri.contains("/user")){%>
-			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:56px; background:#00AAB2;">
+			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:50px; background:#00AAB2;">
 				<div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
 					마이페이지
 				</div>
@@ -175,15 +179,9 @@
 				<div class="menu-item" onclick="location.href='${ path }/user/wishList.do'">
 					찜목록
 				</div>
-				<%-- <div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
-					구매내역
-				</div>
-				<div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
-					판매내역
-				</div> --%>
 			</div>
 		<%} else if(uri.contains("/board/")){%>
-			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:56px; background:#00AAB2;">
+			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:50px; background:#00AAB2;">
 				<div class="menu-item" onclick="location.href='${path}/board/boardlist.do?board_type=notice'">
 					공지사항
 				</div>
@@ -204,7 +202,7 @@
 				</div> --%>
 			</div>			
 		<%} else {%>
-			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:56px; background:#00AAB2;">
+			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:50px; background:#00AAB2;">
 				<div class="menu-item" onclick="location.href='${path}/boarditem/itemlist.do'">
 					중고거래
 				</div>
