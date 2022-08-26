@@ -27,9 +27,9 @@
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/mfb.css" rel="stylesheet">
 <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
 <link rel="stylesheet" href="${ path }/css/boardlist1.css" type="text/css" />
+<link href="${ path }/css/mfb.css" rel="stylesheet">
 
 
 		
@@ -508,7 +508,7 @@ text-decoration: none;
 					</c:if>
 				</c:if>
 					<c:if test="${ pm.board_type ne 'notice' and pm.board_type ne 'free' }">
-						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=notice';">글쓰기</button>
+						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${pm.board_type}';">글쓰기</button>
 					</c:if>
 				
 			
@@ -607,6 +607,11 @@ text-decoration: none;
 
 	</div>
 </div>
+
+      <!-- 퀵메뉴 시작 -->
+      <%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>         
+      <!-- 퀵메뉴 종료 --> 
+
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		

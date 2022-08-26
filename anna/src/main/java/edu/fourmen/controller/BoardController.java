@@ -522,7 +522,7 @@ public class BoardController {
 								
 					MultipartFile mFile = multi.getFile(uploadFile);
 					String fileName = mFile.getOriginalFilename();
-					System.out.println("실제 파일 이름 : " +fileName);
+//					System.out.println("실제 파일 이름 : " +fileName);
 					newFileName = formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+fileName;
 					
 					try {
