@@ -79,7 +79,7 @@ public class BoardItemController {
 			pm.setAddr_code(auth);	
 			model.addAttribute("addr_code",auth);
 			
-		}
+	
 		//찜 많은순 보기  wishchceck 로 한 이유는 현재 사용되는 value 값이 1,2 밖에 없음. 
 		//그 이후로 늘어날 일도 없고 새로운 변수를 선언하기 애매해서 그냥 쓰는중
 		if(pm.getWishCheck() == 3) {
@@ -89,13 +89,11 @@ public class BoardItemController {
 		}
 		//내 키워드 상품 보기
 		if(pm.getWishCheck() == 4) {
-			int uidx = (int) session.getAttribute("uidx");
-			UserVO uvo = userService.getUserInfo(uidx);
 			String keyword = uvo.getInterested();
 			pm.setInterested(keyword);
 		}
 		
-		
+		}
 		//한 페이지에 몇개씩 표시할 것인지
 				int pagecount = 12;
 				//보여줄 페이지의 번호를 일단 1이라고 초기값 지정

@@ -203,13 +203,13 @@ $(document).ready(function(){
 				}
 			}
 		}); */
-				
+
 	$("#addr_code").on("change",function(){
 		var code = $("#addr_code").val();
 		var auth = <%=request.getParameter("addr_code") %>;
 		console.log(code);
 			if(code == 0){
-
+				location.href="itemlist.do";
 			}else {		
 				$("#frm2").attr("action","/anna/boarditem/itemlist.do").submit();
 			}
@@ -483,8 +483,8 @@ a:link {
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div id="main" class="wrapper">
-			<div class="container main">
+		<div id="main" class="wrapper main">
+			<div class="container ">
 				<!-- <div class="categories text-center">
 					<ul class="cate_menu">
 						<li onclick="location.href='itemlist.do'">전체</li>

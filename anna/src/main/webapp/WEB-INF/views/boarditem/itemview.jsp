@@ -684,7 +684,7 @@ function itemdelete(){
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="main" id="main" style="overflow-y: auto; overflow-x: hidden;">
+		<div class="wrapper main" id="main" style="overflow-y: auto; overflow-x: hidden;">
 			<div class="container">
 				<div class="row">
 					<!-- 신고하기 팝업 영역  -->
