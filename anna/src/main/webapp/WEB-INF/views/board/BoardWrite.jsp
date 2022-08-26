@@ -122,7 +122,8 @@ body {
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-	<div class="container main">
+	<div class="wrapper main">
+		<div class="container">
 		
 			
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">글 쓰기</h3>
@@ -211,7 +212,7 @@ body {
 
 				</form>
 			</div>
-		
+		</div>
 
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>

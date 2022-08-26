@@ -61,9 +61,7 @@ width : 341px;
 }
 
 .comment-box{
-width : 700px;
-margin:auto;
-display:block;
+
 }
 
 .comment_Box{
@@ -184,6 +182,21 @@ height : 54px;
 	}
 }
 
+/*탭*/
+
+
+.tabs > input{display:none; font-size: 0;}  /* 라디오버튼 안보이게 */
+.tabs > input:checked + label{color:#191919;} /* 선택된 라디오 버튼의 폰트색을 변경 */
+.tabs > input:checked + label::after{transform: translateY(8px); background:#00AAB2;}
+
+.tabs > label{
+        display: inline-block; text-align: center; cursor: pointer;
+        font-size:17px; color:#999; padding:0 20px;
+    }
+.tabs > label::after{content:''; display:block; width:100%; height:3px; background:transtrent; transition:all .2s ease-in-out; }
+.line{display:block; width:100%; height:3px; background-color:#ececec; margin:5px 0 50px 0;}
+/*탭 끝*/
+
 </style>
 </head>
 <body>
@@ -231,9 +244,25 @@ height : 54px;
 	    		</div>
     		</form>
     	</div>
-		<div class="wrapper">
+		<div class="wrapper main">
 			<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;" class="m-none">
-			<div class="container main">
+			<div class="container">
+				<div class="tabs" style="text-align: center; padding-left: 30px; padding-right: 30px;">
+					<input id="tab0" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=notice";' <c:if test="${ bv.board_type eq 'notice' }">checked</c:if> />
+					<label for="tab0">공지사항</label>
+					<input id="tab1" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=free";'<c:if test="${ bv.board_type eq 'free' }">checked</c:if>  />
+					<label for="tab1">일상&amp;소통</label>
+					<input id="tab2" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=job";'<c:if test="${ bv.board_type eq 'job' }">checked</c:if>/>
+					<label for="tab2">구인&amp;구직</label>
+					<input id="tab3" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=meeting";'<c:if test="${ bv.board_type eq 'meeting' }">checked</c:if>/>
+					<label for="tab3">모임</label>
+					<input id="tab4" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=hotplace";'<c:if test="${ bv.board_type eq 'hotplace' }">checked</c:if>/>
+					<label for="tab4">핫플레이스</label>
+					<div class="line"></div>
+				</div>
+			
+			
+			
 				<h4  class="border-bottom" style="padding:5px; margin:0; text-decoration-thickness: 1px; text-underline-offset: 8px;">
 						<c:if test="${bv.board_type eq 'free'}">
 							<a href="boardlist.do?board_type=free">일상&소통</a>
@@ -297,7 +326,7 @@ height : 54px;
 						<div class="col-10 td" style="display:table-cell;">
 							${bv.contents }<br>
 							
-							<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+							<div id="carouselExampleControls" class="carousel slide" style="height:100px;" data-bs-ride="carousel">
 							  <div class="carousel-inner">
 							  <c:if test="${bv.board_type != 'free' and bv.place_location != null}">
 							    <div class="carousel-item active">
@@ -306,27 +335,27 @@ height : 54px;
 						 	 </c:if>
 							  <c:if test="${bv.image1 != null}">
 							    <div class="carousel-item active">
-							      <img src="../resources/upload/${bv.image1}" class="d-block w-100" alt="...">
+							      <img src="../resources/upload/${bv.image1}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
 							    </div>
 						 	 </c:if>
 						 	  <c:if test="${bv.image2 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image2}" class="d-block w-100" alt="...">
+							      <img src="../resources/upload/${bv.image2}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
 							    </div>
 							  </c:if>
 							  <c:if test="${bv.image3 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image3}" class="d-block w-100" alt="...">
+							      <img src="../resources/upload/${bv.image3}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
 							    </div>
 							  </c:if>
 							  <c:if test="${bv.image4 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image4}" class="d-block w-100" alt="...">
+							      <img src="../resources/upload/${bv.image4}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
 							    </div>
 							  </c:if>
 							  <c:if test="${bv.image5 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image5}" class="d-block w-100" alt="...">
+							      <img src="../resources/upload/${bv.image5}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
 							    </div>
 							  </c:if>  
 							  </div>
@@ -339,25 +368,7 @@ height : 54px;
 							    <span class="visually-hidden">Next</span>
 							  </button>
 							</div>
-							<%-- <c:if test="${bv.image1 != null}">
-								<div class="board_img"><img src="../resources/upload/${bv.image1}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
-							</c:if>
-							
-							<c:if test="${bv.image2 != null}">
-								<div class="board_img"><img src="../resources/upload/${bv.image2}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
-							</c:if>
-							
-							<c:if test="${bv.image3 != null}">
-								<div class="board_img"><img src="../resources/upload/${bv.image3}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
-						    </c:if>
-						    
-						    <c:if test="${bv.image4 != null}">
-								<div class="board_img"><img src="../resources/upload/${bv.image4}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
-						    </c:if>
-						    
-						    <c:if test="${bv.image5 != null}">
-								<div class="board_img"><img src="../resources/upload/${bv.image5}" alt ="불러올 수 없는 이미지입니다." class="img"></div>
-						    </c:if> --%>
+						
 						</div>
 					</div>
 					<c:if test="${bv.uidx == uidx}"> 
@@ -371,27 +382,26 @@ height : 54px;
 
 
 				<c:if test="${ bv.board_type ne 'notice' }">
-                    <div class="comment-box">
-   		                 <div class="comment-count">댓글 <span id="count">0</span></div>
- 
-   		                <form method='post' id="commentForm">
-   		                 	   <!-- <span class="c-icon"><i class="fa-solid fa-user"></i>  -->
-   		                 <div class="comment-name">
-	                        <span class="anonym">
-	                       		<input type="hidden" class="form-control" id="nickName" name ="nickName" value='${userInfo.nickName}'>
-	                        	<input type="hidden" name="uidx" value="${uidx}">
-	                        </span>
-	                      </div>   
-	                        	
-	                        <!-- </span> -->
-                     
-                    <div class="comment-sbox">
-                    	<input type="hidden" value="${bv.bidx}" name="Bidx" id="Bidx">
-                        <textarea class="comment-input" id="Contents" cols="80" rows="2" style="resize: none;" name="Contents"></textarea>
-                     	<button class="Reply_btn" id="commentwrite">댓글등록</button>
-                    </div>
-                    </form>
-                    	
+                    <div class="comment-box" style="margin-top: 18px;">
+                    	<div class="row  tr">
+	   		            	<div class="comment-count col-2 th">댓글 <span id="count">(0)</span></div>
+	   		                <form method='post' id="commentForm">
+		   		                 <div class="comment-name">
+			                        <span class="anonym">
+			                       		<input type="hidden" class="form-control" id="nickName" name ="nickName" value='${userLoginInfo.nickName}'>
+			                        	<input type="hidden" name="uidx" value="${uidx}">
+			                        </span>
+			                      </div>   
+		                        	
+		                        <!-- </span> -->
+	                     
+	                    <div class="comment-sbox">
+	                    	<input type="hidden" value="${bv.bidx}" name="Bidx" id="Bidx">
+	                        <textarea class="comment-input" id="Contents" cols="80" rows="2" style="resize: none;" name="Contents"></textarea>
+	                     	<button class="Reply_btn" id="commentwrite">댓글등록</button>
+	                    </div>
+	                    </form>
+                    	</div>
     			   </div>
     			   
     			    <div class="comment_Box"> <!-- 댓글이 들어갈 박스 -->
@@ -519,7 +529,7 @@ function getList() {
 					comment_html += "<div id='commentstyle'><span id='nickName'><strong>" + nickName + "</strong></span><br/>";
 					comment_html += "<span id='Contents'>" + Contents + "</span><br>";
 					if(nickName=== $("#nickName").val()){
-						 comment_html += "<span id='delete' style='cursor:pointer;' data-id ="+Contents+">[삭제]</span><br></div>";
+						 comment_html += "<span id='delete' style='cursor:pointer;' data-id ="+Contents+"><a class=''>삭제</a></span><br></div>";
 					}
 					else{
 						comment_html += "</div>";
