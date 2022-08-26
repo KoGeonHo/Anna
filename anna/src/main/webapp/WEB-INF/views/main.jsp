@@ -29,6 +29,7 @@
 <link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="css/mfb.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/main.css" rel="stylesheet">
 <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
 
 <link rel="stylesheet" href="css/boardlist1.css" type="text/css" />
@@ -134,12 +135,56 @@ const GetList = function(currentPage){
 </script>
 <!-- 무한스크롤 -->
 
-		    
-
-
-
-
-
+<script>
+	$(function(){
+		let slide;
+		let slideWidth = 0;
+		
+		$(window).resize(function(){
+			$(".slide-container").css("left","0px");
+		});
+		
+		$(".slide-btn-prev").click(function(){
+			let slideContainer = $(this).data("container");
+			slideWidth = $(slideContainer).css("width").replace("px","");
+			let itemSize = $(this).data("itemsize");
+			let NextMax = -((Math.ceil(itemSize / 5) - 1) * slideWidth);
+			slide = $($(this).data("slide"));
+			if((parseInt(slide.css("left").replace("px",""))%slideWidth) == 0){
+				let left = slide.css("left").replace("px","");
+				if(slide.css("left").replace("px","") == 0){
+					left = NextMax;
+				}else if((parseInt(left)+parseInt(slideWidth)) > 0){
+					left = 0;
+				}
+				else{
+					left = parseInt(left)+parseInt(slideWidth);
+				}
+				slide.css("left",left+"px");
+			}
+		});
+		
+		$(".slide-btn-next").click(function(){
+			let itemSize = $(this).data("itemsize");
+			let slideContainer = $(this).data("container");
+			slideWidth = $(slideContainer).css("width").replace("px","");
+			slide = $($(this).data("slide"));
+			if((parseInt(slide.css("left").replace("px",""))%slideWidth) == 0){
+				left = slide.css("left").replace("px","");
+				let NextMax = -((Math.ceil(itemSize / 5) - 1) * slideWidth);
+				if((parseInt(left)-parseInt(slideWidth)) >= parseInt(NextMax)){
+					left = (parseInt(left)-parseInt(slideWidth));
+				}else{
+					left = 0;
+				}
+			}
+			slide.css("left",left+"px");
+		});
+		
+		
+		
+	});
+</script>
 
 
 		
@@ -148,273 +193,6 @@ const GetList = function(currentPage){
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <!--   Slick Slider -->
 	
-	
-<!-- path는 request.getContextPath()를 가져온것. -->
-
-
-
-<style>
-
-/*
-반응형 기준 기록
-	아주작은(xs)  576px 미만	  스마트폰 세로
-	작은(sm) 	  576px 이상	  스마트폰 가로
-	중간(md)	  768px 이상	  타블렛
-	큰(lg)   	  992px 이상	  데스크탑
-	아주큰(xl)	  1200px 이상	  큰 데스크탑
-*/
-.myCarousel {
-	z-index: 1;
-}
-
-.body {
-	padding-top: -56px;
-}
-
-a {
-	color: #000;
-	text-decoration: none;
-}
-
-}
-.row {
-	padding: 0px;
-	margin: 0px;
-}
-
-.container {
-	justify-content: center;
-	align-items: center;
-}
-
-.card {
-	margin-left: 3px;
-}
-
-@media ( min-width : 576px) {
-	.col-md-2 {
-		width: 30%;
-	}
-}
-
-@media ( min-width : 1200px) {
-	.col-md-2 {
-		width: 16.66666667%;
-	}
-}
-
-.offcanvas-collapse {
-	top: 150px;
-}
-
-.logo {
-	padding-left: 2.5rem;
-}
-
-@media all and (max-width: 767px) {
-	#myCarousel, #search, #bestitem, #boardlist, #productname,
-		#kategorie_img, #event_img, #itemtitlename {
-		display: none;
-	}
-	#itemlist {
-		margin-top: -106px;
-	}
-}
-
-@media all and (min-width :768px) {
-}
-
-#itemtitle {
-	font-weight: bold;
-}
-</style>
-
-
-
-
-<!-- 중고거래 style -->
-<style>
-
-/* .section .container . row. .col-lg-3 .row .products-tabs  .product .product-img  img{
-width:100%;
-height:160px;
-
-} */
-.cate_menu {
-	list-style: none;
-	margin: 20px;
-	padding-inline-start: 0px;
-}
-
-.cate_menu li {
-	display: inline-block;
-	margin-right: 20px;
-	padding-right: 5px;
-	padding-left: 5px;
-	background-color: gainsboro;
-	border-radius: 6px;
-	color: grey;
-	cursor: pointer;
-}
-
-.Pstyle {
-	opacity: 0;
-	display: none;
-	position: relative;
-	width: auto;
-	border: 5px solid #fff;
-	padding: 20px;
-	background-color: #fff;
-}
-
-.Pstyle2 {
-	opacity: 0;
-	display: none;
-	position: relative;
-	width: auto;
-	border: 5px solid #fff;
-	padding: 20px;
-	background-color: #fff;
-}
-
-#container {
-	height: 5000px;
-}
-
-#log {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	margin: 0;
-	height: 200px;
-	background-color: rgba(0, 0, 0, 0.7);
-	text-align: center;
-	line-height: 50px;
-}
-
-#container span {
-	color: white;
-}
-
-#b {
-	display: none;
-}
-
-a:link {
-	color: black;
-	text-decoration: none;
-}
-
-.box {
-	float: left;
-	overflow: hidden;
-}
-
-.box-inner {
-	width: auto;
-	padding: 10px;
-}
-
-/* max가  0부터 ~ 까지라는뜨 */
-/* 반응형 */
-@media all and (max-width: 767px) {
-	#myCarousel, #search, #bestitem, #boardlist, #productname {
-		display: none;
-	}
-	#itemlist {
-		margin-top: -106px;
-	}
-	#search-area {
-		width: 100%;
-		text-align: center;
-	}
-	#Wish_area {
-		width: 16px;
-		height: 16px;
-	}
-	#Wish_area .image {
-		width: 16px;
-		height: 16px;
-		position: relative;
-		text-align: center;
-		color: #FFFFFF;
-	}
-	#Wish_area .image p {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%); /*  background-color:#FFFFFF; */
-		text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px
-			1px black;
-		margin: auto;
-	}
-}
-
-}
-@media all and (min-width :400px) {
-	.product-img {
-		width: 100%;
-		heigh: 100%;
-	}
-	#Wish_area {
-		width: 16px;
-		height: 16px;
-	}
-	#Wish_area .image {
-		width: 16px;
-		height: 16px;
-		position: relative;
-		text-align: center;
-		color: #FFFFFF;
-	}
-	#Wish_area .image p {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%); /*  background-color:#FFFFFF; */
-		text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px
-			1px black;
-		margin: auto;
-	}
-	#search-area {
-		width: 100%;
-		text-align: center;
-	}
-}
-
-@media all and (min-width :1400px) {
-	.card-container {
-		width: 20%;
-	}
-}
-
-@media all and (max-width :1399px) {
-	.card-container {
-		width: 25%;
-	}
-}
-
-@media all and (max-width :1199px) {
-	.card-container {
-		width: 33.3333%;
-	}
-}
-
-@media all and (max-width :991px) {
-	.card-container {
-		width: 50%;
-	}
-}
-
-@media all and (max-width: 767px) {
-	.card-container {
-		width: 100%;
-	}
-}
-</style>
-<!-- 중고거래 style -->
-
 
 </head>
 
@@ -478,14 +256,6 @@ a:link {
 
 	<!-- 슬라이드 -->
 
-
-
-
-		
-		
-
-		
-		
 		
 	<!-- 검색 -->
 	<div id="search">
@@ -508,27 +278,27 @@ a:link {
 	</div>
 	<!-- 검색 -->
 
-<div id="kategorie_img" style="padding-bottom: 62px;">
-<div class="container">
-			<div class="row" style="margin-top: 40px;">
-				<div class="col-md-6 "><a href="${path}/boarditem/itemlist.do"><img src="images/main_menu_img1.jpg" style="margin-left: 20px;"></a></div>
-				<div class="col-md-6 " style="padding: 0;">
-				<a href="${path}/board/boardlist.do?board_type=free"><img src="images/main_menu_img2.jpg"></a>
-				<a href="${path}/board/boardlist.do?board_type=notice'"><img src="images/main_menu_img3.jpg" style="margin-top: 15px;"></a>
-				<a href="${path}/customer/QnAList.do"><img src="images/main_menu_img4.jpg" style="margin-left: 22px;  margin-top: 17px;"></a></div>
-	</div>
-	</div>
-	</div>
+			<div id="kategorie_img" style="padding-bottom: 62px;">
+				<div class="container">
+					<div class="row" style="margin-top: 40px;">
+						<div class="col-md-6 ">
+							<a href="${path}/boarditem/itemlist.do"><img src="images/main_menu_img1.jpg" style="margin-left: 20px;"></a>
+						</div>
+						<div class="col-md-6 " style="padding: 0;">
+							<a href="${path}/board/boardlist.do?board_type=free"><img src="images/main_menu_img2.jpg"></a> <a
+								href="${path}/board/boardlist.do?board_type=notice'"><img src="images/main_menu_img3.jpg" style="margin-top: 15px;"></a>
+							<a href="${path}/customer/QnAList.do"><img src="images/main_menu_img4.jpg" style="margin-left: 22px; margin-top: 17px;"></a>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 
-
-
-	<!-- 인기상품 start -->
+			<!-- 인기상품 start -->
 			<div id="bestitem">
 				<main>
 					<div class="album py-5" style="background-color: #f9f9f9; height: 118px; ">
-
 							<div class="container ">
 								<div class="row">
 									<div class="col-md-2"></div>
@@ -539,138 +309,53 @@ a:link {
 									<div class="col-md-2 "></div>
 								</div>
 							</div>
-							</div>
-							</main>
-
-		
-		
-		
-				
-			
-			
-
-
+						</div>
+				</main>
 				<!--   Slick Slider -->
 				<div class="container ">
 					<div class="row">
 						<!-- stlye 은 slick 영역 확인용 -->
-						<div
-							style="padding-top: 30px; background-color: #fff; ">
-							<div id="slider-div">
-
-								<c:if test="${list.size() > 0}">
+						
+						<c:if test="${list.size() > 0}">
+							<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative; margin-top: 39px;">
+								<c:if test="${list.size() > 5}">
+									<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ list.size() }" id="slide-btn-prev" style="left:0;"><img src='<%=request.getContextPath()%>/images/slicbtn_prev.png'></div>
+									<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ list.size() }" id="slide-btn-next" style="right:0;"><img src='<%=request.getContextPath()%>/images/slicbtn_next.png'></div>
+								</c:if>
+								<div id="slider-interested" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
 									<c:forEach var="vo" items="${list}">
-
-
-										<div class="col-lg-3  col-md-12 ">
-
-											<div class="card">
-												<a href="boarditem/itemview.do?item_idx=${vo.item_idx}">
-													<img
-													src="<%=request.getContextPath()%>/resources/upload/${vo.image1}" onerror=this.src="images/noimg_item.jpg" width="100%"height="255">
-												</a>
-												<div class="card-body"
-													style="text-align: center; padding-top: 5px;">
-													<h7 class="card-title"
-														style="color:#E52421; font-weight :  bold; font-size:14px;">
-													<c:if test="${vo.state==1}">
-														<h7 class="product-price">거래중</h7>
-													</c:if> <c:if test="${vo.state==2}">
-														<h7 class="product-price">예약중</h7>
-													</c:if> <c:if test="${vo.state==3}">
-														<h7 class="product-price">거래완료</h7>
-													</c:if> </h7>
-													<h6 class="card-title" id="itemtitle">
-														<a href="boarditem/itemview.do?item_idx=${vo.item_idx}"><c:if test="${ fn:length(vo.title) > 8 }">
-													<b>${fn:substring(vo.title,0,8) }...</b>
-												</c:if>
-												<c:if test="${ fn:length(vo.title) <= 8 }">
-													${ vo.title }
-												</c:if></a>
-													</h6>
-													<p class="card-text" id="itemtitle"
-														style="color: #00AAB2; font-size: 17px"><fmt:formatNumber value="${vo.price}" pattern="#,###"/><span style="color: #000;">원</span>
-													</p>
-													<div style="display: inline-block; margin: 0px auto;">
-														<h7 class="card-text" style="color:#6C757D; "> 2
-														View 5</h7>
+										<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
+											<div class="card" style="margin:5px;" onclick="location.href='<%=request.getContextPath()%>/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
+												<img src="<%=request.getContextPath()%>/resources/upload/${ vo.image1 }" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+												<div class="card-body">
+													<div class="text-start" style="height:30px; display:flex; align-items:center;">
+														<c:if test="${ fn:length(vo.title) > 8 }">
+															<b>${fn:substring(vo.title,0,8) }...</b>
+														</c:if>
+														<c:if test="${ fn:length(vo.title) <= 8 }">
+															<b>${ vo.title }</b>
+														</c:if>
+														<c:if test="${ vo.state eq 2 }"><span style="padding:3px; border-radius:5px; background:green; color:#fff; font-size:0.8rem; margin-left:5px;">예약중</span></c:if>
+														<c:if test="${ vo.state eq 3 }"><span style="padding:3px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem; margin-left:5px;">거래완료</span></c:if>
 													</div>
-												</div>
+													<div>
+														<span style="color:#00AAB2;"><fmt:formatNumber value="${ vo.price }" pattern="#,###"/></span>원
+													</div>
+											    	<div class="text-end">
+											    		<img src="<%=request.getContextPath()%>/images/icon_wish_count.png" style="width:26px; padding:2px;"> ${ vo.wishCount }&nbsp;<img src="${path}/images/icon_chat_count.png" style="width:28px; padding:1px;"> ${ vo.chatCount }
+											    	</div>
+											  	</div>
 											</div>
 										</div>
 									</c:forEach>
-								</c:if>
+								</div>
 							</div>
-						</div>
+						</c:if>					
 					</div>
-
-
-					<script>
-  		$(function(){
-			$('#slider-div').slick({
-				slide: 'div',		//슬라이드 되어야 할 태그 ex) div, li 
-				infinite : true, 	//무한 반복 옵션	 
-				slidesToShow : 4,		// 한 화면에 보여질 컨텐츠 개수
-				slidesToScroll : 1,		//스크롤 한번에 움직일 컨텐츠 개수
-				speed : 100,	 // 다음 버튼 누르고 다음 화면 뜨는데까지 걸리는 시간(ms)
-				arrows : true, 		// 옆으로 이동하는 화살표 표시 여부
-				autoplay : true,			// 자동 스크롤 사용 여부
-				autoplaySpeed : 5000, 		// 자동 스크롤 시 다음으로 넘어가는데 걸리는 시간 (ms)
-				pauseOnHover : true,		// 슬라이드 이동	시 마우스 호버하면 슬라이더 멈추게 설정
-				vertical : false,		// 세로 방향 슬라이드 옵션
-				prevArrow : "<img src='images/slicbtn_prev.png'  id ='slidebtn' class='slick-prev'></button>",		// 이전 화살표 모양 설정
-				nextArrow : "<img src='images/slicbtn_next.png' id ='slidebtn' class='slick-next'></button>",		// 다음 화살표 모양 설정
-				draggable : true, 	//드래그 가능 여부 
-				
-				responsive: [ // 반응형 웹 구현 옵션
-					{  
-						breakpoint: 960, //화면 사이즈 960px
-						settings: {
-							//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-							slidesToShow:3 
-						} 
-					},
-					{ 
-						breakpoint: 768, //화면 사이즈 768px
-						settings: {	
-							//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
-							slidesToShow:2 
-						} 
-					}
-				]
-
-			});
-  		})  		
-	</script>
-
-
-<style>
-
-#slidebtn {
-	width: 50px;
-	color: white;
-	font-size: 35px;
-	line-height: 50px;
-}
-
-.slick-prev {
-	position: absolute;
-	z-index: 100;
-	top: 42%;
-	left: 18px;
-	border: 0;
-}
-
-.slick-next {
-	position: absolute;
-	z-index: 100;
-	top: 42%;
-	right: 18px;
-	border: 0;
-}
-</style>
 				</div>
-				<!--   Slick Slider -->
+
+				
+								<!--   Slick Slider -->
 
 				<!-- 인기상품 end -->
 
@@ -683,26 +368,24 @@ a:link {
 								<div class="row">
 									<div class="col-md-2"></div>
 									<div class="col-md-8" style="text-align:center; transform: translate(10px, -14px);">
-									<h5 style="font-weight:bold; font-size:20px;">일상 & 소통</h5>
+									<h5 style="font-weight:bold; font-size:20px;">일상 &amp; 소통</h5>
 									<h6 style="color:#aaa; font-size:16px;">이웃과 따뜻해지는 동네를 만들어요</h6>
 									</div>
 									<div class="col-md-2 "></div>
 								</div>
 							</div>
-							</div>
-							</main>
+					</div>
+				</main>
+				
 				<main>
 					<div class="album py-5" id="boardlist">
 						<div class="container">
 							<div class="container ">
 							</div>
-							<form>
+							<form>						
 							
-							
-								<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-								
-							
-		
+					<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">								
+					
 			<div id="bo_gall" style="width:100%">
 				<ul id="gall_ul" class="gall_row">
 			
@@ -713,7 +396,7 @@ a:link {
             			<div class="gall_box" >
                 			<div class="gall_con">
                     			<div class="gall_boxa">
-                        			<a href="viewBoard.do?Bidx=${vo.bidx}">
+                        			<a href="board/viewBoard.do?Bidx=${vo.bidx}">
                   						<em class="iconPs bo_tit"></em>
                   						<i class="imgAr">
                   							<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="images/no_imgborder.jpg" style="width :200px; height : 200px">
@@ -746,10 +429,8 @@ a:link {
 					
 				</c:forEach>
 			</c:if>
-
 				</ul>
-			</div>	
-								
+			</div>									
 								</div>
 							</form>
 						</div>
@@ -824,8 +505,8 @@ a:link {
 																	<b>${fn:substring(vo.title,0,8) }...</b>
 																</c:if>
 																<c:if test="${ fn:length(vo.title) <= 8 }">
-													${ vo.title }
-												</c:if>
+																	${ vo.title }
+																</c:if>
 																<c:if test="${ vo.state eq 2 }">
 																	<span
 																		style="display: inline-block; padding: 3px; border-radius: 5px; background: green; color: #fff; font-size: 0.8rem;">예약중</span>
@@ -869,8 +550,8 @@ a:link {
 
 
 
- <!-- 퀵메뉴 시작 -->
-			<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
+		<!-- 퀵메뉴 시작 -->
+		<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
 		<!-- 퀵메뉴 종료 --> 
 		
 
@@ -880,7 +561,7 @@ a:link {
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
 
 
-	</div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
  <script src="https://getbootstrap.kr/docs/5.1/examples/offcanvas-navbar/offcanvas.js"></script>
