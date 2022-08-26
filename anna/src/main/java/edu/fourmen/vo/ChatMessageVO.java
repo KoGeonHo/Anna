@@ -18,9 +18,22 @@ public class ChatMessageVO extends BoardItemVO{
 	private int chat_read;
 	private int newMessages;
 	private String itemThumbNail;
+	private int state;
 	
 
 	
+	public int getState() {
+		return state;
+	}
+
+
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+
+
 	public String getItemThumbNail() {
 		return itemThumbNail;
 	}

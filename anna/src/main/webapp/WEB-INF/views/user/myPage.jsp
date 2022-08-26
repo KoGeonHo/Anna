@@ -136,12 +136,12 @@
 .btn-circle {
 	border-radius:100px; 
 	background:#777; 
-	width:80px;
-	height:80px; 
+	width:50px;
+	height:50px; 
 	margin:auto;
 	margin-top:20px; 
 	color:#fff; 
-	line-height:80px;
+	line-height:50px;
 }
 
 .card-body{
@@ -166,9 +166,9 @@
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		
-		<div class="wrapper" id="container-pc">
+		<div class="wrapper main" id="container-pc">
 			<!-- MyPage for Pc -->
-			<div class="container main">
+			<div class="container ">
 				<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
 				<div id="listOfInterested">
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님이 관심있어 할만한 상품</div>

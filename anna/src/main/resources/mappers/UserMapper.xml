@@ -324,11 +324,61 @@
 			(select b.contents from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as lastChat,
 			(select date_format(b.cdate,'%Y/%m/%d %p %H:%i') from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as lastChatDate,
 			(select image1 from Board_Items where item_idx = a.item_idx) as itemThumbNail,
+			(select state from Board_Items where item_idx = a.item_idx) as state,
 			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages
 		FROM 
 			chat a 
 		WHERE 
 			chat_host = #{uidx} OR
+			invited = #{uidx}
+		GROUP BY item_idx, chat_host, invited
+		ORDER BY lastChatDate DESC
+		
+	</select>
+	
+	
+	<select id="getSellChatList" parameterType="int" resultType="chatVO">
+	
+		SELECT 
+			a.item_idx,
+			a.invited,
+			(select nickName FROM AnnaUser WHERE uidx = a.invited) invitedNickName,
+			(select profile_image FROM AnnaUser WHERE uidx = a.invited) invitedProfileImg,
+			a.chat_host,
+			(select nickName FROM AnnaUser WHERE uidx = a.chat_host) hostNickName,
+			(select profile_image FROM AnnaUser WHERE uidx = a.chat_host) hostProfileImg,
+			(select b.contents from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as lastChat,
+			(select date_format(b.cdate,'%Y/%m/%d %p %H:%i') from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as lastChatDate,
+			(select image1 from Board_Items where item_idx = a.item_idx) as itemThumbNail,
+			(select state from Board_Items where item_idx = a.item_idx) as state,
+			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages
+		FROM 
+			chat a 
+		WHERE 
+			chat_host = #{uidx}
+		GROUP BY item_idx, chat_host, invited
+		ORDER BY lastChatDate DESC
+		
+	</select>
+	
+	<select id="getBuyChatList" parameterType="int" resultType="chatVO">
+	
+		SELECT 
+			a.item_idx,
+			a.invited,
+			(select nickName FROM AnnaUser WHERE uidx = a.invited) invitedNickName,
+			(select profile_image FROM AnnaUser WHERE uidx = a.invited) invitedProfileImg,
+			a.chat_host,
+			(select nickName FROM AnnaUser WHERE uidx = a.chat_host) hostNickName,
+			(select profile_image FROM AnnaUser WHERE uidx = a.chat_host) hostProfileImg,
+			(select b.contents from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as lastChat,
+			(select date_format(b.cdate,'%Y/%m/%d %p %H:%i') from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as lastChatDate,
+			(select image1 from Board_Items where item_idx = a.item_idx) as itemThumbNail,
+			(select state from Board_Items where item_idx = a.item_idx) as state,
+			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages
+		FROM 
+			chat a 
+		WHERE 
 			invited = #{uidx}
 		GROUP BY item_idx, chat_host, invited
 		ORDER BY lastChatDate DESC

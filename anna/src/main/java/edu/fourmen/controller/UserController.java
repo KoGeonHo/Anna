@@ -637,17 +637,9 @@ public class UserController {
 	
 	//채팅 리스트
 	@RequestMapping(value="/chatList.do")
-	public String chatList(Model model,HttpServletRequest request,HttpSession session) {
-		
-		session = request.getSession();
-		
-		int uidx = (int)session.getAttribute("uidx");
-		
-		List<ChatMessageVO> chatList = userService.getChatList(uidx);
+	public String chatList(String type,Model model,HttpServletRequest request,HttpSession session) {
 		
 		model.addAttribute("path",path);
-		
-		model.addAttribute("chatList",chatList);
 		
 		return "user/chatList";
 	}
@@ -736,13 +728,26 @@ public class UserController {
 	//채팅 목록 새로운 메세지 갱신
 	@ResponseBody
 	@RequestMapping(value="/checkNewMessage.do",produces = "application/json; charset=utf8")
-	public List<ChatMessageVO> checkNewMessage(HttpServletRequest request,HttpSession session){
+	public List<ChatMessageVO> checkNewMessage(String type,HttpServletRequest request,HttpSession session){
 
 		session = request.getSession();
 		
 		int uidx = (int)session.getAttribute("uidx");
 		
-		List<ChatMessageVO> chatList = userService.getChatList(uidx);
+		List<ChatMessageVO> chatList = null;
+		
+		if(type != null) {
+			if(type.equals("sell")) {
+				System.out.println("sell");
+				chatList = userService.getSellChatList(uidx);
+			}else if(type.equals("buy")) {
+				System.out.println("buy");
+				chatList = userService.getBuyChatList(uidx);
+			}else {
+				chatList = userService.getChatList(uidx);
+			}
+		}
+		
 		
 		return chatList;
 	}
