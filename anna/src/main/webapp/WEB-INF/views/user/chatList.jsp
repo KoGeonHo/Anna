@@ -81,8 +81,13 @@
 				for(let i = 0; i < chatList.length; i++){
 					html += '<div class="tr border-bottom" style="padding:5px; display:flex; position:relative;">';
 					
-					if(chatList[i].state == 3){
-						html += '<div class="profileImg_div" style="position:absolute;  top:0; width:100%; height:100%; vertical-aling:middle; background:rgba(0,0,0,0.4);">테스트</div>';
+					if(chatList[i].state == 3 && chatList[i].chat_host == '${uidx}'){
+						html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.8);">';
+						html += '<div style="flex:1;">';
+						html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;">후기 등록하기</button>'
+						html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>'
+						html += '</div>';
+						html += '</div>';
 					}
 					html += '<div class="profileImg_div" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
 					
@@ -146,6 +151,16 @@
 			}
 		});
 	}
+	
+	function checkLike(radiobox){
+		if(radiobox.value == 'like'){
+			$("#radiosLike").css("display","block");
+			$("#radiosDisLike").css("display","none");
+		}else if(radiobox.value == 'dislike'){
+			$("#radiosLike").css("display","none");
+			$("#radiosDisLike").css("display","block");
+		}
+	}
  
 </script>
 
@@ -156,7 +171,7 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div class="wrapper main" style="overflow:auto;">
-			<div class="container">
+			<div class="container" style="position:relative;">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">채팅 목록</h3>
 				<div class="tr border-bottom">
 					<div class="td text-center" onclick="location.href='chatList.do'" <c:if test="${ empty type }"> style="background:#777; color:#fff;"</c:if> style="border-right:1px solid #ddd;" >전체</div>
@@ -166,6 +181,58 @@
 				<div class="table" id="chatDiv">
 					<div>
 						Loading...
+					</div>
+				</div>
+				
+				<div id="modalForReView">
+					<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; ">
+						<div style="margin:auto; width:280px; height:300px; background:#fff; border-radius:10px; border:2px solid #ddd; box-shadow: 2px 2px 2px 2px grey;">
+							<p class="border-bottom text-start" style="width:100%; margin:0px;"><b style="margin:0; padding:5px; font-size:20px;">거래후기 등록</b></p>	
+							<div>
+								<form>
+									<div class="tr border-bottom">
+										<div class="td"><input id="like" name="satisfied" type="radio" onclick="checkLike(this)" value="like"><label for="like">&nbsp;만족</label></div>
+										<div class="td"><input id="dislike" name="satisfied" type="radio" onclick="checkLike(this)" value="dislike"><label for="dislike">&nbsp;불만족</label></div>
+									</div>
+									<div id="radiosLike" style="display:none;">
+										<div class="tr" id="checkLike">
+											<div class="td text-start">
+												<input id="like1" name="likeCheck" type="checkbox" value="option1"><label for="like1">&nbsp;친절해요</label>
+											</div>
+										</div>
+										<div class="tr" id="checkLike">
+											<div class="td text-start">
+												<input id="like2" name="likeCheck" type="checkbox" value="option3"><label for="like2">&nbsp;응답이 빨라요</label>
+											</div>
+										</div>
+										<div class="tr" id="checkLike">
+											<div class="td text-start">
+												<input id="like3" name="likeCheck" type="checkbox" value="option2"><label for="like3">&nbsp;상품이 설명과 같아요</label>
+											</div>
+										</div>
+									</div>
+									
+									<div id="radiosDisLike" style="display:none;">
+										<div class="tr" id="checkDisLike">
+											<div class="td text-start">
+												<input id="dislike1" name="dislikeCheck" type="checkbox" value="option1"><label for="dislike1">&nbsp;불친절해요</label>
+											</div>
+										</div>
+										<div class="tr" id="checkLike">
+											<div class="td text-start">
+												<input id="dislike2" name="dislikeCheck" type="checkbox" value="option2"><label for="dislike2">&nbsp;연락이 잘 안되요</label>
+												
+											</div>
+										</div>
+										<div class="tr" id="checkLike">
+											<div class="td text-start">
+												<input id="dislike3" name="dislikeCheck" type="checkbox" value="option3"><label for="dislike3">&nbsp;상품이 설명과 달라요</label>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
