@@ -242,6 +242,38 @@ $(document).ready(function () {
 	  $('select.addr_code option[value=' + addr_code_val + ']').attr('selected', 'selected');
 	});
 </script>
+<script>
+	let locationList2 = [${ userLoginInfo.location_auth }];
+	let html2 = '';
+	let addr = <%=request.getParameter("addr_code")%>;
+	 		$.ajax({
+		url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
+		data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
+		success : function(data){
+			$(".spinner-border").css("display","none");
+			for(let i = 0; i < locationList2.length; i++){
+				$.ajax({
+					url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
+					async : false,
+					data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList2[i]+"&low_search=0",
+					success : function(geojson){
+						let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
+						//dong.push(locationLevel[locationLevel.length-1]);
+						if(addr != locationList2[i]){
+						$(".form-select2").append('<option value="'+locationList2[i]+'">'+locationLevel[locationLevel.length-1]+'</option>');
+						}else if(addr == locationList2[i]){
+						$(".form-select2").append('<option value="'+locationList2[i]+'" selected="selected">'+locationLevel[locationLevel.length-1]+'</option>');
+							
+						}
+					}
+				});
+			}
+		},
+		error: function(){
+			console.log("error");
+		}
+	});
+</script>
 <style>
 
 /* .section .container . row. .col-lg-3 .row .products-tabs  .product .product-img  img{
@@ -251,20 +283,39 @@ height:160px;
 } */
 
 
+.form-select2{
+display: block;
+    width: 100%;
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+    -moz-padding-start: calc(0.75rem - 3px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e);
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
 .cate_menu {
-	list-style:none;
-	margin:20px;
-	padding-inline-start:0px;
+	list-style: none;
+    width: 100%;
+    text-align: center;
+    display:flex;
 }
 .cate_menu li{
 	display:inline-block;
-	margin-right:20px;
-	padding-right:5px; 
-	padding-left:5px; 
-	background-color: gainsboro;  
-	border-radius: 6px;  
 	color:grey;
 	cursor:pointer;
+	width:33%;
 }
 
 
@@ -434,7 +485,7 @@ a:link {
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div id="main" class="wrapper">
 			<div class="container main">
-				<div class="categories text-center">
+				<!-- <div class="categories text-center">
 					<ul class="cate_menu">
 						<li onclick="location.href='itemlist.do'">전체</li>
 						<li onclick="location.href='itemlist.do?cate_idx=1'">가전제품</li>
@@ -447,48 +498,20 @@ a:link {
 						<li onclick="location.href='itemlist.do?cate_idx=8'">자동차용품</li>
 						<li onclick="location.href='itemlist.do?cate_idx=9'">스포츠&레저용품</li>
 					</ul>
-				</div>
-				
-				
-				
-				
-				
-				<!-- <br>
-				<br>
-	
-			<div id="asd">
-				카테고리 
-					<div>
-						div style="width:100px; background-color:grey;"class="slide-toggle">
-					카테고리
-						</div>																				
-						<div style="">
-							<div class="box">
-							    <div class="box-inner" style="width:100%;">
-							    	<ul class="cate_menu">
-										<li  style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do" ><span style="color:grey;">전체</span></a></li>
-										<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=1" style=""><span style="color:grey;">가전제품</span></a></li>
-										<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=2" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">생활용품</span></a></li>
-										<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=3" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">완구&취미</span></a></li>
-										<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=4" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">패션&의류</span></a></li>
-										<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=5" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">인테리어</span></a></li>
-										<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=6" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">반려동물용품</span></a></li>
-										<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=7" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;"> 뷰티&악세</span></a></li>
-										<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=8" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">자동차용품</span></a></li>
-										<li style="padding-right:5px; padding-left:5px; background-color: gainsboro;  border-radius: 6px;  border-radius: 6px;"><a href="itemlist.do?cate_idx=9" style="background-color: gainsboro; border-radius: 6px;"><span style="color:grey;">스포츠&레저용품</span></a></li>
-									</ul>
-							    </div>
-							</div>
-						</div>		
-					</div>		
-				카테고리 끝
-			</div> -->
-				<div>
+				</div> -->
+			<div>
 				<!-- 검색창 시작 -->
-				
 				<div class="searchFrm text-center" style="margin:20px;">
 					<div style="display:flex;">
+						<form id="frm2">
+									<select class="form-select2" aria-label="Default select example" id="addr_code"name="addr_code">
+										<option value="0">내 동네</option>
+									</select>
+						    		
+							</form>
 						<div style="flex:1; margin-right:10px;">		
+							<!-- 내지역 코드 전송 -->
+							
 							<form method="get" action="itemlist.do" id="frm">
 								<input class="form-control text-center" type="text" id="searchVal" name="searchVal" class="search-control" placeholder="검색어를 입력해주세요" value="${pm.searchVal}">
 							</form>
@@ -496,39 +519,10 @@ a:link {
 							<input type="submit" value="검색" class="btn btn-outline-primary" id="search">
 							<button class="btn"  id="write" type="button"style="background-color: #00AAB2; color: #fff;" >글쓰기</button>
 							
-							<!-- 내지역 코드 전송 -->
-							<form id="frm2">
-									<select class="form-select" data-addr_code ="${addr_code}" aria-label="Default select example" id="addr_code"name="addr_code">
-										<option value="0">내 동네</option>
-									</select>
-								    		<script>
-									    		let locationList2 = [${ userLoginInfo.location_auth }];
-									    		let html2 = '';
-									    		$.ajax({
-													url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
-													data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
-													success : function(data){
-														$(".spinner-border").css("display","none");
-														for(let i = 0; i < locationList2.length; i++){
-															$.ajax({
-																url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
-																async : false,
-																data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList2[i]+"&low_search=0",
-																success : function(geojson){
-																	let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
-																	//dong.push(locationLevel[locationLevel.length-1]);
-																	//console.log(dong);
-																	$(".form-select").append('<option value="'+locationList2[i]+'">'+locationLevel[locationLevel.length-1]+'</option>');
-																}
-															});
-														}
-													},
-													error: function(){
-														console.log("error");
-													}
-												});
-						    				</script>
-							</form>
+						
+							
+							
+							
 								<%-- <% String addr = request.getParameter("addr_code");
 										if(addr != null){%>
 								내 지역만 보기<input type="checkbox" class="box" id="addr" checked>
@@ -539,6 +533,14 @@ a:link {
 											 <%} %> --%>
 					</div>
 				</div>
+				
+				<div>
+					<ul class="cate_menu">
+						<li>카테고리</li>
+						<li onclick="location.href='itemlist.do?WishCheck=3'">찜 많은순</li>
+						<li onclick="location.href='itemlist.do?WishCheck=4'">내 관심 상품</li>
+					</ul>
+				</div>	
 				<%-- <div class="col-md-12  col-sm-12 d-flex" id="search-area">
 					<form method="get" action="itemlist.do"  class="d-flex">
 						<input type="text" name="searchVal" class="search-control" placeholder="검색어를 입력해주세요"
@@ -736,6 +738,9 @@ a:link {
 									</div>
 								</div> --%>
 							</c:forEach>
+						</c:if>
+						<c:if test="${list.size() == 0}">
+							<h2>관련된 상품이 없습니다!</h2>
 						</c:if>
 						<!-- Products tab & slick -->
 					</div>
