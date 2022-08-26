@@ -1,4 +1,3 @@
-@charset "UTF-8";
 
 /*
 반응형 기준 기록
@@ -8,16 +7,20 @@
 	큰(lg)   	  992px 이상	  데스크탑
 	아주큰(xl)	  1200px 이상	  큰 데스크탑
 */
+.myCarousel {
+	z-index: 1;
+}
+
 .body {
 	padding-top: -56px;
 }
+
 a {
-  color: #000;
-  text-decoration: none;
-}
-	
+	color: #000;
+	text-decoration: none;
 }
 
+}
 .row {
 	padding: 0px;
 	margin: 0px;
@@ -32,25 +35,6 @@ a {
 	margin-left: 3px;
 }
 
-.bottom_menu {
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	height: 130px;
-	z-index: 100;
-	border-top: 1px solid black;
-	background-color: white
-}
-
-.bottom_menu>div {
-	float: left;
-	width: 20%;
-	height: 100%;
-	text-align: center;
-	padding-top: 20px;
-}
-
 @media ( min-width : 576px) {
 	.col-md-2 {
 		width: 30%;
@@ -63,138 +47,296 @@ a {
 	}
 }
 
-.navbar {
-	height: 150;
-}
-
 .offcanvas-collapse {
 	top: 150px;
-}
-
-.navbar-toggler-icon {
-	width: 4.5em;
-	height: 5.5em;
-}
-
-.navbar-brand {
-	margin-left: 2rem;
-}
-
-.navbar-dark .navbar-toggler-icon {
-	margin: 0 1rem;
 }
 
 .logo {
 	padding-left: 2.5rem;
 }
-</style>
 
-<style>
-
-html, body {
-	padding : 0px;
-	width: 100%;
-	overflow-x: hidden;
+@media all and (max-width: 767px) {
+	#myCarousel, #search, #bestitem, #boardlist, #productname,
+		#kategorie_img, #event_img, #itemtitlename {
+		display: none;
+	}
+	#itemlist {
+		margin-top: -106px;
+	}
 }
 
-body { 
-	position: fixed; 
+@media all and (min-width :768px) {
 }
 
-.container {
-	justify-content: center;
-	align-items: center;
+#itemtitle {
+	font-weight: bold;
 }
 
 
-#footer {
-	background:#fff;
-	position:fixed; 
-	bottom:0px;
-	z-index:10000;
+
+
+<!-- 중고거래 style -->
+
+
+.cate_menu {
+	list-style: none;
+	margin: 20px;
+	padding-inline-start: 0px;
+}
+
+.cate_menu li {
+	display: inline-block;
+	margin-right: 20px;
+	padding-right: 5px;
+	padding-left: 5px;
+	background-color: gainsboro;
+	border-radius: 6px;
+	color: grey;
+	cursor: pointer;
+}
+
+.Pstyle {
+	opacity: 0;
+	display: none;
+	position: relative;
+	width: auto;
+	border: 5px solid #fff;
+	padding: 20px;
+	background-color: #fff;
+}
+
+.Pstyle2 {
+	opacity: 0;
+	display: none;
+	position: relative;
+	width: auto;
+	border: 5px solid #fff;
+	padding: 20px;
+	background-color: #fff;
+}
+
+#container {
+	height: 5000px;
+}
+
+#log {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: 0;
+	height: 200px;
+	background-color: rgba(0, 0, 0, 0.7);
+	text-align: center;
+	line-height: 50px;
+}
+
+#container span {
+	color: white;
+}
+
+#b {
+	display: none;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+.box {
+	float: left;
+	overflow: hidden;
+}
+
+.box-inner {
+	width: auto;
+	padding: 10px;
+}
+
+/* max가  0부터 ~ 까지라는뜨 */
+/* 반응형 */
+@media all and (max-width: 767px) {
+	#myCarousel, #search, #bestitem, #boardlist, #productname {
+		display: none;
+	}
+	#itemlist {
+		margin-top: -106px;
+	}
+	#search-area {
+		width: 100%;
+		text-align: center;
+	}
+	#Wish_area {
+		width: 16px;
+		height: 16px;
+	}
+	#Wish_area .image {
+		width: 16px;
+		height: 16px;
+		position: relative;
+		text-align: center;
+		color: #FFFFFF;
+	}
+	#Wish_area .image p {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%); /*  background-color:#FFFFFF; */
+		text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px
+			1px black;
+		margin: auto;
+	}
+}
+
+}
+@media all and (min-width :400px) {
+	.product-img {
+		width: 100%;
+		heigh: 100%;
+	}
+	#Wish_area {
+		width: 16px;
+		height: 16px;
+	}
+	#Wish_area .image {
+		width: 16px;
+		height: 16px;
+		position: relative;
+		text-align: center;
+		color: #FFFFFF;
+	}
+	#Wish_area .image p {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%); /*  background-color:#FFFFFF; */
+		text-shadow: -1px 0 1px black, 0 1px 1px black, 1px 0 1px black, 0 -1px
+			1px black;
+		margin: auto;
+	}
+	#search-area {
+		width: 100%;
+		text-align: center;
+	}
+}
+
+@media all and (min-width :1400px) {
+	.card-container {
+		width: 20%;
+	}
+}
+
+@media all and (max-width :1399px) {
+	.card-container {
+		width: 25%;
+	}
+}
+
+@media all and (max-width :1199px) {
+	.card-container {
+		width: 33.3333%;
+	}
+}
+
+@media all and (max-width :991px) {
+	.card-container {
+		width: 50%;
+	}
+}
+
+@media all and (max-width: 767px) {
+	.card-container {
+		width: 100%;
+	}
+}
+
+<!-- 중고거래 style -->
+
+<!-- 베스트 스타일 -->		
+
+
+
+.card {
+    margin-left: 3px;
+    cursor:pointer;
 }
 
 @media all and (max-width:  767px){
 	
-	.pc-header {
+	#container-pc {
 		display:none;
-	}
-	
-	.main {
-		padding-bottom: 70px;
-	}
-	
-	.wrapper {
-    	margin-bottom:70px;
 	}
 	
 }
 
 @media all and (min-width :768px){
 
-	.navbar, .collapse, #menu{
+	#footer, #container-mobile{
 		display:none
 	}
 	
-	#footer {
-		display:none;
-	}
-	
 }
 
-.menu-hide {
-	 left:100%;
+.prev{
+	position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    padding-left:15px;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    text-align: center;
+    background: none;
+    border: 0;
+    opacity: 0.5;
+    transition: opacity 0.15s ease;
 }
 
-
-#menu{
-
-	transition: all 0.5s ease-out;
-	
+.next{
+	position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    padding-right:15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right:0;
+    color: #000;
+    text-align: center;
+    background: none;
+    border: 0;
+    opacity: 0.5;
+    transition: opacity 0.15s ease;
 }
 
-.menu-item{
-
-	padding:1rem;
-	font-size:1rem;
-	
+.btn-circle {
+	border-radius:100px; 
+	background:#777; 
+	width:80px;
+	height:80px; 
+	margin:auto;
+	margin-top:20px; 
+	color:#fff; 
+	line-height:80px;
 }
 
-.wrapper {
-	display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow:auto;
-}
-
-.ft-icon {
-	border:0px;
-	margin:0px;
-}
-
-.row {
-	margin:0;
-}
-
-.row > * {
-	padding:0 5px;
-}
-
-.th {
-	background:#eee;
-	text-align:center;
-	vertical-align:middle;
-}
-.th, .td {
+.card-body{
 	padding:10px;
-	display:table-cell;
 }
 
-.tr {
-	display:table; 
-	width:100%;
+.slide-btn {
+	position:absolute;
+	z-index:100; 
+	height:100%; 
+	top:0; 
+	bottom:0; 
+	align-items:center; 
+	display:flex;
+	cursor:pointer;
 }
 
-.pc-header border-bottom{
-	z-index : 10000;
-}
+<!-- 베스트 스타일 -->	
