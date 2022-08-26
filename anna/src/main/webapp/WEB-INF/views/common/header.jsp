@@ -51,7 +51,7 @@
 								</ul>
 							<li>
 								<ul style="list-style:none; padding-inline-start:0;">
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="alert('준비중입니다.');">자주하는질문</li>
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/customer/FaQList.do'">자주하는질문</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/customer/QnAList.do'">문의하기</li>
 								</ul>
 							<li>

@@ -29,8 +29,8 @@
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="wrapper">
-			<div class="container main">
+		<div class="wrapper main">
+			<div class="container ">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의 하기</h3>
 				<table class="text-center" style="width:100%;">
 					<thead>

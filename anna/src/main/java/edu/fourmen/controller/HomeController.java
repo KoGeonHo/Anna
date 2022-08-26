@@ -34,7 +34,7 @@ public class HomeController {
 	@Autowired
 	BoardItemService boardItemService;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/")
 	public String home(Locale locale, Model model, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm, BoardItemVO vo) {
 		 
 		

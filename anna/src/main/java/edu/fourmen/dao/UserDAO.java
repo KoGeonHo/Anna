@@ -180,6 +180,18 @@ public class UserDAO {
 		
 		return sqlSession.update("edu.fourmen.mapper.userMapper.updateRandomPwd",vo);
 	}
+
+
+	public List<ChatMessageVO> getSellChatList(int uidx) {
+		
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getSellChatList",uidx);
+	}
+
+
+	public List<ChatMessageVO> getBuyChatList(int uidx) {
+
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getBuyChatList",uidx);
+	}
 }
 
 

@@ -36,5 +36,7 @@ public interface UserService {
 	List<BoardVO> getMyCommunity(int uidx);
 	int updatePwd(UserVO vo);
 	int updateRandomPwd(UserVO vo);
+	List<ChatMessageVO> getSellChatList(int uidx);
+	List<ChatMessageVO> getBuyChatList(int uidx);
 	
 }

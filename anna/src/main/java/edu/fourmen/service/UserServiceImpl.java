@@ -352,5 +352,17 @@ public class UserServiceImpl implements UserService{
 		return userDAO.updateRandomPwd(vo);
 	}
 
+	@Override
+	public List<ChatMessageVO> getSellChatList(int uidx) {
+		
+		return userDAO.getSellChatList(uidx);
+	}
+
+	@Override
+	public List<ChatMessageVO> getBuyChatList(int uidx) {
+		
+		return userDAO.getBuyChatList(uidx);
+	}
+
 
 }
