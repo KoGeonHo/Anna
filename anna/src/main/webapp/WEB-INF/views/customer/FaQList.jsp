@@ -16,6 +16,8 @@
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/mfb.css" rel="stylesheet">
 <!-- path는 request.getContextPath()를 가져온것. -->
 
 <style>
@@ -144,10 +146,14 @@ MY > 설정 > [계정설정]에서 직접 탈퇴 가능<br>
 				
 			</div>
 		</div>	
+		<!-- 퀵메뉴 시작 -->
+		<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
+		<!-- 퀵메뉴 종료 --> 
 		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
 	</div>
+	
 </body>
 </html>
