@@ -126,32 +126,36 @@
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">거래지역</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<select class="form-select" aria-label="Default select example" id="addr_code"name="addr_code" onchange="alert('해당 기능은 준비중입니다.')">
+							<input type="text" class="form-control" value="${userLoginInfo.location_auth }" id="addr_code" name="addr_code">
+						</div>
+							<!-- <select class="form-select" aria-label="Default select example" id="addr_code"name="addr_code" onchange="alert('해당 기능은 준비중입니다.')">
 								<option value="0" id="addr">내 동네</option>
 							</select>
-				    		<script>
-					    		let locationList = [${ userLoginInfo.location_auth }];
-					    		let html = '';
+ -->				    		<script>
+					    		let locationList2 = [${ userLoginInfo.location_auth }];
+					    		let html2 = '';
 					    		$.ajax({
 									url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
 									data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
 									success : function(data){
 										$(".spinner-border").css("display","none");
-										for(let i = 0; i < locationList.length; i++){
+										for(let i = 0; i < locationList2.length; i++){
 											$.ajax({
 												url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
 												async : false,
-												data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
+												data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList2[i]+"&low_search=0",
 												success : function(geojson){
 													let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
+													console.log(locationLevel[locationLevel.length-1]); // 이게 동까지만 자른거
+													$('input[name=addr_code]').attr('value',locationLevel[locationLevel.length-1]);
 													//dong.push(locationLevel[locationLevel.length-1]);
 													//console.log(dong);
-													html += '<option value="'+locationList[i]+'"';
+										/* 			html += '<option value="'+locationList[i]+'"';
 													if(i == 0){
 														html += " selected "
 													}
 													html += '>'+locationLevel[locationLevel.length-1]+'</option>'
-													$(".form-select").append('<option value="'+locationList[i]+'">'+locationLevel[locationLevel.length-1]+'</option>');
+													$(".form-select").append('<option value="'+locationList[i]+'">'+locationLevel[locationLevel.length-1]+'</option>'); */
 												}
 											});
 										}
@@ -162,7 +166,6 @@
 								});
 		    				</script>
 						</div>
-					</div>
 					
 					
 			
