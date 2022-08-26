@@ -27,6 +27,7 @@ public class BoardVO extends UserVO{
 	private String place_location;
 	private String place_name;
 	
+	
 
 	public String getPlace_location() {
 		return place_location;

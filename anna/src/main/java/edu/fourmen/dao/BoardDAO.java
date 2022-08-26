@@ -112,7 +112,7 @@ public class BoardDAO {
 			locationList = pm.getLocation_auth().split(",");
 		}
 		
-		System.out.println("searchUidx:"+pm.getSearchUidx());
+		//System.out.println("searchUidx:"+pm.getSearchUidx());
 		
 		HM.put("pm",pm);
 		HM.put("locationList",locationList);

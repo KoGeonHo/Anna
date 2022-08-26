@@ -63,6 +63,12 @@
 </style>
 
 <style>
+
+.file{
+
+width : calc(100% - 50px);
+
+}
     
 
 .viewimg{
@@ -146,10 +152,10 @@ position: fixed;
 						<div class="col-4 th" style="display:table-cell;">게시판 분류</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<select name="board_type" onchange="javascript:locationMap(this);" id="board_type">
-								<option value="free">일상&amp;소통</option>
-								<option value="job">구인구직</option>
-								<option value="meeting">모임</option>
-								<option value="hotplace">우리동네 핫플레이스</option>
+								<option value="free" <c:if test="${ bv.board_type eq 'free' }"> selected </c:if>>일상&amp;소통</option>
+								<option value="job" <c:if test="${ bv.board_type eq 'job' }"> selected </c:if>>구인구직</option>
+								<option value="meeting" <c:if test="${ bv.board_type eq 'meeeting' }"> selected </c:if>>모임</option>
+								<option value="hotplace" <c:if test="${ bv.board_type eq 'hotplace' }"> selected </c:if>>핫플레이스</option>
 							</select>
 						</div>
 					</div>
@@ -161,6 +167,15 @@ position: fixed;
 						</div>
 					</div>
 					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
+						
+						<div id="boxWrap" class="col-8 td" style="display:table-cell;">
+							<input class="form-control file" type="file" id="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
+							<!-- <button type="button" id="file_btn">추가</button> -->
+						</div>
+					</div>
+					
 
 					
 					
@@ -169,6 +184,8 @@ position: fixed;
 						<div class="viewimg">
 							<img src="../resources/upload/${bv.image1}" alt ="안되는데요?" style="width:500px">
 						</div>
+						<button type="button" name="delbtn" value="0">사진 지우기</button>
+						
 					</c:if>
 					<c:if test="${bv.image2 != null}">
 						<span class="view2">${bv.image2}</span><br>
@@ -216,14 +233,14 @@ position: fixed;
 					
 					<div id="clickLatlng"></div>
 					<input type="hidden" class="boardtype" value="${bv.board_type}">
-					
+					<input type="hidden" id="place_location" name="original_place_location" value="${bv.place_location}">
 					<div class="text-end tr">
 						<div class="td">
 							<button class="btn" style="background:#00AAB2; color:#fff;" onclick="check()">수정</button>
 							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/board/boardlist.do?=${bv.board_type}'">취소</button>
 						</div>
 					</div>
-					<input type="hidden" id="place_location" name="place_location" value="${bv.place_location}">
+					
 				</form>
 				
 				
@@ -241,32 +258,53 @@ position: fixed;
 
 <script type="text/javascript">
 
+//카카오맵 API
+
+console.log($("#place_location").val());
+
+
 
 //마커를 담을 배열입니다
 var markers = [];
+
+if($("#place_location").val() == ''){
+	var x = 33.450701;
+	var y = 126.570667;
+
+}else{
+	var xy = $("#place_location").val().split(',');
+	
+	x= xy[0];
+	y= xy[1];
+	
+	
+}
+
 
 
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
-	
-	let location = document.getElementById('place_location').val();
-        
-        
- 		if( location != ''){
- 			
- 			center: new kakao.maps.LatLng(${bv.place_location}),
- 		}else{
- 			 center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
- 		}
-        	
-       
 
+ 		center: new kakao.maps.LatLng(x,y), //지도의 중심좌표
+        level: 5 // 지도의 확대 레벨
         
-        level: 3 // 지도의 확대 레벨
+        
     };
+console.log(mapOption);
+
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+if($("#place_location").val() != ''){
+	var marker = new kakao.maps.Marker({ 
+	    // 지도 중심좌표에 마커를 생성합니다 
+	    position: map.getCenter() 
+	});
+	
+		marker.setMap(map);
+		markers.push(marker);
+}
 //장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();
 
@@ -362,15 +400,13 @@ function displayPlaces(places) {
             	
             	var x = marker.getPosition().Ma;
             	var y = marker.getPosition().La;
-            	
-            	console.log(id);
-            	
+            		
             	console.log(title);
             	
             	console.log(x,y);
             	
             	var html ="<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>"
-            	html += "<input type='text' id='place_name' name='place_name' value='"+title+"'>"
+            	html += "<input type='hidden' id='place_name' name='place_name' value='"+title+"'>"
             	
             	 $("#clickLatlng").html(html);
             	
@@ -413,7 +449,7 @@ function displayPlaces(places) {
             	console.log(x,y);
             	
             	var html ="<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>"
-            	html += "<input type='text' id='place_name' name='place_name' value='"+title+"'>"
+            	html += "<input type='hidden' id='place_name' name='place_name' value='"+title+"'>"
             	
             	 $("#clickLatlng").html(html);
             	
@@ -471,8 +507,7 @@ function getListItem(index, places) {
         itemStr += '    <span>' +  places.address_name  + '</span>'; 
     }
                  
-      itemStr += '  <span class="tel">' + places.phone  + '</span>' + '<span>'+ places.id +'<span>'
-                '</div>';           
+      itemStr += '  <span class="tel">' + places.phone  + '</span>' + '<span></div>';           
 
     el.innerHTML = itemStr;
     el.className = 'item';
@@ -565,11 +600,8 @@ function removeAllChildNods(el) {
 }
  
 
-var boardtype = $(".boardtype").val();
 
-console.log(boardtype);
-
-$('#board_type').val(boardtype).prop("selected",true);
+//수정 시 이미지 확인
 
 $(".view").mouseover(function(){
 	$(".viewimg").css("display","block")
@@ -621,6 +653,8 @@ $(".view5").mouseout(function(){
 	
 });
 
+// 유효성 검사
+
 var title = $("#Title").val();
 
 function check(){
@@ -647,6 +681,86 @@ function check(){
 	
 
 }
+
+//파일 기능 스크립트
+
+$(document).ready(function() {
+	var i=2; // 변수설정은 함수의 바깥에 설정!
+  $("#file_btn").click(function() {
+    if(i<=5){
+    	
+    	$("#boxWrap").append("<input class='form-control file' type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'><a class='del'>삭제</a>");
+    }
+    
+    i++;
+    
+    if(i==6){
+    	$("#file_btn").css("display","none");
+    }
+   
+    
+
+  });
+});
+
+function chk_file_type(obj) {
+    var file_kind = obj.value.lastIndexOf('.');
+    var file_name = obj.value.substring(file_kind+1,obj.length); 
+    var file_type = file_name.toLowerCase();
+
+
+
+   var check_file_type = new Array();
+    check_file_type=['jpg','gif','png','jpeg','bmp',];
+
+
+
+    if(check_file_type.indexOf(file_type)==-1){
+     alert('이미지 파일만 선택할 수 있습니다.');
+     var parent_Obj=obj.parentNode
+     var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
+     return false;
+     
+     }
+    
+}
+
+//카카오맵 온/오프
+
+var board_type = $("#board_type").val();
+
+if(board_type != 'free'){
+
+	$(".map_wrap").css("display","block")
+
+}else if(board_type == 'free'){
+	
+	$(".map_wrap").css("display","none")
+}
+
+function locationMap(obj){
+	
+	var board_type = $("#board_type option:selected").val();
+	
+	if(board_type != 'free'){
+		$(".map_wrap").css("display","block")
+
+	}else if(board_type == 'free'){
+		$(".map_wrap").css("display","none")
+	}
+}
+
+//로그인 확인
+
+if(${uidx == null}){
+	alert("로그인 이후 이용해주세요");
+	location.href="/anna/user/login.do";
+}
+
+
+
+
+
 	
 
 </script>
