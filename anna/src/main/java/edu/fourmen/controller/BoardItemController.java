@@ -5,10 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import java.io.IOException;
-import java.lang.constant.Constable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
@@ -69,25 +68,33 @@ public class BoardItemController {
 			pm.setSearchVal("");
 		}
 		
-		
-		
+		//회원의 지역코드 넘기는 부분
 		if (session.getAttribute("uidx") != null) {
 			int uidx = (int) session.getAttribute("uidx");
+			UserVO uvo = userService.getUserInfo(uidx);
+			
 			pm.setUidx(uidx);
+			//내 지역보기 체크
+			String auth = uvo.getLocation_auth();
+			pm.setAddr_code(auth);	
+			model.addAttribute("addr_code",auth);
+			
+		}
+		//찜 많은순 보기  wishchceck 로 한 이유는 현재 사용되는 value 값이 1,2 밖에 없음. 
+		//그 이후로 늘어날 일도 없고 새로운 변수를 선언하기 애매해서 그냥 쓰는중
+		if(pm.getWishCheck() == 3) {
+			
+			pm.setWishCheck(pm.getWishCheck());
+			System.out.println("찜 많은순 보기 들어옴");
+		}
+		//내 키워드 상품 보기
+		if(pm.getWishCheck() == 4) {
+			int uidx = (int) session.getAttribute("uidx");
+			UserVO uvo = userService.getUserInfo(uidx);
+			String keyword = uvo.getInterested();
+			pm.setInterested(keyword);
 		}
 		
-		//내 지역보기 체크
-		if(vo.getAddr_code() != null) {
-		String auth = vo.getAddr_code();
-		vo.setAddr_code(auth);
-		model.addAttribute("addr_code",auth);
-		/*
-		 * String[] auth2 = auth.split(","); for(String a : auth2 ) {
-		 * 
-		 * vo.setAddr_code(a.substring(0,4));
-			}
-		 */
-		}
 		
 		//한 페이지에 몇개씩 표시할 것인지
 				int pagecount = 12;
@@ -161,7 +168,7 @@ public class BoardItemController {
 		session = request.getSession();
 		
 		
-		  
+	
 		
 		if(pm.getSearchVal() == null) {
 			pm.setSearchVal("");

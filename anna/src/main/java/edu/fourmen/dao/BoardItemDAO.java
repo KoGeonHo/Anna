@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.fourmen.service.UserService;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.PageMaker;
@@ -32,12 +33,23 @@ public class BoardItemDAO {
 	
 	public List<BoardItemVO> selectAll(PageMaker pm) {
 		
-		
-		
 		HashMap<String,Object> del = new HashMap<String,Object>();
 		String[] key = null;
 		
-		if(pm.getInterested() != null) {
+		if(pm.getAddr_code()!= null) {
+		
+		  String[] ArrayLocation = pm.getAddr_code().split(",");
+		  
+		  List<String> locationList = new ArrayList<String>();
+		  
+		  for(int i = 0; i < ArrayLocation.length; i++) {
+		  locationList.add(ArrayLocation[i]); //System.out.println(ArrayLocation[i]);
+		  }
+		  del.put("addr_code", locationList); 
+		}
+		
+		
+		if(pm.getWishCheck() == 4) {
 			key  = pm.getInterested().split(",");
 		}
 		del.put("pagemaker", pm);

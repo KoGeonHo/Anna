@@ -30,8 +30,11 @@
 		   AND ( b.title like concat ('%',#{pagemaker.searchVal},'%')  
 		   or b.keyword like concat ('%',#{pagemaker.searchVal},'%') )
 		</if>
-		<if test='pagemaker.addr_code != null'>
-			and b.addr_code like concat ('%',#{pagemaker.addr_code},'%')
+		<if test='addr_code != null'>
+			<!-- and b.addr_code like concat ('%',#{pagemaker.addr_code},'%') -->
+			<foreach collection="addr_code" item="item" separator="OR" open="AND (" close=")">
+				b.addr_code like concat('%',#{item},'%')
+			</foreach>
 		</if>
 		<if test='pagemaker.searchUidx != 0 '>
 			AND b.uidx = #{pagemaker.searchUidx}
@@ -39,14 +42,18 @@
 		 <if test='pagemaker.cate_idx != 0 and pagemaker.cate_idx != null'>
 		 	and cate_idx = #{pagemaker.cate_idx}
 		 </if> 
-		 <if test="interested != null">
+		 <if test="pagemaker.WishCheck ==4">
 		 	<foreach collection="interested" item="item"  separator="OR" open="AND (" close=")">
 				b.keyword like concat('%',#{item},'%') and b.uidx != #{pagemaker.uidx}
 			</foreach>
 		 </if> 
-		 
-		 
-		ORDER BY wdate desc limit #{pagemaker.startPage}, #{pagemaker.pageNum}
+		
+		 <if test="pagemaker.WishCheck ==3">
+		 and  b.uidx != #{pagemaker.uidx} and b.state = 1 ORDER BY WishCount desc limit #{pagemaker.startPage}, #{pagemaker.pageNum}
+		 </if>
+		 <if test="pagemaker.WishCheck !=3">
+			 ORDER BY wdate desc  limit #{pagemaker.startPage}, #{pagemaker.pageNum}
+		 </if>
 	</select>
 	
 	

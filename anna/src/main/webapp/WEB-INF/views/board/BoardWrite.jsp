@@ -156,7 +156,7 @@ body {
 									<option value="free" <c:if test="${ pm.board_type eq 'free' }"> selected </c:if>>일상&amp;소통</option>
 									<option value="job" <c:if test="${ pm.board_type eq 'job' }"> selected </c:if>>구인구직</option>
 									<option value="meeting" <c:if test="${ pm.board_type eq 'meeting' }"> selected </c:if>>모임</option>
-									<option value="hotplace" <c:if test="${ pm.board_type eq 'hotplace' }"> selected </c:if>>우리동네 핫플레이스</option>
+									<option value="hotplace" <c:if test="${ pm.board_type eq 'hotplace' }"> selected </c:if>>핫플레이스</option>
 								</select>
 							</c:if>
 						</div>
@@ -548,7 +548,7 @@ $(document).ready(function() {
   $("#file_btn").click(function() {
     if(i<=5){
     	
-    	$("#boxWrap").append("<input class='form-control' id='file' type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'><a class='del'>삭제</a>");
+    	$("#boxWrap").append("<input class='form-control' type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'><a class='del'>삭제</a>");
     }
     
     i++;

@@ -286,7 +286,15 @@
 	   	  ,Contents = #{Contents}
 	   	  ,Wdate = now()
 	   	  ,Location = #{Location}
-	   	  ,
+	   	  <if test="place_location != null">
+	   	  ,place_location = #{place_location}
+	   	  </if>
+	   	  <if test="place_name != null">
+	   	  ,place_name = #{place_name}
+	   	  </if>
+	   	  <if test="Image1 != null">
+	   	  ,Image1 = #{Image1}
+	   	  </if>
 	 WHERE Bidx = #{Bidx}
 
 
