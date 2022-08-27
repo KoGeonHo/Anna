@@ -153,6 +153,12 @@ text-decoration: none;
 
 @media all and (max-width : 767px){
 
+	.tabs{
+	
+	display:none;
+	
+	}
+
 	.pageing{
 	
 	width:40%;
@@ -307,18 +313,28 @@ text-decoration: none;
 <body>
 
 <div class="wrapper">
-		<!-- 헤더 및 메뉴 -->
-		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
+<!-- 헤더 및 메뉴 -->
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
+	<div class="main" id="main" style="overflow: auto; flex:1; width:100%;">
 		
+		<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;" class="m-none">
 		
-		
-			<div class="main" id="main" style="overflow: auto; flex:1;">
-
-		
-			<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;" class="m-none">
-			
-	<div class="container">
+		<div class="container">
+			<div class="tabs" style="text-align: center; padding-left: 30px; padding-right: 30px;">
+				<input id="tab0" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=notice";' <c:if test="${ pm.board_type eq 'notice' }">checked</c:if> />
+				<label for="tab0">공지사항</label>
+				<input id="tab1" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=free";'<c:if test="${ pm.board_type eq 'free' }">checked</c:if>  />
+				<label for="tab1">일상&amp;소통</label>
+				<input id="tab2" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=job";'<c:if test="${ pm.board_type eq 'job' }">checked</c:if>/>
+				<label for="tab2">구인&amp;구직</label>
+				<input id="tab3" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=meeting";'<c:if test="${ pm.board_type eq 'meeting' }">checked</c:if>/>
+				<label for="tab3">모임</label>
+				<input id="tab4" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=hotplace";'<c:if test="${ pm.board_type eq 'hotplace' }">checked</c:if>/>
+				<label for="tab4">핫플레이스</label>
+				<div class="line"></div>
+			</div>
+	
 		<div class="col-md-12  col-sm-12 " style=" display: flex; ">
 			<div style="flex:1">
 				<form method="get" action="boardlist.do" class="d-flex "  id="search">
@@ -595,7 +611,7 @@ text-decoration: none;
 
 			
 
-	</div>
+	
 </div>
 
       <!-- 퀵메뉴 시작 -->
@@ -606,6 +622,7 @@ text-decoration: none;
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
 	</div>
+</div>
 <script>
 //스크롤 시 이벤트 처리
 
@@ -709,7 +726,7 @@ const GetList = function(currentPage){
 			//console.log("ajax"); 
 		}	
 	});
-}
+  }
 }
 
 </script>
@@ -725,7 +742,15 @@ $(".view").mouseout(function(){
 	
 });
 
+$("input[name='tab_btn']").change(function(){
+	
 
+	if($("input[name='tab_btn']:checked").val() == 'free'){
+	
+		
+	}
+
+});
 
 </script>
 
