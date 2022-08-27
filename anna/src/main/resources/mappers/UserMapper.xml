@@ -327,7 +327,7 @@
 			(select state from Board_Items where item_idx = a.item_idx) as state,
 			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages,
 			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) as myReview,
-			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer != #{uidx}) as review
+			(select count(*) from review where item_idx = a.item_idx and writer = #{uidx}) as chkReview
 		FROM 
 			chat a 
 		WHERE 
@@ -355,7 +355,7 @@
 			(select state from Board_Items where item_idx = a.item_idx) as state,
 			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages,
 			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) as myReview,
-			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer != #{uidx}) as review
+			(select count(*) from review where item_idx = a.item_idx and writer = #{uidx}) as chkReview
 		FROM 
 			chat a 
 		WHERE 
@@ -381,7 +381,7 @@
 			(select state from Board_Items where item_idx = a.item_idx) as state,
 			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages,
 			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) as myReview,
-			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer != #{uidx}) as review
+			(select count(*) from review where item_idx = a.item_idx and writer = #{uidx}) as chkReview
 		FROM 
 			chat a 
 		WHERE 
