@@ -9,7 +9,7 @@
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
 <script src="${ path }/js/common/common.js"></script>
-<script type='text/javascript' src='https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=7b9a8af3d576479db243'></script>	
+<script type='text/javascript' src='https://sgisapi.kostat.go.kr/OpenAPI3/auth/javascriptAuth?consumer_key=7b9a8af3d576479db243'></script>
 
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
@@ -22,7 +22,7 @@
 			url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
 			data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
 			success : function(data){
-				//console.log(navigator.geolocation);
+				console.log(navigator.geolocation);
 				if(navigator.geolocation){
 					navigator.geolocation.getCurrentPosition(function(position){
 						

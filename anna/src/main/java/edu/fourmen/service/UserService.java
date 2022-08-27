@@ -6,6 +6,7 @@ import java.util.List;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.ChatMessageVO;
+import edu.fourmen.vo.ReViewVO;
 import edu.fourmen.vo.UserVO;
 
 public interface UserService {
@@ -38,5 +39,6 @@ public interface UserService {
 	int updateRandomPwd(UserVO vo);
 	List<ChatMessageVO> getSellChatList(int uidx);
 	List<ChatMessageVO> getBuyChatList(int uidx);
+	void insertReView(ReViewVO vo);
 	
 }

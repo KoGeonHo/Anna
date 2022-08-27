@@ -29,6 +29,7 @@ import edu.fourmen.service.UserService;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.ChatMessageVO;
+import edu.fourmen.vo.ReViewVO;
 import edu.fourmen.vo.UserVO;
 
 @RequestMapping(value="/user")
@@ -921,7 +922,27 @@ public class UserController {
 	}
 	
 	
-	
+	@RequestMapping(value="/insertReView.do")
+	public String insertReView(ReViewVO vo,HttpServletRequest request,HttpSession session) {
+		
+		session = request.getSession();
+		
+		vo.setWriter((int)session.getAttribute("uidx"));
+		
+//		System.out.println(vo.getItem_idx());
+//		System.out.println(vo.getSeller());
+//		System.out.println(vo.getBuyer());
+//		System.out.println(vo.getWriter());
+//		System.out.println(vo.getSatisfied());
+//		System.out.println(vo.getOption1());
+//		System.out.println(vo.getOption2());
+//		System.out.println(vo.getOption3());
+		
+		userService.insertReView(vo);
+		
+		return "redirect:/user/chatList.do";
+		
+	}
 	
 	
 	

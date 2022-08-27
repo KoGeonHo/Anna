@@ -419,7 +419,7 @@
 												<div style="padding:5px;">${audience}</div>
 												<div>
 													<c:if test="${fn:contains(i.contents, '&image')}">
-														<div style="padding:5px; color:#fff; background:#ddd; border-radius:5px; display:inline-block; text-align:start;">
+														<div style="color:#fff; background:#ddd; border-radius:5px; display:inline-block; text-align:start;">
 															${ fn:replace(i.contents,'&image','')}
 														</div>
 													</c:if>
