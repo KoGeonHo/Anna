@@ -19,11 +19,24 @@ public class ChatMessageVO extends BoardItemVO{
 	private int newMessages;
 	private String itemThumbNail;
 	private int state;
+	private int chkReview;
 	private int myReview;
 	private int Review;
 	
 
 	
+	public int getChkReview() {
+		return chkReview;
+	}
+
+
+
+	public void setChkReview(int chkReview) {
+		this.chkReview = chkReview;
+	}
+
+
+
 	public int getMyReview() {
 		return myReview;
 	}
