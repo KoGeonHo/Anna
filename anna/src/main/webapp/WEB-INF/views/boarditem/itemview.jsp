@@ -39,27 +39,6 @@ viewport {
 #viewcontent {
 	
 }
-
-.outer {
-	border: 6px solid royalblue;
-	width: 500px;
-	height: 500px;
-	margin: 0 auto;
-	overflow-x: hidden;
-	display: none;
-}
-
-.inner-list {
-	display: flex;
-	height: 100%;
-	transition: .3s ease-out;
-	display: none;
-}
-
-.inner>img {
-	width: 100%;
-	height: 100%;
-}
 /* 상대방의 다른상품 리스트 이미지 크기 */
 .row .col-lg-3 .card img {
 	width: 100%;
@@ -73,7 +52,10 @@ viewport {
 	margin: 0 auto;
 	overflow: hidden; /* 현재 슬라이드 오른쪽에 위치한 나머지 슬라이드 들이 보이지 않도록 가림 */
 }
-
+.slider-1>.page-btns>div.active {
+		/* background-color:rgba(255,255,255,1); */
+		background-color: whtie;
+	}
 .slider input[type=radio] {
 	
 }
@@ -116,16 +98,41 @@ ul.imgs li {
 	height: 400px;
 }
 
-#btn-area {
-}
-/*557 보다 크거나 같아야 하고 991거나 작아야 같아야함 태블릿용*/
-@media all and (577px <= width <= 991px) {
+#btn-area .btn{
+width: 90px; 
+height: 38px; 
+background-color: #00AAB2; 
+color: #fff; 
+margin-left: 15px;
 }
 
-/* 400이하 모바일*/
+/*557 보다 크거나 같아야 하고 991거나 작아야 같아야함 태블릿용*/
+@media all and (421px <= width <= 3600px) {
+
+#btn-area .btn{
+width: 60px;
+height: 38px;
+background-color: #00AAB2;
+color: #fff;
+margin-left: 5px;
+}
+
+#carouselExampleIndicators{
+display:none;
+}
+
+}
+
+/* 420이하 모바일*/
 @media ( max-width : 420px ) {
-	#btn-area {
-		margin-left: 0%;
+
+
+	#btn-area .btn{
+	width: 60px;
+    height: 38px;
+    background-color: #00AAB2;
+    color: #fff;
+    margin: auto;
 	}
 	#viewcontent {
 		margin-left: 0px;
@@ -158,23 +165,6 @@ ul.imgs li {
 		-khtml-user-select: none;
 		user-select: none;
 	}
-	.outer {
-		border: 3px solid royalblue;
-		width: 100%;
-		height: 250px;
-		margin: 0 auto;
-		overflow-x: hidden;
-		display: block
-	}
-	.inner-list {
-		display: flex;
-		width: 100%;
-		height: 250px;
-		transition: .3s ease-out;
-	}
-	.inner {
-		padding: 0;
-	}
 	.slider-1 {
 		width: 100%;
 		height: 400px;
@@ -203,7 +193,7 @@ ul.imgs li {
 	}
 	.slider-1>.page-btns>div.active {
 		/* background-color:rgba(255,255,255,1); */
-		background-color: gray;
+		background-color: white;
 		display: none;
 	}
 
@@ -269,6 +259,11 @@ ul.imgs li {
 		width: 100%;
 		hieght: 50px;
 	}
+	
+	.carousel-item > img{
+	width:100%;
+	height:100%;
+	}
 }
 
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
@@ -303,8 +298,8 @@ a {
 .slider-1>.page-btns>div {
 	width: 20px;
 	height: 20px;
-	/* background-color:rgba(255,255,255,.5); */
-	background-color: gray;
+	background-color:rgba(255,255,255,.5);
+	/* background-color: gray; */
 	border-radius: 4px;
 	display: inline-block;
 	cursor: pointer;
@@ -642,6 +637,8 @@ function itemdelete(){
 			    alert("게시물 삭제가 완료되었습니다.");
 			}
 	
+	
+	
 </script>
 
 
@@ -684,7 +681,7 @@ function itemdelete(){
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="main" id="main" style="overflow-y: auto; overflow-x: hidden;">
+		<div class="wrapper main" id="main" style="overflow-y: auto; overflow-x: hidden;">
 			<div class="container">
 				<div class="row">
 					<!-- 신고하기 팝업 영역  -->
@@ -707,13 +704,6 @@ function itemdelete(){
 									</select>
 								</div>
 							</div>
-							<div class="row border-bottom tr">
-								<div class="col-4 th" style="display: table-cell;">제목</div>
-								<div class="col-8 td" style="display: table-cell;">
-									<input type="text" class="form-control" name="title">
-								</div>
-							</div>
-
 							<div class="row border-bottom tr">
 								<div class="col-4 th" style="display: table-cell;">내용</div>
 								<div class="col-8 td" style="display: table-cell;">
@@ -797,13 +787,8 @@ function itemdelete(){
 										
 									</div>
 								</div> --%>
-									<div class="border-bottom" style="display: flex;">
-										<span
-											style="padding: 10px; font-size: 3rem; font-weight: bold;">${vo.title}</span>
-										<div id="state" style="margin: auto 10px; text-align: start;">
-										</div>
-
-
+									<div class="border-bottom" style="display: flex; text-align:center;">
+										<span style="padding: 10px; font-size: 3rem; font-weight: bold;">${vo.title}</span>
 									</div>
 
 
@@ -821,55 +806,55 @@ function itemdelete(){
 															</div>
 														</c:if>
 														<c:if test="${vo.image2 != null}">
-															<div>
+															<div style="width: 100%;">
 																<img src="../resources/upload/${vo.image2}"
 																	onerror=this.src="../images/no_imgborder.jpg">
 															</div>
 														</c:if>
 														<c:if test="${vo.image3 != null}">
-															<div>
+															<div style="width: 100%;">
 																<img src="../resources/upload/${vo.image3}"
 																	onerror=this.src="../images/no_imgborder.jpg">
-															</div>
+															</div >
 														</c:if>
 														<c:if test="${vo.image4 != null}">
-															<div>
+															<div style="width: 100%;"> 
 																<img src="../resources/upload/${vo.image4}"
 																	onerror=this.src="../images/no_imgborder.jpg">
 															</div>
 														</c:if>
 														<c:if test="${vo.image5 != null}">
-															<div>
+															<div style="width: 100%;">
 																<img src="../resources/upload/${vo.image5}"
 																	onerror=this.src="../images/no_imgborder.jpg">
 															</div>
 														</c:if>
 														<c:if test="${vo.image6 != null}">
-															<div>
+															<div style="width: 100%;">
 																<img src="../resources/upload/${vo.image6}"
 																	onerror=this.src="../images/no_imgborder.jpg">
 															</div>
 														</c:if>
 														<c:if test="${vo.image7 != null}">
-															<div>
+															<div style="width: 100%;">
 																<img src="../resources/upload/${vo.image7}"
 																	onerror=this.src="../images/no_imgborder.jpg">
 															</div>
 														</c:if>
 														<c:if test="${vo.image8 != null}">
-															<div>
+															<div style="width: 100%;">
 																<img src="../resources/upload/${vo.image8}"
 																	onerror=this.src="../images/no_imgborder.jpg">
 															</div>
 														</c:if>
 														<c:if test="${vo.image9 != null}">
-															<div>
+															<div style="width: 100%;">
 																<img src="../resources/upload/${vo.image9}"
 																	onerror=this.src="../images/no_imgborder.jpg">
 															</div>
 														</c:if>
 														<c:if test="${vo.image10 != null}">
-															<div>
+															<div style="width: 100%;">
 																<img src="../resources/upload/${vo.image10}"
 																	onerror=this.src="../images/no_imgborder.jpg">
 															</div>
@@ -913,11 +898,11 @@ function itemdelete(){
 														<div class="side-btns">
 															<div>
 																<span><img src="../images/arrow-left.png"
-																	style="width: 50px; height: 50px;"></span>
+																	style="width: 20px; height: 20px;"></span>
 															</div>
 															<div>
 																<span><img src="../images/arrow-right.png"
-																	style="width: 50px; height: 50px;"></span>
+																	style="width: 20px; height: 20px;"></span>
 															</div>
 														</div>
 													</c:if>
@@ -926,9 +911,92 @@ function itemdelete(){
 
 											<div class="col-sm-6">
 												<div id="viewcontent">
-
-													<div style="">
-													
+												<!-- 모바일 터치 슬라이드 -->
+												<script>
+												$('.carousel').carousel({
+													  interval: false,
+													});
+												</script>
+												
+													<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"  data-interval="false">
+													  <div class="carousel-indicators">
+													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+													  </div>
+													  <div class="carousel-inner">
+													  
+														    <div class="carousel-item  active"  data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image1}" onerror=this.src="../images/no_imgborder.jpg" class="d-block w-100">
+														    </div>
+														    
+													    <c:if test="${vo.image2 != null }">
+														    <div class="carousel-item" data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image2}" onerror=this.src="../images/no_imgborder.jpg" class="d-block w-100" >
+														    </div>
+														</c:if>
+													    <c:if test="${vo.image3 != null }">
+														    <div class="carousel-item" data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image3}" onerror=this.src="../images/no_imgborder.jpg" class="d-block w-100" >
+														    </div>
+														</c:if>
+													    <c:if test="${vo.image4 != null }">
+														    <div class="carousel-item" data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image4}" onerror=this.src="../images/no_imgborder.jpg" class="d-block w-100" >
+														    </div>
+														</c:if>
+													    <c:if test="${vo.image5 != null }">
+														    <div class="carousel-item" data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image5}" onerror=this.src="../images/no_imgborder.jpg" class="d-block w-100" >
+														    </div>
+														</c:if>
+													    <c:if test="${vo.image6 != null }">
+														    <div class="carousel-item" data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image6}" onerror=this.src="../images/no_imgborder.jpg" class="d-block w-100" >
+														    </div>
+														</c:if>
+													    <c:if test="${vo.image7 != null }">
+														    <div class="carousel-item" data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image7}" onerror=this.src="../images/no_imgborder.jpg" class="d-block w-100" >
+														    </div>
+														</c:if>
+													    <c:if test="${vo.image8 != null }">
+														    <div class="carousel-item" data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image8}" onerror=this.src="../images/no_imgborder.jpg" class="d-block w-100" >
+														    </div>
+														</c:if>
+													    <c:if test="${vo.image9 != null }">
+														    <div class="carousel-item" data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image9}" onerror=this.src="../images/no_imgborder.jpg" class="d-block w-100" >
+														    </div>
+														</c:if>
+													    <c:if test="${vo.image10 != null }">
+														    <div class="carousel-item" data-bs-interval="50000000 ">
+														      <img src="../resources/upload/${vo.image10}" onerror=this.src="../images/no_imgborder.jpg"  class="d-block w-100" >
+														    </div>
+														</c:if>
+													  </div>
+													  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+													    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+													    <span class="visually-hidden">Previous</span>
+													  </button>
+													  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+													    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+													    <span class="visually-hidden">Next</span>
+													  </button>
+													</div>
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														
+														</div>
 														<div class="row border-bottom tr">
 															<div class="col-5 th"
 																style="display: table-cell; background-color: white; border: 0; font-size: 20px;">판매가격</div>
@@ -957,10 +1025,10 @@ function itemdelete(){
 																style="display: table-cell; background-color: white; border: 0; font-size: 20px;">가격제안</div>
 															<div class="col-8 td" style="display: table-cell;">
 																<c:if test="${vo.offer ==1 }">
-																	<p>불가능</p>
+																	<p style="margin: auto;">불가능</p>
 																</c:if>
 																<c:if test="${vo.offer ==2 }">
-																	<p>가능</p>
+																	<p style="margin: auto;">가능</p>
 																</c:if>
 															</div>
 
@@ -1023,45 +1091,37 @@ function itemdelete(){
 																		<div class="wrap2">
 																			<input type="submit" id="btn_open2" class="btn btn"
 																				value="신고하기" class="btn"
-																				style="background-color: #00AAB2; color: #fff; margin-right: 15px;">
+																				>
 																		</div>
 																	
 
 																	<c:if test="${vo.state != 3}">
 																			<div class="wrap2">
 																				<input type="button" value="연락하기" class="btn"
-																					style="background-color: #00AAB2; color: #fff; margin-right: 15px;"
+																					
 																					onclick="location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'">
 																			</div>
 																	</c:if>
 																	<!-- 이웃 영역 시작 -->
 																		<div id="Neighbor_area">
 																			<c:if test="${result == 0 }">
-																				<button onclick="addNeighbor(); return false;"
-																					class="btn"
-																					style="background-color: #00AAB2; color: #fff;">
-																					이웃추가</button>
+																				<button onclick="addNeighbor(); return false;"class="btn">이웃추가</button>
 																			</c:if>
 
 																			<c:if test="${result != 0}">
-																				<button onclick="delNeighbor(); return false;"
-																					class="btn"
-																					style="background-color: #00AAB2; color: #fff;">
-																					이웃삭제</button>
+																				<button onclick="delNeighbor(); return false;"class="btn">이웃삭제</button>
 																			</c:if>
 																		</div>
 
 																		<div id="Wish_area">
 																			<c:if test="${wish == 0}">
-																				<button class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px"
-																					onclick="addWish(); return false;">
+																				<button class="btn" onclick="addWish(); return false;">
 																					<p>찜 추가</p>
 																				</button>
 																			</c:if>
 
 																			<c:if test="${wish != 0}">
-																				<button class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px"
-																					onclick="delWish(); return false;">
+																				<button class="btn" onclick="delWish(); return false;">
 																					<p>찜 삭제</p>
 																				</button>
 																			</c:if>
@@ -1070,12 +1130,12 @@ function itemdelete(){
 																	
 																	<c:if test="${userLoginInfo.uidx == vo.uidx}">
 																			<c:if test="${vo.state != 3}">
-																				<button onclick=" location.href='itemmodify.do?item_idx=${vo.item_idx}'" class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px">수정</button>
+																				<button onclick=" location.href='itemmodify.do?item_idx=${vo.item_idx}'" class="btn "id="btn-modi" >수정</button>
 																			</c:if>
-																		<button id="btn_open" class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px" >삭제</button>
-																		<button onclick="updatewdate()" class="btn" style="width: 90px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px">끌올</button>
+																		<button id="btn_open" class="btn" >삭제</button>
+																		<button onclick="updatewdate()" class="btn">끌올</button>
 																			<c:if test="${vo.state != 3}" >
-																				<select name="state" class="state btn" onchange="updatestate();"  style="width: 100px; height: 38px; background-color: #00AAB2; color: #fff; margin-left: 15px">
+																				<select name="state" style="width:100px;" class="state btn" onchange="updatestate();">
 																					<c:if test="${vo.state == 1 }">
 																						<option selected disabled hidden>거래중</option>
 																					</c:if>
@@ -1097,9 +1157,7 @@ function itemdelete(){
 															</div>
 														</div>
 
-													</div>
 													<!-- 테이블 div -->
-
 
 
 
@@ -1160,59 +1218,6 @@ function itemdelete(){
 
 
 
-														<div class="outer">
-
-															<div class="inner-list">
-																<div class="inner">
-																	<img src="../resources/upload${vo.image1}">
-																</div>
-																<c:if test="${vo.image2 != null }">
-																	<div class="inner">
-																		<img src="../resources/upload/${vo.image2}">
-																	</div>
-																</c:if>
-																<c:if test="${vo.image3 != null }">
-																	<div class="inner">
-																		<img src="../resources/upload/${vo.image3}">
-																	</div>
-																</c:if>
-																<c:if test="${vo.image4 != null }">
-																	<div class="inner">
-																		<img src="../resources/upload/${vo.image4}">
-																	</div>
-																</c:if>
-																<c:if test="${vo.image5 != null }">
-																	<div class="inner">
-																		<img src="../resources/upload/${vo.image5}">
-																	</div>
-																</c:if>
-																<c:if test="${vo.image6 != null }">
-																	<div class="inner">
-																		<img src="../resources/upload/${vo.image6}">
-																	</div>
-																</c:if>
-																<c:if test="${vo.image7 != null }">
-																	<div class="inner">
-																		<img src="../resources/upload/${vo.image7}">
-																	</div>
-																</c:if>
-																<c:if test="${vo.image8 != null }">
-																	<div class="inner">
-																		<img src="../resources/upload/${vo.image8}">
-																	</div>
-																</c:if>
-																<c:if test="${vo.image9 != null }">
-																	<div class="inner">
-																		<img src="../resources/upload/${vo.image9}">
-																	</div>
-																</c:if>
-																<c:if test="${vo.image10 != null }">
-																	<div class="inner">
-																		<img src="../resources/upload/${vo.image10}">
-																	</div>
-																</c:if>
-															</div>
-														</div>
 													</div>
 												</div>
 											</div>
@@ -1307,10 +1312,8 @@ function itemdelete(){
 				src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 			<script
 				src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
-			<script src="../js/boarditem.js"></script>
 			<script src="../js/boarditem2.js"></script>
 
-		</div>
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->

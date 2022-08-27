@@ -6,7 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title> 상품 등록 페이지</title>
  <!-- include libraries(jQuery, bootstrap) -->
         <!-- include libraries(jQuery, bootstrap) -->
@@ -100,7 +101,9 @@
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="container main">
+		
+		<div class="wrapper  main">
+		<div class="container">
 		
 		
 		<h3 class="border-bottom" style="padding:1rem; margin:0px;">판매글 작성하기</h3>
@@ -126,7 +129,8 @@
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">거래지역</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<input type="text" class="form-control" value="${userLoginInfo.location_auth }" id="addr_code" name="addr_code">
+							<input type="hidden" class="form-control" value="${userLoginInfo.location_auth}" id="addr_code" name="addr_code">
+							<p class="viewaddr">asd</p>
 						</div>
 							<!-- <select class="form-select" aria-label="Default select example" id="addr_code"name="addr_code" onchange="alert('해당 기능은 준비중입니다.')">
 								<option value="0" id="addr">내 동네</option>
@@ -147,18 +151,21 @@
 												success : function(geojson){
 													let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
 													console.log(locationLevel[locationLevel.length-1]); // 이게 동까지만 자른거
-													$('input[name=addr_code]').attr('value',locationLevel[locationLevel.length-1]);
 													//dong.push(locationLevel[locationLevel.length-1]);
 													//console.log(dong);
-										/* 			html += '<option value="'+locationList[i]+'"';
+													html2 += locationLevel[locationLevel.length-1]+",";
+													/* 			html += '<option value="'+locationList[i]+'"';
 													if(i == 0){
 														html += " selected "
 													}
+													href
 													html += '>'+locationLevel[locationLevel.length-1]+'</option>'
 													$(".form-select").append('<option value="'+locationList[i]+'">'+locationLevel[locationLevel.length-1]+'</option>'); */
 												}
 											});
 										}
+												//	$('input[name=addr_code]').attr('value',html3); input 태그에 벨류값을 넣지 않음
+													$('.viewaddr').text(html2); // viewaddr 클래스 html2의 내용을 text 타입으로 추가
 									},
 									error: function(){
 										console.log("error");
@@ -216,7 +223,7 @@
 			          		</div>
 			             <div id="tag-list" ></div>
 				           	 <div class="form-group">
-				            	<input type="text" id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 300px;"/>
+				            	<input type="text" id="tag" size="7" placeholder="입력후 엔터를 눌러주세요." style="width: 200px;"/>
 				          	 </div>
 						</div>
 					</div>
@@ -227,7 +234,7 @@
 						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<div id="fileDiv">
-								<input type="file" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
+								<input type="file" style="width:200px;" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
 							</div>
 								<br/><br/>
 							<a href="#this" class="btn" id="addFile">파일 추가</a>
@@ -312,7 +319,7 @@
 				
 				function fn_addFile(){
 					var str = "<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-					$("#fileDiv").append("<p style='margin:auto;'><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
+					$("#fileDiv").append("<p style='margin:auto;'><input type='file' style='width:200px;' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
 					$("a[name='delete']").on("click", function(e){ //삭제 버튼
 						e.preventDefault();
 						fn_deleteFile($(this));
@@ -383,6 +390,7 @@
 			    });
 			</script> 
 
+		</div>
 		</div>
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
