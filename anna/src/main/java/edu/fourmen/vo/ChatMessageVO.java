@@ -19,9 +19,35 @@ public class ChatMessageVO extends BoardItemVO{
 	private int newMessages;
 	private String itemThumbNail;
 	private int state;
+	private int myReview;
+	private int Review;
 	
 
 	
+	public int getMyReview() {
+		return myReview;
+	}
+
+
+
+	public void setMyReview(int myReview) {
+		this.myReview = myReview;
+	}
+
+
+
+	public int getReview() {
+		return Review;
+	}
+
+
+
+	public void setReview(int review) {
+		Review = review;
+	}
+
+
+
 	public int getState() {
 		return state;
 	}

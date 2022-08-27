@@ -70,6 +70,14 @@
 		setInterval(function(){
 			getChatList();
 		},10*1000);
+		
+		$(".chk").click(function(){
+			if($("input:checkbox:checked").length != 0){
+				$("#btnSubmit").prop("disabled",false);
+			}else{
+				$("#btnSubmit").prop("disabled",true);
+			}
+		});
 	});
 	
 	function getChatList(){
@@ -84,8 +92,12 @@
 					if(chatList[i].state == 3 && chatList[i].chat_host == '${uidx}'){
 						html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.8);">';
 						html += '<div style="flex:1;">';
-						html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;">후기 등록하기</button>'
-						html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>'
+						if(chatList[i].myReview == 0){
+							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openModal(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\')">후기 등록하기</button>';
+						}else{
+							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;">등록한 후기 보기</button>';
+						}
+						html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
 						html += '</div>';
 						html += '</div>';
 					}
@@ -152,14 +164,36 @@
 		});
 	}
 	
+	function openModal(item_idx,chat_host,invited){
+		$("input[name=item_idx]").val(item_idx);
+		$("input[name=seller]").val(chat_host);
+		$("input[name=buyer]").val(invited);
+		$("#modalForReView").fadeIn();
+	}
+	function closeModal(){
+		$("input[name=item_idx]").val("");
+		$("input[name=seller]").val("");
+		$("input[name=buyer]").val("");
+		$("#modalForReView").fadeOut();
+	}
 	function checkLike(radiobox){
-		if(radiobox.value == 'like'){
-			$("#radiosLike").css("display","block");
-			$("#radiosDisLike").css("display","none");
-		}else if(radiobox.value == 'dislike'){
-			$("#radiosLike").css("display","none");
-			$("#radiosDisLike").css("display","block");
+		if(radiobox.value == 'Y'){
+			$("input:checkbox").prop("checked", false);
+			$("#btnSubmit").prop("disabled",true);
+			$("#label1").html("&nbsp;친절해요");
+			$("#label2").html("&nbsp;응답이 빨라요");
+			$("#label3").html("&nbsp;상품이 설명한 것과 같아요");
+		}else if(radiobox.value == 'N'){
+			$("input:checkbox").prop("checked", false);
+			$("#btnSubmit").prop("disabled",true);
+			$("#label1").html("&nbsp;불친절해요");
+			$("#label2").html("&nbsp;연락이 잘 안돼요");
+			$("#label3").html("&nbsp;상품이 설명한 것과 달라요");
 		}
+	}
+	
+	function insertReView(){
+		$("#ReViewFrm").submit();
 	}
  
 </script>
@@ -183,54 +217,43 @@
 						Loading...
 					</div>
 				</div>
-				
-				<div id="modalForReView">
-					<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; ">
-						<div style="margin:auto; width:280px; height:300px; background:#fff; border-radius:10px; border:2px solid #ddd; box-shadow: 2px 2px 2px 2px grey;">
-							<p class="border-bottom text-start" style="width:100%; margin:0px;"><b style="margin:0; padding:5px; font-size:20px;">거래후기 등록</b></p>	
-							<div>
-								<form>
-									<div class="tr border-bottom">
-										<div class="td"><input id="like" name="satisfied" type="radio" onclick="checkLike(this)" value="like"><label for="like">&nbsp;만족</label></div>
-										<div class="td"><input id="dislike" name="satisfied" type="radio" onclick="checkLike(this)" value="dislike"><label for="dislike">&nbsp;불만족</label></div>
-									</div>
-									<div id="radiosLike" style="display:none;">
-										<div class="tr" id="checkLike">
-											<div class="td text-start">
-												<input id="like1" name="likeCheck" type="checkbox" value="option1"><label for="like1">&nbsp;친절해요</label>
-											</div>
-										</div>
-										<div class="tr" id="checkLike">
-											<div class="td text-start">
-												<input id="like2" name="likeCheck" type="checkbox" value="option3"><label for="like2">&nbsp;응답이 빨라요</label>
-											</div>
-										</div>
-										<div class="tr" id="checkLike">
-											<div class="td text-start">
-												<input id="like3" name="likeCheck" type="checkbox" value="option2"><label for="like3">&nbsp;상품이 설명과 같아요</label>
-											</div>
+			</div>
+			<div id="modalForReView" style="display:none;">
+				<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">
+					<div style="margin:auto; width:280px; height:300px; background:#fff; border-radius:10px; border:2px solid #ddd; box-shadow: 2px 2px 2px 2px gray; position:relative;">
+						<p class="border-bottom text-start" style="width:100%; margin:0px;"><b style="margin:0; padding:5px; font-size:20px;">거래후기 등록</b></p>	
+						<div>
+							<form id="ReViewFrm" method="POST" action="insertReView.do">
+								<input type="hidden" name="item_idx" value="">
+								<input type="hidden" name="seller" value="">
+								<input type="hidden" name="buyer" value="">
+								<div class="tr border-bottom">
+									<div class="td"><input id="like" checked name="satisfied" type="radio" onclick="checkLike(this)" value="Y"><label for="like">&nbsp;만족</label></div>
+									<div class="td"><input id="dislike" name="satisfied" type="radio" onclick="checkLike(this)" value="N"><label for="dislike">&nbsp;불만족</label></div>
+								</div>
+								<div id="ckeckLike">
+									<div class="tr" >
+										<div class="td text-start">
+											<input id="opt1" class="chk" name="option1" type="checkbox" value="1"><label id="label1" for="opt1">&nbsp;친절해요</label>
 										</div>
 									</div>
-									
-									<div id="radiosDisLike" style="display:none;">
-										<div class="tr" id="checkDisLike">
-											<div class="td text-start">
-												<input id="dislike1" name="dislikeCheck" type="checkbox" value="option1"><label for="dislike1">&nbsp;불친절해요</label>
-											</div>
-										</div>
-										<div class="tr" id="checkLike">
-											<div class="td text-start">
-												<input id="dislike2" name="dislikeCheck" type="checkbox" value="option2"><label for="dislike2">&nbsp;연락이 잘 안되요</label>
-												
-											</div>
-										</div>
-										<div class="tr" id="checkLike">
-											<div class="td text-start">
-												<input id="dislike3" name="dislikeCheck" type="checkbox" value="option3"><label for="dislike3">&nbsp;상품이 설명과 달라요</label>
-											</div>
+									<div class="tr">
+										<div class="td text-start">
+											<input id="opt2" class="chk" name="option2" type="checkbox" value="1"><label id="label2" for="opt2">&nbsp;응답이 빨라요</label>
 										</div>
 									</div>
-								</form>
+									<div class="tr" >
+										<div class="td text-start">
+											<input id="opt3" class="chk" name="option3" type="checkbox" value="1"><label id="label3" for="opt3">&nbsp;상품이 설명과 같아요</label>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div style="position:absolute; bottom:0; width: 100%;">
+							<div class="text-end" style="padding:10px;">
+								<button class="btn" type="button" id="btnSubmit" disabled style="background:#00AAB2; color:#fff;" onclick="insertReView()">등록</button>
+								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="closeModal()">닫기</button>
 							</div>
 						</div>
 					</div>

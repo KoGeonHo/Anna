@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.ChatMessageVO;
+import edu.fourmen.vo.ReViewVO;
 import edu.fourmen.vo.UserVO;
 
 @Repository
@@ -191,6 +192,13 @@ public class UserDAO {
 	public List<ChatMessageVO> getBuyChatList(int uidx) {
 
 		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getBuyChatList",uidx);
+	}
+
+
+	public void insertReView(ReViewVO vo) {
+
+		sqlSession.insert("edu.fourmen.mapper.userMapper.insertReView",vo);
+		
 	}
 }
 

@@ -16,6 +16,7 @@ import edu.fourmen.dao.UserDAO;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.ChatMessageVO;
+import edu.fourmen.vo.ReViewVO;
 import edu.fourmen.vo.UserVO;
 
 import org.springframework.stereotype.Service;
@@ -32,8 +33,9 @@ public class UserServiceImpl implements UserService{
 	
 	private final String client_id = "32245dd905f9d9b6d898ebe61795735c";
 	
-	private final String redirect_uri = "http://localhost:8070/anna/user/kakaoLogin.do";
+	//private final String redirect_uri = "http://localhost:8070/anna/user/kakaoLogin.do";
 	//private final String redirect_uri = "http://192.168.0.56:8070/anna/user/kakaoLogin.do";
+	private final String redirect_uri = "http://kgh5247.cafe24.com/anna/user/kakaoLogin.do";
 	
 	@Override
 	public String getClient_id() {
@@ -362,6 +364,13 @@ public class UserServiceImpl implements UserService{
 	public List<ChatMessageVO> getBuyChatList(int uidx) {
 		
 		return userDAO.getBuyChatList(uidx);
+	}
+
+	@Override
+	public void insertReView(ReViewVO vo) {
+
+		userDAO.insertReView(vo);
+		
 	}
 
 
