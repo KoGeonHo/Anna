@@ -50,6 +50,8 @@
 			r.ban_date
 		FROM
 			report r
+			
+			order by report_date desc
 		
 		
 		

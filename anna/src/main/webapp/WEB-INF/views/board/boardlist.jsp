@@ -437,16 +437,16 @@ text-decoration: none;
 								
 								<div class="tr border-bottom d-flex">
 									
-										<a href="#" class="mlink">
-											<div class="title"><a href="<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${vo.bidx}" class="p">${vo.title }</a>
-												<a href="<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${vo.bidx}">
+										
+											<div class="title" onClick="location.href='<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${vo.bidx}'">
+												<span style="font-weight:bold" class="p">${vo.title }</span>
 													<div class="value">
-														<span>${vo.title }</span>
+														<span  style="font-weight:bold">${vo.title }</span>
 														<c:if test="${vo.image1 != null}">
 															<span><img src="../images/icon_image.png" style="height:15px; margin-top: -5px;"></span>
 														</c:if>
 													</div>
-												</a>
+												
 												<div class="value">
 													<span class="nickName">
 														<c:if test="${pm.board_type ne 'notice' }">
@@ -460,6 +460,7 @@ text-decoration: none;
 													<span class="wdate">${vo.wdate }</span>
 												</div>
 											</div>
+										
 											<a class="com-btn value">
 												<span class="ccount">${vo.ccount }</span>
 												<span>댓글</span>
@@ -475,8 +476,7 @@ text-decoration: none;
 											<div class="td text-center p" style="width:20%;">${ vo.wdate }</div>
 											<div class="td text-center p" style="width:10%;">${ vo.hit }</div>
 											<div class="td text-center p" style="width:10%;">${ vo.cntLike}</div>
-										</a>
-									
+										
 								</div>
 								
 							
@@ -499,7 +499,7 @@ text-decoration: none;
 							<button type="button" class="btn btn-secondary" onclick="location.href='${path}/board/boardlist.do?<c:if test="${pm.board_type != null }">board_type=${pm.board_type}</c:if>&page=${i}&SearchVal=${pm.searchVal}<c:if test="${pm.searchUidx != null }">&searchUidx=${pm.searchUidx}</c:if>'">${i}</button>
 						</c:forEach>
 						<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
-							<button type="button" class="btn btn-secondary" kstyle="text-align:right;" onclic="location.href='${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}'">
+							<button type="button" class="btn btn-secondary" style="text-align:right;" onclick="location.href='${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}'">
 								▶
 							</button>
 						</c:if>

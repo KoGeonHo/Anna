@@ -41,8 +41,7 @@
 
 #commentstyle{
 
-border-width: 1px 0px 0px 0px ;
-  border-style: solid;
+    border-top: #dee2e6 solid 1px;
 
 }
 
@@ -66,8 +65,6 @@ width : 341px;
 
 .comment_Box{
 
-width : 700px;
-margin:auto;
 display:block;
 }
 
@@ -98,6 +95,10 @@ float: right;
 height : 54px;
 
 }
+
+#Contents{
+	width: 83%;
+	}
 
 #report_contents{
 
@@ -159,6 +160,26 @@ height : 54px;
 }
 
 
+@media(max-width:767px){
+	.col-2 {
+		width:33.33333333%
+	}
+	.col-4 {
+		width:66.66666666%
+	}
+	.col-1 {
+		width:16.5%;	
+	}
+	
+	.tabs{
+	display:none;
+	}
+	
+	#Contents{
+	width: 66.66666667%;
+	}
+	
+}
 
 @media(max-width: 576px){
 	.comment-box{
@@ -283,20 +304,20 @@ height : 54px;
 		
 				<form style="margin: 0px auto;">
 					
-					<div class="row border-bottom tr">
-						<div class="col-2 th" style="display:table-cell;">제목</div>
-						<div class="col-4 td" style="display:table-cell;">
+					<div class="row">
+						<div class="col-2 th border-bottom" style="display:table-cell;">제목</div>
+						<div class="col-4 td border-bottom" style="display:table-cell;">
 							${bv.title}
 							<c:if test="${ bv.board_type ne 'notice' }">
 								<input type="image" src="../images/icon_unlike.png" class="LikeBtn" style="margin: -5px 0 0 0">
 							</c:if>
 						</div>
-						<div class="col-2 th" style="display:table-cell;">작성일</div>
-						<div class="col-4 td" style="display:table-cell;">${bv.wdate}</div>				
+						<div class="col-2 th border-bottom" style="display:table-cell;">작성일</div>
+						<div class="col-4 td border-bottom" style="display:table-cell;">${bv.wdate}</div>				
 					</div>
-					<div class="row border-bottom tr">
-						<div class="col-2 th" style="display:table-cell;">작성자</div>
-						<div class="col-4 td" style="display:table-cell;">
+					<div class="row ">
+						<div class="col-2 th border-bottom" style="display:table-cell;">작성자</div>
+						<div class="col-4 td border-bottom" style="display:table-cell;">
 							<c:if test="${ bv.board_type eq 'notice' }">
 								관리자
 							</c:if>
@@ -308,10 +329,10 @@ height : 54px;
 									<a class="" onclick="ready()">이웃추가</a> <br>
 									<a class="" onclick="ready()">유저 정보보기</a>
 						</div>
-						<div class="col-2 th" style="display:table-cell;">조회수</div>
-						<div class="col-1 td" style="display:table-cell;">${bv.hit}</div>
-						<div class="col-2 th" style="display:table-cell;">추천</div>
-						<div class="col-1 td" style="display:table-cell;">${bv.cntLike}</div>
+						<div class="col-2 th border-bottom" style="display:table-cell;">조회수</div>
+						<div class="col-1 td border-bottom" style="display:table-cell;">${bv.hit}</div>
+						<div class="col-2 th border-bottom" style="display:table-cell;">추천</div>
+						<div class="col-1 td border-bottom" style="display:table-cell;">${bv.cntLike}</div>
 					</div>
 					<div class="row border-bottom tr">
 						<div class="col-2 th" style="display:table-cell;">첨부파일</div>
@@ -321,41 +342,41 @@ height : 54px;
 							</c:if>
 						</div>
 					</div>
-					<div class="row border-bottom tr">
-						<div class="col-2 th" style="display:table-cell; height:500px">내용</div>
-						<div class="col-10 td" style="display:table-cell;">
+					<div class="row border-bottom tr" style="min-height:200px; height:auto;">
+						<div class="col-2 th" style="display:table-cell; ">내용</div>
+						<div class="col-10 td" style="display:table-cell; ">
 							${bv.contents }<br>
 							
-							<div id="carouselExampleControls" class="carousel slide" style="height:100px;" data-bs-ride="carousel">
+							<div id="carouselExampleControls" class="carousel slide" style="height:auto;" data-bs-ride="carousel">
 							  <div class="carousel-inner">
 							  <c:if test="${bv.board_type != 'free' and bv.place_location != null}">
 							    <div class="carousel-item active">
-							      <div id="map" style="width:100%;height:350px;" onclick="window.open('https://map.kakao.com/?q=${bv.place_name}&urlLevel=5')"></div>
+							      <div id="map" style="width:100%;height:500px;" onclick="window.open('https://map.kakao.com/?q=${bv.place_name}&urlLevel=5')"></div>
 							    </div>
 						 	 </c:if>
 							  <c:if test="${bv.image1 != null}">
 							    <div class="carousel-item active">
-							      <img src="../resources/upload/${bv.image1}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
+							      <img src="../resources/upload/${bv.image1}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
 							    </div>
 						 	 </c:if>
 						 	  <c:if test="${bv.image2 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image2}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
+							      <img src="../resources/upload/${bv.image2}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
 							    </div>
 							  </c:if>
 							  <c:if test="${bv.image3 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image3}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
+							      <img src="../resources/upload/${bv.image3}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
 							    </div>
 							  </c:if>
 							  <c:if test="${bv.image4 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image4}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
+							      <img src="../resources/upload/${bv.image4}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
 							    </div>
 							  </c:if>
 							  <c:if test="${bv.image5 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image5}" class="d-block w-100" alt="..." style="width:100%;height:400px;">
+							      <img src="../resources/upload/${bv.image5}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
 							    </div>
 							  </c:if>  
 							  </div>
@@ -364,7 +385,7 @@ height : 54px;
 							    <span class="visually-hidden">Prev</span>
 							  </button>
 							  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-							    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							    <span class="carousel-control-next-icon"  aria-hidden="true"></span>
 							    <span class="visually-hidden">Next</span>
 							  </button>
 							</div>
@@ -384,8 +405,8 @@ height : 54px;
 				<c:if test="${ bv.board_type ne 'notice' }">
                     <div class="comment-box" style="margin-top: 18px;">
                     	<div class="row  tr">
-	   		            	<div class="comment-count col-2 th">댓글 <span id="count">(0)</span></div>
-	   		                <form method='post' id="commentForm">
+	   		            	<div class="comment-count col-2 th">댓글 <span id="count"></span></div>
+	   		                <form method='post' id="commentForm" style="margin: auto;">
 		   		                 <div class="comment-name">
 			                        <span class="anonym">
 			                       		<input type="hidden" class="form-control" id="nickName" name ="nickName" value='${userLoginInfo.nickName}'>
@@ -395,16 +416,20 @@ height : 54px;
 		                        	
 		                        <!-- </span> -->
 	                     
-	                    <div class="comment-sbox">
+	                    <div class="comment-sbox  d-flex">
 	                    	<input type="hidden" value="${bv.bidx}" name="Bidx" id="Bidx">
-	                        <textarea class="comment-input" id="Contents" cols="80" rows="2" style="resize: none;" name="Contents"></textarea>
-	                     	<button class="Reply_btn" id="commentwrite">댓글등록</button>
+	                    	<div style="flex:1; padding: 0px 10px 0 0px;">
+	                    		<textarea class="comment-input" id="Contents" style="resize: none; width:100%; height:100%;" name="Contents"></textarea>
+	                    	</div>
+	                    	<div>
+	                    		<button class="Reply_btn" id="commentwrite" style="width:auto;">등록</button>
+	                    	</div>                    	
 	                    </div>
 	                    </form>
                     	</div>
     			   </div>
     			   
-    			    <div class="comment_Box"> <!-- 댓글이 들어갈 박스 -->
+    			    <div class="comment_Box" style="margin-top:15px;"> <!-- 댓글이 들어갈 박스 -->
 
 	                </div>
 				</c:if>
@@ -520,20 +545,30 @@ function getList() {
 			if(data.total > 0){
 				var list = data.list;
 				
-				var comment_html = "<div>";
+				var comment_html = "<div class='row border-bottom' id='commentstyle'>";
 				
 				$('#count').html(data.total);
 				for(i = 0;i < list.length;i++){
 					var Contents = list[i].contents;
 					var nickName = list[i].nickName;
-					comment_html += "<div id='commentstyle'><span id='nickName'><strong>" + nickName + "</strong></span><br/>";
-					comment_html += "<span id='Contents'>" + Contents + "</span><br>";
+					var wdate = list[i].wdate;
+					
+					comment_html += "<div class='row' style='padding: 8px 0; '>"
+					
+					comment_html += "<div class='col-2 td' style='border-right: #dee2e6 solid 1px; text-align:center;'><span id='nickName'><strong>" + nickName + "</strong></span></div>";
+					comment_html += "<div class='td' id='Contents' style='display:flex;'>";
+					comment_html += "<div style='flex:1;'>"+Contents+"</div>";
+					comment_html += "<div style='width:100px; font-size:0.8rem;'>"+ wdate +"</div>";
+					comment_html += "</div>";
 					if(nickName=== $("#nickName").val()){
 						 comment_html += "<span id='delete' style='cursor:pointer;' data-id ="+Contents+"><a class=''>삭제</a></span><br></div>";
 					}
 					else{
 						comment_html += "</div>";
 					}
+					
+					comment_html += "</div>"
+					
 				}
 				
 				console.log(comment_html);

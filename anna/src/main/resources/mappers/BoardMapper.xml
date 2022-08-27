@@ -300,4 +300,16 @@
 
 </update>
 
+<delete id="replyDel">
+	DELETE 
+	  FROM reply
+	 WHERE ridx = #{ridx}
+
+</delete>
+
+<update id="replyModify">
+	UPDATE reply
+	   SET contents = #{contents}
+</update>
+
 </mapper>
