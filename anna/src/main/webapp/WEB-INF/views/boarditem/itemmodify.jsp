@@ -3,8 +3,10 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
  <!-- include libraries(jQuery, bootstrap) -->
         <!-- include libraries(jQuery, bootstrap) -->
@@ -97,11 +99,12 @@
 	<div class="wrapper">
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
+		<div class="wrapper main">
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="container main">
+		<div class="container">
 		
 
-<h3 class="border-bottom" style="padding:1rem; margin:0px;">판매글 하기</h3>
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">판매글 하기</h3>
 				<form method="POST" action="itemmodify.do" enctype="multipart/form-data" name="frm" id="joinFrm">
 					
 					<input type="hidden" name="uidx" value="${uidx}">
@@ -171,7 +174,7 @@
 			          		${vo.keyword}
 			             <div id="tag-list" ></div>
 				           	 <div class="form-group">
-				            	<input type="text" id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 300px;"/>
+				            	<input type="text" id="tag" size="7" placeholder="입력후 엔터를 눌러주세요." style="width: 200px;"/>
 				          	 </div>
 						</div>
 					</div>
@@ -193,7 +196,7 @@
 						${vo.image9}
 						${vo.image10}
 							<div id="fileDiv">
-								<input type="file" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
+								<input type="file" style="width:200px;"id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
 							</div>
 								<br/><br/>
 							<a href="#this" class="btn" id="addFile">파일 추가</a>
@@ -281,7 +284,7 @@ $("#joinFrm").submit(function(){
 		}
 		
 		function fn_addFile(){
-			var str = "<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+			var str = "<p><input type='file' style='width:200px;' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
 			$("#fileDiv").append(str);
 			$("a[name='delete']").on("click", function(e){ //삭제 버튼
 				e.preventDefault();
@@ -293,6 +296,7 @@ $("#joinFrm").submit(function(){
 			obj.parent().remove();
 		}
 	</script>
+	</div>
 	</div>
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -305,6 +305,7 @@ display: block;
     appearance: none;
 }
 
+
 .cate_menu {
 	list-style: none;
     width: 100%;
@@ -450,6 +451,7 @@ a:link {
 	.card-container {
 		width:25%;
 	}
+	
 
 }
 
@@ -476,6 +478,99 @@ a:link {
 	
 }
 
+
+
+*{
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: #57523E;
+}
+
+#menu2{
+  position:relative; 
+  z-index: 99; 
+  background-color: white;
+  height: 50px;
+  text-align: center;
+}
+
+[class*="main"] {
+  background-color: white;
+  border-radius: 5px 5px 5px 5px;
+}
+
+[class*="main"] ul {
+  border-radius: 5px 5px 5px 5px;
+  border: 1px solid #57523E;
+}
+.main1{
+  padding-left: 0px;
+   height: 100%;
+  width: 95%;
+  margin: 0 auto;
+  display: inline-block;
+      display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+.main1>li {
+  float: left;
+  line-height: 50px;
+  position: relative;
+  width: 33%;
+  font-size: xx-small;
+}
+.main1>li:hover .main2 {
+  left: 0;
+}
+.main1>li a {
+  display: block;
+}
+.main1>li a:hover {
+  font-weight: bold;
+}
+.main2 {
+  width:110%;
+  position: absolute;
+  top: 50px;
+  left: -9999px;
+  width: 100%;
+  padding: 0px;
+}
+.main1>li:hover {
+  /* border-bottom: 5px solid #D94C1A; */
+  background-color: grey;
+}
+.main2 li:hover {
+ background-color: grey;
+}
+
+.main2>li {
+  position: relative;
+}
+.main2>li:hover .main3 {
+  left: 100%;
+}
+.main2>li a, .main3>li a {
+  border-radius: 10px;
+  margin: 10px;
+}
+.main3 {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  left: -9999px;
+  padding: 0px;
+}
+.main3>li a:hover {
+  color: #fff;
+}
+nav {
+  margin-top: 20px;
+}
 </style>
 </head>
 <body>
@@ -485,24 +580,29 @@ a:link {
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		<div id="main" class="wrapper main">
 			<div class="container ">
+		
 				<!-- <div class="categories text-center">
 					<ul class="cate_menu">
-						<li onclick="location.href='itemlist.do'">전체</li>
-						<li onclick="location.href='itemlist.do?cate_idx=1'">가전제품</li>
-						<li onclick="location.href='itemlist.do?cate_idx=2'">생활용품</li>
-						<li onclick="location.href='itemlist.do?cate_idx=3'">완구&취미</li>
-						<li onclick="location.href='itemlist.do?cate_idx=4'">패션&의류</li>
-						<li onclick="location.href='itemlist.do?cate_idx=5'">인테리어</li>
-						<li onclick="location.href='itemlist.do?cate_idx=6'">반려동물용품</li>
-						<li onclick="location.href='itemlist.do?cate_idx=7'">뷰티&악세</li>
-						<li onclick="location.href='itemlist.do?cate_idx=8'">자동차용품</li>
-						<li onclick="location.href='itemlist.do?cate_idx=9'">스포츠&레저용품</li>
+						
 					</ul>
 				</div> -->
-			<div>
+			<div class="">
 				<!-- 검색창 시작 -->
 				<div class="searchFrm text-center" style="margin:20px;">
 					<div style="display:flex;">
+    <!-- <li style="border: none;"><a href="#"><b style="font-size: 20px;"><span style="font-size: 20px;">≡</span> menu1</b></a>
+      <ul class="main2">
+        <li><a href="#">menu2</a>
+          <ul class="main3">
+            <li><a href="#">menu3</a></li>
+            <li><a href="#">menu3</a></li>
+            <li><a href="#">menu3</a></li>
+            <li><a href="#">menu3</a></li>
+            <li><a href="#">menu3</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li> -->
 						<form id="frm2">
 									<select class="form-select2" aria-label="Default select example" id="addr_code"name="addr_code">
 										<option value="0">내 동네</option>
@@ -534,13 +634,29 @@ a:link {
 					</div>
 				</div>
 				
-				<div>
-					<ul class="cate_menu">
-						<li>카테고리</li>
-						<li onclick="location.href='itemlist.do?WishCheck=3'">찜 많은순</li>
-						<li onclick="location.href='itemlist.do?WishCheck=4'">내 관심 상품</li>
-					</ul>
-				</div>	
+				
+			<div id="menu2" class="categories">
+				<ul class="main1 ">
+				    <li style="border: none;"><a href="#">카테고리</a>
+				       <ul class="main2">
+				        <li onclick="location.href='itemlist.do'">전체</li>
+						<li onclick="location.href='itemlist.do?cate_idx=1'">가전제품</li>
+						<li onclick="location.href='itemlist.do?cate_idx=2'">생활용품</li>
+						<li onclick="location.href='itemlist.do?cate_idx=3'">완구&취미</li>
+						<li onclick="location.href='itemlist.do?cate_idx=4'">패션&의류</li>
+						<li onclick="location.href='itemlist.do?cate_idx=5'">인테리어</li>
+						<li onclick="location.href='itemlist.do?cate_idx=6'">반려동물</li>
+						<li onclick="location.href='itemlist.do?cate_idx=7'">뷰티&악세</li>
+						<li onclick="location.href='itemlist.do?cate_idx=8'">자동차용품</li>
+						<li onclick="location.href='itemlist.do?cate_idx=9'">스포츠&레저</li>
+				      </ul>
+				    </li>
+				    <li onclick="location.href='itemlist.do?WishCheck=3'">찜 많은순</li>
+					<li onclick="location.href='itemlist.do?WishCheck=4'">내 관심 상품</li>
+			    </ul>
+			</div>
+				
+				
 				<%-- <div class="col-md-12  col-sm-12 d-flex" id="search-area">
 					<form method="get" action="itemlist.do"  class="d-flex">
 						<input type="text" name="searchVal" class="search-control" placeholder="검색어를 입력해주세요"

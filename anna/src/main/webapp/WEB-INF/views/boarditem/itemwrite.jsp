@@ -223,7 +223,7 @@
 			          		</div>
 			             <div id="tag-list" ></div>
 				           	 <div class="form-group">
-				            	<input type="text" id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 300px;"/>
+				            	<input type="text" id="tag" size="7" placeholder="입력후 엔터를 눌러주세요." style="width: 200px;"/>
 				          	 </div>
 						</div>
 					</div>
@@ -234,7 +234,7 @@
 						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<div id="fileDiv">
-								<input type="file" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
+								<input type="file" style="width:200px;" id="file" name="file1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)' >
 							</div>
 								<br/><br/>
 							<a href="#this" class="btn" id="addFile">파일 추가</a>
@@ -319,7 +319,7 @@
 				
 				function fn_addFile(){
 					var str = "<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-					$("#fileDiv").append("<p style='margin:auto;'><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
+					$("#fileDiv").append("<p style='margin:auto;'><input type='file' style='width:200px;' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
 					$("a[name='delete']").on("click", function(e){ //삭제 버튼
 						e.preventDefault();
 						fn_deleteFile($(this));
