@@ -17,6 +17,7 @@ public class UserVO{
 	private String keepLogin;
 	private String jdate;
 	private String isAdmin;
+	private int bancount;
 	
 	public String getJdate() {
 		return jdate;
@@ -113,6 +114,12 @@ public class UserVO{
 	}
 	public void setIsAdmin(String isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+	public int getBancount() {
+		return bancount;
+	}
+	public void setBancount(int bancount) {
+		this.bancount = bancount;
 	}
 	
 	

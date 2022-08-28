@@ -67,7 +67,7 @@ public class adminController {
 	@ResponseBody
 	@RequestMapping(value="/reportview", produces = "application/json; charset=utf8")
 	public Map<String, Object> getList(ReportVO rv, Model model) { // @PathVariable: URL 경로에 변수를 넣어주는
-		System.out.println("댓글 목록 컨트롤러 동작");
+	
 		List<ReportVO> list = adminService.getReportView(rv.getRidx());//댓글목록
 		
 		ModelAndView view = new ModelAndView(); //데이터와 뷰를 동시에 설정이 가능

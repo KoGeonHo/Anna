@@ -45,7 +45,8 @@
 			kakao_auth,
 			interested,
 			user_pwd,
-			isAdmin
+			isAdmin,
+			(select count(*) from report where ban = 'Y')as bancount
 		FROM 
 			AnnaUser
 		WHERE
