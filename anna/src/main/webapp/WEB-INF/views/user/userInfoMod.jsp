@@ -181,24 +181,57 @@ form {
 		$("#userInfoModFrm").submit();
 	}
 	
+	function updateProFileImage(image){
+		
+		let form = $('#profileFrm')[0];
+	    let data = new FormData(form);
+		
+		if(image.value != ""){
+			 $.ajax({             
+		    	type: "POST",          
+		        enctype: 'multipart/form-data',  
+		        url: "updateProfileImage.do",
+		        data: data,          
+		        processData: false,    
+		        contentType: false,      
+		        cache: false,           
+		        timeout: 600000,       
+		        success: function () {
+		        	location.reload();
+		        }
+			 });
+		}
+		
+		
+	}
 </script>
 </head>
 <body>
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	
-		<div class="wrapper">
-			<div class="container  main">
+		<div class="wrapper main">
+			<div class="container  ">
 				<h3 class="border-bottom" style="padding:1rem;">회원정보수정</h3>
-				<form id="userInfoModFrm" method="POST" action="userInfoMod.do">
-					<div id="profile" class="border-bottom" style="width:100%;">
-						<div style="display:inline-block;"><img class="profile-image" onerror="this.onerror=null; this.src='${path}/images/NoProfile.png';" style="border-radius:100px;"  src="${ userInfo.profile_image }"></div>
-						<div style="display:inline-block;">
-							<div>
-								<b>${ userInfo.nickName }</b>님의 프로필
-							</div>
+				
+				<div id="profile" class="border-bottom" style="display:flex;" style="width:100%;">
+					<div style="display:inline-block;">
+						<form method="post" id="profileFrm">
+							<input id="input-fileUpdate" type="file" name="profile_image" accept="image/gif, image/jpeg" style="display:none;" onchange="updateProFileImage(this)">
+							<label for="input-fileUpdate">
+								<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
+								<%-- <img src="${ userInfo.profile_image }" class="profile-image" onerror="this.onerror=null; this.src='${path}/images/NoProfile.png';" style="border-radius:100px;" > --%>
+							</label>
+						</form>
+					</div>
+					<div style="display:inline-block; flex:1; display:flex; align-items: center;">
+						<div>
+							<b>${ userInfo.nickName }</b>님의 프로필<br>
+							* 프로필 사진을 클릭하시면 프로필사진을 변경할수 있습니다.
 						</div>
 					</div>
+				</div>
+				<form id="userInfoModFrm" method="POST" action="userInfoMod.do">	
 					<div class="row border-bottom" style="display:table; width:100%;">
 						<div class="col-3 text-center th" style="padding:1rem; display:table-cell; width:25%;">닉네임</div>
 						<div class="col-9" style="padding:1rem; align-self:center; display:table-cell; width:auto;"><input type="text" class="form-control" id="input-nickName" name="nickName" value="${ userInfo.nickName }"></div>

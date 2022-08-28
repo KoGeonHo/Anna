@@ -347,13 +347,16 @@
 			<!-- MyPage for Mobile -->
 			<div class="container" style="overflow:auto;">
 				<h3 style="padding:1rem; margin:0px;">마이 페이지</h3>
-				<div class="border-bottom border-top">
+				<div class="border-bottom border-top" style="display:flex;">
 					<div style="display:inline-block;">
-						<img src="${ userInfo.profile_image }" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/NoProfile.png';" style="border-radius:100px; width:110px; height:auto; padding:10px;">
+						<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
 					</div>
-					<div style="display:inline-block; vertical-align: middle;">
-						<div>${ userInfo.nickName }</div>
-						<div><span onclick="location.href='userInfoView.do'">내 정보</span>&nbsp;<span onclick="location.href='logout.do'">로그아웃</span></div>
+					<div style="display:flex; vertical-align: middle; flex:1; align-items:center;">
+						<div>
+							<div style="padding:5px 5px 5px 0; font-size:1.1rem;"><b>${ userInfo.nickName }</b></div>
+							<div><span onclick="location.href='userInfoView.do'">내 정보</span>&nbsp;<span onclick="location.href='logout.do'">로그아웃</span></div>
+						</div>
+						
 					</div>
 				</div>
 				<div class="row">

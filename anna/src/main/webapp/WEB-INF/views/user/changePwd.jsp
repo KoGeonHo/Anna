@@ -79,7 +79,10 @@
 							<div class="td col-9"><input class="form-control" type="password" name="user_pwd_chk" placeholder="비밀번호 확인"></div>
 						</div>
 						<div class="tr row" >
-							<div class="td col-12 text-end"><button id="btn_pwd_cng" class="btn" type="submit" disabled style="background:#00AAB2; color:#fff;">비밀번호 변경</button></div>
+							<div class="td col-12 text-end">
+								<button id="btn_pwd_cng" class="btn" type="submit" disabled style="background:#00AAB2; color:#fff;">비밀번호 변경</button>
+								<button class="btn" type="button" onclick="history.back()" style="background:#BBCE53; color:#fff;">취소</button>
+							</div>
 						</div>
 					</form>
 				</div>
