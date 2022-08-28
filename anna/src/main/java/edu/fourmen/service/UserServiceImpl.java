@@ -373,5 +373,24 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
+	public ReViewVO getMyReview(ReViewVO vo) {
+		
+		return userDAO.getMyReview(vo);
+	}
+
+	@Override
+	public ReViewVO getMyReviewForMe(ReViewVO vo) {
+		
+		return userDAO.getMyReviewForMe(vo);
+	}
+
+	@Override
+	public void updateProfile(UserVO vo) {
+
+		userDAO.updateProfile(vo);
+		
+	}
+
 
 }

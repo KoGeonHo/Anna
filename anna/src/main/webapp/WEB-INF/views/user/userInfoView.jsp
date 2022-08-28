@@ -80,6 +80,7 @@ $(function(){
 	function closeModal(){
 		$("#pwd_chk_msg").html("");
 		$("input[name=chkPwd]").val("");
+		$("#btn_pwd_chk").prop("disabled",true);
 		$("#modal_pwd_chk").fadeOut();
 	}
 </script>
@@ -91,9 +92,9 @@ $(function(){
 		<div class="wrapper">
 			<div class="container main">
 				<h3 class="border-bottom" style="padding:1rem;">회원정보</h3>
-				<div id="profile" class="border-bottom" style="width:100%;">
-					<div style="display:inline-block;" onclick="alert('준비중입니다.')"><img class="profile-image" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/NoProfile.png';" style="border-radius:100px;"  src="${ userInfo.profile_image }"></div>
-					<div style="display:inline-block;">
+				<div id="profile" class="border-bottom" style="width:100%; display:flex;">
+					<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
+					<div style="display:inline-block; flex:1; display:flex; align-items:center;">
 						<div>
 							${ userInfo.nickName }님의 프로필
 						</div>

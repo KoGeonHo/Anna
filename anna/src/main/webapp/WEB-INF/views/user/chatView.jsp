@@ -287,11 +287,8 @@
 	function updateState(selectBox){
 		let state = selectBox.value;
 		if(state == 3){
-			if(confirm("${audience}님과 거래가 완료 되었습니다. 거래 후기를 작성하시겠어요?\n(지금 작성하지 않아도 나중에 다시 작성 할 수 있습니다.)")){
-				console.log("거래 후기 작성");
-				//$("#changeState").val(prevSelected);
-			}else{
-				console.log("거래 후기 작성");
+			if(!confirm("거래 완료로 변경하시겠습니까?\n 완료 후에는 채팅 목록에서 거래 후기를 작성해 주세요!")){
+				return false;
 			}
 		}else if(state == 2){
 			if(!confirm("판매중인 게시글에도 예약중으로 노출됩니다. 예약중으로 변경 하시겠습니까?")){

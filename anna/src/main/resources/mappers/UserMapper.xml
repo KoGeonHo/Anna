@@ -542,6 +542,53 @@
 		
 	</insert>
 	
+	<select id="getMyReview" parameterType="ReViewVO" resultType="ReViewVO">
+	
+		SELECT
+			satisfied,
+			option1,
+			option2,
+			option3
+		FROM
+			review
+		WHERE
+			writer = #{ writer } AND
+			item_idx = #{ item_idx } AND
+			seller = #{ seller } AND
+			buyer = #{ buyer }
+	
+	</select>
+	
+	
+	<select id="getMyReviewForMe" parameterType="ReViewVO" resultType="ReViewVO">
+	
+		SELECT
+			satisfied,
+			option1,
+			option2,
+			option3
+		FROM
+			review
+		WHERE
+			writer != #{ writer } AND
+			item_idx = #{ item_idx } AND
+			seller = #{ seller } AND
+			buyer = #{ buyer }
+	
+	</select>
+	
+	<update id="updateProfile" parameterType="UserVO">
+	
+	
+		UPDATE
+			AnnaUser
+		SET
+			profile_image = #{profile_image}
+		WHERE 
+			uidx = #{uidx}
+	
+	</update>
+	
 </mapper>
 
 

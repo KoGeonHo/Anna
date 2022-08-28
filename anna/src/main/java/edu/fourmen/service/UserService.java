@@ -40,5 +40,8 @@ public interface UserService {
 	List<ChatMessageVO> getSellChatList(int uidx);
 	List<ChatMessageVO> getBuyChatList(int uidx);
 	void insertReView(ReViewVO vo);
+	ReViewVO getMyReview(ReViewVO vo);
+	ReViewVO getMyReviewForMe(ReViewVO vo);
+	void updateProfile(UserVO vo);
 	
 }

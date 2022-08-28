@@ -200,6 +200,25 @@ public class UserDAO {
 		sqlSession.insert("edu.fourmen.mapper.userMapper.insertReView",vo);
 		
 	}
+
+
+	public ReViewVO getMyReview(ReViewVO vo) {
+		
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.getMyReview",vo);
+	}
+
+
+	public ReViewVO getMyReviewForMe(ReViewVO vo) {
+		
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.getMyReviewForMe",vo);
+	}
+
+
+	public void updateProfile(UserVO vo) {
+
+		sqlSession.update("edu.fourmen.mapper.userMapper.updateProfile",vo);
+		
+	}
 }
 
 

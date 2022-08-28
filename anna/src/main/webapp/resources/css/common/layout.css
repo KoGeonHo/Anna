@@ -33,6 +33,10 @@ body {
 /* 모바일 */
 
 @media all and (max-width:  767px){
+	html, body {
+		font-size:0.9rem;
+	}
+	
 	
 	.pc-header  {
 		display:none;

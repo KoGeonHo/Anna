@@ -922,6 +922,7 @@ public class UserController {
 	}
 	
 	
+	//리뷰 등록
 	@RequestMapping(value="/insertReView.do")
 	public String insertReView(ReViewVO vo,HttpServletRequest request,HttpSession session) {
 		
@@ -944,14 +945,62 @@ public class UserController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/getReview.do",produces = "application/json; charset=utf8")
+	public HashMap<String,ReViewVO> getReview(ReViewVO vo, HttpServletRequest request,HttpSession session){
+		
+		session = request.getSession();
+		
+		vo.setWriter((int)session.getAttribute("uidx"));
+		
+		ReViewVO myrvo = userService.getMyReview(vo);
+
+		ReViewVO rfmvo = userService.getMyReviewForMe(vo);
+		
+		HashMap<String,ReViewVO> reviewList = new HashMap<>();
+		
+		reviewList.put("myReview",myrvo);
+		
+		reviewList.put("reviewForMe",rfmvo);
+		
+		return reviewList;
+	}
 	
 	
-	
-	
-	
-	
-	
-	
+	@ResponseBody
+	@RequestMapping(value="/updateProfileImage.do",produces = "application/text; charset=utf8")
+	public String updateProfileImage(MultipartFile profile_image,HttpServletRequest request,HttpSession session) throws IllegalStateException, IOException {
+		
+		session = request.getSession();
+		
+		String filePath = session.getServletContext().getRealPath("/resources/images/userProfile/");
+		File dir = new File(filePath);
+		
+		//System.out.println(path);
+		
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		
+		String fileName = session.getAttribute("uidx") + "_" + profile_image.getOriginalFilename();
+		
+		if(!profile_image.getOriginalFilename().isEmpty()) {
+			profile_image.transferTo(new File(filePath,fileName));
+		}
+		
+		String profileRealPath = path + "/images/userProfile/"+fileName;
+		
+		UserVO vo = new UserVO();
+		
+		vo.setUidx((int)session.getAttribute("uidx"));
+		vo.setProfile_image(profileRealPath);
+		
+		userService.updateProfile(vo);
+		
+		System.out.println(vo.getProfile_image());
+		
+		return "";
+	}
 	
 	
 	
