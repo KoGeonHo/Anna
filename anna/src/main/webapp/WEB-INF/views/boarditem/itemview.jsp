@@ -98,13 +98,13 @@ ul.imgs li {
 	height: 400px;
 }
 
-#btn-area .btn{
+/* #btn-area .btn{
 width: 90px; 
 height: 38px; 
 background-color: #00AAB2; 
 color: #fff; 
 margin-left: 15px;
-}
+} */
 
 /*557 보다 크거나 같아야 하고 991거나 작아야 같아야함 태블릿용*/
 @media all and (421px <= width <= 3600px) {
@@ -264,6 +264,11 @@ display:none;
 	width:100%;
 	height:100%;
 	}
+	
+	.carousel-inner{
+		height:340px;
+	}
+	
 }
 
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
@@ -598,6 +603,18 @@ console.log("addwish");
 					item_idx : ${vo.item_idx},
 				},
 				'json');
+					
+				
+					$.post('AddMessage',{
+						chat_host : 0,
+						item_idx : ${vo.item_idx},
+						invited : ${vo.uidx},
+						contents : "거래완료 테스트",
+					},
+					'json');
+				
+				
+				
 					console.log("거래상태 변경 완료");
 				//	$('#state').load(location.href+' #state');
 			    alert("거래완료 처리가 완료되었습니다.");

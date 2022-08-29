@@ -796,7 +796,7 @@ nav {
 													<b>${fn:substring(vo.title,0,8) }...</b>
 												</c:if>
 												<c:if test="${ fn:length(vo.title) <= 8 }">
-													${ vo.title }
+													<b>${ vo.title }</b>
 												</c:if>
 												<c:if test="${ vo.state eq 2 }"><span style="display:inline-block; padding:3px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span></c:if>
 												<c:if test="${ vo.state eq 3 }"><span style="display:inline-block; padding:3px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span></c:if>
@@ -880,6 +880,12 @@ nav {
 	
 			</div>
 		</div>
+		
+		 <!-- 퀵메뉴 시작 -->
+      <%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>         
+      <!-- 퀵메뉴 종료 --> 
+		
+		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
