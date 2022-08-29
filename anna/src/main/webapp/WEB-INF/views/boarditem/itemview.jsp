@@ -31,6 +31,8 @@ viewport {
 <title>item view 페이지</title>
 
 <style>
+
+
 .chat-list {
 	height: 300px;
 	overflow-y: auto;
@@ -110,7 +112,7 @@ margin-left: 15px;
 @media all and (421px <= width <= 3600px) {
 
 #btn-area .btn{
-width: 60px;
+width: 95px;
 height: 38px;
 background-color: #00AAB2;
 color: #fff;
@@ -128,7 +130,7 @@ display:none;
 
 
 	#btn-area .btn{
-	width: 60px;
+	text-align:center;
     height: 38px;
     background-color: #00AAB2;
     color: #fff;
@@ -604,23 +606,26 @@ console.log("addwish");
 				},
 				'json');
 					
-				
-					$.post('AddMessage',{
-						chat_host : 0,
+					//글 작성자에게 거래완료 채팅을 보냄
+					/* $.post('AddMessage',{
+						chat_host : 1,
 						item_idx : ${vo.item_idx},
 						invited : ${vo.uidx},
-						contents : "거래완료 테스트",
+						contents : "거래완료 처리가 되었습니다. ",
+						uidx : 1,
 					},
-					'json');
-				
+					'json'); */
+					
+					//구매 완료한 사람에게 거래완료 채팅을 보냄
+					
 				
 				
 					console.log("거래상태 변경 완료");
-				//	$('#state').load(location.href+' #state');
+					$('#state').load(location.href+' #state');
 			    alert("거래완료 처리가 완료되었습니다.");
 			    
 			}else{
-				//$('#state').load(location.href+' #state');
+				$('#state').load(location.href+' #state');
 				$(".state").val(${vo.state});
 			    alert("처리를 취소하였습니다.");
 			}
@@ -1054,7 +1059,7 @@ function itemdelete(){
 															<div class="col-5 th"
 																style="display: table-cell; background-color: white; border: 0; font-size: 20px;">거래지역</div>
 															<div class="col-8 td" style="display: table-cell;">
-																<div class="addr_zone" aria-label="Default select example" name="addr_code"></div>
+																<div class="addr_zone" aria-label="Default select example"></div>
 													    		<script>
 														    		let locationList2 = [${ vo.addr_code }];
 														    		let html2 = '';
@@ -1068,7 +1073,7 @@ function itemdelete(){
 																					url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
 																					async : false,
 																					data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList2[i]+"&low_search=0",
-																					success : function(geojson){
+																						success : function(geojson){
 																						let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
 																						//dong.push(locationLevel[locationLevel.length-1]);
 																						//console.log(dong);
@@ -1122,7 +1127,7 @@ function itemdelete(){
 																	<!-- 이웃 영역 시작 -->
 																		<div id="Neighbor_area">
 																			<c:if test="${result == 0 }">
-																				<button onclick="addNeighbor(); return false;"class="btn">이웃추가</button>
+																				<input type="button"onclick="addNeighbor(); return false;"class="btn" value="이웃추가">
 																			</c:if>
 
 																			<c:if test="${result != 0}">
@@ -1147,12 +1152,12 @@ function itemdelete(){
 																	
 																	<c:if test="${userLoginInfo.uidx == vo.uidx}">
 																			<c:if test="${vo.state != 3}">
-																				<button onclick=" location.href='itemmodify.do?item_idx=${vo.item_idx}'" class="btn "id="btn-modi" >수정</button>
+																				<button onclick=" location.href='itemmodify.do?item_idx=${vo.item_idx}'" style="width:70px;" class="btn "id="btn-modi" >수정</button>
 																			</c:if>
-																		<button id="btn_open" class="btn" >삭제</button>
-																		<button onclick="updatewdate()" class="btn">끌올</button>
+																		<button id="btn_open" class="btn"  style="width:70px;" >삭제</button>
+																		<button onclick="updatewdate()" class="btn"  style="width:70px;">끌올</button>
 																			<c:if test="${vo.state != 3}" >
-																				<select name="state" style="width:100px;" class="state btn" onchange="updatestate();">
+																				<select name="state"  class="state btn" onchange="updatestate();">
 																					<c:if test="${vo.state == 1 }">
 																						<option selected disabled hidden>거래중</option>
 																					</c:if>
@@ -1248,18 +1253,26 @@ function itemdelete(){
 											</div>
 											<!-- card body 끝 -->
 										</div>
-										<div>
+										<div style="border-bottom:solid 2px;">
 											<h2 style="text-align: center;">
-												<a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님
-												의다른상품
+												<a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님의 다른상품
 											</h2>
 										</div>
 										<div class="container-fluid">
 											<div class="row">
-												<c:if test="${youritem.size() > 0}">
-													<c:forEach var="vo" items="${youritem}">
-														<div class="col-lg-3  col-md-12 "
-															style="margin-bottom: 10px;">
+												
+											
+											
+													<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative; margin-top: 39px;">
+														<c:if test="${list.size() > 5}">
+															<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ list.size() }" id="slide-btn-prev" style="left:0;"><img src='<%=request.getContextPath()%>/images/slicbtn_prev.png'></div>
+															<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ list.size() }" id="slide-btn-next" style="right:0;"><img src='<%=request.getContextPath()%>/images/slicbtn_next.png'></div>
+														</c:if>
+														<c:if test="${youritem.size() > 0}">
+															<c:forEach var="vo" items="${youritem}">
+														<div id="slider-interested" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
+								
+														<div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">
 															<div class="card">
 																<a href="itemview.do?item_idx=${vo.item_idx}"><img
 																	src="../resources/upload/${vo.image1}"
@@ -1304,6 +1317,8 @@ function itemdelete(){
 														</div>
 													</c:forEach>
 												</c:if>
+														</div>
+														</div>
 
 												<c:if test="${youritem.size() <= 0}">
 													<div style="text-align: center; border-top: solid 1px;">

@@ -51,9 +51,9 @@ public class BoardItemDAO {
 		
 		if(pm.getWishCheck() == 4) {
 			key  = pm.getInterested().split(",");
+			del.put("interested", key);
 		}
 		del.put("pagemaker", pm);
-		del.put("interested", key);
 		
 		return sqlSession.selectList(efdb+".selectAll",del);
 		

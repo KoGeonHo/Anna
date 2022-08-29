@@ -20,6 +20,7 @@
 			 , b.state
 			 , b.keyword
 			 , b.addr_code
+			 , b.wdate
 			 , b.hit
 			 , (select count(*) from Wish_list w where w.item_idx = b.item_idx and w.uidx = #{pagemaker.uidx} ) as WishCheck
 			 , (select count(uidx)as WishCount from Wish_list where item_idx = b.item_idx)as WishCount
@@ -44,15 +45,15 @@
 		 </if> 
 		 <if test="pagemaker.WishCheck ==4">
 		 	<foreach collection="interested" item="item"  separator="OR" open="AND (" close=")">
-				b.keyword like concat('%',#{item},'%') and b.uidx != #{pagemaker.uidx}
+				b.keyword like concat('%',#{item},'%')
 			</foreach>
 		 </if> 
 		
 		 <if test="pagemaker.WishCheck ==3">
-		 and  b.uidx != #{pagemaker.uidx} and b.state = 1 ORDER BY WishCount desc limit #{pagemaker.startPage}, #{pagemaker.pageNum}
+		 and  b.uidx != #{pagemaker.uidx}  ORDER BY WishCount desc limit #{pagemaker.startPage}, #{pagemaker.pageNum}
 		 </if>
-		 <if test="pagemaker.WishCheck !=3">
-			 ORDER BY wdate desc  limit #{pagemaker.startPage}, #{pagemaker.pageNum}
+		 <if test="pagemaker.WishCheck != 3 ">
+			 ORDER BY b.wdate desc  limit #{pagemaker.startPage}, #{pagemaker.pageNum}
 		 </if>
 	</select>
 	

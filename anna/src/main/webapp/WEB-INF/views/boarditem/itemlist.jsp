@@ -13,10 +13,11 @@
 <title>중고물품 리스트</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
+
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
 <script src="${ path }/js/common/common.js"></script>
-<script src="<%=request.getContextPath()%>/js/jquery-3.6.0.js"></script> 
+<script src="${ path }/js/jquery-3.6.0.js"></script> 
 <!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet"/>
 
@@ -25,7 +26,7 @@
 <link rel="stylesheet" href="${path}/css/font-awesome.min.css"> --%>
 		
 <link type="text/css" rel="stylesheet" href="${path}/css/style.css"/>
-
+<link href="${ path }/css/main.css" rel="stylesheet">
 <link href="${path}/css/bootstrap.css" rel="stylesheet" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
@@ -520,8 +521,8 @@ a {
   float: left;
   line-height: 50px;
   position: relative;
-  width: 33%;
-  font-size: xx-small;
+  width: 33.333333%;
+  height:100%;
 }
 .main1>li:hover .main2 {
   left: 0;
@@ -567,9 +568,6 @@ a {
 }
 .main3>li a:hover {
   color: #fff;
-}
-nav {
-  margin-top: 20px;
 }
 </style>
 </head>
@@ -652,7 +650,8 @@ nav {
 				      </ul>
 				    </li>
 				    <li onclick="location.href='itemlist.do?WishCheck=3'">찜 많은순</li>
-					<li onclick="location.href='itemlist.do?WishCheck=4'">내 관심 상품</li>
+				<li <c:if test='${userLoginInfo.uidx !=null}'>onclick="location.href='itemlist.do?WishCheck=4'"</c:if>
+					<c:if test='${userLoginInfo.uidx ==null}'>onclick='alert("로그인 후에 이용 가능합니다.");'</c:if>>내 관심 상품</li>
 			    </ul>
 			</div>
 				

@@ -130,7 +130,7 @@
 						<div class="col-4 th" style="display:table-cell;">거래지역</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<input type="hidden" class="form-control" value="${userLoginInfo.location_auth}" id="addr_code" name="addr_code">
-							<p class="viewaddr">asd</p>
+							<p class="viewaddr"></p>
 						</div>
 							<!-- <select class="form-select" aria-label="Default select example" id="addr_code"name="addr_code" onchange="alert('해당 기능은 준비중입니다.')">
 								<option value="0" id="addr">내 동네</option>
@@ -211,8 +211,24 @@
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">내용</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<textarea class="form-control" id="contents" name="contents" rows="10" cols="25"></textarea>
+							<textarea class="form-control" id="summernote" name="contents" rows="10" cols="25"></textarea>
+								<div class="contet_count" style="float:right;"></div>
 						</div>
+						
+							
+							
+					    <!--   $('.contet_count').html("("+$(this).val().length+" / 500)"); //클래스 안에 0 / 500 출력
+						  
+			        		$("#contents").on('keyup', function() { // 안에 키 누르면 이벤트시작
+						        $('.contet_count').html("("+$(this).val().length+" / 500)"); //내용 입력시 안에 ? / 500 출력
+						    	
+						        if($(this).val().length > 500) {
+						            $(this).val($(this).val().substring(0, 500)); //500자가 넘으면 500자 까지 잘라냄
+						            alert("내용은 최대 500자 까지 입력 가능합니다.");
+						            $('.contet_count').html("(500 / 500)"); //500자 라고 출력
+						        }
+						    });
+						});  -->
 					</div>
 					
 					<div class="row border-bottom tr">
@@ -252,18 +268,36 @@
 					
 				</form>
 		<script>
-		    $(document).ready(function () {
-		
+		    $(document).ready(function (){
+					
+					$('#summernote').summernote({
+						height : 400, // set editor height
+						minHeight : null, // set minimum height of editor
+						maxHeight : null, // set maximum height of editor
+						maxWidth : 840,
+						focus : true,
+						lang : 'ko-KR', // 기본 메뉴언어 US->KR로 변경
+						callbacks: {
+				             onChange: function(contents, $editable) {
+				               console.log('onChange:', contents, $editable);
+				               console.log(contents.length+"글자수");
+				               
+				               $('.contet_count').html("("+contents.length+" / 500)"); //클래스 안에 0 / 500 출력
+				              
+					               if($(this).val().length > 500) {
+										            $(this).val($(this).val().substring(0, 500)); //500자가 넘으면 500자 까지 잘라냄
+										            $('.contet_count').html("(500 / 500)"); //500자 라고 출력
+										            alert("내용은 최대 500자 까지 입력 가능합니다.");
+							              $('#summernote').keydown(function(e){ 
+							              		});
+							        		}
+				           				}
+				        		 }
+						});
 			 
 			    //위와 같이 값을 먼저 넣어준 후 초기화를 시킨다. 그럼 아래와 같이 입력이 된다.
 			    //초기화
-				$('#summernote').summernote({
-					height : 400, // set editor height
-					minHeight : null, // set minimum height of editor
-					maxHeight : null, // set maximum height of editor
-					focus : true,
-					lang : 'ko-KR' // 기본 메뉴언어 US->KR로 변경
-				});
+			
 			
 			    //저장버튼 클릭
 			    $(document).on('click', '#saveBtn', function () {
@@ -281,7 +315,7 @@
 		
 		</script>
 			<script type="text/javascript">
-				var gfv_count = 1
+				
 				
 				$(document).ready(function(){
 					$("#list").on("click", function(e){ //목록으로 버튼
@@ -293,11 +327,11 @@
 						e.preventDefault();
 						fn_insertBoard();
 					});
-					
+				/* 	
 					$("#addFile").on("click", function(e){ //파일 추가 버튼
 						e.preventDefault();
 						fn_addFile();
-					});
+					}); */
 					
 					$("a[name='delete']").on("click", function(e){ //삭제 버튼
 						e.preventDefault();
@@ -317,14 +351,43 @@
 					comSubmit.submit();
 				}
 				
-				function fn_addFile(){
-					var str = "<p><input type='file' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-					$("#fileDiv").append("<p style='margin:auto;'><input type='file' style='width:200px;' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
-					$("a[name='delete']").on("click", function(e){ //삭제 버튼
-						e.preventDefault();
-						fn_deleteFile($(this));
+			/* 	function fn_addFile(){
+					var i = 2
+					var str = "<p style='margin:auto;'><input type='file' name='file"+i+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+					if(i <= 10){
+						$("#fileDiv").append("<p style='margin:auto;'><input type='file' style='width:200px;' name='file"+i+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
+						$("a[name='delete']").on("click", function(e){ //삭제 버튼
+							e.preventDefault();
+							fn_deleteFile($(this));
+							});
+						i++;
+						}  
+					
+					if(i >= 10){
+						$("#fileDiv").css("display","none");
+					} */
+					
+					$(document).ready(function() {
+						var i=2; // 변수설정은 함수의 바깥에 설정!
+					  $("#addFile").click(function() {
+					    if(i<=10){
+					    	
+					    	$("#fileDiv").append("<p style='margin:auto;'><input type='file' style='width:200px;' name='file"+i+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
+					    }
+					    
+					    i++;
+					    
+					    if(i==11){
+					    	$("#addFile").css("display","none");
+					    }
+					   
+					    
+
+					  });
 					});
-				}
+					
+					
+					
 				
 				function fn_deleteFile(obj){
 					obj.parent().remove();
@@ -352,8 +415,7 @@
 				     }
 				    
 				}
-			</script>
-			<script>
+				
 			$("#joinFrm").submit(function(){
 			    var fileCheck = $("#file").val();
 			    var price = $("#price").val();

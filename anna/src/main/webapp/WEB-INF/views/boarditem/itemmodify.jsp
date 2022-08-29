@@ -161,8 +161,25 @@
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">내용</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<textarea class="form-control" name="contents" id="contents" rows="10" cols="25">${vo.contents}</textarea>
+							<textarea  class="form-control" id="contents" name="contents" rows="10" cols="25">${vo.contents}</textarea>
+								<div class="contet_count" style="float:right;"></div>
 						</div>
+						<script>
+							
+						$(document).ready(function() {
+			        		$('.contet_count').html("("+$(this).val().length+" / 500)"); //클래스 안에 0 / 500 출력
+				        		$('#contents').on('keyup', function() { // 안에 키 누르면 이벤트시작
+							        $('.contet_count').html("("+$(this).val().length+" / 500)"); //내용 입력시 안에 ? / 500 출력
+							    	
+							    	
+							        if($(this).val().length > 500) {
+							            $(this).val($(this).val().substring(0, 500)); //500자가 넘으면 500자 까지 잘라냄
+							            alert("내용은 최대 500자 까지 입력 가능합니다.");
+							            $('.contet_count').html("(500 / 500)"); //500자 라고 출력
+							        }
+							    });
+						});
+						</script>
 					</div>
 					
 					<div class="row border-bottom tr">
