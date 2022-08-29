@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class BoardItemController {
 	
 	
 	@RequestMapping(value = "/itemlist.do")
-	public String itemlist(HttpSession session,PageMaker pm,BoardItemVO vo,  HttpServletRequest request, Model model) {
+	public String itemlist(HttpSession session,PageMaker pm,BoardItemVO vo,HttpServletResponse response ,HttpServletRequest request, Model model) throws IOException {
 		session = request.getSession();
 		
 		if(pm.getSearchVal() == null) {
@@ -89,6 +90,7 @@ public class BoardItemController {
 		}
 		//내 키워드 상품 보기
 		if(pm.getWishCheck() == 4) {
+			
 			String keyword = uvo.getInterested();
 			pm.setInterested(keyword);
 		}
@@ -355,16 +357,21 @@ public class BoardItemController {
 			HttpSession session, Model model) throws IllegalStateException, IOException {
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 		String fileName = null;
-		UUID uuid = UUID.randomUUID();
 
+		
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+		formatter.format(date);
+
+		
+		
 		if (vo.getFile1() != null) {
 			MultipartFile uploadFile1 = vo.getFile1();
+			String originalFileName = uploadFile1.getOriginalFilename();
 //			String uploadFile11 = uploadFile1.getOriginalFilename()+uuid.toString();
 			if (!uploadFile1.isEmpty()) {
-				fileName = uuid + "_" + uploadFile1.getOriginalFilename();
-				uploadFile1.transferTo(new File(path, fileName));
-
-			
+			fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
+			uploadFile1.transferTo(new File(path, fileName));
 
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
@@ -387,9 +394,10 @@ public class BoardItemController {
 
 		if (vo.getFile2() != null) {
 			MultipartFile uploadFile2 = vo.getFile2();
+			String originalFileName = uploadFile2.getOriginalFilename();
 			if (!uploadFile2.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile2.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"2"+"_"+originalFileName;
 				uploadFile2.transferTo(new File(path, fileName));
 			
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
@@ -415,9 +423,10 @@ public class BoardItemController {
 
 		if (vo.getFile3() != null) {
 			MultipartFile uploadFile3 = vo.getFile3();
+			String originalFileName = uploadFile3.getOriginalFilename();
 			if (!uploadFile3.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile3.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"3"+"_"+originalFileName;
 				uploadFile3.transferTo(new File(path, fileName));
 			
 
@@ -443,9 +452,10 @@ public class BoardItemController {
 
 		if (vo.getFile4() != null) {
 			MultipartFile uploadFile4 = vo.getFile4();
+			String originalFileName = uploadFile4.getOriginalFilename();
 			if (!uploadFile4.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile4.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"4"+"_"+originalFileName;
 				uploadFile4.transferTo(new File(path, fileName));
 			
 
@@ -471,9 +481,10 @@ public class BoardItemController {
 
 		if (vo.getFile5() != null) {
 			MultipartFile uploadFile5 = vo.getFile5();
+			String originalFileName = uploadFile5.getOriginalFilename();
 			if (!uploadFile5.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile5.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"5"+"_"+originalFileName;
 				uploadFile5.transferTo(new File(path, fileName));
 			
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
@@ -498,9 +509,10 @@ public class BoardItemController {
 
 		if (vo.getFile6() != null) {
 			MultipartFile uploadFile6 = vo.getFile6();
+			String originalFileName = uploadFile6.getOriginalFilename();
 			if (!uploadFile6.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile6.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"6"+"_"+originalFileName;
 				uploadFile6.transferTo(new File(path, fileName));
 			
 
@@ -527,9 +539,10 @@ public class BoardItemController {
 
 		if (vo.getFile7() != null) {
 			MultipartFile uploadFile7 = vo.getFile7();
+			String originalFileName = uploadFile7.getOriginalFilename();
 			if (!uploadFile7.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile7.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"7"+"_"+originalFileName;
 				uploadFile7.transferTo(new File(path, fileName));
 			
 
@@ -553,9 +566,10 @@ public class BoardItemController {
 
 		if (vo.getFile8() != null) {
 			MultipartFile uploadFile8 = vo.getFile8();
+			String originalFileName = uploadFile8.getOriginalFilename();
 			if (!uploadFile8.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile8.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"8"+"_"+originalFileName;
 				uploadFile8.transferTo(new File(path, fileName));
 			
 
@@ -582,9 +596,10 @@ public class BoardItemController {
 
 		if (vo.getFile9() != null) {
 			MultipartFile uploadFile9 = vo.getFile9();
+			String originalFileName = uploadFile9.getOriginalFilename();
 			if (!uploadFile9.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile9.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"9"+"_"+originalFileName;
 				uploadFile9.transferTo(new File(path, fileName));
 			
 
@@ -611,9 +626,10 @@ public class BoardItemController {
 
 		if (vo.getFile10() != null) {
 			MultipartFile uploadFile10 = vo.getFile10();
+			String originalFileName = uploadFile10.getOriginalFilename();
 			if (!uploadFile10.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile10.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"10"+"_"+originalFileName;
 				uploadFile10.transferTo(new File(path, fileName));
 			
 
@@ -688,16 +704,20 @@ public class BoardItemController {
 		
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
 		System.out.println(path);
-
+		
 		String fileName = null;
-		UUID uuid = UUID.randomUUID();
-		// System.out.println(vo.getFile1().getOriginalFilename()+"파일1");
+		
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+		formatter.format(date);
+		
 
 		if (vo.getFile1() != null) {
 			MultipartFile uploadFile1 = vo.getFile1();
+			String originalFileName = uploadFile1.getOriginalFilename();
 //			String uploadFile11 = uploadFile1.getOriginalFilename()+uuid.toString();
 			if (!uploadFile1.isEmpty()) {
-				fileName = uuid + "_" + uploadFile1.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
 				uploadFile1.transferTo(new File(path, fileName));
 
 				System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
@@ -724,9 +744,10 @@ public class BoardItemController {
 
 		if (vo.getFile2() != null) {
 			MultipartFile uploadFile2 = vo.getFile2();
+			String originalFileName = uploadFile2.getOriginalFilename();
 			if (!uploadFile2.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile2.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"2"+"_"+originalFileName;
 				uploadFile2.transferTo(new File(path, fileName));
 			
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
@@ -752,9 +773,10 @@ public class BoardItemController {
 
 		if (vo.getFile3() != null) {
 			MultipartFile uploadFile3 = vo.getFile3();
+			String originalFileName = uploadFile3.getOriginalFilename();
 			if (!uploadFile3.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile3.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"3"+"_"+originalFileName;
 				uploadFile3.transferTo(new File(path, fileName));
 			
 
@@ -780,9 +802,10 @@ public class BoardItemController {
 
 		if (vo.getFile4() != null) {
 			MultipartFile uploadFile4 = vo.getFile4();
+			String originalFileName = uploadFile4.getOriginalFilename();
 			if (!uploadFile4.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile4.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"4"+"_"+originalFileName;
 				uploadFile4.transferTo(new File(path, fileName));
 			
 
@@ -808,9 +831,10 @@ public class BoardItemController {
 
 		if (vo.getFile5() != null) {
 			MultipartFile uploadFile5 = vo.getFile5();
+			String originalFileName = uploadFile5.getOriginalFilename();
 			if (!uploadFile5.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile5.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"5"+"_"+originalFileName;
 				uploadFile5.transferTo(new File(path, fileName));
 			
 
@@ -836,9 +860,10 @@ public class BoardItemController {
 
 		if (vo.getFile6() != null) {
 			MultipartFile uploadFile6 = vo.getFile6();
+			String originalFileName = uploadFile6.getOriginalFilename();
 			if (!uploadFile6.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile6.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"6"+"_"+originalFileName;
 				uploadFile6.transferTo(new File(path, fileName));
 		
 
@@ -865,9 +890,10 @@ public class BoardItemController {
 
 		if (vo.getFile7() != null) {
 			MultipartFile uploadFile7 = vo.getFile7();
+			String originalFileName = uploadFile7.getOriginalFilename();
 			if (!uploadFile7.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile7.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"7"+"_"+originalFileName;
 				uploadFile7.transferTo(new File(path, fileName));
 			
 
@@ -890,9 +916,10 @@ public class BoardItemController {
 
 		if (vo.getFile8() != null) {
 			MultipartFile uploadFile8 = vo.getFile8();
+			String originalFileName = uploadFile8.getOriginalFilename();
 			if (!uploadFile8.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile8.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"8"+"_"+originalFileName;
 				uploadFile8.transferTo(new File(path, fileName));
 			
 
@@ -919,9 +946,10 @@ public class BoardItemController {
 
 		if (vo.getFile9() != null) {
 			MultipartFile uploadFile9 = vo.getFile9();
+			String originalFileName = uploadFile9.getOriginalFilename();
 			if (!uploadFile9.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile9.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"9"+"_"+originalFileName;
 				uploadFile9.transferTo(new File(path, fileName));
 			
 
@@ -948,9 +976,10 @@ public class BoardItemController {
 
 		if (vo.getFile10() != null) {
 			MultipartFile uploadFile10 = vo.getFile10();
+			String originalFileName = uploadFile10.getOriginalFilename();
 			if (!uploadFile10.isEmpty()) {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName = uuid + "_" + uploadFile10.getOriginalFilename();
+				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"10"+"_"+originalFileName;
 				uploadFile10.transferTo(new File(path, fileName));
 			
 
@@ -1244,37 +1273,45 @@ public class BoardItemController {
 	}
 	
 	@RequestMapping(value="/report.do")
-	public String report_taget(ReportVO rvo,HttpServletRequest request) throws IllegalStateException, IOException {
+	public String report_taget(ReportVO rvo,HttpServletRequest request, HttpSession session) throws IllegalStateException, IOException {
+		
+		session = request.getSession();
 		
 		System.out.println("신고하기 들어왔음");
 		
-		  UUID uuid = UUID.randomUUID(); 
-		  String fileName =""; 
-		  String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-		 System.out.println(rvo.getFile1()+"신고하기 파일확인");
 		
+		
+		
+	    String fileName =""; 
+ 	    String path = request.getSession().getServletContext().getRealPath("/resources/upload");
+		Date date = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
+		formatter.format(date);
+		 
+		 
 		  if (rvo.getFile1() != null) { MultipartFile uploadFile1 = rvo.getFile1(); //
 			 // String uploadFile11 = uploadFile1.getOriginalFilename()+uuid.toString(); 
+				  String originalFileName = uploadFile1.getOriginalFilename();
 			  if(!uploadFile1.isEmpty()) { 
-				 fileName = uuid + "_" +uploadFile1.getOriginalFilename(); uploadFile1.transferTo(new File(path,fileName));
-				 System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
-				  }
-			  BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-			  BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC,
-			  Scalr.Mode.FIT_TO_HEIGHT, 450);
-			  
-			  String thumbnailName = path + File.separator + "s-" + fileName;
-			  
-			  // System.out.println("thumbnailName"+thumbnailName);
-			  
-			  File newFile = new File(thumbnailName); //
-			  System.out.println("newFile:"+newFile); String formatName =
-			  fileName.substring(fileName.lastIndexOf(".") + 1); //
-			  System.out.println("destImg"+destImg); boolean flag = ImageIO.write(destImg,
-			  formatName.toUpperCase(), newFile); System.out.println("복사여부 flag" + flag);
-			  
-			  thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
-			  rvo.setAttach(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일 // 이름 }
+					  fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
+					  System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
+					  BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+					  BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC,
+					  Scalr.Mode.FIT_TO_HEIGHT, 450);
+					  
+					  String thumbnailName = path + File.separator + "s-" + fileName;
+					  
+					  // System.out.println("thumbnailName"+thumbnailName);
+					  
+					  File newFile = new File(thumbnailName); //
+					  System.out.println("newFile:"+newFile); String formatName =
+					  fileName.substring(fileName.lastIndexOf(".") + 1); //
+					  System.out.println("destImg"+destImg); boolean flag = ImageIO.write(destImg,
+					  formatName.toUpperCase(), newFile); System.out.println("복사여부 flag" + flag);
+					  
+					  thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+					  rvo.setAttach(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일 // 이름 }
+			  }
 		  }
 		
 		
