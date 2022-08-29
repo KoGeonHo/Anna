@@ -999,17 +999,15 @@ public class BoardItemController {
 
 	@RequestMapping("/AddMessage")
 	@ResponseBody
-	public Map AddMessage(ChatMessageVO cvo ,HttpServletRequest request, HttpSession session) {
+	public String AddMessage(ChatMessageVO cvo ,HttpServletRequest request, HttpSession session) {
 		System.out.println("이쯤에");
 		session = request.getSession();
 		
-		
 		boarditemService.insertChat(cvo);
+		System.out.println("거래완료 채팅 보냄");
 		
-		//ajax가 가져갈 출력값 개체 생성
-		Map rs = new HashMap<String, Object>();
 		
-		return rs;
+		return "" ;
 	}
 	@RequestMapping("/getAllMessages")
 	@ResponseBody

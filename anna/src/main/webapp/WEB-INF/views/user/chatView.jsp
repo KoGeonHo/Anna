@@ -8,7 +8,7 @@
 <head>
 <title>안녕? 나야!</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=yes">
 <script src="${ path }/js/jquery-3.6.0.js"></script>
 <script src="${ path }/js/bootstrap.js"></script>
 <script src="${ path }/js/common/common.js"></script>
@@ -310,6 +310,18 @@
 			}
 		});
 	}
+	
+	function openModal(image){
+		console.log(image.width);
+		console.log(image.height);
+		console.log($("#chat-container").css("width"));
+		console.log($("#chat-container").css("height"));
+		$("#viewImage").attr("src",image.src);
+		$(".imagePreviewModal").fadeIn();
+	}
+	function closeModal(){
+		$(".imagePreviewModal").fadeOut();
+	}
 </script>
 </head>
 <body>
@@ -319,9 +331,15 @@
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		
 		<div class="wrapper main">
+			
 			<div class="container" style="overflow:auto; height:100%;">
 				<div style="flex:1; display:flex; width:100%; height:100%;">
 					<div id="chat-container" style="display:flex; flex-direction:column; flex:1; position:relative; border:1px solid #ddd;">
+						<div class="imagePreviewModal" style="width:100%; height:100%; position:absolute; left:0; top:0; display:none; z-index:100; ">
+							<div style="width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; overflow:auto;" onclick="closeModal()">
+								<img id="viewImage" src="" style="width:95%; padding:20px; height:auto; margin:auto; touch-action:pinch-zoom;">
+							</div>
+						</div>
 						<!-- 채팅 title AND 거래상태 표시 시작 -->
 						<div class="border-bottom" style="display:flex;">
 							<div style="width:25px;display:flex; align-items:center;">
