@@ -44,6 +44,14 @@
 		}
 		
 	}
+	
+	function openModal(){
+		$(".imagePreviewModal").fadeIn();
+	}
+	
+	function closeModal(){
+		$(".imagePreviewModal").fadeOut();
+	}
 
 </script>
 </head>
@@ -53,8 +61,13 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		
-		<div class="wrapper">
-			<div class="container main">
+		<div class="wrapper main" style="position:relative;">
+			<div class="imagePreviewModal" style="width:100%; height:100%; position:absolute; left:0; top:0; display:none;">
+				<div style="width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; overflow:auto;" onclick="closeModal()">
+					<img src="${ path }/resources/QnA/${QnAItem.attach}" style="width:80%; padding:20px; height:auto; margin:auto;">
+				</div>
+			</div>
+			<div class="container">				
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의하기 - ${ QnAItem.title }</h3>
 				<div class="row border-bottom tr">
 					<div class="col-4 th" style="display:table-cell;">작성일</div>
@@ -95,7 +108,7 @@
 						<c:if test="${ length < 20 }" >
 							${ QnAItem.attach } 
 						</c:if>
-						<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="alert('준비중입니다.');">첨부파일 보기</button>
+						<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="openModal()">첨부파일 보기</button>
 					</div>
 				</div>
 				<c:if test="${ userLoginInfo.isAdmin eq 'N' and QnAItem.state eq 1}">

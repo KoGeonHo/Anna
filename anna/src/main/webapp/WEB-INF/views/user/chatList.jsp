@@ -378,7 +378,7 @@
 			
 			
 			<div id="viewReView" style="display:none;">
-				<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">
+				<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5);">
 					<div style="margin:auto; width:280px; height:300px; background:#fff; border-radius:10px; border:2px solid #ddd; box-shadow: 2px 2px 2px 2px gray; position:relative;">
 						
 						<div>

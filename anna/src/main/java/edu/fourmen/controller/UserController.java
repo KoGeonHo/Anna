@@ -901,7 +901,7 @@ public class UserController {
 		
 		String result = "&image";
 		
-		result += "<img src='"+path+"/resources/images/Chat/"+fileName+"' alt='"+item_image.getOriginalFilename()+"' style='width:200px; height:auto; border-radius:5px;'>";
+		result += "<img src='"+path+"/resources/images/Chat/"+fileName+"' onclick='openModal(this)' alt='"+item_image.getOriginalFilename()+"' style='width:200px; height:auto; border-radius:5px;'>";
 		
 		
 		System.out.println(result);

@@ -185,7 +185,7 @@
 									<c:forEach var="vo" items="${interestedList}">
 										<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 											<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-												<img src="${ path }/resources/upload/${ vo.image1 }" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+												<div style="width:100%; height:210px; background:url('${ path }/resources/upload/${ vo.image1 }'); background-size:cover; background-position:center; background-repeat:no-repeat;" class="card-img-top" ></div>
 												<div class="card-body">
 													<div class="text-start" style="height:30px; display:flex; align-items:center;">
 														<c:if test="${ fn:length(vo.title) > 8 }">
