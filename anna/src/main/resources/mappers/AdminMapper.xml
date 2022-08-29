@@ -47,7 +47,7 @@
 			r.contents,
 			DATE_FORMAT(r.report_date, '%Y-%m-%d') AS report_date,
 			r.ban,
-			r.ban_date
+			DATE_FORMAT(r.ban_date, '%Y-%m-%d') AS ban_date
 		FROM
 			report r
 			
@@ -80,6 +80,7 @@
 	
 		UPDATE report
 		   SET ban = 'Y'
+		   	  ,ban_date = now()
 		 WHERE ridx = #{ridx}
 	
 	</update>

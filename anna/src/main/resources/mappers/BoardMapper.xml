@@ -303,13 +303,14 @@
 <delete id="replyDel">
 	DELETE 
 	  FROM reply
-	 WHERE ridx = #{ridx}
+	 WHERE reply_idx = #{reply_idx}
 
 </delete>
 
 <update id="replyModify">
 	UPDATE reply
 	   SET contents = #{contents}
+	 WHERE reply_idx = #{reply_idx}
 </update>
 
 </mapper>

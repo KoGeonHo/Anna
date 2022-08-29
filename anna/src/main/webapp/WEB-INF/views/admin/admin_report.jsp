@@ -40,6 +40,15 @@
 					padding-left: 50px;
 					padding-right: 50px;
 				}
+				
+			#imgView{
+			
+			display:none;
+			position: fixed;
+			margin-left: 15%;
+    		margin-top: -11%;
+			
+			}
 
         </style>
         
@@ -59,14 +68,13 @@
 			}
 
 			.banner_online {
-			    height: 700px;
-  			    width: 503px;
+ 				width: 650px;
 				border: 1px solid black;
 				box-shadow: 3px 3px 7px 1px grey;
 				background-color: white;
 				z-index: 9999;
 				margin-left: 22%;
-    			margin-top: -11%;
+    			margin-top: -9%;
 				display: none;
 				position: fixed;
 			}
@@ -127,7 +135,7 @@
 				padding : ;
 				position: relative;
   				left: 52px;
-  				margin : 30 0 10 0;
+  				margin : 30 0 10 31;
   				
 
 			}
@@ -239,55 +247,97 @@ let myMap = new Map();
 						        
 						        <h1>신고 상세보기</h1><br>
 						        <div class="pop_content">
+						         			
 						       
 						             <table border="0" id="report_table" name="modal_list" style="text-align:  left; border-bottom: 1px solid #cdd0d4;">
-						             	<tr>
-						             		<td id="ridx">
-						             			
-						             		</td>
-						             	</tr>
-						             	
-						             	<tr>
-											<td id="td_line" width="130px;" height= "40px;" >신고유형</td>
-											<td id="report_type"></td>
-										</tr>
-										<tr>
-										    <td id="td_line" width="130px;" height= "40px;">신고닉네임</td>
-										    <td id="target"></td>
-										    
-										</tr>
-								
-										<tr>
-										    <td id="td_line" width="130px;" height= "200px;" style="vertical-align: top; padding-top: 10px;">상세설명</td>
-										    <td id="contents" style="vertical-align: top; padding-top: 10px;"></td>
-										</tr>
-										<tr>
-										    <td id="td_line"  width="130px;" height= "40px;">신고일</td>
-										    <td id="date"></td>
-										</tr>
-										<tr>
-										    <td id="td_line" width="130px;" height= "40px;">신고자</td>
-										    <td id="repoter"></td>
-										</tr>
-										<tr>
-										    <td id="td_line" width="130px;" height= "40px;">첨부파일</td>
-										    <td id="attach"></td>
-										</tr>
-								</table>
+							             	<tr>
+							             		<td id="ridx">
+							             			
+							             		</td>
+							             		<td id="evidence_td">
+							             		
+							             		</td>
+							             		<td id="item_idx_td">
+							             		
+							             		</td>
+							             		<td id="bidx_td">
+							             		
+							             		</td>
+							             	</tr>
+							             	
+							             	<tr>
+												<td id="td_line" width="130px;" height= "40px;" >신고유형</td>
+												<td id="report_type"></td>
+											</tr>
+											<tr>
+											    <td id="td_line" width="130px;" height= "40px;">신고닉네임</td>
+											    <td id="target"></td>
+											    
+											</tr>
+									
+											<tr>
+											    <td id="td_line" width="130px;" height= "200px;" style="vertical-align: top; padding-top: 10px;">상세설명</td>
+											    <td id="contents" style="vertical-align: top; padding-top: 10px;"></td>
+											</tr>
+											<tr>
+											    <td id="td_line"  width="130px;" height= "40px;">신고일</td>
+											    <td id="date"></td>
+											</tr>
+											<tr>
+											    <td id="td_line" width="130px;" height= "40px;">신고자</td>
+											    <td id="repoter"></td>
+											</tr>
+											
+											<tr>
+											
+											    <td id="td_line" width="130px;" height= "40px;">첨부파일</td>
+											    <td id="attach_td"></td>				  
+											</tr>
+											
+									</table>
 								
 									    <br>
 								</div>
+								 <script>
+								 		
+								 
+								       function postCheck(){ //게시물 확인
+								    	   
+								    	   var bidx=$("#bidx").val();
+								    	   var item_idx=$("#item_idx").val();
+								    	   
+				               					if($("#evidence").val() == 1){
+				               						location.href="<%=request.getContextPath()%>/boarditem/itemview.do?item_idx="+item_idx
+						                    			
+				                    			}else if($("#evidence").val() == 2){
+		
+				                    						location.href="<%=request.getContextPath()%>/board/viewBoard.do?Bidx="+bidx
+				                    			}
+				                    	}
+								       
+								       $("#attach_td").mouseover(function(){
+								    		$("#imgView").css("display","block")
+								    		
+								    		});
+								       
+								       $("#attach_td").mouseout(function(){
+								    		$("#imgView").css("display","none")
+								    		
+								    	});
+						       </script>
+								
 						        <div id="menu_box">
-						          <div id="menu_box">
-						       
-											<button type="button"  id="test_button" class="btn " style="width :105px; background-color: #3881B4; color: #fff; cursor: pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">거래글 확인</button>
+						          	<div id="menu_box">
+										<button type="button"  id="test_button" class="btn " style="width :105px; background-color: #3881B4; color: #fff; cursor: pointer;" onclick="postCheck()" style="font-size: 14px;">거래글 확인</button>
 						       			 &nbsp;
 						       			<button id="test_button" class="btn " style="background-color: #E51D21; color: #fff; cursor: pointer;"  style="font-size: 14px;">신고 적용 </button>
 						       			&nbsp;
 						       			<button type="button"  id="close_button" class="btn" style="background-color: #00AAB2; color: #fff; cursor: pointer;" style="font-size: 14px;">닫기</button>
+						        	</div>
 						        </div>
-						        </div>
-						       </div>
+						  	</div>
+						       
+						      
 						       </form>
                    
                        
@@ -305,6 +355,8 @@ let myMap = new Map();
                                                 <th>신고자</th>
                                                 <!-- <th>노쇼</th> -->
                                                 <th>상세보기</th>
+                                                <th>적용여부</th>
+                                                <th>적용일자</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -335,9 +387,7 @@ let myMap = new Map();
 	                                        			<th>${ i.contents }</th>
 	                                        			<th>${ i.report_date }</th>
 	                                        			<th>${i.repotername }</th>
-                                        				
 	                                        			<th>
-	                                        			
 	                                        			<button type="button" class="openModalPop btn"  style="background-color: #00AAB2; color: #fff;"  style="font-size: 14px;" onclick="check(${i.ridx})">상세보기</button>
 	                                        			
 	                                        			<script>
@@ -361,6 +411,7 @@ let myMap = new Map();
 									    							
 									    									console.log("여기까진옴");
 									    									console.log(list[0].report_type);
+									    									console.log(list[0].ridx)
 									    									
 									    								       if(list[0].report_type== 0){
 									    									   		var report_type='노쇼'
@@ -384,15 +435,20 @@ let myMap = new Map();
 									    								   var repoter = list[0].repotername
 									    								   var attach = list[0].attach
 									    								   var ridx = list[0].ridx
+									    								   var evidence = list[0].evidence
+									    								   var bidx = list[0].bidx
+									    								   var item_idx = list[0].item_idx
 									    								   
 									    								   $("#report_type").html(report_type);
 									    								   $("#target").html(target);
 									    								   $("#contents").html(content);
 									    								   $("#date").html(report_date);
 									    								   $("#repoter").html(repoter);
-									    								   $("#attach").html(attach);
-									    								   $("#ridx").html("<input type='hidden' name='ridx' value='"+ridx+"'>");
-									    								   
+									    								   $("#attach_td").html(attach + "<img id='imgView' src='../resources/upload/"+attach+"' alt ='안되는데요' style='width:400px'>");
+									    								   $("#ridx").html("<input type='hidden' name='ridx' value='"+ridx+"'>"); 
+									    								   $("#evidence_td").html("<input type='hidden' id='evidence' name='evidence' value='"+evidence+"'>");
+									    								   $("#bidx_td").html("<input type='hidden' id='bidx' name='bidx' value='"+bidx+"'>");
+									    								   $("#item_idx_td").html("<input type='hidden' id='item_idx' name='item_idx' value='"+item_idx+"'>");
 									    								   /* </td>
 									    									
 									    									
@@ -426,7 +482,6 @@ let myMap = new Map();
 									    						
 									    						$(".banner_online").fadeIn();
 							    						 		$(".modal").fadeIn();
-									               				
 									               			}
 									    						
 									               			$("#close_button").click(function(){
@@ -434,15 +489,27 @@ let myMap = new Map();
 														        $(".modal").fadeOut();
 														        
 														    });
+									               			
+									               			
+									               			
+									               			
 									    						
 									    						
 									    						 
 									               		</script>
 	                                        			
-	                                        			
-															       
-															       
-															       
+	                                        			</th>
+	                                        			<th>
+	                                        				${i.ban}
+														</th>	       
+														<th>
+															
+															${i.ban_date}
+															
+
+														</th>	       
+													
+													</tr>      
 	                                        	</c:forEach>
                                         	</c:if>
 
@@ -465,6 +532,6 @@ let myMap = new Map();
 
         <script src="<%=request.getContextPath()%>/js/admin_user2.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        
+
     </body>
 </html>

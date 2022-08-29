@@ -372,7 +372,7 @@ public class BoardController {
 
 	
 	@RequestMapping(value="/BoardDelete.do")
-	public String BoardDelete(int Bidx,BoardVO vo) {
+	public String BoardDelete(int Bidx,BoardVO vo) { //게시글 삭제처리
 		
 		vo.setBidx(Bidx);
 		
@@ -382,7 +382,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/BoardModify.do", method=RequestMethod.GET)
-	public String BoardModify(int Bidx, Model model) {
+	public String BoardModify(int Bidx, Model model) { //게시글 수정
 		
 		BoardVO bv = boardService.viewBoard(Bidx);
 		model.addAttribute("bv", bv);
@@ -392,7 +392,7 @@ public class BoardController {
 		return "board/BoardModify";
 	}
 	
-	@RequestMapping(value="/BoardModify.do", method=RequestMethod.POST)
+	@RequestMapping(value="/BoardModify.do", method=RequestMethod.POST) //수정처리
 	public String BoardModify(BoardVO vo, HttpServletRequest request, HttpSession session) throws IOException {
 		
 		session = request.getSession();
@@ -539,12 +539,18 @@ public class BoardController {
 		return "";
 	}
 	
-	@RequestMapping(value="/FreeBoard.do")
-	public String FreeBoard() {
+	@RequestMapping(value="/replyDelete")
+	public String replyDelete(int reply_idx) {
+		boardService.replyDel(reply_idx);
 		
-		return "board/FreeBoard";
+		return "";
+	}
+	
+	@RequestMapping(value="/replyModify")
+	public String replyDelete(BoardVO vo) {
+		boardService.replyModify(vo);
 		
-		
+		return "";
 	}
 	
 	
