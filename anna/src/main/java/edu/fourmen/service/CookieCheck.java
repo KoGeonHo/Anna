@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import edu.fourmen.vo.UserVO;
@@ -53,6 +54,35 @@ public class CookieCheck extends HandlerInterceptorAdapter{
 			
 		}
 		
+		
 		return true;
 	}
+	
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,ModelAndView modelAndView) throws Exception{
+		
+		HttpSession session = request.getSession();
+		
+		if(session.getAttribute("uidx") != null) {
+			int uidx = (int)session.getAttribute("uidx");
+			
+			int chkAlarm = 0; 
+			
+			chkAlarm = userService.chkAlarm(uidx);
+			
+			int chkBuyNewMessage = 0; 
+			
+			chkBuyNewMessage = userService.chkBuyNewMessage(uidx);
+			
+			int chkSellNewMessage = 0; 
+			
+			chkSellNewMessage = userService.chkSellNewMessage(uidx);
+			
+			request.setAttribute("chkAlarm",chkAlarm);
+			request.setAttribute("chkBuyNewMessage",chkBuyNewMessage);
+			request.setAttribute("chkSellNewMessage",chkSellNewMessage);
+		}
+		
+	}
+		
 }

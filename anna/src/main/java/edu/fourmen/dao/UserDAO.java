@@ -219,6 +219,28 @@ public class UserDAO {
 		sqlSession.update("edu.fourmen.mapper.userMapper.updateProfile",vo);
 		
 	}
+
+
+	public int chkAlarm(int uidx) {
+		
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.chkAlarm",uidx);
+	}
+	
+	public int chkSellNewMessage(int uidx) {
+			
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.chkSellNewMessage",uidx);
+	}
+	
+	public int chkBuyNewMessage(int uidx) {
+		
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.chkBuyNewMessage",uidx);
+	}
+
+
+	public void updateReview(ReViewVO vo) {
+		// TODO Auto-generated method stub
+		sqlSession.update("edu.fourmen.mapper.userMapper.updateReview",vo);
+	}
 }
 
 

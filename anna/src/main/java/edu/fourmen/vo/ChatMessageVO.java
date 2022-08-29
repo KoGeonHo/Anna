@@ -1,6 +1,6 @@
 package edu.fourmen.vo;
 
-public class ChatMessageVO extends BoardItemVO{
+public class ChatMessageVO {
 	
 	private long cidx;
 	private int uidx;
@@ -20,9 +20,20 @@ public class ChatMessageVO extends BoardItemVO{
 	private String itemThumbNail;
 	private int state;
 	private int chkReview;
+	private int chkCanReview;
 	private int myReview;
 	private int Review;
 	
+
+	public int getChkCanReview() {
+		return chkCanReview;
+	}
+
+
+
+	public void setChkCanReview(int chkCanReview) {
+		this.chkCanReview = chkCanReview;
+	}
 
 	
 	public int getChkReview() {

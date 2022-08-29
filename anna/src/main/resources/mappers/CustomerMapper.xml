@@ -47,6 +47,7 @@
   	
   		SELECT 
   			qidx,
+  			uidx,
   			qType,
   			title,
   			attach,
