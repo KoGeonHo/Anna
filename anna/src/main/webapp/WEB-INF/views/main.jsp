@@ -35,6 +35,39 @@
 <link rel="stylesheet" href="css/boardlist1.css" type="text/css" />
 
 
+<style>
+@media all and (max-width :1399px){
+	#kategorie_img {
+		width:25%;
+	}
+	
+
+}
+
+@media all and (max-width :1199px){
+	#kategorie_img {
+		width:33.3333%;
+	}
+
+}
+
+@media all and (max-width :991px){
+	#kategorie_img {
+		width:50%;
+	}
+
+}
+@media all and (max-width:  767px){
+	
+	#kategorie_img {
+		width:100%;
+	}
+	
+	
+	
+}
+</style>
+
 <!-- 무한스크롤 -->
 <script>
 //스크롤 시 이벤트 처리
@@ -278,20 +311,22 @@ const GetList = function(currentPage){
 	</div>
 	<!-- 검색 -->
 
+			<!-- 카테고리 메뉴 -->
 			<div id="kategorie_img" style="padding-bottom: 62px;">
 				<div class="container">
 					<div class="row" style="margin-top: 40px;">
-						<div class="col-md-6 ">
+						<div class="col-md-6 col-sm-6 ">
 							<a href="${path}/boarditem/itemlist.do"><img src="images/main_menu_img1.jpg" style="margin-left: 20px;"></a>
 						</div>
-						<div class="col-md-6 " style="padding: 0;">
+						<div class="col-md-6 col-sm-6 " style="padding: 0;">
 							<a href="${path}/board/boardlist.do?board_type=free"><img src="images/main_menu_img2.jpg"></a> <a
 								href="${path}/board/boardlist.do?board_type=notice'"><img src="images/main_menu_img3.jpg" style="margin-top: 15px;"></a>
-							<a href="${path}/customer/QnAList.do"><img src="images/main_menu_img4.jpg" style="margin-left: 22px; margin-top: 17px;"></a>
+							<a href="${path}/customer/QnAList.do"><img src="images/main_menu_img4.jpg" style="margin-left: 15px; margin-top: 17px;"></a>
 						</div>
 					</div>
 				</div>
 			</div>
+			<!-- 카테고리 메뉴 -->
 
 
 
