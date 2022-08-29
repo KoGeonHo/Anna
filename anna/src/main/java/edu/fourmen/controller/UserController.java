@@ -93,7 +93,7 @@ public class UserController {
 			System.out.println("kakao_auth : " + userInfo.getKakao_auth());
 			
 			if(userInfo.getKakao_auth() == null) {
-
+				
 				if(pwdEncoder.matches(vo.getUser_pwd(), userInfo.getUser_pwd())){
 					
 					System.out.println("비밀번호 일치");
@@ -106,26 +106,6 @@ public class UserController {
 					
 					session.setAttribute("userLoginInfo", userInfo);
 					
-					if(userInfo.getBancount() == 1){
-					
-						System.out.println("밴 1회");
-						pw.append("<script>alert('7일간 계정이 정지되었습니다. 관리자에게 문의해주세요');history.back();</script>");
-						pw.flush();
-						pw.close();
-						
-					}else if(userInfo.getBancount() == 2){
-						System.out.println("밴 2회");
-						pw.append("<script>alert('30일간 계정이 정지되었습니다. 관리자에게 문의해주세요');history.back();</script>");
-						pw.flush();
-						pw.close();
-						
-					}else if(userInfo.getBancount() == 3) {
-						System.out.println("밴 3회");
-						pw.append("<script>alert('영구적으로 계정이 정지되었습니다. 관리자에게 문의해주세요');history.back();</script>");
-						pw.flush();
-						pw.close();
-
-					}
 					
 					//로그인 유지체크를 한경우 쿠키를생성한다.
 					if(vo.getKeepLogin() != null) {
