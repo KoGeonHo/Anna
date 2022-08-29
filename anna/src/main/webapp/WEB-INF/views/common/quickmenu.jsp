@@ -8,12 +8,11 @@ function hover(element) {
 	function unhover(element) {
 	  element.setAttribute('src', '<%=request.getContextPath()%>/images/icon_plus.png');
 	}
-
-
-
 </script>
 
-<ul id=quickmenu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
+
+<dvi>
+<ul id="quickmenu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
 				<li class="mfb-component__wrap" ><a href="" class="mfb-component__button--main">
 				<div id="menu_plus" class="menu_plus" onClick="javascript:window.scrollTo(0,0)">
 				<img src="<%=request.getContextPath()%>/images/icon_plus.png" width="25px" height="25px;" he style="margin-left: 16px; margin-top: 16px;"
@@ -42,3 +41,4 @@ function hover(element) {
 				</ul>
 			</li>
 			</ul>
+			</dvi>

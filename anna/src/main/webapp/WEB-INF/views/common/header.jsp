@@ -1,5 +1,40 @@
 <%@ page language="java"  pageEncoding="utf-8"%>
-<% String uri = request.getRequestURI(); %>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+<style>
+#nav {
+	font-family: 'NanumSquare', sans-serif !important;
+	font-size: 17.5px;
+	line-height: 1.5;
+	font-weight: 450;
+}
+
+.nav-li {
+	padding-right: 0.8rem !important;
+	padding-left: 0.7rem !important;
+}
+
+#nav>ul>li :hover {
+	transform: scale(1.1);
+}
+
+#subMenu {
+	font-family: 'NanumSquare', sans-serif !important;
+	font-size: 15.6px;
+	line-height: 1.5;
+	font-weight: 400;
+}
+
+#subMenu_text :hover {
+	text-decoration: underline;
+	text-decoration-thickness: 1.5px;
+	text-decoration-color: #00aab2;
+	text-underline-offset: 7px;
+}
+</style>
+
+<%
+	String uri = request.getRequestURI();
+%>
 <!-- PC 헤더 START-->
 		<div id="header-container">
 			<div class="pc-header border-bottom">
@@ -8,7 +43,7 @@
 						<img src="${ path }/images/logo.png" style="width:100px; cursor:pointer;" onclick="location.href='${path}/main.do'">
 					</div>
 					<div style="flex:1;" id="nav">
-						<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
+						<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0" style="margin-left:16px;">
 							<li class="nav-li"><a href="${path}/boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
 							<li class="nav-li"><a href="${path}/board/boardlist.do?board_type=free" class="nav-link px-3 link-dark">커뮤니티</a></li>
 							<li class="nav-li"><a href="${path}/customer/QnAList.do" class="nav-link px-3 link-dark">고객센터</a></li>
@@ -35,27 +70,27 @@
 			<div style="height:0px; backgorund:#fff; position:relative;">
 				<div id="subMenu" class="border-bottom" style="position:absolute; width:100%; background:#fff; display:none; z-index:1000;" >
 					<div style="flex:1;">
-						<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0">
+						<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0" style="text-align : center;">
 							<li>
-								<ul style="list-style:none; padding-inline-start:0;">
+								<ul id="subMenu_text" style="list-style:none; padding-inline-start:0; width:118px;">
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/boarditem/itemlist.do'">중고거래</li>
 								</ul>
 							</li>
 							<li>
-								<ul style="list-style:none; padding-inline-start:0;">
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=notice'">공지사항</li>
+								<ul id="subMenu_text" style="list-style:none; padding-inline-start:0; width:118px;">									
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=free'">일상소통</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=job'">구인구직</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=meeting'">모임</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=hotplace'">핫플레이스</li>
 								</ul>
 							<li>
-								<ul style="list-style:none; padding-inline-start:0;">
+								<ul id="subMenu_text" style="list-style:none; padding-inline-start:0; width:118px;">
+									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/board/boardlist.do?board_type=notice'">공지사항</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/customer/FaQList.do'">자주하는질문</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/customer/QnAList.do'">문의하기</li>
 								</ul>
 							<li>
-								<ul style="list-style:none; padding-inline-start:0;">
+								<ul id="subMenu_text" style="list-style:none; padding-inline-start:0; width:118px; ">
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/myPage.do'">마이페이지</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/userInfoView.do'">내정보</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/wishList.do'">찜목록</li>
