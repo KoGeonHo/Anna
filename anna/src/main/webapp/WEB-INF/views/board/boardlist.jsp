@@ -491,15 +491,15 @@ text-decoration: none;
 				<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups" style="justify-content: space-around;">
 					<div class="btn-group me-2" role="group" aria-label="First group">
 						<c:if test="${pm.isPrev() == true}">
-							<button type="button" class="btn btn-secondary" onclick="location.href='${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}'">
+							<button type="button" class="btn btn-secondary" onclick="location.href='${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getStartPage()-1}<c:if test="${pm.searchVal != null }">&SearchVal=${pm.searchVal}</c:if><c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>'">
 								◀
 							</button>
 						</c:if>
 						<c:forEach var="i" begin="${pm.getStartPage()}" end="${pm.getEndPage()}">
-							<button type="button" class="btn btn-secondary" onclick="location.href='${path}/board/boardlist.do?<c:if test="${pm.board_type != null }">board_type=${pm.board_type}</c:if>&page=${i}&SearchVal=${pm.searchVal}<c:if test="${pm.searchUidx != null }">&searchUidx=${pm.searchUidx}</c:if>'">${i}</button>
+							<button type="button" class="btn btn-secondary" onclick="location.href='${path}/board/boardlist.do?<c:if test="${pm.board_type != null }">board_type=${pm.board_type}</c:if>&page=${i}<c:if test="${pm.searchVal != null }">&SearchVal=${pm.searchVal}</c:if><c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>'">${i}</button>
 						</c:forEach>
 						<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
-							<button type="button" class="btn btn-secondary" style="text-align:right;" onclick="location.href='${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}'">
+							<button type="button" class="btn btn-secondary" onclick="location.href='${ path }/board/boardlist.do?board_type=${pm.board_type}&page=${pm.getEndPage()+1}<c:if test="${pm.searchVal != null }">&SearchVal=${pm.searchVal}</c:if><c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>'">
 								▶
 							</button>
 						</c:if>

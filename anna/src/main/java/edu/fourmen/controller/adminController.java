@@ -87,6 +87,9 @@ public class adminController {
 		
 		PrintWriter pw = response.getWriter();
 		
+		System.out.println(rv.getRidx() + "ridx");
+
+
 		if(result==0) {
 			
 			pw.append("<script>alert('신고적용실패');location.href='admin_report.do';</script>");

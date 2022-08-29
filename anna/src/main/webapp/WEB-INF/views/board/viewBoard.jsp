@@ -256,7 +256,7 @@ height : 54px;
 	    		</div>
 	    		<div class="row border-bottom tr">
 	    			<div class="col-4 th" style="display:table-cell;">첨부파일</div>
-	    			<div class="col-8 td" style="display:table-cell;"><input type="file" class="form-control" name="file2" id="file"></div>
+	    			<div class="col-8 td" style="display:table-cell;"><input type="file" class="form-control" name="file2" id="file" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'></div>
 	    		</div>
 	    		
 	    		<div style="float:right;">
@@ -334,14 +334,7 @@ height : 54px;
 						<div class="col-2 th border-bottom" style="display:table-cell;">추천</div>
 						<div class="col-1 td border-bottom" style="display:table-cell;">${bv.cntLike}</div>
 					</div>
-					<div class="row border-bottom tr">
-						<div class="col-2 th" style="display:table-cell;">첨부파일</div>
-						<div class="col-10 td" style="display:table-cell;" onclick="alert('준비중입니다.')">${bv.image1}
-							<c:if test="${bv.image1 == null}">
-								첨부파일이 존재하지 않습니다.
-							</c:if>
-						</div>
-					</div>
+					
 					<div class="row border-bottom tr" style="min-height:200px; height:auto;">
 						<div class="col-2 th" style="display:table-cell; ">내용</div>
 						<div class="col-10 td" style="display:table-cell; ">
@@ -553,19 +546,18 @@ function getList() {
 					var nickName = list[i].nickName;
 					var wdate = list[i].wdate;
 					
-					comment_html += "<div class='row' style='padding: 8px 0; '>"
+					comment_html += "<div class='row border-bottom' style='padding: 8px 0; '>"
 					
 					comment_html += "<div class='col-2 td' style='border-right: #dee2e6 solid 1px; text-align:center;'><span id='nickName'><strong>" + nickName + "</strong></span></div>";
 					comment_html += "<div class='td' id='Contents' style='display:flex;'>";
 					comment_html += "<div style='flex:1;'>"+Contents+"</div>";
 					comment_html += "<div style='width:100px; font-size:0.8rem;'>"+ wdate +"</div>";
-					comment_html += "</div>";
 					if(nickName=== $("#nickName").val()){
-						 comment_html += "<span id='delete' style='cursor:pointer;' data-id ="+Contents+"><a class=''>삭제</a></span><br></div>";
+						 comment_html += "<span id='modify' style='cursor:pointer;font-size:0.8rem;'><a class=''>수정</a>&nbsp;</span>"
+						 comment_html += "<span id='delete' style='cursor:pointer;font-size:0.8rem;'><a class=''>삭제</a></span></div>";
 					}
-					else{
-						comment_html += "</div>";
-					}
+					comment_html += "</div>";
+					
 					
 					comment_html += "</div>"
 					
@@ -699,9 +691,47 @@ var infowindow = new kakao.maps.InfoWindow({
 // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 infowindow.open(map, marker);
 	    
-	   
 	    
+//파일
+function chk_file_type(obj) {
+    var file_kind = obj.value.lastIndexOf('.');
+    var file_name = obj.value.substring(file_kind+1,obj.length); 
+    var file_type = file_name.toLowerCase();
+
+
+
+   var check_file_type = new Array();
+    check_file_type=['jpg','gif','png','jpeg','bmp',];
+
+
+
+    if(check_file_type.indexOf(file_type)==-1){
+     alert('이미지 파일만 선택할 수 있습니다.');
+     var parent_Obj=obj.parentNode
+     var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
+     return false;
+     
+     }
+    
+}	    
+
+//댓글
+
+$("#delete").click(function(){
 	
+	location.href="";
+	
+	
+	
+});
+
+
+$("#modify").click(function(){
+	
+	
+	
+	
+});
 
 
 </script>

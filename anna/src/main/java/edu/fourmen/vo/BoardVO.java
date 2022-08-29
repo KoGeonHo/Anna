@@ -26,6 +26,7 @@ public class BoardVO extends UserVO{
 	private int cntLike;
 	private String place_location;
 	private String place_name;
+	private int reply_idx;
 	
 	
 
@@ -163,6 +164,12 @@ public class BoardVO extends UserVO{
 	}
 	public void setPlace_name(String place_name) {
 		this.place_name = place_name;
+	}
+	public int getReply_idx() {
+		return reply_idx;
+	}
+	public void setReply_idx(int reply_idx) {
+		this.reply_idx = reply_idx;
 	}
 
 

@@ -18,6 +18,9 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ad11d9178deb7b571198c476ec55ad0f&libraries=services"></script>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <!-- 지도 API -->
+<!-- 써머노트 -->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 
 <!-- 스타일 시트는 여기에 추가로 작성해서 사용 -->
 	
@@ -122,7 +125,7 @@ body {
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-	<div class="wrapper main">
+	<div class="wrapper ">
 		<div class="container">
 		
 			
@@ -167,6 +170,8 @@ body {
 						<div class="col-4 th" style="display:table-cell;">내용</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<textarea class="form-control" id="summernote" name="contents" rows="10" cols="25"></textarea>
+							<div class="contet_count" style="float:right;"></div>
+							
 						</div>
 					</div>
 					
@@ -327,7 +332,7 @@ function displayPlaces(places) {
             	var x = marker.getPosition().Ma;
             	var y = marker.getPosition().La;
             	
-            	console.log(id);
+          
             	
             	console.log(title);
             	
@@ -649,10 +654,46 @@ function check(){
 }
 		
     
+$(document).ready(function () {
+	
+	 
+    //위와 같이 값을 먼저 넣어준 후 초기화를 시킨다. 그럼 아래와 같이 입력이 된다.
+    //초기화
+	$('#summernote').summernote({
+        height : 400, // set editor height
+        minHeight : null, // set minimum height of editor
+        maxHeight : null, // set maximum height of editor
+        focus : true,
+        lang : 'ko-KR', // 기본 메뉴언어 US->KR로 변경
+		popover: {         //팝오버 설정
+					image: [], //이미지 삭제
+					link: [],  //링크 삭제
+					air: []
+        	      },
 
+        callbacks: {
+               onChange: function(contents, $editable) {
+                 console.log('onChange:', contents, $editable);
+                 console.log(contents.length+"글자수");
+                 
+                 $('.contet_count').html("("+$(this).val().length+" / 500)"); //클래스 안에 0 / 500 출력
+                
+                 if($(this).val().length > 500) {
+                    $(this).val($(this).val().substring(0, 500)); //500자가 넘으면 500자 까지 잘라냄
+                    alert("내용은 최대 500자 까지 입력 가능합니다.");
+                    $('.contet_count').html("(500 / 500)"); //500자 라고 출력
+                }
+
+             }
+           }
+     });
+    
+	
+});
 
 
 </script>
+
 
 </body>
 </html>

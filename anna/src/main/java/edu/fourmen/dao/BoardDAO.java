@@ -131,8 +131,8 @@ public class BoardDAO {
 		return sqlSession.insert(namespace+".reportinsert",vo);
 	}
 	
-	public int replyDel(BoardVO vo) {
-		return sqlSession.delete(namespace+".replyDel", vo);
+	public int replyDel(int reply_idx) {
+		return sqlSession.delete(namespace+".replyDel", reply_idx);
 	}
 	
 	public int replyModify(BoardVO vo) {

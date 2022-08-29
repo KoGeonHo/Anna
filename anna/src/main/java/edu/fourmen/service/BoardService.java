@@ -45,7 +45,7 @@ public interface BoardService {
 
 	int reportinsert(ReportVO vo);
 
-	int replyDel(BoardVO vo);
+	int replyDel(int reply_idx);
 	
 	int replyModify(BoardVO vo);
 	

@@ -124,9 +124,9 @@ public class BoardServiceImpl implements BoardService {
 
 
 	@Override
-	public int replyDel(BoardVO vo) {
+	public int replyDel(int reply_idx) {
 		
-		return boardDao.replyDel(vo);
+		return boardDao.replyDel(reply_idx);
 	}
 
 
