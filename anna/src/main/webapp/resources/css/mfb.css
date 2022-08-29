@@ -1,3 +1,10 @@
+@media all and (max-width: 767px) {
+	#quickmenu {
+		display: none;
+	}
+}
+
+
 
 .mfb-component--tl, .mfb-component--tr, .mfb-component--bl, .mfb-component--br {
   box-sizing: border-box;

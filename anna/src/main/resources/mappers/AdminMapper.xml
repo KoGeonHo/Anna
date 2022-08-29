@@ -29,6 +29,7 @@
 		   )as userNickName  from QnA a 
 		   WHERE
 			isDel='N'
+			ORDER BY a.qidx DESC
 	</select>
 
 	<select id="getReportList" resultType="ReportVO">

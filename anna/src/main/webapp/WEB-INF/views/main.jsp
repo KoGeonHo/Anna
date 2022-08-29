@@ -36,9 +36,9 @@
 
 
 <style>
-@media all and (max-width :1399px){
+ @media all and (max-width :1399px){
 	#kategorie_img {
-		width:25%;
+		width:100%;
 	}
 	
 
@@ -46,14 +46,14 @@
 
 @media all and (max-width :1199px){
 	#kategorie_img {
-		width:33.3333%;
+		width:100%;
 	}
 
 }
 
 @media all and (max-width :991px){
 	#kategorie_img {
-		width:50%;
+		width:100%;
 	}
 
 }
@@ -65,7 +65,43 @@
 	
 	
 	
+} 
+
+@media all and (max-width: 767px) {
+	 #itemcard {
+	display: flex;
+    flex-direction: row;
+    margin: 0;
 }
+
+	#itemcard > img {
+	width: 35%;
+    height: 130px;
+	}
+	
+	#itemtext {
+	 margin-top: 37px;
+	}
+/* 	#item_list{
+		margin-top: 65px;
+	}  */
+	#item_container{
+		margin-top: -14px;
+	}
+	
+}
+
+@media all and (min-width :768px) {
+	#itemcard > img {
+	width: 100%;
+    height: 210px;
+	}
+
+
+}
+
+
+
 </style>
 
 <!-- 무한스크롤 -->
@@ -81,7 +117,7 @@ let currentPage = 1;
 let isLoding=false;
 $(function(){
    $("#main").on("scroll",function(){
-	   console.log("ㅇㅇ");
+	  // console.log("ㅇㅇ");
       	var scrollTop = $(this).scrollTop();
         var innerHeight = $(this).innerHeight();
         var scrollHeight = $(this).prop('scrollHeight');
@@ -128,9 +164,9 @@ const GetList = function(currentPage){
          
          for(let i = 0; i < appendList.length; i++){
         	 
-			html +='<div class="card-container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">';
-			html +='<div class="card" style="margin:5px;" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+appendList[i].item_idx+'\'">';
-			html +='<img src="${ path }/resources/upload/'+appendList[i].image1+'" style="width:100%; height:210px;" onerror="this.onerror=null; this.src=\'${path}/images/no_image.gif\';" class="card-img-top" alt="...">';
+			html +='<div class="card-container" id="item_container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">';
+			html +='<div class="card" id="itemcard"  style="margin:5px;" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+appendList[i].item_idx+'\'">';
+			html +='<img src="${ path }/resources/upload/'+appendList[i].image1+'"  onerror="this.onerror=null; this.src=\'${path}/images/no_image.gif\';" class="card-img-top" alt="...">';
 			html +='<div class="card-body" style="padding:10px;">';
 			html +='<div class="text-start" style="height:30px; display:flex; align-items:center;">';
 			if(appendList[i].title.length >= 8){
@@ -147,7 +183,7 @@ const GetList = function(currentPage){
 			html +='<div>';
 			html +='<span style="color:#00AAB2;">'+appendList[i].price+'</span>원';
 			html +='</div>';
-			html +='<div class="text-end">';
+			html +='<div class="text-end" id="itemtext">';
 			html +='<img src="${path}/images/icon_wish_count.png" style="width:26px; padding:2px;">'+appendList[i].wishCount+' &nbsp;<img src="${path}/images/icon_chat_count.png" style="width:28px; padding:1px;"> '+appendList[i].chatCount;
 			html +='</div>';
 			html +='</div>';
@@ -312,16 +348,16 @@ const GetList = function(currentPage){
 	<!-- 검색 -->
 
 			<!-- 카테고리 메뉴 -->
-			<div id="kategorie_img" style="padding-bottom: 62px;">
-				<div class="container">
+			<div  style="padding-bottom: 62px;">
+				<div class="container" id="kategorie_img">
 					<div class="row" style="margin-top: 40px;">
 						<div class="col-md-6 col-sm-6 ">
-							<a href="${path}/boarditem/itemlist.do"><img src="images/main_menu_img1.jpg" style="margin-left: 20px;"></a>
+							<a href="${path}/boarditem/itemlist.do"><img src="images/main_menu_img1.jpg" style="margin-left: 20px;" width="94.5%"></a>
 						</div>
-						<div class="col-md-6 col-sm-6 " style="padding: 0;">
-							<a href="${path}/board/boardlist.do?board_type=free"><img src="images/main_menu_img2.jpg"></a> <a
-								href="${path}/board/boardlist.do?board_type=notice'"><img src="images/main_menu_img3.jpg" style="margin-top: 15px;"></a>
-							<a href="${path}/customer/QnAList.do"><img src="images/main_menu_img4.jpg" style="margin-left: 15px; margin-top: 17px;"></a>
+						<div class="col-md-6 col-sm-6 " style="padding: 0; display: -webkit-inline-box;">
+							<a href="${path}/board/boardlist.do?board_type=free"><img src="images/main_menu_img2.jpg" width="97%"></a> <a
+								href="${path}/board/boardlist.do?board_type=notice"><img src="images/main_menu_img3.jpg" style="margin-top: 15px;" width="47%"></a>
+							<a href="${path}/customer/QnAList.do"><img src="images/main_menu_img4.jpg" style="margin-left: 15px; margin-top: 17px;" width="47%"></a>
 						</div>
 					</div>
 				</div>
@@ -352,7 +388,7 @@ const GetList = function(currentPage){
 						<!-- stlye 은 slick 영역 확인용 -->
 						
 						<c:if test="${list.size() > 0}">
-							<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative; margin-top: 39px;">
+							<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative; margin-top: 39px; padding-right:0; ">
 								<c:if test="${list.size() > 5}">
 									<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ list.size() }" id="slide-btn-prev" style="left:0;"><img src='<%=request.getContextPath()%>/images/slicbtn_prev.png'></div>
 									<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ list.size() }" id="slide-btn-next" style="right:0;"><img src='<%=request.getContextPath()%>/images/slicbtn_next.png'></div>
@@ -456,7 +492,7 @@ const GetList = function(currentPage){
 			                            ${vo.title }
 			                        </a>
 			                        <span style="float:right;"><img src="images/icon_comment.png" style="margin-top: -1px; margin-right: 3px; height: 15px;">${vo.ccount}</span>
-			                        <span style="float:right;"><img src="images/icon_like.png" height="23px" style="margin-top:-4px;">${vo.cntLike}</span>
+			                        <span style="float:right;"><img src="images/icon_wish_count.png" height="23px" style="margin-top:-4px; width: 18px; height: 16px;">${vo.cntLike}</span>
 			                    </div>
 			                </div>
             			</div>
@@ -484,7 +520,7 @@ const GetList = function(currentPage){
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
-							<img src="images/main_event_img.jpg" style="margin-top: -78px;">
+							<img src="images/main_event_img.jpg" style="margin-top: -78px;     width: 100%;">
 						</div>
 					</div>
 				</div>
@@ -525,12 +561,12 @@ const GetList = function(currentPage){
 										<c:if test="${list.size() > 0}">
 											<c:forEach var="vo" items="${list}">
 
-												<div class="card-container"
+												<div class="card-container" id="item_container"
 													style="display: inline-block; font-size: 1rem; flex: none; padding: 5px;">
-													<div class="card" style="margin: 5px;"
+													<div class="card" id="itemcard" style="margin: 5px;"
 														onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
 														<img src="${ path }/resources/upload/${ vo.image1}"
-															style="width: 100%; height: 210px;"
+															
 															onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';"
 															class="card-img-top" alt="...">
 														<div class="card-body" style="padding: 10px;">
@@ -542,6 +578,7 @@ const GetList = function(currentPage){
 																<c:if test="${ fn:length(vo.title) <= 8 }">
 																	${ vo.title }
 																</c:if>
+																&nbsp;
 																<c:if test="${ vo.state eq 2 }">
 																	<span
 																		style="display: inline-block; padding: 3px; border-radius: 5px; background: green; color: #fff; font-size: 0.8rem;">예약중</span>
@@ -554,7 +591,7 @@ const GetList = function(currentPage){
 															<div>
 																<span style="color: #00AAB2;"><fmt:formatNumber value="${vo.price}" pattern="#,###"/></span>원
 															</div>
-															<div class="text-end">
+															<div class="text-end" id="itemtext">
 																<img src="${path}/images/icon_wish_count.png"
 																	style="width: 26px; padding: 2px;"> ${ vo.wishCount }&nbsp;<img
 																	src="${path}/images/icon_chat_count.png"
