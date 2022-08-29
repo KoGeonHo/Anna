@@ -326,13 +326,16 @@
 			(select image1 from Board_Items where item_idx = a.item_idx) as itemThumbNail,
 			(select state from Board_Items where item_idx = a.item_idx) as state,
 			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages,
-			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) as myReview,
-			(select count(*) from review where item_idx = a.item_idx and writer = #{uidx}) as chkReview
+			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) chkCanReview,
+			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx} and (option1 = 1 or option2 = 1 or option3 = 1)) chkReview
+			
+			
 		FROM 
 			chat a 
 		WHERE 
-			chat_host = #{uidx} OR
-			invited = #{uidx}
+			(chat_host = #{uidx} OR
+			invited = #{uidx}) AND
+			item_idx != 0
 		GROUP BY item_idx, chat_host, invited
 		ORDER BY lastChatDate DESC
 		
@@ -354,12 +357,14 @@
 			(select image1 from Board_Items where item_idx = a.item_idx) as itemThumbNail,
 			(select state from Board_Items where item_idx = a.item_idx) as state,
 			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages,
-			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) as myReview,
-			(select count(*) from review where item_idx = a.item_idx and writer = #{uidx}) as chkReview
+			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) chkCanReview,
+			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx} and (option1 = 1 or option2 = 1 or option3 = 1)) chkReview
+			
 		FROM 
 			chat a 
 		WHERE 
-			chat_host = #{uidx}
+			chat_host = #{uidx} AND
+			item_idx != 0
 		GROUP BY item_idx, chat_host, invited
 		ORDER BY lastChatDate DESC
 		
@@ -380,12 +385,18 @@
 			(select image1 from Board_Items where item_idx = a.item_idx) as itemThumbNail,
 			(select state from Board_Items where item_idx = a.item_idx) as state,
 			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages,
-			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) as myReview,
-			(select count(*) from review where item_idx = a.item_idx and writer = #{uidx}) as chkReview
+			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) chkCanReview,
+			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx} and (option1 = 1 or option2 = 1 or option3 = 1)) chkReview
+			
+			
+			
+			
+			
 		FROM 
 			chat a 
 		WHERE 
-			invited = #{uidx}
+			invited = #{uidx} AND
+			item_idx != 0
 		GROUP BY item_idx, chat_host, invited
 		ORDER BY lastChatDate DESC
 		
@@ -555,7 +566,10 @@
 			writer = #{ writer } AND
 			item_idx = #{ item_idx } AND
 			seller = #{ seller } AND
-			buyer = #{ buyer }
+			buyer = #{ buyer } AND
+			option1 != 0 AND
+			option2 != 0 AND
+			option3 != 0
 	
 	</select>
 	
@@ -573,7 +587,10 @@
 			writer != #{ writer } AND
 			item_idx = #{ item_idx } AND
 			seller = #{ seller } AND
-			buyer = #{ buyer }
+			buyer = #{ buyer } AND
+			option1 != 0 AND
+			option2 != 0 AND
+			option3 != 0
 	
 	</select>
 	
@@ -589,6 +606,62 @@
 	
 	</update>
 	
+	<select id="chkAlarm" parameterType="int" resultType="_int">
+	
+		SELECT 
+			COUNT(*) as cntAlarm
+		FROM
+			chat
+		WHERE
+			item_idx = 0 AND
+			invited = #{uidx} AND
+			chat_read = 1
+		
+	</select>
+	
+	<select id="chkBuyNewMessage" parameterType="int" resultType="_int">
+	
+		SELECT 
+			COUNT(*) as cntAlarm
+		FROM
+			chat
+		WHERE
+			uidx != #{uidx} AND
+			invited = #{uidx} AND
+			chat_read = 1
+		
+	</select>
+	
+	<select id="chkSellNewMessage" parameterType="int" resultType="_int">
+	
+		SELECT 
+			COUNT(*) as cntAlarm
+		FROM
+			chat
+		WHERE
+			uidx != #{uidx} AND
+			chat_host = #{uidx} AND
+			chat_read = 1
+		
+	</select>
+	
+	
+	<update id="updateReview">
+		
+		UPDATE
+			review
+		SET
+			satisfied = #{satisfied},
+			option1 = #{option1},
+			option2 = #{option1},
+			option3 = #{option1}
+		WHERE
+			writer = #{writer} AND
+			seller = #{seller} AND
+			buyer = #{buyer} AND
+			item_idx = #{item_idx}
+			
+	</update>
 </mapper>
 
 

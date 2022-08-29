@@ -392,5 +392,29 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
+	public int chkAlarm(int uidx) {
+		
+		return userDAO.chkAlarm(uidx);
+	}
+
+	@Override
+	public int chkSellNewMessage(int uidx) {
+		// TODO Auto-generated method stub
+		return userDAO.chkSellNewMessage(uidx);
+	}
+
+	@Override
+	public int chkBuyNewMessage(int uidx) {
+		// TODO Auto-generated method stub
+		return userDAO.chkBuyNewMessage(uidx);
+	}
+
+	@Override
+	public void updateReview(ReViewVO vo) {
+		// TODO Auto-generated method stub
+		userDAO.updateReview(vo);
+	}
+
 
 }

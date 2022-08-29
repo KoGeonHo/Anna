@@ -16,7 +16,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import edu.fourmen.service.BoardItemService;
 import edu.fourmen.service.CustomerService;
+import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.QnAVO;
 
 @RequestMapping(value="/customer")
@@ -25,6 +27,9 @@ public class CustomerController {
 	
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	BoardItemService boardItemService;
 	
 	private String path = "/anna";
 
@@ -132,6 +137,16 @@ public class CustomerController {
 		vo.setAns_uidx(ans_uidx);
 		
 		int result = customerService.QnAAnswer(vo);
+		
+		ChatMessageVO alarmVO = new ChatMessageVO();
+		
+		alarmVO.setUidx(ans_uidx);
+		alarmVO.setItem_idx(0);
+		alarmVO.setChat_host(ans_uidx);
+		alarmVO.setInvited(vo.getUidx());
+		alarmVO.setContents("<div>문의하신 글에 답변이 등록되었습니다. <span onclick='location.href=\""+path+"/customer/QnAView.do?qidx="+vo.getQidx()+"\"'>바로가기</span></div>");
+		
+		boardItemService.insertChat(alarmVO);
 		
 		return "redirect:/customer/QnAView.do?qidx="+vo.getQidx();
 		

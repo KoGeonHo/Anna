@@ -562,12 +562,20 @@ public class UserController {
 	}
 	
 	//동네설정 페이지
-	@RequestMapping(value="/locationView.do")
+	@RequestMapping(value="/locationView.do",method=RequestMethod.POST)
 	public String locationAuth(String[] dong,Model model) {
 		
 		model.addAttribute("path",path);
 		
-		model.addAttribute("selectedDong",dong);
+		List<String> selectedDong = new ArrayList<>();
+		
+		for(int i = 0; i < dong.length; i++) {
+			selectedDong.add(dong[i]);
+		}
+		
+		System.out.println(dong.length);
+		
+		model.addAttribute("selectedDong",selectedDong);
 		
 		return "user/locationView";
 		
@@ -734,15 +742,15 @@ public class UserController {
 		session = request.getSession();
 		
 		int uidx = (int)session.getAttribute("uidx");
-		
+		//System.out.println(uidx);
 		List<ChatMessageVO> chatList = null;
 		
 		if(type != null) {
 			if(type.equals("sell")) {
-				System.out.println("sell");
+				//System.out.println("sell");
 				chatList = userService.getSellChatList(uidx);
 			}else if(type.equals("buy")) {
-				System.out.println("buy");
+				//System.out.println("buy");
 				chatList = userService.getBuyChatList(uidx);
 			}else {
 				chatList = userService.getChatList(uidx);
@@ -923,23 +931,28 @@ public class UserController {
 	
 	
 	//리뷰 등록
-	@RequestMapping(value="/insertReView.do")
-	public String insertReView(ReViewVO vo,HttpServletRequest request,HttpSession session) {
+	@RequestMapping(value="/insertMyReView.do")
+	public String insertMyReView(ReViewVO vo,HttpServletRequest request,HttpSession session) {
 		
 		session = request.getSession();
 		
-		vo.setWriter((int)session.getAttribute("uidx"));
-		
-//		System.out.println(vo.getItem_idx());
-//		System.out.println(vo.getSeller());
-//		System.out.println(vo.getBuyer());
-//		System.out.println(vo.getWriter());
-//		System.out.println(vo.getSatisfied());
-//		System.out.println(vo.getOption1());
-//		System.out.println(vo.getOption2());
-//		System.out.println(vo.getOption3());
-		
+		//판매자, 구매자의 리뷰 데이터 등록 
+		vo.setWriter(vo.getSeller());
 		userService.insertReView(vo);
+
+		vo.setWriter(vo.getBuyer());
+		userService.insertReView(vo);
+		
+		//거래 완료 알람을 구매자에게 보내기
+		ChatMessageVO alarmVO = new ChatMessageVO();
+		
+		alarmVO.setUidx((int)session.getAttribute("uidx"));
+		alarmVO.setItem_idx(0);
+		alarmVO.setChat_host((int)session.getAttribute("uidx"));
+		alarmVO.setInvited(vo.getBuyer());
+		alarmVO.setContents("<div>거래가 완료되었습니다. 거래 후기를 작성해주세요. <span onclick='location.href=\""+path+"/user/chatList.do?type=buy\"'>후기 작성 하러가기</span></div>");
+		
+		boardItemService.insertChat(alarmVO);
 		
 		return "redirect:/user/chatList.do";
 		
@@ -1002,7 +1015,20 @@ public class UserController {
 		return "";
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="/updateReView.do")
+	public String updateReView(ReViewVO vo,HttpServletRequest request,HttpSession session) {
+		
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		vo.setWriter(uidx);
+		
+		userService.updateReview(vo);
+		
+		return "";
+	}
 	
 	
 	

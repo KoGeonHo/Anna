@@ -283,12 +283,24 @@
 	}
 	
 	
-	//거래 상태 변경(업데이트)
+	//거래 상태 변경(업데이트) - 판매자만 가능
 	function updateState(selectBox){
 		let state = selectBox.value;
 		if(state == 3){
-			if(!confirm("거래 완료로 변경하시겠습니까?\n 완료 후에는 채팅 목록에서 거래 후기를 작성해 주세요!")){
+			if(!confirm("${audience}님과 거래를 하셨나요?\n 완료 처리시 ${audience}님에게도 거래 완료 알람이 전달됩니다.")){
+				$("#changeState").val(prevSelected);
 				return false;
+			}else{
+				alert("거래 완료로 변경 되었습니다.");
+				let Data = "satisfied=Y&item_idx="+<%=request.getParameter("item_idx")%>+"&buyer="+<%=request.getParameter("invited")%>+"&seller="+<%=request.getParameter("chat_host")%>+"&writer=${uidx}";
+				$.ajax({
+					url : "insertMyReView.do",
+					data : Data,
+					success : function(result){
+						//console.log("test");
+					}
+				});
+				
 			}
 		}else if(state == 2){
 			if(!confirm("판매중인 게시글에도 예약중으로 노출됩니다. 예약중으로 변경 하시겠습니까?")){

@@ -95,23 +95,34 @@
 					html += '<div class="tr border-bottom" style="padding:5px; display:flex; position:relative;">';
 					
 					if(chatList[i].state == 3){
-						
-						if(chatList[i].chkReview > 0){
-							if(chatList[i].myReview > 0){
-								html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
-								html += '<div style="flex:1;">';
-								html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openViewReview(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
-								if(chatList[i].chat_host == ${uidx}){
-									html += '\''+chatList[i].invitedNickName+'\'';
-								}else if(chatList[i].invited == ${uidx}) {
-									html += '\''+chatList[i].hostNickName+'\'';
-								}
-								html +=')">거래 후기 보기</button>';
-								html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
-								html += '</div>';
-								html += '</div>';
+						if(chatList[i].chkCanReview > 0 && chatList[i].chkReview == 0){
+							html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
+							html += '<div style="flex:1;">';
+							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openModal(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
+							if(chatList[i].chat_host == '${uidx}'){
+								html += '\''+chatList[i].invitedNickName+'\'';
+							}else if(chatList[i].invited == '${uidx}') {
+								html += '\''+chatList[i].hostNickName+'\'';
 							}
-						}else{
+							html += ')">후기 등록하기</button>';
+							html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
+							html += '</div>';
+							html += '</div>';
+						}else if(chatList[i].chkCanReview > 0 && chatList[i].chkReview > 0){
+							html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
+							html += '<div style="flex:1;">';
+							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openViewReview(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
+							if(chatList[i].chat_host == '${uidx}'){
+								html += '\''+chatList[i].invitedNickName+'\'';
+							}else if(chatList[i].invited == '${uidx}') {
+								html += '\''+chatList[i].hostNickName+'\'';
+							}
+							html +=')">거래 후기 보기</button>';
+							html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
+							html += '</div>';
+							html += '</div>';
+						}
+						/* if(chatList[i].chkCanReview > 0 && chatList[i].chkReview == 0){
 							html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
 							html += '<div style="flex:1;">';
 							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openModal(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
@@ -124,7 +135,22 @@
 							html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
 							html += '</div>';
 							html += '</div>';
-						}
+							
+							
+						}else if(chatList[i].chkCanReview > 0 && chatList[i].chkReview > 0){
+							html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
+							html += '<div style="flex:1;">';
+							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openViewReview(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
+							if(chatList[i].chat_host == ${uidx}){
+								html += '\''+chatList[i].invitedNickName+'\'';
+							}else if(chatList[i].invited == ${uidx}) {
+								html += '\''+chatList[i].hostNickName+'\'';
+							}
+							html +=')">거래 후기 보기</button>';
+							html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
+							html += '</div>';
+							html += '</div>';
+						} */
 						
 						
 					}
@@ -228,13 +254,13 @@
 	
 	function openViewReview(item_idx,seller,buyer,nickName){
 		let html = "";
-		$("#viewReView").fadeIn();
 		 $.ajax({
 			url : "getReview.do",
 			data : "item_idx="+item_idx+"&seller="+seller+"&buyer="+buyer,
 			success : function(result){
-				$("#view-review-title").html(nickName+"님과의 거래 후기");
 				//console.log(result.myReview.satisfied);
+				$("#view-review-title").html(nickName+"님과의 거래 후기");
+				$("#viewReView").fadeIn();
 				if(result.myReview.satisfied == "Y"){
 					html += "<div class='border-bottom' style='padding:10px;'>만족스러워요</div>";
 					if(result.myReview.option1 == 1){
@@ -247,7 +273,7 @@
 						html += "<div class='text-start' style='padding:5px 0 0 5px;'> * 상품이 설명과 같아요</div>";
 					}
 				}else if(result.myReview.satisfied == "N"){
-					html += "<div class='border-bottom'> * 만족스럽지 않아요</div>";
+					html += "<div class='border-bottom' style='padding:10px;'> * 만족스럽지 않아요</div>";
 					if(result.myReview.option1 == 1){
 						html += "<div class='text-start' style='padding:5px 0 0 5px;'> * 불친절해요</div>";
 					}
@@ -263,7 +289,7 @@
 				html = "";
 				if(result.reviewForMe != null){
 					if(result.reviewForMe.satisfied == "Y"){
-						html += "<div class='border-bottom'>만족스러워요</div>";
+						html += "<div class='border-bottom' style='padding:10px;'>만족스러워요</div>";
 						if(result.reviewForMe.option1 == 1){
 							html += "<div class='text-start' style='padding:5px 0 0 5px;'> * 친절해요</div>";
 						}
@@ -274,7 +300,7 @@
 							html += "<div class='text-start' style='padding:5px 0 0 5px;'> * 상품이 설명과 같아요</div>";
 						}
 					}else if(result.reviewForMe.satisfied == "N"){
-						html += "<div class='border-bottom'>만족스럽지 않아요</div>";
+						html += "<div class='border-bottom' style='padding:10px;'>만족스럽지 않아요</div>";
 						if(result.reviewForMe.option1 == 1){
 							html += "<div class='text-start' style='padding:5px 0 0 5px;'> * 불친절해요</div>";
 						}
@@ -289,6 +315,7 @@
 					html += "<div style='padding:15px 0 15px 0;'>아직 후기가 등록되지 않았어요.</div>"
 				}
 				$("#reviewForMe-contents").html(html);
+				
 			}
 		});
 	}
@@ -339,7 +366,7 @@
 					<div style="margin:auto; width:280px; height:300px; background:#fff; border-radius:10px; border:2px solid #ddd; box-shadow: 2px 2px 2px 2px gray; position:relative;">
 						<p class="border-bottom text-start" style="width:100%; margin:0px;"><b id="modalTitle" style="margin:0; padding:5px; font-size:20px;"></b></p>	
 						<div>
-							<form id="ReViewFrm" method="POST" action="insertReView.do">
+							<form id="ReViewFrm" method="POST" action="updateReView.do">
 								<input type="hidden" name="item_idx" value="">
 								<input type="hidden" name="seller" value="">
 								<input type="hidden" name="buyer" value="">

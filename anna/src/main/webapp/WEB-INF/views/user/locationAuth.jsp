@@ -14,6 +14,8 @@
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/mfb.css" rel="stylesheet">
+<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
 
 <script>
 	$(function(){
@@ -86,25 +88,27 @@
 <body>
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
-	
 		
-		
-		<div id="wrapper" style="overflow:auto; flex:1; position:relative; display:flex;">
+		<div class="wrapper main">
 			<div id="loading" style="width:100%; height:100%; flex:1; background:#000; display:flex; position:absolute; color:white;" class="text-center">
 				<div style="margin:auto;">
 					<span class="spinner-grow spinner-grow-sm" style="margin:auto;"role="status" aria-hidden="true"></span>
-	  			Loading...
+	  				Loading...
 	  			</div>
 			</div>
-			<div class="container main" style="flex:1; ">
-				<h3 class="border-bottom" style="padding:1rem; margin:0px;">동네설정</h3>
-				<form id="locationFrm" action="locationView.do">
-					<div class='text-center' style='padding:1rem;'>거래를 원하시는 동네를 선택해주세요.</div>
-					<div id="dongList">
+			<div class="container" >
+				<div class="container main" style="flex:1; ">
+					<h3 class="border-bottom" style="padding:1rem; margin:0px;">동네설정</h3>
+					<form id="locationFrm" action="locationView.do" method="post">
+						<div class='text-center' style='padding:1rem;'>거래를 원하시는 동네를 선택해주세요.</div>
+						<div id="dongList">
+						</div>
+					</form>
+					<div class="text-end">
+						<button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="chkChkBox()">확인</button>
+						<button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="location.href='userInfoView.do'">돌아가기</button>
 					</div>
-				</form>
-				<div class="text-end"><button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="chkChkBox()">확인</button></div>
-				<div class="text-end"><button class="btn btn1" style="background:#00AAB2; color:#fff; margin:5px 0;" type="button" onclick="location.href='userInfoView.do'">돌아가기</button></div>
+				</div>
 			</div>
 		</div>
 		

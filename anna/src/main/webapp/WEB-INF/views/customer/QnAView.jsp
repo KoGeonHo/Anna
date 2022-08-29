@@ -30,7 +30,6 @@
 			$("textarea[name=answer]").focus();
 		}
 	});
-	
 	function Answer(){
 		let answer = $("textarea[name=answer]");
 		
@@ -38,7 +37,7 @@
 			alert("답변 내용을 입력하세요");
 			answer.focus();
 		}else{
-			let url ="QnAAnswer.do?qidx=${QnAItem.qidx}&answer="+answer.val();
+			let url ="QnAAnswer.do?qidx=${QnAItem.qidx}&answer="+answer.val()+"&uidx=${QnAItem.uidx}";
 			//console.log(url);
 			location.href = url;
 		}

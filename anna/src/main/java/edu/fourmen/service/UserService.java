@@ -43,5 +43,9 @@ public interface UserService {
 	ReViewVO getMyReview(ReViewVO vo);
 	ReViewVO getMyReviewForMe(ReViewVO vo);
 	void updateProfile(UserVO vo);
+	int chkAlarm(int uidx);
+	int chkSellNewMessage(int uidx);
+	int chkBuyNewMessage(int uidx);
+	void updateReview(ReViewVO vo);
 	
 }
