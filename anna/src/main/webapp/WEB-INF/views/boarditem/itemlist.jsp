@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -220,7 +221,6 @@ $(document).ready(function(){
 
 $(document).ready(function(){
 	
-	var auth =[ ${userLoginInfo.location_auth} ];
 	
 	$("#write").click(function(){
 			if(${userLoginInfo.uidx == null}){
@@ -370,6 +370,11 @@ a:link {
 
 /* max가  0부터 ~ 까지라는뜨 */
 /* 반응형 */@media all and (max-width:  767px){
+   
+  #searchform , .categories{
+   display:none;
+   }
+   
    
    #myCarousel, #search, #bestitem, #boardlist, #productname  {
       display:none;
@@ -584,28 +589,13 @@ a {
 						
 					</ul>
 				</div> -->
-			<div class="">
 				<!-- 검색창 시작 -->
-				<div class="searchFrm text-center" style="margin:20px;">
-					<div style="display:flex;">
-    <!-- <li style="border: none;"><a href="#"><b style="font-size: 20px;"><span style="font-size: 20px;">≡</span> menu1</b></a>
-      <ul class="main2">
-        <li><a href="#">menu2</a>
-          <ul class="main3">
-            <li><a href="#">menu3</a></li>
-            <li><a href="#">menu3</a></li>
-            <li><a href="#">menu3</a></li>
-            <li><a href="#">menu3</a></li>
-            <li><a href="#">menu3</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li> -->
-						<form id="frm2">
+				<div class="searchFrm text-center" id="searchform" style="margin:20px;">
+					<div style="display:flex;" >
+							<form id="frm2">
 									<select class="form-select2" aria-label="Default select example" id="addr_code"name="addr_code">
-										<option value="0">내 동네</option>
+										<option value="${userLoginInfo.location_auth}">내 동네</option>
 									</select>
-						    		
 							</form>
 						<div style="flex:1; margin-right:10px;">		
 							<!-- 내지역 코드 전송 -->
@@ -616,19 +606,6 @@ a {
 						</div>
 							<input type="submit" value="검색" class="btn btn-outline-primary" id="search">
 							<button class="btn"  id="write" type="button"style="background-color: #00AAB2; color: #fff;" >글쓰기</button>
-							
-						
-							
-							
-							
-								<%-- <% String addr = request.getParameter("addr_code");
-										if(addr != null){%>
-								내 지역만 보기<input type="checkbox" class="box" id="addr" checked>
-											 <%} %>
-								<% String addr2 = request.getParameter("addr_code");
-										if(addr2 == null){%>
-								내 지역만 보기<input type="checkbox" class="box" id="addr" >
-											 <%} %> --%>
 					</div>
 				</div>
 				
@@ -650,8 +627,11 @@ a {
 				      </ul>
 				    </li>
 				    <li onclick="location.href='itemlist.do?WishCheck=3'">찜 많은순</li>
-				<li <c:if test='${userLoginInfo.uidx !=null}'>onclick="location.href='itemlist.do?WishCheck=4'"</c:if>
-					<c:if test='${userLoginInfo.uidx ==null}'>onclick='alert("로그인 후에 이용 가능합니다.");'</c:if>>내 관심 상품</li>
+					<li
+						<c:if test='${userLoginInfo.uidx != null and userLoginInfo.location_auth != null}'>onclick="location.href='itemlist.do?WishCheck=4'"</c:if>
+						<c:if test='${userLoginInfo.uidx != null and userLoginInfo.location_auth == null}'>onclick='alert("내동네 를 설정해주세요!");location.href="${path}/user/userInfoView.do"'</c:if>
+						<c:if test='${userLoginInfo.uidx == null}'>onclick='alert("로그인 후에 이용 가능합니다.");'</c:if>>내 관심 상품
+					</li>
 			    </ul>
 			</div>
 				
@@ -737,7 +717,10 @@ a {
 											<h6 class="card-title" id="itemtitle"	>
 												<a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
 											</h6>
-										<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
+										<div>
+										
+											<span style="color:#00AAB2;"><fmt:formatNumber value="${ vo.price }" pattern="#,###"/></span>원
+										</div>
 											${vo.hit} 조회수123
 										<div id="Wish_area">
 											<c:if test="${vo.wishCheck == 0 }">
@@ -764,7 +747,6 @@ a {
 					<c:if test="${!empty pm.searchVal and ssang.size()==0}">
 					검색 결과가 없습니다.
 					</c:if>
-				</div>
 	
 		<div class="section" style="padding:0px;">
 				<!-- container -->
@@ -790,6 +772,7 @@ a {
 									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
 										<img src="${ path }/resources/upload/${ vo.image1}"   style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
 										<div class="card-body" style="padding:10px;">
+										
 											<div class="text-start" style="height:30px; display:flex; align-items:center;">
 												<c:if test="${ fn:length(vo.title) > 8 }">
 													<b>${fn:substring(vo.title,0,8) }...</b>
@@ -801,7 +784,7 @@ a {
 												<c:if test="${ vo.state eq 3 }"><span style="display:inline-block; padding:3px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span></c:if>
 											</div>
 											<div>
-												<span style="color:#00AAB2;">${ vo.price }</span>원
+												<span style="color:#00AAB2;"><fmt:formatNumber value="${ vo.price }" pattern="#,###"/></span>원
 											</div>
 									    	<div class="text-end">
 									    		<c:if test="${vo.wishCheck == 0}">
