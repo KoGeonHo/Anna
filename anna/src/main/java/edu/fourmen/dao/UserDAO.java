@@ -12,6 +12,7 @@ import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.ReViewVO;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.UserVO;
 
 @Repository
@@ -252,6 +253,12 @@ public class UserDAO {
 	public void setAlarmRead(int uidx) {
 		// TODO Auto-generated method stub
 		sqlSession.update("edu.fourmen.mapper.userMapper.setAlarmRead",uidx);
+	}
+
+
+	public ReportVO BenCheck(int uidx) {
+		
+		return sqlSession.selectOne("edu.fourmen.mapper.userMapper.BenCheck",uidx);
 	}
 }
 

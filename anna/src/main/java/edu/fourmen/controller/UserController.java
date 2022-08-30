@@ -107,6 +107,8 @@ public class UserController {
 					
 					session.setAttribute("userLoginInfo", userInfo);
 					
+					session.setAttribute("locationSet", userInfo.getLocation_auth());
+					
 					
 					//로그인 유지체크를 한경우 쿠키를생성한다.
 					if(vo.getKeepLogin() != null) {
@@ -340,6 +342,8 @@ public class UserController {
         		
         		userLoginInfo = userService.login(userLoginInfo);
         		
+        		session.setAttribute("locationSet", userLoginInfo.getLocation_auth());
+        		
         		String isAdmin = userLoginInfo.getIsAdmin();
 
         		
@@ -425,8 +429,9 @@ public class UserController {
 			
 		List<BoardItemVO> myBoardItemList = userService.myBoardItemList(uidx);
 		
-		if(uv.getLocation_auth() != null) {
-			myTownCommunityList = userService.myTownCommunityList(uv.getLocation_auth());
+		
+		if(session.getAttribute("locationSet") != null) {
+			myTownCommunityList = userService.myTownCommunityList((String)session.getAttribute("locationSet"));
 		}
 		
 		//System.out.println(blist);
@@ -598,6 +603,10 @@ public class UserController {
 		//System.out.println(vo.getLocation_auth());
 		
 		int result = userService.updateLocation(vo);
+		
+		if(result == 1) {
+			session.setAttribute("locationSet", vo.getLocation_auth());
+		}
 		
 		return "redirect:/user/userInfoMod.do";
 	}
@@ -1032,7 +1041,7 @@ public class UserController {
 		
 		userService.updateReview(vo);
 		
-		return "";
+		return "redirect:/user/chatlist.do";
 	}
 	
 	
@@ -1055,7 +1064,16 @@ public class UserController {
 		
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="/setLocation.do",produces = "application/text; charset=utf8")
+	public String setLocation(String location,HttpServletRequest request,HttpSession session){
+		System.out.println(location);
+		session = request.getSession();
+		
+		session.setAttribute("locationSet", location);
+		
+		return "result";
+	}
 	
 	
 }

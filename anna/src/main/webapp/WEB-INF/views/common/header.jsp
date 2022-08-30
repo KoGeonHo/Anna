@@ -31,6 +31,29 @@
 	text-underline-offset: 7px;
 }
 </style>
+<script>
+
+	$(function(){
+		$("input[name=header-searchVal]").keyup(function(e){
+			if(e.keyCode == 13){
+				location.href="${path}/boarditem/itemlist.do?searchVal="+$(this).val();
+			}
+		});
+	});
+
+	
+	function setLocation(selBox){
+		console.log(selBox.value);
+		$.ajax({
+			url: "setLocation.do",
+			data : "location="+selBox.value,
+			success : function(result){
+				console.log(result);
+				location.reload();
+			}
+		});
+	}
+</script>
 
 <%
 	String uri = request.getRequestURI();
@@ -46,7 +69,7 @@
 						<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0" style="margin-left:16px;">
 							<li class="nav-li"><a href="${path}/boarditem/itemlist.do" class="nav-link px-3 link-dark ">중고거래</a></li>
 							<li class="nav-li"><a href="${path}/board/boardlist.do?board_type=free" class="nav-link px-3 link-dark">커뮤니티</a></li>
-							<li class="nav-li"><a href="${path}/customer/QnAList.do" class="nav-link px-3 link-dark">고객센터</a></li>
+							<li class="nav-li"><a href="${path}/board/boardlist.do?board_type=notice" class="nav-link px-3 link-dark">고객센터</a></li>
 							<li class="nav-li"><a href="${path}/user/myPage.do" class="nav-link px-3 link-dark">마이페이지</a></li>
 						</ul>
 					</div>
@@ -153,8 +176,8 @@
 		<nav class="navbar navbar-dark" style="background:#00AAB2;">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<select class="form-select" aria-label="Default select example" onchange="alert('해당 기능은 준비중입니다.')">
-						<option>내 동네</option>
+					<select class="form-select" aria-label="Default select example" onchange="setLocation(this)">
+						<option value="${ userLoginInfo.location_auth }" <c:if test="${ userLoginInfo.location_auth eq locationSet }" > selected </c:if>>내 동네</option>
 					</select>
 		    		<script>
 			    		let locationList = [${ userLoginInfo.location_auth }];
@@ -172,16 +195,17 @@
 										success : function(geojson){
 											let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
 											//dong.push(locationLevel[locationLevel.length-1]);
-											//console.log(dong);
+											//console.log((locationList[i]==${locationSet}));
 											html += '<option value="'+locationList[i]+'"';
-											if(i == 0){
+											if(locationList[i].toString()=='${locationSet}'){
 												html += " selected "
 											}
 											html += '>'+locationLevel[locationLevel.length-1]+'</option>'
-											$(".form-select").append('<option value="'+locationList[i]+'">'+locationLevel[locationLevel.length-1]+'</option>');
+											//$(".form-select").append('<option value="'+locationList[i]+'">'+locationLevel[locationLevel.length-1]+'</option>');
 										}
 									});
 								}
+								$(".form-select").append(html);
 							},
 							error: function(){
 								console.log("error");
@@ -190,7 +214,7 @@
 		    		</script>
 			    </div>
 			    <div class="text-end" style="color:white; flex:1; padding:0 1rem;">
-			    	<input type="text" class="form-control" placeholder="상품검색">
+			    	<input type="text" name="header-searchVal" class="form-control" value="<%if(request.getParameter("searchVal") != null) { out.print(request.getParameter("searchVal")); }%>" placeholder="상품검색" >
 			    </div>
 				<div id="div-menu-btn" class="navbar-right">
 					<button class="navbar-toggler" type="button">

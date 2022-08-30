@@ -17,6 +17,7 @@ import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.ReViewVO;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.UserVO;
 
 import org.springframework.stereotype.Service;
@@ -400,19 +401,19 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public int chkSellNewMessage(int uidx) {
-		// TODO Auto-generated method stub
+
 		return userDAO.chkSellNewMessage(uidx);
 	}
 
 	@Override
 	public int chkBuyNewMessage(int uidx) {
-		// TODO Auto-generated method stub
+
 		return userDAO.chkBuyNewMessage(uidx);
 	}
 
 	@Override
 	public void updateReview(ReViewVO vo) {
-		// TODO Auto-generated method stub
+
 		userDAO.updateReview(vo);
 	}
 
@@ -424,8 +425,14 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void setAlarmRead(int uidx) {
-		// TODO Auto-generated method stub
+		
 		userDAO.setAlarmRead(uidx);
+	}
+
+	@Override
+	public ReportVO BenCheck(int uidx) {
+
+		return userDAO.BenCheck(uidx);
 	}
 
 
