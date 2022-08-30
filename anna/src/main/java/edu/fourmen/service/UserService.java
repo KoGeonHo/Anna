@@ -7,6 +7,7 @@ import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.ChatMessageVO;
 import edu.fourmen.vo.ReViewVO;
+import edu.fourmen.vo.ReportVO;
 import edu.fourmen.vo.UserVO;
 
 public interface UserService {
@@ -49,5 +50,6 @@ public interface UserService {
 	void updateReview(ReViewVO vo);
 	List<ChatMessageVO> getAlarm(int uidx);
 	void setAlarmRead(int uidx);
+	ReportVO BenCheck(int uidx);
 	
 }

@@ -174,7 +174,7 @@
 				<h3 class="border-bottom" style="padding:1rem;">마이 페이지</h3>
 				<div id="listOfInterested">
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님이 관심있어 할만한 상품</div>
-					<div style="float:right; padding:5px;" onclick="location.href='${path}/boarditem/itemlist.do?interested=${userLoginInfo.interested}'">더 보기</div>
+					<div style="float:right; padding:5px;" onclick="location.href='${path}/boarditem/itemlist.do?WishCheck=4'">더 보기</div>
 					
 					<c:if test="${ not empty userLoginInfo.interested }">
 						<c:if test="${interestedList.size() > 0}">

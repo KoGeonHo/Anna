@@ -18,6 +18,7 @@ public class ReportVO {
 	private String ban_date;
 	private String repotername;
 	private String targetname;
+	private int banCount;
 	
 	MultipartFile file1;
 	
@@ -119,6 +120,12 @@ public class ReportVO {
 	}
 	public void setTargetname(String targetname) {
 		this.targetname = targetname;
+	}
+	public int getBanCount() {
+		return banCount;
+	}
+	public void setBanCount(int banCount) {
+		this.banCount = banCount;
 	}
 	
 	
