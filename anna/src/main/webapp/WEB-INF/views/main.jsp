@@ -333,10 +333,9 @@ const GetList = function(currentPage){
 				<div class="col-md-1 col-sm-0"></div>
 				<div class="col-md-10  col-sm-12">
 
-					<form class="d-flex ">
-						<input class="form-control me-6 vh-20" type="search"
-							placeholder="검색어를 입력하세요" aria-label="Search">
-						<button class="btn btn-outline-primary" type="submit" href="void(0);" onclick="alert('준비중입니다');return false;">Search</button>
+					<form class="d-flex" action="${ path }/boarditem/itemlist.do?searchVal=${pm.searchVal}">						
+						<input class="form-control" type="text" id="searchVal" name="searchVal" class="search-control" placeholder="검색어를 입력해주세요" >&nbsp;
+						<input type="submit" value="검색" class="btn btn-outline-primary" id="search" ">
 					</form>
 
 				</div>

@@ -23,18 +23,26 @@ function hover(element) {
 					<ul class="mfb-component__list">
 					<c:if test="${ not empty uidx }">
 						<li>
-							<a href="<%=request.getContextPath()%>/boarditem/itemwrite.do" data-mfb-label="판매글 등록" class="mfb-component__button--child">
+							<a href="<%=request.getContextPath()%>/boarditem/itemwrite.do" data-mfb-label="글쓰기" class="mfb-component__button--child">
 								<img src="<%=request.getContextPath()%>/images/icon_write.png" width="20px" height="20px;" he style="margin-left: 19px; margin-top: 18px;">
 							</a>
 						</li>
 						</c:if>
 						<li>
+						<c:if test="${ chkSellNewMessage ne 0}">
+								<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding: 0px 0px 0px 5px; right:1px; top:0; background:red; margin-left: 10px;
+   										 margin-top: 10px; border-radius:10px; color:#fff; z-index:1;">${ chkSellNewMessage }</div>
+							</c:if>
 							<a href="<%=request.getContextPath()%>/user/chatList.do" data-mfb-label="채팅" class="mfb-component__button--child">
 								<img src="<%=request.getContextPath()%>/images/icon_qc.png" width="23px" height="23px;" he style="margin-left: 17px; margin-top: 16px;">
 							</a>
 						</li>
 						<li>
-							<a href="<%=request.getContextPath()%>/itemwrite.do" data-mfb-label="알림" class="mfb-component__button--child">
+						<c:if test="${ chkAlarm ne 0}">
+								<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding: 0px 0px 0px 5px; right:1px; top:0; background:red; margin-left: 10px;
+   										 margin-top: 10px; border-radius:10px; color:#fff; z-index:1;">${ chkAlarm }</div>
+							</c:if>
+							<a href="<%=request.getContextPath()%>/user/alarmView.do" data-mfb-label="알림" class="mfb-component__button--child">
 								<img src="<%=request.getContextPath()%>/images/icon_push.png" width="20px" height="20px;" he style="margin-left: 18px; margin-top: 18px;">
 							</a>
 						</li>
