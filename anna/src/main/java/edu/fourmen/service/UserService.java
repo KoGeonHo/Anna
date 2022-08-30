@@ -47,5 +47,7 @@ public interface UserService {
 	int chkSellNewMessage(int uidx);
 	int chkBuyNewMessage(int uidx);
 	void updateReview(ReViewVO vo);
+	List<ChatMessageVO> getAlarm(int uidx);
+	void setAlarmRead(int uidx);
 	
 }

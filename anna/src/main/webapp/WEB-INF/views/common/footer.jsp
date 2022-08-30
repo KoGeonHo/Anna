@@ -19,6 +19,10 @@
 		<br>
 		<span style="font-size:0.8rem;">커뮤니티</span>
 	</div><!--
+	--><div class="ft-icon text-center" style="width:20vw; display:inline-block; border-right:1px solid #ddd;" onclick="location.href='${path}/boarditem/itemwrite.do'">
+		<img src="${path}/images/icon_write_mobile.png" style="width:25px; height:25px;">
+		
+	</div><!-- 
 	--><div class="ft-icon text-center" style="width:20vw; display:inline-block; border-right:1px solid #ddd;" onclick="location.href='${path}/user/chatList.do';">
 		<%if(urif.contains("/user/chat")){ %>
 			<img src="${ path }/images/icon_chat_click.png">
@@ -28,17 +32,18 @@
 		<br>
 		<span style="font-size:0.8rem;">채팅</span>
 	</div><!--
-	--><div class="ft-icon text-center" style="width:20vw; display:inline-block; border-right:1px solid #ddd;" onclick="location.href='${path}/user/myPage.do';">
-		<%if(!urif.contains("/user/chat") && urif.contains("/user")){ %>
+	--><%-- <div class="ft-icon text-center" style="width:20vw; display:inline-block; border-right:1px solid #ddd;" onclick="location.href='${path}/user/myPage.do';">
 			<img src="${ path }/images/icon_my_click.png">
-		<%} else {%>
 			<img src="${ path }/images/icon_my.png">
-		<%} %>
 		<br>
 		<span style="font-size:0.8rem;">myPage</span>
-	</div><!--
-	--><div class="ft-icon text-center" style="width:20vw; display:inline-block;" onclick="alert('준비중입니다.')">
-		<img src="${ path }/images/icon_quick.png">
+	</div> --%><!--
+	--><div class="ft-icon text-center" style="width:20vw; display:inline-block;" onclick="location.href='${path}/user/myPage.do';">
+		<%if(!urif.contains("/user/chat") && urif.contains("/user")){ %>
+			<img src="${ path }/images/icon_quick.png">
+		<%} else {%>
+			<img src="${ path }/images/icon_quick.png">
+		<%} %>
 		<br>
 		<span style="font-size:0.8rem;">메뉴</span>
 	</div>

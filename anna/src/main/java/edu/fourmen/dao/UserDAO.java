@@ -241,6 +241,18 @@ public class UserDAO {
 		// TODO Auto-generated method stub
 		sqlSession.update("edu.fourmen.mapper.userMapper.updateReview",vo);
 	}
+
+
+	public List<ChatMessageVO> getAlarm(int uidx) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("edu.fourmen.mapper.userMapper.getAlarm",uidx);
+	}
+
+
+	public void setAlarmRead(int uidx) {
+		// TODO Auto-generated method stub
+		sqlSession.update("edu.fourmen.mapper.userMapper.setAlarmRead",uidx);
+	}
 }
 
 

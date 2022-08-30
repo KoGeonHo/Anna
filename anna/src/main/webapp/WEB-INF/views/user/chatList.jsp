@@ -122,35 +122,6 @@
 							html += '</div>';
 							html += '</div>';
 						}
-						/* if(chatList[i].chkCanReview > 0 && chatList[i].chkReview == 0){
-							html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
-							html += '<div style="flex:1;">';
-							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openModal(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
-							if(chatList[i].chat_host == ${uidx}){
-								html += '\''+chatList[i].invitedNickName+'\'';
-							}else if(chatList[i].invited == ${uidx}) {
-								html += '\''+chatList[i].hostNickName+'\'';
-							}
-							html += ')">후기 등록하기</button>';
-							html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
-							html += '</div>';
-							html += '</div>';
-							
-							
-						}else if(chatList[i].chkCanReview > 0 && chatList[i].chkReview > 0){
-							html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
-							html += '<div style="flex:1;">';
-							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openViewReview(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
-							if(chatList[i].chat_host == ${uidx}){
-								html += '\''+chatList[i].invitedNickName+'\'';
-							}else if(chatList[i].invited == ${uidx}) {
-								html += '\''+chatList[i].hostNickName+'\'';
-							}
-							html +=')">거래 후기 보기</button>';
-							html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
-							html += '</div>';
-							html += '</div>';
-						} */
 						
 						
 					}
