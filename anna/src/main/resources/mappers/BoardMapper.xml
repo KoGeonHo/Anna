@@ -226,6 +226,7 @@
 		  ,b.Image1
 		  ,(select count(*) from reply r where r.Bidx = b.Bidx) as ccount
 		  ,(select count(*) from Board_like c where c.Bidx = b.Bidx) as cntLike
+		  ,b.location
 	  FROM Board b
 	 INNER JOIN AnnaUser u
 	  	ON b.uidx = u.uidx
@@ -241,7 +242,7 @@
 	    OR b.Title like concat('%',#{pm.SearchVal},'%')) 
 	
 </if>
-<if test="pm.searchUidx != 0">
+<if test="pm.searchUidx != null and pm.searchUidx != 0">
 	AND b.uidx = #{pm.searchUidx} AND b.board_type != 'notice'
 </if>
 <if test="locationList != null">
@@ -249,6 +250,8 @@
 		b.location like concat('%',#{item},'%') AND b.board_type != 'notice'
 	</foreach>
 </if>
+
+
 <!-- <if test='searchType != null and searchType.equals("All")'>
 	  
 	   AND (b.Contents like concat('%',#{SearchVal},'%')

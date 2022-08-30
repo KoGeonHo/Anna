@@ -39,9 +39,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.fourmen.service.BoardService;
+import edu.fourmen.service.UserService;
 import edu.fourmen.vo.BoardVO;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.ReportVO;
+import edu.fourmen.vo.UserVO;
 
 
 @Controller
@@ -50,66 +52,78 @@ public class BoardController {
 
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	UserService userService;
 
 	
 	@ResponseBody
 	@RequestMapping(value="/ajax_board.do")
 	public HashMap<String, Object> ajax_FreeBoard(HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
+String boardtype = "free";
 		
-		//한 페이지에 몇개씩 표시할 것인지
-		int pagecount = 12;
-		//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
-		int pagenumber = 1;
-		//페이지 번호가 파라미터로 전달되는지 읽어와본다.
-		String strPageNum = request.getParameter("pagenumber");
-		//만일 페이지 번호가 파리미터로 넘어온다면
-		if(strPageNum != null) {
-			//숫자로 바꿔서 보여줄 페이지 번호를 지정한다.
-			pagenumber = Integer.parseInt(strPageNum);
-		}
+		session = request.getSession();
 		
-		//보여줄 페이지의 시작 ROWNUM - 0부터 시작
-		int startPage = 0+ (pagenumber - 1)* pagecount;
-		//보여줄 페이지의 끝 ROWNUM
-		int endPage = pagenumber*pagecount;
+		if(pm.getBoard_type() != null && pm.getBoard_type().equals(boardtype)) {
+			//한 페이지에 몇개씩 표시할 것인지
+			int pagecount = 12;
+			//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
+			int pagenumber = 1;
+			//페이지 번호가 파라미터로 전달되는지 읽어와본다.
+			String strPageNum = request.getParameter("pagenumber");
+			//만일 페이지 번호가 파리미터로 넘어온다면
+				if(strPageNum != null) {
+					//숫자로 바꿔서 보여줄 페이지 번호를 지정한다.
+					pagenumber = Integer.parseInt(strPageNum);
+				}
+			
+				//보여줄 페이지의 시작 ROWNUM - 0부터 시작
+				int startPage = 0+ (pagenumber - 1)* pagecount;
+				//보여줄 페이지의 끝 ROWNUM
+				int endPage = pagenumber*pagecount;
+				
+				int pageNum = pagecount;
+				
+				// 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
+				
 		
-		int pageNum = pagecount;
+				
 		
-		// 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
-
-		// 설정해준 값들을 해당 객체에 담는다.
-		pm.setStartPage(startPage);
-		pm.setEndPage(endPage);
-		pm.setPageNum(pageNum);
+				// 설정해준 값들을 해당 객체에 담는다.
+				pm.setStartPage(startPage);
+				pm.setEndPage(endPage);
+				pm.setPageNum(pageNum);
+				
+				//ArrayList 객체의 참조값을 담을 지역변수를 만든다.
+				ArrayList<PageMaker> plist = null;
+				//전체 row의 개수를 담을 지역변수를 미리 만든다. -검색 조건이 들어온 경우 '검색 결과 갯수'가 된다.
+				int totalRow = 0;
 		
-		//ArrayList 객체의 참조값을 담을 지역변수를 만든다.
-		ArrayList<PageMaker> plist = null;
-		//전체 row의 개수를 담을 지역변수를 미리 만든다. -검색 조건이 들어온 경우 '검색 결과 갯수'가 된다.
-		int totalRow = 0;
-		
-		//글의 개수
-		totalRow = boardService.totalCount(pm);
-		
-		
-		//전체 페이지 갯수 구하기
-		int totalPageCount = (int)Math.ceil(totalRow / (double)pagecount);
-		
-		request.setAttribute("plist", plist);
-		request.setAttribute("totalPageCount", totalPageCount);
-		request.setAttribute("totalRow", totalRow);
-		request.setAttribute("pagenumber", pagenumber);
+				//글의 개수
+				totalRow = boardService.totalCount(pm);
+				
+				System.out.println(totalRow +"토탈");
+				//전체 페이지 갯수 구하기
+				int totalPageCount = (int)Math.ceil(totalRow / (double)pagecount);
+				
+				
+				
+				request.setAttribute("plist", plist);
+				request.setAttribute("totalPageCount", totalPageCount);
+				request.setAttribute("totalRow", totalRow);
+				request.setAttribute("pagenumber", pagenumber);
+				
+			
+			
+			}
 		
 		List<BoardVO> board = boardService.selectboard(pm);
-		int Ccount = boardService.getCTotal(bv);
-		
-		bv.setCcount(Ccount);
 	
 		 HashMap<String, Object> result = new HashMap<String,Object>();
 
 	     result.put("appendList",board);
 
-		
-
+	     
 		return result;
 	}
 	
@@ -372,13 +386,13 @@ public class BoardController {
 
 	
 	@RequestMapping(value="/BoardDelete.do")
-	public String BoardDelete(int Bidx,BoardVO vo) { //게시글 삭제처리
+	public String BoardDelete(int Bidx,BoardVO vo, PageMaker pm) { //게시글 삭제처리
 		
 		vo.setBidx(Bidx);
 		
 		boardService.boardDelete(Bidx);
 		
-		return "redirect:/board/boardlist.do?board_type="+vo.getBoard_type();
+		return "redirect:/board/boardlist.do?board_type="+pm.getBoard_type();
 	}
 	
 	@RequestMapping(value="/BoardModify.do", method=RequestMethod.GET)
@@ -406,7 +420,7 @@ public class BoardController {
 	@RequestMapping(value="/boardlist.do") //게시판 통합
 	public String boardlist(Model model, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm) {
 		
-		
+
 		
 		String boardtype = "free";
 		
@@ -433,10 +447,7 @@ public class BoardController {
 				int pageNum = pagecount;
 				
 				// 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
-				
-		
-				
-		
+
 				// 설정해준 값들을 해당 객체에 담는다.
 				pm.setStartPage(startPage);
 				pm.setEndPage(endPage);
@@ -449,8 +460,12 @@ public class BoardController {
 		
 				//글의 개수
 				totalRow = boardService.totalCount(pm);
+				
+				System.out.println(totalRow +"토탈");
 				//전체 페이지 갯수 구하기
 				int totalPageCount = (int)Math.ceil(totalRow / (double)pagecount);
+				
+				
 				
 				request.setAttribute("plist", plist);
 				request.setAttribute("totalPageCount", totalPageCount);
@@ -489,10 +504,15 @@ public class BoardController {
 		
 //		System.out.println(pm.getPageNum()+"num");
 //		System.out.println(pm.isNext()+"next");
-		
-		
+		if((int)pm.getSearchUidx() != 0) {
+			UserVO vo = userService.getUserInfo(pm.getSearchUidx());
+			model.addAttribute("search_nickName",vo.getNickName());
+		}
 		model.addAttribute("pm", pm);
 		model.addAttribute("board", board);
+		
+		
+		
 		
 		return "board/boardlist";
 		

@@ -268,9 +268,8 @@ height : 54px;
 		<div class="wrapper main">
 			<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;" class="m-none">
 			<div class="container">
+			<c:if test="${bv.board_type ne 'notice' }">
 				<div class="tabs" style="text-align: center; padding-left: 30px; padding-right: 30px;">
-					<input id="tab0" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=notice";' <c:if test="${ bv.board_type eq 'notice' }">checked</c:if> />
-					<label for="tab0">공지사항</label>
 					<input id="tab1" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=free";'<c:if test="${ bv.board_type eq 'free' }">checked</c:if>  />
 					<label for="tab1">일상&amp;소통</label>
 					<input id="tab2" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=job";'<c:if test="${ bv.board_type eq 'job' }">checked</c:if>/>
@@ -281,7 +280,7 @@ height : 54px;
 					<label for="tab4">핫플레이스</label>
 					<div class="line"></div>
 				</div>
-			
+			</c:if>
 			
 			
 				<h4  class="border-bottom" style="padding:5px; margin:0; text-decoration-thickness: 1px; text-underline-offset: 8px;">
@@ -308,9 +307,7 @@ height : 54px;
 						<div class="col-2 th border-bottom" style="display:table-cell;">제목</div>
 						<div class="col-4 td border-bottom" style="display:table-cell;">
 							${bv.title}
-							<c:if test="${ bv.board_type ne 'notice' }">
-								<input type="image" src="../images/icon_unlike.png" class="LikeBtn" style="margin: -5px 0 0 0">
-							</c:if>
+							
 						</div>
 						<div class="col-2 th border-bottom" style="display:table-cell;">작성일</div>
 						<div class="col-4 td border-bottom" style="display:table-cell;">${bv.wdate}</div>				
@@ -332,7 +329,12 @@ height : 54px;
 						<div class="col-2 th border-bottom" style="display:table-cell;">조회수</div>
 						<div class="col-1 td border-bottom" style="display:table-cell;">${bv.hit}</div>
 						<div class="col-2 th border-bottom" style="display:table-cell;">추천</div>
-						<div class="col-1 td border-bottom" style="display:table-cell;">${bv.cntLike}</div>
+						<div class="col-1 td border-bottom" style="display:table-cell;">${bv.cntLike}
+							<c:if test="${ bv.board_type ne 'notice' }">
+								<input type="image" src="../images/icon_unlike.png" class="LikeBtn" style="margin: -5px 0 0 0">
+							</c:if>
+						
+						</div>
 					</div>
 					
 					<div class="row border-bottom tr" style="min-height:200px; height:auto;">
@@ -385,9 +387,10 @@ height : 54px;
 						
 						</div>
 					</div>
-					<c:if test="${bv.uidx == uidx}"> 
-				    	<a href="BoardModify.do?Bidx=${bv.bidx }">수정</a>
-				    	<a href="BoardDelete.do?Bidx=${bv.bidx}">삭제</a>
+					<c:if test="${bv.uidx == uidx}">
+					<div style="text-align: right;">
+				    	<a href="BoardModify.do?Bidx=${bv.bidx }" >수정</a>&nbsp;<a class="" onclick="delCheck()" >삭제</a>
+				    </div>
 				    </c:if>
 				    <c:if test="${bv.uidx != uidx and bv.board_type != 'notice'}">
 				    	<div style="margin: auto; height: 25px" id="report"><a class="report" style="cursor:pointer; float:right; ">신고</a></div>
@@ -538,7 +541,7 @@ function getList() {
 			if(data.total > 0){
 				var list = data.list;
 				
-				var comment_html = "<div class='row border-bottom' id='commentstyle'>";
+				var comment_html = "<div class='row' id='commentstyle'>";
 				
 				$('#count').html(data.total);
 				for(i = 0;i < list.length;i++){
@@ -550,12 +553,13 @@ function getList() {
 					
 					comment_html += "<div class='col-2 td' style='border-right: #dee2e6 solid 1px; text-align:center;'><span id='nickName'><strong>" + nickName + "</strong></span></div>";
 					comment_html += "<div class='td' id='Contents' style='display:flex;'>";
-					comment_html += "<div style='flex:1;'>"+Contents+"</div>";
-					comment_html += "<div style='width:100px; font-size:0.8rem;'>"+ wdate +"</div>";
+					comment_html += "<div style='flex:1;'>"+Contents+"<p style='margin: 10px 0 0 0;'>"+wdate+"";
+					
 					if(nickName=== $("#nickName").val()){
-						 comment_html += "<span id='modify' style='cursor:pointer;font-size:0.8rem;'><a class=''>수정</a>&nbsp;</span>"
-						 comment_html += "<span id='delete' style='cursor:pointer;font-size:0.8rem;'><a class=''>삭제</a></span></div>";
+						 comment_html += "&nbsp;<a class=''>수정</a>&nbsp;"
+						 comment_html += "<a class=''>삭제</a></p></div>";
 					}
+			
 					comment_html += "</div>";
 					
 					
@@ -732,6 +736,19 @@ $("#modify").click(function(){
 	
 	
 });
+
+//삭제확인
+
+function delCheck(){
+	if(confirm("삭제하시겠습니까?")== true){
+		
+		location.href='BoardDelete.do?Bidx='+${bv.bidx}+'&board_type=${bv.board_type}';
+	}else{
+		
+		return false;
+	}
+	
+}
 
 
 </script>

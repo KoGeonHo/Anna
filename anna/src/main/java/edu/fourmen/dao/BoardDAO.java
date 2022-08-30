@@ -42,10 +42,9 @@ public class BoardDAO {
 		String[] locationList = null;
 		
 		if(pm.getLocation_auth() != null) {
+			//System.out.println(pm.getLocation_auth()+"주소");
 			locationList = pm.getLocation_auth().split(",");
 		}
-		
-		
 		
 		HM.put("pm",pm);
 		HM.put("locationList",locationList);

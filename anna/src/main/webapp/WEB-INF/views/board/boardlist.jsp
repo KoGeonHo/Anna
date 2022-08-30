@@ -2,6 +2,7 @@
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -321,19 +322,26 @@ text-decoration: none;
 		<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;" class="m-none">
 		
 		<div class="container">
+		<c:if test="${pm.board_type ne 'notice' }">
 			<div class="tabs" style="text-align: center; padding-left: 30px; padding-right: 30px;">
-				<input id="tab0" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=notice";' <c:if test="${ pm.board_type eq 'notice' }">checked</c:if> />
-				<label for="tab0">공지사항</label>
-				<input id="tab1" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=free";'<c:if test="${ pm.board_type eq 'free' }">checked</c:if>  />
+				<input id="tab1" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=free<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'free' }">checked</c:if>  />
 				<label for="tab1">일상&amp;소통</label>
-				<input id="tab2" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=job";'<c:if test="${ pm.board_type eq 'job' }">checked</c:if>/>
+				<input id="tab2" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=job<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'job' }">checked</c:if>/>
 				<label for="tab2">구인&amp;구직</label>
-				<input id="tab3" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=meeting";'<c:if test="${ pm.board_type eq 'meeting' }">checked</c:if>/>
+				<input id="tab3" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=meeting<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'meeting' }">checked</c:if>/>
 				<label for="tab3">모임</label>
-				<input id="tab4" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=hotplace";'<c:if test="${ pm.board_type eq 'hotplace' }">checked</c:if>/>
+				<input id="tab4" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=hotplace<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'hotplace' }">checked</c:if>/>
 				<label for="tab4">핫플레이스</label>
 				<div class="line"></div>
 			</div>
+		</c:if>
+		
+		<c:if test="${pm.searchUidx != null and pm.searchUidx != 0 }">
+			
+			<div style="margin: -25px 0 20px 0;"><span style="font-size: 23px;">${search_nickName}님이 작성하신 글</span></div>
+			
+		</c:if>
+		
 	
 		<div class="col-md-12  col-sm-12 " style=" display: flex; ">
 			<div style="flex:1">
@@ -347,6 +355,10 @@ text-decoration: none;
 					
 					<c:if test="${pm.board_type == null }">
 					<input type="hidden" value="${pm.searchUidx}" name="searchUidx">
+					</c:if>
+					
+					<c:if test="${pm.location_auth != null }">	
+					<input type="hidden" value="${pm.location_auth}" name="location_auth">
 					</c:if>
 					
 					<input type="text" name="SearchVal" class="search-control" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
@@ -402,7 +414,12 @@ text-decoration: none;
                     			</div>
 			                    <div class="gall_text_href bo_tit" >
 			                    	<a href="viewBoard.do?Bidx=${vo.bidx}" style="float:left;">
-			                            ${vo.title }
+			                            <c:if test="${ fn:length(vo.title) > 10 }">
+											<b>${fn:substring(vo.title,0,9) }...</b>
+										</c:if>
+										<c:if test="${ fn:length(vo.title) <= 10 }">
+											<b>${ vo.title }</b>
+										</c:if>
 			                        </a>
 			                        <span style="float:right;"><img src="../images/icon_comment.png" style="margin-top: -1px; margin-right: 3px; height: 15px;">${vo.ccount}</span>
 			                        <span style="float:right;"><img src="../images/icon_like.png" height="23px" style="margin-top:-4px;">${vo.cntLike}</span>
@@ -432,9 +449,7 @@ text-decoration: none;
 					</c:if>
 						<c:if test="${ not empty board }">
 							<c:forEach var="vo" items="${ board }">
-						
-						
-								
+		
 								<div class="tr border-bottom d-flex">
 									
 										
@@ -521,92 +536,7 @@ text-decoration: none;
 		</div>
 			<div class="mdiv"></div>
 			</c:if>
-			
-			<%-- <c:if test="${pm.board_type == null and pm.uidx !=0}">
-				<div class="list">
-					<div class="tr border-bottom" id="plist-top">
-						<div class="th" style="width:40%;">제목</div>
-						<div class="th" style="width:20%;">작성자</div>
-						<div class="th" style="width:20%;">작성일</div>
-						<div class="th" style="width:10%;">조회수</div>
-						<div class="th" style="width:10%;">추천</div>
-					</div>
-					<c:if test="${board.size() ==0}">		
-						<h3>등록된 게시물이 없습니다.</h3>
-					</c:if>
-						<c:if test="${ not empty board }">
-							<c:forEach var="vo" items="${ board }">
-						
-						
-								
-								<div class="tr border-bottom d-flex">
-									
-										<a href="#" class="mlink">
-											<div class="title"><a href="<%=request.getContextPath()%>/board/test.do?Bidx=${vo.bidx}" class="p">${vo.title }</a>
-												<a href="">
-													<div class="value">
-														<span>${vo.title }</span>
-														<c:if test="${vo.image1 != null}">
-															<span><img src="../images/icon_image.png" style="height:15px; margin-top: -5px;"></span>
-														</c:if>
-													</div>
-												</a>
-												<div class="value">
-													<span class="nickName">${vo.nickName}</span> 
-													<span class="hit">조회${vo.hit}</span>
-													<span class="wdate">${vo.wdate }</span>
-												</div>
-											</div>
-											<a href="" class="com-btn value">
-												<span class="ccount">${vo.ccount }</span>
-												<span>댓글</span>
-											</a>
-											<div class="td text-center p" style="width:20%;">${ vo.nickName }</div>
-											<div class="td text-center p" style="width:20%;">${ vo.wdate }</div>
-											<div class="td text-center p" style="width:10%;">${ vo.hit }</div>
-											<div class="td text-center p" style="width:10%;">${ vo.cntLike}</div>
-										</a>
-									
-								</div>
-								
-							
-							</c:forEach>
-						</c:if>
-					</div>
-			
-			<ul style="width:30%;text-align:center; justify-content: center;" class="pageing">
-				
-					
-			<c:if test="${pm.isPrev() == true}">
-				<li>
-					<a href="${ path }/board/boardlist.do?page=${pm.getStartPage()-1}&SearchVal=${pm.searchVal}">◀</a>
-				</li>
-			</c:if>
-					
-			
-
-					
-			<c:forEach var="i" begin="${pm.getStartPage()}" end="${pm.getEndPage()}">
-				<li>
-    				<span><a href="${ path }/board/boardlist.do?page=${i}&SearchVal=${pm.searchVal}">${i}</a></span>
-				</li>
-			</c:forEach>
-				
-				
-			<c:if test="${pm.isNext() && pm.getEndPage() >0}" >
-				<li style="text-align:left;">
-					<a href="${ path }/board/boardlist.do?page=${pm.getEndPage()+1}&SearchVal=${pm.searchVal}">▶</a>
-				</li>
-			</c:if>
-			
-				
-			</ul>
-			<div style="height: 300px;"></div>
-			</c:if> --%>
-			
-		
-				
-				
+	
 		</form>
 
 			
@@ -680,7 +610,7 @@ const GetList = function(currentPage){
 		url : "ajax_board.do",
 		method : "GET",
 		//검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
-		data : "board_type=${pm.board_type}&pagenumber="+currentPage+"&SearchVal=${pm.searchVal}",
+		data : "board_type=${pm.board_type}&pagenumber="+currentPage+"&SearchVal=${pm.searchVal}&searchUidx=${pm.searchUidx}&location_auth=${pm.location_auth}",
 		//FreeBoard.jsp의 내용이 data로 들어온다. 
 		success:function(data){
 			 //console.log(data.appendList);
@@ -709,7 +639,14 @@ const GetList = function(currentPage){
 	            html += '<u><span>작성자 </span>'+appendList[i].nickName+'</u>';
 	            html += '</em></a></div>';
 	            html += '<div class="gall_text_href bo_tit">';
-	            html += '<a href="viewBoard.do?Bidx='+appendList[i].bidx+'&board_type='+appendList[i].board_type+'" style="float:left;">'+appendList[i].title+'</a>'
+	            html += '<a href="viewBoard.do?Bidx='+appendList[i].bidx+'&board_type='+appendList[i].board_type+'" style="float:left;">'
+	            
+	            if(appendList[i].title.length >= 10){
+	            	 html += ''+appendList[i].title+'</a>'
+				}else{
+					 html += ''+appendList[i].title+'</a>'
+				}
+	           
 	            html += '<span style="float:right;"><img src="../images/icon_comment.png" style="margin-top: -1px; margin-right: 3px; height: 15px;">'+appendList[i].ccount+'</span>';
 	            html += '<span style="float:right;"><img src="../images/icon_like.png" height="23px" style="margin-top:-4px;">'+appendList[i].cntLike+'</span>';
 	         	html += '</div></div></div></li>';

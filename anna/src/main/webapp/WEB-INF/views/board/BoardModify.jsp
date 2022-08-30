@@ -137,8 +137,8 @@ position: fixed;
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		
-		<div class="wrapper">
-			<div class="container main">
+		<div class="wrapper  main">
+			<div class="container">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">글 수정</h3>
 		
 				<form action="BoardModify.do" method="post" enctype="multipart/form-data" id="frm">
@@ -188,7 +188,7 @@ position: fixed;
 						<div class="viewimg">
 							<img src="../resources/upload/${bv.image1}" alt ="안되는데요?" style="width:500px">
 						</div>
-						<button type="button" name="delbtn" value="0">사진 지우기</button>
+						
 						
 					</c:if>
 					<c:if test="${bv.image2 != null}">
@@ -241,7 +241,7 @@ position: fixed;
 					<div class="text-end tr">
 						<div class="td">
 							<button class="btn" style="background:#00AAB2; color:#fff;" onclick="check()">수정</button>
-							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/board/boardlist.do?=${bv.board_type}'">취소</button>
+							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="history.back();">취소</button>
 						</div>
 					</div>
 					
@@ -774,6 +774,11 @@ $(document).ready(function () {
         maxHeight : null, // set maximum height of editor
         focus : true,
         lang : 'ko-KR', // 기본 메뉴언어 US->KR로 변경
+        popover: {         //팝오버 설정
+			image: [], //이미지 삭제
+			link: [],  //링크 삭제
+			air: []
+	      },
         callbacks: {
                onChange: function(contents, $editable) {
                  console.log('onChange:', contents, $editable);
