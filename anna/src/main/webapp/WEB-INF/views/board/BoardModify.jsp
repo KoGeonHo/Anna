@@ -78,7 +78,9 @@ width : calc(100% - 50px);
 
 display : none;
 position: fixed;
-
+    top: 36%;
+    left: 37%;
+    z-index: 3;
 
 }
 
@@ -86,29 +88,33 @@ position: fixed;
 
 display : none;
 position: fixed;
-
-
+    top: 36%;
+    left: 37%;
+ z-index: 3;
 }
 .viewimg3{
 
 display : none;
 position: fixed;
-
-
+    top: 36%;
+    left: 37%;
+ z-index: 3;
 }
 .viewimg4{
 
 display : none;
 position: fixed;
-
-
+    top: 36%;
+    left: 37%;
+ z-index: 3;
 }
 .viewimg5{
 
 display : none;
 position: fixed;
-
-
+    top: 36%;
+    left: 37%;
+ z-index: 3;
 }
 
 
@@ -138,7 +144,7 @@ position: fixed;
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		
 		<div class="wrapper  main">
-			<div class="container">
+			<div class="container" >
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">글 수정</h3>
 		
 				<form action="BoardModify.do" method="post" enctype="multipart/form-data" id="frm">
@@ -172,50 +178,64 @@ position: fixed;
 					</div>
 					
 					<div class="row border-bottom tr">
-						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
+						<div class="col-4 th" style="display:table-cell;">첨부 이미지 파일</div>
 						
 						<div id="boxWrap" class="col-8 td" style="display:table-cell;">
-							<input class="form-control file" type="file" id="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
-							<!-- <button type="button" id="file_btn">추가</button> -->
+							<div class="d-flex" style=" width:100%;">
+								<div style="flex:1">
+									<input class="form-control" type="file" id="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
+								</div>
+								<div>
+									<button type="button" class="btn" id="file_btn">추가</button>
+								</div>
+							</div>
+							
 						</div>
 					</div>
-					
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">기존 이미지 파일</div>
+						<div id="carouselExampleControls" class="carousel slide" style="height:auto; width:500px" data-bs-ride="carousel">
+							  <div class="carousel-inner">
+							  <c:if test="${bv.image1 != null}">
+							    <div class="carousel-item active">
+							      <img src="../resources/upload/${bv.image1}" class="d-block " alt="..." style="width:auto;height:500px;">
+							    </div>
+						 	 </c:if>
+						 	  <c:if test="${bv.image2 != null}">
+							    <div class="carousel-item">
+							      <img src="../resources/upload/${bv.image2}" class="d-block" alt="..." style="width:auto;height:500px;">
+							    </div>
+							  </c:if>
+							  <c:if test="${bv.image3 != null}">
+							    <div class="carousel-item">
+							      <img src="../resources/upload/${bv.image3}" class="d-block" alt="..." style="width:auto;height:500px;">
+							    </div>
+							  </c:if>
+							  <c:if test="${bv.image4 != null}">
+							    <div class="carousel-item">
+							      <img src="../resources/upload/${bv.image4}" class="d-block" alt="..." style="width:auto;height:500px;">
+							    </div>
+							  </c:if>
+							  <c:if test="${bv.image5 != null}">
+							    <div class="carousel-item">
+							      <img src="../resources/upload/${bv.image5}" class="d-block " alt="..." style="width:auto;height:500px;">
+							    </div>
+							  </c:if>  
+							  </div>
+							  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							    <span class="visually-hidden">Prev</span>
+							  </button>
+							  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+							    <span class="carousel-control-next-icon"  aria-hidden="true"></span>
+							    <span class="visually-hidden">Next</span>
+							  </button>
+							</div>
+						
 
 					
-					
-					<c:if test="${bv.image1 != null}">
-						<span class="view">${bv.image1}</span><br>
-						<div class="viewimg">
-							<img src="../resources/upload/${bv.image1}" alt ="안되는데요?" style="width:500px">
-						</div>
-						
-						
-					</c:if>
-					<c:if test="${bv.image2 != null}">
-						<span class="view2">${bv.image2}</span><br>
-						<div class="viewimg2">
-							<img src="../resources/upload/${bv.image2}" alt ="안되는데요?" style="width:500px">
-						</div>
-					</c:if>
-					<c:if test="${bv.image3 != null}">
-						<span class="view3">${bv.image3}</span><br>
-						<div class="viewimg3">
-							<img src="../resources/upload/${bv.image3}" alt ="안되는데요?" style="width:500px">
-						</div>
-					</c:if>
-					<c:if test="${bv.image4 != null}">
-						<span class="view4">${bv.image4}</span><br>
-						<div class="viewimg4">
-							<img src="../resources/upload/${bv.image4}" alt ="안되는데요?" style="width:500px">
-						</div>
-					</c:if>
-					<c:if test="${bv.image5 != null}">
-						<span class="view5">${bv.image5}</span>
-						<div class="viewimg5">
-							<img src="../resources/upload/${bv.image5}" alt ="안되는데요?" style="width:500px">
-						</div>
-					</c:if>
-					
+					</div>
+
 					<div class="map_wrap">
 					    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 					
@@ -246,7 +266,7 @@ position: fixed;
 					</div>
 					
 				</form>
-				
+						
 				
 			</div>
 		</div>
@@ -688,25 +708,6 @@ function check(){
 
 //파일 기능 스크립트
 
-$(document).ready(function() {
-	var i=2; // 변수설정은 함수의 바깥에 설정!
-  $("#file_btn").click(function() {
-    if(i<=5){
-    	
-    	$("#boxWrap").append("<input class='form-control file' type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'><a class='del'>삭제</a>");
-    }
-    
-    i++;
-    
-    if(i==6){
-    	$("#file_btn").css("display","none");
-    }
-   
-    
-
-  });
-});
-
 function chk_file_type(obj) {
     var file_kind = obj.value.lastIndexOf('.');
     var file_name = obj.value.substring(file_kind+1,obj.length); 
@@ -779,6 +780,8 @@ $(document).ready(function () {
 			link: [],  //링크 삭제
 			air: []
 	      },
+	
+		tooltip : none,
         callbacks: {
                onChange: function(contents, $editable) {
                  console.log('onChange:', contents, $editable);
@@ -800,7 +803,24 @@ $(document).ready(function () {
 });
 
 
+$(document).ready(function() {
+	var i=2; // 변수설정은 함수의 바깥에 설정!
+  $("#file_btn").click(function() {
+    if(i<=5){
+    	
+    	$("#boxWrap").append("<input class='form-control' type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>");
+    }
+    
+    i++;
+    
+    if(i==6){
+    	$("#file_btn").css("display","none");
+    }
+   
+    
 
+  });
+});
 	
 
 </script>

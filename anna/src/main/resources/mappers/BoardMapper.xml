@@ -90,7 +90,7 @@
 	    OR b.Title like concat('%',#{pm.SearchVal},'%')) 
 	
 </if>
-<if test="pm.searchUidx != 0">
+<if test="pm.searchUidx != null and pm.searchUidx != 0">
 	AND b.uidx = #{pm.searchUidx} AND b.board_type != 'notice'
 </if>
 
@@ -286,6 +286,7 @@
 <update id="boardModify">
 	UPDATE Board
 	   SET Title = #{Title}
+	   	  ,board_type =#{board_type}
 	   	  ,Contents = #{Contents}
 	   	  ,Wdate = now()
 	   	  ,Location = #{Location}
@@ -297,6 +298,18 @@
 	   	  </if>
 	   	  <if test="Image1 != null">
 	   	  ,Image1 = #{Image1}
+	   	  </if>
+	   	  <if test="Image2 != null">
+	   	  ,Image2 = #{Image2}
+	   	  </if>
+	   	  <if test="Image3 != null">
+	   	  ,Image3 = #{Image3}
+	   	  </if>
+	   	  <if test="Image4 != null">
+	   	  ,Image4 = #{Image4}
+	   	  </if>
+	   	  <if test="Image5 != null">
+	   	  ,Image5 = #{Image5}
 	   	  </if>
 	 WHERE Bidx = #{Bidx}
 
