@@ -96,15 +96,13 @@
 	    });
 	</script>
 </head>
-<body>
+<body style="overflow-y:hidden;">
 	<div class="wrapper">
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		
 		<div class="wrapper  main">
 		<div class="container">
-		
 		
 		<h3 class="border-bottom" style="padding:1rem; margin:0px;">판매글 작성하기</h3>
 				<form method="POST" action="itemwrite.do" enctype="multipart/form-data" name="frm" id="joinFrm">
@@ -196,8 +194,8 @@
 						<div class="col-4 th" style="display:table-cell;">가격제안</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<select name="offer">
-								<option value="1">불가능</option>
-								<option value="2">가능</option>
+								<option value="0">불가능</option>
+								<option value="1">가능</option>
 						    </select>
 						</div>
 					</div>
@@ -277,6 +275,14 @@
 						maxWidth : 840,
 						focus : true,
 						lang : 'ko-KR', // 기본 메뉴언어 US->KR로 변경
+						popover: {         //팝오버 설정
+					         image: [], //이미지 삭제
+					         link: [],  //링크 삭제
+					         air: []
+					         },
+						
+						
+						
 						callbacks: {
 				             onChange: function(contents, $editable) {
 				               console.log('onChange:', contents, $editable);
@@ -335,7 +341,7 @@
 					
 					$("a[name='delete']").on("click", function(e){ //삭제 버튼
 						e.preventDefault();
-						fn_deleteFile($(this));e
+						fn_deleteFile($(this));
 					});
 				});
 				

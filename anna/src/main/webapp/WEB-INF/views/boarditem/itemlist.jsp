@@ -371,6 +371,18 @@ a:link {
 /* max가  0부터 ~ 까지라는뜨 */
 /* 반응형 */@media all and (max-width:  767px){
    
+   .card{
+   widht:100%;
+   flex-direction: row;
+   }
+   .card .card-img-top{
+   
+   width:50%;
+   
+   }
+   
+   
+   
   #searchform , .categories{
    display:none;
    }
@@ -457,6 +469,21 @@ a:link {
 	.card-container {
 		width:25%;
 	}
+		
+	.card > img {
+	width:100%; height:210px;
+	}
+	
+	b{
+	
+	}	
+	
+	#image{
+	height:230px;
+	background:url('')
+	}
+	
+	
 	
 
 }
@@ -475,6 +502,10 @@ a:link {
 
 }
 @media all and (max-width:  767px){
+	
+	
+	
+	
 	
 	.card-container {
 		width:100%;
@@ -502,16 +533,16 @@ a {
   text-align: center;
 }
 
-[class*="main"] {
+[class*="cate"] {
   background-color: white;
   border-radius: 5px 5px 5px 5px;
 }
 
-[class*="main"] ul {
+[class*="cate"] ul {
   border-radius: 5px 5px 5px 5px;
   border: 1px solid #57523E;
 }
-.main1{
+.cate1{
   padding-left: 0px;
    height: 100%;
   width: 95%;
@@ -522,23 +553,23 @@ a {
     flex-wrap: wrap;
     align-content: space-around;
 }
-.main1>li {
+.cate1>li {
   float: left;
   line-height: 50px;
   position: relative;
   width: 33.333333%;
   height:100%;
 }
-.main1>li:hover .main2 {
+.cate1>li:hover .cate2 {
   left: 0;
 }
-.main1>li a {
+.cate1>li a {
   display: block;
 }
-.main1>li a:hover {
+.cate1>li a:hover {
   font-weight: bold;
 }
-.main2 {
+.cate2 {
   width:110%;
   position: absolute;
   top: 50px;
@@ -546,21 +577,21 @@ a {
   width: 100%;
   padding: 0px;
 }
-.main1>li:hover {
+.cate1>li:hover {
   /* border-bottom: 5px solid #D94C1A; */
   background-color: grey;
 }
-.main2 li:hover {
+.cate2 li:hover {
  background-color: grey;
 }
 
-.main2>li {
+.cate2>li {
   position: relative;
 }
-.main2>li:hover .main3 {
+.cate2>li:hover .main3 {
   left: 100%;
 }
-.main2>li a, .main3>li a {
+.cate2>li a, .main3>li a {
   border-radius: 10px;
   margin: 10px;
 }
@@ -609,11 +640,10 @@ a {
 					</div>
 				</div>
 				
-				
 			<div id="menu2" class="categories">
-				<ul class="main1 ">
+				<ul class="cate1">
 				    <li style="border: none;"><a href="#">카테고리</a>
-				       <ul class="main2">
+				       <ul class="cate2">
 				        <li onclick="location.href='itemlist.do'">전체</li>
 						<li onclick="location.href='itemlist.do?cate_idx=1'">가전제품</li>
 						<li onclick="location.href='itemlist.do?cate_idx=2'">생활용품</li>
@@ -625,7 +655,6 @@ a {
 						<li onclick="location.href='itemlist.do?cate_idx=8'">자동차용품</li>
 						<li onclick="location.href='itemlist.do?cate_idx=9'">스포츠&레저</li>
 				      </ul>
-				    </li>
 				    <li onclick="location.href='itemlist.do?WishCheck=3'">찜 많은순</li>
 					<li
 						<c:if test='${userLoginInfo.uidx != null and userLoginInfo.location_auth != null}'>onclick="location.href='itemlist.do?WishCheck=4'"</c:if>
@@ -700,8 +729,9 @@ a {
 							</div>
 							 --%>
 							<div class="col-lg-3  col-md-12 ">
-								<div class="card" >
-									<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
+								<div class="card container" >
+									
+										<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
 									<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
 													<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
 												<c:if test="${vo.state==1}">
@@ -770,7 +800,9 @@ a {
 								</script>
 								<div class="card-container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">
 									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
-										<img src="${ path }/resources/upload/${ vo.image1}"   style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+										<div id="image">
+										<img src="${ path }/resources/upload/${ vo.image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+									</div>	
 										<div class="card-body" style="padding:10px;">
 										
 											<div class="text-start" style="height:30px; display:flex; align-items:center;">

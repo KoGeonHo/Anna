@@ -272,6 +272,16 @@ $("#joinFrm").submit(function(){
 		maxWidth : 840,
 		focus : true,
 		lang : 'ko-KR', // 기본 메뉴언어 US->KR로 변경
+		popover: {         //팝오버 설정
+	         image: [], //이미지 삭제
+	         link: [],  //링크 삭제
+	         air: []
+	         },	
+		
+		
+		
+		
+		
 		callbacks: {
              onChange: function(contents, $editable) {
                console.log('onChange:', contents, $editable);
