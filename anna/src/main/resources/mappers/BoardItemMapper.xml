@@ -24,6 +24,7 @@
 			 , b.hit
 			 , (select count(*) from Wish_list w where w.item_idx = b.item_idx and w.uidx = #{pagemaker.uidx} ) as WishCheck
 			 , (select count(uidx)as WishCount from Wish_list where item_idx = b.item_idx)as WishCount
+			 , (select count(DISTINCT invited)  from chat c where c.chat_host=b.uidx and c.item_idx = b.item_idx )as chatCount
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  
 			and b.isDel ='N'

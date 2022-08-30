@@ -64,22 +64,23 @@ public class BoardItemController {
 	@RequestMapping(value = "/itemlist.do")
 	public String itemlist(HttpSession session,PageMaker pm,BoardItemVO vo,HttpServletResponse response ,HttpServletRequest request, Model model) throws IOException {
 		session = request.getSession();
-		
 		if(pm.getSearchVal() == null) {
 			pm.setSearchVal("");
 		}
 		
+		
+		
 		//회원의 지역코드 넘기는 부분
+		// 이따 세션에서 뽑아오려면 이 부분 if문도 변경
 		if (session.getAttribute("uidx") != null) {
 			int uidx = (int) session.getAttribute("uidx");
 			UserVO uvo = userService.getUserInfo(uidx);
-			
 			pm.setUidx(uidx);
 			//내 지역보기 체크
+			//session locationSet 으로 변경할것
 			String auth = uvo.getLocation_auth();
 			pm.setAddr_code(auth);	
 			model.addAttribute("addr_code",auth);
-			
 	
 		//찜 많은순 보기  wishchceck 로 한 이유는 현재 사용되는 value 값이 1,2 밖에 없음. 
 		//그 이후로 늘어날 일도 없고 새로운 변수를 선언하기 애매해서 그냥 쓰는중

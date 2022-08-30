@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="true"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -109,14 +110,16 @@ margin-left: 15px;
 } */
 
 /*557 보다 크거나 같아야 하고 991거나 작아야 같아야함 태블릿용*/
-@media all and (421px <= width <= 3600px) {
+@media all and (767px <= width <= 3600px) {
 
 #btn-area .btn{
-width: 95px;
-height: 38px;
-background-color: #00AAB2;
-color: #fff;
-margin-left: 5px;
+width: 40%;
+    height: 38px;
+    background-color: #00AAB2;
+    color: #fff;
+    margin-left: 8%;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 #carouselExampleIndicators{
@@ -126,7 +129,7 @@ display:none;
 }
 
 /* 420이하 모바일*/
-@media ( max-width : 420px ) {
+@media ( max-width : 767px ) {
 
 
 	#btn-area .btn{
@@ -432,7 +435,6 @@ table td {
 }
 
 #Wish_area {
-	width: 90px;
 	height: 50px;
 }
 
@@ -471,7 +473,7 @@ console.log("addwish");
 				item_idx : item_idx,
 				uidx : uidx,
 			},'json');
-			$('#Wish_area').load(location.href+' #Wish_area');
+			$('#Neighbor_area').load(location.href+' #Neighbor_area');
 			$('#count-area').load(location.href+' #count-area');
 			
 				console.log("찜 완료");
@@ -485,7 +487,7 @@ console.log("addwish");
 				item_idx : item_idx,
 				uidx : uidx,
 			},'json');
-			$('#Wish_area').load(location.href+' #Wish_area');
+			$('#Neighbor_area').load(location.href+' #Neighbor_area');
 			$('#count-area').load(location.href+' #count-area');
 			
 				console.log("찜 삭제 완료");
@@ -495,10 +497,10 @@ console.log("addwish");
 		//신고 팝업 여는 부분
 		$(function(){
 			$("#btn_open2").click(function(){ //레이어 팝업 열기 버튼 클릭 시
-				$('#popup2').bPopup();
+				$('#reportpopup').bPopup();
 			});
 			$("#btn_close2").click(function(){ //닫기
-				$('#popup2').bPopup().close();  
+				$('#reportpopup').bPopup().close();  
 			});			
 		});
 		
@@ -508,10 +510,10 @@ console.log("addwish");
 		//삭제 팝업 여는 부분
 		$(function(){
 			$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
-				$('#popup').bPopup();
+				$('#delpopup').bPopup();
 			});
 			$("#btn_close").click(function(){ //닫기
-				$('#popup').bPopup().close();  
+				$('#delpopup').bPopup().close();  
 			});			
 		});
 		
@@ -707,7 +709,7 @@ function itemdelete(){
 			<div class="container">
 				<div class="row">
 					<!-- 신고하기 팝업 영역  -->
-					<div id="popup2" class="Pstyle2">
+					<div id="reportpopup" class="Pstyle2">
 						<!-- form 은 기본 전송방식이 post 임!! 잊지말것  -->
 						<form method="POST" action="report.do" enctype="multipart/form-data" name="frm" id="joinFrm">
 							<div class="row border-bottom tr">
@@ -758,7 +760,7 @@ function itemdelete(){
 						</div>
 
 						<!-- 삭제 팝업 영역  -->
-				 <div id="popup" class="Pstyle" style="width:25%;">	
+				 <div id="delpopup" class="Pstyle" style="width:25%;">	
 		 				<div class="col-4 th" style="display: table-cell;">정말 게시글을 삭제하시겠습니까?</div>
 								<button class="btn" style="background: #00AAB2; color: #fff; width:50%;" onclick="itemdelete(); location.href='itemlist.do'">삭제하기</button>
 								<button class="btn" style="background: #00AAB2; color: #fff; width:50%;" type="button" id="btn_close">취소</button>
@@ -1018,7 +1020,6 @@ function itemdelete(){
 														
 														
 														
-														</div>
 														<div class="row border-bottom tr">
 															<div class="col-5 th"
 																style="display: table-cell; background-color: white; border: 0; font-size: 20px;">판매가격</div>
@@ -1028,7 +1029,8 @@ function itemdelete(){
 																value="${vo.uidx}">
 
 															<div class="col-8 td" style="display: table-cell;">
-																${vo.price} 원</div>
+																<span style="color:#00AAB2;"><fmt:formatNumber value="${ vo.price }" pattern="#,###"/></span>원
+																</div>
 																
 														</div>
 
@@ -1097,162 +1099,86 @@ function itemdelete(){
 																${vo.keyword}</div>
 														</div>
 
-														<div class="row border-bottom tr" style="border: 0;">
-															<div class="col-5 th"
-																style="display: table-cell; background-color: white; border: 0; font-size: 20px;">내용</div>
-															<div class="col-8 td" style="display: table-cell;">
-																${vo.contents}</div>
-														</div>
-														<div class="row border-bottom tr" style="border: 0;">
+													
 
 															<!-- 		<div class="col-4 th" style="display:table-cell;"></div> -->
-															<div class="col-8 td"
-																style="display: table-cell; background-color: white; border: 0;">
 																<div id="btn-area" style="display: flex; width: 100%; padding: 0px; flex-direction: row; justify-content: center;">
-																	<c:if test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
-																		<div class="wrap2">
-																			<input type="submit" id="btn_open2" class="btn btn"
-																				value="신고하기" class="btn"
-																				>
-																		</div>
+												<c:if test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
+														<div class="row border-bottom tr" style="border: 0;">
 																	
-
-																	<c:if test="${vo.state != 3}">
-																			<div class="wrap2">
-																				<input type="button" value="연락하기" class="btn"
-																					
-																					onclick="location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'">
-																			</div>
-																	</c:if>
+																		<input type="submit" id="btn_open2" style="background-color:#ef3030; padding: 0px;"class="btn btn" value="신고하기" class="btn">
+																		<c:if test="${vo.state != 3}">
+																			<input type="button" value="연락하기" class="btn" style="background-color:#00aab2;padding: 0px;"
+																				onclick="location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'">
+																		</c:if>
 																	<!-- 이웃 영역 시작 -->
-																		<div id="Neighbor_area">
+																		<div id="Neighbor_area" style="width:100%;     padding: 0px;">
 																			<c:if test="${result == 0 }">
-																				<input type="button"onclick="addNeighbor(); return false;"class="btn" value="이웃추가">
+																				<input type="button"style="background-color:#fab915;  padding: 0px;"onclick="addNeighbor(); return false;"class="btn" value="이웃추가">
 																			</c:if>
 
 																			<c:if test="${result != 0}">
-																				<button onclick="delNeighbor(); return false;"class="btn">이웃삭제</button>
+																				<input type="button" style="background-color:#fab915;  padding: 0px;"value="이웃삭제"onclick="delNeighbor(); return false;"class="btn">
 																			</c:if>
-																		</div>
 
-																		<div id="Wish_area">
 																			<c:if test="${wish == 0}">
-																				<button class="btn" onclick="addWish(); return false;">
-																					<p>찜 추가</p>
-																				</button>
+																				<input type="button" class="btn" style="background-color:#BBCD53;  padding: 0px;" value="찜 추가"onclick="addWish(); return false;">
 																			</c:if>
 
 																			<c:if test="${wish != 0}">
-																				<button class="btn" onclick="delWish(); return false;">
-																					<p>찜 삭제</p>
-																				</button>
+																				<input type="button" class="btn" style="background-color:#BBCD53;  padding: 0px;" value="찜 삭제"onclick="delWish(); return false;">
 																			</c:if>
 																		</div>
-																	</c:if>
-																	
+														</div>
+												</c:if>
 																	<c:if test="${userLoginInfo.uidx == vo.uidx}">
+																	<div class="row border-bottom tr" style="border: 0;">
 																			<c:if test="${vo.state != 3}">
-																				<button onclick=" location.href='itemmodify.do?item_idx=${vo.item_idx}'" style="width:70px;" class="btn "id="btn-modi" >수정</button>
+																				<button onclick=" location.href='itemmodify.do?item_idx=${vo.item_idx}'" style="" class="btn "id="btn-modi" >수정</button>
 																			</c:if>
-																		<button id="btn_open" class="btn"  style="width:70px;" >삭제</button>
-																		<button onclick="updatewdate()" class="btn"  style="width:70px;">끌올</button>
-																			<c:if test="${vo.state != 3}" >
-																				<select name="state"  class="state btn" onchange="updatestate();">
-																					<c:if test="${vo.state == 1 }">
-																						<option selected disabled hidden>거래중</option>
-																					</c:if>
-																					<c:if test="${vo.state == 2 }">
-																						<option selected disabled hidden>예약중</option>
-																					</c:if>
-																					<c:if test="${vo.state == 3 }">
-																						<option  selected disabled hidden>거래완료</option>
-																					</c:if>
-																					
-																					<option value="1">거래중</option>
-																					<option value="2">예약중</option>
-																					<option value="3">거래완료</option>
-																				</select>
-																			</c:if>
+																		<button id="btn_open" class="btn"  style="" >삭제</button>
+																		
+																		
+																			<button onclick="updatewdate()" class="btn"  style="">끌올</button>
+																				<c:if test="${vo.state != 3}" >
+																					<select name="state"  class="state btn" onchange="updatestate();">
+																						<c:if test="${vo.state == 1 }">
+																							<option selected disabled hidden>거래중</option>
+																						</c:if>
+																						<c:if test="${vo.state == 2 }">
+																							<option selected disabled hidden>예약중</option>
+																						</c:if>
+																						<c:if test="${vo.state == 3 }">
+																							<option  selected disabled hidden>거래완료</option>
+																						</c:if>
+																						
+																						<option value="1">거래중</option>
+																						<option value="2">예약중</option>
+																						<option value="3">거래완료</option>
+																					</select>
+																				</c:if>
+																	</div>
 																	</c:if>
-																	
-																</div><!-- btn-area  끝 -->
-															</div>
+																
+															
 														</div>
-
-													<!-- 테이블 div -->
-
-
-
-
-
-
-
-
-													<!-- <div class="container">
-				<div class="row"> -->
-													<div class="col-sm-6">
-														<div class="col-lg-6 col-sm-6">
-															<!--  .얘가 테두리 -->
-
-
-
-															<%-- <c:if test="${vo.cate_idx == 1}">
-						상품카테고리 > 가전제품 
-							</c:if>
-									<c:if test="${vo.cate_idx == 2}">
-						상품카테고리 > 생활용품
-							</c:if>
-									<c:if test="${vo.cate_idx == 3}">
-						상품카테고리 > 완구&취미
-							</c:if>
-									<c:if test="${vo.cate_idx == 4}">
-						상품카테고리 > 패션&의류
-							</c:if>
-									<c:if test="${vo.cate_idx == 5}">
-						상품카테고리 > 인테리어
-							</c:if>
-									<c:if test="${vo.cate_idx == 6}">
-						상품카테고리 > 반려동물용품
-							</c:if>
-									<c:if test="${vo.cate_idx == 7}">
-						상품카테고리 > 뷰티&악세
-							</c:if>
-									<c:if test="${vo.cate_idx == 8}">
-						상품카테고리 > 자동차용품
-							</c:if>
-									<c:if test="${vo.cate_idx == 9}">
-						상품카테고리 > 스포츠&레저
-							</c:if>
-
-									<div style="">
-										<c:if test="${vo.uidx == userLoginInfo.uidx}">
-											<c:if test="${vo.state != 3}">
-												<a href="itemmodify.do?item_idx=${vo.item_idx}">수정</a>
-											</c:if>
-											<a href="itemdelete.do?item_idx=${vo.item_idx}">삭제</a>
-										</c:if>
-										조회수 : ${viewCount} --%>
-
-														</div>
-
-
-
-
-
-
-													</div>
-												</div>
+													
+												</div>  <!-- viewcontent 끝 -->
+													
 											</div>
 										</div>
-
-
-										<div class="col-sm-6">
-											<div class="row">
-												<div class="col-lg-6 col-sm-6"></div>
-
+										
+										<div class="col-sm-12 col-lg-12" style="height:250px;">  <!--내용 하단 -->
+											
+												<div class="row border-bottom tr" style="border: 0; height:100%;">
+												<div class="col-5 th"
+													style="display: table-cell; background-color: white; border: 0; font-size: 20px;">내용</div>
+												<div class="col-8 td" style="display: table-cell;">
+													${vo.contents}</div>
 											</div>
-											<!-- card body 끝 -->
 										</div>
+										
+										<!-- 판매자의 다른 상품 -->
 										<div style="border-bottom:solid 2px;">
 											<h2 style="text-align: center;">
 												<a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님의 다른상품
@@ -1260,17 +1186,8 @@ function itemdelete(){
 										</div>
 										<div class="container-fluid">
 											<div class="row">
-												
-											
-											
-													<div id="slideOfInterested" style="width:100%; clear:both; overflow:hidden; position:relative; margin-top: 39px;">
-														<c:if test="${list.size() > 5}">
-															<div class="slide-btn slide-btn-prev" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ list.size() }" id="slide-btn-prev" style="left:0;"><img src='<%=request.getContextPath()%>/images/slicbtn_prev.png'></div>
-															<div class="slide-btn slide-btn-next" data-slide="#slider-interested" data-container="#slideOfInterested" data-itemsize="${ list.size() }" id="slide-btn-next" style="right:0;"><img src='<%=request.getContextPath()%>/images/slicbtn_next.png'></div>
-														</c:if>
 														<c:if test="${youritem.size() > 0}">
 															<c:forEach var="vo" items="${youritem}">
-														<div id="slider-interested" class="slide-container" style="display:flex; white-space:nowrap; font-size:0px; left:0; position:relative; transition: left 0.6s ease-in-out;">
 								
 														<div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">
 															<div class="card">
@@ -1317,9 +1234,6 @@ function itemdelete(){
 														</div>
 													</c:forEach>
 												</c:if>
-														</div>
-														</div>
-
 												<c:if test="${youritem.size() <= 0}">
 													<div style="text-align: center; border-top: solid 1px;">
 														<h3 style="text-align: center;">${vo.nickName}님의다른

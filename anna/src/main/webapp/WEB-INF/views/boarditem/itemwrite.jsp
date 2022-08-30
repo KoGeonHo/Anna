@@ -335,7 +335,7 @@
 					
 					$("a[name='delete']").on("click", function(e){ //삭제 버튼
 						e.preventDefault();
-						fn_deleteFile($(this));
+						fn_deleteFile($(this));e
 					});
 				});
 				

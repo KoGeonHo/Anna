@@ -161,11 +161,11 @@
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">내용</div>
 						<div class="col-8 td" style="display:table-cell;">
-							<textarea  class="form-control" id="contents" name="contents" rows="10" cols="25">${vo.contents}</textarea>
+							<textarea  class="form-control" id="summernote" name="contents" rows="10" cols="25">${vo.contents}</textarea>
 								<div class="contet_count" style="float:right;"></div>
 						</div>
 						<script>
-							
+						/* 	
 						$(document).ready(function() {
 			        		$('.contet_count').html("("+$(this).val().length+" / 500)"); //클래스 안에 0 / 500 출력
 				        		$('#contents').on('keyup', function() { // 안에 키 누르면 이벤트시작
@@ -178,7 +178,7 @@
 							            $('.contet_count').html("(500 / 500)"); //500자 라고 출력
 							        }
 							    });
-						});
+						}); */
 						</script>
 					</div>
 					
@@ -264,6 +264,35 @@ $("#joinFrm").submit(function(){
     });
 </script>
 	<script type="text/javascript">
+	
+	$('#summernote').summernote({
+		height : 400, // set editor height
+		minHeight : null, // set minimum height of editor
+		maxHeight : null, // set maximum height of editor
+		maxWidth : 840,
+		focus : true,
+		lang : 'ko-KR', // 기본 메뉴언어 US->KR로 변경
+		callbacks: {
+             onChange: function(contents, $editable) {
+               console.log('onChange:', contents, $editable);
+               console.log(contents.length+"글자수");
+               
+               $('.contet_count').html("("+contents.length+" / 500)"); //클래스 안에 0 / 500 출력
+              
+	               if($(this).val().length > 500) {
+						            $(this).val($(this).val().substring(0, 500)); //500자가 넘으면 500자 까지 잘라냄
+						            $('.contet_count').html("(500 / 500)"); //500자 라고 출력
+						            alert("내용은 최대 500자 까지 입력 가능합니다.");
+			              $('#summernote').keydown(function(e){ 
+			              		});
+			        		}
+           				}
+        		 }
+		});
+	
+	
+	
+	
 		var gfv_count = 2;
 	
 		$(document).ready(function(){
@@ -277,10 +306,6 @@ $("#joinFrm").submit(function(){
 				fn_insertBoard();
 			});
 			
-			$("#addFile").on("click", function(e){ //파일 추가 버튼
-				e.preventDefault();
-				fn_addFile();
-			});
 			
 			$("a[name='delete']").on("click", function(e){ //삭제 버튼
 				e.preventDefault();
@@ -300,14 +325,24 @@ $("#joinFrm").submit(function(){
 			comSubmit.submit();
 		}
 		
-		function fn_addFile(){
-			var str = "<p><input type='file' style='width:200px;' name='file"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-			$("#fileDiv").append(str);
-			$("a[name='delete']").on("click", function(e){ //삭제 버튼
-				e.preventDefault();
-				fn_deleteFile($(this));
-			});
-		}
+		$(document).ready(function() {
+			var i=2; // 변수설정은 함수의 바깥에 설정!
+		  $("#addFile").click(function() {
+		    if(i<=10){
+		    	
+		    	$("#fileDiv").append("<p style='margin:auto;'><input type='file' style='width:200px;' name='file"+i+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
+		    }
+		    
+		    i++;
+		    
+		    if(i==11){
+		    	$("#addFile").css("display","none");
+		    }
+		   
+		    
+
+		  });
+		});
 		
 		function fn_deleteFile(obj){
 			obj.parent().remove();
