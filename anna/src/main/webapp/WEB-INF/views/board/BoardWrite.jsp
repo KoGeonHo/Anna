@@ -2,11 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
 <title>글쓰기 페이지</title>
 <!-- include libraries(jQuery, bootstrap) -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -34,7 +36,7 @@
 <style>
     
 #file{
-	width: calc(100% - 35px);
+	width: 100%;
 
 }    
  
@@ -179,8 +181,15 @@ body {
 						<div class="col-4 th" style="display:table-cell;">첨부 파일</div>
 						
 						<div id="boxWrap" class="col-8 td" style="display:table-cell;">
-							<!-- <button type="button" id="file_btn">추가</button> -->
-							<input class="form-control" type="file" id="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
+							<div class="d-flex" style=" width:100%;">
+								<div style="flex:1">
+									<input class="form-control" type="file" id="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
+								</div>
+								<div>
+									<button type="button" class="btn" id="file_btn">추가</button>
+								</div>
+							</div>
+							
 						</div>
 					</div>
 					
@@ -210,7 +219,7 @@ body {
 					<div class="text-end tr">
 						<div class="td">
 							<button class="btn" type="button" id="write"style="background:#00AAB2; color:#fff;" onclick="check()">작성</button>
-							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="location.href='${path}/board/boardlist.do?=${pm.board_type}'">취소</button>
+							<button class="btn" style="background:#00AAB2; color:#fff;" type="button" onclick="history.back();">취소</button>
 						</div>
 					</div>
 					
@@ -339,7 +348,7 @@ function displayPlaces(places) {
             	console.log(x,y);
             	
             	var html ="<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>"
-            	html += "<input type='text' id='place_name' name='place_name' value='"+title+"'>"
+            	html += "<input type='hidden' id='place_name' name='place_name' value='"+title+"'>"
             	
             	 $("#clickLatlng").html(html);
             	
@@ -382,7 +391,7 @@ function displayPlaces(places) {
             	console.log(x,y);
             	
             	var html ="<input type='hidden' id='place_location' name='place_location' value='"+x+","+y+"'>"
-            	html += "<input type='text' id='place_name' name='place_name' value='"+title+"'>"
+            	html += "<input type='hidden' id='place_name' name='place_name' value='"+title+"'>"
             	
             	 $("#clickLatlng").html(html);
             	
@@ -440,8 +449,7 @@ function getListItem(index, places) {
         itemStr += '    <span>' +  places.address_name  + '</span>'; 
     }
                  
-      itemStr += '  <span class="tel">' + places.phone  + '</span>' + '<span>'+ places.id +'<span>'
-                '</div>';           
+      itemStr += '  <span class="tel">' + places.phone  + '</span></div>';           
 
     el.innerHTML = itemStr;
     el.className = 'item';
@@ -554,7 +562,7 @@ $(document).ready(function() {
   $("#file_btn").click(function() {
     if(i<=5){
     	
-    	$("#boxWrap").append("<input class='form-control' type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'><a class='del'>삭제</a>");
+    	$("#boxWrap").append("<input class='form-control' type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>");
     }
     
     i++;
@@ -630,28 +638,28 @@ var board_type = $("#board_type").val();
 		
 var title = $("#Title").val();
 		
-function check(){
+	function check(){
+		
+		var title = $("#Title").val();
+		
+		if(title == ""){
+			alert("제목을 입력하세요");
+			$("#Title").focus();
+			
+		}else if($("#board_type").val()==""){
+			alert("게시글 분류를 선택해주세요");
+			$("#board_type").focus();
+		}else if($("#summernote").val()==""){
+			alert("내용을 입력하세요");
+			$("#summernote").focus();
+			
+		}else{
+			
+			$("#frm").submit();
+			
+		}
 	
-	var title = $("#Title").val();
-	
-	if(title == ""){
-		alert("제목을 입력하세요");
-		$("#Title").focus();
-		
-	}else if($("#board_type").val()==""){
-		alert("게시글 분류를 선택해주세요");
-		$("#board_type").focus();
-	}else if($("#summernote").val()==""){
-		alert("내용을 입력하세요");
-		$("#summernote").focus();
-		
-	}else{
-		
-		$("#frm").submit();
-		
 	}
-
-}
 		
     
 $(document).ready(function () {
