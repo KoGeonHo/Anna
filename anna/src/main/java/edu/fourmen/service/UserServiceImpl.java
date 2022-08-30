@@ -416,5 +416,17 @@ public class UserServiceImpl implements UserService{
 		userDAO.updateReview(vo);
 	}
 
+	@Override
+	public List<ChatMessageVO> getAlarm(int uidx) {
+
+		return userDAO.getAlarm(uidx);
+	}
+
+	@Override
+	public void setAlarmRead(int uidx) {
+		// TODO Auto-generated method stub
+		userDAO.setAlarmRead(uidx);
+	}
+
 
 }

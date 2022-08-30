@@ -930,7 +930,7 @@ public class UserController {
 	}
 	
 	
-	//리뷰 등록
+	//거래완료시 빈 리뷰 등록
 	@RequestMapping(value="/insertMyReView.do")
 	public String insertMyReView(ReViewVO vo,HttpServletRequest request,HttpSession session) {
 		
@@ -958,6 +958,8 @@ public class UserController {
 		
 	}
 	
+	
+	//내가 작성한 리뷰, 상대방이 작성한 리뷰 get
 	@ResponseBody
 	@RequestMapping(value="/getReview.do",produces = "application/json; charset=utf8")
 	public HashMap<String,ReViewVO> getReview(ReViewVO vo, HttpServletRequest request,HttpSession session){
@@ -980,6 +982,7 @@ public class UserController {
 	}
 	
 	
+	//프로필 이미지 업데이트
 	@ResponseBody
 	@RequestMapping(value="/updateProfileImage.do",produces = "application/text; charset=utf8")
 	public String updateProfileImage(MultipartFile profile_image,HttpServletRequest request,HttpSession session) throws IllegalStateException, IOException {
@@ -1015,6 +1018,8 @@ public class UserController {
 		return "";
 	}
 	
+	
+	//리뷰 업데이트
 	@ResponseBody
 	@RequestMapping(value="/updateReView.do")
 	public String updateReView(ReViewVO vo,HttpServletRequest request,HttpSession session) {
@@ -1028,6 +1033,26 @@ public class UserController {
 		userService.updateReview(vo);
 		
 		return "";
+	}
+	
+	
+	@RequestMapping(value="/alarmView.do")
+	public String alarmView(Model model, HttpServletRequest request, HttpSession session) {
+		
+		session = request.getSession();
+		
+		int uidx = (int)session.getAttribute("uidx");
+		
+		List<ChatMessageVO> alarmList = userService.getAlarm(uidx);
+		
+		userService.setAlarmRead(uidx);
+		
+		model.addAttribute("path",path);
+		
+		model.addAttribute("alarmList",alarmList);
+		
+		return "user/alarmView";
+		
 	}
 	
 	

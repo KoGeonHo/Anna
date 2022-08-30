@@ -1,5 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page session="true" %>
+<%@ page trimDirectiveWhitespaces="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
 <head>
@@ -22,43 +25,137 @@
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
 <!-- path는 request.getContextPath()를 가져온것. -->
 </head>
+<style>
+
+
+@media all and (max-width : 575px){
+	.card-container{
+		width:100%
+	}
+	
+	.card{
+		flex-direction:row;
+	}
+	
+	.card-img-div{
+		width:120px; 
+		height:120px;
+	}
+}
+	
+@media all and (min-width : 576px){
+	.card-container{
+		width:50%
+	}
+	
+	.card{
+		flex-direction:column;
+	}
+	
+	.card-img-div{
+		width:100%; 
+		height:210px;
+	}
+}
+	
+	
+@media all and (min-width : 768px){
+	.card-container{
+		width:33.333333%
+	}
+	
+	.card{
+		flex-direction:column;
+	}
+	
+	.card-img-div{
+		width:100%; 
+		height:210px;
+	}
+}
+
+
+@media all and (min-width : 992px){
+	.card-container{
+		width:25%
+	}
+	
+	.card{
+		flex-direction:column;
+	}
+	
+	.card-img-div{
+		width:100%; 
+		height:210px;
+	}
+}
+@media all and (min-width : 1200px){
+	.card-container{
+		width:20%
+	}
+	
+	.card{
+		flex-direction:column;
+	}
+	
+	.card-img-div{
+		width:100%; 
+		height:210px;
+	}
+}
+
+.card-img-div{
+	border-radius:5px
+}
+
+.card-body{
+	padding:10px;
+}
+
+</style>
 <body>
 	<div class="wrapper">
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="container main" style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem; margin:0px;">찜 목록</h3>
-			<c:if test="${ empty wishList }">
-				<div class="border-bottom" style="padding:10px;">
-					<div class='text-center'>
-						찜 목록이 비어있습니다.
-					</div>
-				</div>
-			</c:if>
-			<c:if test="${ not empty wishList }">
-				<c:forEach var="i" items="${ wishList }">
-					<div style="padding:0 10px; display:flex; cursor:pointer;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ i.item_idx }'">
-						<div><img src="${ path }/resources/upload/${i.image1}" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';" style="width:110px; height:110px; border:2px solid #ccc; border-radius:10px; margin:10px;"></div>
-						<div style="flex:1; margin:auto; padding:10px;">
-							<div><h5>${ i.title }</h5></div>
-							<div>${ i.keyword }</div>
-							<div>
-								<c:if test="${ i.state eq 2 }"><span style="padding:5px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span></c:if>
-								<c:if test="${ i.state eq 3 }"><span style="padding:5px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span></c:if>
-								${ i.price }원</div>
+		<div class="wrapper main" >
+			<div class="container" style="flex:1;">
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">찜 목록</h3>
+				<c:if test="${ empty wishList }">
+					<div class="border-bottom" style="padding:10px;">
+						<div class='text-center'>
+							찜 목록이 비어있습니다.
 						</div>
-						<%-- <div class="text-center" style="width:100px; margin:auto;">
-							<button type="button" class="btn" onclick="" style="background:#00AAB2; color:#fff; margin:5px;">작성글</button>
-							<button type="button" class="btn" onclick="delNeighbor(${i.uidx})" style="background:#00AAB2; color:#fff; margin:5px;">삭제</button>
-						</div> --%>
 					</div>
-					<div class="text-end border-bottom" style="padding:5px;">
-						<img src="${path}/images/icon_chat_count.png" style="width:34px; height:auto; padding:3px;">${ i.chatCount }
-						<img src="${path}/images/icon_wish_count.png" style="width:30px; height:auto; padding:5px;">${ i.wishCount }
-						</div>
-				</c:forEach>
-			</c:if>
+				</c:if>
+				<c:if test="${ not empty wishList }">
+					<c:forEach var="i" items="${ wishList }"><!-- 
+						 --><div class="card-container" style="display:inline-block; font-size:1rem;">
+							<div class="card" style="margin:5px; display:flex; " onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ i.item_idx }'">
+								<div class="card-img-div" style="background:url('${ path }/resources/upload/${ i.image1 }'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+								<div class="card-body">
+									<div class="text-start" style="height:30px; display:flex; align-items:center;">
+										<c:if test="${ fn:length(i.title) > 8 }">
+											<b>${fn:substring(i.title,0,8) }...</b>
+										</c:if>
+										<c:if test="${ fn:length(i.title) <= 8 }">
+											<b>${ i.title }</b>
+										</c:if>
+										<c:if test="${ i.state eq 2 }"><span style="padding:3px; border-radius:5px; background:green; color:#fff; font-size:0.8rem; margin-left:5px;">예약중</span></c:if>
+										<c:if test="${ i.state eq 3 }"><span style="padding:3px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem; margin-left:5px;">거래완료</span></c:if>
+									</div>
+									<div>
+										<span style="color:#00AAB2;"><fmt:formatNumber value="${ i.price }" pattern="#,###"/></span>원
+									</div>
+							    	<div class="text-end">
+							    		<img src="${path}/images/icon_wish_count.png" style="width:26px; padding:2px;"> ${ i.wishCount }&nbsp;<img src="${path}/images/icon_chat_count.png" style="width:28px; padding:1px;"> ${ i.chatCount }
+							    	</div>
+							  	</div>
+							</div>
+						</div><!-- 
+					--></c:forEach>
+				</c:if>
+			</div>
 		</div>
 		
 		<!-- 푸터는 고정 -->

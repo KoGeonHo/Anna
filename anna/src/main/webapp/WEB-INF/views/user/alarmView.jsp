@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html>
@@ -20,52 +21,36 @@
 <link href="${ path }/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
+<link href="${ path }/css/mfb.css" rel="stylesheet">
+<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
 <!-- path는 request.getContextPath()를 가져온것. -->
-<script>
-	function delNeighbor(neighbor_idx){
-		$.ajax({
-			url : "${path}/boarditem/delNeighbor",
-			data : "neighbor_idx="+neighbor_idx,
-			success : function(){
-				location.reload();
-			}
-		});
-		
-		//${path}/BoardItem/delNeighbor?uidx=${uidx}&neighbor_idx=${i.uidx}
-	}
-</script>
+
 </head>
 <body>
 	<div class="wrapper">
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
-		<div class="container main" style="flex:1; overflow:auto;">
-			<h3 class="border-bottom" style="padding:1rem; margin:0px;">이웃 관리</h3>
-			<c:if test="${ empty nList }">
-				<div class="border-bottom" style="padding:10px;">
-					<div class='text-center'>
-						등록한 이웃이 없습니다.
-					</div>
-				</div>
-			</c:if>
-			<c:if test="${ not empty nList }">
-				<c:forEach var="i" items="${ nList }">
-					<div class="border-bottom" style="padding:10px; display:flex;">
-						<div style="width:100px; height:100px;"><img src="${i.profile_image}" onerror="this.onerror=null; this.src='${path}/images/NoProfile.png';" style="width:80px; height:80px; border-radius:100px; margin:10px;"></div>
-						<div style="flex:1; margin:auto; padding:10px;">
-							<div><h5>${ i.nickName }</h5></div>
-							<div>${ i.introduce }</div>
+		<div class="wrapper main" style="overflow:auto;">
+			<div class="container" style="position:relative;">
+				<h3 class="border-bottom" style="padding:1rem; margin:0px;">알림</h3>
+				<c:if test="${ empty alarmList }">
+					알림이 없습니다.
+				</c:if>
+				<c:if test="${ not empty alarmList }">
+					<c:forEach var="i" items="${ alarmList }">
+						<div class="border-bottom">
+							<div style="padding:15px;">
+								${ i.contents }
+							</div>
+							<div class="text-end" style="padding:5px;">
+								${ i.cDate }
+							</div>
 						</div>
-						<div class="text-center" style="width:100px; margin:auto;">
-							<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin:5px;" onclick="location.href='${path}/board/boardlist.do?searchUidx=${i.uidx}'">작성글</button>
-							<button type="button" class="btn" onclick="delNeighbor(${i.uidx})" style="background:#00AAB2; color:#fff; margin:5px;">삭제</button>
-						</div>
-					</div>
-				</c:forEach>
-			</c:if>
+					</c:forEach>
+				</c:if>
+			</div>
 		</div>
-		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		

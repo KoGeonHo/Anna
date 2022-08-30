@@ -662,6 +662,36 @@
 			item_idx = #{item_idx}
 			
 	</update>
+	
+	
+	<select id="getAlarm" parameterType="int" resultType="chatVO">
+	
+		SELECT
+			contents,
+			cDate
+		FROM
+			chat
+		WHERE
+			item_idx = 0 AND
+			invited = #{uidx}
+		ORDER BY 
+			cdate DESC
+		
+	</select>
+	
+	
+	<update id="setAlarmRead" parameterType="int">
+	
+		UPDATE
+			chat
+		SET
+			chat_read = 0
+		WHERE
+			item_idx = 0 AND
+			invited = #{uidx}
+		
+	</update>
+	
 </mapper>
 
 

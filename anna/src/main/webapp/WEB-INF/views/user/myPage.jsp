@@ -232,7 +232,7 @@
 				
 				<div id="listOfCommunity">
 					<div style="float:left; padding:5px;">${ userLoginInfo.nickName }님의 판매중인 상품</div>
-					<div style="float:right; padding:5px;" onclick="alert('준비중입니다.')">더 보기</div>
+					<div style="float:right; padding:5px;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">더 보기</div>
 					<%-- <div style="float:right; padding:5px;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">더 보기</div> --%>
 					
 					<c:if test="${myBoardItemList.size() > 0}">
@@ -381,7 +381,7 @@
 						<div class="text-center">판매 내역</div>
 					</div>
 					<div class="col-4" style="padding:0px;">
-						<div class="text-center btn-circle" onclick="location.href='chatList.do?type=sell'">
+						<div class="text-center btn-circle" onclick="location.href='alarmView.do'">
 							<c:if test="${ chkAlarm ne 0}">
 								<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding:2px; right:0; top:0; background:red; border-radius:10px; color:#fff;">${ chkAlarm }</div>
 							</c:if>
