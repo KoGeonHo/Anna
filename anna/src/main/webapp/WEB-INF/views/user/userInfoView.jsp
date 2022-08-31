@@ -71,18 +71,25 @@ $(function(){
 		}
 	});
 });
-	
-	
-	function openModal(){
-		$("#modal_pwd_chk").fadeIn();
+
+
+function openModal(){
+	$("#modal_pwd_chk").fadeIn();
+}
+
+function closeModal(){
+	$("#pwd_chk_msg").html("");
+	$("input[name=chkPwd]").val("");
+	$("#btn_pwd_chk").prop("disabled",true);
+	$("#modal_pwd_chk").fadeOut();
+}
+
+function userWithdrawal(){
+	if(confirm("정말 회원 탈퇴 하시겠습니까?")){
+		alert('준비중입니다.');
 	}
-	
-	function closeModal(){
-		$("#pwd_chk_msg").html("");
-		$("input[name=chkPwd]").val("");
-		$("#btn_pwd_chk").prop("disabled",true);
-		$("#modal_pwd_chk").fadeOut();
-	}
+}
+
 </script>
 </head>
 <body>
@@ -170,10 +177,11 @@ $(function(){
 				</div>
 				<div style="padding:5px 0;">
 					<div class="text-end">
-						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/user/userInfoMod.do';">회원정보 수정</button>
-						<c:if test="${ empty userInfo.kakao_auth  }">
+						<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/user/userInfoMod.do';">회원정보 수정</button>
+						<c:if test="${ empty userInfo.kakao_auth }">
 							<button id="btn_pwd_cng" class="btn" style="background:#BBCE53; color:#fff;" onclick="openModal()">비밀번호 변경</button>
 						</c:if>
+						<button class="btn" style="background:#00AAB2; color:#fff;" onclick="userWithdrawal()">회원탈퇴</button>
 					</div>
 				</div>
 			</div>
@@ -193,8 +201,8 @@ $(function(){
 						
 					</div>
 					<div class="text-end" style="padding:10px;">
-						<button id="btn_pwd_chk" class="btn btn1" style="background:#00AAB2; color:#fff;" disabled onclick="location.href='changePwd.do'">비밀번호 확인</button>
-						<button class="btn btn1" style="background:#00AAB2; color:#fff;" onclick="closeModal()">닫기</button>
+						<button id="btn_pwd_chk" class="btn" style="background:#00AAB2; color:#fff;" disabled onclick="location.href='changePwd.do'">비밀번호 확인</button>
+						<button class="btn" style="background:#00AAB2; color:#fff;" onclick="closeModal()">닫기</button>
 					</div>
 				</div>
 		</div>

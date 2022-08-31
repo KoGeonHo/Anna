@@ -59,7 +59,7 @@ function hover(element) {
 	  element.setAttribute('src', '<%=request.getContextPath()%>/images/icon_plus.png');
 	}
 	
-	console.log('${chkSellNewMessage }');
+	//console.log('${chkSellNewMessage }');
 </script>
 
 
@@ -91,8 +91,8 @@ function hover(element) {
 						</a>
 					</li>
 					<li>
-						<c:if test="${ not empty  chkAlarm}">
-							<c:if test="${ chkAlarm ne 0}">
+						<c:if test="${ not empty  chkAlarm }">
+							<c:if test="${ chkAlarm ne 0 }">
 							<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding: 0px 0px 0px 5px; right:1px; top:0; background:red; margin-left: 10px;
 												 margin-top: 10px; border-radius:10px; color:#fff; z-index:1;">${ chkAlarm }</div>
 							</c:if>
