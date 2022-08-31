@@ -34,16 +34,9 @@ public class HomeController {
 	@Autowired
 	BoardItemService boardItemService;
 	
-	@RequestMapping(value = "/")
-	public String home(Locale locale, Model model, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm, BoardItemVO vo) {
-		 
-		
-		return "redirect:/main.do";
-		
-		
-	}
+	
 
-	@RequestMapping(value = "/main.do"  )
+	@RequestMapping(value = "/"  )
 	public String main(Model model, HttpServletRequest request, HttpSession session,BoardVO bv, PageMaker pm, BoardItemVO vo) {
 		
 		
@@ -151,7 +144,7 @@ public class HomeController {
 				
 				
 				
-		return "main";
+		return "index";
 	}
 	
 	@ResponseBody
@@ -226,18 +219,6 @@ public class HomeController {
 	}
 	
 	
-	
-	@RequestMapping(value="test")
-	public String test() {
-		
-		return "test";
-	}
-	
-	@RequestMapping(value="test2")
-	public String test2() {
-		
-		return "test2";
-	}
 }
 	
 	
