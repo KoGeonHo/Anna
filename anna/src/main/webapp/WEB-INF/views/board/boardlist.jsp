@@ -318,188 +318,160 @@ text-decoration: none;
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 	<div class="main" id="main" style="overflow: auto; flex:1; width:100%;">
-		
 		<img alt="" src="../images/board_bn.jpg" style="width:100%; margin-bottom: 34px;" class="m-none">
-		
 		<div class="container">
-		<c:if test="${pm.board_type ne 'notice' }">
-			<div class="tabs" style="text-align: center; padding-left: 30px; padding-right: 30px;">
-				<input id="tab1" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=free<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'free' }">checked</c:if>  />
-				<label for="tab1">일상&amp;소통</label>
-				<input id="tab2" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=job<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'job' }">checked</c:if>/>
-				<label for="tab2">구인&amp;구직</label>
-				<input id="tab3" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=meeting<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'meeting' }">checked</c:if>/>
-				<label for="tab3">모임</label>
-				<input id="tab4" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=hotplace<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'hotplace' }">checked</c:if>/>
-				<label for="tab4">핫플레이스</label>
-				<div class="line"></div>
-			</div>
-		</c:if>
-		
-		<c:if test="${pm.searchUidx != null and pm.searchUidx != 0 }">
-			
-			<div style="margin: -25px 0 20px 0;"><span style="font-size: 23px;">${search_nickName}님이 작성하신 글</span></div>
-			
-		</c:if>
-		
-	
-		<div class="col-md-12  col-sm-12 " style=" display: flex; ">
-			<div style="flex:1">
-				<form method="get" action="boardlist.do" class="d-flex "  id="search">
-					
-					<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
-					
-					<c:if test="${pm.board_type != 'free'}">
-					<input type="hidden" value="1" name="page">	
-					</c:if>
-					
-					<c:if test="${pm.board_type == null }">
-					<input type="hidden" value="${pm.searchUidx}" name="searchUidx">
-					</c:if>
-					
-					<c:if test="${pm.location_auth != null }">	
-					<input type="hidden" value="${pm.location_auth}" name="location_auth">
-					</c:if>
-					
-					<input type="text" name="SearchVal" class="search-control" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
-					<input type="submit" value="검색" class="btn btn-outline-primary">
-					
-				</form>
-			</div>
-			<div>
-				<c:if test="${ pm.board_type eq 'free' }">
-					<button type="button" id="btn"class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="write2()">글쓰기</button>
-				</c:if>
-			</div>
-			
-			
-			
-		</div>
-
-		<form>
-			
-
-		<c:if test="${pm.board_type eq 'free'}">
-			<c:if test="${board.size() ==0}">		
-				<div style="margin: 15px 0 0 0;"><span style="font-size:25px">등록된 게시물이 없습니다.</span></div>
+			<!-- 커뮤니티 메뉴탭 시작-->
+			<c:if test="${pm.board_type ne 'notice' }">
+				<div class="tabs" style="text-align: center; padding-left: 30px; padding-right: 30px;">
+					<input id="tab1" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=free<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'free' }">checked</c:if>  />
+					<label for="tab1">일상&amp;소통</label>
+					<input id="tab2" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=job<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'job' }">checked</c:if>/>
+					<label for="tab2">구인&amp;구직</label>
+					<input id="tab3" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=meeting<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'meeting' }">checked</c:if>/>
+					<label for="tab3">모임</label>
+					<input id="tab4" type="radio" name="tab_btn" onclick='location.href="${path}/board/boardlist.do?board_type=hotplace<c:if test="${pm.searchUidx != null and pm.searchUidx != 0}">&searchUidx=${pm.searchUidx}</c:if><c:if test="${pm.location_auth != null }">&location_auth=${pm.location_auth}</c:if>";'<c:if test="${ pm.board_type eq 'hotplace' }">checked</c:if>/>
+					<label for="tab4">핫플레이스</label>
+					<div class="line"></div>
+				</div>
 			</c:if>
-		
-			<div id="bo_gall" style="width:100%">
-				<ul id="gall_ul" class="gall_row">
-			
-			<c:if test="${board.size()>0}">
-				<c:forEach var="vo" items="${board}">
-					
-					<li class="gall_li col-gn-4 gallWST" style="margin-bottom:5px;">
-            			<div class="gall_box" >
-                			<div class="gall_con">
-                    			<div class="gall_boxa">
-                        			<a href="viewBoard.do?Bidx=${vo.bidx}">
-                  						<em class="iconPs bo_tit"></em>
-                  						<i class="imgAr">
-                  							<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px">
-                  						</i>
-                  						<em class="gall_info">
-                     						<span class="sound_only">조회 </span>
-                     						<i class="fa fa-eye" aria-hidden="true"></i>
-                     						${vo.hit}
-                     						<span class="gall_date">
-                     							<span>작성일</span>
-                     							<i class="fa fa-clock-o" aria-hidden="true"></i>
-                     							${vo.wdate }
-                     						</span>
-                     						<u>
-                     							<span>작성자 </span>${vo.nickName }
-                     						</u>
-                  						</em>
-                        			</a>
-                    			</div>
-			                    <div class="gall_text_href bo_tit" >
-			                    	<a href="viewBoard.do?Bidx=${vo.bidx}" style="float:left;">
-			                            <c:if test="${ fn:length(vo.title) > 10 }">
-											<b>${fn:substring(vo.title,0,9) }...</b>
-										</c:if>
-										<c:if test="${ fn:length(vo.title) <= 10 }">
-											<b>${ vo.title }</b>
-										</c:if>
-			                        </a>
-			                        <span style="float:right;"><img src="../images/icon_comment.png" style="margin-top: -1px; margin-right: 3px; height: 15px;">${vo.ccount}</span>
-			                        <span style="float:right;"><img src="../images/icon_like.png" height="23px" style="margin-top:-4px;">${vo.cntLike}</span>
-			                    </div>
-			                </div>
-            			</div>
-        			</li>
-					
-				</c:forEach>
+			<!-- 커뮤니티 메뉴탭 끝-->
+			<c:if test="${pm.searchUidx != null and pm.searchUidx != 0 }">
+				<div style="margin: -25px 0 20px 0;"><span style="font-size: 23px;">${search_nickName}님이 작성하신 글</span></div>
 			</c:if>
-
-				</ul>
-			</div>	
-		</c:if>
-		<c:if test="${pm.board_type != 'free'}">
-			<div class="table-responsive custom-table-responsive">
-				<div class="list custom-table">
-					<div class="tr border-bottom" id="plist-top">
-						<div class="th" style="width:40%;">제목</div>
-						<div class="th" style="width:20%;">작성자</div>
-						<div class="th" style="width:20%;">작성일</div>
-						<div class="th" style="width:10%;">조회수</div>
-						<div class="th" style="width:10%;">추천</div>
-					</div>
+			<div class="col-md-12  col-sm-12 " style=" display: flex;">
+				<div style="flex:1">
+					<!-- 검색기능 시작-->
+					<form method="get" action="boardlist.do" class="d-flex "  id="search">
+						<input type="hidden" value="${pm.board_type}" name="board_type" id="board_type">
+						<c:if test="${pm.board_type != 'free'}">
+							<input type="hidden" value="1" name="page">	
+						</c:if>
+						<c:if test="${pm.board_type == null }">
+							<input type="hidden" value="${pm.searchUidx}" name="searchUidx">
+						</c:if>
+						<c:if test="${pm.location_auth != null }">	
+							<input type="hidden" value="${pm.location_auth}" name="location_auth">
+						</c:if>
+						<input type="text" name="SearchVal" class="search-control" <c:if test="${!empty pm.searchVal}">value="${pm.searchVal}"</c:if> placeholder="검색어를 입력해주세요">
+						<input type="submit" value="검색" class="btn btn-outline-primary">	
+					</form>
+					<!-- 검색기능 끝-->
+				</div>
+				<div>
+					<c:if test="${ pm.board_type eq 'free' }">
+						<button type="button" id="btn"class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="write2()">글쓰기</button>
+					</c:if>
+				</div>
+			</div>
+			<form>
+				<c:if test="${pm.board_type eq 'free'}">
 					<c:if test="${board.size() ==0}">		
 						<div style="margin: 15px 0 0 0;"><span style="font-size:25px">등록된 게시물이 없습니다.</span></div>
-					</c:if>
-						<c:if test="${ not empty board }">
-							<c:forEach var="vo" items="${ board }">
-		
-								<div class="tr border-bottom d-flex">
-									
-										
-											<div class="title" onClick="location.href='<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${vo.bidx}'">
-												<span style="font-weight:bold" class="p">${vo.title }</span>
-													<div class="value">
-														<span  style="font-weight:bold">${vo.title }</span>
-														<c:if test="${vo.image1 != null}">
-															<span><img src="../images/icon_image.png" style="height:15px; margin-top: -5px;"></span>
+					</c:if>		
+					<div id="bo_gall" style="width:100%">
+						<ul id="gall_ul" class="gall_row">
+							<c:if test="${board.size()>0}">
+								<c:forEach var="vo" items="${board}">
+									<li class="gall_li col-gn-4 gallWST" style="margin-bottom:5px;">
+		            					<div class="gall_box" >
+		                					<div class="gall_con">
+		                    					<div class="gall_boxa">
+		                        					<a href="viewBoard.do?Bidx=${vo.bidx}">
+		                  								<em class="iconPs bo_tit"></em>
+		                  								<i class="imgAr">
+		                  									<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px">
+		                  								</i>
+		                  								<em class="gall_info">
+		                     								<span class="sound_only">조회 </span>
+		                     								<i class="fa fa-eye" aria-hidden="true"></i>
+		                     								${vo.hit}
+		                     								<span class="gall_date">
+		                     									<span>작성일</span>
+		                     									<i class="fa fa-clock-o" aria-hidden="true"></i>
+		                     									${vo.wdate }
+		                     								</span>
+		                     								<u>
+		                     									<span>작성자 </span>${vo.nickName }
+		                     								</u>
+		                  								</em>
+		                        					</a>
+		                    					</div>
+					                    		<div class="gall_text_href bo_tit" >
+					                    			<a href="viewBoard.do?Bidx=${vo.bidx}" style="float:left;">
+							                            <c:if test="${ fn:length(vo.title) > 10 }">
+															<b>${fn:substring(vo.title,0,9) }...</b>
 														</c:if>
-													</div>
-												
-												<div class="value">
-													<span class="nickName">
-														<c:if test="${pm.board_type ne 'notice' }">
-															${ vo.nickName }
+														<c:if test="${ fn:length(vo.title) <= 10 }">
+															<b>${ vo.title }</b>
 														</c:if>
-														<c:if test="${pm.board_type eq 'notice' }">
-															관리자
-														</c:if>
-													</span> 
-													<span class="hit">조회${vo.hit}</span>
-													<span class="wdate">${vo.wdate }</span>
-												</div>
-											</div>
-										
-											<a class="com-btn value">
-												<span class="ccount">${vo.ccount }</span>
-												<span>댓글</span>
-											</a>
-											<div class="td text-center p" style="width:20%;">
-												<c:if test="${pm.board_type ne 'notice' }">
-													${ vo.nickName }
-												</c:if>
-												<c:if test="${pm.board_type eq 'notice' }">
-													관리자
-												</c:if>
-											</div>
-											<div class="td text-center p" style="width:20%;">${ vo.wdate }</div>
-											<div class="td text-center p" style="width:10%;">${ vo.hit }</div>
-											<div class="td text-center p" style="width:10%;">${ vo.cntLike}</div>
-										
-								</div>
-								
-							
-							</c:forEach>
-						</c:if>
+					                        		</a>
+							                        <span style="float:right;"><img src="../images/icon_comment.png" style="margin-top: -1px; margin-right: 3px; height: 15px;">${vo.ccount}</span>
+							                        <span style="float:right;"><img src="../images/icon_like.png" height="23px" style="margin-top:-4px;">${vo.cntLike}</span>
+					                    		</div>
+					                		</div>
+		            					</div>
+		        					</li>
+								</c:forEach>
+							</c:if>
+						</ul>
 					</div>
+				</c:if>
+				<c:if test="${pm.board_type != 'free'}">
+					<div class="table-responsive custom-table-responsive">
+						<div class="list custom-table">
+							<div class="tr border-bottom" id="plist-top">
+								<div class="th" style="width:40%;">제목</div>
+								<div class="th" style="width:20%;">작성자</div>
+								<div class="th" style="width:20%;">작성일</div>
+								<div class="th" style="width:10%;">조회수</div>
+								<div class="th" style="width:10%;">추천</div>
+							</div>
+							<c:if test="${board.size() ==0}">		
+								<div style="margin: 15px 0 0 0;"><span style="font-size:25px">등록된 게시물이 없습니다.</span></div>
+							</c:if>
+							<c:if test="${ not empty board }">
+								<c:forEach var="vo" items="${ board }">
+									<div class="tr border-bottom d-flex">
+										<div class="title" onClick="location.href='<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${vo.bidx}'">
+											<span style="font-weight:bold" class="p">${vo.title }</span>
+											<div class="value">
+												<span  style="font-weight:bold">${vo.title }</span>
+												<c:if test="${vo.image1 != null}">
+													<span><img src="../images/icon_image.png" style="height:15px; margin-top: -5px;"></span>
+												</c:if>
+											</div>
+											<div class="value">
+												<span class="nickName">
+													<c:if test="${pm.board_type ne 'notice' }">
+														${ vo.nickName }
+													</c:if>
+													<c:if test="${pm.board_type eq 'notice' }">
+														관리자
+													</c:if>
+												</span> 
+												<span class="hit">조회${vo.hit}</span>
+												<span class="wdate">${vo.wdate }</span>
+											</div>
+										</div>
+										<a class="com-btn value">
+											<span class="ccount">${vo.ccount }</span>
+											<span>댓글</span>
+										</a>
+										<div class="td text-center p" style="width:20%;">
+											<c:if test="${pm.board_type ne 'notice' }">
+												${ vo.nickName }
+											</c:if>
+											<c:if test="${pm.board_type eq 'notice' }">
+												관리자
+											</c:if>
+										</div>
+										<div class="td text-center p" style="width:20%;">${ vo.wdate }</div>
+										<div class="td text-center p" style="width:10%;">${ vo.hit }</div>
+										<div class="td text-center p" style="width:10%;">${ vo.cntLike}</div>
+									</div>
+								</c:forEach>
+							</c:if>
+						</div>
 			
 			
 				
@@ -525,30 +497,25 @@ text-decoration: none;
 			</div>
 		</div>
 		
-				<c:if test="${ pm.board_type eq 'notice' }">
-					<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
-						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=notice';">글쓰기</button>
+					<c:if test="${ pm.board_type eq 'notice' }">
+						<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
+							<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=notice';">글쓰기</button>
+						</c:if>
 					</c:if>
-				</c:if>
 					<c:if test="${ pm.board_type ne 'notice' and pm.board_type ne 'free' }">
 						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="write2()">글쓰기</button>
 					</c:if>
-				
-			
-		</div>
-			<div class="mdiv"></div>
+				</div>
+				<div class="mdiv"></div>
 			</c:if>
 	
-		</form>
+			</form>
 
-			
+		</div>
 
-	
-</div>
-
-      <!-- 퀵메뉴 시작 -->
-      <%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>         
-      <!-- 퀵메뉴 종료 --> 
+	    <!-- 퀵메뉴 시작 -->
+	    <%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>         
+	    <!-- 퀵메뉴 종료 --> 
 
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
@@ -679,8 +646,8 @@ const GetList = function(currentPage){
 			//로딩중이 아니라고 표시한다.
 			isLoding=false;
 			//console.log("ajax"); 
-		}	
-	});
+			}	
+		});
   }
 }
 
