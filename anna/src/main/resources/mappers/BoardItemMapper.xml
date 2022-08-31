@@ -119,8 +119,6 @@
 						,Title
 						,contents
 						,wdate
-						,addr1
-						,addr2
 						,addr_Code
 						,image1
 						,image2
@@ -144,8 +142,6 @@
 						,#{title}
 						,#{contents}
 						,now()
-						,#{addr1}
-						,#{addr2}
 						,#{addr_code}
 						,#{image1}
 						,#{image2}
@@ -200,8 +196,6 @@
 						,Title = #{title}
 						,contents = #{contents}
 						,wdate = now()
-						,addr1 = #{addr1}
-						,addr2 = #{addr2}
 						,addr_Code = #{addr_code}
 						<if test="image1 != null">
 						,image1 = #{image1}
