@@ -182,7 +182,7 @@
 					</select>
 		    		<script>
 			    		let locationList = [${ userLoginInfo.location_auth }];
-			    		console.log('${ userLoginInfo.location_auth }');
+			    		//console.log('${ userLoginInfo.location_auth }');
 			    		let html = '';
 			    		$.ajax({
 							url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
