@@ -124,7 +124,18 @@ margin-left: 15px;
     margin-left: 8%;
     margin-top: 8px;
     margin-bottom: 8px;
+    
 }
+
+#btn-area{
+display:none;
+
+}
+
+#Neighbor_area-web{
+	display:flex;
+}
+
 
 #btn-area .btn{
 	text-align:center;
@@ -492,9 +503,9 @@ console.log("addwish");
 		if( uidx != null){		
 			$.post('addWish',{
 				item_idx : item_idx,
-				uidx : uidx,
 			},'json');
 			$('#Neighbor_area').load(location.href+' #Neighbor_area');
+			$('#Neighbor_area-web').load(location.href+' #Neighbor_area-web');
 			$('#count-area').load(location.href+' #count-area');
 			
 				console.log("찜 완료");
@@ -506,9 +517,9 @@ console.log("addwish");
 		if(uidx != null){
 			$.post('delWish',{
 				item_idx : item_idx,
-				uidx : uidx,
 			},'json');
 			$('#Neighbor_area').load(location.href+' #Neighbor_area');
+			$('#Neighbor_area-web').load(location.href+' #Neighbor_area-web');
 			$('#count-area').load(location.href+' #count-area');
 			
 				console.log("찜 삭제 완료");
@@ -1120,7 +1131,6 @@ function itemdelete(){
 																${vo.keyword}</div>
 														</div>
 
-													
 
 															<!-- 		<div class="col-4 th" style="display:table-cell;"></div> -->
 											<div id="btn-area-web" style="display: flex; width: 100%; padding: 0px; flex-direction: row; justify-content: center;">
@@ -1130,7 +1140,7 @@ function itemdelete(){
 																			<input type="button"  onclick="<c:if test="${vo.state!=3 }">location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'</c:if> <c:if test="${vo.state ==3 }">alert('이미 거래가 완료된 글입니다');</c:if>" value="연락하기" class="btn" style="background-color:#00aab2;padding: 0px;" >
 																		<input type="submit" id="btn_open2" style="background-color:#d92929; padding: 0px;"class="btn btn" value="신고하기" class="btn">
 																	<!-- 이웃 영역 시작 -->
-																		<div id="Neighbor_area" style="width:100%;     padding: 0px;">
+																		<div id="Neighbor_area-web" style="width:100%;     padding: 0px;">
 																			<c:if test="${result == 0 }">
 																				<input type="button"style="background-color:#fab915;  padding: 0px;"onclick="addNeighbor(); return false;"class="btn" value="이웃추가">
 																			</c:if>
@@ -1149,29 +1159,29 @@ function itemdelete(){
 																		</div>
 															</div>
 													</c:if>
-																	<c:if test="${userLoginInfo.uidx == vo.uidx}">
-																	<div class="row  tr" style="border: 0;">
-																			<button onclick="updatewdate()" class="btn"  style="background-color:#BBCD53; padding: 0px;">끌올</button>
-																				
-																			<select name="state"  class="state btn" onchange="updatestate();" id="state" style="background-color:#00aab2;">
-																				<c:if test="${vo.state == 1 }">
-																					<option selected disabled hidden>거래중</option>
-																				</c:if>
-																				<c:if test="${vo.state == 2 }">
-																					<option selected disabled hidden>예약중</option>
-																				</c:if>
-																				<c:if test="${vo.state == 3 }">
-																					<option  selected disabled hidden>거래완료</option>
-																				</c:if>
-																				
-																				<option value="1">거래중</option>
-																				<option value="2">예약중</option>
-																			</select>
-																				
-																		<button onclick="<c:if test="${vo.state ==3 }">alert('거래완료 처리된 글은 수정이 불가능합니다');</c:if> <c:if test="${vo.state != 3 }">location.href='itemmodify.do?item_idx=${vo.item_idx}'</c:if>" style="background-color:#fab915;" class="btn "id="btn-modi" >수정</button>
-																		<button id="btn_open" class="btn"  style="background-color:#d92929;" >삭제</button>
-																	</div>
+													<c:if test="${userLoginInfo.uidx == vo.uidx}">
+														<div class="row  tr" style="border: 0;">
+																<button onclick="updatewdate()" class="btn"  style="background-color:#BBCD53; padding: 0px;">끌올</button>
+																	
+																<select name="state"  class="state btn" onchange="updatestate();" id="state" style="background-color:#00aab2;">
+																	<c:if test="${vo.state == 1 }">
+																		<option selected disabled hidden>거래중</option>
 																	</c:if>
+																	<c:if test="${vo.state == 2 }">
+																		<option selected disabled hidden>예약중</option>
+																	</c:if>
+																	<c:if test="${vo.state == 3 }">
+																		<option  selected disabled hidden>거래완료</option>
+																	</c:if>
+																	
+																	<option value="1">거래중</option>
+																	<option value="2">예약중</option>
+																</select>
+																	
+															<button onclick="<c:if test="${vo.state ==3 }">alert('거래완료 처리된 글은 수정이 불가능합니다');</c:if> <c:if test="${vo.state != 3 }">location.href='itemmodify.do?item_idx=${vo.item_idx}'</c:if>" style="background-color:#fab915;" class="btn "id="btn-modi" >수정</button>
+															<button id="btn_open" class="btn"  style="background-color:#d92929;" >삭제</button>
+														</div>
+													</c:if>
 																
 															
 											</div>
@@ -1207,15 +1217,15 @@ function itemdelete(){
 																			<c:if test="${result != 0}">
 																				<input type="button" style="background-color:#fab915;  padding: 0px;"value="이웃삭제"onclick="delNeighbor(); return false;"class="btn">
 																			</c:if>
-
+																			
 																			<c:if test="${wish == 0}">
 																				<input type="button" class="btn" style="background-color:#BBCD53;  padding: 0px;" value="찜 추가"onclick="addWish(); return false;">
 																			</c:if>
-
 																			<c:if test="${wish != 0}">
 																				<input type="button" class="btn" style="background-color:#BBCD53;  padding: 0px;" value="찜 삭제"onclick="delWish(); return false;">
 																			</c:if>
 																		</div>
+																		<input type="text" value="${wish}">asd
 															</div>
 													</c:if>
 																	<c:if test="${userLoginInfo.uidx == vo.uidx}">
@@ -1341,7 +1351,7 @@ function itemdelete(){
 			<script
 				src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.js"></script>
 			<script src="../js/boarditem2.js"></script>
-
+</div>
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->

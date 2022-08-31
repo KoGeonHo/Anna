@@ -21,7 +21,6 @@ import edu.fourmen.service.BoardItemService;
 import edu.fourmen.service.BoardService;
 import edu.fourmen.vo.BoardItemVO;
 import edu.fourmen.vo.BoardVO;
-import edu.fourmen.vo.Criteria;
 import edu.fourmen.vo.PageMaker;
 import edu.fourmen.vo.SearchVO;
 

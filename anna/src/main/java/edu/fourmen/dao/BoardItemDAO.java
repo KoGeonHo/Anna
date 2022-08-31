@@ -150,10 +150,10 @@ public class BoardItemDAO {
 		return sqlSession.insert(efdb+".addWish",del);
 	}
 	
-	public int checkWish(int neighbor_idx, int uidx) {
+	public int checkWish(int item_idx, int uidx) {
 		HashMap<String,Integer> del = new HashMap<String,Integer>();
 		
-		del.put("negibor_idx", neighbor_idx);
+		del.put("item_idx", item_idx);
 		del.put("uidx", uidx);
 		
 		return sqlSession.selectOne(efdb+".checkWish",del);
