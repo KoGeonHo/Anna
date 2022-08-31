@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,12 +106,22 @@ public class BoardItemDAO {
 		return sqlSession.selectList(efdb+".mychat",cvo);
 	}
 	
-	public int addNeighbor(BoardItemVO vo) {
-		return sqlSession.insert(efdb+".addNeighbor",vo);
+	public int addNeighbor(int neigbor_idx,int uidx) {
+		
+		HashMap<String,Integer> del = new HashMap<String,Integer>();
+		
+		del.put("uidx", uidx);
+		del.put("neighbor_idx", neigbor_idx);
+		
+		return sqlSession.insert(efdb+".addNeighbor",del);
 	}
 
-	public int neighbor_check(BoardItemVO bvo) {
-		return sqlSession.selectOne(efdb+".neighbor_check",bvo);
+	public int neighbor_check(int neighbor_idx,int uidx) {
+		HashMap<String,Integer> del = new HashMap<String,Integer>();
+		del.put("neighbor_idx", neighbor_idx);
+		del.put("uidx", uidx);
+		
+		return sqlSession.selectOne(efdb+".neighbor_check",del);
 	}
 	
 	public List<BoardItemVO> neighbor_list(BoardItemVO nvo){
@@ -130,16 +141,32 @@ public class BoardItemDAO {
 	}
 	
 	
-	public int addwist(BoardItemVO vo){
-		return sqlSession.insert(efdb+".addWish",vo);
+	public int addwish(int item_idx, int uidx){
+		HashMap<String,Integer> del = new HashMap<String,Integer>();
+		
+		del.put("item_idx", item_idx);
+		del.put("uidx", uidx);
+		
+		return sqlSession.insert(efdb+".addWish",del);
 	}
 	
-	public int checkWish(BoardItemVO wvo) {
-		return sqlSession.selectOne(efdb+".checkWish",wvo);
+	public int checkWish(int neighbor_idx, int uidx) {
+		HashMap<String,Integer> del = new HashMap<String,Integer>();
+		
+		del.put("negibor_idx", neighbor_idx);
+		del.put("uidx", uidx);
+		
+		return sqlSession.selectOne(efdb+".checkWish",del);
 	}
 		
-	public int delWish(BoardItemVO wvo) {
-		return sqlSession.delete(efdb+".delWish",wvo);
+	public int delWish(int item_idx, int uidx) {
+		HashMap<String,Integer> del = new HashMap<String,Integer>();
+		
+		del.put("item_idx", item_idx);
+		del.put("uidx", uidx);
+		
+		
+		return sqlSession.delete(efdb+".delWish",del);
 	}
 	
 	public int WishCount(int item_idx) {

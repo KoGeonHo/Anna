@@ -546,8 +546,6 @@ console.log("addwish");
 				// AJAX -> addNeighbor 실행 및 출력값 가져오기
 				$.post('./addNeighbor',{
 					neighbor_idx : ${vo.uidx},
-					uidx : uidx,
-					item_idx : item_idx,
 				}, function(data) {
 					uidx = data["uidx"];
 				},'json');

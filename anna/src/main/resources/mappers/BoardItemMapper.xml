@@ -288,7 +288,7 @@
 										<!-- 임시로 지정한것! 바꿀것!@!#!!@#@!@# -->
 	</select>
 	
-	<select id="neighbor_check" resultType="int" parameterType="BoardItemVO">
+	<select id="neighbor_check" resultType="int" parameterType="hashmap">
 		select COUNT(*) from Neighbor 
 		where uidx = #{uidx}
 		 and  neighbor_idx = #{neighbor_idx}
@@ -299,7 +299,7 @@
  			select nickname from AnnaUser where uidx = neighbor_idx )as nickName 
  		from Neighbor where uidx = #{uidx}
 	</select>	
-	<insert id="addNeighbor" >
+	<insert id="addNeighbor" parameterType="hashmap">
 		insert into Neighbor
 					(
 					 uidx
@@ -313,7 +313,7 @@
 	</insert>
 	
 
-	<delete id="delneighbor" parameterType="java.util.HashMap">
+	<delete id="delneighbor" parameterType="hashmap">
 		delete from Neighbor 
 		where 
 		uidx = #{uidx} AND
@@ -369,11 +369,11 @@
 	 		  order by a.cdate desc
 	</select>
 	
-	<insert id="addWish">
+	<insert id="addWish" parameterType="hashmap">
 		insert into Wish_list(uidx, item_idx) values(#{uidx},#{item_idx})
 	</insert>
 	
-	<select id="checkWish" parameterType="BoardItemVO" resultType="int">
+	<select id="checkWish" parameterType="hashmap" resultType="int">
 		 select count(*) from Wish_list where item_idx = #{item_idx} and uidx = #{uidx}
 	</select>
 	
@@ -407,7 +407,7 @@
 	
 	
 	
-	<delete id ="delWish" parameterType="BoardItemVO">
+	<delete id ="delWish" parameterType="hashmap">
 		delete from Wish_list
 		where item_idx = #{item_idx} and uidx = #{uidx}
 	</delete>
