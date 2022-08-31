@@ -102,8 +102,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public int neighbor_check(BoardItemVO bvo) {
-		int result = boarditemdao.neighbor_check(bvo);
+	public int neighbor_check(int neighbor_idx, int uidx) {
+		int result = boarditemdao.neighbor_check(neighbor_idx, uidx);
 		return result;
 	}
 
@@ -120,8 +120,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 	}
 
 	@Override
-	public int checkWish(int neighbor_idx, int uidx) {
-		return boarditemdao.checkWish(neighbor_idx,uidx);
+	public int checkWish(int item_idx, int uidx) {
+		return boarditemdao.checkWish(item_idx,uidx);
 	}
 	
 	@Override

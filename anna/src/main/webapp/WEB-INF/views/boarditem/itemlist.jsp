@@ -225,6 +225,8 @@ $(document).ready(function(){
 	$("#write").click(function(){
 			if(${userLoginInfo.uidx == null}){
 				alert("이 기능은 로그인 후에 이용해주세요!");	
+			}else if(${uesrLoginInfo.location_auth == 'N'}){
+				alert("이 기능은 지역설정을 해주셔야 합니다!")
 			}else{
 				location.href="itemwrite.do";			
 			}
@@ -676,127 +678,62 @@ a {
 				      </ul>
 				    <li onclick="location.href='itemlist.do?WishCheck=3'">찜 많은순</li>
 					<li
-						<c:if test='${userLoginInfo.uidx != null and userLoginInfo.location_auth != null}'>onclick="location.href='itemlist.do?WishCheck=4'"</c:if>
-						<c:if test='${userLoginInfo.uidx != null and userLoginInfo.location_auth == null}'>onclick='alert("내동네 를 설정해주세요!");location.href="${path}/user/userInfoView.do"'</c:if>
+						<c:if test='${userLoginInfo.uidx != null and userLoginInfo.interested != null}'>onclick="location.href='itemlist.do?WishCheck=4'"</c:if>
+						<c:if test='${userLoginInfo.uidx != null and userLoginInfo.interested == null}'>onclick='alert("내 관심 키워드를 설정해주세요!");location.href="${path}/user/userInfoView.do"'</c:if>
 						<c:if test='${userLoginInfo.uidx == null}'>onclick='alert("로그인 후에 이용 가능합니다.");'</c:if>>내 관심 상품
 					</li>
 			    </ul>
 			</div>
 				
 				
-				<%-- <div class="col-md-12  col-sm-12 d-flex" id="search-area">
-					<form method="get" action="itemlist.do"  class="d-flex">
-						<input type="text" name="searchVal" class="search-control" placeholder="검색어를 입력해주세요"
-							<c:if test="${!empty svo.searchVal}">
-							value=${svo.searchVal}
-							</c:if>>
-						<input type="submit" value="검색" class="btn btn-outline-primary">
-					</form>
-						
-				</div> --%>
 				<!-- 검색창 끝 -->
-					<c:if test="${!empty pm.searchVal}">
-						<c:forEach var="vo" items="${ssang}">
-							<h1>${userLoginInfo.nickName} 님이 검색하신 ${pm.searchVal} 의 최저가 상품입니다</h1>
+				
+			<c:if test="${not empty pm.searchVal and vo.image1 != null}">
+				<c:forEach var="vo" items="${ssang}">
 							
-					<%-- 		<div class="col-lg-3">
-							<div class="row">
-								<div class="products-tabs">
-									<!-- tab -->
-											<!-- product -->
-											<div class="product">
-												<div class="product-img">
-													<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a></h3>
-													
-													<h4 class="product-price">지역번호 ${vo.addr_code} </h4>
-													<h4 class="product-price">${vo.price} 원</h4>
-													<c:if test="${vo.state==1}">
-													<h4 class="product-price">거래중</h4>
-													</c:if>												
-													<c:if test="${vo.state==2}">
-													<h4 class="product-price">예약중</h4>
-													</c:if>												
-													<c:if test="${vo.state==3}">
-													<h4 class="product-price">거래완료</h4>
-													</c:if>										
-													${vo.hit} 조회수
-												<div id="Wish_area">
-													<c:if test="${vo.wishCheck == 0 }">
-															<div class="image">
-																<img src="../images/Wish_off.png" style="width:50px; height:50px;" >
-																<p>${vo.wishCount}</p>
-															</div>
-													</c:if>
+						<h1>${userLoginInfo.nickName} 님이 검색하신 ${pm.searchVal} 의 최저가 상품입니다</h1>
+							<div class="col-lg-3  col-md-12 " style="width:100%;">
+								<div class="card-container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">
+									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
+										<div id="image" style="background:url('${path}/resources/upload/${vo.image1}'); background-position:center;  background-size:cover;">
 										
-													<c:if test="${vo.wishCheck != 0}">
-														<div class="image">
-															<img src="../images/Wish_on.png" style="width:50px; height:50px;"  >
-															<p style="background-color:ce3746;">${vo.wishCount}</p>
-														</div>
-													</c:if> 
-												</div>
-												</div>
-											</div>
-											<!-- /product -->
-										<div id="slick-nav-1" class="products-slick-nav"></div>
-									</div>
-									<!-- /tab -->
-								</div>
-							</div>
-							 --%>
-							<div class="col-lg-3  col-md-12 ">
-								<div class="card container" >
-									
-										<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
-									<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
-													<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
-												<c:if test="${vo.state==1}">
-													<h7 class="product-price"  >거래중</h7>
-												</c:if>												
-												<c:if test="${vo.state==2}">			
-													<h7 class="product-price" >예약중</h7>
-												</c:if>												
-												<c:if test="${vo.state==3}" >			
-													<h7 class="product-price" >거래완료</h7>
+										<!-- 상품 이미지 -->
+										</div>	
+										<div class="card-body" style="padding:10px;">
+										
+											<div class="text-start" style="height:30px; display:flex; align-items:center;">
+												<c:if test="${ fn:length(vo.title) > 8 }">
+													<b>${fn:substring(vo.title,0,8) }...</b>
 												</c:if>
-													</h7>
-											<h6 class="card-title" id="itemtitle"	>
-												<a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
-											</h6>
-										<div>
-										
-											<span style="color:#00AAB2;"><fmt:formatNumber value="${ vo.price }" pattern="#,###"/></span>원
-										</div>
-											${vo.hit} 조회수123
-										<div id="Wish_area">
-											<c:if test="${vo.wishCheck == 0 }">
-												<div class="image">
-													<img src="../images/Wish_off.png" style="width: 16px; height: 16px;" >
-													<span>${vo.wishCount}</span>
-														</div>
-											</c:if>
-																	
-											<c:if test="${vo.wishCheck != 0}">
-												<div class="image">
-													<img src="../images/Wish_on.png" style="width:16px; height:16px;"  >
-													<span style="background-color:ce3746;">${vo.wishCount}</span>
-												</div>
-											</c:if> 
-										</div>											
+												<c:if test="${ fn:length(vo.title) <= 8 }">
+													<b>${ vo.title }</b>
+												</c:if>
+												<c:if test="${ vo.state eq 2 }"><span style="display:inline-block; padding:3px; border-radius:5px; background:green; color:#fff; font-size:0.8rem;">예약중</span></c:if>
+												<c:if test="${ vo.state eq 3 }"><span style="display:inline-block; padding:3px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem;">거래완료</span></c:if>
+											</div>
+											<div>
+												<span style="color:#00AAB2;"><fmt:formatNumber value="${ vo.price }" pattern="#,###"/></span>원
+											</div>
+									    	<div class="text-end">
+									    		<c:if test="${vo.wishCheck == 0}">
+									    		<img src="${path}/images/icon_wish_count.png" style="width:26px; padding:2px;">
+									    		</c:if>
+									    		<c:if test="${vo.wishCheck != 0}">
+									    		<img src="${path}/images/Wish_on.png" style="width:26px; padding:2px;">
+									    		</c:if>${ vo.wishCount }&nbsp;<img src="${path}/images/icon_chat_count.png" style="width:28px; padding:1px;"> ${ vo.chatCount }
+									    	</div>
+									  	</div>
 									</div>
 								</div>
 							
 						</div>
 						<br><br>
-						</c:forEach>
-					</c:if>
-					<c:if test="${!empty pm.searchVal and ssang.size()==0}">
-					검색 결과가 없습니다.
-					</c:if>
-	
+				</c:forEach>
+			</c:if>
+		<c:if test="${not empty pm.searchVal and ssang.size() < 0}">
+		검색 결과가 없습니다.
+		</c:if>
+
 		<div class="section" style="padding:0px;">
 				<!-- container -->
 				<div class="container">
@@ -849,44 +786,6 @@ a {
 									  	</div>
 									</div>
 								</div>
-								<%-- <div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">
-									<div class="card" style="height:100%;">
-										<a href="itemview.do?item_idx=${vo.item_idx}"><img src="../resources/upload/${vo.image1}" onerror=this.src="../images/noimg_item.jpg" ></a>
-										<div class="card-body" style ="text-align: center; padding-top: 5px; ">											
-														<h7 class="card-title"  style="color:#E52421; font-weight :  bold; font-size:14px;">
-													<c:if test="${vo.state==1}">
-														<h7 class="product-price"  >거래중</h7>
-													</c:if>												
-													<c:if test="${vo.state==2}">			
-														<h7 class="product-price" >예약중</h7>
-													</c:if>												
-													<c:if test="${vo.state==3}" >			
-														<h7 class="product-price" >거래완료</h7>
-													</c:if>
-														</h7>
-												<h6 class="card-title" id="itemtitle"	>
-													<a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
-												</h6>
-											<p class="card-text" id="itemtitle" style="color : #00AAB2;  font-size:17px">${vo.price}<span style="color:#000;">원</span></p>
-												${vo.hit} 조회수
-											<div id="Wish_area">
-												<c:if test="${vo.wishCheck == 0 }">
-													<div class="image">
-														<img src="../images/Wish_off.png" style="width:16px; height:16px;" >
-														<span>${vo.wishCount}</span>
-													</div>
-												</c:if>
-																		
-												<c:if test="${vo.wishCheck != 0}">
-													<div class="image">
-														<img src="../images/Wish_on.png" style="width:16px; height:16px;">
-														<span style="background-color:ce3746;">${vo.wishCount}</span>
-													</div>
-												</c:if> 
-											</div>											
-										</div>
-									</div>
-								</div> --%>
 							</c:forEach>
 						</c:if>
 						<c:if test="${list.size() == 0}">

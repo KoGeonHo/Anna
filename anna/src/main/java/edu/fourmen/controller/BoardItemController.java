@@ -80,7 +80,6 @@ public class BoardItemController {
 			//session locationSet 으로 변경할것
 			String auth = (String) session.getAttribute("locationSet");
 			pm.setAddr_code(auth);	
-			System.out.println(pm.getAddr_code());
 			model.addAttribute("addr_code",auth);
 	
 		//찜 많은순 보기  wishchceck 로 한 이유는 현재 사용되는 value 값이 1,2 밖에 없음. 
@@ -147,9 +146,13 @@ public class BoardItemController {
 	    
 	    
 	    //최저가 상품 정보 받아오기
-	    List<BoardItemVO> ssang = boarditemService.MinPrice(pm);
+	    if(pm.getSearchVal() != null ) {
+	    	List<BoardItemVO> ssang = boarditemService.MinPrice(pm);
+	    	model.addAttribute("ssang",ssang);
+	    System.out.println(ssang.size() +"검색 물품");
+	    }
 	    
-	    model.addAttribute("ssang",ssang);
+	    
 	    model.addAttribute("pm",pm);
 	    model.addAttribute("list", list);
 	    
@@ -257,6 +260,7 @@ public class BoardItemController {
 		
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		model.addAttribute("vo", vo);
+
 		
 		//끌올 시작
 		SimpleDateFormat df= new SimpleDateFormat("yyyy-MM-dd");
@@ -305,37 +309,35 @@ public class BoardItemController {
 		
 		//이웃체크
 		if(session.getAttribute("uidx") != null) {
-		int neighbor_idx = vo.getUidx();
-		int uidx = (int) session.getAttribute("uidx");
-		bvo.setNeighbor_idx(neighbor_idx);
-		bvo.setUidx(uidx); //이게 있으면 추가가 안되고 없으면 체크가 안된다.
-		int result = boarditemService.neighbor_check(neighbor_idx, uidx);
-		model.addAttribute("result",result);
-		System.out.println(result +"이웃 체크");
-		
+			int neighbor_idx = vo.getUidx();
+			int uidx = (int) session.getAttribute("uidx");
+			bvo.setNeighbor_idx(neighbor_idx);
+			bvo.setUidx(uidx); //이게 있으면 추가가 안되고 없으면 체크가 안된다.
+			int result = boarditemService.neighbor_check(neighbor_idx, uidx);
+			model.addAttribute("result",result);
 		}
 		
 		//찜 체크
 		if(session.getAttribute("uidx") != null) {
-			int W_item_idx = vo.getItem_idx();
-			int uidx = (int) session.getAttribute("uidx");
-			wvo.setItem_idx(W_item_idx);
-			wvo.setUidx(uidx);
+				int W_item_idx = vo.getItem_idx();
+				int uidx = (int) session.getAttribute("uidx");
+				bvo.setItem_idx(W_item_idx);
+				bvo.setUidx(uidx);
+					int wish = boarditemService.checkWish(item_idx, uidx);
+					model.addAttribute("wish",wish);
 		}
+			
 		
-		int wish = boarditemService.checkWish(neighbor_idx, uidx);
-		model.addAttribute("wish",wish);
-		int wishCount = boarditemService.WishCount(item_idx);
-		model.addAttribute("wishCount",wishCount);
+			int wishCount = boarditemService.WishCount(item_idx);
+			model.addAttribute("wishCount",wishCount);
+		
+			int viewCount = boarditemService.viewCount(vo);
+			model.addAttribute("viewCount",viewCount);
+			
+			
+			return "boarditem/itemview";
 	
-		int viewCount = boarditemService.viewCount(vo);
-		model.addAttribute("viewCount",viewCount);
-		
-		
-		
-		return "boarditem/itemview";
-
-	}
+		}
 
 	@RequestMapping(value = "itemwrite.do", method = RequestMethod.GET)
 	public String itemwrite() {
