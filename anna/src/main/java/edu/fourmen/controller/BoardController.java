@@ -624,12 +624,13 @@ String boardtype = "free";
 	}
 	
 	@RequestMapping(value="/replyDelete")
-	public String replyDelete(int reply_idx, BoardVO vo) {
+	public String replyDelete(int reply_idx, int Bidx, BoardVO vo) {
 		System.out.println("댓글 삭제");
 		vo.setReply_idx(reply_idx);
+		vo.setBidx(Bidx);
 		boardService.replyDel(reply_idx);
 		
-		return "";
+		return "redirect:/board/viewBoard.do?Bidx="+vo.getBidx();
 	}
 	
 

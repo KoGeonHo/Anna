@@ -737,7 +737,7 @@ function delCheck(){
 
 function replydel(a){
 	/* location.href='replyDelete?reply_idx='"++"; */
-	location.href="replyDelete?reply_idx="+a;
+	location.href="${path}/board/replyDelete?reply_idx="+a+"&Bidx="+${bv.bidx};
 	
 }
 </script>
