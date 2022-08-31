@@ -218,53 +218,25 @@
 
             <div id="layoutSidenav_content"> 
                 <main>
-                <div class="container-fluid px-4">
-           <!-- 검색 -->
-					<div class="container">
-						<div class="d-md-none d-lg-block d-xl-block">
-					    <div class="row">
-					        <div class="col-md-1 col-sm-0"></div>
-					        <div class="col-md-10  col-sm-12" >
-                                <h6 style="font-weight:bold">⚫️ 이벤트 배너 설정   &nbsp;&nbsp;ex)</h6>
-                                <br>
-                                 <div id="slide_write">
-						          	<img src="../images/admin_slide_img.png" width=" 80%">
-						         </div>
-
-					        
-					        </div>
-					        <div class="col-md-1 col-sm-0"></div>
-					    </div>
-					    </div>
-					    </div>	
-                        </div>
-				  	<!-- 검색 -->
-          	
-          						
+                <div class="container-fluid px-4" style="margin-top: 80px;">
+                   
                             <div class="card mb-4">
                                 <div class="card-body">
-                                <button type="button" class="btn " style="float: right; background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/admin/admin_slideWrite.do'" style="font-size: 14px;">등록</button>
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>배너 적용 이미지</th>
-                                                <th>게시일</th>
+                                                <th>시작일</th>
+                                                <th>종료일</th>
                                                 <th>첨부파일</th>
-                                                <th>항목등록 &amp; 삭제</th>
+                                                <th>등록</th>
 
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr >
-                                                <th>
-                                                  <select class="form-select" aria-label="Default select example">
-												  <option selected>1</option>
-												  <option value="1">2</option>
-												  <option value="2">3</option>
-												</select></th>
-                                                <th><img src="../images/admin_slide_ex.png"></th>
-                                                <th>2022-07-25</th>
+                                                
+                                                <th><input  type="date"  ></th>
+                                                <th><input  type="date"  ></th>
                                                 <th>
                                                  <form action="admin_slide.do" method="post" enctype="multipart/form-data">
 												        <label><input type="file" name="upload" /></label>
@@ -273,7 +245,7 @@
 												    </th>
                                                 <%-- <th>slide_img_1&nbsp;<button type="button" class="btn " style="background-color: #4A4A49; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">파일업로드</button></th>
                                                  --%><th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">등록</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                               </th>
                                                 </tr>
                                                 
                                                
