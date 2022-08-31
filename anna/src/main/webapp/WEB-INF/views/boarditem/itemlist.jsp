@@ -391,7 +391,16 @@ a:link {
 }
 /* max가  0부터 ~ 까지라는뜨 */
 /* 반응형 */@media all and (max-width:  767px){
+   .card-body{
+   padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    align-items: baseline;
+    justify-content: space-evenly;
+    
    
+   }
    
    
    #image{
@@ -695,7 +704,7 @@ a {
 							<div class="col-lg-3  col-md-12 " style="width:100%;">
 								<div class="card-container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">
 									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
-										<div id="image" style="background:url('${path}/resources/upload/${vo.image1}'); background-position:center;  background-size:cover;">
+										<div id="image" style="background:url('${path}/resources/upload/${vo.image1}'),url('${path }/images/no_image.gif'); background-position:center;  background-size:cover;">
 										
 										<!-- 상품 이미지 -->
 										</div>	
@@ -756,7 +765,7 @@ a {
 								</script>
 								<div class="card-container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">
 									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
-										<div id="image" style="background:url('${path}/resources/upload/${vo.image1}'); background-position:center;  background-size:cover;">
+										<div id="image" style="background:url('${path}/resources/upload/${vo.image1}'),url('${path }/images/no_image.gif'); background-position:center;  background-size:cover;">
 										
 										<!-- 상품 이미지 -->
 										</div>	

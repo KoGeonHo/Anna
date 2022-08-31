@@ -144,6 +144,7 @@ display:none;
     background-color: #00AAB2;
     color: #fff;
     display:none;
+ 
 	}
 #carouselExampleIndicators{
 display:none;
@@ -154,6 +155,10 @@ display:none;
 /* 420이하 모바일*/
 @media ( max-width : 767px ) {
 
+	
+	#container-fluid{
+	display:none;
+	}
 	/* web 버전 */
 	#btn-area-web .btn{
 	text-align:center;
@@ -170,6 +175,7 @@ display:none;
     width:24%;
     background-color: #00AAB2;
     color: #fff;
+       margin:1px;
 	}
 	#viewcontent {
 		margin-left: 0px;
@@ -299,11 +305,11 @@ display:none;
 	
 	.carousel-item > img{
 	width:100%;
-	height:100%;
+	height:300px;
 	}
 	
 	.carousel-inner{
-		height:340px;
+		height:100%;
 	}
 	
 }
@@ -506,8 +512,7 @@ console.log("addwish");
 			},'json');
 			$('#Neighbor_area').load(location.href+' #Neighbor_area');
 			$('#Neighbor_area-web').load(location.href+' #Neighbor_area-web');
-			$('#count-area').load(location.href+' #count-area');
-			
+			alert("이 상품을 찜 목록에 추가했습니다.");		
 				console.log("찜 완료");
 		}
 	}
@@ -520,8 +525,7 @@ console.log("addwish");
 			},'json');
 			$('#Neighbor_area').load(location.href+' #Neighbor_area');
 			$('#Neighbor_area-web').load(location.href+' #Neighbor_area-web');
-			$('#count-area').load(location.href+' #count-area');
-			
+			alert("이 상품을 찜 목록에서 제거했습니다.");
 				console.log("찜 삭제 완료");
 		}
 	}
@@ -561,6 +565,8 @@ console.log("addwish");
 					uidx = data["uidx"];
 				},'json');
 				$('#Neighbor_area').load(location.href+' #Neighbor_area');
+				$('#Neighbor_area-web').load(location.href+' #Neighbor_area-web');
+				alert("작성자를 이웃으로 추가했습니다.");
 		}
 	}
 
@@ -570,8 +576,10 @@ console.log("addwish");
 				url : 'delNeighbor',
 				data : 'neighbor_idx=${vo.uidx}',
 				success : function(data){
-					console.log("완");
+					alert("작성자를 이웃에서 삭제했습니다.");
 					$('#Neighbor_area').load(location.href+' #Neighbor_area');
+					$('#Neighbor_area-web').load(location.href+' #Neighbor_area-web');
+					console.log("완");
 				}
 			});
 		}
@@ -1111,7 +1119,9 @@ function itemdelete(){
 																						let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
 																						//dong.push(locationLevel[locationLevel.length-1]);
 																						//console.log(dong);
-																						$(".addr_zone").append('<span>'+locationLevel[locationLevel.length-1]+',</span>');
+																						html2 = locationLevel[locationLevel.length-1]+" ";
+																						console.log(html2);
+																						$(".addr_zone").append(html2);
 																					}
 																				});
 																			}
@@ -1191,23 +1201,23 @@ function itemdelete(){
 											</div>
 										</div>
 										
-										<div class="col-sm-12 col-lg-12" style="min-height:250px; max-heigth:550px;">  <!--내용 하단 -->
+										<div class="col-sm-12 col-lg-12" style="    min-height: 250px; max-height:500px;}">  <!--내용 하단 -->
 											
-												<div class="row border-top tr" style="border: 0; height:100%;">
+												<div class="row border-top tr" style="min-height: 250px;border: solid 1px;max-heigth: 550px;">
 												<div class="col-5 th"
-													style="display: table-cell; background-color: white; border: 0; font-size: 20px;">내용</div>
-												<div class="col-8 td" style="display: table-cell;">
+													style="  display: table-cell; background-color: white; border: 0; font-size: 20px;border-radius: 25px;">내용</div>
+												<div class="col-8 td" style="display: table-cell; border-radius: 25px;">
 													${vo.contents}</div>
 											</div>
 										</div>
 										
 										
-									<div id="btn-area" style="display: flex; width: 100%; padding: 0px; flex-direction: row; justify-content: center;">
+									<div id="btn-area" style="margin:2px;display: flex; width: 100%; padding: 0px; flex-direction: row; justify-content: center;">
 													<c:if test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
-															<div class="row tr" style="border: 0;">
+															<div class="row tr" style="border: 0; display: flex; flex-direction: row; flex-wrap: nowrap;">
 																	
-																			<input type="button"  onclick="<c:if test="${vo.state!=3 }">location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'</c:if> <c:if test="${vo.state ==3 }">alert('이미 거래가 완료된 글입니다');</c:if>" value="연락하기" class="btn" style="background-color:#00aab2;padding: 0px;" >
-																		<input type="submit" id="btn_open2" style="background-color:#d92929; padding: 0px;"class="btn btn" value="신고하기" class="btn">
+										<input type="button"  onclick="<c:if test="${vo.state!=3 }">location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'</c:if> <c:if test="${vo.state ==3 }">alert('이미 거래가 완료된 글입니다');</c:if>" value="연락하기" class="btn" style="background-color:#00aab2;padding: 0px;" >
+										<input type="submit" id="btn_open2" style="background-color:#d92929; padding: 0px;"class="btn btn" value="신고하기" class="btn">
 																	<!-- 이웃 영역 시작 -->
 																		<div id="Neighbor_area" style="width:100%;     padding: 0px;">
 																			<c:if test="${result == 0 }">
@@ -1225,7 +1235,6 @@ function itemdelete(){
 																				<input type="button" class="btn" style="background-color:#BBCD53;  padding: 0px;" value="찜 삭제"onclick="delWish(); return false;">
 																			</c:if>
 																		</div>
-																		<input type="text" value="${wish}">asd
 															</div>
 													</c:if>
 																	<c:if test="${userLoginInfo.uidx == vo.uidx}">
@@ -1271,15 +1280,15 @@ function itemdelete(){
 										
 										
 										<!-- 판매자의 다른 상품 -->
-										<div style="border-bottom:solid 2px;">
-											<h2 style="text-align: center;">
-												<a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님의 다른상품
-											</h2>
-										</div>
-										<div class="container-fluid">
+										<div class="container-fluid" id="container-fluid">
+											<div style="margin-top: 15px; margin-bottom: 15px;">
+												<h2 style="text-align: center;">
+													<a href="../user/myPage.do?uidx=${vo.uidx}">${vo.nickName}</a>님의 다른상품
+												</h2>
+											</div>
 											<div class="row">
-														<c:if test="${youritem.size() > 0}">
-															<c:forEach var="vo" items="${youritem}">
+												<c:if test="${youritem.size() > 0}">
+													<c:forEach var="vo" items="${youritem}">
 								
 														<div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">
 															<div class="card">
@@ -1326,13 +1335,59 @@ function itemdelete(){
 														</div>
 													</c:forEach>
 												</c:if>
-												<c:if test="${youritem.size() <= 0}">
-													<div style="text-align: center; border-top: solid 1px;">
-														<h3 style="text-align: center;">${vo.nickName}님의다른
-															상품이 없습니다</h3>
+										<c:if test="${youritem.size() <= 0}">
+													<div style="text-align: center; border-top: solid 1px; border-bottom: solid 1px;height:150px;">
+														<h3 style="text-align: center;">${vo.nickName}님의다른상품이 없습니다 !</h3>
 													</div>
+													
+													<h2>이 글과 같은 키워드의 상품</h2>
+													
+													<c:forEach var="vo" items="${list}">
+														<div class="col-lg-3  col-md-12 " style="margin-bottom: 10px;">
+															<div class="card">
+																<a href="itemview.do?item_idx=${vo.item_idx}"><img
+																	src="../resources/upload/${vo.image1}"
+																	style="width: 100%;" onerror=this.src="../images/noimg_item.jpg" ></a>
+																<div class="card-body"
+																	style="text-align: center; padding-top: 5px;">
+																	<h7 class="card-title"
+																		style="color:#E52421; font-weight :  bold; font-size:14px;">
+																	<c:if test="${vo.state==1}">
+																		<h7 class="product-price">거래중</h7>
+																	</c:if> <c:if test="${vo.state==2}">
+																		<h7 class="product-price">예약중</h7>
+																	</c:if> <c:if test="${vo.state==3}">
+																		<h7 class="product-price">거래완료</h7>
+																	</c:if> </h7>
+																	<h6 class="card-title" id="itemtitle">
+																		<a href="itemview.do?item_idx=${vo.item_idx}">${vo.title}</a>
+																	</h6>
+																	<p class="card-text" id="itemtitle"
+																		style="color: #00AAB2; font-size: 17px">${vo.price}<span
+																			style="color: #000;">원</span>
+																	</p>
+																	${vo.hit} 조회수
+																	<!-- div id를 바꿔서 본 글에 찜 추가 눌렀을때 안 나오게 해둠 -->
+																	<div id="Wish_area2">
+																		<c:if test="${vo.wishCheck == 0 }">
+																			<div class="image">
+																				<img src="../images/Wish_off.png"
+																					style="width: 16px; height: 16px;"> <span>${vo.wishCount}</span>
+																			</div>
+																		</c:if>
+																		<c:if test="${vo.wishCheck != 0}">
+																			<div class="image">
+																				<img src="../images/Wish_on.png"
+																					style="width: 16px; height: 16px;"> <span
+																					style="background-color: ce3746;">${vo.wishCount}</span>
+																			</div>
+																		</c:if>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</c:forEach>
 												</c:if>
-
 											</div>
 										</div>
 
