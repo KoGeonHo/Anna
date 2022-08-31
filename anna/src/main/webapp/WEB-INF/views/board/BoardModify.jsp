@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
 <title>수정하기</title>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -192,7 +193,7 @@ position: fixed;
 							
 						</div>
 					</div>
-					<div class="row border-bottom tr">
+					<%-- <div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">기존 이미지 파일</div>
 						<div id="carouselExampleControls" class="carousel slide" style="width:auto;" data-bs-ride="carousel">
 							  <div class="carousel-inner">
@@ -234,7 +235,7 @@ position: fixed;
 						
 
 					
-					</div>
+					</div> --%>
 
 					<div class="map_wrap">
 					    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
