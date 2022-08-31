@@ -28,7 +28,7 @@
 <link href="${ path }/css/common/layout.css" rel="stylesheet" type="text/css" />
 <link href="css/offcanvas.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="css/mfb.css" rel="stylesheet">
+	<link href="${ path }/css/mfb.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/main.css" rel="stylesheet">
 <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> 
 
@@ -621,10 +621,7 @@ const GetList = function(currentPage){
 
 
 
-		<!-- 퀵메뉴 시작 -->
-		<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
-		<!-- 퀵메뉴 종료 --> 
-		
+
 
 
 		<!-- 푸터는 고정 -->
