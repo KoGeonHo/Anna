@@ -62,11 +62,6 @@
 
 </insert>
 
-
-
-
-
-
 <select id="totalCount" parameterType="hashmap" resultType="int">
 	 SELECT 
 		count(*)

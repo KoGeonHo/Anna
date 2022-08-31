@@ -83,11 +83,6 @@ String boardtype = "free";
 				int endPage = pagenumber*pagecount;
 				
 				int pageNum = pagecount;
-				
-				// 검색 키워드 관련된 처리 - 검색 키워드가 넘어올 수 도 있고 안 넘어올 수도 있다.
-				
-		
-				
 		
 				// 설정해준 값들을 해당 객체에 담는다.
 				pm.setStartPage(startPage);
@@ -321,22 +316,11 @@ String boardtype = "free";
 	public String InsertComment(BoardVO rv, HttpServletRequest request, HttpSession session, int Bidx) {
 		
 		session = request.getSession();
-		//rv.setUidx((int)session.getAttribute("uidx"));
-		
-//		if(session.getAttribute("login") == null) {
-//			return "fail";
-//		} else {
-//			System.out.println("로그인함. 스크랩 진행");
-			
-//		System.out.println(rv.getContents()); 
-//		System.out.println(rv.getNickName()); 
-//		System.out.println(rv.getBidx()); 
 		
 			boardService.commentwrite(rv);//댓글작성
 			boardService.Ccount(Bidx);
 			
 			return "InsertSuccess";
-//		}
 	}
 
 	@ResponseBody
