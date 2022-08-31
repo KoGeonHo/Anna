@@ -53,6 +53,7 @@
 			}
 		});
 	}
+	
 </script>
 
 <%
@@ -63,7 +64,7 @@
 			<div class="pc-header border-bottom">
 				<div class="container" style="display:flex; flex-direction:row;">
 					<div style="width:130px; padding:15px;">
-						<img src="${ path }/images/logo.png" style="width:100px; cursor:pointer;" onclick="location.href='${path}/main.do'">
+						<img src="${ path }/images/logo.png" style="width:100px; cursor:pointer;" onclick="location.href='${path}/'">
 					</div>
 					<div style="flex:1;" id="nav">
 						<ul class="nav col-12 col-md-auto  col-sm-0 mb-1 justify-content-center mb-md-0" style="margin-left:16px;">
@@ -181,6 +182,7 @@
 					</select>
 		    		<script>
 			    		let locationList = [${ userLoginInfo.location_auth }];
+			    		console.log('${ userLoginInfo.location_auth }');
 			    		let html = '';
 			    		$.ajax({
 							url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",

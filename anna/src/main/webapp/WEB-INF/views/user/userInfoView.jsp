@@ -89,8 +89,8 @@ $(function(){
 	<div class="wrapper">
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	
-		<div class="wrapper">
-			<div class="container main">
+		<div class="wrapper main">
+			<div class="container">
 				<h3 class="border-bottom" style="padding:1rem;">회원정보</h3>
 				<div id="profile" class="border-bottom" style="width:100%; display:flex;">
 					<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
@@ -113,14 +113,14 @@ $(function(){
 					<div class="col-9 td" style="padding:1rem; align-self:center;" id="locaList">
 						
 						<c:if test="${ empty userInfo.location_auth }">
-							<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 등록하기</button>
+							-
 						</c:if>
 						<c:if test="${ not empty userInfo.location_auth }">
 							<div class="spinner-border text-primary" role="status">
 								<span class="visually-hidden">Loading...</span>
 							</div>
 							<script>
-								
+								locationList = [${userInfo.location_auth}];
 								$.ajax({
 									url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
 									data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",

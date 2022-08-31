@@ -1,8 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <% String urif = request.getRequestURI(); %>
 <div id="footer" class="border-top" style="box-sizing: border-box; width:100vw; position:fixed; bottom:0px; height:50px; align-items:center;">
-	<div class="ft-icon text-center" style="width:20vw; display:inline-block; border-right:1px solid #ddd;" onclick="location.href='${path}/main.do';">
-		<%if(urif.contains("/main") || urif.contains("/boarditem") || urif.contains("/customer")){ %>
+	<div class="ft-icon text-center" style="width:20vw; display:inline-block; border-right:1px solid #ddd;" onclick="location.href='${path}/';">
+		<%if(urif.contains("/index") || urif.contains("/boarditem") || urif.contains("/customer")){ %>
 			<img src="${ path }/images/icon_home_click.png">
 		<%} else {%>
 			<img src="${ path }/images/icon_home.png">

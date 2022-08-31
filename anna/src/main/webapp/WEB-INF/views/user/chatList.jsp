@@ -90,98 +90,105 @@
 			url : "checkNewMessage.do",
 			data : "type=${type}",
 			success : function(chatList){
+				console.log(chatList.length);
 				let html = "";
-				for(let i = 0; i < chatList.length; i++){
-					html += '<div class="tr border-bottom" style="padding:5px; display:flex; position:relative;">';
-					
-					if(chatList[i].state == 3){
-						if(chatList[i].chkCanReview > 0 && chatList[i].chkReview == 0){
-							html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
-							html += '<div style="flex:1;">';
-							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openModal(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
-							if(chatList[i].chat_host == '${uidx}'){
-								html += '\''+chatList[i].invitedNickName+'\'';
-							}else if(chatList[i].invited == '${uidx}') {
-								html += '\''+chatList[i].hostNickName+'\'';
+				if(chatList.length > 0){
+					for(let i = 0; i < chatList.length; i++){
+						html += '<div class="tr border-bottom" style="padding:5px; display:flex; position:relative;">';
+						
+						if(chatList[i].state == 3){
+							if(chatList[i].chkCanReview > 0 && chatList[i].chkReview == 0){
+								html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
+								html += '<div style="flex:1;">';
+								html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openModal(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
+								if(chatList[i].chat_host == '${uidx}'){
+									html += '\''+chatList[i].invitedNickName+'\'';
+								}else if(chatList[i].invited == '${uidx}') {
+									html += '\''+chatList[i].hostNickName+'\'';
+								}
+								html += ')">후기 등록하기</button>';
+								html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
+								html += '</div>';
+								html += '</div>';
+							}else if(chatList[i].chkCanReview > 0 && chatList[i].chkReview > 0){
+								html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
+								html += '<div style="flex:1;">';
+								html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openViewReview(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
+								if(chatList[i].chat_host == '${uidx}'){
+									html += '\''+chatList[i].invitedNickName+'\'';
+								}else if(chatList[i].invited == '${uidx}') {
+									html += '\''+chatList[i].hostNickName+'\'';
+								}
+								html +=')">거래 후기 보기</button>';
+								html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
+								html += '</div>';
+								html += '</div>';
 							}
-							html += ')">후기 등록하기</button>';
-							html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
-							html += '</div>';
-							html += '</div>';
-						}else if(chatList[i].chkCanReview > 0 && chatList[i].chkReview > 0){
-							html += '<div class="profileImg_div" style="position:absolute; align-items:center; display:flex; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.5);">';
-							html += '<div style="flex:1;">';
-							html += '<button type="button" class="btn" style="background:#00AAB2; color:#fff; margin-right:10px; font-size:0.8rem;" onclick="openViewReview(\'' + chatList[i].item_idx + '\',\'' + chatList[i].chat_host + '\',\'' + chatList[i].invited + '\',';
-							if(chatList[i].chat_host == '${uidx}'){
-								html += '\''+chatList[i].invitedNickName+'\'';
-							}else if(chatList[i].invited == '${uidx}') {
-								html += '\''+chatList[i].hostNickName+'\'';
-							}
-							html +=')">거래 후기 보기</button>';
-							html += '<button type="button" class="btn" style="background:#bbcd53; color:#fff; font-size:0.8rem;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">채팅 보기</button>';
-							html += '</div>';
-							html += '</div>';
+							
+							
+						}
+						html += '<div class="profileImg_div" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
+						
+						if(chatList[i].chat_host == ${uidx}){
+							html += '<img src="'+chatList[i].invitedProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
+						}else if(chatList[i].invited == ${uidx}) {
+							html += '<img src="'+chatList[i].hostProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
 						}
 						
+						html += '</div>';
+						html += '<div style="flex:1; margin:auto;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
+						html += '<div style="padding:5px;">';
+						
+						var today = new Date();
+	
+						var year = today.getFullYear();
+						var month = ('0' + (today.getMonth() + 1)).slice(-2);
+						var day = ('0' + today.getDate()).slice(-2);
+	
+						var dateString = year + '/' + month  + '/' + day;
+						let lastChatDate = chatList[i].lastChatDate;
+						
+						if(lastChatDate.split(" ")[0] == dateString){
+							lastChatDate = lastChatDate.split(" ")[1]+" "+lastChatDate.split(" ")[2];
+						}else{
+							lastChatDate = lastChatDate.split(" ")[0];
+						}
+						
+						if(chatList[i].chat_host == ${uidx}){
+							html += chatList[i].invitedNickName+'<span style="font-size:0.8rem;">('+lastChatDate+')</span>';
+						}else if(chatList[i].invited == ${uidx}) {
+							html += chatList[i].hostNickName+'<span style="font-size:0.8rem;">('+lastChatDate+')</span>';
+						}
+						html += '</div>';
+						html += '<div style="padding:5px; font-size:0.8rem; class="text-start">';
+	
+						if(chatList[i].state == 3){
+							html += '<span style="padding:3px; font-size:11px; border-radius:5px; background:gray; color:#fff; margin-right:5px;">거래완료</span>';
+						}else if(chatList[i].state == 2){
+							html += '<span style="padding:3px; font-size:11px; border-radius:5px; background:green; color:#fff; margin-right:5px;">예약중</span>';
+						}
+						if(chatList[i].lastChat.indexOf("&image") != -1){
+							html += "사진을 보냈습니다.";
+						}else if(chatList[i].lastChat.indexOf("&image") == -1){
+							html += chatList[i].lastChat;
+						}
+						html += '</div>';
+						html += '</div>';
+						html += '<div style="width:80px; text-align:center; margin:auto;">';
+						html += '<img src="${path}/resources/upload/'+chatList[i].itemThumbNail+'" style="padding:0" class="item_thumbnail" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+chatList[i].item_idx+'\'" onerror="this.onerror=null; this.src=\'${path}/images/noimg_item.jpg\';">';
+						
+						
+						html += '</div>';
+						if(chatList[i].newMessages > 0){
+							html += '<div class="NewMessageAlert">'+chatList[i].newMessages+'</div>';
+						}
+						html += '</div>';
 						
 					}
-					html += '<div class="profileImg_div" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
-					
-					if(chatList[i].chat_host == ${uidx}){
-						html += '<img src="'+chatList[i].invitedProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
-					}else if(chatList[i].invited == ${uidx}) {
-						html += '<img src="'+chatList[i].hostProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
-					}
-					
+				}else{
+					html += '<div class="tr border-bottom" style="padding:15px; position:relative; text-align:center;">';
+					html += '진행중인 채팅이 없습니다.'
 					html += '</div>';
-					html += '<div style="flex:1; margin:auto;" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
-					html += '<div style="padding:5px;">';
-					
-					var today = new Date();
-
-					var year = today.getFullYear();
-					var month = ('0' + (today.getMonth() + 1)).slice(-2);
-					var day = ('0' + today.getDate()).slice(-2);
-
-					var dateString = year + '/' + month  + '/' + day;
-					let lastChatDate = chatList[i].lastChatDate;
-					
-					if(lastChatDate.split(" ")[0] == dateString){
-						lastChatDate = lastChatDate.split(" ")[1]+" "+lastChatDate.split(" ")[2];
-					}else{
-						lastChatDate = lastChatDate.split(" ")[0];
-					}
-					
-					if(chatList[i].chat_host == ${uidx}){
-						html += chatList[i].invitedNickName+'<span style="font-size:0.8rem;">('+lastChatDate+')</span>';
-					}else if(chatList[i].invited == ${uidx}) {
-						html += chatList[i].hostNickName+'<span style="font-size:0.8rem;">('+lastChatDate+')</span>';
-					}
-					html += '</div>';
-					html += '<div style="padding:5px; font-size:0.8rem; class="text-start">';
-
-					if(chatList[i].state == 3){
-						html += '<span style="padding:3px; font-size:11px; border-radius:5px; background:gray; color:#fff; margin-right:5px;">거래완료</span>';
-					}else if(chatList[i].state == 2){
-						html += '<span style="padding:3px; font-size:11px; border-radius:5px; background:green; color:#fff; margin-right:5px;">예약중</span>';
-					}
-					if(chatList[i].lastChat.indexOf("&image") != -1){
-						html += "사진을 보냈습니다.";
-					}else if(chatList[i].lastChat.indexOf("&image") == -1){
-						html += chatList[i].lastChat;
-					}
-					html += '</div>';
-					html += '</div>';
-					html += '<div style="width:80px; text-align:center; margin:auto;">';
-					html += '<img src="${path}/resources/upload/'+chatList[i].itemThumbNail+'" style="padding:0" class="item_thumbnail" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+chatList[i].item_idx+'\'" onerror="this.onerror=null; this.src=\'${path}/images/noimg_item.jpg\';">';
-					
-					
-					html += '</div>';
-					if(chatList[i].newMessages > 0){
-						html += '<div class="NewMessageAlert">'+chatList[i].newMessages+'</div>';
-					}
-					html += '</div>';
-					
 				}
 				$("#chatDiv").html(html);
 			}

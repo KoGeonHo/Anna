@@ -60,97 +60,100 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 		
-		<div class="wrapper main" style="position:relative;">
-			<div class="imagePreviewModal" style="width:100%; height:100%; position:absolute; left:0; top:0; display:none;">
-				<div style="width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; overflow:auto;" onclick="closeModal()">
-					<img src="${ path }/resources/QnA/${QnAItem.attach}" style="width:80%; padding:20px; height:auto; margin:auto;">
+		<div class="wrapper main">
+			<div class="container">
+				<div class="imagePreviewModal" style="width:100%; height:100%; position:absolute; left:0; top:0; display:none;">
+					<div style="width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; overflow:auto;" onclick="closeModal()">
+						<img src="${ path }/resources/QnA/${QnAItem.attach}" style="width:80%; padding:20px; height:auto; margin:auto;">
+					</div>
 				</div>
+				<div class="container">				
+					<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의하기 - ${ QnAItem.title }</h3>
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">작성일</div>
+						<div class="col-8 td" style="display:table-cell;">
+							${ QnAItem.wDate }
+						</div>
+					</div>
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">문의유형</div>
+						<div class="col-8 td" style="display:table-cell;">
+							${ QnAItem.qType }
+						</div>
+					</div>
+					<div class="row border-bottom tr">
+						<div class="col-4 th" style="display:table-cell;">처리상태</div>
+						<div class="col-8 td" style="display:table-cell;">
+							<c:if test="${ QnAItem.state eq 0 }">
+								처리중
+							</c:if>
+							<c:if test="${ QnAItem.state eq 1 }">
+								처리완료
+							</c:if>
+						</div>
+					</div>
+					<div class="row border-bottom tr">
+						<div class="col-4 th">내용</div>
+						<div class="col-8 td">
+							${QnAItem.contents}
+						</div>
+					</div>
+					<div class="row border-bottom tr">
+						<div class="col-4 th">첨부파일</div>
+						<div class="col-8 td">
+	    					<c:set var = "length" value = "${fn:length(QnAItem.attach)}"/>
+							<c:if test="${ length >= 20 }" >
+								${ fn:substring(QnAItem.attach,0,5) }...${ fn:substring(QnAItem.attach,length-10,length) } 
+							</c:if>
+							<c:if test="${ length < 20 }" >
+								${ QnAItem.attach } 
+							</c:if>
+							<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="openModal()">첨부파일 보기</button>
+						</div>
+					</div>
+					<c:if test="${ userLoginInfo.isAdmin eq 'N' and QnAItem.state eq 1}">
+						<div class="row border-bottom tr">
+							<div class="col-4 th">답변자</div>
+							<div class="col-8 td">
+								관리자
+							</div>
+						</div>
+						<div class="row border-bottom tr">
+							<div class="col-4 th">답변일</div>
+							<div class="col-8 td">
+								${ QnAItem.ans_date }
+							</div>
+						</div>
+						<div class="row border-bottom tr">
+							<div class="col-4 th">답변</div>
+							<div class="col-8 td">
+								${QnAItem.answer}
+							</div>
+						</div>
+					</c:if>
+					<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
+						<div class="row border-bottom tr">
+							<div class="col-4 th">답변</div>
+							<div class="col-8 td">
+								<textarea wrap="hard" name="answer" class="form-control" style="resize:none; height:120px;">${ QnAItem.answer }</textarea>
+							</div>
+						</div>
+					</c:if>
+					<div class="row tr">
+						<div class="col-12 td text-end">
+							<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
+								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="Answer()">답변</button>
+								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAList.do'">목록</button>
+								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/admin/admin_qna.do'">관리 목록</button>
+							</c:if>
+							<c:if test="${ userLoginInfo.isAdmin ne 'Y' }">
+								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnADel.do?qidx=<%=request.getParameter("qidx")%>'">삭제</button>
+								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAList.do'">목록</button>
+							</c:if>
+						</div>
+					</div>
+				</div>	
 			</div>
-			<div class="container">				
-				<h3 class="border-bottom" style="padding:1rem; margin:0px;">문의하기 - ${ QnAItem.title }</h3>
-				<div class="row border-bottom tr">
-					<div class="col-4 th" style="display:table-cell;">작성일</div>
-					<div class="col-8 td" style="display:table-cell;">
-						${ QnAItem.wDate }
-					</div>
-				</div>
-				<div class="row border-bottom tr">
-					<div class="col-4 th" style="display:table-cell;">문의유형</div>
-					<div class="col-8 td" style="display:table-cell;">
-						${ QnAItem.qType }
-					</div>
-				</div>
-				<div class="row border-bottom tr">
-					<div class="col-4 th" style="display:table-cell;">처리상태</div>
-					<div class="col-8 td" style="display:table-cell;">
-						<c:if test="${ QnAItem.state eq 0 }">
-							처리중
-						</c:if>
-						<c:if test="${ QnAItem.state eq 1 }">
-							처리완료
-						</c:if>
-					</div>
-				</div>
-				<div class="row border-bottom tr">
-					<div class="col-4 th">내용</div>
-					<div class="col-8 td">
-						${QnAItem.contents}
-					</div>
-				</div>
-				<div class="row border-bottom tr">
-					<div class="col-4 th">첨부파일</div>
-					<div class="col-8 td">
-    					<c:set var = "length" value = "${fn:length(QnAItem.attach)}"/>
-						<c:if test="${ length >= 20 }" >
-							${ fn:substring(QnAItem.attach,0,5) }...${ fn:substring(QnAItem.attach,length-10,length) } 
-						</c:if>
-						<c:if test="${ length < 20 }" >
-							${ QnAItem.attach } 
-						</c:if>
-						<button type="button" class="btn btn-sm" style="background: #00AAB2; color: #fff;" onclick="openModal()">첨부파일 보기</button>
-					</div>
-				</div>
-				<c:if test="${ userLoginInfo.isAdmin eq 'N' and QnAItem.state eq 1}">
-					<div class="row border-bottom tr">
-						<div class="col-4 th">답변자</div>
-						<div class="col-8 td">
-							관리자
-						</div>
-					</div>
-					<div class="row border-bottom tr">
-						<div class="col-4 th">답변일</div>
-						<div class="col-8 td">
-							${ QnAItem.ans_date }
-						</div>
-					</div>
-					<div class="row border-bottom tr">
-						<div class="col-4 th">답변</div>
-						<div class="col-8 td">
-							${QnAItem.answer}
-						</div>
-					</div>
-				</c:if>
-				<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
-					<div class="row border-bottom tr">
-						<div class="col-4 th">답변</div>
-						<div class="col-8 td">
-							<textarea wrap="hard" name="answer" class="form-control" style="resize:none; height:120px;">${ QnAItem.answer }</textarea>
-						</div>
-					</div>
-				</c:if>
-				<div class="row tr">
-					<div class="col-12 td text-end">
-						<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
-							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="Answer()">답변</button>
-							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/admin/admin_qna.do'">목록으로</button>
-						</c:if>
-						<c:if test="${ userLoginInfo.isAdmin eq 'N' }">
-							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnADel.do?qidx=<%=request.getParameter("qidx")%>'">삭제</button>
-							<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAList.do'">목록</button>
-						</c:if>
-					</div>
-				</div>
-			</div>	
 		</div>
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>

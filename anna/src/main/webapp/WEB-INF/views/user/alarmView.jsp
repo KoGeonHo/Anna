@@ -35,7 +35,9 @@
 			<div class="container" style="position:relative;">
 				<h3 class="border-bottom" style="padding:1rem; margin:0px;">알림</h3>
 				<c:if test="${ empty alarmList }">
+					<div class="border-bottom" style="padding:15px; text-align:center;">
 					알림이 없습니다.
+					</div>
 				</c:if>
 				<c:if test="${ not empty alarmList }">
 					<c:forEach var="i" items="${ alarmList }">
