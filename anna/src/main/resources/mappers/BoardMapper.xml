@@ -139,6 +139,7 @@
 <select id="getCList" resultType="boardvo" parameterType="int">
   	SELECT r.Uidx as Uidx
   		  ,r.Bidx as Bidx
+  		  ,r.reply_idx
   		  ,u.nickName as nickName
   		  ,r.contents as contents
   		  ,date_format(r.Wdate,'%y-%m-%d-%h:%i')as Wdate

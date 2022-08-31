@@ -137,7 +137,7 @@ position: fixed;
 </style>
 
 </head>
-<body>
+<body style="overflow-y: hidden;">
 
 <div class="wrapper">
 		<!-- 헤더 및 메뉴 -->
@@ -180,17 +180,26 @@ position: fixed;
 					
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">첨부 이미지 파일</div>
-						
 						<div id="boxWrap" class="col-8 td" style="display:table-cell;">
-							<div class="d-flex" style=" width:100%;">
-								<div style="flex:1">
-									<input class="form-control" type="file" id="file" name="FileName1" accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>
-								</div>
-								<div>
-									<button type="button" class="btn" id="file_btn">추가</button>
-								</div>
-							</div>
-							
+							<c:if test="${bv.image1 != null}">
+								<span class="view">${bv.image1}</span><br>
+							</c:if>
+							<c:if test="${bv.image2 != null}">
+								<span class="view2">${bv.image2}</span><br>
+								
+							</c:if>
+							<c:if test="${bv.image3 != null}">
+								<span class="view3">${bv.image3}</span><br>
+							</c:if>
+							<c:if test="${bv.image4 != null}">
+								<span class="view4">${bv.image4}</span><br>
+								
+							</c:if>
+							<c:if test="${bv.image5 != null}">
+								<span class="view5">${bv.image5}</span>
+								
+							</c:if>
+	
 						</div>
 					</div>
 					<%-- <div class="row border-bottom tr">
@@ -236,6 +245,8 @@ position: fixed;
 
 					
 					</div> --%>
+					
+					
 
 					<div class="map_wrap">
 					    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -626,58 +637,6 @@ function removeAllChildNods(el) {
  
 
 
-//수정 시 이미지 확인
-
-$(".view").mouseover(function(){
-	$(".viewimg").css("display","block")
-	
-	});
-
-$(".view").mouseout(function(){
-	$(".viewimg").css("display","none")
-	
-});
-
-$(".view2").mouseover(function(){
-	$(".viewimg2").css("display","block")
-	
-	});
-
-$(".view2").mouseout(function(){
-	$(".viewimg2").css("display","none")
-	
-});
-
-$(".view3").mouseover(function(){
-	$(".viewimg3").css("display","block")
-	
-	});
-
-$(".view3").mouseout(function(){
-	$(".viewimg3").css("display","none")
-	
-});
-
-$(".view4").mouseover(function(){
-	$(".viewimg4").css("display","block")
-	
-	});
-
-$(".view4").mouseout(function(){
-	$(".viewimg4").css("display","none")
-	
-});
-
-$(".view5").mouseover(function(){
-	$(".viewimg5").css("display","block")
-	
-	});
-
-$(".view5").mouseout(function(){
-	$(".viewimg5").css("display","none")
-	
-});
-
 // 유효성 검사
 
 var title = $("#Title").val();
@@ -707,29 +666,6 @@ function check(){
 
 }
 
-//파일 기능 스크립트
-
-function chk_file_type(obj) {
-    var file_kind = obj.value.lastIndexOf('.');
-    var file_name = obj.value.substring(file_kind+1,obj.length); 
-    var file_type = file_name.toLowerCase();
-
-
-
-   var check_file_type = new Array();
-    check_file_type=['jpg','gif','png','jpeg','bmp',];
-
-
-
-    if(check_file_type.indexOf(file_type)==-1){
-     alert('이미지 파일만 선택할 수 있습니다.');
-     var parent_Obj=obj.parentNode
-     var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
-     return false;
-     
-     }
-    
-}
 
 //카카오맵 온/오프
 
@@ -781,8 +717,7 @@ $(document).ready(function () {
 			link: [],  //링크 삭제
 			air: []
 	      },
-	
-		tooltip : none,
+
         callbacks: {
                onChange: function(contents, $editable) {
                  console.log('onChange:', contents, $editable);
@@ -804,24 +739,7 @@ $(document).ready(function () {
 });
 
 
-$(document).ready(function() {
-	var i=2; // 변수설정은 함수의 바깥에 설정!
-  $("#file_btn").click(function() {
-    if(i<=5){
-    	
-    	$("#boxWrap").append("<input class='form-control' type='file' name='FileName"+i+"' accept='image/jpeg,image/gif,image/png' onchange='chk_file_type(this)'>");
-    }
-    
-    i++;
-    
-    if(i==6){
-    	$("#file_btn").css("display","none");
-    }
-   
-    
 
-  });
-});
 	
 
 </script>

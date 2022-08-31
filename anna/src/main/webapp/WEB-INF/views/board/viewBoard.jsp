@@ -96,7 +96,7 @@ height : 54px;
 
 }
 
-#Contents{
+.Contents{
 	width: 83%;
 	}
 
@@ -182,7 +182,7 @@ height : 54px;
 	display:none;
 	}
 	
-	#Contents{
+	.Contents{
 	width: 66.66666667%;
 	}
 	
@@ -562,27 +562,31 @@ function getList() {
 				
 				var comment_html = "<div class='row' id='commentstyle'>";
 				
-				$('#count').html(data.total);
+				
 				for(i = 0;i < list.length;i++){
 					var Contents = list[i].contents;
 					var nickName = list[i].nickName;
 					var wdate = list[i].wdate;
+					var reply_idx = list[i].reply_idx;
 					
-					comment_html += "<div class='row border-bottom' style='padding: 8px 0; '>"
+					
+					console.log(reply_idx+"dd");
+					
+					comment_html += "<div class='row border-bottom' style='padding: 8px 0; '>";
 					
 					comment_html += "<div class='col-2 td' style='border-right: #dee2e6 solid 1px; text-align:center;'><span id='nickName'><strong>" + nickName + "</strong></span></div>";
-					comment_html += "<div class='td' id='Contents' style='display:flex;'>";
+					comment_html += "<div class='td Contents' style='display:flex;'>";
 					comment_html += "<div style='flex:1;'>"+Contents+"<p style='margin: 10px 0 0 0;'>"+wdate+"";
 					
-					if(nickName=== $("#nickName").val()){
-						 comment_html += "&nbsp;<a class=''>수정</a>&nbsp;"
-						 comment_html += "<a class=''>삭제</a></p></div>";
+					if(nickName == $("#nickName").val()){
+						// comment_html += "&nbsp;<a class='' onclick='location.href=replyDelete?reply_idx='"+reply_idx+"'>삭제</a></p></div>";
+						 comment_html += "&nbsp;<a class='' onclick='replydel("+reply_idx+");'>삭제</a></p></div>";
 					}
 			
 					comment_html += "</div>";
 					
 					
-					comment_html += "</div>"
+					comment_html += "</div>";
 					
 				}
 				
@@ -620,7 +624,7 @@ function Like(){
 				url : 'likeDown',
 				data : "Bidx="+Bidx+"&Uidx="+Uidx,
 				success : function(data) {
-					alert('추천 취소');
+					
 					location.reload();
 				}
 			})// 아작스 끝
@@ -637,7 +641,7 @@ function Like(){
 				url : 'likeUp',
 				data : "Bidx="+Bidx+"&Uidx="+Uidx,
 				success : function(data) {
-					alert('추천');
+					
 					location.reload();
 				}
 			})// 아작스 끝
@@ -714,47 +718,9 @@ var infowindow = new kakao.maps.InfoWindow({
 // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 infowindow.open(map, marker);
 	    
-	    
-//파일
-function chk_file_type(obj) {
-    var file_kind = obj.value.lastIndexOf('.');
-    var file_name = obj.value.substring(file_kind+1,obj.length); 
-    var file_type = file_name.toLowerCase();
-
-
-
-   var check_file_type = new Array();
-    check_file_type=['jpg','gif','png','jpeg','bmp',];
-
-
-
-    if(check_file_type.indexOf(file_type)==-1){
-     alert('이미지 파일만 선택할 수 있습니다.');
-     var parent_Obj=obj.parentNode
-     var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
-     return false;
-     
-     }
-    
-}	    
+  
 
 //댓글
-
-$("#delete").click(function(){
-	
-	location.href="";
-	
-	
-	
-});
-
-
-$("#modify").click(function(){
-	
-	
-	
-	
-});
 
 //삭제확인
 
@@ -769,7 +735,11 @@ function delCheck(){
 	
 }
 
-
+function replydel(a){
+	/* location.href='replyDelete?reply_idx='"++"; */
+	location.href="replyDelete?reply_idx="+a;
+	
+}
 </script>
 					
 					
