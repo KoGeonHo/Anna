@@ -379,7 +379,9 @@ text-decoration: none;
 		                        					<a href="viewBoard.do?Bidx=${vo.bidx}">
 		                  								<em class="iconPs bo_tit"></em>
 		                  								<i class="imgAr">
-		                  									<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px">
+		                  									<div style="width:auto;height:200px; background:url('<%=request.getContextPath()%>/resources/upload/${vo.image1}'),url('<%=request.getContextPath()%>/images/no_imgborder.jpg');background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
+		                  								
+		                  									<%-- <img src="<%=request.getContextPath()%>/resources/upload/${vo.image1}" alt="없어요" onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px; background-position: center; background-size:cover;"> --%>
 		                  								</i>
 		                  								<em class="gall_info">
 		                     								<span class="sound_only">조회 </span>
