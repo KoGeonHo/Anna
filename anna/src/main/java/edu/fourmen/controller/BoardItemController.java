@@ -69,17 +69,18 @@ public class BoardItemController {
 		}
 		
 		
-		
 		//회원의 지역코드 넘기는 부분
 		// 이따 세션에서 뽑아오려면 이 부분 if문도 변경
 		if (session.getAttribute("uidx") != null) {
+			//if(session.getAttribute("locationSet"))
 			int uidx = (int) session.getAttribute("uidx");
 			UserVO uvo = userService.getUserInfo(uidx);
 			pm.setUidx(uidx);
 			//내 지역보기 체크
 			//session locationSet 으로 변경할것
-			String auth = uvo.getLocation_auth();
+			String auth = (String) session.getAttribute("locationSet");
 			pm.setAddr_code(auth);	
+			System.out.println(pm.getAddr_code());
 			model.addAttribute("addr_code",auth);
 	
 		//찜 많은순 보기  wishchceck 로 한 이유는 현재 사용되는 value 값이 1,2 밖에 없음. 
@@ -98,7 +99,7 @@ public class BoardItemController {
 		
 		}
 		//한 페이지에 몇개씩 표시할 것인지
-				int pagecount = 12;
+				int pagecount = 15;
 				//보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 				int pagenumber = 1;
 				//페이지 번호가 파라미터로 전달되는지 읽어와본다.
@@ -178,7 +179,7 @@ public class BoardItemController {
 	      
 	      
 	      //한 페이지에 몇개씩 표시할 것인지
-	      int pagecount = 12;
+	      int pagecount = 15;
 	      //보여줄 페이지의 번호를 일단 1이라고 초기값 지정
 	      int pagenumber = 1;
 	      //페이지 번호가 파라미터로 전달되는지 읽어와본다.
