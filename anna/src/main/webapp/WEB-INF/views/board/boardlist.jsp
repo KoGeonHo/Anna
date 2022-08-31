@@ -711,11 +711,11 @@ $("input[name='tab_btn']").change(function(){
 <script>
 	function write2(){
 		
-		if(${userLoginInfo.uidx != null and userLoginInfo.location_auth != null}){
+		if(${userLoginInfo.uidx != null && userLoginInfo.location_auth != 'N'}){
 			
 			location.href='${path}/board/BoardWrite.do?board_type=${ pm.board_type }';
 			
-		}else if(${userLoginInfo.uidx != null and userLoginInfo.location_auth == null}){
+		}else if(${userLoginInfo.uidx != null && userLoginInfo.location_auth == 'N'}){
 			
 			alert("내 동네를 설정해주세요!");
 			location.href="${path}/user/userInfoView.do";

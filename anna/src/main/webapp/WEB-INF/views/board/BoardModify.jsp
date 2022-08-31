@@ -194,31 +194,31 @@ position: fixed;
 					</div>
 					<div class="row border-bottom tr">
 						<div class="col-4 th" style="display:table-cell;">기존 이미지 파일</div>
-						<div id="carouselExampleControls" class="carousel slide" style="height:auto; width:500px" data-bs-ride="carousel">
+						<div id="carouselExampleControls" class="carousel slide" style="width:auto;" data-bs-ride="carousel">
 							  <div class="carousel-inner">
 							  <c:if test="${bv.image1 != null}">
 							    <div class="carousel-item active">
-							      <img src="../resources/upload/${bv.image1}" class="d-block " alt="..." style="width:auto;height:500px;">
+							      <img src="../resources/upload/${bv.image1}" class="d-block " alt="..." style="max-width:auto;height:auto;">
 							    </div>
 						 	 </c:if>
 						 	  <c:if test="${bv.image2 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image2}" class="d-block" alt="..." style="width:auto;height:500px;">
+							      <img src="../resources/upload/${bv.image2}" class="d-block" alt="..." style="max-width:auto;height:auto">
 							    </div>
 							  </c:if>
 							  <c:if test="${bv.image3 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image3}" class="d-block" alt="..." style="width:auto;height:500px;">
+							      <img src="../resources/upload/${bv.image3}" class="d-block" alt="..." style="max-width:auto;height:auto">
 							    </div>
 							  </c:if>
 							  <c:if test="${bv.image4 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image4}" class="d-block" alt="..." style="width:auto;height:500px;">
+							      <img src="../resources/upload/${bv.image4}" class="d-block" alt="..." style="max-width:auto;height:auto">
 							    </div>
 							  </c:if>
 							  <c:if test="${bv.image5 != null}">
 							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image5}" class="d-block " alt="..." style="width:auto;height:500px;">
+							      <img src="../resources/upload/${bv.image5}" class="d-block " alt="..." style="max-width:auto;height:auto">
 							    </div>
 							  </c:if>  
 							  </div>

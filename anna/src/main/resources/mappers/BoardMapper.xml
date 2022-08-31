@@ -11,7 +11,6 @@
 			,board_type
 			,Title
 			,Contents
-			,Wdate
 			,Location
 			,Image1
 			,Image2
@@ -20,12 +19,12 @@
 			,Image5
 			,place_location
 			,place_name
+			,Hit
 	)VALUES(
 			 #{uidx}
 			,#{board_type}
 			,#{Title}
 			,#{Contents}
-			,now()
 			,#{Location}
 			,#{Image1}
 			,#{Image2}
@@ -34,6 +33,7 @@
 			,#{Image5}
 			,#{place_location}
 			,#{place_name}
+			,0
 	)
 
 
@@ -68,11 +68,6 @@
 
 
 <select id="totalCount" parameterType="hashmap" resultType="int">
-	<!-- SELECT COUNT(Bidx)
-	  FROM Board b
-	  INNER JOIN AnnaUser u
-	  	ON b.uidx = u.uidx
-	 WHERE b.isDel = 'N' -->
 	 SELECT 
 		count(*)
 	  FROM Board b
@@ -99,17 +94,6 @@
 		b.location like concat('%',#{item},'%') AND b.board_type != 'notice'
 	</foreach>
 </if>
-<!-- <if test='board_type != null'>
-	   AND b.board_type = #{board_type}
-</if>
-<if test="searchVal != null">
-	AND (b.Contents like concat('%',#{SearchVal},'%')
-	 	OR u.nickname like concat('%',#{SearchVal},'%')
-	    OR b.Title like concat('%',#{SearchVal},'%'))
-</if>
-<if test="uidx != 0">
-	AND b.uidx = #{uidx}
-</if> -->
 
 </select>
 
@@ -141,12 +125,10 @@
 			 uidx
 			,Bidx
 			,contents
-		    ,Wdate
 	)VALUES(
 			 #{uidx}
 			,#{Bidx} 
 			,#{Contents}
-			,now()
 	)
 </insert>
 
@@ -251,23 +233,6 @@
 	</foreach>
 </if>
 
-
-<!-- <if test='searchType != null and searchType.equals("All")'>
-	  
-	   AND (b.Contents like concat('%',#{SearchVal},'%')
-	 	OR u.nickname like concat('%',#{SearchVal},'%')
-	    OR b.Title like concat('%',#{SearchVal},'%'))
-	 		
-	 	</if>
-<if test='searchType != null and searchType.equals("title")'>
-	   
-	   AND b.Title like concat('%',#{SearchVal},'%')
-</if>
-<if test='searchType != null and searchType.equals("contentWriter")'>
-       
-	   AND (b.Contents like concat('%',#{SearchVal},'%')
-	 	OR u.nickname like concat('%',#{SearchVal},'%'))
-</if> -->
 	 ORDER BY b.Wdate desc
 
 <if test='pm.board_type != null and pm.board_type.equals("free")'> 
