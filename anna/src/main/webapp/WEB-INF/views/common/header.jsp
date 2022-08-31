@@ -45,7 +45,7 @@
 	function setLocation(selBox){
 		console.log(selBox.value);
 		$.ajax({
-			url: "setLocation.do",
+			url: "${path}/user/setLocation.do",
 			data : "location="+selBox.value,
 			success : function(result){
 				console.log(result);

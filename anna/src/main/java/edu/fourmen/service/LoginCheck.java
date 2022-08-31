@@ -61,7 +61,7 @@ public class LoginCheck extends HandlerInterceptorAdapter{
 						
 						PrintWriter pw = response.getWriter();
 						
-						pw.append("<script>alert('잘못된 접근입니다.'); location.href='"+request.getContextPath()+"/main.do';</script>");
+						pw.append("<script>alert('잘못된 접근입니다.'); location.href='"+request.getContextPath()+"/';</script>");
 						
 						pw.flush();
 						

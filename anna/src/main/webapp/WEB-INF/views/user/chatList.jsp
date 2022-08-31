@@ -47,7 +47,7 @@
 	.profileImg {
 		padding:5px !important;
 		width:70px; 
-		height:auto; 
+		height:70px; 
 		border-radius:100px;
 	}
 	
@@ -130,9 +130,11 @@
 						html += '<div class="profileImg_div" onclick="location.href=\'chatView.do?item_idx='+chatList[i].item_idx+'&chat_host='+chatList[i].chat_host+'&invited='+chatList[i].invited+'\'">';
 						
 						if(chatList[i].chat_host == ${uidx}){
-							html += '<img src="'+chatList[i].invitedProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
+							html += '<div class="profileImg" style="background:url('+chatList[i].invitedProfileImg+'),url(\'${path}/images/NoProfile.png\');background-size:cover; background-position:center; background-repeat:no-repeat;"></div>';
+							//html += '<img src="'+chatList[i].invitedProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
 						}else if(chatList[i].invited == ${uidx}) {
-							html += '<img src="'+chatList[i].hostProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
+							html += '<div class="profileImg" style="background:url('+chatList[i].hostProfileImg+'),url(\'${path}/images/NoProfile.png\');background-size:cover; background-position:center; background-repeat:no-repeat;"></div>';
+							//html += '<img src="'+chatList[i].hostProfileImg+'" class="profileImg" onerror="this.onerror=null; this.src=\'${path}/images/NoProfile.png\';">';
 						}
 						
 						html += '</div>';
@@ -175,7 +177,9 @@
 						html += '</div>';
 						html += '</div>';
 						html += '<div style="width:80px; text-align:center; margin:auto;">';
-						html += '<img src="${path}/resources/upload/'+chatList[i].itemThumbNail+'" style="padding:0" class="item_thumbnail" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+chatList[i].item_idx+'\'" onerror="this.onerror=null; this.src=\'${path}/images/noimg_item.jpg\';">';
+						
+						html += '<div class="item_thumbnail" style="background:url(\'${path}/resources/upload/'+chatList[i].itemThumbNail+'\'),url(\'${path}/images/noimg_item.jpg\');background-size:cover; background-position:center; background-repeat:no-repeat;"></div>';
+						//html += '<img src="${path}/resources/upload/'+chatList[i].itemThumbNail+'" style="padding:0" class="item_thumbnail" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+chatList[i].item_idx+'\'" onerror="this.onerror=null; this.src=\'${path}/images/noimg_item.jpg\';">';
 						
 						
 						html += '</div>';

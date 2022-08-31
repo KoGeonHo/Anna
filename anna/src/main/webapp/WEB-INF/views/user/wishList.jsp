@@ -132,8 +132,8 @@
 					<c:forEach var="i" items="${ wishList }"><!-- 
 						 --><div class="card-container" style="display:inline-block; font-size:1rem;">
 							<div class="card" style="margin:5px; display:flex; " onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ i.item_idx }'">
-								<div class="card-img-div" style="background:url('${ path }/resources/upload/${ i.image1 }'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
-								<div class="card-body">
+								<div class="card-img-div" style="background:url('${ path }/resources/upload/${ i.image1 }'),url('${path}/images/no_image.gif'); background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+								<div class="card-body" style="display:flex; flex-direction:column;">
 									<div class="text-start" style="height:30px; display:flex; align-items:center;">
 										<c:if test="${ fn:length(i.title) > 8 }">
 											<b>${fn:substring(i.title,0,8) }...</b>
@@ -144,7 +144,7 @@
 										<c:if test="${ i.state eq 2 }"><span style="padding:3px; border-radius:5px; background:green; color:#fff; font-size:0.8rem; margin-left:5px;">예약중</span></c:if>
 										<c:if test="${ i.state eq 3 }"><span style="padding:3px; border-radius:5px; background:gray; color:#fff; font-size:0.8rem; margin-left:5px;">거래완료</span></c:if>
 									</div>
-									<div>
+									<div style="flex:1;">
 										<span style="color:#00AAB2;"><fmt:formatNumber value="${ i.price }" pattern="#,###"/></span>원
 									</div>
 							    	<div class="text-end">
