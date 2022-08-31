@@ -508,7 +508,18 @@ public class UserController {
 		
 		vo.setUidx(uidx);
 		
+		System.out.println(vo.getIntroduce());
+		System.out.println(vo.getUidx());
+		
 		int result = userService.userInfoMod(vo);
+		
+		System.out.println(result);
+		
+		UserVO userInfo = userService.getUserInfo(uidx);
+		
+		System.out.println(userInfo.getIntroduce());
+		
+		session.setAttribute("userLoginInfo",userInfo);
 		
 		return "redirect:/user/userInfoView.do";
 		
@@ -527,6 +538,10 @@ public class UserController {
 		vo.setUidx(uidx);
 		
 		int result = userService.updateInterested(vo);
+		
+		UserVO userInfo = userService.getUserInfo(uidx);
+		
+		session.setAttribute("userLoginInfo",userInfo);
 		
 		//System.out.println(vo.getInterested());
 		
@@ -605,6 +620,13 @@ public class UserController {
 		//System.out.println(vo.getLocation_auth());
 		
 		int result = userService.updateLocation(vo);
+		
+		
+		int uidx = vo.getUidx();
+		
+		UserVO userInfo = userService.getUserInfo(uidx);
+		
+		session.setAttribute("userLoginInfo",userInfo);
 		
 		if(result == 1) {
 			session.setAttribute("locationSet", vo.getLocation_auth());
@@ -1024,7 +1046,7 @@ public class UserController {
 		
 		userService.updateProfile(vo);
 		
-		System.out.println(vo.getProfile_image());
+		//System.out.println(vo.getProfile_image());
 		
 		return "";
 	}
