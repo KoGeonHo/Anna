@@ -368,9 +368,11 @@ text-decoration: none;
 			</div>
 			<div>
 				<c:if test="${ pm.board_type eq 'free' }">
-					<button type="button" id="btn"class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${ pm.board_type }';">글쓰기</button>
+					<button type="button" id="btn"class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="write2()">글쓰기</button>
 				</c:if>
 			</div>
+			
+			
 			
 		</div>
 
@@ -529,7 +531,7 @@ text-decoration: none;
 					</c:if>
 				</c:if>
 					<c:if test="${ pm.board_type ne 'notice' and pm.board_type ne 'free' }">
-						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="javascript:location.href='${ path }/board/BoardWrite.do?board_type=${pm.board_type}';">글쓰기</button>
+						<button type="button" id="btn" class="btn" style="background-color: #00AAB2;color: #fff; float:right;" onclick="write2()">글쓰기</button>
 					</c:if>
 				
 			
@@ -604,13 +606,29 @@ var scrollHeight = $(this).prop('scrollHeight');
 const GetList = function(currentPage){
 	//console.log("inGetList" + currentPage);
 	
+	var data1;
+	
+	if(${pm.searchUidx != null and pm.searchUidx != 0}){
+		data1 = "board_type=${pm.board_type}&pagenumber="+currentPage+"&SearchVal=${pm.searchVal}&searchUidx=${pm.searchUidx}"
+	}else if(${pm.location_auth != null}){
+		
+		data1 = "board_type=${pm.board_type}&pagenumber="+currentPage+"&SearchVal=${pm.searchVal}&location_auth=${pm.location_auth}"
+	}else{
+		
+		data1 = "board_type=${pm.board_type}&pagenumber="+currentPage+"&SearchVal=${pm.searchVal}"
+		
+	}
+	
+
 	//무한스크롤
 	$.ajax({
 	
 		url : "ajax_board.do",
 		method : "GET",
 		//검색 기능이 있는 경우 seachType과 seachVal를 함께 넘겨줘야한다. 안그러면 검색결과만 나와야하는데 다른 것들이 덧붙여져 나온다.
-		data : "board_type=${pm.board_type}&pagenumber="+currentPage+"&SearchVal=${pm.searchVal}&searchUidx=${pm.searchUidx}&location_auth=${pm.location_auth}",
+		
+		data: data1
+		,
 		//FreeBoard.jsp의 내용이 data로 들어온다. 
 		success:function(data){
 			 //console.log(data.appendList);
@@ -690,7 +708,25 @@ $("input[name='tab_btn']").change(function(){
 });
 
 </script>
+<script>
+	function write2(){
+		
+		if(${userLoginInfo.uidx != null && userLoginInfo.location_auth != 'N'}){
+			
+			location.href='${path}/board/BoardWrite.do?board_type=${ pm.board_type }';
+			
+		}else if(${userLoginInfo.uidx != null && userLoginInfo.location_auth == 'N'}){
+			
+			alert("내 동네를 설정해주세요!");
+			location.href="${path}/user/userInfoView.do";
+		}else{
+			alert("로그인 후에 이용 가능합니다.");
+			location.href="${path}/user/login.do";
+		}
+		
+	}
 
+</script>
 
 
 
