@@ -71,7 +71,7 @@ public class CookieCheck extends HandlerInterceptorAdapter{
 			
 			//밴 체크 
 			ReportVO rv = userService.BenCheck(uidx);
-			System.out.println(rv);
+			//System.out.println(rv);
 			if(rv != null) {
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				

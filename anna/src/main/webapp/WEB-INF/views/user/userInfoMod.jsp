@@ -267,7 +267,7 @@ form {
 													}
 												});
 											}
-											$("#locaList").append("<button class='btn' type='button' style='background:#00AAB2;  color:#fff;' onclick=\"location.href='locationAuth.do';\">동네 다시 등록하기</button>");
+											$("#locaList").append("<button class='btn' type='button'  style='background:#00AAB2; float:right; margin-top:10px;  color:#fff;' onclick=\"location.href='locationAuth.do';\">동네 다시 등록하기</button>");
 										},
 										error: function(){
 											console.log("error");
