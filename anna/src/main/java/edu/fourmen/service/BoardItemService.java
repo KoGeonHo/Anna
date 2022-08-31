@@ -41,19 +41,19 @@ public interface BoardItemService {
 	
 	public List<ChatMessageVO> mychat(ChatMessageVO cvo);
 	
-	public int addNeighbor(BoardItemVO vo);
+	public int addNeighbor(int neighbor_idx, int uidx);
 	
-	public int neighbor_check(BoardItemVO bvo);
+	public int neighbor_check(int neighbor_idx, int uidx);
 	
 	public List<BoardItemVO> neighbor_list(BoardItemVO nvo);
 	
 	public int delneighbor(int neighbor_idx, int uidx);
 	
-	public int addWish(BoardItemVO vo);
+	public int addWish(int item_idx , int uidx);
 	
-	public int checkWish(BoardItemVO wvo);
+	public int checkWish(int item_idx, int uidx);
 	
-	public int delWish(BoardItemVO wvo);
+	public int delWish(int item_idx, int uidx);
 	
 	public int report_target(ReportVO rvo);
 	

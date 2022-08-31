@@ -368,8 +368,36 @@ a:link {
 .box {float:left; overflow: hidden;}
 .box-inner {width: auto; padding: 10px;}
 
+
+	#image{
+	height:230px;
+	width:100%;
+
+	}
+
+
+@media all and (767px <= width <= 990px) {
+
+
+	#image{
+	height:290px;
+	width:100%;
+
+	}
+
+
+}
 /* max가  0부터 ~ 까지라는뜨 */
 /* 반응형 */@media all and (max-width:  767px){
+   
+   
+   
+   #image{
+	height:220px;
+	width:60%;
+
+	}
+   
    
    .card{
    widht:100%;
@@ -392,9 +420,6 @@ a:link {
       display:none;
    }
    
-   #itemlist {
-      margin-top: -106px;
-   }
  
  	
 
@@ -473,15 +498,9 @@ a:link {
 	.card > img {
 	width:100%; height:210px;
 	}
-	
 	b{
 	
 	}	
-	
-	#image{
-	height:230px;
-	background:url('')
-	}
 	
 	
 	
@@ -800,9 +819,10 @@ a {
 								</script>
 								<div class="card-container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">
 									<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
-										<div id="image">
-										<img src="${ path }/resources/upload/${ vo.image1}" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
-									</div>	
+										<div id="image" style="background:url('${path}/resources/upload/${vo.image1}'); background-position:center;  background-size:cover;">
+										
+										<!-- 상품 이미지 -->
+										</div>	
 										<div class="card-body" style="padding:10px;">
 										
 											<div class="text-start" style="height:30px; display:flex; align-items:center;">

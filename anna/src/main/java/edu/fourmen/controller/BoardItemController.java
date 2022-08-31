@@ -165,7 +165,7 @@ public class BoardItemController {
 
 	@ResponseBody
 	@RequestMapping(value = "/ajax_main.do", produces = "application/json; charset=utf8")
-	   public HashMap<String, Object> main2(HttpSession session,PageMaker pm, SearchVO svo,BoardItemVO vo,  HttpServletRequest request, Model model) {
+	   public HashMap<String, Object> main2(HttpSession session,PageMaker pm,BoardItemVO vo,  HttpServletRequest request, Model model) {
 		
 		session = request.getSession();
 		
@@ -239,7 +239,7 @@ public class BoardItemController {
 	
 	@ResponseBody
 	@RequestMapping("/addviewcount")
-	public int addviewcount(BoardItemVO vo) {
+	public int addviewcount(BoardItemVO vo) { //item_idx 로 받아서 되는가 확인할것
 		int item_idx = vo.getItem_idx();
 		vo.setItem_idx(item_idx);
 		boarditemService.addviewCount(item_idx);
@@ -248,15 +248,12 @@ public class BoardItemController {
 
 	
 	@RequestMapping(value = "itemview.do")
-	public String selectitem(BoardItemVO wvo,BoardItemVO bvo,ChatMessageVO cvo,PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
+	public String selectitem(BoardItemVO bvo, PageMaker pm,SearchVO svo,int item_idx, HttpServletResponse response, HttpServletRequest request,
 			HttpSession session, Model model) throws ParseException {
 		
 
 		session = request.getSession();
 		
-		if(session.getAttribute("uidx") != null) {
-		int uidx = (int) session.getAttribute("uidx");
-		}
 		
 		BoardItemVO vo = boarditemService.selectitem(item_idx);
 		model.addAttribute("vo", vo);
@@ -276,14 +273,6 @@ public class BoardItemController {
 		Date date = df.parse(wwdate); // 추출해서 넣은 작성시간을 Date 타입으로 변경
 		
 		cal.setTime(date); // 캘린더 함수에 추가
-		
-		/*
-		 * cal.add(Calendar.MONTH, 1);// 캘린더 함수를 통해 넣은 시간에 1달을 더함
-		 * System.out.println("한달 후"+ df.format(cal.getTime())); // 더해진 시간 확인
-		 * 
-		 * String updatewdate = df.format(cal.getTime()); // 1달이 더해진 시간을 string 타입에 넣음
-		 * Date wdate = df.parse(updatewdate);// string 타입을 date 타입으로 전환
-		 */		
 		
 		int Sec = (int) ((realnowtime.getTime() - date.getTime()) / 1000); //두 날짜의 차이를 초 단위로 만듬
 		int Days = Sec / (24*60*60) ; // 초 단위로 만든 두 날짜의 차이를 일(하루) 기준으로 만듬
@@ -320,11 +309,11 @@ public class BoardItemController {
 		int uidx = (int) session.getAttribute("uidx");
 		bvo.setNeighbor_idx(neighbor_idx);
 		bvo.setUidx(uidx); //이게 있으면 추가가 안되고 없으면 체크가 안된다.
-		}
-		int result = boarditemService.neighbor_check(bvo);
+		int result = boarditemService.neighbor_check(neighbor_idx, uidx);
 		model.addAttribute("result",result);
 		System.out.println(result +"이웃 체크");
 		
+		}
 		
 		//찜 체크
 		if(session.getAttribute("uidx") != null) {
@@ -334,7 +323,7 @@ public class BoardItemController {
 			wvo.setUidx(uidx);
 		}
 		
-		int wish = boarditemService.checkWish(wvo);
+		int wish = boarditemService.checkWish(neighbor_idx, uidx);
 		model.addAttribute("wish",wish);
 		int wishCount = boarditemService.WishCount(item_idx);
 		model.addAttribute("wishCount",wishCount);
@@ -370,7 +359,6 @@ public class BoardItemController {
 		if (vo.getFile1() != null) {
 			MultipartFile uploadFile1 = vo.getFile1();
 			String originalFileName = uploadFile1.getOriginalFilename();
-//			String uploadFile11 = uploadFile1.getOriginalFilename()+uuid.toString();
 			if (!uploadFile1.isEmpty()) {
 			fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
 			uploadFile1.transferTo(new File(path, fileName));
@@ -380,12 +368,8 @@ public class BoardItemController {
 
 			String thumbnailName = path + File.separator + "s-" + fileName;
 
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
 
@@ -398,25 +382,16 @@ public class BoardItemController {
 			MultipartFile uploadFile2 = vo.getFile2();
 			String originalFileName = uploadFile2.getOriginalFilename();
 			if (!uploadFile2.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"2"+"_"+originalFileName;
 				uploadFile2.transferTo(new File(path, fileName));
 			
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage2(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 																									// 이름
@@ -427,26 +402,15 @@ public class BoardItemController {
 			MultipartFile uploadFile3 = vo.getFile3();
 			String originalFileName = uploadFile3.getOriginalFilename();
 			if (!uploadFile3.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"3"+"_"+originalFileName;
 				uploadFile3.transferTo(new File(path, fileName));
-			
-
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage3(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 			}																						// 이름
@@ -456,26 +420,15 @@ public class BoardItemController {
 			MultipartFile uploadFile4 = vo.getFile4();
 			String originalFileName = uploadFile4.getOriginalFilename();
 			if (!uploadFile4.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"4"+"_"+originalFileName;
 				uploadFile4.transferTo(new File(path, fileName));
-			
-
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage4(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 			}																						// 이름
@@ -485,25 +438,15 @@ public class BoardItemController {
 			MultipartFile uploadFile5 = vo.getFile5();
 			String originalFileName = uploadFile5.getOriginalFilename();
 			if (!uploadFile5.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"5"+"_"+originalFileName;
 				uploadFile5.transferTo(new File(path, fileName));
-			
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage5(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 			}
@@ -513,29 +456,17 @@ public class BoardItemController {
 			MultipartFile uploadFile6 = vo.getFile6();
 			String originalFileName = uploadFile6.getOriginalFilename();
 			if (!uploadFile6.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"6"+"_"+originalFileName;
 				uploadFile6.transferTo(new File(path, fileName));
-			
-
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage6(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
 			}
 		}
 
@@ -543,26 +474,17 @@ public class BoardItemController {
 			MultipartFile uploadFile7 = vo.getFile7();
 			String originalFileName = uploadFile7.getOriginalFilename();
 			if (!uploadFile7.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"7"+"_"+originalFileName;
 				uploadFile7.transferTo(new File(path, fileName));
-			
-
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage7(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-			
 			}																						// 이름
 		}
 
@@ -570,29 +492,17 @@ public class BoardItemController {
 			MultipartFile uploadFile8 = vo.getFile8();
 			String originalFileName = uploadFile8.getOriginalFilename();
 			if (!uploadFile8.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"8"+"_"+originalFileName;
 				uploadFile8.transferTo(new File(path, fileName));
-			
-
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage8(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
 			}
 		}
 
@@ -600,29 +510,17 @@ public class BoardItemController {
 			MultipartFile uploadFile9 = vo.getFile9();
 			String originalFileName = uploadFile9.getOriginalFilename();
 			if (!uploadFile9.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"9"+"_"+originalFileName;
 				uploadFile9.transferTo(new File(path, fileName));
-			
-
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage9(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
 			}
 		}
 
@@ -630,52 +528,27 @@ public class BoardItemController {
 			MultipartFile uploadFile10 = vo.getFile10();
 			String originalFileName = uploadFile10.getOriginalFilename();
 			if (!uploadFile10.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"10"+"_"+originalFileName;
 				uploadFile10.transferTo(new File(path, fileName));
-			
-
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
 			File newFile = new File(thumbnailName);
-
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage10(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 			}																						// 이름
 		}
-
-		/*
-		 * File dir = new File(path); // path가 존재하는지 여부 확인 if(!dir.exists()) {
-		 * dir.mkdirs(); // 위치가 존재하지 않는 경우 위치 생성 }
-		 */
-
-		/*
-		 * vo.getImage1().getOriginalFilename(); vo.getImage2().getOriginalFilename();
-		 * // vo.getImage3().getOriginalFilename();
-		 */
-
 		session = request.getSession();
 		
+		//키워드 잘라서 넣고 보냄
 		if(vo.getKeyword() != null) {
 		 String str = vo.getKeyword().replace(",","#");
 		 
 		 vo.setKeyword(str);
 		}
-			/* vo.setKeyword("#"+s); */
-		
-		//  List<String> list2 = "#"; System.out.println("#"+list2);
-		// System.out.println(list2 + "키워드 리스트2222 자르고난후");
-		 
-		
-		// vo.setMidx(login.getMidx());
 
 		 boarditemService.boarditemswrite(vo);
 
@@ -709,6 +582,8 @@ public class BoardItemController {
 		
 		String fileName = null;
 		
+		
+		//현재 날짜와 시간을 불러와서 변환해주고 이미지 이름에 넣음
 		Date date = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmm");
 		formatter.format(date);
@@ -717,28 +592,17 @@ public class BoardItemController {
 		if (vo.getFile1() != null) {
 			MultipartFile uploadFile1 = vo.getFile1();
 			String originalFileName = uploadFile1.getOriginalFilename();
-//			String uploadFile11 = uploadFile1.getOriginalFilename()+uuid.toString();
 			if (!uploadFile1.isEmpty()) {
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
 				uploadFile1.transferTo(new File(path, fileName));
-
 				System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
-		
-
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage1(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 			}																					// 이름
@@ -748,28 +612,17 @@ public class BoardItemController {
 			MultipartFile uploadFile2 = vo.getFile2();
 			String originalFileName = uploadFile2.getOriginalFilename();
 			if (!uploadFile2.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"2"+"_"+originalFileName;
 				uploadFile2.transferTo(new File(path, fileName));
-			
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
 			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
 			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
 			System.out.println("복사여부 flag" + flag);
-
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage2(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
 			}
 		}
 
@@ -777,30 +630,19 @@ public class BoardItemController {
 			MultipartFile uploadFile3 = vo.getFile3();
 			String originalFileName = uploadFile3.getOriginalFilename();
 			if (!uploadFile3.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"3"+"_"+originalFileName;
 				uploadFile3.transferTo(new File(path, fileName));
-			
-
-			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
-			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
-			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
-			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-			System.out.println("복사여부 flag" + flag);
-
-			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
-			vo.setImage3(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-			}																						// 이름
-		}
+				BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+				BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
+				String thumbnailName = path + File.separator + "s-" + fileName;
+				File newFile = new File(thumbnailName);
+				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
+				System.out.println("복사여부 flag" + flag);
+				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+				vo.setImage3(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
+				}																						// 이름
+			}
 
 		if (vo.getFile4() != null) {
 			MultipartFile uploadFile4 = vo.getFile4();
@@ -809,199 +651,136 @@ public class BoardItemController {
 				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"4"+"_"+originalFileName;
 				uploadFile4.transferTo(new File(path, fileName));
-			
-
-			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
-			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
-			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
-			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-			System.out.println("복사여부 flag" + flag);
-
-			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
-			vo.setImage4(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-			}																						// 이름
-		}
+				BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+				BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
+				String thumbnailName = path + File.separator + "s-" + fileName;
+				File newFile = new File(thumbnailName);
+				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
+				System.out.println("복사여부 flag" + flag);
+				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+				vo.setImage4(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
+				}																						// 이름
+			}
 
 		if (vo.getFile5() != null) {
 			MultipartFile uploadFile5 = vo.getFile5();
 			String originalFileName = uploadFile5.getOriginalFilename();
 			if (!uploadFile5.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"5"+"_"+originalFileName;
 				uploadFile5.transferTo(new File(path, fileName));
-			
-
-			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
-			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
-			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
-			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-			System.out.println("복사여부 flag" + flag);
-
-			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
-			vo.setImage5(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-			}																					// 이름
-		}
+				BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+				BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
+				String thumbnailName = path + File.separator + "s-" + fileName;
+				File newFile = new File(thumbnailName);
+				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
+				System.out.println("복사여부 flag" + flag);
+				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+				vo.setImage5(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
+				}																					// 이름
+			}
 
 		if (vo.getFile6() != null) {
 			MultipartFile uploadFile6 = vo.getFile6();
 			String originalFileName = uploadFile6.getOriginalFilename();
 			if (!uploadFile6.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"6"+"_"+originalFileName;
 				uploadFile6.transferTo(new File(path, fileName));
-		
-
-			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
-			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
-			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
-			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-			System.out.println("복사여부 flag" + flag);
-
-			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
-			vo.setImage6(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-			}																					// 이름
-
-		}
+	 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+				BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
+				String thumbnailName = path + File.separator + "s-" + fileName;
+				File newFile = new File(thumbnailName);
+				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
+				System.out.println("복사여부 flag" + flag);
+				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+				vo.setImage6(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
+				}																					// 이름
+	
+			}
 
 		if (vo.getFile7() != null) {
 			MultipartFile uploadFile7 = vo.getFile7();
 			String originalFileName = uploadFile7.getOriginalFilename();
 			if (!uploadFile7.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"7"+"_"+originalFileName;
 				uploadFile7.transferTo(new File(path, fileName));
-			
-
-			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
-			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-			System.out.println("복사여부 flag" + flag);
-
-			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
-			vo.setImage7(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-			}																					// 이름
-		}
+				
+				BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+				BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
+				String thumbnailName = path + File.separator + "s-" + fileName;
+				File newFile = new File(thumbnailName);
+				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
+				System.out.println("복사여부 flag" + flag);
+				
+				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+				vo.setImage7(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
+				}																					// 이름
+			}
 
 		if (vo.getFile8() != null) {
 			MultipartFile uploadFile8 = vo.getFile8();
 			String originalFileName = uploadFile8.getOriginalFilename();
 			if (!uploadFile8.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"8"+"_"+originalFileName;
 				uploadFile8.transferTo(new File(path, fileName));
-			
 
-			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
-			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
-			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
-			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-			System.out.println("복사여부 flag" + flag);
-
-			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
-			vo.setImage8(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+				BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+				BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
+				String thumbnailName = path + File.separator + "s-" + fileName;
+				File newFile = new File(thumbnailName);
+				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
+				System.out.println("복사여부 flag" + flag);
+	
+				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+				vo.setImage8(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
+																										// 이름
+				}
 			}
-		}
 
 		if (vo.getFile9() != null) {
 			MultipartFile uploadFile9 = vo.getFile9();
 			String originalFileName = uploadFile9.getOriginalFilename();
 			if (!uploadFile9.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"9"+"_"+originalFileName;
 				uploadFile9.transferTo(new File(path, fileName));
-			
 
-			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
-			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			// System.out.println("thumbnailName"+thumbnailName);
-
-			File newFile = new File(thumbnailName);
-			// System.out.println("newFile:"+newFile);
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			// System.out.println("destImg"+destImg);
-			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-			System.out.println("복사여부 flag" + flag);
-
-			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
-			vo.setImage9(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-																									// 이름
+				BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+				BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
+				String thumbnailName = path + File.separator + "s-" + fileName;
+				File newFile = new File(thumbnailName);
+				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
+				System.out.println("복사여부 flag" + flag);
+	
+				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+				vo.setImage9(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
+																										// 이름
+				}
 			}
-		}
 
 		if (vo.getFile10() != null) {
 			MultipartFile uploadFile10 = vo.getFile10();
 			String originalFileName = uploadFile10.getOriginalFilename();
 			if (!uploadFile10.isEmpty()) {
-				// String uploadFile22 = uploadFile2.getOriginalFilename()+uuid.toString();
-				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"10"+"_"+originalFileName;
+ 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"10"+"_"+originalFileName;
 				uploadFile10.transferTo(new File(path, fileName));
-			
 
-			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
-
-			String thumbnailName = path + File.separator + "s-" + fileName;
-
-			File newFile = new File(thumbnailName);
-
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-			System.out.println("복사여부 flag" + flag);
-
-			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
-			vo.setImage10(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
-			}																					// 이름
-		}
-		
+				BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
+				BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
+				String thumbnailName = path + File.separator + "s-" + fileName;
+				File newFile = new File(thumbnailName);
+				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
+				System.out.println("복사여부 flag" + flag);
+	
+				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
+				vo.setImage10(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
+				}																					// 이름
+			}
 		
 			boarditemService.itemmodify(vo);
 			
@@ -1019,175 +798,130 @@ public class BoardItemController {
 		return "redirect:/boarditem/itemlist.do";
 	}
 	
+	
+	 //채팅부분 주석
 	/*
-	 * @RequestMapping(value="/itemdelete.do", method=RequestMethod.POST) public
-	 * String delete(HttpSession session,BoardItemVO vo) {
+	 * @RequestMapping("/AddMessage")
+	 * 
+	 * @ResponseBody public String AddMessage(ChatMessageVO cvo ,HttpServletRequest
+	 * request, HttpSession session) { System.out.println("이쯤에"); session =
+	 * request.getSession();
+	 * 
+	 * boarditemService.insertChat(cvo); System.out.println("거래완료 채팅 보냄");
 	 * 
 	 * 
-	 * return "redirect:/itemboard/itemlist.do"; }
+	 * return "" ; }
+	 * 
+	 * @RequestMapping("/getAllMessages")
+	 * 
+	 * @ResponseBody public String getAllMessages(ChatMessageVO cvo,String
+	 * nickName,int uidx,int item_idx,String cdate, String contents,
+	 * HttpServletResponse response, HttpServletRequest request, HttpSession
+	 * session, Model model) {
+	 * 
+	 * UserVO userinfo = (UserVO)session.getAttribute("login"); BoardItemVO vo =
+	 * boarditemService.selectitem(item_idx); int invited = userinfo.getUidx(); int
+	 * chat_host = vo.getUidx(); session.setAttribute("userinfo",userinfo);
+	 * model.addAttribute("vo",vo);
+	 * 
+	 * return "d"; }
+	 * 
+	 * //채팅방
+	 * 
+	 * @RequestMapping(value="/chatView.do") public String chatView(ChatMessageVO
+	 * cmvo,Model model,HttpServletRequest request,HttpSession session) {
+	 * 
+	 * session = request.getSession();
+	 * 
+	 * int uidx = (int)session.getAttribute("uidx");
+	 * 
+	 * List<ChatMessageVO> chatViewList = userService.getChatViewList(cmvo);
+	 * 
+	 * String audience = "";
+	 * 
+	 * if(cmvo.getInvited() == uidx) { UserVO audienceInfo =
+	 * userService.getUserInfo(cmvo.getChat_host()); audience =
+	 * audienceInfo.getNickName(); }else if(cmvo.getChat_host() == uidx) { UserVO
+	 * audienceInfo = userService.getUserInfo(cmvo.getInvited()); audience =
+	 * audienceInfo.getNickName(); }
+	 * 
+	 * List<Integer> listForSetRead = new ArrayList<Integer>();
+	 * 
+	 * for(ChatMessageVO list : chatViewList) {
+	 * //System.out.println(list.getCidx()); if(uidx != list.getUidx() &&
+	 * list.getChat_read() == 1) { listForSetRead.add((int)list.getCidx()); } }
+	 * 
+	 * if(listForSetRead.size() != 0) { userService.chatSetRead(listForSetRead); }
+	 * 
+	 * BoardItemVO itemVO = boarditemService.selectitem(cmvo.getItem_idx());
+	 * 
+	 * UserVO hostInfo = userService.getUserInfo(cmvo.getChat_host());
+	 * 
+	 * //System.out.println(cmvo.getItem_idx());
+	 * 
+	 * model.addAttribute("itemVO",itemVO);
+	 * 
+	 * model.addAttribute("hostInfo",hostInfo);
+	 * 
+	 * model.addAttribute("audience",audience);
+	 * 
+	 * model.addAttribute("path",path);
+	 * 
+	 * model.addAttribute("chatViewList",chatViewList);
+	 * 
+	 * return "user/chatView"; }
+	 * 
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value="/getMessage.do", produces =
+	 * "application/json; charset=utf8") public ChatMessageVO
+	 * getMessage(ChatMessageVO cmvo){
+	 * 
+	 * ChatMessageVO getMessage = userService.getMessageNoRead(cmvo);
+	 * //System.out.println(getMessage); List<Integer> listForSetRead = new
+	 * ArrayList<Integer>(); if(getMessage != null) {
+	 * listForSetRead.add((int)getMessage.getCidx());
+	 * userService.chatSetRead(listForSetRead); }
+	 * 
+	 * return getMessage; }
+	 * 
+	 * @RequestMapping("/clear")
+	 * 
+	 * @ResponseBody public String clear() { chatlist.clear(); return "메시지 전체 삭제"; }
+	 * 
+	 * @RequestMapping("/mychatlist")
+	 * 
+	 * @ResponseBody public List<ChatMessageVO> mychatlist(int
+	 * chat_host,ChatMessageVO cvo,HttpSession session,HttpServletRequest request) {
+	 * session = request.getSession();
+	 * 
+	 * 
+	 * 
+	 * cvo.setChat_host(chat_host);
+	 * 
+	 * List<ChatMessageVO> mychatlist = boarditemService.mychatlist(cvo); return
+	 * mychatlist; }
+	 * 
+	 * @RequestMapping("/mychat")
+	 * 
+	 * @ResponseBody public List mychat(int chat_host,ChatMessageVO cvo,HttpSession
+	 * session,HttpServletRequest request) { System.out.println("거래채팅창 열었다");
+	 * session = request.getSession();
+	 * 
+	 * 
+	 * List<ChatMessageVO> mychat = boarditemService.mychat(cvo); return mychat; }
 	 */
-	
-
-	@RequestMapping("/AddMessage")
-	@ResponseBody
-	public String AddMessage(ChatMessageVO cvo ,HttpServletRequest request, HttpSession session) {
-		System.out.println("이쯤에");
-		session = request.getSession();
-		
-		boarditemService.insertChat(cvo);
-		System.out.println("거래완료 채팅 보냄");
-		
-		
-		return "" ;
-	}
-	@RequestMapping("/getAllMessages")
-	@ResponseBody
-	public String getAllMessages(ChatMessageVO cvo,String nickName,int uidx,int item_idx,String cdate, String contents, HttpServletResponse response, HttpServletRequest request, HttpSession session, Model model) {
-
-		UserVO userinfo = (UserVO)session.getAttribute("login");
-		BoardItemVO vo = boarditemService.selectitem(item_idx);
-		int invited = userinfo.getUidx();
-		int chat_host = vo.getUidx();
-		session.setAttribute("userinfo",userinfo);
-		model.addAttribute("vo",vo);
-		
-		return "d";
-	}
-	
-	//채팅방
-		@RequestMapping(value="/chatView.do")
-		public String chatView(ChatMessageVO cmvo,Model model,HttpServletRequest request,HttpSession session) {
-			
-			session = request.getSession();
-			
-			int uidx = (int)session.getAttribute("uidx");
-			
-			List<ChatMessageVO> chatViewList = userService.getChatViewList(cmvo);
-			
-			String audience = "";
-			
-			if(cmvo.getInvited() == uidx) {
-				UserVO audienceInfo = userService.getUserInfo(cmvo.getChat_host());
-				audience = audienceInfo.getNickName();
-			}else if(cmvo.getChat_host() == uidx) {
-				UserVO audienceInfo = userService.getUserInfo(cmvo.getInvited());
-				audience = audienceInfo.getNickName();
-			}
-			
-			List<Integer> listForSetRead = new ArrayList<Integer>();
-			
-			for(ChatMessageVO list : chatViewList) {
-				//System.out.println(list.getCidx());
-				if(uidx != list.getUidx() && list.getChat_read() == 1) {
-					listForSetRead.add((int)list.getCidx());
-				}
-			}
-			
-			if(listForSetRead.size() != 0) {
-				userService.chatSetRead(listForSetRead);
-			}
-			
-			BoardItemVO itemVO = boarditemService.selectitem(cmvo.getItem_idx());
-			
-			UserVO hostInfo = userService.getUserInfo(cmvo.getChat_host());
-			
-			//System.out.println(cmvo.getItem_idx());
-			
-			model.addAttribute("itemVO",itemVO);
-			
-			model.addAttribute("hostInfo",hostInfo);
-			
-			model.addAttribute("audience",audience);
-			
-			model.addAttribute("path",path);
-			
-			model.addAttribute("chatViewList",chatViewList);
-			
-			return "user/chatView";
-		}
-	
-	@ResponseBody
-	@RequestMapping(value="/getMessage.do", produces = "application/json; charset=utf8")
-	public ChatMessageVO getMessage(ChatMessageVO cmvo){
-		
-		ChatMessageVO getMessage = userService.getMessageNoRead(cmvo);
-		//System.out.println(getMessage);
-		List<Integer> listForSetRead = new ArrayList<Integer>();
-		if(getMessage != null) {
-			listForSetRead.add((int)getMessage.getCidx());
-			userService.chatSetRead(listForSetRead);
-		}
-		
-		return getMessage;
-	}
-	
-	@RequestMapping("/clear")
-	@ResponseBody
-	public String clear() {
-		chatlist.clear();
-		return "메시지 전체 삭제";
-	}
-	
-	@RequestMapping("/mychatlist")
-	@ResponseBody
-	public List<ChatMessageVO> mychatlist(int chat_host,ChatMessageVO cvo,HttpSession session,HttpServletRequest request) {
-		session = request.getSession();
-		
-		
-		
-		cvo.setChat_host(chat_host);
-		
-		List<ChatMessageVO> mychatlist = boarditemService.mychatlist(cvo);
-		return mychatlist;
-	}
-	
-	@RequestMapping("/mychat")
-	@ResponseBody
-	public List mychat(int chat_host,ChatMessageVO cvo,HttpSession session,HttpServletRequest request) {
-		System.out.println("거래채팅창 열었다");
-		session = request.getSession();
-		
-		
-		List<ChatMessageVO> mychat = boarditemService.mychat(cvo);
-		return mychat;
-	}
-/*
-	@ResponseBody
-	@RequestMapping("/neighbor_check")
-	public String neighbor_check(HttpSession session, int item_idx, int neighbor_idx, BoardItemVO vo, Model model) {
-
-		
-
-		int result = boarditemService.neighbor_check(vo);
-
-		System.out.println(result + "친구 유무");
-
-		model.addAttribute("result", result);
-
-		if (result == 0) {
-
-			return "/addNeighbor";
-		} else {
-
-			return "/delNeighbor";
-		}
-	}
-	 */
-		
-		
-		
-		
-		
-	
 	
 	@ResponseBody
 	@RequestMapping("/addNeighbor")
 	public String addNeighbor(HttpSession
-			session,HttpServletRequest request ,int item_idx, int neighbor_idx,BoardItemVO vo, Model model) {
+			session,HttpServletRequest request, int neighbor_idx) {
 		session = request.getSession();
-		int uidx = (int) session.getAttribute("uidx");
 		
-		boarditemService.addNeighbor(vo);
+		int uidx = (int)session.getAttribute("uidx");
+		
+		
+		boarditemService.addNeighbor(neighbor_idx, uidx);
 		
 		return "이웃추가 완료";
 	}
@@ -1199,8 +933,6 @@ public class BoardItemController {
 		session = request.getSession();
 		
 		int uidx = (int)session.getAttribute("uidx");
-		System.out.println(uidx +"uidxuidx");
-		System.out.println(neighbor_idx+"neighbor_idx");
 		boarditemService.delneighbor(neighbor_idx, uidx);
 		System.out.println("이웃삭제 완료");
 		
@@ -1210,18 +942,21 @@ public class BoardItemController {
 	
 	@ResponseBody
 	@RequestMapping("/addWish")
-	public int addWish(BoardItemVO vo) {
+	public int addWish(HttpSession session, int item_idx) {
+		int uidx = (int)session.getAttribute("uidx");
 		
-		boarditemService.addWish(vo);
+		boarditemService.addWish(item_idx, uidx);
 		System.out.println("찜 완료");
 		return 1;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/delWish")
-	public int delWish(BoardItemVO vo) {
+	public int delWish(HttpSession session, int item_idx) {
+		int uidx = (int)session.getAttribute("uidx");
 		
-		boarditemService.delWish(vo);
+		
+		boarditemService.delWish(item_idx,uidx);
 		System.out.println("찜 삭제 완료");
 		return 1;
 	}
@@ -1246,30 +981,7 @@ public class BoardItemController {
 	@RequestMapping("/updatewdate")
 	public int updatewdate(int item_idx){
 		
-		/*
-		 * BoardItemVO result = boarditemService.selectitem(item_idx);
-		 * System.out.println(result.getWdate()+"글 작성날짜"); SimpleDateFormat df= new
-		 * SimpleDateFormat("yyyy-MM-dd"); Calendar cal = Calendar.getInstance();
-		 * 
-		 * String wwdate = result.getWdate(); //작성된 글의 시간을 추출해서 넣기 Date date =
-		 * df.parse(wwdate); // 추출해서 넣은 작성시간을 Date 타입으로 변경
-		 * 
-		 * System.out.println(date +"date"); cal.setTime(date); // 캘린더 함수에 추가
-		 * System.out.println("넣은 시간" +df.format(cal.getTime())); // 바로 위에서 넣은 값 확인
-		 * 
-		 * cal.add(Calendar.MONTH, 1);// 캘린더 함수를 통해 넣은 시간에 1달을 더함
-		 * System.out.println("바뀐 시간"+ df.format(cal.getTime())); // 더해진 시간 확인
-		 * 
-		 * String updatewdate = df.format(cal.getTime()); // 1달이 더해진 시간을 string 타입에 넣음
-		 * Date wdate = df.parse(updatewdate);// string 타입을 date 타입으로 전환
-		 * 
-		 * System.out.println(wdate.getTime() - date.getTime() / 1000 + "두 날짜간의 차이 구하기"
-		 * ); int Sec = (int) ((wdate.getTime() - date.getTime()) / 1000); int Days =
-		 * Sec / (24*60*60) ; System.out.println("두 날짜의 차이는 =" +Days+"일");
-		 */
 		boarditemService.update_wdate(item_idx);
-		
-		
 		System.out.println("끌올 완료");
 		return 1;
 	}
@@ -1292,18 +1004,15 @@ public class BoardItemController {
 		 
 		 
 		  if (rvo.getFile1() != null) { MultipartFile uploadFile1 = rvo.getFile1(); //
-			 // String uploadFile11 = uploadFile1.getOriginalFilename()+uuid.toString(); 
 				  String originalFileName = uploadFile1.getOriginalFilename();
 			  if(!uploadFile1.isEmpty()) { 
 					  fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
+					 
 					  System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
 					  BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 					  BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC,
 					  Scalr.Mode.FIT_TO_HEIGHT, 450);
-					  
 					  String thumbnailName = path + File.separator + "s-" + fileName;
-					  
-					  // System.out.println("thumbnailName"+thumbnailName);
 					  
 					  File newFile = new File(thumbnailName); //
 					  System.out.println("newFile:"+newFile); String formatName =
@@ -1313,13 +1022,11 @@ public class BoardItemController {
 					  
 					  thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 					  rvo.setAttach(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일 // 이름 }
+				  }
 			  }
-		  }
-		
 		
 		boarditemService.report_target(rvo);
 		System.out.println("신고 완료");
-		System.out.println(rvo.getItem_idx()+"신고당한 글 번호");
 		return "redirect:/boarditem/itemview.do?item_idx="+rvo.getItem_idx();
 	}
 	
