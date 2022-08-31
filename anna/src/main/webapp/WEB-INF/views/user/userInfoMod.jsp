@@ -153,7 +153,7 @@ form {
 					data : "interested="+keyword,
 					success : function(rs){
 						//console.log(rs);
-						alert("키워드가 등록되었습니다.");
+						//alert("키워드가 등록되었습니다.");
 						if(rs != 0){
 							for(let i = 0; i < arr.length; i++){
 								html += arr[i]+"<span onclick='delKeyword(\""+arr[i]+"\");'>삭제</span><br>";
@@ -219,7 +219,12 @@ form {
 						<form method="post" id="profileFrm">
 							<input id="input-fileUpdate" type="file" name="profile_image" accept="image/gif, image/jpeg" style="display:none;" onchange="updateProFileImage(this)">
 							<label for="input-fileUpdate">
-								<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
+								<c:if test="${ not empty userInfo.profile_image }">
+									<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
+								</c:if>
+								<c:if test="${ empty userInfo.profile_image }">
+									<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${path}/images/NoProfile.png'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
+								</c:if>
 								<%-- <img src="${ userInfo.profile_image }" class="profile-image" onerror="this.onerror=null; this.src='${path}/images/NoProfile.png';" style="border-radius:100px;" > --%>
 							</label>
 						</form>
@@ -232,26 +237,26 @@ form {
 					</div>
 				</div>
 				<form id="userInfoModFrm" method="POST" action="userInfoMod.do">	
-					<div class="row border-bottom" style="display:table; width:100%;">
+					<div class="row border-bottom tr" style="display:table; width:100%;">
 						<div class="col-3 text-center th" style="padding:1rem; display:table-cell; width:25%;">닉네임</div>
-						<div class="col-9" style="padding:1rem; align-self:center; display:table-cell; width:auto;"><input type="text" class="form-control" id="input-nickName" name="nickName" value="${ userInfo.nickName }"></div>
+						<div class="col-9 td" style="padding:1rem; align-self:center; display:table-cell; width:auto;"><input type="text" class="form-control" id="input-nickName" name="nickName" value="${ userInfo.nickName }"></div>
 					</div>
-					<div class="row border-bottom">
+					<div class="row border-bottom tr">
 						<div class="col-3 text-center th" style="padding:1rem;">이메일</div>
-						<div class="col-9" style="padding:1rem;">${ userInfo.user_email }</div>
+						<div class="col-9 td" style="padding:1rem;">${ userInfo.user_email }</div>
 					</div>
-					<div class="row border-bottom">
+					<div class="row border-bottom tr">
 						<div class="col-3 text-center th" style="padding:1rem;">내동네</div>
-						<div class="col-9" style="padding:1rem; align-self:center;" id="locaList">
+						<div class="col-9 td" style="padding:1rem; align-self:center;" id="locaList">
 							<c:if test="${ empty userInfo.location_auth }">
-								<button class="btn" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 등록하기</button>
+								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='locationAuth.do';">동네 설정하기</button>
 							</c:if>
 							<c:if test="${ not empty userInfo.location_auth }">
 								<div class="spinner-border text-primary" role="status">
 									<span class="visually-hidden">Loading...</span>
 								</div>
 								<script>
-									
+									locationList = [${userInfo.location_auth}];
 									$.ajax({
 										url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
 										data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
@@ -277,16 +282,16 @@ form {
 							</c:if>
 						</div>
 					</div>
-					<div class="row border-bottom">
+					<div class="row border-bottom tr">
 						<div class="col-3 text-center th" style="padding:1rem;">소개글</div>
-						<div class="col-9">
+						<div class="col-9 td">
 							<textarea class="form-control" name="introduce" style="margin:5px 0; resize:none;" rows="5">${ userInfo.introduce }</textarea>
 						</div>
 					</div>
 				</form>
-				<div class="row border-bottom">
+				<div class="row border-bottom tr">
 					<div class="col-3 text-center th" style="padding:1rem; min-width:4rem;">관심<br>키워드</div>
-					<div class="col-9" style="padding:1rem; margin:5px 0;">
+					<div class="col-9 td" style="padding:1rem; margin:5px 0;">
 						<input type="text" class="form-control" id="input-interested" autocomplete="off" style="display:inline-block;" name="interested">
 						<button class="btn" type="button" style="display:inline-block; background-color: #00AAB2; color: #fff;" onclick="addInterested()">추가</button>
 						<div id="interest_keywords">

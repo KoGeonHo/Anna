@@ -77,6 +77,8 @@ public class UserController {
 		PrintWriter pw = response.getWriter();
 		
 		UserVO userInfo = userService.login(vo);
+		
+		
 
 		if(userInfo == null) {
 			
@@ -90,7 +92,7 @@ public class UserController {
 			
 			
 		} else {
-			
+			System.out.println(userInfo.getLocation_auth());
 			System.out.println("kakao_auth : " + userInfo.getKakao_auth());
 			
 			if(userInfo.getKakao_auth() == null) {
@@ -125,7 +127,7 @@ public class UserController {
 					if(userInfo.getIsAdmin().equals("Y")) {
 						pw.append("<script>location.href='"+request.getContextPath()+"/admin/admin_user.do';</script>");
 					}else {
-						pw.append("<script>location.href='"+request.getContextPath()+"/main.do';</script>");
+						pw.append("<script>location.href='"+request.getContextPath()+"/';</script>");
 					}
 					
 					pw.flush();
@@ -178,7 +180,7 @@ public class UserController {
 			}
 		}
 		
-		return "redirect:/main.do";
+		return "redirect:/";
 	}
 	
 	//회원가입  데이터 입력
@@ -329,7 +331,7 @@ public class UserController {
             		if(isAdmin.equals("Y")) {
             			moveTo = path+"/admin/admin_user.do";
             		}else {
-            			moveTo = path+"/main.do";
+            			moveTo = path+"/";
             		}
         			
             	}
@@ -360,7 +362,7 @@ public class UserController {
         		if(isAdmin.equals("Y")) {
         			moveTo = path+"/admin/admin_user.do";
         		}else {
-        			moveTo = path+"/main.do";
+        			moveTo = path+"/";
         		}
         	}
         	//System.out.println(keepLogin);

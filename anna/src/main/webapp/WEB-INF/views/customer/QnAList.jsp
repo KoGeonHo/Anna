@@ -49,7 +49,7 @@
 					<tbody>
 						<c:if test="${ empty QnAList }">
 							<tr class="border-bottom">
-								<td colspan="3">
+								<td style="padding:15px;" colspan="3">
 									아직 작성한 글이 없습니다.
 								</td>
 							</tr>
