@@ -177,7 +177,7 @@
             <a class="navbar-brand ps-3" href="../admin/admin_user.do">관리자페이지</a>
             <!-- Sidebar Toggle-->
             
-            <h5 style="color:#fff; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/main.do';">HOME</h5> 
+            <h5 style="color:#fff; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/';">HOME</h5> 
 
             
         </nav>
@@ -216,51 +216,49 @@
 
 
 
-            <div id="layoutSidenav_content"> 
-                <main>
-                <div class="container-fluid px-4" style="margin-top: 80px;">
-                   
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <table id="datatablesSimple">
-                                        <thead>
-                                            <tr>
-                                                <th>시작일</th>
-                                                <th>종료일</th>
-                                                <th>첨부파일</th>
-                                                <th>등록</th>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid px-4" style="margin-top: 80px;">
+					<div class="card mb-4">
+						<div class="card-body">
+							<form action="admin_slideWrite.do" method="post" enctype="multipart/form-data">
+								<table id="datatablesSimple">
+									<thead>
+										<tr>
+											<th>시작일</th>
+											<th>종료일</th>
+											<th>URL</th>
+											<th>첨부파일 업로드</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th><input type="date" name="sDate"></th>
+											<th><input type="date" name="eDate"></th>
+											<th><input type="text" name="link"></th>
+											<th>
+													<label><input type="file" name="image" /></label>
+													<input type="submit" value="업로드"  oneclick="slideWrite();"></th>													
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</main>
+		</div>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr >
-                                                
-                                                <th><input  type="date"  ></th>
-                                                <th><input  type="date"  ></th>
-                                                <th>
-                                                 <form action="admin_slide.do" method="post" enctype="multipart/form-data">
-												        <label><input type="file" name="upload" /></label>
-												        <input type="submit" value="업로드" />
-												    </form> 
-												    </th>
-                                                <%-- <th>slide_img_1&nbsp;<button type="button" class="btn " style="background-color: #4A4A49; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">파일업로드</button></th>
-                                                 --%><th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">등록</button>&nbsp;
-                                               </th>
-                                                </tr>
-                                                
-                                               
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
-                    </div>
-                   
+		<script>
+			function slideWrite(){
+				
+				
+			}
+		
+		</script>
 
 
-                
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<%=request.getContextPath()%>/js/admin_user.js"></script>
         <script src="<%=request.getContextPath()%>/js/simple-datatables@latest.js"></script>
 
