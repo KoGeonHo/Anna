@@ -31,6 +31,11 @@
 	
 	<!-- 해시태그 구현 -->
 	<script>
+		<c:if test="${ empty userLoginInfo.location_auth }">
+			alert("동네설정이 필요한 서비스 입니다.");
+			location.href="${path}/user/locationAuth.do";
+		</c:if>
+		//console.log('${  userLoginInfo.location_auth}'+'난 아냐');
 	    $(document).ready(function () {
 	        var tag = {};
 	        var counter = 0;
@@ -128,36 +133,27 @@
 								<option value="0" id="addr">내 동네</option>
 							</select>
  -->				    		<script>
-					    		let locationList2 = [${ userLoginInfo.location_auth }];
-					    		let html2 = '';
-					    		$.ajax({
+					    		//console.log(${userLoginInfo.location_auth});
+					    		
+					    		locationList = [${userLoginInfo.location_auth}];
+								$.ajax({
 									url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
 									data : "consumer_key=7b9a8af3d576479db243&consumer_secret=02e72ab8a0e046f9bf95",
 									success : function(data){
 										$(".spinner-border").css("display","none");
-										for(let i = 0; i < locationList2.length; i++){
+										for(let i = 0; i < locationList.length; i++){
+											//console.log(data.result.accessToken);
+											//console.log(locationList[i]);
 											$.ajax({
 												url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
 												async : false,
-												data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList2[i]+"&low_search=0",
+												data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
 												success : function(geojson){
-													let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
-													console.log(locationLevel[locationLevel.length-1]); // 이게 동까지만 자른거
-													//dong.push(locationLevel[locationLevel.length-1]);
-													//console.log(dong);
-													html2 += locationLevel[locationLevel.length-1]+",";
-													/* 			html += '<option value="'+locationList[i]+'"';
-													if(i == 0){
-														html += " selected "
-													}
-													href
-													html += '>'+locationLevel[locationLevel.length-1]+'</option>'
-													$(".form-select").append('<option value="'+locationList[i]+'">'+locationLevel[locationLevel.length-1]+'</option>'); */
+													//console.log(geojson);
+													$(".viewaddr").append(geojson.features[0].properties.adm_nm+"<br>");
 												}
 											});
 										}
-												//	$('input[name=addr_code]').attr('value',html3); input 태그에 벨류값을 넣지 않음
-													$('.viewaddr').text(html2); // viewaddr 클래스 html2의 내용을 text 타입으로 추가
 									},
 									error: function(){
 										console.log("error");

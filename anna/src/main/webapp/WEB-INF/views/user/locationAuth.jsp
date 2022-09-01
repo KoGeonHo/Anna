@@ -90,7 +90,7 @@
 		<%@ include file="/WEB-INF/views/common/header.jsp" %>
 		
 		<div class="wrapper main">
-			<div id="loading" style="width:100%; height:100%; flex:1; background:#000; display:flex; position:absolute; color:white;" class="text-center">
+			<div id="loading" style="width:100%; height:100%; flex:1; background:#000; display:flex; position:absolute; color:white; z-index:1;" class="text-center">
 				<div style="margin:auto;">
 					<span class="spinner-grow spinner-grow-sm" style="margin:auto;"role="status" aria-hidden="true"></span>
 	  				Loading...

@@ -229,6 +229,7 @@
                        
                             <div class="card mb-4">
                                 <div class="card-body">
+                                <button type="button" class="btn " style="font-size: 14px; float: right; background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/board/BoardWrite.do?board_type=notice'">등록</button>
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
@@ -249,7 +250,7 @@
 							            				<th>${ i.title }</th>
 							            				<th>${ i.wdate }</th>
 							                         	<th>
-															<button type="button" class="btn " style="background-color: #00AAB2; color: #fff; font-size: 14px;" >게시글 조회</button>&nbsp;
+															<button type="button" class="btn " style="background-color: #00AAB2; color: #fff; font-size: 14px;" onclick="location.href='<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${ i.bidx }'">게시글 조회</button>&nbsp;
 							                    			<button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff; font-size: 14px;">삭제</button>
 														</th>
 				                          			</tr>

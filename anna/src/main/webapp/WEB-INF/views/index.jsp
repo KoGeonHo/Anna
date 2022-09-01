@@ -273,7 +273,7 @@ const GetList = function(currentPage){
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 
 
-			<div class="main"  id="main" style="overflow:auto;">
+			<div class="main"  id="main" style="overflow:auto; width:100%;">
 
 	<!-- 슬라이드 -->
 
@@ -620,11 +620,6 @@ const GetList = function(currentPage){
 </div>
 
 
-
-		<!-- 퀵메뉴 시작 -->
-		<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
-		<!-- 퀵메뉴 종료 --> 
-		
 
 
 		<!-- 푸터는 고정 -->

@@ -100,7 +100,7 @@ function userWithdrawal(){
 			<div class="container">
 				<h3 class="border-bottom" style="padding:1rem;">회원정보</h3>
 				<div id="profile" class="border-bottom" style="width:100%; display:flex;">
-					<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
+					<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'),url('${path}/images/NoProfile.png'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
 					<div style="display:inline-block; flex:1; display:flex; align-items:center;">
 						<div>
 							${ userInfo.nickName }님의 프로필

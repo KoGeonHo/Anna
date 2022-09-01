@@ -36,6 +36,11 @@
 
 <script>
 	
+<c:if test="${ empty userLoginInfo.location_auth }">
+	alert("동네설정이 필요한 서비스 입니다.");
+	location.href="${path}/user/locationAuth.do";
+</c:if>
+	
 	$(function(){
 		$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
 		console.log("채팅창 목록 열림")
@@ -223,13 +228,7 @@ $(document).ready(function(){
 	
 	
 	$("#write").click(function(){
-			if(${userLoginInfo.uidx == null}){
-				alert("이 기능은 로그인 후에 이용해주세요!");	
-			}else if(${uesrLoginInfo.location_auth == 'N'}){
-				alert("이 기능은 지역설정을 해주셔야 합니다!")
-			}else{
-				location.href="itemwrite.do";			
-			}
+		location.href="itemwrite.do";		
 			
 	});		
 	
@@ -404,9 +403,9 @@ a:link {
    
    
    #image{
-	height:220px;
-	width:60%;
-
+	height:118px;
+	width:120px;
+	
 	}
    
    
@@ -822,10 +821,6 @@ a {
 	
 			</div>
 		</div>
-		
-		 <!-- 퀵메뉴 시작 -->
-      <%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>         
-      <!-- 퀵메뉴 종료 --> 
 		
 		
 		<!-- 푸터는 고정 -->

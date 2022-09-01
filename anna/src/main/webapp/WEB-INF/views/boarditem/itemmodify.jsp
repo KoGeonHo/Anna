@@ -138,11 +138,11 @@
 						<div class="col-4 th" style="display:table-cell;">가격제안</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<select name="offer">
-								<c:if test="${vo.offer == 1}">
+								<c:if test="${vo.offer == 0}">
 									<option value="1" selected>불가능</option>
 									<option value="2"  >가능</option>
 								</c:if>
-								<c:if test="${vo.offer == 2}">
+								<c:if test="${vo.offer == 1}">
 									<option value="1">불가능</option>
 									<option value="2" selected >가능</option>
 								</c:if>

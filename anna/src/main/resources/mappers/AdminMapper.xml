@@ -52,7 +52,7 @@
 		FROM
 			report r
 			
-			order by report_date desc
+			order by r.ridx desc
 		
 		
 		

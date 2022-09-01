@@ -226,6 +226,10 @@
 			</div>
 		</nav>
 		<!-- 모바일 헤더 END -->
+		
+		
+		
+		
 		<%if(!uri.contains("/user/chat") && uri.contains("/user")){%>
 			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:50px; background:#00AAB2;">
 				<div class="menu-item" onclick="location.href='${ path }/user/myPage.do'">
@@ -243,9 +247,6 @@
 			</div>
 		<%} else if(uri.contains("/board/")){%>
 			<div id="menu" class="container-fluid text-white menu-hide" style="position:absolute; top:50px; background:#00AAB2;">
-				<div class="menu-item" onclick="location.href='${path}/board/boardlist.do?board_type=notice'">
-					공지사항
-				</div>
 				<div class="menu-item" onclick="location.href='${path}/board/boardlist.do?board_type=free'">
 					일상소통
 				</div>
@@ -274,7 +275,7 @@
 					고객센터
 				</div>
 				<div class="menu-item" onclick="location.href='${path}/user/myPage.do'">
-					마이페이지
+					메뉴
 				</div>
 			</div>
 		<%}%>

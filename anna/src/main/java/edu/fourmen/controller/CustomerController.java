@@ -39,9 +39,10 @@ public class CustomerController {
 	public String QnAList(Model model,HttpServletRequest request,HttpSession session) {
 		
 		session = request.getSession();
-		
-		int uidx = (int)session.getAttribute("uidx");
-		
+		int uidx = 0;
+		if(session.getAttribute("uidx") != null) {
+			uidx = (int)session.getAttribute("uidx");
+		}
 		List<QnAVO> QnAList = customerService.getQnAList(uidx);
 		
 		model.addAttribute("path",path);

@@ -515,10 +515,6 @@ text-decoration: none;
 
 		</div>
 
-	    <!-- 퀵메뉴 시작 -->
-	    <%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>         
-	    <!-- 퀵메뉴 종료 --> 
-
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<!-- 푸터 수정 하지마시오 링크 걸어야하면 공동작업해야하므로 팀장에게 말할것! -->		
@@ -680,15 +676,11 @@ $("input[name='tab_btn']").change(function(){
 <script>
 	function write2(){
 		
-		if(${userLoginInfo.uidx != null && userLoginInfo.location_auth != 'N'}){
+		if(${ userLoginInfo.uidx != null }){
 			
 			location.href='${path}/board/BoardWrite.do?board_type=${ pm.board_type }';
 			
-		}else if(${userLoginInfo.uidx != null && userLoginInfo.location_auth == 'N'}){
-			
-			alert("내 동네를 설정해주세요!");
-			location.href="${path}/user/userInfoView.do";
-		}else{
+		}else {
 			alert("로그인 후에 이용 가능합니다.");
 			location.href="${path}/user/login.do";
 		}

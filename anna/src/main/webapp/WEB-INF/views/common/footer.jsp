@@ -38,14 +38,24 @@
 		<br>
 		<span style="font-size:0.8rem;">myPage</span>
 	</div> --%><!--
-	--><div class="ft-icon text-center" style="width:20vw; display:inline-block;" onclick="location.href='${path}/user/myPage.do';">
-		<%if(urif.contains("/user/myPage")){ %>
-			<img src="${ path }/images/icon_menu_active.png">
-		<%} else {%>
-			<img src="${ path }/images/icon_quick.png">
-		<%} %>
-		<br>
-		<span style="font-size:0.8rem;">메뉴</span>
+	--><div class="ft-icon text-center" style="width:20vw; display:inline-block;"
+		<c:if test="${ not empty uidx }">onclick="location.href='${path}/user/myPage.do';"</c:if>
+		<c:if test="${ empty uidx }">onclick="location.href='${path}/user/login.do';"</c:if>
+		>
+		<c:if test="${ not empty uidx }">
+			<%if(urif.contains("/user/myPage")){ %>
+				<img src="${ path }/images/icon_menu_active.png">
+			<%} else {%>
+				<img src="${ path }/images/icon_quick.png">
+			<%} %>
+			<br>
+			<span style="font-size:0.8rem;">메뉴</span>
+		</c:if>
+		<c:if test="${ empty uidx }">
+			<img src="${ path }/images/icon_login.png">
+			<br>
+			<span style="font-size:0.8rem;">로그인</span>
+		</c:if>
 	</div>
 </div>
 
@@ -59,7 +69,9 @@ function hover(element) {
 	  element.setAttribute('src', '<%=request.getContextPath()%>/images/icon_plus.png');
 	}
 	
-	//console.log('${chkSellNewMessage }');
+	/* console.log('${chkBuyNewMessage }');
+	console.log('${chkSellNewMessage }');
+	console.log('${chkAlarm }'); */
 </script>
 
 
@@ -67,6 +79,12 @@ function hover(element) {
 	<div>
 		<ul id="quickmenu" class="mfb-component--br mfb-zoomin" data-mfb-toggle="hover">
 			<li class="mfb-component__wrap" ><a href="" class="mfb-component__button--main">
+			<c:if test="${ (chkSellNewMessage + chkBuyNewMessage + chkAlarm) ne 0}">
+				
+					<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding: 0px 0px 0px 5px; right:1px; top:0; background:red; margin-left: 10px;
+												 border-radius:10px; color:#fff; z-index:1;">${ chkAlarm + chkSellNewMessage + chkBuyNewMessage }</div>
+			
+			</c:if>
 			<div id="menu_plus" class="menu_plus" onClick="javascript:window.scrollTo(0,0)">
 			<img src="<%=request.getContextPath()%>/images/icon_plus.png" width="25px" height="25px;" he style="margin-left: 16px; margin-top: 16px;"
 			onmouseover="hover(this);" onmouseout="unhover(this);" >
@@ -80,22 +98,20 @@ function hover(element) {
 						</a>
 					</li>
 					<li>
-						<c:if test="${ not empty chkSellNewMessage and not empty chkBuyNewMessage}">
-							<c:if test="${ chkSellNewMessage ne 0 and chkBuyNewMessage ne 0}">
+						<c:if test="${ (chkSellNewMessage + chkBuyNewMessage) ne 0 }">
+							
 								<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding: 0px 0px 0px 5px; right:1px; top:0; background:red; margin-left: 10px;
-													 margin-top: 10px; border-radius:10px; color:#fff; z-index:1;">${ chkSellNewMessage }</div>
-							 </c:if>
+													 margin-top: 10px; border-radius:10px; color:#fff; z-index:1;">${ chkSellNewMessage + chkBuyNewMessage }</div>
+							
 						</c:if>
 						<a href="<%=request.getContextPath()%>/user/chatList.do" data-mfb-label="채팅" class="mfb-component__button--child">
 							<img src="<%=request.getContextPath()%>/images/icon_qc.png" width="23px" height="23px;" he style="margin-left: 17px; margin-top: 16px;">
 						</a>
 					</li>
 					<li>
-						<c:if test="${ not empty  chkAlarm }">
-							<c:if test="${ chkAlarm ne 0 }">
+						<c:if test="${ chkAlarm ne 0 }">
 							<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding: 0px 0px 0px 5px; right:1px; top:0; background:red; margin-left: 10px;
 												 margin-top: 10px; border-radius:10px; color:#fff; z-index:1;">${ chkAlarm }</div>
-							</c:if>
 						</c:if>
 						<a href="<%=request.getContextPath()%>/user/alarmView.do" data-mfb-label="알림" class="mfb-component__button--child">
 							<img src="<%=request.getContextPath()%>/images/icon_push.png" width="20px" height="20px;" he style="margin-left: 18px; margin-top: 18px;">
