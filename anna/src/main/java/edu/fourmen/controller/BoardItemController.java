@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,8 +12,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 
 import javax.imageio.ImageIO;
@@ -149,7 +146,6 @@ public class BoardItemController {
 	    if(pm.getSearchVal() != null ) {
 	    	List<BoardItemVO> ssang = boarditemService.MinPrice(pm);
 	    	model.addAttribute("ssang",ssang);
-	    System.out.println(ssang.size() +"검색 물품");
 	    }
 	    
 	    
@@ -293,11 +289,18 @@ public class BoardItemController {
 		
 		
 		
+		
+		if(vo.getKeyword() != null) {
+			pm.setWishCheck(4);
+			pm.setInterested(vo.getKeyword().replace("#", ","));
+		}
 		List<BoardItemVO> list = boarditemService.list(pm);
 		model.addAttribute("list", list);
-
 		
-		List<BoardItemVO> youritem = boarditemService.selectAllbyuser(vo, svo);
+		
+		//uidx2 = 작성된 글의 작성자 번호
+		int uidx2 = vo.getUidx();
+		List<BoardItemVO> youritem = boarditemService.selectAllbyuser(item_idx, uidx2);
 		model.addAttribute("youritem", youritem);
 		
 		Cookie cookie = new Cookie ("item_idx", Integer.toString(item_idx)); // 쿠키에 "키값",값 넣기
@@ -547,7 +550,7 @@ public class BoardItemController {
 		
 		//키워드 잘라서 넣고 보냄
 		if(vo.getKeyword() != null) {
-		 String str = vo.getKeyword().replace(",","#");
+		 String str = "#"+vo.getKeyword().replace(",","#");
 		 
 		 vo.setKeyword(str);
 		}
@@ -580,7 +583,6 @@ public class BoardItemController {
 			
 		
 		String path = request.getSession().getServletContext().getRealPath("/resources/upload");
-		System.out.println(path);
 		
 		String fileName = null;
 		
@@ -597,7 +599,6 @@ public class BoardItemController {
 			if (!uploadFile1.isEmpty()) {
 				fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
 				uploadFile1.transferTo(new File(path, fileName));
-				System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
 			BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
 			BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 450);
 			String thumbnailName = path + File.separator + "s-" + fileName;
@@ -622,7 +623,6 @@ public class BoardItemController {
 			File newFile = new File(thumbnailName);
 			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 			boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-			System.out.println("복사여부 flag" + flag);
 			thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 			vo.setImage2(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 			}
@@ -640,7 +640,6 @@ public class BoardItemController {
 				File newFile = new File(thumbnailName);
 				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-				System.out.println("복사여부 flag" + flag);
 				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 				vo.setImage3(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 				}																						// 이름
@@ -659,7 +658,6 @@ public class BoardItemController {
 				File newFile = new File(thumbnailName);
 				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-				System.out.println("복사여부 flag" + flag);
 				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 				vo.setImage4(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 				}																						// 이름
@@ -677,7 +675,6 @@ public class BoardItemController {
 				File newFile = new File(thumbnailName);
 				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-				System.out.println("복사여부 flag" + flag);
 				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 				vo.setImage5(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 				}																					// 이름
@@ -695,7 +692,6 @@ public class BoardItemController {
 				File newFile = new File(thumbnailName);
 				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-				System.out.println("복사여부 flag" + flag);
 				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 				vo.setImage6(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
 				}																					// 이름
@@ -715,7 +711,6 @@ public class BoardItemController {
 				File newFile = new File(thumbnailName);
 				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-				System.out.println("복사여부 flag" + flag);
 				
 				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 				vo.setImage7(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
@@ -735,7 +730,6 @@ public class BoardItemController {
 				File newFile = new File(thumbnailName);
 				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-				System.out.println("복사여부 flag" + flag);
 	
 				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 				vo.setImage8(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일
@@ -756,7 +750,6 @@ public class BoardItemController {
 				File newFile = new File(thumbnailName);
 				String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 				boolean flag = ImageIO.write(destImg, formatName.toUpperCase(), newFile);
-				System.out.println("복사여부 flag" + flag);
 	
 				thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 				vo.setImage9(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일

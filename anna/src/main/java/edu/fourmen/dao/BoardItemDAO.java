@@ -59,8 +59,13 @@ public class BoardItemDAO {
 		return sqlSession.selectList(efdb+".selectAll",del);
 		
 	}
-	public List<BoardItemVO> selectAllbyuser(BoardItemVO vo, SearchVO svo) {
-		return sqlSession.selectList(efdb+".selectAllbyuser",vo);
+	public List<BoardItemVO> selectAllbyuser(int item_idx, int uidx) {
+		HashMap<String,Integer> del = new HashMap<String,Integer>();
+		
+		del.put("item_idx",item_idx);
+		del.put("uidx",uidx);
+		
+		return sqlSession.selectList(efdb+".selectAllbyuser",del);
 		
 	}
 		

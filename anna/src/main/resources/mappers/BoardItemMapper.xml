@@ -59,7 +59,7 @@
 	</select>
 	
 	
-	<select id="selectAllbyuser" resultType="BoardItemVO" parameterType="searchvo" >
+	<select id="selectAllbyuser" resultType="BoardItemVO" parameterType="hashmap" >
 		SELECT b.item_idx
 			 , b.Title
 			 , b.uidx
@@ -69,10 +69,12 @@
 			 , b.Price
 			 , b.state
 			 , b.image1
+			 , b.isDel
 			FROM Board_Items b, AnnaUser u
 			WHERE b.uidx = u.uidx  and b.uidx = #{uidx}
 			and b.item_idx not like #{item_idx}
-			order by item_idx limit 1,4
+			and b.isDel = 'N'
+			order by item_idx limit 0,4
 	</select>
 	<select id="totalCount" resultType="Integer" parameterType="pagemaker">
 			SELECT 
