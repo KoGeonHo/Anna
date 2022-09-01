@@ -45,7 +45,7 @@
 	function setLocation(selBox){
 		console.log(selBox.value);
 		$.ajax({
-			url: "setLocation.do",
+			url: "${path}/user/setLocation.do",
 			data : "location="+selBox.value,
 			success : function(result){
 				console.log(result);
@@ -182,7 +182,7 @@
 					</select>
 		    		<script>
 			    		let locationList = [${ userLoginInfo.location_auth }];
-			    		console.log('${ userLoginInfo.location_auth }');
+			    		//console.log('${ userLoginInfo.location_auth }');
 			    		let html = '';
 			    		$.ajax({
 							url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",

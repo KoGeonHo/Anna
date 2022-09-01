@@ -5,15 +5,15 @@ public class PageMaker extends BoardItemVO{
 	private int totalCount; // 게시글 총합을 구함
 	private int startPage; // 시작 게시글
 	private int endPage; // 마지막 게시글
-	private boolean prev; //
-	private boolean next; //
+	private boolean prev; // 다음페이지목록으로
+	private boolean next; // 이전페이지목록으로
 	private int pageNum; // 화면에 보여줄 게시글 수
 	private int displayPageNum = 10; // < 1 2 3 4 5 6 7 8 9 10 > 페이지바?
-	private int page; //
-	private String SearchVal;
-	private String board_type;
-	private int epage;
-	private int SearchUidx;
+	private int page; //현재페이지
+	private String SearchVal; // 검색키워드
+	private String board_type; //커뮤니티 분류
+	private int epage; //page 기준으로해서 가져올 첫번째 게시글번호
+	private int SearchUidx; 
 	private int uidx;
 	private String interested;
 	private String location_auth;
