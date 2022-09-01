@@ -318,7 +318,7 @@ String boardtype = "free";
 		session = request.getSession();
 		
 			boardService.commentwrite(rv);//댓글작성
-			boardService.Ccount(Bidx);
+			
 			
 			return "InsertSuccess";
 	}

@@ -148,12 +148,6 @@
   	   AND r.Uidx = u.uidx
 </select>
 
-<update id="Ccount" parameterType="int">
-	UPDATE Board
-	   SET Ccount = Ccount+1
-	 WHERE Bidx = #{Bidx}
-</update>
-
 <insert id="boardLikeUP">
 	INSERT INTO Board_like(
 			Uidx
