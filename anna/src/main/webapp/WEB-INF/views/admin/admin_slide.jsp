@@ -177,7 +177,7 @@
             <a class="navbar-brand ps-3" href="../admin/admin_user.do">관리자페이지</a>
             <!-- Sidebar Toggle-->
             
-            <h5 style="color:#fff; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/main.do';">HOME</h5> 
+            <h5 style="color:#fff; margin-left:1550px; cursor:pointer;" onclick="javascript:location.href='<%=request.getContextPath()%>/';">HOME</h5> 
 
             
         </nav>
@@ -249,9 +249,11 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>배너 적용 이미지</th>
-                                                <th>게시일</th>
+                                                <th>링크</th>
+                                                <th>시작일</th>
+                                                <th>종료일</th>
                                                 <th>첨부파일</th>
-                                                <th>항목등록 &amp; 삭제</th>
+                                                <th>삭제</th>
 
                                             </tr>
                                         </thead>
@@ -264,16 +266,14 @@
 												  <option value="2">3</option>
 												</select></th>
                                                 <th><img src="../images/admin_slide_ex.png"></th>
+                                                <th>/board/boardlest.do</th>
                                                 <th>2022-07-25</th>
+                                                <th>2022-08-31</th>
                                                 <th>
-                                                 <form action="admin_slide.do" method="post" enctype="multipart/form-data">
-												        <label><input type="file" name="upload" /></label>
-												        <input type="submit" value="업로드" />
-												    </form> 
+                                                 asdfcas.jpg
 												    </th>
-                                                <%-- <th>slide_img_1&nbsp;<button type="button" class="btn " style="background-color: #4A4A49; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">파일업로드</button></th>
-                                                 --%><th><button type="button" class="btn " style="background-color: #00AAB2; color: #fff;" onclick="javascript:location.href='<%=request.getContextPath()%>/" style="font-size: 14px;">등록</button>&nbsp;
-                                                <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
+                                              	<th>
+                                             		   <button type="button" id="openModalPop" class="btn " style="background-color: #E51D21; color: #fff;"  style="font-size: 14px;">삭제</button></th>
                                                 </tr>
                                                 
                                                

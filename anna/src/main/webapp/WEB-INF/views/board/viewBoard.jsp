@@ -96,7 +96,7 @@ height : 54px;
 
 }
 
-#Contents{
+.Contents{
 	width: 83%;
 	}
 
@@ -182,7 +182,7 @@ height : 54px;
 	display:none;
 	}
 	
-	#Contents{
+	.Contents{
 	width: 66.66666667%;
 	}
 	
@@ -193,6 +193,8 @@ height : 54px;
 	#slide-img{
 		height:300px;
 	}
+	
+
 	
 }
 
@@ -245,7 +247,7 @@ height : 54px;
 		</div>
 		
 		<div id="report_contents">
-			<form id="reportFrm" action="report.do" enctype="multipart/form-data" method="post">		    
+			<form id="reportFrm" enctype="multipart/form-data" method="post">		    
 				<input type="hidden" name= "bidx" value="${bv.bidx}" id="bidx">
 				<input type="hidden" name="evidence"value="2" id="evidence">
 	    		<div class="row border-bottom tr">
@@ -275,7 +277,7 @@ height : 54px;
 	    		</div>
 	    		
 	    		<div style="float:right;">
-	    			<button  id="report_btn">접수하기</button>
+	    			<button type="button" id="report_btn">접수하기</button>
 	    			<button type="button" id="close_button">닫기</button>
 	    		</div>
     		</form>
@@ -351,40 +353,46 @@ height : 54px;
 						
 						</div>
 					</div>
-					
+					<c:if test="${ not empty bv.image1 or not empty bv.place_location }">
 					<div class="row border-bottom tr">
 						<div class="col-12 td">
 							<div id="carouselExampleControls" class="carousel slide" style="margin:auto;" data-bs-ride="carousel">
 								  <div class="carousel-inner">
-								  <c:if test="${bv.board_type != 'free' and bv.place_location != null}">
-								    <div class="carousel-item active">
-								      <div id="map" style="width:100%; height:500px;" onclick="window.open('https://map.kakao.com/?q=${bv.place_name}&urlLevel=5')"></div>
+								  <c:if test="${bv.place_location != null}">
+								    <div class="carousel-item active" data-bs-interval="1000000">
+								      <div id="map" style="width:100%; height:100%;" onclick="window.open('https://map.kakao.com/?q=${bv.place_name}&urlLevel=5')"></div>
 								    </div>
+								    <c:if test="${bv.image1 != null}">
+									    <div class="carousel-item" data-bs-interval="1000000">
+									    	<div id="slide-img" style="width:100%; background:url('${ path }/resources/upload/${bv.image1}'),url('${path}/images/no_image.gif'); background-position:center; background-repeat:no-repeat; background-size:cover;"></div>							      	
+									    </div>
+							 	 	</c:if>
 							 	 </c:if>
-								  <c:if test="${bv.image1 != null}">
-								    <div class="carousel-item active">
-								    	<div id="slide-img" style="width:100%; background:url('${ path }/resources/upload/${bv.image1}'),url('${path}/images/no_image.gif'); background-position:center; background-repeat:no-repeat; background-size:cover;"></div>
-								      	<%-- <img src="../resources/upload/${bv.image1}" class="d-block w-100" alt="..." style="width:100%;height:500px;"> --%>
-								    </div>
+							 	  <c:if test="${bv.place_location == null}">
+									  <c:if test="${bv.image1 != null}">
+									    <div class="carousel-item active" data-bs-interval="1000000">
+									    	<div id="slide-img" style="width:100%; background:url('${ path }/resources/upload/${bv.image1}'),url('${path}/images/no_image.gif'); background-position:center; background-repeat:no-repeat; background-size:cover;"></div>							      	
+									    </div>
+								 	 </c:if>
 							 	 </c:if>
 							 	  <c:if test="${bv.image2 != null}">
-								    <div class="carousel-item">
-								      <img src="../resources/upload/${bv.image2}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
+								    <div class="carousel-item" data-bs-interval="1000000">
+								    	<div id="slide-img" style="width:100%; background:url('${ path }/resources/upload/${bv.image2}'),url('${path}/images/no_image.gif'); background-position:center; background-repeat:no-repeat; background-size:cover;"></div>	
 								    </div>
 								  </c:if>
 								  <c:if test="${bv.image3 != null}">
-								    <div class="carousel-item">
-								      <img src="../resources/upload/${bv.image3}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
+								    <div class="carousel-item" data-bs-interval="1000000">
+								    	<div id="slide-img" style="width:100%; background:url('${ path }/resources/upload/${bv.image3}'),url('${path}/images/no_image.gif'); background-position:center; background-repeat:no-repeat; background-size:cover;"></div>	
 								    </div>
 								  </c:if>
 								  <c:if test="${bv.image4 != null}">
-								    <div class="carousel-item">
-								      <img src="../resources/upload/${bv.image4}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
+								    <div class="carousel-item" data-bs-interval="1000000">
+								    	<div id="slide-img" style="width:100%; background:url('${ path }/resources/upload/${bv.image4}'),url('${path}/images/no_image.gif'); background-position:center; background-repeat:no-repeat; background-size:cover;"></div>	
 								    </div>
 								  </c:if>
 								  <c:if test="${bv.image5 != null}">
-								    <div class="carousel-item">
-								      <img src="../resources/upload/${bv.image5}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
+								    <div class="carousel-item" data-bs-interval="1000000">
+								    	<div id="slide-img" style="width:100%; background:url('${ path }/resources/upload/${bv.image5}'),url('${path}/images/no_image.gif'); background-position:center; background-repeat:no-repeat; background-size:cover;"></div>	
 								    </div>
 								  </c:if>  
 								  </div>
@@ -399,7 +407,7 @@ height : 54px;
 							</div>
 						</div>
 					</div>
-					
+					</c:if>
 					<div class="row border-bottom tr" style="height:auto;">
 						<div class="col-2 th" style="display:table-cell; ">내용</div>
 						<div class="col-10 td" style="display:table-cell; ">
@@ -407,12 +415,16 @@ height : 54px;
 						</div>
 					</div>
 					<c:if test="${bv.uidx == uidx}">
-					<div style="text-align: right;">
-				    	<a href="BoardModify.do?Bidx=${bv.bidx }" >수정</a>&nbsp;<a class="" onclick="delCheck()" >삭제</a>
+					<div style="text-align: right; cursor:pointer;margin: 5px 0 5px 0;">
+				    	<a href="boardlist.do?board_type=${bv.board_type}">목록</a>&nbsp;<a href="BoardModify.do?Bidx=${bv.bidx }" >수정</a>&nbsp;<a class="" onclick="delCheck()" >삭제</a>
 				    </div>
 				    </c:if>
 				    <c:if test="${bv.uidx != uidx and bv.board_type != 'notice'}">
-				    	<div style="margin: auto; height: 25px" id="report"><a class="report" style="cursor:pointer; float:right; ">신고</a></div>
+				    <div style="float:right; cursor:pointer;margin: 5px 0 5px 0;">
+				    <a href="boardlist.do?board_type=${bv.board_type}">목록</a>&nbsp;
+				    <a id="repot" class="report">신고</a>
+				    </div>
+				    	
 				    </c:if>
 				</form>
 
@@ -437,7 +449,7 @@ height : 54px;
 	                    		<textarea class="comment-input" id="Contents" style="resize: none; width:100%; height:100%;" name="Contents"></textarea>
 	                    	</div>
 	                    	<div>
-	                    		<button class="Reply_btn" id="commentwrite" style="width:auto;">등록</button>
+	                    		<button type="button" class="Reply_btn" id="commentwrite" style="width:auto;">등록</button>
 	                    	</div>                    	
 	                    </div>
 	                    </form>
@@ -562,27 +574,31 @@ function getList() {
 				
 				var comment_html = "<div class='row' id='commentstyle'>";
 				
-				$('#count').html(data.total);
+				
 				for(i = 0;i < list.length;i++){
 					var Contents = list[i].contents;
 					var nickName = list[i].nickName;
 					var wdate = list[i].wdate;
+					var reply_idx = list[i].reply_idx;
 					
-					comment_html += "<div class='row border-bottom' style='padding: 8px 0; '>"
+					
+					console.log(reply_idx+"dd");
+					
+					comment_html += "<div class='row border-bottom' style='padding: 8px 0; '>";
 					
 					comment_html += "<div class='col-2 td' style='border-right: #dee2e6 solid 1px; text-align:center;'><span id='nickName'><strong>" + nickName + "</strong></span></div>";
-					comment_html += "<div class='td' id='Contents' style='display:flex;'>";
+					comment_html += "<div class='td Contents' style='display:flex;'>";
 					comment_html += "<div style='flex:1;'>"+Contents+"<p style='margin: 10px 0 0 0;'>"+wdate+"";
 					
-					if(nickName=== $("#nickName").val()){
-						 comment_html += "&nbsp;<a class=''>수정</a>&nbsp;"
-						 comment_html += "<a class=''>삭제</a></p></div>";
+					if(nickName == $("#nickName").val()){
+						// comment_html += "&nbsp;<a class='' onclick='location.href=replyDelete?reply_idx='"+reply_idx+"'>삭제</a></p></div>";
+						 comment_html += "&nbsp;<a class='' onclick='replydel("+reply_idx+");'>삭제</a></p></div>";
 					}
 			
 					comment_html += "</div>";
 					
 					
-					comment_html += "</div>"
+					comment_html += "</div>";
 					
 				}
 				
@@ -620,7 +636,7 @@ function Like(){
 				url : 'likeDown',
 				data : "Bidx="+Bidx+"&Uidx="+Uidx,
 				success : function(data) {
-					alert('추천 취소');
+					
 					location.reload();
 				}
 			})// 아작스 끝
@@ -637,7 +653,7 @@ function Like(){
 				url : 'likeUp',
 				data : "Bidx="+Bidx+"&Uidx="+Uidx,
 				success : function(data) {
-					alert('추천');
+					
 					location.reload();
 				}
 			})// 아작스 끝
@@ -666,10 +682,13 @@ Like();
 		    data: formData,
 			success : function(json){
 				alert("등록되었습니다.");
+				$("#report_contents").fadeOut();
+		        $(".report_back").fadeOut();
 				
 			},
 			error: function(xhr, status, error){
 				alert("실패."+error);
+				
 			}
 		});
 	});
@@ -714,47 +733,9 @@ var infowindow = new kakao.maps.InfoWindow({
 // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 infowindow.open(map, marker);
 	    
-	    
-//파일
-function chk_file_type(obj) {
-    var file_kind = obj.value.lastIndexOf('.');
-    var file_name = obj.value.substring(file_kind+1,obj.length); 
-    var file_type = file_name.toLowerCase();
-
-
-
-   var check_file_type = new Array();
-    check_file_type=['jpg','gif','png','jpeg','bmp',];
-
-
-
-    if(check_file_type.indexOf(file_type)==-1){
-     alert('이미지 파일만 선택할 수 있습니다.');
-     var parent_Obj=obj.parentNode
-     var node=parent_Obj.replaceChild(obj.cloneNode(true),obj);
-     return false;
-     
-     }
-    
-}	    
+  
 
 //댓글
-
-$("#delete").click(function(){
-	
-	location.href="";
-	
-	
-	
-});
-
-
-$("#modify").click(function(){
-	
-	
-	
-	
-});
 
 //삭제확인
 
@@ -769,7 +750,18 @@ function delCheck(){
 	
 }
 
-
+function replydel(a){
+	
+if(confirm("삭제하시겠습니까?")== true){
+		
+	location.href="${path}/board/replyDelete?reply_idx="+a+"&Bidx="+${bv.bidx};
+	}else{
+		
+		return false;
+	}
+	
+	
+}
 </script>
 					
 					

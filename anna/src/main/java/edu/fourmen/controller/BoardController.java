@@ -318,7 +318,7 @@ String boardtype = "free";
 		session = request.getSession();
 		
 			boardService.commentwrite(rv);//댓글작성
-			boardService.Ccount(Bidx);
+			
 			
 			return "InsertSuccess";
 	}
@@ -624,10 +624,13 @@ String boardtype = "free";
 	}
 	
 	@RequestMapping(value="/replyDelete")
-	public String replyDelete(int reply_idx) {
+	public String replyDelete(int reply_idx, int Bidx, BoardVO vo) {
+		System.out.println("댓글 삭제");
+		vo.setReply_idx(reply_idx);
+		vo.setBidx(Bidx);
 		boardService.replyDel(reply_idx);
 		
-		return "";
+		return "redirect:/board/viewBoard.do?Bidx="+vo.getBidx();
 	}
 	
 

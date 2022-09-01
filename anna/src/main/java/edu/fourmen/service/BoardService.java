@@ -29,7 +29,7 @@ public interface BoardService {
 	
 	List<BoardVO> getCList(int Bidx);
 	
-	int Ccount(int Bidx);
+
 	
 	int boardLikeUP(BoardVO vo);
 	
