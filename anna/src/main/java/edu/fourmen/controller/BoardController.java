@@ -409,7 +409,7 @@ String boardtype = "free";
 				
 			if(vo.getFileName1() != null) {
 				MultipartFile uploadFile = vo.getFileName1();
-					//System.out.println(uploadFile);
+					
 				if (!uploadFile.isEmpty()) {
 					String originalFileName = uploadFile.getOriginalFilename();
 					//String ext = FilenameUtils.getExtension(originalFileName);	//확장자 구하기
@@ -417,42 +417,12 @@ String boardtype = "free";
 					fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
 					//System.out.println(request.getSession().getServletContext().getRealPath("/main/resources/upload/"));
 					uploadFile.transferTo(new File(request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName));
-					String oPath = request.getSession().getServletContext().getRealPath("/resources/upload/") + fileName; // 원본 경로
-					File oFile = new File(oPath); //파일 클래스를 생성 그 안에 원본 경로를 담는다.
-
-					int index = oPath.lastIndexOf("."); //문자열에서 특정 문자열의 위치 값(index)를 반환한다.
-														//indexOf가 처음 발견되는 문자열에 대한 index를 반환하는 반면,
-														//lastIndexOf는 마지막 문자열의 index를 반환한다.
-														// 확장자 찾으려고 "." 위치를 찾는듯하다
 					
-					String ext2 = oPath.substring(index + 1); // 파일 확장자  //해당 위치부터 해서 확장자 부분을 짜름(?)
-
-					String tPath = oFile.getParent() + File.separator + "t-" + oFile.getName(); // 썸네일저장 경로
-					
-					File tFile = new File(tPath); //파일 클래스를 생성 그 안에 썸네일 저장경로를 담는다.
-
-					//double ratio = 2; // 이미지 축소 비율
-					
-					try {
-						//(int) (oImage.getWidth() / ratio); // 생성할 썸네일이미지의 너비
-						//(int) (oImage.getHeight() / ratio)// 생성할 썸네일이미지의 높이
-						BufferedImage oImage = ImageIO.read(oFile); // 원본이미지
-						int tWidth =  200;// 생성할 썸네일이미지의 너비
-						int tHeight = 200; // 생성할 썸네일이미지의 높이
-						
-						BufferedImage tImage = new BufferedImage(tWidth, tHeight, BufferedImage.TYPE_3BYTE_BGR); // 썸네일이미지
-						Graphics2D graphic = tImage.createGraphics();
-						Image image = oImage.getScaledInstance(tWidth, tHeight, Image.SCALE_SMOOTH);
-						graphic.drawImage(image, 0, 0, tWidth, tHeight, null);
-						graphic.dispose(); // 리소스를 모두 해제
-
-						ImageIO.write(tImage, ext2, tFile);
-					} catch (IOException e) {
-						e.printStackTrace();
 					}
-				}
 				vo.setImage1(fileName);
-			}
+				}
+				
+		
 			
 			if(vo.getFileName2() != null) {
 				MultipartFile uploadFile2 = vo.getFileName2();
@@ -660,14 +630,7 @@ String boardtype = "free";
 		return "";
 	}
 	
-	@RequestMapping(value="/replyModify")
-	public String replyDelete(BoardVO vo) {
-		boardService.replyModify(vo);
-		
-		return "";
-	}
-	
-	
+
 	
 	
 }

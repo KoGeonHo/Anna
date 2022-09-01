@@ -187,7 +187,7 @@
 									<c:forEach var="vo" items="${interestedList}">
 										<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 											<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-												<div style="width:100%; height:210px; background:url('${ path }/resources/upload/${ vo.image1 }'); background-size:cover; background-position:center; background-repeat:no-repeat;" class="card-img-top" ></div>
+												<div style="width:100%; height:210px; background:url('${ path }/resources/upload/${ vo.image1 }'),url('${path}/images/no_image.gif'); background-size:cover; background-position:center; background-repeat:no-repeat;" class="card-img-top" ></div>
 												<div class="card-body">
 													<div class="text-start" style="height:30px; display:flex; align-items:center;">
 														<c:if test="${ fn:length(vo.title) > 8 }">
@@ -245,7 +245,8 @@
 								<c:forEach var="vo" items="${myBoardItemList}">
 									<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 										<div class="card" style="margin:5px;" onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-											<img src="${ path }/resources/upload/${ vo.image1 }" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+											<div style="width:100%; height:210px; background:url('${ path }/resources/upload/${ vo.image1 }'),url('${path}/images/no_image.gif'); background-size:cover; background-position:center; background-repeat:no-repeat;" class="card-img-top" ></div>
+											<%-- <img src="${ path }/resources/upload/${ vo.image1 }" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="..."> --%>
 											<div class="card-body">
 												<div class="text-start" style="height:30px; display:flex; align-items:center;">
 													<c:if test="${ fn:length(vo.title) > 8 }">
@@ -348,7 +349,6 @@
 		<div class="wrapper main" id='container-mobile'>
 			<!-- MyPage for Mobile -->
 			<div class="container" style="overflow:auto;">
-				<h3 style="padding:1rem; margin:0px;">마이 페이지</h3>
 				<div class="border-bottom border-top" style="display:flex;">
 					<div style="display:inline-block;">
 						<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>

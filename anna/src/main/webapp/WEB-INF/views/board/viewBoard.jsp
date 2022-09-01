@@ -159,6 +159,13 @@ height : 54px;
 	}
 }
 
+#carouselExampleControls{
+	width:500px;
+	height:500px;
+}
+#slide-img{
+	height:500px;
+}
 
 @media(max-width:767px){
 	.col-2 {
@@ -177,6 +184,14 @@ height : 54px;
 	
 	#Contents{
 	width: 66.66666667%;
+	}
+	
+	#carouselExampleControls{
+		width:90%;
+		height:300px;
+	}
+	#slide-img{
+		height:300px;
 	}
 	
 }
@@ -337,54 +352,58 @@ height : 54px;
 						</div>
 					</div>
 					
-					<div class="row border-bottom tr" style="min-height:200px; height:auto;">
+					<div class="row border-bottom tr">
+						<div class="col-12 td">
+							<div id="carouselExampleControls" class="carousel slide" style="margin:auto;" data-bs-ride="carousel">
+								  <div class="carousel-inner">
+								  <c:if test="${bv.board_type != 'free' and bv.place_location != null}">
+								    <div class="carousel-item active">
+								      <div id="map" style="width:100%; height:500px;" onclick="window.open('https://map.kakao.com/?q=${bv.place_name}&urlLevel=5')"></div>
+								    </div>
+							 	 </c:if>
+								  <c:if test="${bv.image1 != null}">
+								    <div class="carousel-item active">
+								    	<div id="slide-img" style="width:100%; background:url('${ path }/resources/upload/${bv.image1}'),url('${path}/images/no_image.gif'); background-position:center; background-repeat:no-repeat; background-size:cover;"></div>
+								      	<%-- <img src="../resources/upload/${bv.image1}" class="d-block w-100" alt="..." style="width:100%;height:500px;"> --%>
+								    </div>
+							 	 </c:if>
+							 	  <c:if test="${bv.image2 != null}">
+								    <div class="carousel-item">
+								      <img src="../resources/upload/${bv.image2}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
+								    </div>
+								  </c:if>
+								  <c:if test="${bv.image3 != null}">
+								    <div class="carousel-item">
+								      <img src="../resources/upload/${bv.image3}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
+								    </div>
+								  </c:if>
+								  <c:if test="${bv.image4 != null}">
+								    <div class="carousel-item">
+								      <img src="../resources/upload/${bv.image4}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
+								    </div>
+								  </c:if>
+								  <c:if test="${bv.image5 != null}">
+								    <div class="carousel-item">
+								      <img src="../resources/upload/${bv.image5}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
+								    </div>
+								  </c:if>  
+								  </div>
+								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Prev</span>
+								  </button>
+								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+								    <span class="carousel-control-next-icon"  aria-hidden="true"></span>
+								    <span class="visually-hidden">Next</span>
+								  </button>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row border-bottom tr" style="height:auto;">
 						<div class="col-2 th" style="display:table-cell; ">내용</div>
 						<div class="col-10 td" style="display:table-cell; ">
-							${bv.contents }<br>
-							
-							<div id="carouselExampleControls" class="carousel slide" style="height:auto;" data-bs-ride="carousel">
-							  <div class="carousel-inner">
-							  <c:if test="${bv.board_type != 'free' and bv.place_location != null}">
-							    <div class="carousel-item active">
-							      <div id="map" style="width:100%;height:500px;" onclick="window.open('https://map.kakao.com/?q=${bv.place_name}&urlLevel=5')"></div>
-							    </div>
-						 	 </c:if>
-							  <c:if test="${bv.image1 != null}">
-							    <div class="carousel-item active">
-							      <img src="../resources/upload/${bv.image1}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
-							    </div>
-						 	 </c:if>
-						 	  <c:if test="${bv.image2 != null}">
-							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image2}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
-							    </div>
-							  </c:if>
-							  <c:if test="${bv.image3 != null}">
-							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image3}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
-							    </div>
-							  </c:if>
-							  <c:if test="${bv.image4 != null}">
-							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image4}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
-							    </div>
-							  </c:if>
-							  <c:if test="${bv.image5 != null}">
-							    <div class="carousel-item">
-							      <img src="../resources/upload/${bv.image5}" class="d-block w-100" alt="..." style="width:100%;height:500px;">
-							    </div>
-							  </c:if>  
-							  </div>
-							  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-							    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							    <span class="visually-hidden">Prev</span>
-							  </button>
-							  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-							    <span class="carousel-control-next-icon"  aria-hidden="true"></span>
-							    <span class="visually-hidden">Next</span>
-							  </button>
-							</div>
-						
+							${bv.contents }
 						</div>
 					</div>
 					<c:if test="${bv.uidx == uidx}">

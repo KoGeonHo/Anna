@@ -60,6 +60,7 @@
 			uidx,
 			nickName,
 			user_email,
+			profile_image,
 			location_auth,
 			kakao_auth,
 			interested,
@@ -86,14 +87,16 @@
 	<select id="getUserInfo" parameterType="int" resultType="UserVO">
 		
 		SELECT
+			uidx,
 			nickName,
 			user_email,
-			interested,
+			profile_image,
 			location_auth,
 			kakao_auth,
-			profile_image,
+			interested,
 			introduce,
-			jdate
+			user_pwd,
+			isAdmin
 		FROM
 			AnnaUser
 		WHERE

@@ -52,8 +52,8 @@ public  class BoardItemServiceImple implements BoardItemService{
 
 
 	@Override
-	public List<BoardItemVO> selectAllbyuser(BoardItemVO vo, SearchVO svo) {
-		return boarditemdao.selectAllbyuser(vo, svo);
+	public List<BoardItemVO> selectAllbyuser(int item_idx, int uidx) {
+		return boarditemdao.selectAllbyuser(item_idx,uidx);
 	}
 
 

@@ -253,7 +253,6 @@ public class adminController {
 		
 		return "admin/admin_slide";
 	}
-	
 
 	
 	
