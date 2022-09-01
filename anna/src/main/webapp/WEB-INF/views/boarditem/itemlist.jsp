@@ -404,14 +404,15 @@ a:link {
    
    
    #image{
-	height:220px;
-	width:60%;
+	height: 118px;
+    width: 120px;
 
 	}
    
    
    .card{
-   widht:100%;
+   widht:12opx;
+   height:120px;
    flex-direction: row;
    }
    .card .card-img-top{

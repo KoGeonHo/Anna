@@ -275,7 +275,11 @@ public class BoardItemController {
 		cal.setTime(date); // 캘린더 함수에 추가
 		
 		int Sec = (int) ((realnowtime.getTime() - date.getTime()) / 1000); //두 날짜의 차이를 초 단위로 만듬
+		
+		
 		int Days = Sec / (24*60*60) ; // 초 단위로 만든 두 날짜의 차이를 일(하루) 기준으로 만듬
+		System.out.println(Days);
+		
 		model.addAttribute("Days", Days); //두 날짜의 차이를 화면으로 보냄
 		
 		
@@ -1004,16 +1008,9 @@ public class BoardItemController {
 					  fileName=formatter.format(date)+"_"+session.getAttribute("uidx")+"_"+"1"+"_"+originalFileName;
 					 
 					  System.out.println(uploadFile1.getOriginalFilename() + "두번째 if문 파일네임 입니다.");
-					  BufferedImage sourceImg = ImageIO.read(new File(path, fileName));
-					  BufferedImage destImg = Scalr.resize(sourceImg, Scalr.Method.AUTOMATIC,
-					  Scalr.Mode.FIT_TO_HEIGHT, 450);
 					  String thumbnailName = path + File.separator + "s-" + fileName;
 					  
 					  File newFile = new File(thumbnailName); //
-					  System.out.println("newFile:"+newFile); String formatName =
-					  fileName.substring(fileName.lastIndexOf(".") + 1); //
-					  System.out.println("destImg"+destImg); boolean flag = ImageIO.write(destImg,
-					  formatName.toUpperCase(), newFile); System.out.println("복사여부 flag" + flag);
 					  
 					  thumbnailName.substring(path.length()).replace(File.separatorChar, '/');
 					  rvo.setAttach(thumbnailName.substring(path.length()).replace(File.separatorChar, '/')); // 실질적으로 db에 닮기는 파일 // 이름 }

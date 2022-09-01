@@ -154,7 +154,14 @@ display:none;
 
 /* 420이하 모바일*/
 @media ( max-width : 767px ) {
-
+	
+	.Pstyle2{
+	width:290px;
+	}
+	
+	
+	
+	
 	
 	#container-fluid{
 	display:none;
@@ -305,7 +312,7 @@ display:none;
 	
 	.carousel-item > img{
 	width:100%;
-	height:300px;
+	height:240px;
 	}
 	
 	.carousel-inner{
@@ -341,6 +348,7 @@ a {
 	bottom: 20px;
 	left: 0;
 	width: 100%;
+	background: rgba(0,0,0,0.2);
 }
 
 .slider-1>.page-btns>div {
@@ -463,13 +471,20 @@ table td {
 }
 
 .Pstyle2 {
-	opacity: 0;
+
+	width:350px;
+	height: 355px;
+	background-color: #fff; 
+	border: 5px solid #fff;
+	padding: 20px;
+	margin:auto;
+	/* opacity: 0;
 	display: none;
 	position: relative;
 	width: auto;
-	border: 5px solid #fff;
-	padding: 20px;
-	background-color: #fff;
+	
+	
+	*/
 }
 
 #Wish_area {
@@ -532,12 +547,12 @@ console.log("addwish");
 
 		//신고 팝업 여는 부분
 		$(function(){
-			$("#btn_open2").click(function(){ //레이어 팝업 열기 버튼 클릭 시
-				$('#reportpopup').bPopup();
+			$(".report").click(function(){ //레이어 팝업 열기 버튼 클릭 시
+				$("#modal-container").fadeIn();
 			});
 			$("#btn_close2").click(function(){ //닫기
-				$('#reportpopup').bPopup().close();  
-			});			
+				$("#modal-container").fadeOut();
+			});		
 		});
 		
 		
@@ -624,7 +639,6 @@ console.log("addwish");
 					item_idx : ${vo.item_idx},
 				},
 				'json');
-					console.log("예약중으로 변경 완료");
 					//$('#state').load(location.href+' #state');
 			    alert("예약중 처리가 완료되었습니다.");
 			    
@@ -679,7 +693,7 @@ console.log("addwish");
 	/* 끌올 처리 */
 function updatewdate(){
 	let Days = ${Days};
-			if(Days > 31){
+			if(Days > 8){
 				$.post('updatewdate',{
 					item_idx : item_idx,
 				},
@@ -688,7 +702,7 @@ function updatewdate(){
 			    alert("끌올 처리가 완료되었습니다.");
 				}else{
 				
-				alert("글 작성일로부터 한 달이 지나야 끌올이 가능합니다!")
+				alert("글 작성일로부터 일주일 이 지나야 끌올이 가능합니다!")
 			}
 	}
 	
@@ -745,61 +759,62 @@ function itemdelete(){
 		<!-- 헤더 및 메뉴 -->
 		<%@ include file="/WEB-INF/views/common/header.jsp"%>
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
+		<!-- 신고하기 팝업 영역  -->
+		<div id="modal-container" style="display:none; z-index:200;">
+			<div id="modal" style="width:100%; height:100%; background:rgba(0,0,0,0.5); position:absolute; display:flex; align-items:center;">
+				<div id="reportpopup" class="Pstyle2">
+					<!-- form 은 기본 전송방식이 post 임!! 잊지말것  -->
+					<form method="POST" action="report.do" enctype="multipart/form-data" name="frm" id="joinFrm">
+						<div class="row border-bottom  tr">
+							<input type="hidden" name="item_idx" value="${vo.item_idx}">
+							<input type="hidden" name="repoter"
+								value="${userLoginInfo.uidx}"> <input type="hidden"
+								name="target" value="${vo.uidx}">
+							<div class="col-4 th" style="display: table-cell;">신고유형</div>
+							<div class="col-8 td" style="display: table-cell;">
+								<select name="report_type">
+									<option value="0">노쇼</option>
+									<option value="1">비속어&비매너채팅</option>
+									<option value="2">게시물 규칙 위반</option>
+									<option value="3">허위매물</option>
+									<option value="4">기타</option>
+								</select>
+							</div>
+						</div>
+						<div class="row border-bottom tr" style="height: 150px;">
+							<div class="col-4 th" style="display: table-cell;">내용</div>
+							<div class="col-8 td" style="display: table-cell;">
+								<textarea name="contents" style="height: 150px;"></textarea>
+							</div>
+						</div>
+		
+						<div class="row  tr">
+							<div class="col-8 td" style="display: table-cell;">
+								<div id="fileDiv">
+									<input type="file" id="file" name="file1"
+										accept='image/jpeg,image/gif,image/png'
+										onchange='chk_file_type(this)'>
+								</div>
+							</div>
+						</div>
+		
+						<div class="text-end tr">
+							<div class="td">
+							
+								<button class="btn" style="background: #00AAB2; color: #fff;">신고하기</button>
+								<button class="btn" style="background: #00AAB2; color: #fff;"
+									type="button" id="btn_close2">취소</button>
+							</div>
+						</div>
+					</form>
+					</div>
+				</div>
+			</div>
+			<!-- 삭제 팝업 영역  -->
 		<div class="wrapper main" id="main" style="overflow-y: auto; overflow-x: hidden;">
 			<div class="container">
 				<div class="row">
-					<!-- 신고하기 팝업 영역  -->
-					<div id="reportpopup" class="Pstyle2">
-						<!-- form 은 기본 전송방식이 post 임!! 잊지말것  -->
-						<form method="POST" action="report.do" enctype="multipart/form-data" name="frm" id="joinFrm">
-							<div class="row  tr">
-								<input type="hidden" name="item_idx" value="${vo.item_idx}">
-								<input type="hidden" name="repoter"
-									value="${userLoginInfo.uidx}"> <input type="hidden"
-									name="target" value="${vo.uidx}">
-								<div class="col-4 th" style="display: table-cell;">신고유형</div>
-								<div class="col-8 td" style="display: table-cell;">
-									<select name="report_type">
-										<option value="0">노쇼</option>
-										<option value="1">비속어&비매너채팅</option>
-										<option value="2">게시물 규칙 위반</option>
-										<option value="3">허위매물</option>
-										<option value="4">기타</option>
-									</select>
-								</div>
-							</div>
-							<div class="row  tr">
-								<div class="col-4 th" style="display: table-cell;">내용</div>
-								<div class="col-8 td" style="display: table-cell;">
-									<textarea name="contents"></textarea>
-								</div>
-							</div>
-
-							<div class="row  tr">
-								<div class="col-4 th" style="display: table-cell;">첨부 파일</div>
-								<div class="col-8 td" style="display: table-cell;">
-									<div id="fileDiv">
-										<input type="file" id="file" name="file1"
-											accept='image/jpeg,image/gif,image/png'
-											onchange='chk_file_type(this)'>
-									</div>
-									<br /> <br /> <a href="#this" class="btn" id="addFile">파일
-										추가</a>
-								</div>
-							</div>
-
-							<div class="text-end tr">
-								<div class="td">
-								
-									<button class="btn" style="background: #00AAB2; color: #fff;">신고하기</button>
-									<button class="btn" style="background: #00AAB2; color: #fff;"
-										type="button" id="btn_close2">취소</button>
-								</div>
-							</div>
-						</form>
-						</div>
-
-						<!-- 삭제 팝업 영역  -->
+					
 				 <div id="delpopup" class="Pstyle" style="width:25%;">	
 		 				<div class="col-4 th" style="display: table-cell;">정말 게시글을 삭제하시겠습니까?</div>
 								<button class="btn" style="background: #00AAB2; color: #fff; width:50%;" onclick="<c:if test="${vo.state == 3 }">alert('거래완료 처리된 글은 ')</c:if> <c:if test="${vo.state != 3 }">itemdelete(); location.href='itemlist.do'</c:if>">삭제하기</button>
@@ -983,7 +998,7 @@ function itemdelete(){
 												</script>
 												
 													<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"  data-interval="false">
-													  <div class="carousel-indicators">
+													  <div class="carousel-indicators" style="margin-bottom: 0.5rem;">
 													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -1040,11 +1055,11 @@ function itemdelete(){
 														    </div>
 														</c:if>
 													  </div>
-													  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+													  <button class="carousel-control-prev" style="background: rgba(0,0,0,0.2);" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
 													    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 													    <span class="visually-hidden">Previous</span>
 													  </button>
-													  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+													  <button class="carousel-control-next" style="background: rgba(0,0,0,0.2);" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
 													    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 													    <span class="visually-hidden">Next</span>
 													  </button>
@@ -1148,7 +1163,10 @@ function itemdelete(){
 															<div class="row tr" style="border: 0;">
 																	
 																			<input type="button"  onclick="<c:if test="${vo.state!=3 }">location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'</c:if> <c:if test="${vo.state ==3 }">alert('이미 거래가 완료된 글입니다');</c:if>" value="연락하기" class="btn" style="background-color:#00aab2;padding: 0px;" >
-																		<input type="submit" id="btn_open2" style="background-color:#d92929; padding: 0px;"class="btn btn" value="신고하기" class="btn">
+																		<input type="submit" id="btn_open2" style="background-color:#d92929; padding: 0px;"class="btn btn report" value="신고하기" class="btn">
+																
+																	
+																	
 																	<!-- 이웃 영역 시작 -->
 																		<div id="Neighbor_area-web" style="width:100%;     padding: 0px;">
 																			<c:if test="${result == 0 }">
@@ -1215,9 +1233,10 @@ function itemdelete(){
 									<div id="btn-area" style="margin:2px;display: flex; width: 100%; padding: 0px; flex-direction: row; justify-content: center;">
 													<c:if test="${userLoginInfo.uidx != null and vo.uidx != userLoginInfo.uidx}">
 															<div class="row tr" style="border: 0; display: flex; flex-direction: row; flex-wrap: nowrap;">
-																	
+										
+										
 										<input type="button"  onclick="<c:if test="${vo.state!=3 }">location.href='<%=request.getContextPath()%>/user/chatView.do?item_idx=${vo.item_idx}&chat_host=${vo.uidx}&invited=${userLoginInfo.uidx}'</c:if> <c:if test="${vo.state ==3 }">alert('이미 거래가 완료된 글입니다');</c:if>" value="연락하기" class="btn" style="background-color:#00aab2;padding: 0px;" >
-										<input type="submit" id="btn_open2" style="background-color:#d92929; padding: 0px;"class="btn btn" value="신고하기" class="btn">
+										<input type="submit" id="btn_open2" style="background-color:#d92929; padding: 0px;"class="btn btn report" value="신고하기" class="btn">							
 																	<!-- 이웃 영역 시작 -->
 																		<div id="Neighbor_area" style="width:100%;     padding: 0px;">
 																			<c:if test="${result == 0 }">
@@ -1263,8 +1282,6 @@ function itemdelete(){
 																
 															
 											</div>
-										
-										
 										
 										
 										
