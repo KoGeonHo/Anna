@@ -72,10 +72,7 @@ public class BoardDAO {
 		return sqlSession.selectList(namespace+".getCList", Bidx);
 	}
 	
-	public int Ccount(int Bidx) {
-		
-		return sqlSession.update(namespace+".Ccount", Bidx);
-	}
+	
 	
 	public int boardLikeUP(BoardVO vo) {
 		

@@ -139,6 +139,7 @@
 <select id="getCList" resultType="boardvo" parameterType="int">
   	SELECT r.Uidx as Uidx
   		  ,r.Bidx as Bidx
+  		  ,r.reply_idx
   		  ,u.nickName as nickName
   		  ,r.contents as contents
   		  ,date_format(r.Wdate,'%y-%m-%d-%h:%i')as Wdate
@@ -146,12 +147,6 @@
   	 WHERE r.Bidx = #{Bidx}
   	   AND r.Uidx = u.uidx
 </select>
-
-<update id="Ccount" parameterType="int">
-	UPDATE Board
-	   SET Ccount = Ccount+1
-	 WHERE Bidx = #{Bidx}
-</update>
 
 <insert id="boardLikeUP">
 	INSERT INTO Board_like(
