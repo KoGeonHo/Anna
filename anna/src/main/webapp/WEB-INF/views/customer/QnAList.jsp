@@ -74,7 +74,9 @@
 					<tfoot>
 						<tr>
 							<td colspan="3" class="text-end td" style="border:0px;">
+								<c:if test="${ not empty uidx }">
 								<button type="button" class="btn btn-sm" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAWrite.do'">글작성</button>
+								</c:if>
 							</td>
 						</tr>
 					</tfoot>

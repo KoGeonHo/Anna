@@ -119,6 +119,12 @@ body {
 			}
 		});
 	});
+	<c:if test="${ empty userLoginInfo.location_auth}">
+		<c:if test="${userLoginInfo.isAdmin ne 'Y' }">
+			alert("동네설정이 필요한 서비스 입니다.");
+			location.href="${path}/user/locationAuth.do";
+		</c:if>
+	</c:if>
 </script>
 </head>
 <body>
@@ -194,24 +200,25 @@ body {
 					</div>
 					
 					
-					
-					<div class="map_wrap">
-					    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-					
-					    <div id="menu_wrap" class="bg_white">
-					        <div class="option">
-					            <div>
-					                
-					                    키워드 : <input type="text" value="" id="keyword" size="15"> 
-					                    <button type="button" onclick="searchPlaces(); return false;">검색하기</button> 
-					                
-					            </div>
-					        </div>
-					        <hr>
-					        <ul id="placesList"></ul>
-					        <div id="pagination"></div>
-					    </div>
-					</div>
+					<c:if test="${ pm.board_type ne 'notice' }">
+						<div class="map_wrap">
+						    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+						
+						    <div id="menu_wrap" class="bg_white">
+						        <div class="option">
+						            <div>
+						                
+						                    키워드 : <input type="text" value="" id="keyword" size="15"> 
+						                    <button type="button" onclick="searchPlaces(); return false;">검색하기</button> 
+						                
+						            </div>
+						        </div>
+						        <hr>
+						        <ul id="placesList"></ul>
+						        <div id="pagination"></div>
+						    </div>
+						</div>
+					</c:if>
 					
 					
 					<div id="clickLatlng"></div>

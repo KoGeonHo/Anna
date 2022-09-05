@@ -146,9 +146,7 @@ MY > 설정 > [계정설정]에서 직접 탈퇴 가능<br>
 				
 			</div>
 		</div>	
-		<!-- 퀵메뉴 시작 -->
-		<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
-		<!-- 퀵메뉴 종료 --> 
+		
 		
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>

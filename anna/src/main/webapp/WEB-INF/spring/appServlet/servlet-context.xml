@@ -47,6 +47,7 @@
         <interceptor>
             <mapping path="/*/*.do"/>
             <mapping path="/*.do"/>
+            <mapping path="/"/>
             <beans:ref bean="CookieCheckInterceptor"/>
         </interceptor>
         

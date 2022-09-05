@@ -351,7 +351,7 @@
 			<div class="container" style="overflow:auto;">
 				<div class="border-bottom border-top" style="display:flex;">
 					<div style="display:inline-block;">
-						<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
+						<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'),url('${path}/images/NoProfile.png'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
 					</div>
 					<div style="display:flex; vertical-align: middle; flex:1; align-items:center;">
 						<div>
@@ -363,7 +363,7 @@
 				</div>
 				<div class="row">
 					<div class="col-4" style="padding:0px;">
-						<div class="text-center btn-circle" onclick="location.href='chatList.do?type=buy'">
+						<div class="text-center btn-circle" onclick="location.href='chatList.do?type=buy'" style="background:#00AAB2;">
 							<c:if test="${ chkBuyNewMessage ne 0}">
 								<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding:2px; right:0; top:0; background:red; border-radius:10px; color:#fff;">${ chkBuyNewMessage }</div>
 							</c:if>
@@ -372,7 +372,7 @@
 						<div class="text-center">구매 내역</div>
 					</div>
 					<div class="col-4" style="padding:0px;">
-						<div class="text-center btn-circle" onclick="location.href='chatList.do?type=sell'">
+						<div class="text-center btn-circle" onclick="location.href='chatList.do?type=sell'" style="background:#00AAB2;">
 							<c:if test="${ chkSellNewMessage ne 0}">
 								<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding:2px; right:0; top:0; background:red; border-radius:10px; color:#fff;">${ chkSellNewMessage }</div>
 							</c:if>
@@ -381,7 +381,7 @@
 						<div class="text-center">판매 내역</div>
 					</div>
 					<div class="col-4" style="padding:0px;">
-						<div class="text-center btn-circle" onclick="location.href='alarmView.do'">
+						<div class="text-center btn-circle" onclick="location.href='alarmView.do'" style="background:#00AAB2;">
 							<c:if test="${ chkAlarm ne 0}">
 								<div style="display:inline-block; width:18px; height:18px; font-size:0.8rem; position:absolute; padding:2px; right:0; top:0; background:red; border-radius:10px; color:#fff;">${ chkAlarm }</div>
 							</c:if>
@@ -390,27 +390,27 @@
 						<div class="text-center">알림</div>
 					</div>
 					<div class="col-4" style="padding:0px;" onclick="location.href='wishList.do'">
-						<div class="text-center btn-circle"><div style="flex:1;">찜</div></div>
+						<div class="text-center btn-circle" style="background:#BBCE53;"><div style="flex:1;">찜</div></div>
 						<div class="text-center">찜 목록</div>
 					</div>
 					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/boarditem/itemlist.do?interested=${userLoginInfo.interested}'">
-						<div class="text-center btn-circle"><div style="flex:1;">관심</div></div>
+						<div class="text-center btn-circle" style="background:#BBCE53;"><div style="flex:1;">관심</div></div>
 						<div class="text-center">관심 상품</div>
 					</div>
 					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/board/boardlist.do?board_type=notice'">
-						<div class="text-center btn-circle"><div style="flex:1;">공지</div></div>
+						<div class="text-center btn-circle" style="background:#BBCE53;"><div style="flex:1;">공지</div></div>
 						<div class="text-center">공지사항</div>
 					</div>
 					<div class="col-4" style="padding:0px;" onclick="location.href='neighborMng.do'">
-						<div class="text-center btn-circle"><div style="flex:1;">이웃</div></div>
+						<div class="text-center btn-circle" style="background:#fab915;"><div style="flex:1;">이웃</div></div>
 						<div class="text-center">이웃 관리</div>
 					</div>
 					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/customer/FaQList.do'">
-						<div class="text-center btn-circle"><div style="flex:1;">질문</div></div>
+						<div class="text-center btn-circle" style="background:#fab915;"><div style="flex:1;">질문</div></div>
 						<div class="text-center">자주하는 질문</div>
 					</div>
 					<div class="col-4" style="padding:0px;" onclick="location.href='${path}/customer/QnAList.do'">
-						<div class="text-center btn-circle"><div style="flex:1;">QnA</div></div>
+						<div class="text-center btn-circle" style="background:#fab915;"><div style="flex:1;">QnA</div></div>
 						<div class="text-center">문의 내역</div>
 					</div>
 				</div>

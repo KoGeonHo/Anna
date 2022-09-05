@@ -108,6 +108,16 @@ public class CookieCheck extends HandlerInterceptorAdapter{
 					
 					session.invalidate();
 					
+					cookies = request.getCookies();  // 쿠키 값을 null로 설정
+					
+					for(Cookie cookie:cookies) {
+						if(cookie.getName().equals("uidx")) {
+							cookie.setPath("/");
+							cookie.setMaxAge(0);
+							response.addCookie(cookie);
+						}
+					}
+					
 					PrintWriter pw = response.getWriter();
 					
 					String banReason = "";
@@ -149,19 +159,15 @@ public class CookieCheck extends HandlerInterceptorAdapter{
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,ModelAndView modelAndView) throws Exception{
 		
 		HttpSession session = request.getSession();
-		
+		int chkAlarm = 0; 
+		int chkBuyNewMessage = 0; 
+		int chkSellNewMessage = 0; 
 		if(session.getAttribute("uidx") != null) {
 			int uidx = (int)session.getAttribute("uidx");
 			
-			int chkAlarm = 0; 
-			
 			chkAlarm = userService.chkAlarm(uidx);
 			
-			int chkBuyNewMessage = 0; 
-			
 			chkBuyNewMessage = userService.chkBuyNewMessage(uidx);
-			
-			int chkSellNewMessage = 0; 
 			
 			chkSellNewMessage = userService.chkSellNewMessage(uidx);
 			

@@ -122,15 +122,15 @@
 						<div class="col-4 th" style="display:table-cell;">카테고리</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<select name="cate_idx">
-								<option value="1">가전제품</option>
-								<option value="2">생활용품</option>
-								<option value="3">완구&취미</option>
-								<option value="4">패션&의류</option>
-								<option value="5">인테리어</option>
-								<option value="6">반려동물용품</option>
-								<option value="7">뷰티&악세</option>
-								<option value="8">자동차용품</option>
-								<option value="9">스포츠&레저용품</option>
+								<option value="1" <c:if test="${vo.cate_idx == 1}">selected</c:if> >가전제품</option>
+								<option value="2" <c:if test="${vo.cate_idx == 2}">selected</c:if> >생활용품</option>
+								<option value="3" <c:if test="${vo.cate_idx == 3}">selected</c:if> >완구&취미</option>
+								<option value="4" <c:if test="${vo.cate_idx == 4}">selected</c:if> >패션&의류</option>
+								<option value="5" <c:if test="${vo.cate_idx == 5}">selected</c:if> >인테리어</option>
+								<option value="6" <c:if test="${vo.cate_idx == 6}">selected</c:if> >반려동물용품</option>
+								<option value="7" <c:if test="${vo.cate_idx == 7}">selected</c:if> >뷰티&악세</option>
+								<option value="8" <c:if test="${vo.cate_idx == 8}">selected</c:if> >자동차용품</option>
+								<option value="9" <c:if test="${vo.cate_idx == 9}">selected</c:if> >스포츠&레저용품</option>
 						    </select>
 						</div>
 					</div>
@@ -138,13 +138,13 @@
 						<div class="col-4 th" style="display:table-cell;">가격제안</div>
 						<div class="col-8 td" style="display:table-cell;">
 							<select name="offer">
-								<c:if test="${vo.offer == 1}">
-									<option value="1" selected>불가능</option>
-									<option value="2"  >가능</option>
+								<c:if test="${vo.offer == 0}">
+									<option value="0" selected>불가능</option>
+									<option value="1"  >가능</option>
 								</c:if>
-								<c:if test="${vo.offer == 2}">
-									<option value="1">불가능</option>
-									<option value="2" selected >가능</option>
+								<c:if test="${vo.offer == 1 }">
+									<option value="0">불가능</option>
+									<option value="1" selected >가능</option>
 								</c:if>
 						    </select>
 						</div>
@@ -186,7 +186,8 @@
 			           		<div class="form-group">
 			              	  <input type="hidden" value="" name="tag" id="rdTag" />
 			          		</div>
-			          		${vo.keyword}
+			          		기존 키워드:${vo.keyword}
+			          		<input type="hidden" value="${vo.keyword}">
 			             <div id="tag-list" ></div>
 				           	 <div class="form-group">
 				            	<input type="text" id="tag" size="7" placeholder="입력후 엔터를 눌러주세요." style="width: 200px;"/>
@@ -364,3 +365,9 @@ $("#joinFrm").submit(function(){
 	</div>
 </body>
 </html>
+
+
+
+
+
+

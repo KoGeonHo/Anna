@@ -1053,7 +1053,6 @@ public class UserController {
 	
 	
 	//리뷰 업데이트
-	@ResponseBody
 	@RequestMapping(value="/updateReView.do")
 	public String updateReView(ReViewVO vo,HttpServletRequest request,HttpSession session) {
 		
@@ -1063,9 +1062,13 @@ public class UserController {
 		
 		vo.setWriter(uidx);
 		
+		System.out.println(vo.getOption1());
+		System.out.println(vo.getOption2());
+		System.out.println(vo.getOption3());
+		
 		userService.updateReview(vo);
 		
-		return "redirect:/user/chatlist.do";
+		return "redirect:/user/chatList.do";
 	}
 	
 	

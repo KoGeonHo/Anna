@@ -63,6 +63,10 @@
 		width:100%;
 	}
 	
+	#img-items{
+		height:auto;
+		width:120px;
+	}
 	
 	
 } 
@@ -96,11 +100,16 @@
 	width: 100%;
     height: 210px;
 	}
-
+	#img-items{
+		height:210px;
+		width:100%;
+	}
 
 }
 
-
+.imgAr{
+	box-shadow: 5px 5px 5px grey;
+}
 
 </style>
 
@@ -166,7 +175,10 @@ const GetList = function(currentPage){
         	 
 			html +='<div class="card-container" id="item_container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">';
 			html +='<div class="card" id="itemcard"  style="margin:5px;" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+appendList[i].item_idx+'\'">';
-			html +='<img src="${ path }/resources/upload/'+appendList[i].image1+'"  onerror="this.onerror=null; this.src=\'${path}/images/no_image.gif\';" class="card-img-top" alt="...">';
+			
+			html += '<div id="img-items" style="background:url(\'${path}/resources/upload/'+appendList[i].image1+'\'),url(\'${path}/images/no_image.gif\'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div>';
+			
+			//html +='<img src="${ path }/resources/upload/'+appendList[i].image1+'"  onerror="this.onerror=null; this.src=\'${path}/images/no_image.gif\';" class="card-img-top" alt="...">';
 			html +='<div class="card-body" style="padding:10px;">';
 			html +='<div class="text-start" style="height:30px; display:flex; align-items:center;">';
 			if(appendList[i].title.length >= 8){
@@ -273,7 +285,7 @@ const GetList = function(currentPage){
 		<!-- 메뉴는 수정이 필요하면 헤더를 복사해서 메뉴명, 링크만 수정해서 사용할것! -->
 
 
-			<div class="main"  id="main" style="overflow:auto;">
+			<div class="main"  id="main" style="overflow:auto; width:100%;">
 
 	<!-- 슬라이드 -->
 
@@ -396,7 +408,8 @@ const GetList = function(currentPage){
 									<c:forEach var="vo" items="${list}">
 										<div style="width:20%; display:inline-block; font-size:1rem; flex:none;">
 											<div class="card" style="margin:5px;" onclick="location.href='<%=request.getContextPath()%>/boarditem/itemview.do?item_idx=${ vo.item_idx }'">
-												<img src="<%=request.getContextPath()%>/resources/upload/${ vo.image1 }" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="...">
+												<div style="width:100%; height:210px; background:url('${path}/resources/upload/${ vo.image1 }'),url('${path}/images/no_image.gif');background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+												<%-- <img src="<%=request.getContextPath()%>/resources/upload/${ vo.image1 }" style="width:100%; height:210px;" onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';" class="card-img-top" alt="..."> --%>
 												<div class="card-body">
 													<div class="text-start" style="height:30px; display:flex; align-items:center;">
 														<c:if test="${ fn:length(vo.title) > 8 }">
@@ -469,7 +482,8 @@ const GetList = function(currentPage){
                         			<a href="board/viewBoard.do?Bidx=${vo.bidx}">
                   						<em class="iconPs bo_tit"></em>
                   						<i class="imgAr">
-                  							<img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="images/no_imgborder.jpg" style="width :200px; height : 200px">
+                  							<div style="width:auto; height:200px; background:url('${path}/resources/upload/${ vo.image1 }'),url('${path}/images/no_image.gif');background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+                  							<%-- <img src="<%=request.getContextPath()%>/resources/upload/t-${vo.image1}" alt="없어요" onerror=this.src="images/no_imgborder.jpg" style="width :200px; height : 200px"> --%>
                   						</i>
                   						<em class="gall_info">
                      						<span class="sound_only">조회 </span>
@@ -564,10 +578,11 @@ const GetList = function(currentPage){
 													style="display: inline-block; font-size: 1rem; flex: none; padding: 5px;">
 													<div class="card" id="itemcard" style="margin: 5px;"
 														onclick="location.href='${path}/boarditem/itemview.do?item_idx=${ vo.item_idx }'; addviewcount(this);">
-														<img src="${ path }/resources/upload/${ vo.image1}"
+														<div id="img-items" style=" background:url('${path}/resources/upload/${ vo.image1 }'),url('${path}/images/no_image.gif');background-size:cover; background-position:center; background-repeat:no-repeat;"></div>
+														<%-- <img src="${ path }/resources/upload/${ vo.image1}"
 															
 															onerror="this.onerror=null; this.src='<%=request.getContextPath()%>/images/no_image.gif';"
-															class="card-img-top" alt="...">
+															class="card-img-top" alt="..."> --%>
 														<div class="card-body" style="padding: 10px;">
 															<div class="text-start"
 																style="height: 30px; display: flex; align-items: center;">
@@ -620,11 +635,6 @@ const GetList = function(currentPage){
 </div>
 
 
-
-		<!-- 퀵메뉴 시작 -->
-		<%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>			
-		<!-- 퀵메뉴 종료 --> 
-		
 
 
 		<!-- 푸터는 고정 -->

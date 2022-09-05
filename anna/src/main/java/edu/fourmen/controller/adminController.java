@@ -240,7 +240,7 @@ public class adminController {
 		model.addAttribute("freeboard", freeboard);	
 		model.addAttribute("svo", svo);
 
-// 게시판 불러오기
+		// 게시판 불러오기
 		
 		
 		return "admin/admin_board";

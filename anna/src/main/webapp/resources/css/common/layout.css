@@ -18,6 +18,9 @@ body {
 	bottom:0;
 }
 
+.card{
+	cursor:pointer;
+}
 
 #footer {
 	background:#fff;

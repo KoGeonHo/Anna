@@ -325,8 +325,6 @@
 			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) chkCanReview,
 			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx} and (option1 = 1 or option2 = 1 or option3 = 1)) chkReview,
 			(select b.cdate from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as cdate
-			
-			
 		FROM 
 			chat a 
 		WHERE 
@@ -357,7 +355,6 @@
 			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) chkCanReview,
 			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx} and (option1 = 1 or option2 = 1 or option3 = 1)) chkReview,
 			(select b.cdate from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as cdate
-			
 		FROM 
 			chat a 
 		WHERE 
@@ -385,12 +382,7 @@
 			(select count(*) from chat where chat_read = 1 and item_idx = a.item_idx and uidx != #{uidx} and chat_host = a.chat_host and invited = a.invited) as newMessages,
 			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx}) chkCanReview,
 			(select count(*) from review where item_idx = a.item_idx and seller = a.chat_host and buyer = a.invited and writer = #{uidx} and (option1 = 1 or option2 = 1 or option3 = 1)) chkReview,
-			(select b.cdate from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as cdate
-			
-			
-			
-			
-			
+			(select b.cdate from chat b where a.item_idx = b.item_idx and a.invited = b.invited and a.chat_host = b.chat_host order by cdate desc Limit 1) as cdate			
 		FROM 
 			chat a 
 		WHERE 
@@ -564,10 +556,11 @@
 			item_idx = #{ item_idx } AND
 			seller = #{ seller } AND
 			buyer = #{ buyer } AND
-			option1 != 0 AND
-			option2 != 0 AND
-			option3 != 0
-	
+			(
+				option1 != 0 OR
+				option2 != 0 OR
+				option3 != 0
+			)
 	</select>
 	
 	
@@ -585,9 +578,11 @@
 			item_idx = #{ item_idx } AND
 			seller = #{ seller } AND
 			buyer = #{ buyer } AND
-			option1 != 0 AND
-			option2 != 0 AND
-			option3 != 0
+			(
+				option1 != 0 OR
+				option2 != 0 OR
+				option3 != 0
+			)
 	
 	</select>
 	
@@ -650,8 +645,8 @@
 		SET
 			satisfied = #{satisfied},
 			option1 = #{option1},
-			option2 = #{option1},
-			option3 = #{option1}
+			option2 = #{option2},
+			option3 = #{option3}
 		WHERE
 			writer = #{writer} AND
 			seller = #{seller} AND
@@ -691,7 +686,6 @@
 	
 	
 	<select id="BenCheck" parameterType="int" resultType="ReportVO">
-	
 		
 		SELECT
 			report_type,
