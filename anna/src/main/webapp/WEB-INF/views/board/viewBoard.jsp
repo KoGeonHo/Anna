@@ -396,11 +396,11 @@ height : 54px;
 								    </div>
 								  </c:if>  
 								  </div>
-								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="background:rgba(0,0,0,0.2);">
 								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 								    <span class="visually-hidden">Prev</span>
 								  </button>
-								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" style="background:rgba(0,0,0,0.2);">
 								    <span class="carousel-control-next-icon"  aria-hidden="true"></span>
 								    <span class="visually-hidden">Next</span>
 								  </button>
@@ -599,9 +599,11 @@ function getList() {
 					
 					
 					comment_html += "</div>";
-					
+
+					comment_html += "</div>";
 				}
-				
+
+				comment_html += "</div>";
 				console.log(comment_html);
 				
 				$(".comment_Box").html(comment_html);

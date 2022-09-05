@@ -118,7 +118,7 @@
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/myPage.do'">마이페이지</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/userInfoView.do'">내정보</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/wishList.do'">찜목록</li>
-									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/neighborMng.do'">이웃관리</li>
+									<%-- <li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/neighborMng.do'">이웃관리</li> --%>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/chatList.do';">채팅목록</li>
 									<%-- <li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/user/myPage.do'">구매내역</li>
 									<li class="nav-link px-3 link-dark" style="cursor:pointer;" onclick="location.href='${path}/boarditem/itemlist.do?searchUidx=${uidx}'">판매내역</li> --%>
@@ -182,7 +182,6 @@
 					</select>
 		    		<script>
 			    		let locationList = [${ userLoginInfo.location_auth }];
-			    		//console.log('${ userLoginInfo.location_auth }');
 			    		let html = '';
 			    		$.ajax({
 							url : "https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json",
@@ -196,14 +195,13 @@
 										data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
 										success : function(geojson){
 											let locationLevel = geojson.features[0].properties.adm_nm.split(" ");
-											//dong.push(locationLevel[locationLevel.length-1]);
-											//console.log((locationList[i]==${locationSet}));
 											html += '<option value="'+locationList[i]+'"';
-											if(locationList[i].toString()=='${locationSet}'){
+											let locationSet = "<c:out value='${locationSet}'/>";
+											if(locationList[i].toString()== locationSet){
 												html += " selected "
 											}
 											html += '>'+locationLevel[locationLevel.length-1]+'</option>'
-											//$(".form-select").append('<option value="'+locationList[i]+'">'+locationLevel[locationLevel.length-1]+'</option>');
+											
 										}
 									});
 								}

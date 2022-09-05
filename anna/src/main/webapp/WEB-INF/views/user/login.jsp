@@ -130,17 +130,17 @@
 						<label for="inputPassword" class="sr-only">비밀번호</label> 
 						<input type="password" id="inputPassword" class="form-control" name="user_pwd" placeholder="비밀번호" required>
 						<div style="padding:12px 5px;">
-							<input type="checkbox" id="keepLogin" name="keepLogin" value="true"><label for="keepLogin" style="margin-left:10px;">로그인 유지</label>
+							<input type="checkbox" id="keepLogin" name="keepLogin" value="true"><label for="keepLogin" style="margin-left:10px; cursor:pointer;">로그인 유지</label>
 						</div>
 						<div class="find-join row">
-							<div class="text-align-left col-8" ><span onclick="location.href='findPwd.do'">비밀번호 찾기</span></div>
-							<div class="text-align-right col-4"><span onclick="location.href='join.do'">회원가입</span></div>
+							<div class="text-align-left col-8" ><span onclick="location.href='findPwd.do'" style="cursor:pointer;">비밀번호 찾기</span></div>
+							<div class="text-align-right col-4"><span onclick="location.href='join.do'" style="cursor:pointer;">회원가입</span></div>
 						</div>
 						<div class="loginBtn">
-							<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+							<button class="btn btn-lg btn-primary btn-block" type="submit" style="cursor:pointer;">로그인</button>
 						</div>
 						<div class="kakaoLoginBtn">
-							<button class="btn btn-lg btn-primary btn-block" onclick="kakaoLogin()" type="button">카카오로그인</button>
+							<button class="btn btn-lg btn-primary btn-block" onclick="kakaoLogin()" type="button" style="cursor:pointer;">카카오로그인</button>
 						</div>
 					</div>
 				</div>

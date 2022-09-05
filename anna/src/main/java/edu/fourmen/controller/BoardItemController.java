@@ -292,18 +292,18 @@ public class BoardItemController {
 		
 		
 		
-		List<BoardItemVO> list = boarditemService.list(pm);
+		List<BoardItemVO> list = new ArrayList<>();
 		
 		if(vo.getKeyword() != null) {
 			pm.setWishCheck(4);
-			pm.setInterested(vo.getKeyword().replace("#", ","));
-			model.addAttribute("list", list);
+			pm.setInterested(vo.getKeyword());
+			list = boarditemService.list(pm);
 			model.addAttribute("nolist", 1);
 		}else if(vo.getKeyword() == null) {
-			model.addAttribute("list", list);
 			model.addAttribute("nolist", 0);
 		}
-		
+
+		model.addAttribute("list", list);
 		
 		//uidx2 = 작성된 글의 작성자 번호
 		int uidx2 = vo.getUidx();
@@ -784,6 +784,11 @@ public class BoardItemController {
 				}																					// 이름
 			}
 		
+				if(vo.getKeyword() != null) {
+				 String str = "#"+vo.getKeyword().replace(",","#");
+				 vo.setKeyword(str);
+				}
+			
 			boarditemService.itemmodify(vo);
 			
 		return "redirect:/boarditem/itemview.do?item_idx="+vo.getItem_idx();

@@ -132,18 +132,32 @@
 						</div>
 					</c:if>
 					<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
-						<div class="row border-bottom tr">
-							<div class="col-4 th">답변</div>
-							<div class="col-8 td">
-								<textarea wrap="hard" name="answer" class="form-control" style="resize:none; height:120px;">${ QnAItem.answer }</textarea>
+						<c:if test="${ empty QnAItem.answer }">
+							<div class="row border-bottom tr">
+								<div class="col-4 th">답변</div>
+								<div class="col-8 td">
+									<textarea wrap="hard" name="answer" class="form-control" style="resize:none; height:120px;">${ QnAItem.answer }</textarea>
+								</div>
 							</div>
-						</div>
+						</c:if>
+						<c:if test="${ not empty QnAItem.answer }">
+							<div class="row border-bottom tr">
+								<div class="col-4 th">답변</div>
+								<div class="col-8 td">
+									${ QnAItem.answer }
+								</div>
+							</div>
+						</c:if>
 					</c:if>
 					<div class="row tr">
 						<div class="col-12 td text-end">
 							<c:if test="${ userLoginInfo.isAdmin eq 'Y' }">
-								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="Answer()">답변</button>
-								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/customer/QnAList.do'">목록</button>
+								<c:if test="${ not empty QnAItem.answer }">
+									<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="alert('준비중입니다.');">수정</button>
+								</c:if>
+								<c:if test="${ empty QnAItem.answer }">
+									<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="Answer()">답변</button>
+								</c:if>
 								<button class="btn" type="button" style="background:#00AAB2; color:#fff;" onclick="location.href='${path}/admin/admin_qna.do'">관리 목록</button>
 							</c:if>
 							<c:if test="${ userLoginInfo.isAdmin ne 'Y' }">

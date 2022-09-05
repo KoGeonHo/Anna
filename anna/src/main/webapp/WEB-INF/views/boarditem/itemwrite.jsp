@@ -35,7 +35,6 @@
 			alert("동네설정이 필요한 서비스 입니다.");
 			location.href="${path}/user/locationAuth.do";
 		</c:if>
-		//console.log('${  userLoginInfo.location_auth}'+'난 아냐');
 	    $(document).ready(function () {
 	        var tag = {};
 	        var counter = 0;
@@ -79,7 +78,6 @@
 	              
 	                    // 해시태그가 중복되었는지 확인
 	                    if (result.length == 0) { 
-	                       // $("#tag-list").append("<li class='tag-item' name='keyword'>"+tagValue+"<span class='del-btn' idx='"+counter+"'>x</span></li>");
 	                        $("#tag-list").append("<input type='text' class='tag-item' name='keyword'value="+tagValue+"><span class='del-btn' idx='"+counter+"'>x</span>");
 	                        addTag(tagValue);
 	                        self.val("");
@@ -129,11 +127,7 @@
 							<input type="hidden" class="form-control" value="${userLoginInfo.location_auth}" id="addr_code" name="addr_code">
 							<p class="viewaddr"></p>
 						</div>
-							<!-- <select class="form-select" aria-label="Default select example" id="addr_code"name="addr_code" onchange="alert('해당 기능은 준비중입니다.')">
-								<option value="0" id="addr">내 동네</option>
-							</select>
- -->				    		<script>
-					    		//console.log(${userLoginInfo.location_auth});
+ 						<script>
 					    		
 					    		locationList = [${userLoginInfo.location_auth}];
 								$.ajax({
@@ -142,14 +136,11 @@
 									success : function(data){
 										$(".spinner-border").css("display","none");
 										for(let i = 0; i < locationList.length; i++){
-											//console.log(data.result.accessToken);
-											//console.log(locationList[i]);
 											$.ajax({
 												url : "https://sgisapi.kostat.go.kr/OpenAPI3/boundary/hadmarea.geojson",
 												async : false,
 												data : "accessToken="+data.result.accessToken+"&year=2021&adm_cd="+locationList[i]+"&low_search=0",
 												success : function(geojson){
-													//console.log(geojson);
 													$(".viewaddr").append(geojson.features[0].properties.adm_nm+"<br>");
 												}
 											});
@@ -204,19 +195,6 @@
 						</div>
 						
 							
-							
-					    <!--   $('.contet_count').html("("+$(this).val().length+" / 500)"); //클래스 안에 0 / 500 출력
-						  
-			        		$("#contents").on('keyup', function() { // 안에 키 누르면 이벤트시작
-						        $('.contet_count').html("("+$(this).val().length+" / 500)"); //내용 입력시 안에 ? / 500 출력
-						    	
-						        if($(this).val().length > 500) {
-						            $(this).val($(this).val().substring(0, 500)); //500자가 넘으면 500자 까지 잘라냄
-						            alert("내용은 최대 500자 까지 입력 가능합니다.");
-						            $('.contet_count').html("(500 / 500)"); //500자 라고 출력
-						        }
-						    });
-						});  -->
 					</div>
 					
 					<div class="row border-bottom tr">
@@ -323,11 +301,7 @@
 						e.preventDefault();
 						fn_insertBoard();
 					});
-				/* 	
-					$("#addFile").on("click", function(e){ //파일 추가 버튼
-						e.preventDefault();
-						fn_addFile();
-					}); */
+			
 					
 					$("a[name='delete']").on("click", function(e){ //삭제 버튼
 						e.preventDefault();
@@ -347,21 +321,7 @@
 					comSubmit.submit();
 				}
 				
-			/* 	function fn_addFile(){
-					var i = 2
-					var str = "<p style='margin:auto;'><input type='file' name='file"+i+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-					if(i <= 10){
-						$("#fileDiv").append("<p style='margin:auto;'><input type='file' style='width:200px;' name='file"+i+"'><a href='#this' class='btn' name='delete'>삭제</a></p>");
-						$("a[name='delete']").on("click", function(e){ //삭제 버튼
-							e.preventDefault();
-							fn_deleteFile($(this));
-							});
-						i++;
-						}  
-					
-					if(i >= 10){
-						$("#fileDiv").css("display","none");
-					} */
+
 					
 					$(document).ready(function() {
 						var i=2; // 변수설정은 함수의 바깥에 설정!
@@ -419,11 +379,6 @@
 			    var title = $("#title").val();
 			    var addr = $("#addr_code").val();
 			    	
-			    
-			    	/* function addr_code(){
-			    		$('#addr_code').load(location.href+' #addr_code');
-			    	} */
-			    
 			    
 			    
 					    if(title == ""){

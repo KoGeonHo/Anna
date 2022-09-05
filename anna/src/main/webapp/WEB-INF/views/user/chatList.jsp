@@ -240,7 +240,7 @@
 			url : "getReview.do",
 			data : "item_idx="+item_idx+"&seller="+seller+"&buyer="+buyer,
 			success : function(result){
-				//console.log(result.myReview.satisfied);
+				console.log(result.myReview);
 				$("#view-review-title").html(nickName+"님과의 거래 후기");
 				$("#viewReView").fadeIn();
 				if(result.myReview.satisfied == "Y"){

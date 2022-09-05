@@ -387,7 +387,16 @@
 								</div>
 								<div style="flex:1; padding:5px;">
 									<div>
-										<div><h3>${ itemVO.title }</h3></div>
+										<div>
+											<h3>
+												<c:if test="${ fn:length(itemVO.title) > 12 }">
+													<b>${fn:substring(itemVO.title,0,12) }...</b>
+												</c:if>
+												<c:if test="${ fn:length(itemVO.title) <= 12 }">
+													<b>${ itemVO.title }</b>
+												</c:if>
+											</h3>
+										</div>
 										<div style="padding-left:10px;">
 											<span style="color:#00AAB2;">
 												<b>
@@ -496,9 +505,9 @@
 							<h3>상품 정보</h3>
 						</div>
 						<div style="flex:1; display:flex; flex-direction:column; overflow-y:auto;">
-							<div style="padding:10px;">
+							<div style="padding:10px; ">
 								<h4>${ itemVO.title }</h4>
-								<div style="padding:10px; height:380px; text-align:center;">
+								<div style="padding:10px; height:380px;width:350px; text-align:center; margin:auto;">
 									<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 									  <div class="carousel-indicators">
 									  	<c:if test="${ not empty itemVO.image2}">
@@ -532,63 +541,73 @@
 									  </div>
 									  <div class="carousel-inner">
 									    <div class="carousel-item active">
-									    	<img class="d-block" src="${path}/resources/upload/${itemVO.image1}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+									    	<div style="background:url('${path}/resources/upload/${itemVO.image1}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+									    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image1}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 									    </div>
 									    <c:if test="${ not empty itemVO.image2}">
 										    <div class="carousel-item">
-										    	<img class="d-block" src="${path}/resources/upload/${itemVO.image2}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+										    	<div style="background:url('${path}/resources/upload/${itemVO.image2}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+										    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image2}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 										    </div>
 									    </c:if>
 									    <c:if test="${ not empty itemVO.image3}">
 										    <div class="carousel-item">
-										    	<img class="d-block" src="${path}/resources/upload/${itemVO.image3}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+										    	<div style="background:url('${path}/resources/upload/${itemVO.image3}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+										    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image3}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 										    </div>
 									    </c:if>
 									    <c:if test="${ not empty itemVO.image4}">
 										    <div class="carousel-item">
-										    	<img class="d-block" src="${path}/resources/upload/${itemVO.image4}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+										    	<div style="background:url('${path}/resources/upload/${itemVO.image4}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+										    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image4}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 										    </div>
 									    </c:if>
 									    <c:if test="${ not empty itemVO.image5}">
 										    <div class="carousel-item">
-										    	<img class="d-block" src="${path}/resources/upload/${itemVO.image5}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+										    	<div style="background:url('${path}/resources/upload/${itemVO.image5}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+										    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image5}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 										    </div>
 									    </c:if>
 									    <c:if test="${ not empty itemVO.image6}">
 										    <div class="carousel-item">
-										    	<img class="d-block" src="${path}/resources/upload/${itemVO.image6}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+										    	<div style="background:url('${path}/resources/upload/${itemVO.image6}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+										    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image6}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 										    </div>
 									    </c:if>
 									    <c:if test="${ not empty itemVO.image7}">
 										    <div class="carousel-item">
-										    	<img class="d-block" src="${path}/resources/upload/${itemVO.image7}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+										    	<div style="background:url('${path}/resources/upload/${itemVO.image7}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+										    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image7}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 										    </div>
 									    </c:if>
 									    <c:if test="${ not empty itemVO.image8}">
 										    <div class="carousel-item">
-										    	<img class="d-block" src="${path}/resources/upload/${itemVO.image8}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+										    	<div style="background:url('${path}/resources/upload/${itemVO.image8}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+										    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image8}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 										    </div>
 									    </c:if>
 									    <c:if test="${ not empty itemVO.image9}">
 										    <div class="carousel-item">
-										    	<img class="d-block" src="${path}/resources/upload/${itemVO.image9}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+										    	<div style="background:url('${path}/resources/upload/${itemVO.image9}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+										    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image9}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 										    </div>
 									    </c:if>
 									    <c:if test="${ not empty itemVO.image10}">
 										    <div class="carousel-item">
-										    	<img class="d-block" src="${path}/resources/upload/${itemVO.image10}" style="border:2px solid #aaa; border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';">
+										    	<div style="background:url('${path}/resources/upload/${itemVO.image10}'),url('${path}/images/noimg_item.jpg'); background-size:cover; background-position:center;  background-repeat:no-repeat; border-radius:5px; width:350px; height:350px; margin:auto;"></div>
+										    	<%-- <img class="d-block" src="${path}/resources/upload/${itemVO.image10}" style="border-radius:5px; width:350px; height:350px; margin:auto; display:flex; align-items:center;" onerror="this.onerror=null; this.src='${path}/images/noimg_item.jpg';"> --%>
 										    </div>
 									    </c:if>
 									  </div>
 									  <c:if test="${ not empty itemVO.image2}">
-										  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="color:gray;">
-										    <div style="background:#ddd;">
+										  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="background:rgba(0,0,0,0.2);">
+										    <div>
 											    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 											    <span class="visually-hidden">Previous</span>
 										    </div>
 										  </button>
-										  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" style="color:gray;">
-										  	<div style="background:#ddd;">
+										  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" style="background:rgba(0,0,0,0.2);">
+										  	<div>
 											    <span class="carousel-control-next-icon" aria-hidden="true"></span>
 											    <span class="visually-hidden">Next</span>
 										   	</div>

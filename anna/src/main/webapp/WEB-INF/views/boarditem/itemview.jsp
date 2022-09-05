@@ -516,14 +516,23 @@ a:link {
 </style>
 
 <script>
-let item_idx = <%=request.getParameter("item_idx")%>;
-let uidx = ${userLoginInfo.uidx};
-<%-- let uidx = <%=request.getParameter("uidx")%>; --%>
 
-<c:if test="${ empty userLoginInfo.location_auth }">
-	alert("동네설정이 필요한 서비스 입니다.");
-	location.href="${path}/user/locationAuth.do";
+<c:if test="${ empty uidx }">
+	alert("로그인이 필요한 서비스 입니다.");
+	location.href="${path}/user/login.do";
 </c:if>
+<c:if test="${ not empty uidx }">
+	<c:if test="${ empty userLoginInfo.location_auth }">
+		alert("동네설정이 필요한 서비스 입니다.");
+		location.href="${path}/user/locationAuth.do";
+	</c:if>
+</c:if>
+
+
+let item_idx = <%=request.getParameter("item_idx")%>;
+let uidx = '${userLoginInfo.uidx}';
+<%-- let uidx = <%=request.getParameter("uidx")%>; --%>
+console.log(uidx);
 
 //console.log("addwish");
 	function addWish(){
@@ -886,8 +895,9 @@ function itemdelete(){
 													<div class="slides">
 														<c:if test="${vo.image1 != null}">
 															<div class="active" style="width: 100%;">
-																<img src="../resources/upload${vo.image1}"
-																	onerror=this.src="../images/no_imgborder.jpg">
+																<div style="width:100%; height:100%;background:url('${path}/resources/upload${vo.image1}'),url('${path}/images/no_image.gif');  background-size: cover; background-position: center; background-repeat: no-repeat; border:1px solid #ddd; border-radius:5px;"></div>
+																<%-- <img src="../resources/upload${vo.image1}"
+																	onerror=this.src="../images/no_imgborder.jpg"> --%>
 															</div>
 														</c:if>
 														<c:if test="${vo.image2 != null}">
@@ -948,7 +958,7 @@ function itemdelete(){
 													<c:if test="${vo.image2 !=null }">
 														<div class="page-btns">
 															<c:if test="${vo.image1 != null}">
-																<div></div>
+																<div class="active"></div>
 															</c:if>
 															<c:if test="${vo.image2 != null}">
 																<div></div>
@@ -995,7 +1005,7 @@ function itemdelete(){
 											</div>
 
 											<div class="col-sm-6">
-												<div id="viewcontent">
+												<div id="viewcontent" style="border: 1px solid #ddd; height: 100%;">
 												<!-- 모바일 터치 슬라이드 -->
 												<script>
 												$('.carousel').carousel({
@@ -1005,16 +1015,34 @@ function itemdelete(){
 												
 													<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel"  data-interval="false">
 													  <div class="carousel-indicators" style="margin-bottom: 0.5rem;">
-													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
-													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
-													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
-													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="7" aria-label="Slide 8"></button>
+													 	<c:if test="${vo.image2 != null}">
+													 		<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+													    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+													 	</c:if>	
+													 	<c:if test="${vo.image3 != null}">
+													    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+													 	</c:if>	
+													 	<c:if test="${vo.image4 != null}">
+													    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+													 	</c:if>	
+													 	<c:if test="${vo.image5 != null}">
+													    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+													 	</c:if>	
+													 	<c:if test="${vo.image6 != null}">
+													    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="5" aria-label="Slide 6"></button>
+													 	</c:if>	
+													 	<c:if test="${vo.image7 != null}">
+													    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="6" aria-label="Slide 7"></button>
+													 	</c:if>	
+													 	<c:if test="${vo.image8 != null}">
+													    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="7" aria-label="Slide 8"></button>
+													 	</c:if>	
+													 	<c:if test="${vo.image9 != null}">
 													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="8" aria-label="Slide 9"></button>
-													    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="9" aria-label="Slide 10"></button>
+													 		</c:if>	
+													 	<c:if test="${vo.image10 != null}">
+													    	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="9" aria-label="Slide 10"></button>
+													 	</c:if>	
 													  </div>
 													  <div class="carousel-inner">
 													  
@@ -1068,16 +1096,17 @@ function itemdelete(){
 														    </div>
 														</c:if>
 													  </div>
-													  <button class="carousel-control-prev" style="background: rgba(0,0,0,0.2);" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-													    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-													    <span class="visually-hidden">Previous</span>
-													  </button>
-													  <button class="carousel-control-next" style="background: rgba(0,0,0,0.2);" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-													    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-													    <span class="visually-hidden">Next</span>
-													  </button>
+													  <c:if test="${vo.image2 != null}">
+														  <button class="carousel-control-prev" style="background: rgba(0,0,0,0.2);" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+														    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+														    <span class="visually-hidden">Previous</span>
+														  </button>
+														  <button class="carousel-control-next" style="background: rgba(0,0,0,0.2);" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+														    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+														    <span class="visually-hidden">Next</span>
+														  </button>
+													</c:if>
 													</div>
-														
 														
 														
 														

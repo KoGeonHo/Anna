@@ -69,9 +69,6 @@ function hover(element) {
 	  element.setAttribute('src', '<%=request.getContextPath()%>/images/icon_plus.png');
 	}
 	
-	/* console.log('${chkBuyNewMessage }');
-	console.log('${chkSellNewMessage }');
-	console.log('${chkAlarm }'); */
 </script>
 
 

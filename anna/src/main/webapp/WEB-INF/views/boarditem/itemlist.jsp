@@ -36,11 +36,8 @@
 
 <script>
 	
-<c:if test="${ empty userLoginInfo.location_auth }">
-	alert("동네설정이 필요한 서비스 입니다.");
-	location.href="${path}/user/locationAuth.do";
-</c:if>
-	
+
+
 	$(function(){
 		$("#btn_open").click(function(){ //레이어 팝업 열기 버튼 클릭 시
 		console.log("채팅창 목록 열림")
@@ -142,7 +139,10 @@
 	        	 
 				html +='<div class="card-container" style="display:inline-block; font-size:1rem; flex:none; padding:5px;">';
 				html +='<div class="card" style="margin:5px;" onclick="location.href=\'${path}/boarditem/itemview.do?item_idx='+appendList[i].item_idx+'\'">';
-				html +='<img src="${ path }/resources/upload/'+appendList[i].image1+'" style="width:100%; height:210px;" onerror="this.onerror=null; this.src=\'${path}/images/no_image.gif\';" class="card-img-top" alt="...">';
+				html += '<div id="image" style="background:url(\'${ path }/resources/upload/'+appendList[i].image1+'\'),url(\'/anna/images/no_image.gif\'); background-position:center;  background-size:cover;"></div>';
+				
+				
+				/* html +='<img src="${ path }/resources/upload/'+appendList[i].image1+'" style="width:100%; height:210px;" onerror="this.onerror=null; this.src=\'${path}/images/no_image.gif\';" class="card-img-top" alt="...">'; */
 				html +='<div class="card-body" style="padding:10px;">';
 				html +='<div class="text-start" style="height:30px; display:flex; align-items:center;">';
 				if(appendList[i].title.length >= 8){
