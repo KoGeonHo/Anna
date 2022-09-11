@@ -298,7 +298,9 @@ text-decoration: none;
 	
 	}
 
-
+	.imgAr{
+		box-shadow: 5px 5px 5px grey;
+	}
 }
 
 
@@ -378,7 +380,7 @@ text-decoration: none;
 		                    					<div class="gall_boxa">
 		                        					<a href="viewBoard.do?Bidx=${vo.bidx}">
 		                  								<em class="iconPs bo_tit"></em>
-		                  								<i class="imgAr">
+		                  								<i class="imgAr" style="box-shadow: 5px 5px 5px grey;">
 		                  									<div style="width:auto;height:200px; background:url('<%=request.getContextPath()%>/resources/upload/${vo.image1}'),url('<%=request.getContextPath()%>/images/no_image.gif');background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
 		                  								
 		                  									<%-- <img src="<%=request.getContextPath()%>/resources/upload/${vo.image1}" alt="없어요" onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px; background-position: center; background-size:cover;"> --%>
@@ -436,6 +438,9 @@ text-decoration: none;
 									<div class="tr border-bottom d-flex">
 										<div class="title" onClick="location.href='<%=request.getContextPath()%>/board/viewBoard.do?Bidx=${vo.bidx}'">
 											<span style="font-weight:bold" class="p">${vo.title }</span>
+											<c:if test="${pm.board_type != 'notice' }">
+												<span style="color:orange; font-size:0.8rem;">[${vo.ccount }]</span>
+											</c:if>
 											<div class="value">
 												<span  style="font-weight:bold">${vo.title }</span>
 												<c:if test="${vo.image1 != null}">
@@ -514,10 +519,6 @@ text-decoration: none;
 			</form>
 
 		</div>
-
-	    <!-- 퀵메뉴 시작 -->
-	    <%@ include file="/WEB-INF/views/common/quickmenu.jsp" %>         
-	    <!-- 퀵메뉴 종료 --> 
 
 		<!-- 푸터는 고정 -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
@@ -613,8 +614,14 @@ const GetList = function(currentPage){
 	            html += '<div class="gall_boxa">';
 	            html += '<a href="viewBoard.do?Bidx='+appendList[i].bidx+'&board_type='+appendList[i].board_type+'">';
 	            html += '<em class="iconPs bo_tit"></em>';
-	            html += '<i class="imgAr">';
-	            html += '<img src="<%=request.getContextPath()%>/resources/upload/t-'+appendList[i].Image1+'"alt="없어요"onerror=this.src="../images/no_imgborder.jpg" style="width :200px; height : 200px"></i>';
+	            html += '<i class="imgAr" style="box-shadow: 5px 5px 5px grey;">';
+	            
+	            html += "<div style='width:auto; height:200px; background:url(\"${path}/resources/upload/"+appendList[i].image1+"\"),url(\"${path}/images/no_image.gif\");background-size: cover;";
+	          	html += "background-position: center;";
+	           	html += "background-repeat: no-repeat;'></div>";
+	            
+	            
+	           	html += '</i>'
 	            html += '<em class="gall_info">';
 	            html += '<span>조회 </span>';
 	            html += '<i class="fa fa-eye" aria-hidden="true"></i>';
@@ -680,15 +687,11 @@ $("input[name='tab_btn']").change(function(){
 <script>
 	function write2(){
 		
-		if(${userLoginInfo.uidx != null && userLoginInfo.location_auth != 'N'}){
+		if(${ userLoginInfo.uidx != null }){
 			
 			location.href='${path}/board/BoardWrite.do?board_type=${ pm.board_type }';
 			
-		}else if(${userLoginInfo.uidx != null && userLoginInfo.location_auth == 'N'}){
-			
-			alert("내 동네를 설정해주세요!");
-			location.href="${path}/user/userInfoView.do";
-		}else{
+		}else {
 			alert("로그인 후에 이용 가능합니다.");
 			location.href="${path}/user/login.do";
 		}

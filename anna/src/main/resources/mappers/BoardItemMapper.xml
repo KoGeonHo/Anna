@@ -230,12 +230,11 @@
 						<if test="image10 != null">
 						,image10 = #{image10}
 						</if>
-						,Keyword = #{keyword}
+						<if test="keyword != null">   
+						,Keyword = #{keyword}            
+						</if>
 						,Price = #{price}
 						,offer = #{offer}
-						,hit = 1 
-						,state = #{state}
-						,isDel = 'N'
 						
 						where item_idx = #{item_idx}
 						

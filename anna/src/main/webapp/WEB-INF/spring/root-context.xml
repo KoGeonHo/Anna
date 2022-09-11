@@ -6,9 +6,12 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://kgh5247.cafe24.com/kgh5247?characterEncoding=utf8&amp;useSSL=false&amp;autoReconnection=true&amp;serverTimezone=UTC" />
+		<!-- <property name="url" value="jdbc:mysql://kgh5247.cafe24.com/kgh5247?characterEncoding=utf8&amp;useSSL=false&amp;autoReconnection=true&amp;serverTimezone=UTC" />
 		<property name="username" value="kgh5247" />
-		<property name="password" value="playnetstudy!@" />
+		<property name="password" value="playnetstudy!@" /> -->
+		<property name="url" value="jdbc:mysql://jjezen.cafe24.com:3307/api_20220315_a_b?characterEncoding=utf8&amp;useSSL=false&amp;autoReconnection=true&amp;serverTimezone=UTC" />
+		<property name="username" value="api_20220315_a_b" />
+		<property name="password" value="user1234!!" />
 	</bean>
 	
 	<!-- DataBase Connection and Close -->

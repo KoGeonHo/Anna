@@ -219,13 +219,7 @@ form {
 						<form method="post" id="profileFrm">
 							<input id="input-fileUpdate" type="file" name="profile_image" accept="image/gif, image/jpeg" style="display:none;" onchange="updateProFileImage(this)">
 							<label for="input-fileUpdate">
-								<c:if test="${ not empty userInfo.profile_image }">
-									<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
-								</c:if>
-								<c:if test="${ empty userInfo.profile_image }">
-									<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${path}/images/NoProfile.png'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
-								</c:if>
-								<%-- <img src="${ userInfo.profile_image }" class="profile-image" onerror="this.onerror=null; this.src='${path}/images/NoProfile.png';" style="border-radius:100px;" > --%>
+								<div style="border-radius:100px; margin:20px; width:80px; height:80px; background:url('${userInfo.profile_image}'),url('${path}/images/NoProfile.png'); background-position: center; background-repeat: no-repeat; background-size: cover;"></div>
 							</label>
 						</form>
 					</div>
